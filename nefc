@@ -178,6 +178,7 @@ nefClean() {
 
 cleanNEF() {
     cd "$1"
+    rm nef.log
     rm -r nef 1>/dev/null 2>/dev/null
 }
 
