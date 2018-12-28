@@ -36,8 +36,8 @@ checkArguments() {
 #: - Compile
 
 nefCompile() {
-    buildDependencies "$1"
-    buildProject "$1"
+# buildDependencies "$1"
+# buildProject "$1"
     makeStructure "$1"
     compileFiles "$1"
 }
@@ -124,9 +124,19 @@ compileFiles() {
     local projectFolder=$1
     cd $projectFolder
 
-    find . -name '*.xcplaygroundpage' -print0 | while IFS= read -r -d $'\0' base; do
+    pages=()
+    while read -r -d $'\0' playground; do
+        pages+=("$playground")
+    done < <(find . -name '*.xcplaygroundpage' -print0)
+
+    echo "${bold}* Found ${#pages[@]} playgrounds:"
+
+    for file in "${pages[@]}"; do
+        pageName=$(echo $file | rev | cut -d'/' -f 1 | rev)
+        echo "${normal}   Compiling: ${bold}$pageName ${normal}..."
+
         # paths
-        baseFile=$(echo $base | cut -c 2-)
+        baseFile=$(echo $file | cut -c 2-)
         baseAbsolute=$(echo "$projectFolder$baseFile")
         content=$baseAbsolute/Contents.swift
 
@@ -135,6 +145,8 @@ compileFiles() {
 
         # compile
         compileFile "$output" "$baseAbsolute"
+
+        echo "${bold}   DONE"
     done
 }
 
@@ -143,14 +155,14 @@ compileFile() {
 
     file="$1"
     path="$2"
-    log="$path/swift.log"
+    log="$path/nef.log"
 
     xcrun swift -F "nef/build/fw" "$1" 1> "$log" 2>&1;
 
     errors=`grep " error:" "$log"`
     [ "${#errors}" -eq 0 ] && return 0
 
-    echo "$errors" | while read -r error; do echo "[!] $error"; done
+    echo "$errors" | while read -r error; do echo "❌ $error"; done
     exit 1
 }
 
