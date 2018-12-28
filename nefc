@@ -1,0 +1,192 @@
+#!/bin/bash
+
+#: Valid Args
+COMPILE="compile"
+CLEAN="clean"
+
+#: terminal setup
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+#: IN - Check Args
+printWrongArguments() {
+    echo ""
+    echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
+    echo ""
+    echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected projec"
+    echo "    ${bold}$CLEAN${normal}  clean builds in selected project"
+    echo ""
+}
+
+printWrongConfig() {
+    echo ""
+    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$CLEAN"
+    echo ""
+}
+
+checkArguments() {
+    if [ "$#" -ne 2 ]; then printWrongArguments $0; exit 1; fi
+
+    local config=("$COMPILE" "$CLEAN")
+    for e in "${config[@]}"; do [ $1 = $e ] && return 0; done
+
+    printWrongConfig; exit 1
+}
+
+#: - Compile
+
+nefCompile() {
+    buildDependencies "$1"
+    buildProject "$1"
+    makeStructure "$1"
+    compileFiles "$1"
+}
+
+buildProject() {
+    cd "$1"
+
+    find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
+        podProject=$(eval echo "\"$project\" | grep 'Pods.xcodeproj' | awk '{ print length; }'")
+        ! [ "$podProject" = "" ] && continue
+
+        targetSection="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
+        targetName="grep 'name = ' | awk -F' = ' '{print \$2}' | awk -F';' '{print \$1}'"
+        schemeName=$(eval cat "\"$project\" | $targetSection | $targetName")
+
+        # build
+        workspace=$(workspaceForProjectPath "$1" "$project")
+        echo "> building: $workspace - scheme: $schemeName"
+
+        xcodebuild -workspace "$workspace" -scheme "$schemeName" -configuration Debug
+    done
+}
+
+workspaceForProjectPath() {
+    cd "$1"
+
+    path="$1"
+    projectPath="$2"
+
+    xcprojectPath=$(echo "$project" | rev | cut -d'/' -f 2- | rev)
+    xcprojectNoExtension=$(echo "$xcprojectPath" | rev | cut -d'.' -f 2- | rev)
+
+    if [ -d "$xcprojectNoExtension.xcworkspace" ]; then
+        echo "$xcprojectNoExtension.xcworkspace"
+    else
+        echo "$xcprojectNoExtension.xcodeproj"
+    fi
+}
+
+buildDependencies() {
+    cd "$1"
+    podfile="Podfile"
+
+    find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
+        path="${podfilePath::${#podfilePath}-${#podfile}-1}"
+        cd "$path"
+        pod install
+        break
+    done
+}
+
+makeStructure() {
+    set +e
+
+    local projectFolder=$1
+    cd $projectFolder
+
+    rm -r nef; mkdir -p nef/build/fw
+    cp -a $(find build -name '*.framework') nef/build/fw
+}
+
+makeHeaders() {
+    content=$1
+    output=$2/main.swift
+    libs=(`xcrun swiftc -emit-imported-modules "$content" | sort -r`)
+
+    local remove=()
+    local imports=""
+
+    for lib in "${libs[@]}"; do
+        [ $lib = "" ] && continue
+        remove+=("| sed s/\"import $lib\"//g")
+        imports="import $lib$'\n'$imports"
+    done
+
+    if [ "${#remove[@]}" -ne 0 ]; then
+        eval "{ echo $imports; cat \"$content\" ${remove[@]}; } > \"$output\""
+    fi
+
+    echo "$output"
+}
+
+compileFiles() {
+    local projectFolder=$1
+    cd $projectFolder
+
+    find . -name '*.xcplaygroundpage' -print0 | while IFS= read -r -d $'\0' base; do
+        # paths
+        baseFile=$(echo $base | cut -c 2-)
+        baseAbsolute=$(echo "$projectFolder$baseFile")
+        content=$baseAbsolute/Contents.swift
+
+        # headers
+        output=$(makeHeaders "$content" "$baseAbsolute")
+
+        # compile
+        compileFile "$output" "$baseAbsolute"
+    done
+}
+
+compileFile() {
+    set +e
+
+    file="$1"
+    path="$2"
+    log="$path/swift.log"
+
+    xcrun swift -F "nef/build/fw" "$1" 1> "$log" 2>&1;
+
+    errors=`grep " error:" "$log"`
+    [ "${#errors}" -eq 0 ] && return 0
+
+    echo "$errors" | while read -r error; do echo "[!] $error"; done
+    exit 1
+}
+
+#: - Clean
+
+nefClean() {
+    set +e
+
+    $(cleanNEF "$1");   echo "Clean nef   ✅"
+    $(cleanPODS "$1");  echo "Clean PODS  ✅"
+    $(cleanXCode "$1"); echo "Clean XCode ✅"
+}
+
+cleanNEF() {
+    cd "$1"
+    rm -r nef 1>/dev/null 2>/dev/null
+}
+
+cleanPODS() {
+    cd "$1"
+    pod deintegrate 1>/dev/null 2>/dev/null
+    sudo rm -r Pods 2>/dev/null
+    sudo rm -r build 2>/dev/null
+    sudo rm podfile.lock 2>/dev/null
+}
+
+cleanXCode() {
+    rm -rf ~/Library/Developer/Xcode/DerivedData 1>/dev/null 2>/dev/null
+}
+
+#: MAIN
+set -e
+checkArguments $@
+
+if [ $1 = "$COMPILE" ]; then
+    nefCompile "$2"
+else
+    nefClean "$2"
+fi
