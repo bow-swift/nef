@@ -36,8 +36,8 @@ checkArguments() {
 #: - Compile
 
 nefCompile() {
-# buildDependencies "$1"
-# buildProject "$1"
+    buildDependencies "$1"
+    buildProject "$1"
     makeStructure "$1"
     compileFiles "$1"
 }
