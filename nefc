@@ -8,6 +8,10 @@ CLEAN="clean"
 bold=$(tput bold)
 normal=$(tput sgr0)
 
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+reset=$(tput sgr0)
+
 #: IN - Check Args
 
 ##
@@ -55,10 +59,11 @@ checkArguments() {
 #   - Parameter `folder`: path to the project folder.
 ##
 compile() {
-    buildDependencies "$1"
-    buildProject "$1"
     makeStructure "$1"
-    compilePlaygroundPages "$1"
+    buildDependencies "$1"
+    #buildProject "$1"
+    #copyFrameworks "$1"
+    #compilePlaygroundPages "$1"
 }
 
 ##
@@ -107,19 +112,32 @@ workspaceForProjectPath() {
 }
 
 ##
-#   buildDependencies(String folder)
+#   buildDependencies(String folder) throws
 #   - Parameter `folder`: path to the project folder.
 ##
 buildDependencies() {
     cd "$1"  # parameter `folder`
 
     local podfile="Podfile"
+    local log="nef/log/pod-install.log"
+
+    echo -ne "${bold}Installing Pods..."
 
     find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
         cd "$path"
-        pod install
-        break
+
+        pod install 1> "$log" 2>&1
+        installed=`grep "Pod installation complete" "$log"`
+
+        if [ "${#installed}" -gt 0 ]; then
+          echo " ✅"
+          return 0
+        else
+          echo " ❌"
+          echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
+          exit 1
+        fi
     done
 }
 
@@ -136,6 +154,16 @@ makeStructure() {
     rm -r nef 1>/dev/null 2>/dev/null
     mkdir -p nef/build/fw
     mkdir -p nef/log
+}
+
+##
+#   copyFrameworks(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+copyFrameworks() {
+    local projectFolder=$1  # parameter `folder`
+
+    cd $projectFolder
     cp -a $(find build -name '*.framework') nef/build/fw
 }
 
