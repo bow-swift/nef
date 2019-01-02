@@ -95,7 +95,7 @@ makeStructure() {
     local projectFolder=$1
     cd $projectFolder
 
-    rm -r nef
+    rm -r nef 1>/dev/null 2>/dev/null
     mkdir -p nef/build/fw
     mkdir -p nef/log
     cp -a $(find build -name '*.framework') nef/build/fw
