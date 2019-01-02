@@ -9,6 +9,10 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 #: IN - Check Args
+
+##
+#   printWrongArguments()
+##
 printWrongArguments() {
     echo ""
     echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
@@ -18,13 +22,24 @@ printWrongArguments() {
     echo ""
 }
 
+##
+#   printWrongConfig()
+##
 printWrongConfig() {
     echo ""
     echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$CLEAN"
     echo ""
 }
 
+##
+#   checkArguments(List<T> args) throws
+#   - Parameter `args`: list of arguments received from command line
+##
 checkArguments() {
+    # $0 and $1 in `args` are ref. to first and second parameter from command line
+    # $0 - command
+    # $1 - path
+
     if [ "$#" -ne 2 ]; then printWrongArguments $0; exit 1; fi
 
     local config=("$COMPILE" "$CLEAN")
@@ -35,15 +50,23 @@ checkArguments() {
 
 #: - Compile
 
-nefCompile() {
+##
+#   compile(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+compile() {
     buildDependencies "$1"
     buildProject "$1"
     makeStructure "$1"
     compilePlaygroundPages "$1"
 }
 
+##
+#   buildProject(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
 buildProject() {
-    cd "$1"
+    cd "$1" # parameter `folder`
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
         podProject=$(eval echo "\"$project\" | grep 'Pods.xcodeproj' | awk '{ print length; }'")
@@ -61,14 +84,20 @@ buildProject() {
     done
 }
 
+##
+#   workspaceForProjectPath(String folder, String projectPath): String
+#   - Parameter `folder`: path to the project folder.
+#   - Parameter `projectPath`: path to the *.pbxproj file.
+#   - Return `workspace`
+##
 workspaceForProjectPath() {
-    cd "$1"
+    local path="$1"         # parameter `folder`
+    local projectPath="$2"  # parameter `projectPath`
 
-    path="$1"
-    projectPath="$2"
+    cd "$path"
 
-    xcprojectPath=$(echo "$project" | rev | cut -d'/' -f 2- | rev)
-    xcprojectNoExtension=$(echo "$xcprojectPath" | rev | cut -d'.' -f 2- | rev)
+    local xcprojectPath=$(echo "$projectPath" | rev | cut -d'/' -f 2- | rev)
+    local xcprojectNoExtension=$(echo "$xcprojectPath" | rev | cut -d'.' -f 2- | rev)
 
     if [ -d "$xcprojectNoExtension.xcworkspace" ]; then
         echo "$xcprojectNoExtension.xcworkspace"
@@ -77,9 +106,14 @@ workspaceForProjectPath() {
     fi
 }
 
+##
+#   buildDependencies(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
 buildDependencies() {
-    cd "$1"
-    podfile="Podfile"
+    cd "$1"  # parameter `folder`
+
+    local podfile="Podfile"
 
     find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
@@ -89,10 +123,14 @@ buildDependencies() {
     done
 }
 
+##
+#   makeStructure(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
 makeStructure() {
     set +e
+    local projectFolder=$1  # parameter `folder`
 
-    local projectFolder=$1
     cd $projectFolder
 
     rm -r nef 1>/dev/null 2>/dev/null
@@ -101,9 +139,16 @@ makeStructure() {
     cp -a $(find build -name '*.framework') nef/build/fw
 }
 
+##
+#   makeHeaders(String folder, String playgroundName): String
+#   - Parameter `folder`: path to the project folder.
+#   - Parameter `playgroundName`: playground page name (kind of: *.xcplaygroundpage)
+#   - Return `output`: path to file ready to build - added headers
+##
 makeHeaders() {
-    content=$1
-    output="nef/build/$2.swift"
+    local content=$1    # parameter `folder`
+    local playground=$2 # parameter `playgroundName`
+    local output="nef/build/$playground.swift"
 
     libs=(`xcrun swiftc -emit-imported-modules "$content" | sort -r`)
 
@@ -125,8 +170,13 @@ makeHeaders() {
     echo "$output"
 }
 
+##
+#   compilePlaygroundPages(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
 compilePlaygroundPages() {
-    projectFolder=$1
+    local projectFolder=$1  # parameter `folder`
+
     cd $projectFolder
 
     pages=()
@@ -156,12 +206,17 @@ compilePlaygroundPages() {
     done
 }
 
+##
+#   compilePlaygroundPage(String folder, String playgroundName) throws
+#   - Parameter `folder`: path to the project folder.
+#   - Parameter `playgroundName`: playground page name (kind of: *.xcplaygroundpage)
+##
 compilePlaygroundPage() {
     set +e
 
-    file="$1"
-    playground="$2"
-    log="nef/log/$playground.log"
+    local file="$1"       # parameter `folder`
+    local playground="$2" # parameter `playgroundName`
+    local log="nef/log/$playground.log"
 
     xcrun swift -F "nef/build/fw" "$1" 1> "$log" 2>&1;
 
@@ -174,7 +229,11 @@ compilePlaygroundPage() {
 
 #: - Clean
 
-nefClean() {
+##
+#   clean(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+clean() {
     set +e
 
     $(cleanNEF "$1");   echo "Clean nef   ✅"
@@ -182,12 +241,20 @@ nefClean() {
     $(cleanXCode "$1"); echo "Clean XCode ✅"
 }
 
+##
+#   cleanNEF(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
 cleanNEF() {
     cd "$1"
     rm nef.log 1>/dev/null 2>/dev/null
     rm -r nef 1>/dev/null 2>/dev/null
 }
 
+##
+#   cleanPODS(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
 cleanPODS() {
     cd "$1"
     pod deintegrate 1>/dev/null 2>/dev/null
@@ -197,6 +264,9 @@ cleanPODS() {
     rm -r ./*.xcworkspace 1>/dev/null 2>/dev/null
 }
 
+##
+#   cleanXCode()
+##
 cleanXCode() {
     rm -rf ~/Library/Developer/Xcode/DerivedData 1>/dev/null 2>/dev/null
 }
@@ -206,7 +276,7 @@ set -e
 checkArguments $@
 
 if [ $1 = "$COMPILE" ]; then
-    nefCompile "$2"
+    compile "$2"
 else
-    nefClean "$2"
+    clean "$2"
 fi
