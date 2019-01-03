@@ -61,9 +61,9 @@ checkArguments() {
 compile() {
     makeStructure "$1"
     buildDependencies "$1"
-    #buildProject "$1"
-    #copyFrameworks "$1"
-    #compilePlaygroundPages "$1"
+    buildProject "$1"
+    copyFrameworks "$1"
+    compilePlaygroundPages "$1"
 }
 
 ##
@@ -72,6 +72,8 @@ compile() {
 ##
 buildProject() {
     cd "$1" # parameter `folder`
+
+    local logPath="nef/log"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
         podProject=$(eval echo "\"$project\" | grep 'Pods.xcodeproj' | awk '{ print length; }'")
@@ -83,9 +85,20 @@ buildProject() {
 
         # build
         workspace=$(workspaceForProjectPath "$1" "$project")
-        echo "> building: $workspace - scheme: $schemeName"
+        workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
+        log="$logPath/$workspaceName.log"
 
-        xcodebuild -workspace "$workspace" -scheme "$schemeName" -configuration Debug
+        echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
+        xcodebuild -workspace "$workspace" -scheme "$schemeName" -configuration Debug 1> "$log" 2>&1
+        installed=`grep "BUILD SUCCEEDED" "$log"`
+
+        if [ "${#installed}" -gt 0 ]; then
+          echo " ✅"
+        else
+          echo " ❌"
+          echo "${bold}${red}error: ${reset}${bold}building $workspaceName${normal} review '$log' for more information."
+          exit 1
+        fi
     done
 }
 
@@ -93,7 +106,7 @@ buildProject() {
 #   workspaceForProjectPath(String folder, String projectPath): String
 #   - Parameter `folder`: path to the project folder.
 #   - Parameter `projectPath`: path to the *.pbxproj file.
-#   - Return `workspace`
+#   - Return `workspace` path
 ##
 workspaceForProjectPath() {
     local path="$1"         # parameter `folder`
@@ -121,7 +134,7 @@ buildDependencies() {
     local podfile="Podfile"
     local log="nef/log/pod-install.log"
 
-    echo -ne "${bold}Installing Pods..."
+    echo -ne "Installing ${green}Pods ..."
 
     find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
@@ -165,6 +178,8 @@ copyFrameworks() {
 
     cd $projectFolder
     cp -a $(find build -name '*.framework') nef/build/fw
+
+    echo "Copy ${green}frameworks${reset} ✅"
 }
 
 ##
@@ -212,11 +227,11 @@ compilePlaygroundPages() {
         pages+=("$playground")
     done < <(find . -name '*.xcplaygroundpage' -print0)
 
-    echo "${bold}* Found ${#pages[@]} playgrounds:"
+    echo "${bold}Found ${#pages[@]} playgrounds:"
 
     for file in "${pages[@]}"; do
         pageName=$(echo $file | rev | cut -d'/' -f 1 | rev)
-        echo "${normal}   Compiling: ${bold}$pageName ${normal}..."
+        echo -ne "${normal}   Compiling ${green}$pageName${reset} ..."
 
         # paths
         baseFile=$(echo $file | cut -c 2-)
@@ -230,7 +245,7 @@ compilePlaygroundPages() {
         # compile
         compilePlaygroundPage "$output" "$playgroundName"
 
-        echo "${bold}   DONE"
+        echo " ✅"
     done
 }
 
@@ -251,7 +266,8 @@ compilePlaygroundPage() {
     errors=`grep " error:" "$log"`
     [ "${#errors}" -eq 0 ] && return 0
 
-    echo "$errors" | while read -r error; do echo "❌ $error"; done
+    echo " ❌"
+    echo "$errors" | while read -r error; do echo "${bold}${red}error:${normal}${reset}$error"; done
     exit 1
 }
 
