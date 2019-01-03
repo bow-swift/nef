@@ -227,7 +227,7 @@ compilePlaygroundPages() {
         pages+=("$playground")
     done < <(find . -name '*.xcplaygroundpage' -print0)
 
-    echo "${bold}Found ${#pages[@]} playgrounds:"
+    echo "${bold}Found ${#pages[@]} playgrounds"
 
     for file in "${pages[@]}"; do
         pageName=$(echo $file | rev | cut -d'/' -f 1 | rev)
