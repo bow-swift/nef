@@ -3,6 +3,7 @@
 #: Valid Args
 COMPILE="compile"
 CLEAN="clean"
+DERIVED_DATA_DIR="nef/DerivedData"
 
 #: terminal setup
 bold=$(tput bold)
@@ -89,7 +90,7 @@ buildProject() {
         log="$logPath/$workspaceName.log"
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
-        xcodebuild -workspace "$workspace" -scheme "$schemeName" -configuration Debug 1> "$log" 2>&1
+        xcodebuild -workspace "$workspace" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
         installed=`grep "BUILD SUCCEEDED" "$log"`
 
         if [ "${#installed}" -gt 0 ]; then
@@ -134,7 +135,7 @@ buildDependencies() {
     local podfile="Podfile"
     local log="nef/log/pod-install.log"
 
-    echo -ne "Installing ${green}Pods ..."
+    echo -ne "${normal}Installing ${green}Pods ${reset}..."
 
     find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
@@ -167,7 +168,8 @@ makeStructure() {
     rm -r nef 1>/dev/null 2>/dev/null
     mkdir -p nef/build/fw
     mkdir -p nef/log
-}
+    mkdir -p $DERIVED_DATA_DIR
+  }
 
 ##
 #   copyFrameworks(String folder)
@@ -177,8 +179,8 @@ copyFrameworks() {
     local projectFolder=$1  # parameter `folder`
 
     cd $projectFolder
-    cp -a $(find build -name '*.framework') nef/build/fw
 
+    cp -a $(find "$DERIVED_DATA_DIR/build" -name '*.framework') nef/build/fw
     echo "Copy ${green}frameworks${reset} ✅"
 }
 
