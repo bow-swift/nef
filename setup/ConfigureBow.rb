@@ -16,16 +16,11 @@ module Pod
       Pod::ProjectManipulator.new({
         :configurator => @configurator,
         :xcodeproj_path => "template/PROJECT.xcodeproj",
-        :platform => :ios,
-        :remove_demo_project => true,
+        :platform => :osx,
         :prefix => ''
       }).run
 
-      # There has to be a single file in the Classes dir
-      # or a framework won't be created, which is now default
-      `touch Pod/Classes/ReplaceMe.m`
-
-      `mv ./templates/ios/* ./`
+      `mv ./templates/* ./`
     end
   end
 
