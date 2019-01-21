@@ -6,16 +6,10 @@
 	objectVersion = 50;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		8BCD708D21D654BE006D6565 /* PROJECT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BCD708B21D654BE006D6565 /* PROJECT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		8B39A28421D410C200DE2643 /* PROJECT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PROJECT.h; sourceTree = "<group>"; };
 		8B39A28521D410C200DE2643 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B39A28A21D4D92900DE2643 /* PROJECT.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = PROJECT.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8BCD708921D654BE006D6565 /* PROJECT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PROJECT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BCD708B21D654BE006D6565 /* PROJECT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PROJECT.h; sourceTree = "<group>"; };
 		8BCD708C21D654BE006D6565 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,7 +45,6 @@
 		8B39A28321D410C200DE2643 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				8B39A28421D410C200DE2643 /* PROJECT.h */,
 				8B39A28521D410C200DE2643 /* Info.plist */,
 			);
 			path = Config;
@@ -60,7 +53,6 @@
 		8BCD708A21D654BE006D6565 /* PROJECT */ = {
 			isa = PBXGroup;
 			children = (
-				8BCD708B21D654BE006D6565 /* PROJECT.h */,
 				8BCD708C21D654BE006D6565 /* Info.plist */,
 			);
 			path = PROJECT;
@@ -73,7 +65,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BCD708D21D654BE006D6565 /* PROJECT.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

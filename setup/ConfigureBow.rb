@@ -20,7 +20,7 @@ module Pod
         :prefix => ''
       }).run
 
-      `mv ./templates/* ./`
+      `mv ./template/* ./`
     end
   end
 
