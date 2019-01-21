@@ -21,8 +21,7 @@ module Pod
         "PROJECT_OWNER" => @configurator.user_name,
         "TODAYS_DATE" => @configurator.date,
         "TODAYS_YEAR" => @configurator.year,
-        "PROJECT" => @configurator.pod_name,
-        "CPD" => @prefix
+        "PROJECT" => @configurator.pod_name
       }
       replace_internal_project_settings
 
@@ -47,27 +46,6 @@ module Pod
 
       # rename playground
       File.rename(project_folder + "/PROJECT.playground", project_folder + "/" +  @configurator.pod_name + ".playground")
-      
-      unless @remove_demo_target
-        # change app file prefixes
-        ["CPDAppDelegate.h", "CPDAppDelegate.m", "CPDViewController.h", "CPDViewController.m"].each do |file|
-          before = project_folder + "/PROJECT/" + file
-          next unless File.exists? before
-
-          after = project_folder + "/PROJECT/" + file.gsub("CPD", prefix)
-          File.rename before, after
-        end
-
-        # rename project related files
-        ["PROJECT-Info.plist", "PROJECT-Prefix.pch", "PROJECT.entitlements"].each do |file|
-          before = project_folder + "/PROJECT/" + file
-          next unless File.exists? before
-
-          after = project_folder + "/PROJECT/" + file.gsub("PROJECT", @configurator.pod_name)
-          File.rename before, after
-        end
-      end
-
     end
 
     def rename_project_folder

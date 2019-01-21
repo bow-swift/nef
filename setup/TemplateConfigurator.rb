@@ -18,7 +18,6 @@ module Pod
       replace_variables_in_files
       clean_template_files
       add_pods_to_podfile
-      reinitialize_git_repo
       run_pod_install
     end
 
@@ -48,7 +47,7 @@ module Pod
     end
 
     def clean_template_files
-      ["./**/.gitkeep", "configure", "_CONFIGURE.rb", "LICENSE", "templates", "setup", "CODE_OF_CONDUCT.md"].each do |asset|
+      ["./**/.git", "configure", "LICENSE", "template", "bin", "README.md", "setup"].each do |asset|
         `rm -rf #{asset}`
       end
     end
@@ -60,16 +59,6 @@ module Pod
       end.join("\n    ")
       podfile.gsub!("${INCLUDED_PODS}", podfile_content)
       File.open(podfile_path, "w") { |file| file.puts podfile }
-    end
-
-    def reinitialize_git_repo
-      `rm -rf .git`
-      `git init`
-      `git add -A`
-    end
-
-    def validate_user_details
-        return (user_email.length > 0) && (user_name.length > 0)
     end
 
     #----------------------------------------#
@@ -97,7 +86,7 @@ module Pod
     end
 
     def podfile_path
-      'template/Podfile'
+      'Podfile'
     end
 
     #----------------------------------------#
