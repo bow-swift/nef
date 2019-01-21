@@ -18,7 +18,6 @@ module Pod
       replace_variables_in_files
       clean_template_files
       add_pods_to_podfile
-      run_pod_install
     end
 
     #----------------------------------------#
@@ -41,7 +40,7 @@ module Pod
       puts "\nRunning " + "pod install".magenta + " on your new library."
       puts ""
 
-      Dir.chdir("template") do
+      Dir.chdir(".") do
         system "pod install"
       end
     end
