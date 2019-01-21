@@ -4,7 +4,7 @@ require 'colored2'
 module Pod
   class TemplateConfigurator
 
-    attr_reader :pod_name, :pods_for_podfile, :prefixes, :test_example_file, :username, :email
+    attr_reader :pod_name, :pods_for_podfile, :prefixes, :username, :email
 
     def initialize(pod_name)
       @pod_name = pod_name
@@ -64,10 +64,6 @@ module Pod
       end
     end
 
-    def add_pod_to_podfile podname
-      @pods_for_podfile << podname
-    end
-
     def add_pods_to_podfile
       podfile = File.read podfile_path
       podfile_content = @pods_for_podfile.map do |pod|
@@ -77,10 +73,6 @@ module Pod
       File.open(podfile_path, "w") { |file| file.puts podfile }
     end
 
-    def add_line_to_pch line
-      @prefixes << line
-    end
-
     def customise_prefix
       prefix_path = "Example/Tests/Tests-Prefix.pch"
       return unless File.exists? prefix_path
@@ -88,14 +80,6 @@ module Pod
       pch = File.read prefix_path
       pch.gsub!("${INCLUDED_PREFIXES}", @prefixes.join("\n  ") )
       File.open(prefix_path, "w") { |file| file.puts pch }
-    end
-
-    def set_test_framework(test_type, extension, folder)
-      content_path = "setup/test_examples/" + test_type + "." + extension
-      tests_path = "templates/" + folder + "/Example/Tests/Tests." + extension
-      tests = File.read tests_path
-      tests.gsub!("${TEST_EXAMPLE}", File.read(content_path) )
-      File.open(tests_path, "w") { |file| file.puts tests }
     end
 
     def rename_template_files
