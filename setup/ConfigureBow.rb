@@ -1,6 +1,6 @@
 module Pod
 
-  class ConfigureIOS
+  class ConfigureBow
     attr_reader :configurator
 
     def self.perform(options)
