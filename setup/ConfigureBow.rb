@@ -15,10 +15,10 @@ module Pod
 
       Pod::ProjectManipulator.new({
         :configurator => @configurator,
-        :xcodeproj_path => "templates/PROJECT.xcodeproj",
+        :xcodeproj_path => "template/PROJECT.xcodeproj",
         :platform => :ios,
         :remove_demo_project => true,
-        :prefix => nil
+        :prefix => ''
       }).run
 
       # There has to be a single file in the Classes dir

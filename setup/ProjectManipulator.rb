@@ -13,7 +13,6 @@ module Pod
       @xcodeproj_path = options.fetch(:xcodeproj_path)
       @configurator = options.fetch(:configurator)
       @platform = options.fetch(:platform)
-      @remove_demo_target = options.fetch(:remove_demo_project)
       @prefix = options.fetch(:prefix)
     end
 
@@ -28,19 +27,10 @@ module Pod
       replace_internal_project_settings
 
       @project = Xcodeproj::Project.open(@xcodeproj_path)
-      add_podspec_metadata
-      remove_demo_project if @remove_demo_target
       @project.save
 
       rename_files
       rename_project_folder
-    end
-
-    def add_podspec_metadata
-      project_metadata_item = @project.root_object.main_group.children.select { |group| group.name == "Podspec Metadata" }.first
-      project_metadata_item.new_file "../" + @configurator.pod_name  + ".podspec"
-      project_metadata_item.new_file "../README.md"
-      project_metadata_item.new_file "../LICENSE"
     end
 
     def remove_demo_project
@@ -76,7 +66,7 @@ module Pod
 use_frameworks!
 target '#{test_target.name}' do
   pod '#{@configurator.pod_name}', :path => '../'
-  
+
   ${INCLUDED_PODS}
 end
 RUBY
