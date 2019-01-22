@@ -3,6 +3,7 @@
 #: Valid Args
 COMPILE="compile"
 CLEAN="clean"
+DEPENDENCIES="install"
 DERIVED_DATA_DIR="nef/DerivedData"
 
 #: terminal setup
@@ -20,9 +21,10 @@ reset=$(tput sgr0)
 ##
 printWrongArguments() {
     echo ""
-    echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
+    echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
     echo ""
     echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected projec"
+    echo "    ${bold}$DEPENDENCIES${normal}  builds dependencies in selected project"
     echo "    ${bold}$CLEAN${normal}  clean builds in selected project"
     echo ""
 }
@@ -32,7 +34,7 @@ printWrongArguments() {
 ##
 printWrongConfig() {
     echo ""
-    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$CLEAN"
+    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$DEPENDENCIES ${normal}or ${bold}$CLEAN"
     echo ""
 }
 
@@ -47,11 +49,23 @@ checkArguments() {
 
     if [ "$#" -ne 2 ]; then printWrongArguments $0; exit 1; fi
 
-    local config=("$COMPILE" "$CLEAN")
+    local config=("$COMPILE" "$CLEAN" "$DEPENDENCIES")
     for e in "${config[@]}"; do [ $1 = $e ] && return 0; done
 
     printWrongConfig; exit 1
 }
+
+#: - Dependencies
+
+##
+#   dependencies(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+dependencies() {
+    makeStructure "$1"
+    buildDependencies "$1"
+}
+
 
 #: - Compile
 
@@ -165,11 +179,22 @@ makeStructure() {
 
     cd $projectFolder
 
-    rm -r nef 1>/dev/null 2>/dev/null
+    cleanStructure $projectFolder
     mkdir -p nef/build/fw
     mkdir -p nef/log
     mkdir -p $DERIVED_DATA_DIR
-  }
+}
+
+cleanStructure() {
+    set +e
+    local projectFolder=$1  # parameter `folder`
+
+    cd $projectFolder
+
+    rm -r nef/build 1>/dev/null 2>/dev/null
+    rm -r nef/log 1>/dev/null 2>/dev/null
+    rm -r $DERIVED_DATA_DIR 1>/dev/null 2>/dev/null
+}
 
 ##
 #   copyFrameworks(String folder)
@@ -323,6 +348,8 @@ checkArguments $@
 
 if [ $1 = "$COMPILE" ]; then
     compile "$2"
+elif [ $1 = "$DEPENDENCIES" ]; then
+    dependencies "$2"
 else
     clean "$2"
 fi
