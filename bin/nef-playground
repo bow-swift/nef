@@ -41,7 +41,7 @@ setBowVersion() {
   local version="$2"       # parameter `version`
 
   cd $projectFolder
-  echo -ne "${normal}Updating ${green}bow version ($projectName)${reset}..."
+  echo -ne "${normal}Updating ${green}bow version ($version)${reset}..."
 
   sed -i '' s/"~> 0.0.0"/"~> $version"/g './Podfile'
   echo " ✅"
