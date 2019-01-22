@@ -79,10 +79,11 @@ playground() {
 
   error=`grep "Errno:" "$log"`
   fatalError=`grep "fatal:" "$log"`
+  otherErrors=`grep "[!]" "$log"`
 
-  if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ]; then
+  if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
     echo " ❌"
-    echo "[!] ${bold}${red}error: ${reset}${bold}building plaground${normal} review '$log' for more information."
+    echo "[!] ${bold}${red}error: ${reset}${bold}building plaground ($projectName)${normal} review '$log' for more information."
     exit 1
   else
     echo " ✅"
