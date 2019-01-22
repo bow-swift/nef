@@ -2,9 +2,9 @@ target '${POD_NAME}' do
   platform :osx, '10.14'
   use_frameworks!
 
-  pod "Bow", "~> 0.2.0"
-  pod "BowEffects", "~> 0.2.0"
-  pod "BowResult", "~> 0.2.0"
-  pod "BowRx", "~> 0.2.0"
-  pod "BowBrightFutures", "~> 0.2.0"
+  pod "Bow", "~> 0.0.0"
+  pod "BowEffects", "~> 0.0.0"
+  pod "BowResult", "~> 0.0.0"
+  pod "BowRx", "~> 0.0.0"
+  pod "BowBrightFutures", "~> 0.0.0"
 end
