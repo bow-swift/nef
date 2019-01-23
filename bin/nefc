@@ -3,6 +3,8 @@
 #: Valid Args
 COMPILE="compile"
 CLEAN="clean"
+DEPENDENCIES="install"
+DERIVED_DATA_DIR="nef/DerivedData"
 
 #: terminal setup
 bold=$(tput bold)
@@ -19,9 +21,10 @@ reset=$(tput sgr0)
 ##
 printWrongArguments() {
     echo ""
-    echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
+    echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
     echo ""
     echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected projec"
+    echo "    ${bold}$DEPENDENCIES${normal}  builds dependencies in selected project"
     echo "    ${bold}$CLEAN${normal}  clean builds in selected project"
     echo ""
 }
@@ -31,7 +34,7 @@ printWrongArguments() {
 ##
 printWrongConfig() {
     echo ""
-    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$CLEAN"
+    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$DEPENDENCIES ${normal}or ${bold}$CLEAN"
     echo ""
 }
 
@@ -46,11 +49,23 @@ checkArguments() {
 
     if [ "$#" -ne 2 ]; then printWrongArguments $0; exit 1; fi
 
-    local config=("$COMPILE" "$CLEAN")
+    local config=("$COMPILE" "$CLEAN" "$DEPENDENCIES")
     for e in "${config[@]}"; do [ $1 = $e ] && return 0; done
 
     printWrongConfig; exit 1
 }
+
+#: - Dependencies
+
+##
+#   dependencies(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+dependencies() {
+    makeStructure "$1"
+    buildDependencies "$1"
+}
+
 
 #: - Compile
 
@@ -89,7 +104,7 @@ buildProject() {
         log="$logPath/$workspaceName.log"
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
-        xcodebuild -workspace "$workspace" -scheme "$schemeName" -configuration Debug 1> "$log" 2>&1
+        xcodebuild -workspace "$workspace" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
         installed=`grep "BUILD SUCCEEDED" "$log"`
 
         if [ "${#installed}" -gt 0 ]; then
@@ -134,7 +149,7 @@ buildDependencies() {
     local podfile="Podfile"
     local log="nef/log/pod-install.log"
 
-    echo -ne "Installing ${green}Pods ..."
+    echo -ne "${normal}Installing ${green}Pods ${reset}..."
 
     find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
@@ -164,9 +179,21 @@ makeStructure() {
 
     cd $projectFolder
 
-    rm -r nef 1>/dev/null 2>/dev/null
+    cleanStructure $projectFolder
     mkdir -p nef/build/fw
     mkdir -p nef/log
+    mkdir -p $DERIVED_DATA_DIR
+}
+
+cleanStructure() {
+    set +e
+    local projectFolder=$1  # parameter `folder`
+
+    cd $projectFolder
+
+    rm -r nef/build 1>/dev/null 2>/dev/null
+    rm -r nef/log 1>/dev/null 2>/dev/null
+    rm -r $DERIVED_DATA_DIR 1>/dev/null 2>/dev/null
 }
 
 ##
@@ -177,8 +204,8 @@ copyFrameworks() {
     local projectFolder=$1  # parameter `folder`
 
     cd $projectFolder
-    cp -a $(find build -name '*.framework') nef/build/fw
 
+    cp -a $(find "$DERIVED_DATA_DIR/build" -name '*.framework') nef/build/fw
     echo "Copy ${green}frameworks${reset} ✅"
 }
 
@@ -227,7 +254,7 @@ compilePlaygroundPages() {
         pages+=("$playground")
     done < <(find . -name '*.xcplaygroundpage' -print0)
 
-    echo "${bold}Found ${#pages[@]} playgrounds"
+    echo "${bold}Found ${#pages[@]} playgrounds${normal}"
 
     for file in "${pages[@]}"; do
         pageName=$(echo $file | rev | cut -d'/' -f 1 | rev)
@@ -282,7 +309,6 @@ clean() {
 
     $(cleanNEF "$1");   echo "Clean nef   ✅"
     $(cleanPODS "$1");  echo "Clean PODS  ✅"
-    $(cleanXCode "$1"); echo "Clean XCode ✅"
 }
 
 ##
@@ -292,7 +318,7 @@ clean() {
 cleanNEF() {
     cd "$1"
     rm nef.log 1>/dev/null 2>/dev/null
-    rm -r nef 1>/dev/null 2>/dev/null
+    rm -rf nef 1>/dev/null 2>/dev/null
 }
 
 ##
@@ -302,25 +328,27 @@ cleanNEF() {
 cleanPODS() {
     cd "$1"
     pod deintegrate 1>/dev/null 2>/dev/null
-    sudo rm -r Pods 2>/dev/null
-    sudo rm -r build 2>/dev/null
-    sudo rm podfile.lock 2>/dev/null
-    rm -r ./*.xcworkspace 1>/dev/null 2>/dev/null
-}
-
-##
-#   cleanXCode()
-##
-cleanXCode() {
-    rm -rf ~/Library/Developer/Xcode/DerivedData 1>/dev/null 2>/dev/null
+    rm -rf Pods 2>/dev/null
+    rm -rf build 2>/dev/null
+    rm podfile.lock 2>/dev/null
+    rm -rf ./*.xcworkspace 1>/dev/null 2>/dev/null
 }
 
 #: MAIN
 set -e
 checkArguments $@
 
-if [ $1 = "$COMPILE" ]; then
-    compile "$2"
+root=`pwd`
+if [ -d "$root/$2" ]; then
+  projectPath="$root/$2"
 else
-    clean "$2"
+  projectPath="$2"
+fi
+
+if [ $1 = "$COMPILE" ]; then
+    compile "$projectPath"
+elif [ $1 = "$DEPENDENCIES" ]; then
+    dependencies "$projectPath"
+else
+    clean "$projectPath"
 fi
