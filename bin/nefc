@@ -254,7 +254,7 @@ compilePlaygroundPages() {
         pages+=("$playground")
     done < <(find . -name '*.xcplaygroundpage' -print0)
 
-    echo "${bold}Found ${#pages[@]} playgrounds"
+    echo "${bold}Found ${#pages[@]} playgrounds${normal}"
 
     for file in "${pages[@]}"; do
         pageName=$(echo $file | rev | cut -d'/' -f 1 | rev)
@@ -309,7 +309,6 @@ clean() {
 
     $(cleanNEF "$1");   echo "Clean nef   ✅"
     $(cleanPODS "$1");  echo "Clean PODS  ✅"
-    $(cleanXCode "$1"); echo "Clean XCode ✅"
 }
 
 ##
@@ -319,7 +318,7 @@ clean() {
 cleanNEF() {
     cd "$1"
     rm nef.log 1>/dev/null 2>/dev/null
-    rm -r nef 1>/dev/null 2>/dev/null
+    rm -rf nef 1>/dev/null 2>/dev/null
 }
 
 ##
@@ -329,17 +328,10 @@ cleanNEF() {
 cleanPODS() {
     cd "$1"
     pod deintegrate 1>/dev/null 2>/dev/null
-    sudo rm -r Pods 2>/dev/null
-    sudo rm -r build 2>/dev/null
-    sudo rm podfile.lock 2>/dev/null
-    rm -r ./*.xcworkspace 1>/dev/null 2>/dev/null
-}
-
-##
-#   cleanXCode()
-##
-cleanXCode() {
-    rm -rf ~/Library/Developer/Xcode/DerivedData 1>/dev/null 2>/dev/null
+    rm -rf Pods 2>/dev/null
+    rm -rf build 2>/dev/null
+    rm podfile.lock 2>/dev/null
+    rm -rf ./*.xcworkspace 1>/dev/null 2>/dev/null
 }
 
 #: MAIN
