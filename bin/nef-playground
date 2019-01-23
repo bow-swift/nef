@@ -139,4 +139,3 @@ projectFolder="$root/$projectName"
 
 playground "$root" "$projectName"
 setBowVersion "$projectFolder" "$version"
-nefc install  "$projectFolder"

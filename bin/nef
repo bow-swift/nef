@@ -1,0 +1,102 @@
+#!/bin/bash
+
+#: Valid Args
+PLAYGROUND="playground"
+COMPILE="compile"
+
+#: Default params
+DEFAULT_PLAYGROUND="BowPlayground"
+
+#: terminal setup
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+lime=$(tput setaf 190)
+reset=$(tput sgr0)
+
+#: IN - Help
+
+##
+#   printHelp()
+##
+printHelp() {
+    echo ""
+    echo "${normal}$0 ${bold}$PLAYGROUND${normal} | ${bold}$COMPILE${normal} [${bold}--name${normal} <project>] [${bold}--version${normal} <number format: 0.0.0>]"
+    echo ""
+    echo "    ${green}${bold}$PLAYGROUND${reset}${normal} build a playground with Bow compatibility."
+    echo "    ${green}${bold}$COMPILE${reset}${normal} compile a Bow's playground."
+    echo "    ${lime}${bold}name${reset}${normal} create a playground project using this name [optional]."
+    echo "    ${lime}${bold}version${reset}${normal} bow's version to use [optional]."
+    echo ""
+}
+
+#: - Playground
+
+##
+#   playground(List<String> args)
+#   - Parameter `args`: list of command line arguments
+##
+playground() {
+    projectName=$DEFAULT_PLAYGROUND
+    version=""
+
+    while [ "$1" != "" ]; do
+        case $1 in
+            -n | --name )    shift; projectName=$1 ;;
+            -v | --version ) shift; version=$1 ;;
+            $PLAYGROUND )    ;;
+            * )              printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+        esac
+        shift
+    done
+
+    if [ "${#version}" -gt 0 ]; then
+      nef-playground --name "$projectName" --version "$version"
+    else
+      nef-playground --name "$projectName"
+    fi
+
+    nefc install  "$projectName"
+}
+
+#: - Compile
+
+##
+#   compile(List<String> args)
+#   - Parameter `args`: list of command line arguments
+##
+compile() {
+    projectFolder=""
+
+    while [ "$1" != "" ]; do
+        case $1 in
+            -n | --name )    shift; projectFolder=$1 ;;
+            $COMPILE )       ;;
+            * )              printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+        esac
+        shift
+    done
+
+    if [ "${#projectFolder}" -gt 0 ]; then
+      nefc compile "$projectFolder"
+    else
+      printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} command format."; exit 1
+    fi
+}
+
+#: - MAIN
+set -e
+
+while [ "$1" != "" ]; do
+    case $1 in
+        $PLAYGROUND ) shift; playground $@; exit 0 ;;
+        $COMPILE )    shift; compile $@; exit 0 ;;
+        -h | --help | help )  printHelp $@; exit 0 ;;
+        * )                   printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1
+    esac
+    shift
+done
+
+printHelp $@; exit 1
