@@ -84,29 +84,36 @@ playground() {
   if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
     echo " ❌"
     echo "[!] ${bold}${red}error: ${reset}${bold}building plaground ($projectName)${normal} review '$log' for more information."
+    cleanProject $projectFolder
     exit 1
   else
     echo " ✅"
   fi
 }
 
+
 ##
 #   makeStructure(String folder)
 #   - Parameter `folder`: path to the project folder.
 ##
 makeStructure() {
-    set +e
-    local projectFolder="$1"  # parameter `folder`
+  set +e
+  local projectFolder="$1"  # parameter `folder`
 
-    cleanStructure "$projectFolder"
-    mkdir -p "$projectFolder/nef/playground"
+  cleanStructure "$projectFolder"
+  mkdir -p "$projectFolder/nef/playground"
 }
 
 cleanStructure() {
-    set +e
-    local projectFolder="$1"  # parameter `folder`
+  set +e
+  local projectFolder="$1"  # parameter `folder`
 
-    rm -r "$projectFolder/nef/playground" 1>/dev/null 2>/dev/null
+  rm -rf "$projectFolder/nef/playground" 1>/dev/null 2>/dev/null
+}
+
+cleanProject() {
+  local projectFolder="$1"  # parameter `folder`
+  rm -rf $projectFolder
 }
 
 
