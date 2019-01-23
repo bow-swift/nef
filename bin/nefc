@@ -338,10 +338,17 @@ cleanPODS() {
 set -e
 checkArguments $@
 
-if [ $1 = "$COMPILE" ]; then
-    compile "$2"
-elif [ $1 = "$DEPENDENCIES" ]; then
-    dependencies "$2"
+root=`pwd`
+if [ -d "$root/$2" ]; then
+  projectPath="$root/$2"
 else
-    clean "$2"
+  projectPath="$2"
+fi
+
+if [ $1 = "$COMPILE" ]; then
+    compile "$projectPath"
+elif [ $1 = "$DEPENDENCIES" ]; then
+    dependencies "$projectPath"
+else
+    clean "$projectPath"
 fi
