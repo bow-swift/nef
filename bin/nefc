@@ -82,7 +82,7 @@ compile() {
 }
 
 ##
-#   buildProject(String folder)
+#   buildProject(String folder) throws
 #   - Parameter `folder`: path to the project folder.
 ##
 buildProject() {
@@ -140,11 +140,22 @@ workspaceForProjectPath() {
 }
 
 ##
-#   buildDependencies(String folder) throws
+#   buildDependencies(String folder)
 #   - Parameter `folder`: path to the project folder.
 ##
 buildDependencies() {
-    cd "$1"  # parameter `folder`
+    local path="$1" # parameter `folder`
+
+    buildPODS "$path"
+    addPlaygroundReference "$path"
+}
+
+##
+#   buildPODS(String folder) throws
+#   - Parameter `folder`: path to the project folder.
+##
+buildPODS() {
+    cd "$1"
 
     local podfile="Podfile"
     local log="nef/log/pod-install.log"
@@ -159,14 +170,53 @@ buildDependencies() {
         installed=`grep "Pod installation complete" "$log"`
 
         if [ "${#installed}" -gt 0 ]; then
-          echo " ✅"
-          return 0
+            echo " ✅"
+            return 0
         else
-          echo " ❌"
-          echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
-          exit 1
+            echo " ❌"
+            echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
+            exit 1
         fi
     done
+}
+
+##
+#   addPlaygroundReference(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+addPlaygroundReference() {
+    cd "$1"
+
+    local playgrounds=$(playgroundForProjectPath "$1")
+    local pattern="<FileRef"
+
+    find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
+        workspace=$(workspaceForProjectPath "$1" "$project")
+        workspaceContent="$workspace/contents.xcworkspacedata"
+        ! [[ $workspace = .*".xcworkspace" ]] && continue
+        grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
+
+        for playground in "${playgrounds[@]}"; do
+            playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
+            sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
+        done
+    done
+}
+
+##
+#   playgroundForProjectPath(String projectPath): [String]
+#   - Parameter `projectPath`: path to the *.playground file.
+#   - Return list of path `playground`
+##
+playgroundForProjectPath() {
+    cd "$1"
+
+    playgrounds=()
+    while read -r -d $'\0' playground; do
+        playgrounds+=("$playground")
+    done < <(find . -name '*.playground' -print0)
+
+    echo $playgrounds
 }
 
 ##
