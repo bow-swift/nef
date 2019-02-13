@@ -2,21 +2,11 @@
 
 import Foundation
 
-enum Nef {
-    enum Command: String, Equatable {
-        case header
-        case hidden
-        case invalid
+enum Markup { }
 
-        static func get(in line: String) -> Command {
-            guard line.contains("nef:") else { return .invalid }
-            let commandRawValue = line.clean([" ","\n"]).components(separatedBy: ":").last ?? ""
-            return Command(rawValue: commandRawValue) ?? .invalid
-        }
-    }
-}
+// MARK: Markup.Node
+extension Markup {
 
-enum Markup {
     indirect enum Node: Equatable {
         case nef(command: Nef.Command, [Node])
         case markup(title: String?, String)
@@ -34,6 +24,25 @@ enum Markup {
             }
         }
     }
+
+    enum Nef {
+        enum Command: String, Equatable {
+            case header
+            case hidden
+            case invalid
+
+            static func get(in line: String) -> Command {
+                guard line.contains("nef:") else { return .invalid }
+                let commandRawValue = line.clean([" ","\n"]).components(separatedBy: ":").last ?? ""
+
+                return Command(rawValue: commandRawValue) ?? .invalid
+            }
+        }
+    }
+}
+
+// MARK: Markup - Lexical Analysis
+extension Markup {
 
     enum Token: Equatable {
         case nefBegin(command: Nef.Command)
@@ -84,6 +93,15 @@ enum Markup {
             self.currentIndex = 0
         }
 
+        mutating func nextToken() -> (token: Markup.Token, line: String)? {
+            guard let line = nextLine() else { return nil }
+
+            let token = Tokenizer.token(inLine: line.ouput)
+            currentIndex += line.range.location + line.range.length
+
+            return (token, line.ouput)
+        }
+
         private enum Regex {
             static let nef = (begin: "//[ ]*nef:begin:[a-z]+\n", end: "//[ ]*nef:end[ ]*\n")
             static let multiMarkup = (begin: "/\\*:.*\n")
@@ -125,34 +143,30 @@ enum Markup {
         private func nextLine() -> SubstringType? {
             return content.advance(currentIndex).substring(pattern: Regex.line)
         }
-
-        mutating func nextToken() -> (token: Markup.Token, line: String)? {
-            guard let line = nextLine() else { return nil }
-
-            let token = Tokenizer.token(inLine: line.ouput)
-            currentIndex += line.range.location + line.range.length
-
-            return (token, line.ouput)
-        }
     }
+}
+
+// MARK: Markup - Syntax Analysis
+extension Markup {
 
     struct Parser {
-        private var tokenizer: Tokenizer
-        private var openingDelimiters: [Markup.Token]
 
         static func parse(content: String) -> [Markup.Node]? {
             var parser = Parser(content: content)
-            let sintax = parser.parse()
+            let syntax = parser.parse()
 
-            return sintax.contains(Markup.Node.unknown("")) || !parser.openingDelimiters.isEmpty ? nil : sintax
+            return syntax.contains(Markup.Node.unknown("")) || !parser.openingDelimiters.isEmpty ? nil : syntax
         }
+
+        private var tokenizer: Tokenizer
+        private var openingDelimiters: [Markup.Token]
 
         private init(content: String) {
             tokenizer = Tokenizer(content: content)
             openingDelimiters = []
         }
 
-        mutating func parse() -> [Markup.Node] {
+        private mutating func parse() -> [Markup.Node] {
             var nodes = [Markup.Node]()
 
             while let (token, line) = tokenizer.nextToken() {
@@ -175,10 +189,10 @@ enum Markup {
         private func appendNode(in nodes: inout [Markup.Node], from token: Markup.Token, inLine line: String) {
             switch token {
             case .markup:
-                return nodes.append(.markup(title: nil, line))
+                return nodes.append(.markup(title: nil, line.clean(["//:"]).trimmingWhitespaces))
 
             case .comment:
-                return nodes.append(.comment(line))
+                return nodes.append(.comment(line.trimmingWhitespaces))
 
             default:
                 let isCodeNode = openingDelimiters.isEmpty
@@ -190,7 +204,7 @@ enum Markup {
                         nodes.append(.code(line))
                     }
                 } else {
-                    nodes.append(.unknown(line))
+                    nodes.append(.unknown(line.trimmingWhitespaces))
                 }
             }
         }
@@ -211,6 +225,55 @@ enum Markup {
         }
     }
 }
+
+/// Code Generation
+protocol Render {
+    static func render(content: String) -> String?
+}
+
+// MARK: Markup - Jekyll file generation
+struct RenderJekyll: Render {
+    static func render(content: String) -> String? {
+        guard let syntax = Markup.Parser.parse(content: content) else { return nil }
+        return syntax.reduce("") { (acc, node) in acc + node.jekyll }
+    }
+}
+
+extension Markup.Node {
+    var jekyll: String {
+        switch self {
+        case let .nef(command, nodes):
+            return command.jekyll(nodes: nodes)
+
+        case let .markup(_, description):
+            return "\n"+description
+
+        case let .comment(description):
+            return description
+
+        case let .code(code):
+            guard !code.clean([" ", "\n"]).isEmpty else { return "" }
+            return "\n```swift\n\(code)```\n"
+
+        case let .unknown(description):
+            fatalError("Found .unknown node in file with content: \(description.clean(["\n"]).substring(length: 50))")
+        }
+    }
+}
+
+extension Markup.Nef.Command {
+    func jekyll(nodes: [Markup.Node]) -> String {
+        switch self {
+        case .header:
+            return nodes.map{ $0.jekyll }.joined()
+        case .hidden:
+            return ""
+        case .invalid:
+            fatalError("Found .invalid command in nef: \(nodes).")
+        }
+    }
+}
+
 
 // MARK: Helpers
 // MARK: - <string>
@@ -239,5 +302,9 @@ extension String {
         return ocurrences.reduce(self) { (output, ocurrence) in
             output.replacingOccurrences(of: ocurrence, with: "")
         }
+    }
+
+    var trimmingWhitespaces: String {
+        return trimmingCharacters(in: .whitespaces)
     }
 }
