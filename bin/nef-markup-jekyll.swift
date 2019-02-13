@@ -2,8 +2,6 @@
 
 import Foundation
 
-let filePath = "/Users/miguelangel/Desktop/Documentacion/Type Clases.playground/Pages/Intro.xcplaygroundpage/Contents.swift"
-
 enum Nef {
     enum Command: String, Equatable {
         case header
@@ -19,75 +17,97 @@ enum Nef {
 }
 
 enum Markup {
-    enum Node {
+    indirect enum Node {
         case nef(command: Nef.Command, [Node])
-        case markup(title: String, String)
+        case markup(title: String?, String)
         case comment(String)
-        case ignore(String)
-        case text(String)
+        case code(String)
+        case unknown(String)
+
+        var string: String {
+            switch self {
+            case let .nef(_, nodes): return nodes.map { $0.string }.joined()
+            case let .markup(_, description): return description
+            case let .comment(description): return description
+            case let .code(code): return code
+            case let .unknown(description): return description
+            }
+        }
     }
 
-    enum Token: Equatable, CustomDebugStringConvertible {
+    enum Token: Equatable {
         case nefBegin(command: Nef.Command)
-        case nefEnd(command: Nef.Command)
+        case nefEnd
         case markupBegin(title: String)
+        case markup
         case comment
         case commentBegin
         case markupCommentEnd
         case line(String)
 
-        static func == (lhs: Token, rhs: Token) -> Bool {
-            switch (lhs, rhs) {
-            case let (.nefBegin(command1), .nefBegin(command2)):
-                return command1 == command2
-            case let (.nefEnd(command1), .nefEnd(command2)):
-                return command1 == command2
-            case let (.markupBegin(title1), .markupBegin(title2)):
-                return title1 == title2
-            case let (.line(body1), .line(body2)):
-                return body1 == body2
-            case (.commentBegin, .commentBegin): return true
-            case (.markupCommentEnd, .markupCommentEnd): return true
+        func isRightDelimiter(_ token: Token) -> Bool {
+            switch (token, self) {
+            case (.nefBegin(_), .nefEnd): return true
+            case (.markupBegin(_), .markupCommentEnd): return true
+            case (.commentBegin, .markupCommentEnd): return true
             default:
                 return false
             }
         }
 
-        var debugDescription: String {
+        var isLeftDelimiter: Bool {
             switch self {
-            case let .nefBegin(command): return "nef(begin: \(command))"
-            case let .nefEnd(command): return "nef(end: \(command))"
-            case let .markupBegin(title): return "markup(begin: \(title))"
-            case .comment: return "single-comment"
-            case .commentBegin: return "comment(begin)"
-            case .markupCommentEnd: return "comment-markup(end)"
-            case let .line(body): return "line(body: \(body.clean(["\n"]).substring(length: 50)))"
+            case .nefBegin(_): return true
+            case .markupBegin(_): return true
+            case .commentBegin: return true
+            default:
+                return false
+            }
+        }
+
+        var isDelimiter: Bool {
+            switch self {
+            case .comment: return false
+            case .line(_): return false
+            default:
+                return true
             }
         }
     }
 
-    enum Parser {
+    struct Tokenizer {
+        private let content: String
+        private var currentIndex: Int
+
+        init(content: String) {
+            self.content = content
+            self.currentIndex = 0
+        }
+
         private enum Regex {
-            static let nef = (begin: "//[ ]?nef:begin:[a-z]+\n", end: "//[ ]?nef:end:[a-z]+\n")
-            static let markup = (begin: "/\\*:[.]*\n")
+            static let nef = (begin: "//[ ]*nef:begin:[a-z]+\n", end: "//[ ]*nef:end[ ]*\n")
+            static let multiMarkup = (begin: "/\\*:.*\n")
+            static let markup = "//:.*\n"
             static let comment = "//.*\n"
             static let multiComment = (begin: "/\\*.*\n")
             static let markupComment = (end: "\\*/\n")
             static let line = ".*\n"
         }
 
-        static func token(inLine line: String) -> Markup.Token {
+        private static func token(inLine line: String) -> Markup.Token {
             if let nefBegin = line.substring(pattern: Regex.nef.begin) {
                 let command = Nef.Command.get(in: nefBegin.ouput)
                 return Markup.Token.nefBegin(command: command)
             }
-            if let nefEnd = line.substring(pattern: Regex.nef.end) {
-                let command = Nef.Command.get(in: nefEnd.ouput)
-                return Markup.Token.nefEnd(command: command)
+            if let _ = line.substring(pattern: Regex.nef.end) {
+                return Markup.Token.nefEnd
             }
-            if let markupBegin = line.substring(pattern: Regex.markup.begin) {
+            if let markupBegin = line.substring(pattern: Regex.multiMarkup.begin) {
                 let title = markupBegin.ouput.clean([" ","\n"]).components(separatedBy: "/*:").last
                 return Markup.Token.markupBegin(title: title ?? "")
+            }
+            if let _ = line.substring(pattern: Regex.markup) {
+                return Markup.Token.markup
             }
             if let _ = line.substring(pattern: Regex.comment) {
                 return Markup.Token.comment
@@ -102,42 +122,87 @@ enum Markup {
             return Markup.Token.line(line)
         }
 
-        static func nextLine(_ content: String) -> SubstringType? {
-            return content.substring(pattern: Markup.Parser.Regex.line)
+        private func nextLine() -> SubstringType? {
+            return content.advance(currentIndex).substring(pattern: Regex.line)
+        }
+
+        mutating func nextToken() -> (token: Markup.Token, line: String)? {
+            guard let line = nextLine() else { return nil }
+
+            let token = Tokenizer.token(inLine: line.ouput)
+            currentIndex += line.range.location + line.range.length
+
+            return (token, line.ouput)
+        }
+    }
+
+    struct Parser {
+        private var tokenizer: Tokenizer
+        private var openingDelimiters: [Markup.Token]
+
+        static func parse(content: String) -> [Markup.Node] {
+            var parser = Parser(content: content)
+            return parser.parse()
+        }
+
+        private init(content: String) {
+            tokenizer = Tokenizer(content: content)
+            openingDelimiters = []
+        }
+
+        mutating func parse() -> [Markup.Node] {
+            var nodes = [Markup.Node]()
+
+            while let (token, line) = tokenizer.nextToken() {
+                if token.isLeftDelimiter {
+                    openingDelimiters.append(token)
+                    nodes.append(contentsOf: parse())
+                }
+                else if let lastToken = openingDelimiters.last, token.isRightDelimiter(lastToken) {
+                    openingDelimiters.removeLast()
+                    return [node(for: nodes, parentToken: lastToken)]
+                }
+                else {
+                    switch token {
+                    case .markup:
+                        nodes.append(.markup(title: nil, line))
+                    case .comment:
+                        nodes.append(.comment(line))
+                    default:
+                        nodes.append(openingDelimiters.isEmpty ? .code(line) : .unknown(line))
+                    }
+                }
+            }
+
+            return nodes
+        }
+
+        private func node(for childrens: [Markup.Node], parentToken parent: Markup.Token) -> Markup.Node {
+            let description = childrens.map { $0.string }.joined()
+
+            switch parent {
+            case let .nefBegin(command):
+                return .nef(command: command, childrens)
+            case let .markupBegin(title):
+                return .markup(title: title, description)
+            case .commentBegin:
+                return .comment(description)
+            default:
+                fatalError("Parent token [\(parent)]: not supported.")
+            }
         }
     }
 }
 
-struct MarkupTokenizer {
-    private let content: String
-    private var openingDelimiters: [Markup.Token] = []
-
-    init(_ content: String) {
-        self.content = content
-    }
-
-    func tokenizer() -> [Markup.Token] {
-        var content = self.content
-        var tokens = [Markup.Token]()
-
-        while let line = Markup.Parser.nextLine(content) {
-            content = content.advance(line.range.location + line.range.length)
-
-            let token = Markup.Parser.token(inLine: line.ouput)
-            tokens.append(token)
-        }
-
-        return tokens
-    }
-}
-
+// MARK: Helpers
+// MARK: - <string>
 typealias SubstringType = (ouput: String, range: NSRange)
 
 extension String {
     func substring(pattern: String) -> SubstringType? {
         let range = NSRange(location: 0, length: self.utf8.count)
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive),
-              let match = regex.firstMatch(in: self, options: [], range: range) else { return nil }
+            let match = regex.firstMatch(in: self, options: [], range: range) else { return nil }
 
         let output = NSString(string: self).substring(with: match.range) as String
 
@@ -158,13 +223,3 @@ extension String {
         }
     }
 }
-
-// MARK: - MAIN
-func parser(path: String) {
-    let fileURL = URL(fileURLWithPath: filePath)
-    guard let content = try? String(contentsOf: fileURL, encoding: .utf8) else { return }
-
-    MarkupTokenizer(content).tokenizer().forEach { print($0) }
-}
-
-parser(path: filePath)
