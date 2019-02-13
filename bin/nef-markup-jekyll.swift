@@ -2,6 +2,8 @@
 
 import Foundation
 
+let DEBUG = false
+
 enum Markup { }
 
 // MARK: Markup.Node
@@ -40,6 +42,8 @@ extension Markup {
         }
     }
 }
+
+//-----------------------------------------------------------------
 
 // MARK: Markup - Lexical Analysis
 extension Markup {
@@ -146,6 +150,8 @@ extension Markup {
     }
 }
 
+//-----------------------------------------------------------------
+
 // MARK: Markup - Syntax Analysis
 extension Markup {
 
@@ -226,6 +232,8 @@ extension Markup {
     }
 }
 
+//-----------------------------------------------------------------
+
 /// Code Generation
 protocol Render {
     static func render(content: String) -> String?
@@ -235,6 +243,7 @@ protocol Render {
 struct RenderJekyll: Render {
     static func render(content: String) -> String? {
         guard let syntax = Markup.Parser.parse(content: content) else { return nil }
+        if DEBUG { syntax.forEach { print($0) } }
         return syntax.reduce("") { (acc, node) in acc + node.jekyll }
     }
 }
@@ -246,7 +255,7 @@ extension Markup.Node {
             return command.jekyll(nodes: nodes)
 
         case let .markup(_, description):
-            return "\n"+description
+            return "\n\(description)"
 
         case let .comment(description):
             return description
@@ -274,6 +283,7 @@ extension Markup.Nef.Command {
     }
 }
 
+//-----------------------------------------------------------------
 
 // MARK: Helpers
 // MARK: - <string>
@@ -307,4 +317,45 @@ extension String {
     var trimmingWhitespaces: String {
         return trimmingCharacters(in: .whitespaces)
     }
+}
+
+//-----------------------------------------------------------------
+
+// MARK: MAIN
+
+func renderJekyll(from filePath: String, to outputPath: String) {
+    let fileURL = URL(fileURLWithPath: filePath)
+    let outputURL = URL(fileURLWithPath: outputPath)
+
+    print("File: \(filePath)\nOutput: \(outputPath)")
+    guard let content = try? String(contentsOf: fileURL, encoding: .utf8),
+          let rendered = RenderJekyll.render(content: content),
+          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { printError(); return }
+
+    printSuccess()
+}
+
+private func printError() {
+    print("ERROR")
+}
+
+private func printSuccess() {
+    print("SUCCESS")
+}
+
+private func printHelp() {
+    print("HELP")
+}
+
+// MARK: - Console
+private func arguments() -> (from: String, to: String)? {
+    guard CommandLine.arguments.count == 3 else { return nil }
+    return (CommandLine.arguments[1], CommandLine.arguments[2])
+}
+
+if let (from, to) = arguments() {
+    renderJekyll(from: from, to: to)
+} else {
+    printHelp()
+    exit(-1)
 }
