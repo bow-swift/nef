@@ -5,7 +5,7 @@ import Foundation
 enum Nef {
     enum Command: String, Equatable {
         case header
-        case hiden
+        case hidden
         case invalid
 
         static func get(in line: String) -> Command {
@@ -17,7 +17,7 @@ enum Nef {
 }
 
 enum Markup {
-    indirect enum Node {
+    indirect enum Node: Equatable {
         case nef(command: Nef.Command, [Node])
         case markup(title: String?, String)
         case comment(String)
@@ -140,9 +140,11 @@ enum Markup {
         private var tokenizer: Tokenizer
         private var openingDelimiters: [Markup.Token]
 
-        static func parse(content: String) -> [Markup.Node] {
+        static func parse(content: String) -> [Markup.Node]? {
             var parser = Parser(content: content)
-            return parser.parse()
+            let sintax = parser.parse()
+
+            return sintax.contains(Markup.Node.unknown("")) || !parser.openingDelimiters.isEmpty ? nil : sintax
         }
 
         private init(content: String) {
@@ -163,18 +165,34 @@ enum Markup {
                     return [node(for: nodes, parentToken: lastToken)]
                 }
                 else {
-                    switch token {
-                    case .markup:
-                        nodes.append(.markup(title: nil, line))
-                    case .comment:
-                        nodes.append(.comment(line))
-                    default:
-                        nodes.append(openingDelimiters.isEmpty ? .code(line) : .unknown(line))
-                    }
+                    appendNode(in: &nodes, from: token, inLine: line)
                 }
             }
 
             return nodes
+        }
+
+        private func appendNode(in nodes: inout [Markup.Node], from token: Markup.Token, inLine line: String) {
+            switch token {
+            case .markup:
+                return nodes.append(.markup(title: nil, line))
+
+            case .comment:
+                return nodes.append(.comment(line))
+
+            default:
+                let isCodeNode = openingDelimiters.isEmpty
+                if isCodeNode{
+                    if let lastNode = nodes.last, case let .code(lines) = lastNode {
+                        nodes.removeLast()
+                        nodes.append(.code(lines+line))
+                    } else {
+                        nodes.append(.code(line))
+                    }
+                } else {
+                    nodes.append(.unknown(line))
+                }
+            }
         }
 
         private func node(for childrens: [Markup.Node], parentToken parent: Markup.Token) -> Markup.Node {
