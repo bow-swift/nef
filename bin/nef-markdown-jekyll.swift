@@ -1,8 +1,9 @@
-//  Copyright © 2019. All rights reserved.
+#!/usr/bin/swift
 
 import Foundation
 
-let DEBUG = false
+/// Show extra information about the markup conversion process.
+let VERBOSE = false
 
 enum Markup { }
 
@@ -36,7 +37,6 @@ extension Markup {
             static func get(in line: String) -> Command {
                 guard line.contains("nef:") else { return .invalid }
                 let commandRawValue = line.clean([" ","\n"]).components(separatedBy: ":").last ?? ""
-
                 return Command(rawValue: commandRawValue) ?? .invalid
             }
         }
@@ -236,23 +236,26 @@ extension Markup {
 
 /// Code Generation
 protocol Render {
-    static func render(content: String) -> String?
+    func render(content: String) -> String?
 }
 
-// MARK: Markup - Jekyll file generation
+/// Jekyll file generation
 struct RenderJekyll: Render {
-    static func render(content: String) -> String? {
+    let permalink: String
+
+    func render(content: String) -> String? {
         guard let syntax = Markup.Parser.parse(content: content) else { return nil }
-        if DEBUG { syntax.forEach { print($0) } }
-        return syntax.reduce("") { (acc, node) in acc + node.jekyll }
+        if VERBOSE { syntax.forEach { print($0) } }
+        return syntax.reduce("") { (acc, node) in acc + node.jekyll(permalink: permalink) }
     }
 }
 
+// MARK: - Jekyll definition for each node
 extension Markup.Node {
-    var jekyll: String {
+    func jekyll(permalink: String) -> String {
         switch self {
         case let .nef(command, nodes):
-            return command.jekyll(nodes: nodes)
+            return command.jekyll(nodes: nodes, permalink: permalink)
 
         case let .markup(_, description):
             return "\n\(description)"
@@ -271,10 +274,16 @@ extension Markup.Node {
 }
 
 extension Markup.Nef.Command {
-    func jekyll(nodes: [Markup.Node]) -> String {
+    func jekyll(nodes: [Markup.Node], permalink: String) -> String {
         switch self {
         case .header:
-            return nodes.map{ $0.jekyll }.joined()
+            let header = nodes.map{ $0.jekyll(permalink: permalink) }.joined()
+            return """
+                    ---
+                    \(header)
+                    permalink: \(permalink)
+                    ---
+                    """
         case .hidden:
             return ""
         case .invalid:
@@ -323,13 +332,13 @@ extension String {
 
 // MARK: MAIN
 
-func renderJekyll(from filePath: String, to outputPath: String) {
+func renderJekyll(from filePath: String, to outputPath: String, permalink: String) {
     let fileURL = URL(fileURLWithPath: filePath)
     let outputURL = URL(fileURLWithPath: outputPath)
 
     print("File: \(filePath)\nOutput: \(outputPath)")
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8),
-          let rendered = RenderJekyll.render(content: content),
+          let rendered = RenderJekyll(permalink: permalink).render(content: content),
           let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { printError(); return }
 
     printSuccess()
@@ -348,13 +357,13 @@ private func printHelp() {
 }
 
 // MARK: - Console
-private func arguments() -> (from: String, to: String)? {
-    guard CommandLine.arguments.count == 3 else { return nil }
-    return (CommandLine.arguments[1], CommandLine.arguments[2])
+private func arguments() -> (from: String, to: String, permalink: String)? {
+    guard CommandLine.arguments.count == 4 else { return nil }
+    return (CommandLine.arguments[1], CommandLine.arguments[2], CommandLine.arguments[3])
 }
 
-if let (from, to) = arguments() {
-    renderJekyll(from: from, to: to)
+if let (from, to, permalink) = arguments() {
+    renderJekyll(from: from, to: to, permalink: permalink)
 } else {
     printHelp()
     exit(-1)
