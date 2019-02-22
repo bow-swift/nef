@@ -52,7 +52,8 @@ struct SyntaxAnalyzer {
     }
 
     private func appendNode(in nodes: inout [Node], from token: Token, inLine line: String) {
-        func appendCode(in nodes: inout [Node], withLine line: String) {
+
+        func appendNodeCode(in nodes: inout [Node], withLine line: String) {
             if let lastNode = nodes.last, case let .code(lines) = lastNode {
                 nodes.removeLast()
                 nodes.append(.code(lines+line))
@@ -66,13 +67,13 @@ struct SyntaxAnalyzer {
             return nodes.append(.markup(description: nil, line.clean(["//:"]).trimmingWhitespaces))
         case .comment:
             if openingDelimiters.isEmpty {
-                appendCode(in: &nodes, withLine: line)
+                appendNodeCode(in: &nodes, withLine: line)
             } else {
                 nodes.append(.raw(line.clean(["//"]).trimmingWhitespaces))
             }
         default:
             if openingDelimiters.isEmpty {
-                appendCode(in: &nodes, withLine: line)
+                appendNodeCode(in: &nodes, withLine: line)
             } else {
                 nodes.append(.unknown(line.trimmingWhitespaces))
             }
