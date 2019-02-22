@@ -10,6 +10,7 @@ public struct JekyllGenerator: Render {
     public func render(content: String) -> String? {
         guard let syntax = SyntaxAnalyzer.parse(content: content) else { return nil }
         //if VERBOSE { syntax.forEach { print($0) } }
+        syntax.forEach { print($0) }
         return syntax.reduce("") { (acc, node) in acc + node.jekyll(permalink: permalink) }
     }
 }
@@ -24,12 +25,13 @@ extension Node {
         case let .markup(_, description):
             return "\n\(description)"
 
-        case let .comment(description):
-            return description
-
         case let .code(code):
             guard !code.clean([" ", "\n"]).isEmpty else { return "" }
             return "\n```swift\n\(code)```\n"
+
+        case let .raw(description):
+            guard !description.clean([" ", "\n"]).isEmpty else { return "" }
+            return "\n\(description)"
 
         case let .unknown(description):
             fatalError("Found .unknown node in file with content: \(description.clean(["\n"]).substring(length: 50))")

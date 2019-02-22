@@ -23,7 +23,8 @@ struct SyntaxAnalyzer {
         while let (token, line) = tokenizer.nextToken() {
             if token.isLeftDelimiter {
                 openingDelimiters.append(token)
-                nodes.append(contentsOf: parse())
+                let parsedNodes = parse()
+                appendNodes(parsedNodes, in: &nodes)
             }
             else if let lastToken = openingDelimiters.last, token.isRightDelimiter(lastToken) {
                 openingDelimiters.removeLast()
@@ -37,23 +38,41 @@ struct SyntaxAnalyzer {
         return nodes
     }
 
+    private func appendNodes(_ parsedNodes: [Node], in nodes: inout [Node]) {
+        let allNodesAreRaw = parsedNodes.first(where: { !$0.isRaw }) == nil
+
+        if allNodesAreRaw {
+            parsedNodes.forEach {
+                guard case let .raw(line) = $0 else { return }
+                appendNode(in: &nodes, from: .comment, inLine: line)
+            }
+        } else {
+            nodes.append(contentsOf: parsedNodes)
+        }
+    }
+
     private func appendNode(in nodes: inout [Node], from token: Token, inLine line: String) {
+        func appendCode(in nodes: inout [Node], withLine line: String) {
+            if let lastNode = nodes.last, case let .code(lines) = lastNode {
+                nodes.removeLast()
+                nodes.append(.code(lines+line))
+            } else {
+                nodes.append(.code(line))
+            }
+        }
+
         switch token {
         case .markup:
-            return nodes.append(.markup(title: nil, line.clean(["//:"]).trimmingWhitespaces))
-
+            return nodes.append(.markup(description: nil, line.clean(["//:"]).trimmingWhitespaces))
         case .comment:
-            return nodes.append(.comment(line.trimmingWhitespaces))
-
+            if openingDelimiters.isEmpty {
+                appendCode(in: &nodes, withLine: line)
+            } else {
+                nodes.append(.raw(line.clean(["//"]).trimmingWhitespaces))
+            }
         default:
-            let isCodeNode = openingDelimiters.isEmpty
-            if isCodeNode{
-                if let lastNode = nodes.last, case let .code(lines) = lastNode {
-                    nodes.removeLast()
-                    nodes.append(.code(lines+line))
-                } else {
-                    nodes.append(.code(line))
-                }
+            if openingDelimiters.isEmpty {
+                appendCode(in: &nodes, withLine: line)
             } else {
                 nodes.append(.unknown(line.trimmingWhitespaces))
             }
@@ -61,15 +80,16 @@ struct SyntaxAnalyzer {
     }
 
     private func node(for childrens: [Node], parentToken parent: Token) -> Node {
-        let description = childrens.map { $0.string }.joined()
+        let content = childrens.map { $0.string }.joined()
 
         switch parent {
         case let .nefBegin(command):
             return .nef(command: command, childrens)
-        case let .markupBegin(title):
-            return .markup(title: title, description)
+        case let .markupBegin(description):
+            return .markup(description: description, content)
         case .commentBegin:
-            return .comment(description)
+            let content = content.split(separator: "\n").map({ "// "+$0 }).joined(separator: "\n")
+            return .raw(content+"\n")
         default:
             fatalError("Parent token [\(parent)]: not supported.")
         }

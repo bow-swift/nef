@@ -2,18 +2,25 @@ import Foundation
 
 indirect enum Node: Equatable {
     case nef(command: Nef.Command, [Node])
-    case markup(title: String?, String)
-    case comment(String)
+    case markup(description: String?, String)
     case code(String)
+    case raw(String)
     case unknown(String)
 
     var string: String {
         switch self {
         case let .nef(_, nodes): return nodes.map { $0.string }.joined()
         case let .markup(_, description): return description
-        case let .comment(description): return description
         case let .code(code): return code
+        case let .raw(line): return line
         case let .unknown(description): return description
+        }
+    }
+
+    var isRaw: Bool {
+        switch self {
+        case .raw: return true
+        default: return false
         }
     }
 }

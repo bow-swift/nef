@@ -22,8 +22,8 @@ struct LexicalAnalyzer {
     private enum Regex {
         static let nef = (begin: "//[ ]*nef:begin:[a-z]+\n", end: "//[ ]*nef:end[ ]*\n")
         static let multiMarkup = (begin: "/\\*:.*\n")
-        static let markup = "//:.*\n"
-        static let comment = "//.*\n"
+        static let markup = "^[ ]*//:.*\n"
+        static let comment = "^[ ]*//.*\n"
         static let multiComment = (begin: "/\\*.*\n")
         static let markupComment = (end: "\\*/\n")
         static let line = ".*\n"
@@ -38,8 +38,8 @@ struct LexicalAnalyzer {
             return Token.nefEnd
         }
         if let markupBegin = line.substring(pattern: Regex.multiMarkup.begin) {
-            let title = markupBegin.ouput.clean([" ","\n"]).components(separatedBy: "/*:").last
-            return Token.markupBegin(title: title ?? "")
+            let description = markupBegin.ouput.clean([" ","\n"]).components(separatedBy: "/*:").last
+            return Token.markupBegin(description: description ?? "")
         }
         if let _ = line.substring(pattern: Regex.markup) {
             return Token.markup
@@ -66,7 +66,7 @@ struct LexicalAnalyzer {
 enum Token: Equatable {
     case nefBegin(command: Nef.Command)
     case nefEnd
-    case markupBegin(title: String)
+    case markupBegin(description: String)
     case markup
     case comment
     case commentBegin
