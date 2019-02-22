@@ -63,15 +63,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "&quot;/Users/miguelangel/Desktop/Documentacion/Type Clases.playground/Pages/Intro.xcplaygroundpage/Contents.swift&quot;"
+            argument = "--from &quot;/Users/miguelangel/Desktop/Documentacion/Type Clases.playground/Pages/Intro.xcplaygroundpage/Contents.swift&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/Users/miguelangel/Desktop/README.md&quot;"
+            argument = "--to &quot;/Users/miguelangel/Desktop/README.md&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "&quot;/docs/testing/2&quot;"
+            argument = "--permalink &quot;/docs/testing/2&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
