@@ -13,9 +13,16 @@ struct LexicalAnalyzer {
         guard let line = nextLine() else { return nil }
 
         let token = LexicalAnalyzer.token(inLine: line.ouput)
+        let output: String
+        switch token {
+        case .markup:  output = line.ouput.clean(["//:"]).trimmingWhitespaces
+        case .comment: output = line.ouput.clean(["//"]).trimmingWhitespaces
+        default: output = line.ouput
+        }
+
         currentIndex += line.range.location + line.range.length
 
-        return (token, line.ouput)
+        return (token, output)
     }
 
     // MARK: helpers
@@ -31,14 +38,14 @@ struct LexicalAnalyzer {
 
     private static func token(inLine line: String) -> Token {
         if let nefBegin = line.substring(pattern: Regex.nef.begin) {
-            let command = Nef.Command.get(in: nefBegin.ouput)
+            let command = Node.Nef.Command.get(in: nefBegin.ouput)
             return Token.nefBegin(command: command)
         }
         if let _ = line.substring(pattern: Regex.nef.end) {
             return Token.nefEnd
         }
         if let markupBegin = line.substring(pattern: Regex.multiMarkup.begin) {
-            let description = markupBegin.ouput.clean([" ","\n"]).components(separatedBy: "/*:").last
+            let description = markupBegin.ouput.clean(["\n"]).components(separatedBy: "/*:").last?.trimmingWhitespaces
             return Token.markupBegin(description: description ?? "")
         }
         if let _ = line.substring(pattern: Regex.markup) {
@@ -63,8 +70,10 @@ struct LexicalAnalyzer {
 }
 
 
+// MARK: token definition for lexical analysis
+
 enum Token: Equatable {
-    case nefBegin(command: Nef.Command)
+    case nefBegin(command: Node.Nef.Command)
     case nefEnd
     case markupBegin(description: String)
     case markup

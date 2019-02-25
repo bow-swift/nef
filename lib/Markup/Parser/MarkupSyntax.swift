@@ -6,7 +6,7 @@ struct SyntaxAnalyzer {
         var parser = SyntaxAnalyzer(content: content)
         let syntax = parser.parse()
 
-        return syntax.contains(Node.unknown("")) || !parser.openingDelimiters.isEmpty ? nil : syntax
+        return syntax.contains(Node.raw("")) || !parser.openingDelimiters.isEmpty ? nil : syntax.reduce()
     }
 
     private var tokenizer: LexicalAnalyzer
@@ -23,60 +23,28 @@ struct SyntaxAnalyzer {
         while let (token, line) = tokenizer.nextToken() {
             if token.isLeftDelimiter {
                 openingDelimiters.append(token)
-                let parsedNodes = parse()
-                appendNodes(parsedNodes, in: &nodes)
+                nodes += parse()
             }
             else if let lastToken = openingDelimiters.last, token.isRightDelimiter(lastToken) {
                 openingDelimiters.removeLast()
                 return [node(for: nodes, parentToken: lastToken)]
             }
             else {
-                appendNode(in: &nodes, from: token, inLine: line)
+                nodes += [node(for: token, withLine: line)]
             }
         }
 
         return nodes
     }
 
-    private func appendNodes(_ parsedNodes: [Node], in nodes: inout [Node]) {
-        let allNodesAreRaw = parsedNodes.first(where: { !$0.isRaw }) == nil
-
-        if allNodesAreRaw {
-            parsedNodes.forEach {
-                guard case let .raw(line) = $0 else { return }
-                appendNode(in: &nodes, from: .comment, inLine: line)
-            }
-        } else {
-            nodes.append(contentsOf: parsedNodes)
-        }
-    }
-
-    private func appendNode(in nodes: inout [Node], from token: Token, inLine line: String) {
-
-        func appendNodeCode(in nodes: inout [Node], withLine line: String) {
-            if let lastNode = nodes.last, case let .code(lines) = lastNode {
-                nodes.removeLast()
-                nodes.append(.code(lines+line))
-            } else {
-                nodes.append(.code(line))
-            }
-        }
-
+    private func node(for token: Token, withLine line: String) -> Node {
         switch token {
         case .markup:
-            return nodes.append(.markup(description: nil, line.clean(["//:"]).trimmingWhitespaces))
+            return .markup(description: nil, line)
         case .comment:
-            if openingDelimiters.isEmpty {
-                appendNodeCode(in: &nodes, withLine: line)
-            } else {
-                nodes.append(.raw(line.clean(["//"]).trimmingWhitespaces))
-            }
+            return .block([.comment(line)])
         default:
-            if openingDelimiters.isEmpty {
-                appendNodeCode(in: &nodes, withLine: line)
-            } else {
-                nodes.append(.unknown(line.trimmingWhitespaces))
-            }
+            return openingDelimiters.isEmpty ? .block([.code(line)]) : .raw(line.trimmingWhitespaces)
         }
     }
 
@@ -89,10 +57,104 @@ struct SyntaxAnalyzer {
         case let .markupBegin(description):
             return .markup(description: description, content)
         case .commentBegin:
-            let content = content.split(separator: "\n").map({ "// "+$0 }).joined(separator: "\n")
-            return .raw(content+"\n")
+            return openingDelimiters.isEmpty ? .block([.comment(content)]) : .raw(content)
         default:
             fatalError("Parent token [\(parent)]: not supported.")
+        }
+    }
+}
+
+// MARK: Helpers
+extension Node {
+    var isComment: Bool {
+        switch self {
+        case let .block(nodes):
+            return nodes.reduce(true) { acc, node in
+                acc && node.isComment
+            }
+        default:
+            return false
+        }
+    }
+}
+
+extension Node.Code {
+    var isComment: Bool {
+        switch self {
+        case .comment: return true
+        default: return false
+        }
+    }
+}
+
+extension Node {
+    var string: String {
+        switch self {
+        case let .nef(_, nodes): return nodes.map { $0.string }.joined()
+        case let .markup(_, text): return text
+        case let .block(nodes): return nodes.map { $0.string }.joined()
+        case let .raw(line): return line
+        }
+    }
+}
+
+extension Node.Code {
+    var string: String {
+        switch self {
+        case let .code(code): return code
+        case let .comment(lines): return lines
+        }
+    }
+}
+
+// MARK: - Compact syntax tree
+extension Array where Element == Node {
+    func reduce() -> [Node] {
+        return self.reduce([]) { acc, next in
+            guard let last = acc.last else { return acc + [next] }
+
+            var result = [Node]()
+            result.append(contentsOf: acc)
+            result.removeLast()
+            result.append(contentsOf: last.combine(next))
+
+            return result
+        }
+    }
+}
+
+// MARK: - How to combine two syntax nodes
+extension Node {
+    func combine(_ b: Node) -> [Node] {
+        switch (self, b) {
+        case let (.markup(description, textA), .markup(_, textB)):
+            return [.markup(description: description, "\(textA)\n\(textB)")]
+
+        case (.block(var nodesA), .block(let nodesB)):
+            guard nodesA.count > 0, nodesB.count == 1,
+                  let lastA = nodesA.popLast(),
+                  let firstB = nodesB.first else { fatalError("Can not combine \(nodesB) into \(nodesA)") }
+
+            return [.block(nodesA + lastA.combine(firstB))]
+
+        case let (.raw(linesA), .raw(linesB)):
+            return [.raw("\(linesA)\n\(linesB)")]
+
+        default:
+            return [self, b]
+        }
+    }
+}
+
+extension Node.Code {
+    func combine(_ b: Node.Code) -> [Node.Code] {
+        switch (self, b) {
+        case let (.code(codeA), .code(codeB)):
+            return [.code("\(codeA)\n\(codeB)")]
+        case let (.comment(textA), .comment(textB)):
+            return [.comment("\(textA)\n\(textB)")]
+        default:
+            return [self, b]
         }
     }
 }
