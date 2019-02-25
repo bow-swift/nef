@@ -8,14 +8,22 @@ public struct JekyllGenerator: Render {
     }
 
     public func render(content: String) -> String? {
-        guard let syntax = SyntaxAnalyzer.parse(content: content) else { return nil }
+        guard let syntaxTree = SyntaxAnalyzer.parse(content: content) else { return nil }
+        let filteredSyntaxTree = syntaxTree.filter { !$0.isHidden }.reduce()
         //if VERBOSE { syntax.forEach { print($0) } }
-        return syntax.reduce("") { (acc, node) in acc + node.jekyll(permalink: permalink) }
+        return filteredSyntaxTree.reduce("") { (acc, node) in acc + node.jekyll(permalink: permalink) }
     }
 }
 
 // MARK: - Jekyll definition for each node
 extension Node {
+    var isHidden: Bool {
+        switch self {
+        case let .nef(command, _): return command == .hidden
+        default: return false
+        }
+    }
+
     func jekyll(permalink: String) -> String {
         switch self {
         case let .nef(command, nodes):
