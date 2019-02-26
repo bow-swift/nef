@@ -1,11 +1,34 @@
 import XCTest
 @testable import Markup
 
-class MarkupTests: XCTestCase {
+class MarkupSyntaxTests: XCTestCase {
 
-    func testPlainPlayground_parse_returnsCodeNode() {
+    func testPlainPlaygroundWithCode_parse_returnsCodeNode() {
         let input = "import Bow // testing\n"
-        let expected: [Node] = [.code("import Bow // testing\n")]
+        let expected: [Node] = [.block([.code("import Bow // testing\n")])]
+
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundWithSimpleComment_parse_returnsCommentNode() {
+        let input = "// import Bow // testing\n"
+        let expected: [Node] = [.block([.comment("// import Bow // testing\n")])]
+
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundWithMultiComment_parse_returnsCommentNode() {
+        let input = """
+                    /*
+                        import Bow // testing
+                     */
+
+                    """
+        let expected: [Node] = [.block([.comment(input)])]
 
         let result = Markup.SyntaxAnalyzer.parse(content: input)
 
@@ -20,6 +43,108 @@ class MarkupTests: XCTestCase {
 
         XCTAssertEqual(result, expected)
     }
+
+    func testPlainPlaygroundWithMultiMarkup_parse_returnsMarkupNode() {
+        let input = """
+                    /*:
+                    This is a test
+                     */
+
+                    """
+        let expected: [Node] = [.markup(description: .some(""), "This is a test\n")]
+
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundWithMultiMarkupAndDescription_parse_returnsMarkupNode() {
+        let input = """
+                    /*: information
+                    This is a test
+                     */
+
+                    """
+        let expected: [Node] = [.markup(description: .some("information"), "This is a test\n")]
+
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundWithHiddenMarkup_AndMarkup_parse_returnsNefAndMarkupNodes() {
+        let input = """
+                    // nef:begin:hidden
+                    /*:
+                    This is a hidden markup
+                     */
+                    // nef:end
+                    /*:
+                    This is a visible markup multiline
+                     */
+
+                    """
+        let expected: [Node] = [.nef(command: .hidden, [.markup(description: .some(""), "This is a hidden markup\n")]),
+                                .markup(description: .some(""), "This is a visible markup multiline\n")]
+
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundMarkup_AndInnerNefBlock_parse_returnsMarkupNode() {
+        let input = """
+                    /*:
+                    // nef:begin:hidden
+                    This is a visible markup multiline
+                    // nef:end
+                     */
+
+                    """
+        let expected: [Node] = [.markup(description: .some(""), "This is a visible markup multiline\n")]
+
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundNefBlock_AndInnerNefBlock_parse_returnsNestedNefNodes() {
+        let input = """
+                    // nef:begin:hidden
+                    // This is an invisible comment
+                    // nef:begin:header
+                    This is a header command
+                    // nef:end
+                    // nef:end
+
+                    """
+        let expected: [Node] = [.nef(command: .hidden, [
+                                                        .block([.comment("// This is an invisible comment\n")]),
+                                                        .nef(command: .header, [.raw("This is a header command\n")])
+                                                       ])
+                               ]
+
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+
+    //    enum Nef: Equatable {
+    //        enum Command: String, Equatable {
+    //            case header
+    //            case hidden
+    //            case invalid
+    //        }
+    //    }
+    //
+    //    case nef(command: Nef.Command, [Node])
+    //    case markup(description: String?, String)
+    //    case block([Code])
+    //    case raw(String)
+
+
+    
 //
 //    func testLeftDelimiterWithoutRightDelimiter_parse_returnsPlainText() {
 //        // given

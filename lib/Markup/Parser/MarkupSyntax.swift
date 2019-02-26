@@ -67,7 +67,16 @@ struct SyntaxAnalyzer {
 }
 
 // MARK: Helpers
-extension Node {
+private extension Node {
+    var string: String {
+        switch self {
+        case let .nef(_, nodes): return nodes.map { $0.string }.joined()
+        case let .markup(_, text): return text
+        case let .block(nodes): return nodes.map { $0.string }.joined()
+        case let .raw(line): return line
+        }
+    }
+
     var isComment: Bool {
         switch self {
         case let .block(nodes):
@@ -87,31 +96,18 @@ extension Node {
     }
 }
 
-extension Node.Code {
-    var isComment: Bool {
-        switch self {
-        case .comment: return true
-        default: return false
-        }
-    }
-}
-
-extension Node {
-    var string: String {
-        switch self {
-        case let .nef(_, nodes): return nodes.map { $0.string }.joined()
-        case let .markup(_, text): return text
-        case let .block(nodes): return nodes.map { $0.string }.joined()
-        case let .raw(line): return line
-        }
-    }
-}
-
-extension Node.Code {
+private extension Node.Code {
     var string: String {
         switch self {
         case let .code(code): return code
         case let .comment(lines): return lines
+        }
+    }
+
+    var isComment: Bool {
+        switch self {
+        case .comment: return true
+        default: return false
         }
     }
 }

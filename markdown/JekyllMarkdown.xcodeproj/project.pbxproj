@@ -15,7 +15,7 @@
 		8B66EB9F221F04A70001DCA2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB98221F04A60001DCA2 /* Utils.swift */; };
 		8B66EBA0221F04CA0001DCA2 /* Markup-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B66EB90221F04A60001DCA2 /* Markup-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B66EBB6221FFF4F0001DCA2 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
-		8B66EBBF221FFF760001DCA2 /* MarkupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EBBD221FFF760001DCA2 /* MarkupTests.swift */; };
+		8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */; };
 		8B6FC589221ECE6A008F7694 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6FC588221ECE6A008F7694 /* main.swift */; };
 		8B6FC657221EFF03008F7694 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
 /* End PBXBuildFile section */
@@ -51,7 +51,7 @@
 		8B66EB97221F04A60001DCA2 /* MarkupLexical.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupLexical.swift; sourceTree = "<group>"; };
 		8B66EB98221F04A60001DCA2 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8B66EBB1221FFF4F0001DCA2 /* MarkupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarkupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B66EBBD221FFF760001DCA2 /* MarkupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupTests.swift; sourceTree = "<group>"; };
+		8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupSyntaxTests.swift; sourceTree = "<group>"; };
 		8B66EBBE221FFF760001DCA2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B6FC585221ECE6A008F7694 /* JekyllMarkdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JekyllMarkdown; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6FC588221ECE6A008F7694 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 		8B66EBBC221FFF760001DCA2 /* MarkupTests */ = {
 			isa = PBXGroup;
 			children = (
-				8B66EBBD221FFF760001DCA2 /* MarkupTests.swift */,
+				8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */,
 				8B66EBBE221FFF760001DCA2 /* Info.plist */,
 			);
 			name = MarkupTests;
@@ -284,7 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B66EBBF221FFF760001DCA2 /* MarkupTests.swift in Sources */,
+				8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
