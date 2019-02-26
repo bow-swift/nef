@@ -1,11 +1,3 @@
-//
-//  MarkupTests.swift
-//  MarkupTests
-//
-//  Created by Miguel Ángel Díaz on 22/02/2019.
-//  Copyright © 2019 47 Degrees. All rights reserved.
-//
-
 import XCTest
 @testable import Markup
 
