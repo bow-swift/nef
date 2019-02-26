@@ -24,7 +24,7 @@ extension String {
         return NSString(string: self).substring(to: min(length, self.count)) as String
     }
 
-    func clean(_ ocurrences: [String]) -> String {
+    func clean(_ ocurrences: String...) -> String {
         return ocurrences.reduce(self) { (output, ocurrence) in
             output.replacingOccurrences(of: ocurrence, with: "")
         }

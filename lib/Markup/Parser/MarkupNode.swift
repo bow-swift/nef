@@ -14,7 +14,7 @@ indirect enum Node: Equatable {
 
             static func get(in line: String) -> Command {
                 guard line.contains("nef:") else { return .invalid }
-                let commandRawValue = line.clean([" ","\n"]).components(separatedBy: ":").last ?? ""
+                let commandRawValue = line.clean(" ","\n").components(separatedBy: ":").last ?? ""
                 return Command(rawValue: commandRawValue) ?? .invalid
             }
         }
@@ -29,13 +29,58 @@ indirect enum Node: Equatable {
 // MARK: Helpers
 // MARK: - compact nodes
 extension Array where Element == Node {
+    
     func reduce() -> [Node] {
-        return self.reduce([]) { acc, next in
+        let compact: [Node] = self.reduce([]) { acc, next in
             guard let last = acc.last else { return acc + [next] }
             var result = acc
             _ = result.popLast()
 
             return result + last.combine(next)
+        }
+
+        return compact.compactMap { $0.trimmingEmptyNodes }
+    }
+}
+
+extension Node {
+
+    var trimmingEmptyNodes: Node? {
+        switch self {
+        case let .block(nodes):
+            guard let trimmingNodes = nodes.trimmingEmptyNodes else { return nil }
+            return .block(trimmingNodes)
+
+        default:
+            return self
+        }
+    }
+}
+
+extension Array where Element == Node.Code {
+
+    var trimmingEmptyNodes: [Node.Code]? {
+        let leadingTrimming = Array(self.drop { $0.isEmpty })
+        var indexFirstTrailingEmptyNode = leadingTrimming.count
+
+        indexFirstTrailingEmptyNode -= (0..<leadingTrimming.count).first { index in
+            let inverseIndex = leadingTrimming.count - 1 - index
+            return !leadingTrimming[inverseIndex].isEmpty
+            } ?? 0
+
+        let trimmingNodes = Array(leadingTrimming.dropLast(leadingTrimming.count - indexFirstTrailingEmptyNode))
+        return trimmingNodes.count > 0 ? trimmingNodes : nil
+    }
+}
+
+extension Node.Code {
+
+    var isEmpty: Bool {
+        switch self {
+        case let .code(code):
+            return code.clean(" ", "\n").isEmpty
+        case let .comment(text):
+            return text.clean(" ", "\n").isEmpty
         }
     }
 }
@@ -63,12 +108,11 @@ extension Node {
 
 extension Node.Code {
     func combine(_ b: Node.Code) -> [Node.Code] {
-        switch (self, b) {
-        case var (.code(codeA), .code(codeB)):
-            codeA = codeA.clean([" ", "\n"]).isEmpty ? "" : codeA
-            codeB = codeB.clean([" ", "\n"]).isEmpty ? "" : codeB
-            return [.code("\(codeA)\(codeB)")]
+        guard !self.isEmpty && !b.isEmpty else { return [self, b] } // do not combine empty nodes
 
+        switch (self, b) {
+        case let (.code(codeA), .code(codeB)):
+            return [.code("\(codeA)\(codeB)")]
         case let (.comment(textA), .comment(textB)):
             return [.comment("\(textA)\(textB)")]
 

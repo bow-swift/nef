@@ -31,7 +31,7 @@ extension Node {
         case let .block(nodes):
             let nodesJekyll = nodes.map { $0.jekyll() }.joined()
             guard !nodesJekyll.isEmpty else { return "" }
-            return "```swift\n\(nodesJekyll)```\n"
+            return "\n```swift\n\(nodesJekyll)```\n"
             
         case let .raw(description):
             return description
@@ -55,6 +55,7 @@ private extension Node.Nef.Command {
             ---
             \(header)permalink: \(permalink)
             ---
+
             """
         case .hidden:
             return ""
@@ -68,11 +69,10 @@ private extension Node.Code {
     func jekyll() -> String {
         switch self {
         case let .code(code):
-            guard !code.clean([" ", "\n"]).isEmpty else { return "" }
             return code
 
         case let .comment(text):
-            guard !text.clean([" ", "\n"]).isEmpty else { return "" }
+            guard !text.clean(" ", "\n").isEmpty else { return "" }
             return text
         }
     }

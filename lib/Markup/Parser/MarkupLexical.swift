@@ -44,7 +44,7 @@ struct LexicalAnalyzer {
             return Token.nefEnd
         }
         if let markupBegin = line.substring(pattern: Regex.multiMarkup.begin) {
-            let description = markupBegin.ouput.clean(["/*:", "\n"]).trimmingWhitespaces
+            let description = markupBegin.ouput.clean("/*:", "\n").trimmingWhitespaces
             return Token.markupBegin(description: description)
         }
         if let _ = line.substring(pattern: Regex.markup) {
@@ -66,7 +66,7 @@ struct LexicalAnalyzer {
     private static func nextToken(content: String, from index: Int) -> (token: Token, line: String, range: NSRange)? {
         guard let line = nextLine(content: content, from: index) else { return nil }
         let token = LexicalAnalyzer.token(inLine: line.ouput)
-        let output = token == .markup ? line.ouput.clean(["//:"]).trimmingWhitespaces : line.ouput
+        let output = token == .markup ? line.ouput.clean("//:").trimmingWhitespaces : line.ouput
 
         return (token, output, line.range)
     }
