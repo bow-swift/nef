@@ -1,6 +1,8 @@
 import Foundation
 import Markup
 
+let scriptName = "nef-jekyll-page"
+
 func main() {
     guard let (from, to, permalink) = arguments() else { Console.help.show(); exit(-1) }
     renderJekyll(from: from, to: to, permalink: permalink)
@@ -44,15 +46,22 @@ enum Console {
     }
 
     private func printError() {
-        print("ERROR")
+        print("error:\(scriptName) could not render the Jekyll's file ❌")
     }
 
     private func printSuccess() {
-        print("SUCCESS")
+        print("Render Jekyll's file ✅")
     }
 
     private func printHelp() {
-        print("HELP")
+        print("\(scriptName) --from <playground's page> --to <output Jekyll's markdown> --permalink <relative URL>")
+        print("""
+
+                    from: is the path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`
+                    to: is the path where render the Jekyll markdown. ex. `/home`
+                    permalink: is the relative path where Jekyll will render the documentation. ex. `/about/`
+
+             """)
     }
 }
 
@@ -92,9 +101,9 @@ private func arguments() -> (from: String, to: String, permalink: String)? {
     while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "ftph:", longopts, nil), opt != -1 {
         switch (opt) {
         case OptLongCases.from.rawValue:
-            from = String(cString: optarg);
+            from = "\(String(cString: optarg))/Contents.swift"
         case OptLongCases.to.rawValue:
-            to = String(cString: optarg);
+            to = "\(String(cString: optarg))/README.md"
         case OptLongCases.permalink.rawValue:
             permalink = String(cString: optarg);
 

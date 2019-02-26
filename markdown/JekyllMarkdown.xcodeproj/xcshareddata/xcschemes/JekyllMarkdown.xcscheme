@@ -63,11 +63,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--from &quot;/Users/miguelangel/Desktop/Documentacion/Type Clases.playground/Pages/Intro.xcplaygroundpage/Contents.swift&quot;"
+            argument = "--from &quot;/Users/miguelangel/Desktop/Documentacion/Type Clases.playground/Pages/Intro.xcplaygroundpage&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--to &quot;/Users/miguelangel/Desktop/README.md&quot;"
+            argument = "--to &quot;/Users/miguelangel/Desktop&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
