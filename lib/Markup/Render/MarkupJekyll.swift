@@ -12,6 +12,7 @@ public struct JekyllGenerator: Render {
         guard syntaxTree.count > 0 else { return nil }
 
         let filteredSyntaxTree = syntaxTree.filter { !$0.isHidden }.reduce()
+        filteredSyntaxTree.forEach { print($0) }
         return filteredSyntaxTree.reduce("") { (acc, node) in acc + node.jekyll(permalink: permalink) }
     }
 }
@@ -25,12 +26,12 @@ extension Node {
             return command.jekyll(nodes: nodes, permalink: permalink)
 
         case let .markup(_, description):
-            return "\n\(description)"
+            return description
 
         case let .block(nodes):
             let nodesJekyll = nodes.map { $0.jekyll() }.joined()
             guard !nodesJekyll.isEmpty else { return "" }
-            return "```swift\n\(nodesJekyll)\n```\n"
+            return "```swift\n\(nodesJekyll)```\n"
             
         case let .raw(description):
             return description
@@ -52,8 +53,7 @@ private extension Node.Nef.Command {
             let header = nodes.map{ $0.jekyll(permalink: permalink) }.joined()
             return """
             ---
-            \(header)
-            permalink: \(permalink)
+            \(header)permalink: \(permalink)
             ---
             """
         case .hidden:
@@ -72,9 +72,8 @@ private extension Node.Code {
             return code
 
         case let .comment(text):
-            guard !text.isEmpty else { return "" }
-            let comment = text.split(separator: "\n").map({ "// "+$0 }).joined(separator: "\n")
-            return "\(comment)\n"
+            guard !text.clean([" ", "\n"]).isEmpty else { return "" }
+            return text
         }
     }
 }

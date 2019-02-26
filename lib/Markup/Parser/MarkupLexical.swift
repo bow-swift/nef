@@ -44,8 +44,8 @@ struct LexicalAnalyzer {
             return Token.nefEnd
         }
         if let markupBegin = line.substring(pattern: Regex.multiMarkup.begin) {
-            let description = markupBegin.ouput.clean(["\n"]).components(separatedBy: "/*:").last?.trimmingWhitespaces
-            return Token.markupBegin(description: description ?? "")
+            let description = markupBegin.ouput.clean(["/*:", "\n"]).trimmingWhitespaces
+            return Token.markupBegin(description: description)
         }
         if let _ = line.substring(pattern: Regex.markup) {
             return Token.markup
@@ -54,10 +54,10 @@ struct LexicalAnalyzer {
             return Token.comment
         }
         if let _ = line.substring(pattern: Regex.multiComment.begin) {
-            return Token.commentBegin
+            return Token.commentBegin(delimiter: line)
         }
         if let _ = line.substring(pattern: Regex.markupComment.end) {
-            return Token.markupCommentEnd
+            return Token.markupCommentEnd(delimiter: line)
         }
 
         return Token.line(line)
@@ -65,14 +65,8 @@ struct LexicalAnalyzer {
 
     private static func nextToken(content: String, from index: Int) -> (token: Token, line: String, range: NSRange)? {
         guard let line = nextLine(content: content, from: index) else { return nil }
-
         let token = LexicalAnalyzer.token(inLine: line.ouput)
-        let output: String
-        switch token {
-        case .markup:  output = line.ouput.clean(["//:"]).trimmingWhitespaces
-        case .comment: output = line.ouput.clean(["//"]).trimmingWhitespaces
-        default: output = line.ouput
-        }
+        let output = token == .markup ? line.ouput.clean(["//:"]).trimmingWhitespaces : line.ouput
 
         return (token, output, line.range)
     }
@@ -91,8 +85,8 @@ enum Token: Equatable {
     case markupBegin(description: String)
     case markup
     case comment
-    case commentBegin
-    case markupCommentEnd
+    case commentBegin(delimiter: String)
+    case markupCommentEnd(delimiter: String)
     case line(String)
 
     func isRightDelimiter(_ token: Token) -> Bool {

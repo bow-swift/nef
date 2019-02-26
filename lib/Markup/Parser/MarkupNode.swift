@@ -45,7 +45,7 @@ extension Node {
     func combine(_ b: Node) -> [Node] {
         switch (self, b) {
         case let (.markup(description, textA), .markup(_, textB)):
-            return [.markup(description: description, "\(textA)\n\(textB)")]
+            return [.markup(description: description, "\(textA)\(textB)")]
 
         case var (.block(nodesA), .block(nodesB)):
             guard let lastA = nodesA.popLast(), nodesB.count > 0 else { fatalError("Can not combine \(nodesB) into \(nodesA) because are empty") }
@@ -53,7 +53,7 @@ extension Node {
             return [.block(nodesA + lastA.combine(firstB) + nodesB)]
 
         case let (.raw(linesA), .raw(linesB)):
-            return [.raw("\(linesA)\n\(linesB)")]
+            return [.raw("\(linesA)\(linesB)")]
 
         default:
             return [self, b]
@@ -64,10 +64,14 @@ extension Node {
 extension Node.Code {
     func combine(_ b: Node.Code) -> [Node.Code] {
         switch (self, b) {
-        case let (.code(codeA), .code(codeB)):
-            return [.code("\(codeA)\n\(codeB)")]
+        case var (.code(codeA), .code(codeB)):
+            codeA = codeA.clean([" ", "\n"]).isEmpty ? "" : codeA
+            codeB = codeB.clean([" ", "\n"]).isEmpty ? "" : codeB
+            return [.code("\(codeA)\(codeB)")]
+
         case let (.comment(textA), .comment(textB)):
-            return [.comment("\(textA)\n\(textB)")]
+            return [.comment("\(textA)\(textB)")]
+
         default:
             return [self, b]
         }

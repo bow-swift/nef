@@ -27,7 +27,7 @@ struct SyntaxAnalyzer {
             else if let lastToken = openingDelimiters.last, token.isRightDelimiter(lastToken) {
                 var openingDelimiters = openingDelimiters
                 _ = openingDelimiters.popLast()
-                return [node(for: nodes, parentToken: lastToken, openingDelimiters: openingDelimiters)]
+                return [node(for: nodes, openDelimiter: lastToken, closeDelimiter: token, openingDelimiters: openingDelimiters)]
             }
             else {
                 nodes += [node(for: token, withLine: line, openingDelimiters: openingDelimiters)]
@@ -44,22 +44,24 @@ struct SyntaxAnalyzer {
         case .comment:
             return .block([.comment(line)])
         default:
-            return openingDelimiters.isEmpty ? .block([.code(line)]) : .raw(line.trimmingWhitespaces)
+            return openingDelimiters.isEmpty ? .block([.code(line)]) : .raw(line)
         }
     }
 
-    private func node(for childrens: [Node], parentToken parent: Token, openingDelimiters: [Token]) -> Node {
+    private func node(for childrens: [Node], openDelimiter: Token, closeDelimiter: Token, openingDelimiters: [Token]) -> Node {
         let content = childrens.map { $0.string }.joined()
 
-        switch parent {
-        case let .nefBegin(command):
+        switch (openDelimiter, closeDelimiter) {
+        case let (.nefBegin(command), _):
             return .nef(command: command, childrens)
-        case let .markupBegin(description):
+
+        case let (.markupBegin(description), _):
             return .markup(description: description, content)
-        case .commentBegin:
-            return openingDelimiters.isEmpty ? .block([.comment(content)]) : .raw(content)
+
+        case let (.commentBegin(open), .markupCommentEnd(close)):
+            return openingDelimiters.isEmpty ? .block([.comment("\(open)\(content)\(close)")]) : .raw(content)
         default:
-            fatalError("Parent token [\(parent)]: not supported.")
+            fatalError("[!] wrong block \(openDelimiter) <-> \(closeDelimiter)")
         }
     }
 }
