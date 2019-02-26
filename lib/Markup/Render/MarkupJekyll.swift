@@ -10,7 +10,6 @@ public struct JekyllGenerator: Render {
     public func render(content: String) -> String? {
         guard let syntaxTree = SyntaxAnalyzer.parse(content: content) else { return nil }
         let filteredSyntaxTree = syntaxTree.filter { !$0.isHidden }.reduce()
-        //if VERBOSE { syntax.forEach { print($0) } }
         return filteredSyntaxTree.reduce("") { (acc, node) in acc + node.jekyll(permalink: permalink) }
     }
 }

@@ -3,41 +3,41 @@ import Foundation
 struct SyntaxAnalyzer {
 
     static func parse(content: String) -> [Node]? {
-        var parser = SyntaxAnalyzer(content: content)
-        let syntax = parser.parse()
+        let parser = SyntaxAnalyzer(content: content)
+        var tokenizer = LexicalAnalyzer(content: parser.content)
+        let syntax = parser.parse(tokenizer: &tokenizer)
 
-        return syntax.contains(Node.raw("")) || !parser.openingDelimiters.isEmpty ? nil : syntax.reduce()
+        return syntax.contains { $0.isRaw } ? nil : syntax.reduce()
     }
 
-    private var tokenizer: LexicalAnalyzer
-    private var openingDelimiters: [Token]
-
+    private let content: String
     private init(content: String) {
-        tokenizer = LexicalAnalyzer(content: content)
-        openingDelimiters = []
+        self.content = content
     }
 
-    private mutating func parse() -> [Node] {
+    private func parse(tokenizer: inout LexicalAnalyzer?, openingDelimiters: [Token] = []) -> [Node] {
         var nodes = [Node]()
 
-        while let (token, line) = tokenizer.nextToken() {
+        while let token = tokenizer?.token, let line = tokenizer?.line {
+            tokenizer = tokenizer?.scan()
+
             if token.isLeftDelimiter {
-                openingDelimiters.append(token)
-                nodes += parse()
+                nodes += parse(tokenizer: &tokenizer, openingDelimiters: openingDelimiters + [token])
             }
             else if let lastToken = openingDelimiters.last, token.isRightDelimiter(lastToken) {
-                openingDelimiters.removeLast()
-                return [node(for: nodes, parentToken: lastToken)]
+                var openingDelimiters = openingDelimiters
+                _ = openingDelimiters.popLast()
+                return [node(for: nodes, parentToken: lastToken, openingDelimiters: openingDelimiters)]
             }
             else {
-                nodes += [node(for: token, withLine: line)]
+                nodes += [node(for: token, withLine: line, openingDelimiters: openingDelimiters)]
             }
         }
 
-        return nodes
+        return openingDelimiters.isEmpty ? nodes : []
     }
 
-    private func node(for token: Token, withLine line: String) -> Node {
+    private func node(for token: Token, withLine line: String, openingDelimiters: [Token]) -> Node {
         switch token {
         case .markup:
             return .markup(description: nil, line)
@@ -48,7 +48,7 @@ struct SyntaxAnalyzer {
         }
     }
 
-    private func node(for childrens: [Node], parentToken parent: Token) -> Node {
+    private func node(for childrens: [Node], parentToken parent: Token, openingDelimiters: [Token]) -> Node {
         let content = childrens.map { $0.string }.joined()
 
         switch parent {
@@ -74,6 +74,13 @@ extension Node {
             }
         default:
             return false
+        }
+    }
+
+    var isRaw: Bool {
+        switch self {
+        case .raw: return true
+        default: return false
         }
     }
 }

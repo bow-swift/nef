@@ -32,13 +32,10 @@ extension Array where Element == Node {
     func reduce() -> [Node] {
         return self.reduce([]) { acc, next in
             guard let last = acc.last else { return acc + [next] }
+            var result = acc
+            _ = result.popLast()
 
-            var result = [Node]()
-            result.append(contentsOf: acc)
-            result.removeLast()
-            result.append(contentsOf: last.combine(next))
-
-            return result
+            return result + last.combine(next)
         }
     }
 }

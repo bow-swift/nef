@@ -2,27 +2,26 @@ import Foundation
 
 struct LexicalAnalyzer {
     private let content: String
-    private var currentIndex: Int
+    private let currentIndex: Int
 
-    init(content: String) {
-        self.content = content
-        self.currentIndex = 0
+    let token: Token
+    let line: String
+
+    init?(content: String) {
+        self.init(content: content, position: 0)
     }
 
-    mutating func nextToken() -> (token: Token, line: String)? {
-        guard let line = nextLine() else { return nil }
+    private init?(content: String, position: Int) {
+        guard let (token, line, range) = LexicalAnalyzer.nextToken(content: content, from: position) else { return nil }
 
-        let token = LexicalAnalyzer.token(inLine: line.ouput)
-        let output: String
-        switch token {
-        case .markup:  output = line.ouput.clean(["//:"]).trimmingWhitespaces
-        case .comment: output = line.ouput.clean(["//"]).trimmingWhitespaces
-        default: output = line.ouput
-        }
+        self.content = content
+        self.currentIndex = position + range.location + range.length
+        self.token = token
+        self.line = line
+    }
 
-        currentIndex += line.range.location + line.range.length
-
-        return (token, output)
+    func scan() -> LexicalAnalyzer? {
+        return LexicalAnalyzer(content: content, position: currentIndex)
     }
 
     // MARK: helpers
@@ -64,8 +63,22 @@ struct LexicalAnalyzer {
         return Token.line(line)
     }
 
-    private func nextLine() -> SubstringType? {
-        return content.advance(currentIndex).substring(pattern: Regex.line)
+    private static func nextToken(content: String, from index: Int) -> (token: Token, line: String, range: NSRange)? {
+        guard let line = nextLine(content: content, from: index) else { return nil }
+
+        let token = LexicalAnalyzer.token(inLine: line.ouput)
+        let output: String
+        switch token {
+        case .markup:  output = line.ouput.clean(["//:"]).trimmingWhitespaces
+        case .comment: output = line.ouput.clean(["//"]).trimmingWhitespaces
+        default: output = line.ouput
+        }
+
+        return (token, output, line.range)
+    }
+
+    private static func nextLine(content: String, from index: Int) -> SubstringType? {
+        return content.advance(index).substring(pattern: Regex.line)
     }
 }
 
