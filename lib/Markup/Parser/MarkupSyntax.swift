@@ -2,12 +2,12 @@ import Foundation
 
 struct SyntaxAnalyzer {
 
-    static func parse(content: String) -> [Node]? {
+    static func parse(content: String) -> [Node] {
         let parser = SyntaxAnalyzer(content: content)
         var tokenizer = LexicalAnalyzer(content: parser.content)
         let syntax = parser.parse(tokenizer: &tokenizer)
 
-        return syntax.contains { $0.isRaw } ? nil : syntax.reduce()
+        return syntax.contains { $0.isRaw } ? [] : syntax.reduce()
     }
 
     private let content: String

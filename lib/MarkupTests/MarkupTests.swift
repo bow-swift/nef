@@ -9,25 +9,7 @@
 import XCTest
 @testable import Markup
 
-
-//case nef(command: Nef.Command, [Node])
-//case markup(title: String?, String)
-//case comment(String)
-//case code(String)
-//case unknown(String)
-
-
-
 class MarkupTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
 
     func testPlainPlayground_parse_returnsCodeNode() {
         let input = "import Bow // testing\n"

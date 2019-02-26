@@ -8,7 +8,9 @@ public struct JekyllGenerator: Render {
     }
 
     public func render(content: String) -> String? {
-        guard let syntaxTree = SyntaxAnalyzer.parse(content: content) else { return nil }
+        let syntaxTree = SyntaxAnalyzer.parse(content: content)
+        guard syntaxTree.count > 0 else { return nil }
+
         let filteredSyntaxTree = syntaxTree.filter { !$0.isHidden }.reduce()
         return filteredSyntaxTree.reduce("") { (acc, node) in acc + node.jekyll(permalink: permalink) }
     }
@@ -16,12 +18,6 @@ public struct JekyllGenerator: Render {
 
 // MARK: - Jekyll definition for each node
 extension Node {
-    var isHidden: Bool {
-        switch self {
-        case let .nef(command, _): return command == .hidden
-        default: return false
-        }
-    }
 
     func jekyll(permalink: String) -> String {
         switch self {
@@ -40,9 +36,16 @@ extension Node {
             return description
         }
     }
+
+    var isHidden: Bool {
+        switch self {
+        case let .nef(command, _): return command == .hidden
+        default: return false
+        }
+    }
 }
 
-extension Node.Nef.Command {
+private extension Node.Nef.Command {
     func jekyll(nodes: [Node], permalink: String) -> String {
         switch self {
         case .header:
@@ -61,7 +64,7 @@ extension Node.Nef.Command {
     }
 }
 
-extension Node.Code {
+private extension Node.Code {
     func jekyll() -> String {
         switch self {
         case let .code(code):
