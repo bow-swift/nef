@@ -90,7 +90,9 @@ extension Node {
     func combine(_ b: Node) -> [Node] {
         switch (self, b) {
         case let (.markup(description, textA), .markup(_, textB)):
-            return [.markup(description: description, "\(textA)\(textB)")]
+            guard !textB.isEmpty else { return [self] }
+            let isMultiline = description != nil
+            return [.markup(description: description, "\(textA)\(isMultiline ? "\n\(textB)" : textB)")]
 
         case var (.block(nodesA), .block(nodesB)):
             guard let lastA = nodesA.popLast(), nodesB.count > 0 else { fatalError("Can not combine \(nodesB) into \(nodesA) because are empty") }

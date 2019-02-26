@@ -25,8 +25,8 @@ extension Node {
         case let .nef(command, nodes):
             return command.jekyll(nodes: nodes, permalink: permalink)
 
-        case let .markup(_, description):
-            return description
+        case let .markup(_, text):
+            return "\n\(text)"
 
         case let .block(nodes):
             let nodesJekyll = nodes.map { $0.jekyll() }.joined()
