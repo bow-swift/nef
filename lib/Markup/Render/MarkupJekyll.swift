@@ -26,7 +26,12 @@ extension Node {
             return command.jekyll(nodes: nodes, permalink: permalink)
 
         case let .markup(_, text):
-            return "\n\(text)"
+            let textJekyll = text.components(separatedBy: "\n").map { line in
+                guard (line.substring(pattern: "^[ ]*[#]+.*") != nil) else { return line }
+                return line.trimmingLeftWhitespaces
+            }.joined(separator: "\n")
+
+            return "\n\(textJekyll)"
 
         case let .block(nodes):
             let nodesJekyll = nodes.map { $0.jekyll() }.joined()
