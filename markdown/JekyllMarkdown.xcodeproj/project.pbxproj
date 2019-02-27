@@ -121,8 +121,8 @@
 		8B66EBBC221FFF760001DCA2 /* MarkupTests */ = {
 			isa = PBXGroup;
 			children = (
-				8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */,
 				8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */,
+				8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */,
 				8B66EBBE221FFF760001DCA2 /* Info.plist */,
 			);
 			name = MarkupTests;

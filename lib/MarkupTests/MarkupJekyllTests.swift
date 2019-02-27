@@ -32,4 +32,42 @@ class MarkupJekyllTests: XCTestCase {
 
         XCTAssertEqual(result, expected)
     }
+
+    func testPlainPlaygroundWithCode_parse_returnsSwiftBlock() {
+        let input = """
+                    import Bow
+
+                    """
+        let expected = "\n```swift\n\(input)```\n"
+        let result = Markup.JekyllGenerator(permalink: "").render(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundWithNefHeader_parse_returnsHeaderBlock() {
+        let input = """
+                    // nef:begin:header
+                    /*
+                    layout: docs
+                    title: title
+                    video: video
+                    */
+                    // nef:end
+
+                    """
+        let expected = """
+                       ---
+                       layout: docs
+                       title: title
+                       video: video
+                       permalink: permalink
+                       ---
+
+                       """
+
+        let result = Markup.JekyllGenerator(permalink: "permalink").render(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
 }
