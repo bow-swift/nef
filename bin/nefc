@@ -23,7 +23,7 @@ printWrongArguments() {
     echo ""
     echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
     echo ""
-    echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected projec"
+    echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected project"
     echo "    ${bold}$DEPENDENCIES${normal}  builds dependencies in selected project"
     echo "    ${bold}$CLEAN${normal}  clean builds in selected project"
     echo ""
