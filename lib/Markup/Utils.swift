@@ -29,4 +29,8 @@ extension String {
     var trimmingWhitespaces: String {
         return trimmingCharacters(in: .whitespaces)
     }
+
+    var trimmingLeftWhitespaces: String {
+        return String(drop { $0 == " " })
+    }
 }

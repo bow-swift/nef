@@ -56,7 +56,7 @@ struct SyntaxAnalyzer {
             return .nef(command: command, childrens)
 
         case let (.markupBegin(description), _):
-            return .markup(description: description, content)
+            return openingDelimiters.isEmpty ? .markup(description: description, content) : .raw(content)
 
         case let (.commentBegin(open), .markupCommentEnd(close)):
             return openingDelimiters.isEmpty ? .block([.comment("\(open)\(content)\(close)")]) : .raw(content)

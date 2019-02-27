@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B03C3422226A8C300EE4197 /* MarkupJekyllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */; };
 		8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB92221F04A60001DCA2 /* MarkupRender.swift */; };
 		8B66EB9B221F04A70001DCA2 /* MarkupJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */; };
 		8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupJekyllTests.swift; sourceTree = "<group>"; };
 		8B66EB90221F04A60001DCA2 /* Markup-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Markup-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B66EB92221F04A60001DCA2 /* MarkupRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupRender.swift; sourceTree = "<group>"; };
 		8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupJekyll.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */,
+				8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */,
 				8B66EBBE221FFF760001DCA2 /* Info.plist */,
 			);
 			name = MarkupTests;
@@ -284,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B03C3422226A8C300EE4197 /* MarkupJekyllTests.swift in Sources */,
 				8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
