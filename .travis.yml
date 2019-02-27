@@ -3,7 +3,7 @@ osx_image: xcode10
 
 env:
   global:
-    - PROJECT=JekyllMarkdown.xcodeproj
+    - PROJECT="./markdown/JekyllMarkdown.xcodeproj"
     - JOB="XCODE"
     - DEST="arch=x86_64"
     - SCHEME="Markup"
