@@ -108,13 +108,4 @@ enum Token: Equatable {
             return false
         }
     }
-
-    var isDelimiter: Bool {
-        switch self {
-        case .comment: return false
-        case .line: return false
-        default:
-            return true
-        }
-    }
 }

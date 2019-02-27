@@ -34,7 +34,7 @@ struct SyntaxAnalyzer {
             }
         }
 
-        return openingDelimiters.isEmpty ? nodes : []
+        return openingDelimiters.isEmpty ? nodes : [.raw("error:invalid nodes:[\(nodes.map { $0.string.clean("\n").trimmingWhitespaces }.joined(separator: ",\n"))]")]
     }
 
     private func node(for token: Token, withLine line: String, openingDelimiters: [Token]) -> Node {
@@ -77,17 +77,6 @@ private extension Node {
         }
     }
 
-    var isComment: Bool {
-        switch self {
-        case let .block(nodes):
-            return nodes.reduce(true) { acc, node in
-                acc && node.isComment
-            }
-        default:
-            return false
-        }
-    }
-
     var isRaw: Bool {
         switch self {
         case .raw: return true
@@ -101,13 +90,6 @@ private extension Node.Code {
         switch self {
         case let .code(code): return code
         case let .comment(lines): return lines
-        }
-    }
-
-    var isComment: Bool {
-        switch self {
-        case .comment: return true
-        default: return false
         }
     }
 }

@@ -129,6 +129,22 @@ class MarkupSyntaxTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
 
+    func testPlainPlaygroundLeftDelimiterWithoutRightDelimiter_parse_returnsEmptyNodes() {
+        let input = """
+                    // nef:begin:hidden
+                    This is an invisible raw line - valid
+                    // nef:end
+
+                    // nef:begin:hidden
+                    This is an invisible raw line - invalid
+
+                    """
+        let expected: [Node] = []
+        let result = Markup.SyntaxAnalyzer.parse(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
 
     //    enum Nef: Equatable {
     //        enum Command: String, Equatable {

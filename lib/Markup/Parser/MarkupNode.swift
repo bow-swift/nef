@@ -66,7 +66,7 @@ extension Array where Element == Node.Code {
         indexFirstTrailingEmptyNode -= (0..<leadingTrimming.count).first { index in
             let inverseIndex = leadingTrimming.count - 1 - index
             return !leadingTrimming[inverseIndex].isEmpty
-            } ?? 0
+        } ?? 0
 
         let trimmingNodes = Array(leadingTrimming.dropLast(leadingTrimming.count - indexFirstTrailingEmptyNode))
         return trimmingNodes.count > 0 ? trimmingNodes : nil
