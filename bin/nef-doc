@@ -1,0 +1,103 @@
+#!/bin/bash
+
+LOG_PATH="/nef/docs"
+
+#: terminal setup
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+lime=$(tput setaf 190)
+reset=$(tput sgr0)
+
+#: IN - Help
+
+##
+#   printHelp()
+##
+printHelp() {
+    echo ""
+    echo "${normal}$0 ${bold}--render ${normal}<project> ${reset}"
+    echo ""
+    echo "    ${lime}${bold}render${reset}${normal} Jekyll website using playground's pages find in ${bold}<project>${reset}"
+    echo ""
+}
+
+#: - Compile
+
+##
+#   compile(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+generateDocumentation() {
+    makeStructure "$1"
+    workspace=$(workspaceForProjectPath "$1")
+    echo "$workspace"
+}
+
+##
+#   workspaceForProjectPath(String folder, String projectPath): String
+#   - Parameter `folder`: path to the project folder.
+#   - Parameter `projectPath`: path to the *.pbxproj file.
+#   - Return `workspace` path
+##
+workspaceForProjectPath() {
+    local path="$1"         # parameter `folder`
+    local log="$1/$LOG_PATH/workspace.log"
+    cd "$path"
+
+    workspace=`ls | grep xcworkspace`
+    numberOfWorkspaces=`echo "$workspace" | wc -l`
+    workspacePath="$path/$workspace"
+
+    if [ "$numberOfWorkspaces" -ne 1 ]; then
+        echo "[!] error: found more than 1 workspace (total:$numberOfWorkspaces): '$workspace'" > "$log"
+        exit -1
+    elif [ -d "$workspacePath" ]; then
+        echo $workspacePath
+    else
+        echo "[!] error: not found any workspace in root project '$path'" > "$log"
+        exit -1
+    fi
+}
+
+##
+#   makeStructure(String project)
+#   - Parameter `project`: path to the project folder.
+##
+makeStructure() {
+  set +e
+  local project="$1"  # parameter `project`
+
+  cleanStructure "$project"
+  mkdir -p "$project/$LOG_PATH"
+}
+
+cleanStructure() {
+  set +e
+  local project="$1"  # parameter `folder`
+
+  rm -rf "$project/$LOG_PATH" 1>/dev/null 2>/dev/null
+}
+
+
+#: - MAIN
+set -e
+
+projectPath=""
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -r | --render | render )   shift; projectPath=$1 ;;
+        -h | --help )              printHelp $@; exit 1 ;;
+        * )                        printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
+    esac
+    shift
+done
+
+if [ "$projectPath" == "" ]; then
+    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} render argument is required"; exit 1
+else
+    generateDocumentation "$projectPath"
+fi
