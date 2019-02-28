@@ -44,7 +44,7 @@ buildMicrosite() {
     local projectPath="$1"
     local sitePath="$2/$BASE_JEKYLL"
 
-    cleanStructure "$2"
+    cleanStructure "$sitePath"
     mkdir -p "$sitePath"
     playgrounds "$projectPath"
 
