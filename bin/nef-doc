@@ -27,12 +27,8 @@ printHelp() {
     echo ""
 }
 
-#: - Compile
+#: - Render
 
-##
-#   compile(String folder)
-#   - Parameter `folder`: path to the project folder.
-##
 generateDocumentation() {
     local projectPath="$1"
     local sitePath="$2"
@@ -67,6 +63,10 @@ buildMicrosite() {
             pageName=`echo "$pagePath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
             output="$sitePath/$playgroundName/$pageName"
             permalink="/$BASE_JEKYLL/$playgroundName/$pageName/"
+
+            #clean up - jekyll folders without any whitespace
+            output=`echo "$output" | tr -s ' ' '-' | awk '{print tolower($0)}'`
+            permalink=`echo "$permalink" | tr -s ' ' '-' | awk '{print tolower($0)}'`
 
             logFile="$LOG_PATH/$playgroundName-$pageName.log"
             log="$projectPath/$logFile"
