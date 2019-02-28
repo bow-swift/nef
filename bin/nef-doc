@@ -32,17 +32,20 @@ printHelp() {
 ##
 generateDocumentation() {
     makeStructure "$1"
+
     playgrounds "$1"
-
     for playground in "${playgrounds[@]}"; do
-        playgroundPath="$1/$playground"
+        playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
+
         echo ""
-        echo "playground: $playground"
+        echo "playground: $playgroundName"
         echo ""
 
-        pagesInPlayground "$playgroundPath"
+        pagesInPlayground "$1/$playground"
         for page in "${pagesInPlayground[@]}"; do
-            echo "page: $page"
+            pageName=`echo "$page" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
+            
+            echo "page: $page ($pageName)"
         done
         echo "-----------------------"
     done
