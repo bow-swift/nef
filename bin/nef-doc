@@ -18,9 +18,10 @@ reset=$(tput sgr0)
 ##
 printHelp() {
     echo ""
-    echo "${normal}$0 ${bold}--render ${normal}<project> ${reset}"
+    echo "${normal}$0 ${bold}--project ${normal}<project> ${bold}--output ${normal}<output>${reset}"
     echo ""
-    echo "    ${lime}${bold}render${reset}${normal} Jekyll website using playground's pages find in ${bold}<project>${reset}"
+    echo "    ${lime}${bold}project${reset}${normal} path where playground's pages are. It will be use to render Jekyll site. ${reset}"
+    echo "    ${lime}${bold}output${reset}${normal} path where to render the Jekyll site.${reset}"
     echo ""
 }
 
@@ -31,21 +32,27 @@ printHelp() {
 #   - Parameter `folder`: path to the project folder.
 ##
 generateDocumentation() {
-    makeStructure "$1"
+    local projectPath="$1"
+    local sitePath="$2"
 
-    playgrounds "$1"
+    makeStructure "$projectPath"
+    buildMicrosite "$projectPath" "$sitePath"
+}
+
+buildMicrosite() {
+    local projectPath="$1"
+    local sitePath="$2"
+
+    playgrounds "$projectPath"
     for playground in "${playgrounds[@]}"; do
+
         playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
+        playgroundPath="$projectPath/$playground"
 
-        echo ""
-        echo "playground: $playgroundName"
-        echo ""
-
-        pagesInPlayground "$1/$playground"
-        for page in "${pagesInPlayground[@]}"; do
-            pageName=`echo "$page" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-
-            echo "page: $page ($pageName)"
+        pagesInPlayground "$playgroundPath"
+        for pagePath in "${pagesInPlayground[@]}"; do
+            pageName=`echo "$pagePath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
+            echo "page: $pagePath ($pageName :: $playgroundName)"
         done
         echo "-----------------------"
     done
@@ -61,15 +68,20 @@ pagesInPlayground() {
     cleanUp="cut -d'/' -f -1"
     pagesNames=$(eval cat "contents.xcplayground | $dependencies | $cleanUp" 2>/dev/null)
 
-    # A. get pages from `contents.xcplayground`
     pagesNames=`echo "$pagesNames" | tr -s "\'" '\n' | tr -s '\n' '\t'` # ' -> \n -> \t
-    IFS=$'\t' read -r -a pages <<< "$pagesNames"                   # split by \t
+    IFS=$'\t' read -r -a pagesNames <<< "$pagesNames"                   # split by \t
 
-    # B. in case `content.xcplayground` has not pages - get from folder `Pages`
-    if [ "${#pages}" -eq 0 ]; then
+    # A. in case `content.xcplayground` has not pages - get from folder `Pages`
+    if [ "${#pagesNames}" -eq 0 ]; then
         pagesNames=`ls "Pages" | grep xcplaygroundpage`
         pagesNames=`echo "$pagesNames" | tr -s '\n' '\t'`
         IFS=$'\t' read -r -a pages <<< "$pagesNames"
+
+    # B. get pages from `contents.xcplayground`
+    else
+      for page in "${pagesNames[@]}"; do
+          pages+=("$page.xcplaygroundpage")
+      done
     fi
 
     # build pages path
@@ -147,10 +159,12 @@ cleanStructure() {
 set -e
 
 projectPath=""
+sitePath=""
 
 while [ "$1" != "" ]; do
     case $1 in
-        -r | --render | render )   shift; projectPath=$1 ;;
+        -p | --project | project ) shift; projectPath=$1 ;;
+        -o | --output | output )   shift; sitePath=$1 ;;
         -h | --help )              printHelp $@; exit 1 ;;
         * )                        printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
@@ -158,7 +172,9 @@ while [ "$1" != "" ]; do
 done
 
 if [ "$projectPath" == "" ]; then
-    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} render argument is required"; exit 1
+    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'project' argument is required"; exit 1
+elif [ "$sitePath" == "" ]; then
+    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'output' argument is required"; exit 1
 else
-    generateDocumentation "$projectPath"
+    generateDocumentation "$projectPath" "$sitePath"
 fi
