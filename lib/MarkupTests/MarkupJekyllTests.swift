@@ -3,7 +3,7 @@ import XCTest
 
 class MarkupJekyllTests: XCTestCase {
 
-    func testPlainPlaygroundWithMultiMarkup_parse_returnsMarkupNodeAndStartWithNewLine() {
+    func testPlainPlaygroundWithMultiMarkup_render_returnsMarkupNodeAndStartWithNewLine() {
         let input = """
                     /*:
                      ### This is a markup
@@ -16,7 +16,7 @@ class MarkupJekyllTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
 
-    func testPlainPlaygroundWithMultiMarkupAndWhiteSpaces_parse_returnsTrimMarkupNode() {
+    func testPlainPlaygroundWithMultiMarkupAndWhiteSpaces_render_returnsTrimMarkupNode() {
         let input = """
                     /*: trimming white spaces
                         ### This is a Title with spaces
@@ -33,7 +33,7 @@ class MarkupJekyllTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
 
-    func testPlainPlaygroundWithCode_parse_returnsSwiftBlock() {
+    func testPlainPlaygroundWithCode_render_returnsSwiftBlock() {
         let input = """
                     import Bow
 
@@ -44,13 +44,39 @@ class MarkupJekyllTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
 
-    func testPlainPlaygroundWithNefHeader_parse_returnsHeaderBlock() {
+    func testPlainPlaygroundWithNefHeader_render_returnsHeaderBlock() {
         let input = """
                     // nef:begin:header
                     /*
                     layout: docs
                     title: title
                     video: video
+                    */
+                    // nef:end
+
+                    """
+        let expected = """
+                       ---
+                       layout: docs
+                       title: title
+                       video: video
+                       permalink: permalink
+                       ---
+
+                       """
+
+        let result = Markup.JekyllGenerator(permalink: "permalink").render(content: input)
+
+        XCTAssertEqual(result, expected)
+    }
+
+    func testPlainPlaygroundWithNefHeaderAndWhitespaces_render_returnsHeaderBlockTrimmed() {
+        let input = """
+                    // nef:begin:header
+                    /*
+                    layout: docs
+                       title: title
+                     video: video
                     */
                     // nef:end
 

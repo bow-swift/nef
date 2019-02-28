@@ -56,9 +56,11 @@ private extension Node.Nef.Command {
         switch self {
         case .header:
             let header = nodes.map{ $0.jekyll(permalink: permalink) }.joined()
+            let headerTrimmed = header.components(separatedBy: "\n").map{ $0.trimmingWhitespaces }.joined(separator: "\n")
+
             return """
             ---
-            \(header)permalink: \(permalink)
+            \(headerTrimmed)permalink: \(permalink)
             ---
 
             """
