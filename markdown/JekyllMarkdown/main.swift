@@ -50,7 +50,7 @@ enum Console {
     }
 
     private func printSuccess() {
-        print("Render Jekyll's file ✅")
+        print("RENDER SUCCEEDED")
     }
 
     private func printHelp() {
