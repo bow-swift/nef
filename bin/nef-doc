@@ -2,6 +2,7 @@
 
 LOG_PATH="/nef/docs"
 BASE_JEKYLL='docs'
+SIDEBAR_FILE='sidebar.yml'
 
 #: terminal setup
 bold=$(tput bold)
@@ -43,10 +44,15 @@ generateDocumentation() {
 buildMicrosite() {
     local projectPath="$1"
     local sitePath="$2/$BASE_JEKYLL"
+    local sidebarFolderPath="$2/_data"
+    local sidebarFilePath="$sidebarFolderPath/$SIDEBAR_FILE"
 
     cleanStructure "$sitePath"
     mkdir -p "$sitePath"
+    mkdir -p "$sidebarFolderPath"
     playgrounds "$projectPath"
+
+    echo "options:" > "$sidebarFilePath" # sidebar start
 
     for playground in "${playgrounds[@]}"; do
         playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
@@ -54,6 +60,8 @@ buildMicrosite() {
 
         echo -ne "${normal}Rendering jekyll file from ${green}Playground ($playgroundName)${reset}..."
         pagesInPlayground "$playgroundPath"
+
+        echo -e "\n  - title: $playgroundName\n\n    nested_options:\n" >> "$sidebarFilePath" # sidebar title
 
         for pagePath in "${pagesInPlayground[@]}"; do
             pageName=`echo "$pagePath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
@@ -65,6 +73,7 @@ buildMicrosite() {
 
             mkdir -p "$output"
             nef-jekyll-page --from "$pagePath" --to "$output" --permalink "$permalink" 1> "$log" 2>&1
+            echo -e "        - title: $pageName\n          url: $permalink\n" >> "$sidebarFilePath" # sidebar page
 
             installed=`grep "RENDER SUCCEEDED" "$log"`
             if [ "${#installed}" -lt 7 ]; then
