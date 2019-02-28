@@ -44,7 +44,7 @@ generateDocumentation() {
         pagesInPlayground "$1/$playground"
         for page in "${pagesInPlayground[@]}"; do
             pageName=`echo "$page" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-            
+
             echo "page: $page ($pageName)"
         done
         echo "-----------------------"
@@ -60,8 +60,8 @@ pagesInPlayground() {
     dependencies="awk -F'page name=' '{print \$2}'"
     cleanUp="cut -d'/' -f -1"
     pagesNames=$(eval cat "contents.xcplayground | $dependencies | $cleanUp" 2>/dev/null)
-    pagesNames=`echo $pagesNames | tr -s "\'" '@'`
-    IFS='@' read -r -a pagesNames <<< "$pagesNames"
+    pagesNames=`echo $pagesNames | tr -s "\'" '\t'`
+    IFS=$'\t' read -r -a pagesNames <<< "$pagesNames"
 
     # A. get pages from `contents.xcplayground`
     for page in "${pagesNames[@]}"; do
@@ -74,8 +74,8 @@ pagesInPlayground() {
     # B. in case `content.xcplayground` has not pages - get from folder `Pages`
     if [ "${#pages}" -eq 0 ]; then
         pages=`ls "Pages" | grep xcplaygroundpage`
-        pages=`echo "$pages" | tr -s '\n' '@'`
-        IFS='@' read -r -a pages <<< "$pages"
+        pages=`echo "$pages" | tr -s '\n' '\t'`
+        IFS=$'\t' read -r -a pages <<< "$pages"
     fi
 
     # build pages path
@@ -95,7 +95,10 @@ playgrounds() {
 
     dependencies="awk -F'location = \"group:' '{print \$2}'"
     cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
-    playgrounds=($(eval cat "\"$content\" | $dependencies | $cleanUp" ))
+    playgrounds=$(eval cat "\"$content\" | $dependencies | $cleanUp" )
+
+    playgrounds=`echo "$playgrounds" | tr -s '\n' '\t'` # '\n' -> '\t'
+    IFS=$'\t' read -r -a playgrounds <<< "$playgrounds" # split by '\t'
 
     declare -p playgrounds 1>/dev/null 2>/dev/null
 }
