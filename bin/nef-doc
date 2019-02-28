@@ -32,10 +32,70 @@ printHelp() {
 ##
 generateDocumentation() {
     makeStructure "$1"
-    workspace=$(workspaceForProjectPath "$1")
-    echo "$workspace"
+    playgrounds "$1"
+
+    for playground in "${playgrounds[@]}"; do
+        playgroundPath="$1/$playground"
+        echo ""
+        echo "playground: $playground"
+        echo ""
+
+        pagesInPlayground "$playgroundPath"
+        for page in "${pagesInPlayground[@]}"; do
+            echo "page: $page"
+        done
+        echo "-----------------------"
+    done
 }
 
+pagesInPlayground() {
+    local playgroundPath="$1"         # parameter `playground`
+    cd "$playgroundPath"
+
+    pages=()
+
+    dependencies="awk -F'page name=' '{print \$2}'"
+    cleanUp="cut -d'/' -f -1"
+    pagesNames=$(eval cat "contents.xcplayground | $dependencies | $cleanUp" 2>/dev/null)
+    pagesNames=`echo $pagesNames | tr -s "\'" '@'`
+    IFS='@' read -r -a pagesNames <<< "$pagesNames"
+
+    # A. get pages from `contents.xcplayground`
+    for page in "${pagesNames[@]}"; do
+      count=`echo "$page" | sed -e 's/\ //g' | grep . | wc -c`
+      if [ "$count" -gt 0 ]; then
+          pages+=("$page.xcplaygroundpage")
+      fi
+    done
+
+    # B. in case `content.xcplayground` has not pages - get from folder `Pages`
+    if [ "${#pages}" -eq 0 ]; then
+        pages=`ls "Pages" | grep xcplaygroundpage`
+        pages=`echo "$pages" | tr -s '\n' '@'`
+        IFS='@' read -r -a pages <<< "$pages"
+    fi
+
+    # build pages path
+    pagesInPlayground=()
+    for page in "${pages[@]}"; do
+        pagesInPlayground+=("$playgroundPath/Pages/$page")
+    done
+
+    declare -p pagesInPlayground 1>/dev/null 2>/dev/null
+}
+
+playgrounds() {
+    local path="$1"         # parameter `folder`
+
+    workspace=$(workspaceForProjectPath "$1")
+    content="$workspace/contents.xcworkspacedata"
+
+    dependencies="awk -F'location = \"group:' '{print \$2}'"
+    cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
+    playgrounds=($(eval cat "\"$content\" | $dependencies | $cleanUp" ))
+
+    declare -p playgrounds 1>/dev/null 2>/dev/null
+}
 ##
 #   workspaceForProjectPath(String folder, String projectPath): String
 #   - Parameter `folder`: path to the project folder.
