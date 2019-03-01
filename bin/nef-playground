@@ -39,12 +39,18 @@ printHelp() {
 setBowVersion() {
   local projectFolder="$1" # parameter `projectFolder`
   local version="$2"       # parameter `version`
+  local podfilePath="$projectFolder/Podfile"
 
-  cd $projectFolder
   echo -ne "${normal}Updating ${green}bow version ($version)${reset}..."
 
-  sed -i '' s/"~> 0.0.0"/"~> $version"/g './Podfile'
-  echo " ✅"
+  if [ -f "$podfilePath" ]; then
+      sed -i '' s/"~> 0.0.0"/"~> $version"/g "$podfilePath"
+      echo " ✅"
+  else
+      echo " ❌"
+      echo "[!] ${bold}${red}error: ${reset}can not find file '$podfilePath'"
+      exit 1
+  fi
 }
 
 ##
@@ -74,17 +80,17 @@ playground() {
   echo -ne "${normal}Installing ${green}Playground ($projectName)${reset}..."
 
   pod lib create "$projectName" --template-url="$NEF_TEMPLATE" 1> "$tempLog" 2>&1
-  makeStructure $projectFolder
+  makeStructure "$projectFolder"
   mv "$tempLog" "$log"
 
   error=`grep "Errno:" "$log"`
   fatalError=`grep "fatal:" "$log"`
+  gemError=`grep "LoadError" "$log"`
   otherErrors=`grep "[!]" "$log"`
 
-  if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
+  if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ] || [ "${#gemError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
     echo " ❌"
     echo "[!] ${bold}${red}error: ${reset}${bold}building plaground ($projectName)${normal} review '$log' for more information."
-    cleanProject $projectFolder
     exit 1
   else
     echo " ✅"
