@@ -24,7 +24,7 @@ printHelp() {
     echo ""
     echo "    ${lime}${bold}--project${reset}${normal} path where playground's pages are. It will be use to render Jekyll site${reset}"
     echo "    ${lime}${bold}--output${reset}${normal} path where to render the Jekyll site${reset}"
-    echo "    ${lime}${bold}--main-page${reset}${normal} path where is the main page in Jekyll file format [optional]${reset}"
+    echo "    ${lime}${bold}--main-page${reset}${normal} the main page in Jekyll file format [optional]${reset}"
     echo "${reset}"
 }
 
@@ -95,7 +95,7 @@ buildMainPage() {
     local mainPagePath="$1"
     local sitePath="$2/$BASE_JEKYLL"
 
-    if [ "$mainPagePath" == "" ]; then
+    if [ "$mainPagePath" == "" ] | [ ! -f "$mainPagePath" ]; then
         echo -e "\n---\nlayout: docs\npermalink: /docs/\n---\n\n" >> "$sitePath/README.md"
     else
         cp "$mainPagePath" "$sitePath/README.md"
