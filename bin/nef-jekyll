@@ -22,10 +22,10 @@ printHelp() {
     echo ""
     echo "${normal}$0 ${bold}--project ${normal}<project> ${bold}--output ${normal}<output> ${bold}--main-page ${normal}<main>${reset}"
     echo ""
-    echo "    ${lime}${bold}project${reset}${normal} path where playground's pages are. It will be use to render Jekyll site.${reset}"
-    echo "    ${lime}${bold}output${reset}${normal} path where to render the Jekyll site.${reset}"
-    echo "    ${lime}${bold}main-page${reset}${normal} path where is the main page in Jekyll file format. (optional)${reset}"
-    echo ""
+    echo "    ${lime}${bold}--project${reset}${normal} path where playground's pages are. It will be use to render Jekyll site${reset}"
+    echo "    ${lime}${bold}--output${reset}${normal} path where to render the Jekyll site${reset}"
+    echo "    ${lime}${bold}--main-page${reset}${normal} path where is the main page in Jekyll file format [optional]${reset}"
+    echo "${reset}"
 }
 
 #: - Render

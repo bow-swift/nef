@@ -21,7 +21,7 @@ reset=$(tput sgr0)
 ##
 printWrongArguments() {
     echo ""
-    echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
+    echo "${bold}nefc ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
     echo ""
     echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected project"
     echo "    ${bold}$DEPENDENCIES${normal}  builds dependencies in selected project"
