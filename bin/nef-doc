@@ -20,10 +20,11 @@ reset=$(tput sgr0)
 ##
 printHelp() {
     echo ""
-    echo "${normal}$0 ${bold}--project ${normal}<project> ${bold}--output ${normal}<output>${reset}"
+    echo "${normal}$0 ${bold}--project ${normal}<project> ${bold}--output ${normal}<output> ${bold}--main-page ${normal}<main>${reset}"
     echo ""
-    echo "    ${lime}${bold}project${reset}${normal} path where playground's pages are. It will be use to render Jekyll site. ${reset}"
+    echo "    ${lime}${bold}project${reset}${normal} path where playground's pages are. It will be use to render Jekyll site.${reset}"
     echo "    ${lime}${bold}output${reset}${normal} path where to render the Jekyll site.${reset}"
+    echo "    ${lime}${bold}main-page${reset}${normal} path where is the main page in Jekyll file format. (optional)${reset}"
     echo ""
 }
 
@@ -32,9 +33,11 @@ printHelp() {
 generateDocumentation() {
     local projectPath="$1"
     local sitePath="$2"
+    local mainPagePath="$3"
 
     makeStructure "$projectPath"
     buildMicrosite "$projectPath" "$sitePath"
+    buildMainPage "$mainPagePath" "$sitePath"
 }
 
 buildMicrosite() {
@@ -51,6 +54,7 @@ buildMicrosite() {
     echo "options:" > "$sidebarFilePath" # sidebar start
 
     for playground in "${playgrounds[@]}"; do
+
         playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
         playgroundPath="$projectPath/$playground"
 
@@ -87,10 +91,26 @@ buildMicrosite() {
     done
 }
 
+buildMainPage() {
+    local mainPagePath="$1"
+    local sitePath="$2/$BASE_JEKYLL"
+
+    if [ "$mainPagePath" == "" ]; then
+        echo -e "\n---\nlayout: docs\npermalink: /docs/\n---\n\n" >> "$sitePath/README.md"
+    else
+        cp "$mainPagePath" "$sitePath/README.md"
+    fi
+}
+
 pagesInPlayground() {
     local playgroundPath="$1"         # parameter `playground`
-    cd "$playgroundPath"
+    if [ ! -d "$playgroundPath" ]; then
+        echo " ❌"
+        echo "${bold}${red}error: ${reset}can not open '$playgroundPath'. Please, review the path and it is linked correctly in the project."
+        exit 1
+    fi
 
+    cd "$playgroundPath"
     pages=()
 
     dependencies="awk -F'page name=' '{print \$2}'"
@@ -189,11 +209,13 @@ set -e
 
 projectPath=""
 sitePath=""
+mainPagePath=""
 
 while [ "$1" != "" ]; do
     case $1 in
-        -p | --project | project ) shift; projectPath=$1 ;;
-        -o | --output | output )   shift; sitePath=$1 ;;
+        -p | --project | project )     shift; projectPath=$1 ;;
+        -o | --output  | output )      shift; sitePath=$1 ;;
+        -m | --main-page | mainpage )  shift; mainPagePath=$1 ;;
         -h | --help )              printHelp $@; exit 1 ;;
         * )                        printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
@@ -205,5 +227,5 @@ if [ "$projectPath" == "" ]; then
 elif [ "$sitePath" == "" ]; then
     printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'output' argument is required"; exit 1
 else
-    generateDocumentation "$projectPath" "$sitePath"
+    generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
 fi
