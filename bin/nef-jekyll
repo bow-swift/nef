@@ -30,6 +30,12 @@ printHelp() {
 
 #: - Render
 
+##
+#   generateDocumentation(String project, String site, String mainPage)
+#   - Parameter `project`: path to the project folder.
+#   - Parameter `site`: path where to render the Jekyll site.
+#   - Parameter `mainPage`: the main page in Jekyll file format (optional).
+##
 generateDocumentation() {
     local projectPath="$1"
     local sitePath="$2"
@@ -40,6 +46,11 @@ generateDocumentation() {
     buildMainPage "$mainPagePath" "$sitePath"
 }
 
+##
+#   buildMicrosite(String project, String site)
+#   - Parameter `project`: path to the project folder.
+#   - Parameter `site`: path where to render the Jekyll site.
+##
 buildMicrosite() {
     local projectPath="$1"
     local sitePath="$2/$BASE_JEKYLL"
@@ -91,6 +102,11 @@ buildMicrosite() {
     done
 }
 
+##
+#   buildMainPage(String mainPage, String sitePath): String
+#   - Parameter `mainPage`: the main page in Jekyll file format (optional).
+#   - Parameter `sitePath`: path where to render the Jekyll site.
+##
 buildMainPage() {
     local mainPagePath="$1"
     local sitePath="$2/$BASE_JEKYLL"
@@ -102,6 +118,11 @@ buildMainPage() {
     fi
 }
 
+##
+#   pagesInPlayground(String playground)
+#   - Parameter `playground`: path to the playground where to get its pages.
+#   - Return `pagesInPlayground` list of the playground's pages.
+##
 pagesInPlayground() {
     local playgroundPath="$1"         # parameter `playground`
     if [ ! -d "$playgroundPath" ]; then
@@ -142,8 +163,13 @@ pagesInPlayground() {
     declare -p pagesInPlayground 1>/dev/null 2>/dev/null
 }
 
+##
+#   playgrounds(String folder)
+#   - Parameter `folder`: path to the project folder.
+#   - Return `playgrounds` list of the playgrounds.
+##
 playgrounds() {
-    local path="$1"         # parameter `folder`
+    local path="$1"   # parameter `folder`
 
     workspace=$(workspaceForProjectPath "$1")
     content="$workspace/contents.xcworkspacedata"

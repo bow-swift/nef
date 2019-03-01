@@ -75,7 +75,7 @@ printHelpCompileClean() {
     echo ""
 }
 
-#: - Playground
+#: - Jekyll
 
 ##
 #   jekyll(List<String> args)
