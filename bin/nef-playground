@@ -160,15 +160,15 @@ podfile=""
 
 while [ "$1" != "" ]; do
     case $1 in
-        -v | --bow-version | version )    shift; version=$1 ;;
-        -b | --bow-branch | branch )      shift; branch=$1 ;;
-        -f | --podfile | podfile )        shift; podfile=$1 ;;
+        --bow-version | version )    shift; version=$1 ;;
+        --bow-branch | branch )      shift; branch=$1 ;;
+        --podfile | podfile )        shift; podfile=$1 ;;
 
-        -n | --name | name )              shift; projectName=$1 ;;
-        -p | --playground | playground )  shift; projectName=$1 ;;
+        --name | name )              shift; projectName=$1 ;;
+        --playground | playground )  shift; projectName=$1 ;;
 
-        -h | --help )                     printHelp $@; exit 1 ;;
-        * )                               printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
+        -h | --help )                printHelp $@; exit 1 ;;
+        * )                          printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
     shift
 done

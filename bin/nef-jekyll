@@ -239,11 +239,11 @@ mainPagePath=""
 
 while [ "$1" != "" ]; do
     case $1 in
-        -p | --project | project )     shift; projectPath=$1 ;;
-        -o | --output  | output )      shift; sitePath=$1 ;;
-        -m | --main-page | mainpage )  shift; mainPagePath=$1 ;;
-        -h | --help )              printHelp $@; exit 1 ;;
-        * )                        printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
+        --project | project )     shift; projectPath=$1 ;;
+        --output  | output )      shift; sitePath=$1 ;;
+        --main-page | mainpage )  shift; mainPagePath=$1 ;;
+        --help )                  printHelp $@; exit 1 ;;
+        * )                       printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
     shift
 done
