@@ -48,7 +48,7 @@ setBowVersion() {
   local podfile="$4"       # parameter `podfile`
   local podfilePath="$projectFolder/Podfile"
 
-  echo -ne "${normal}Updating ${green}bow "
+  echo -ne "${normal}Updating ${green}Bow "
 
   if [ -f "$podfilePath" ]; then
       # A. update Podfile using `branch`
