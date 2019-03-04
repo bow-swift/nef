@@ -20,7 +20,7 @@ brew install nef
 
 It will warn you if there is a missing dependency and provide guidance to install it.
 
-## 📃 Creating a Swift Playground with third party libraries support
+## 📃 Creating a Swift Playground
 
 Swift Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make easier the creation of a Swift Playground with support for one or more libraries.
 
