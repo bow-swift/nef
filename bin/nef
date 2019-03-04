@@ -13,9 +13,10 @@ DEFAULT_PLAYGROUND="BowPlayground"
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-lime=$(tput setaf 190)
+red=$(tput setaf 196)
+green=$(tput setaf 35)
+required=$(tput setaf 222)
+optional=$(tput setaf 230)
 reset=$(tput sgr0)
 
 #: IN - Help
@@ -34,11 +35,13 @@ printHelp() {
 ##
 printHelpJekyll() {
     echo ""
-    echo "${normal}$0 ${bold}$JEKYLL${normal} ${bold}--project ${normal}<project> ${bold}--output${normal} <output> [${bold}--main-page${normal} <main-page>]${reset}"
+    echo "${normal}nef ${green}${bold}$JEKYLL${normal} ${required}${bold}--project${reset} ${normal}<project> ${required}${bold}--output${normal}${reset} <output> ${optional}${bold}--main-page${normal}${reset} <main-page>${reset}"
     echo ""
-    echo "    ${green}${bold}--project${reset}${normal} source playgrounds to render documentation compatible with Jekyll"
-    echo "    ${lime}${bold}--output${reset}${normal} path where to render the Jekyll site"
-    echo "    ${lime}${bold}--main-page${reset}${normal} the main page in Jekyll file format [optional]${reset}"
+    echo "    Render documentation compatible with Jekyll from source playgrounds"
+    echo ""
+    echo "    ${required}${bold}--project${reset}${normal} path where playground's pages are. It will be use to render Jekyll site"
+    echo "    ${required}${bold}--output${reset}${normal} path where to render the Jekyll site"
+    echo "    ${optional}${bold}--main-page${reset}${normal} the main page in Jekyll file format ${optional}[optional]${reset}"
     echo ""
 }
 
@@ -47,13 +50,14 @@ printHelpJekyll() {
 ##
 printHelpPlayground() {
     echo ""
-    echo "${normal}$0 ${bold}$PLAYGROUND${normal} [${bold}--name${normal} <project>] [${bold}--bow-version${normal} <number format: 0.0.0>] [${bold}--bow-branch${normal} <branch-name>] [${bold}--podfile${normal} <path>]"
+    echo "${normal}nef ${green}${bold}$PLAYGROUND${normal} ${optional}${bold}--name${normal} <project>${reset} ${optional}${bold}--bow-version${normal}${reset} <number format: 0.0.0> ${optional}${bold}--bow-branch${normal}${reset} <branch-name> ${optional}${bold}--podfile${normal} <path>${reset}"
     echo ""
-    echo "    ${green}${bold}$PLAYGROUND${reset}${normal} build a playground compatible with external frameworks"
-    echo "    ${lime}${bold}--name${reset}${normal} create a playground project using this name [default: $DEFAULT_PLAYGROUND]"
-    echo "    ${lime}${bold}--bow-version${reset}${normal} Bow's version to use [optional]"
-    echo "    ${lime}${bold}--bow-branch${reset}${normal} Bow's branch to use [optional]"
-    echo "    ${lime}${bold}--podfile${reset}${normal} podfile to use in playground [optional]"
+    echo "    Build a playground compatible with external frameworks"
+    echo ""
+    echo "    ${optional}${bold}--name${reset}${normal} create a playground project using this name ${optional}[default: $DEFAULT_PLAYGROUND]${reset}"
+    echo "    ${optional}${bold}--bow-version${reset}${normal} Bow's version to use ${optional}[optional]${reset}"
+    echo "    ${optional}${bold}--bow-branch${reset}${normal} Bow's branch to use ${optional}[optional]${reset}"
+    echo "    ${optional}${bold}--podfile${reset}${normal} podfile to use in playground ${optional}[optional]${reset}"
     echo ""
 }
 
@@ -70,10 +74,10 @@ printHelpClean() {
 
 printHelpCompileClean() {
     echo ""
-    echo "${normal}$0 ${bold}$COMPILE${normal} | ${bold}$CLEAN${normal} <project>"
+    echo "${normal}nef ${green}${bold}$COMPILE${normal}${reset} | ${green}${bold}$CLEAN${normal}${reset} <project>"
     echo ""
-    echo "    ${green}${bold}$COMPILE${reset}${normal} compile a Bow's playground"
-    echo "    ${green}${bold}$CLEAN${reset}${normal} clean nef dependencies in Bow's playground"
+    echo "    ${bold}$COMPILE${normal} compile a Bow's playground"
+    echo "    ${bold}$CLEAN${normal} clean nef dependencies in Bow's playground"
     echo ""
 }
 
