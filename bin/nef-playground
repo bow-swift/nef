@@ -27,7 +27,7 @@ printHelp() {
     echo "    ${lime}${bold}--name${reset}${normal} create a playground project using this name [default: $DEFAULT_PLAYGROUND]"
     echo ""
     echo "    ${lime}${bold}--bow-version${reset}${normal} bow's version to use [default: $latestVersion]"
-    echo "    ${lime}${bold}--bow-branch${reset}${normal} bow's branch to use [optional]"
+    echo "    ${lime}${bold}--bow-branch${reset}${normal} Bow's branch to use [optional]"
     echo "    ${lime}${bold}--podfile${reset}${normal} podfile to use in playground [optional]"
     echo "${reset}"
 }
