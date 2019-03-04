@@ -138,7 +138,7 @@ import Bow // This will be hidden in the Markdown file
 struct Person {} // This will be present in the Markdown file
 ```
 
-## ⌨️ Contributing to the project
+## ❤️ Contributing to the project
 
 You can contribute in different ways to make `nef` better:
 
