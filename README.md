@@ -59,7 +59,7 @@ nef playground --name BranchBowProject --bow-branch master
 Your `Podfile`, located in `./folder/dependencies`:
 
 ```ruby
-target 'MyPlayground' do
+target 'MyPodsProject' do
   platform :osx, '10.14'
   use_frameworks!
 
