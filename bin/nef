@@ -25,9 +25,9 @@ reset=$(tput sgr0)
 #   printHelp()
 ##
 printHelp() {
-    printHelpJekyll $@
     printHelpPlayground $@
     printHelpCompileClean $@
+    printHelpJekyll $@
 }
 
 ##
