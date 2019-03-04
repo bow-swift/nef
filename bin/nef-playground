@@ -26,7 +26,7 @@ printHelp() {
     echo ""
     echo "    ${lime}${bold}--name${reset}${normal} create a playground project using this name [default: $DEFAULT_PLAYGROUND]"
     echo ""
-    echo "    ${lime}${bold}--bow-version${reset}${normal} bow's version to use [default: $latestVersion]"
+    echo "    ${lime}${bold}--bow-version${reset}${normal} Bow's version to use [default: $latestVersion]"
     echo "    ${lime}${bold}--bow-branch${reset}${normal} Bow's branch to use [optional]"
     echo "    ${lime}${bold}--podfile${reset}${normal} podfile to use in playground [optional]"
     echo "${reset}"
@@ -81,7 +81,7 @@ setBowVersion() {
 
 ##
 #   lastestBowVersion(): String
-#   - Return: latest bow version
+#   - Return: latest Bow version
 ##
 lastestBowVersion() {
   version=$(eval curl --silent \"$BOW_TAGS\" | grep name | tr -d "\n" | cut -d',' -f 1 | awk -F': "' '{print $2}' | awk -F'"' '{print $1}')

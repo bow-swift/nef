@@ -51,8 +51,8 @@ printHelpPlayground() {
     echo ""
     echo "    ${green}${bold}$PLAYGROUND${reset}${normal} build a playground compatible with external frameworks"
     echo "    ${lime}${bold}--name${reset}${normal} create a playground project using this name [default: $DEFAULT_PLAYGROUND]"
-    echo "    ${lime}${bold}--bow-version${reset}${normal} bow's version to use [optional]"
-    echo "    ${lime}${bold}--bow-branch${reset}${normal} bow's branch to use [optional]"
+    echo "    ${lime}${bold}--bow-version${reset}${normal} Bow's version to use [optional]"
+    echo "    ${lime}${bold}--bow-branch${reset}${normal} Bow's branch to use [optional]"
     echo "    ${lime}${bold}--podfile${reset}${normal} podfile to use in playground [optional]"
     echo ""
 }
