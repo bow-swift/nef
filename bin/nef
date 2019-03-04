@@ -41,7 +41,7 @@ printHelpJekyll() {
     echo ""
     echo "    ${required}${bold}--project${reset}${normal} path to the folder containing the Xcode project with Swift Playgrounds"
     echo "    ${required}${bold}--output${reset}${normal} path where the resulting Markdown files will be generated"
-    echo "    ${optional}${bold}--main-page${reset}${normal} path to a README.md file to be used as the index page of the generated microsite. ${optional}[optional]${reset}"
+    echo "    ${optional}${bold}--main-page${reset}${normal} path to a README.md file to be used as the index page of the generated microsite ${optional}[optional]${reset}"
     echo ""
 }
 
