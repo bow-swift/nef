@@ -37,7 +37,7 @@ printHelp() {
 ##
 #   setBowVersion(String projectFolder, String version, String branch, String podfile)
 #   - Parameter `projectFolder`: path to the project folder.
-#   - Parameter `version`: bow's version which update Podfile.
+#   - Parameter `version`: Bow's version which update Podfile.
 #   - Parameter `branch`: bow's branch which update Podfile.
 #   - Parameter `podfile`
 ##
