@@ -34,7 +34,7 @@ printWrongArguments() {
 ##
 printWrongConfig() {
     echo ""
-    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$DEPENDENCIES ${normal}or ${bold}$CLEAN"
+    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE${normal} or ${bold}$DEPENDENCIES${normal} or ${bold}$CLEAN${normal}"
     echo ""
 }
 
