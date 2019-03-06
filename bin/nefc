@@ -166,7 +166,7 @@ buildPODS() {
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
         cd "$path"
 
-        pod install 1> "$log" 2>&1
+        pod install --repo-update 1> "$log" 2>&1
         installed=`grep "Pod installation complete" "$log"`
 
         if [ "${#installed}" -gt 0 ]; then
