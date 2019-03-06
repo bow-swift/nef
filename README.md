@@ -4,12 +4,6 @@
 
 `nef` is inspired by [ΛNK](https://github.com/arrow-kt/ank) for Kotlin and [tut](https://github.com/tpolecat/tut) for Scala.
 
-`nef` highlights the following features:
-
-- Eases the creation of Swift Playgrounds with support for third party libraries.
-- Compiles Swift Playgrounds with support for third party libraries from the command line.
-- Generates Markdown files that can be consumed from Jekyll to create a microsite.
-
 ## 📥 Installation
 
 `nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. You can run the following command to install `nef`:
@@ -20,7 +14,15 @@ brew install nef
 
 It will warn you if there is a missing dependency and provide guidance to install it.
 
-## 📃 Creating a Swift Playground
+## 🌟 Features
+
+`nef` highlights the following features:
+
+- Eases the creation of Swift Playgrounds with support for third party libraries.
+- Compiles Swift Playgrounds with support for third party libraries from the command line.
+- Generates Markdown files that can be consumed from Jekyll to create a microsite.
+
+### 📃 Creating a Swift Playground
 
 Swift Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make easier the creation of a Swift Playground with support for one or more libraries.
 
@@ -73,7 +75,7 @@ nef playground --name MyPodsProject --Podfile ./folder/dependencies/Podfile
 
 The last three options are mutually exclusive.
 
-## ⚙️ Compiling a Swift Playground
+### ⚙️ Compiling a Swift Playground
 
 Xcode lets you check for correctness of your Swift Playground and run it. However, compiling a Swift Playground from the command line is not so easy when it has dependencies on third party libraries. This is particularly useful in Continuous Integration, when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile Swift Playgrounds in an Xcode project with dependencies. To do this, you can run the following command:
 
@@ -87,7 +89,7 @@ Where `<path>` is the path to the folder where the project and playgrounds are l
 nef clean <path>
 ```
 
-## 🖥 Generating Markdown files for Jekyll
+### 🖥 Generating Markdown files for Jekyll
 
 Swift Playgrounds let you write comments in Markdown format using the symbols `//:` for single line comments, or `/*: */` for multiline comments. Inside this comments, you can use any Markdown syntax; an exmaple:
 
