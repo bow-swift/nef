@@ -111,7 +111,7 @@ buildMainPage() {
     local mainPagePath="$1"
     local sitePath="$2/$BASE_JEKYLL"
 
-    if [ "$mainPagePath" == "" ] | [ ! -f "$mainPagePath" ]; then
+    if [ ! -f "$mainPagePath" ]; then
         echo -e "\n---\nlayout: docs\npermalink: /docs/\n---\n\n" >> "$sitePath/README.md"
     else
         cp "$mainPagePath" "$sitePath/README.md"
@@ -233,6 +233,7 @@ cleanStructure() {
 #: - MAIN
 set -e
 
+root=`pwd`
 projectPath=""
 sitePath=""
 mainPagePath=""
@@ -253,5 +254,5 @@ if [ "$projectPath" == "" ]; then
 elif [ "$sitePath" == "" ]; then
     printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'output' argument is required"; exit 1
 else
-    generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
+    generateDocumentation "$root/$projectPath" "$root/$sitePath" "$root/$mainPagePath"
 fi
