@@ -114,7 +114,7 @@ jekyll() {
   if [ "$projectPath" == "" ] || [ "$outputPath" == "" ]; then
       printHelpJekyll; exit 1
   else
-      ~/Documents/3.projects/47deg/nef/bin/nef-jekyll --project "$projectPath" --output "$outputPath" --main-page "$mainPagePath"
+      nef-jekyll --project "$projectPath" --output "$outputPath" --main-page "$mainPagePath"
   fi
 }
 
