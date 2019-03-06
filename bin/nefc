@@ -186,8 +186,8 @@ buildPODS() {
 ##
 addPlaygroundReference() {
     cd "$1"
+    playgroundForProjectPath "$1"
 
-    local playgrounds=$(playgroundForProjectPath "$1")
     local pattern="<FileRef"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
@@ -196,7 +196,7 @@ addPlaygroundReference() {
         ! [[ $workspace = .*".xcworkspace" ]] && continue
         grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
 
-        for playground in "${playgrounds[@]}"; do
+        for playground in "${playgroundForProjectPath[@]}"; do
             playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
             sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
         done
@@ -211,12 +211,12 @@ addPlaygroundReference() {
 playgroundForProjectPath() {
     cd "$1"
 
-    playgrounds=()
+    playgroundForProjectPath=()
     while read -r -d $'\0' playground; do
-        playgrounds+=("$playground")
+        playgroundForProjectPath+=("$playground")
     done < <(find . -name '*.playground' -print0)
 
-    echo $playgrounds
+    declare -p playgroundForProjectPath 1>/dev/null 2>/dev/null
 }
 
 ##
