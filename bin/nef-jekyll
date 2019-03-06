@@ -254,5 +254,15 @@ if [ "$projectPath" == "" ]; then
 elif [ "$sitePath" == "" ]; then
     printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'output' argument is required"; exit 1
 else
-    generateDocumentation "$root/$projectPath" "$root/$sitePath" "$root/$mainPagePath"
+    if [ -d "$root/$projectPath" ]; then
+      projectPath="$root/$projectPath"
+    fi
+    if [ -d "$root/$sitePath" ]; then
+      projectPath="$root/$sitePath"
+    fi
+    if [ -d "$root/$mainPagePath" ]; then
+      projectPath="$root/$mainPagePath"
+    fi
+
+    generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
 fi
