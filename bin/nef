@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #: Valid Args
+JEKYLL="jekyll"
 PLAYGROUND="playground"
 COMPILE="compile"
 CLEAN="clean"
@@ -12,9 +13,10 @@ DEFAULT_PLAYGROUND="BowPlayground"
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-red=$(tput setaf 1)
-green=$(tput setaf 2)
-lime=$(tput setaf 190)
+red=$(tput setaf 196)
+green=$(tput setaf 35)
+required=$(tput setaf 222)
+optional=$(tput setaf 230)
 reset=$(tput sgr0)
 
 #: IN - Help
@@ -25,6 +27,22 @@ reset=$(tput sgr0)
 printHelp() {
     printHelpPlayground $@
     printHelpCompileClean $@
+    printHelpJekyll $@
+}
+
+##
+#   printHelpJekyll()
+##
+printHelpJekyll() {
+    echo ""
+    echo "${normal}nef ${green}${bold}$JEKYLL${normal} ${required}${bold}--project${reset} ${normal}<path-to-input> ${required}${bold}--output${normal}${reset} <path-to-output> ${optional}${bold}--main-page${normal}${reset} <path-to-index>${reset}"
+    echo ""
+    echo "    Render Markdown files that can be consumed from Jekyll to generate a microsite"
+    echo ""
+    echo "    ${required}${bold}--project${reset}${normal} path to the folder containing the Xcode project with Swift Playgrounds"
+    echo "    ${required}${bold}--output${reset}${normal} path where the resulting Markdown files will be generated"
+    echo "    ${optional}${bold}--main-page${reset}${normal} path to a README.md file to be used as the index page of the generated microsite ${optional}[optional]${reset}"
+    echo ""
 }
 
 ##
@@ -32,11 +50,14 @@ printHelp() {
 ##
 printHelpPlayground() {
     echo ""
-    echo "${normal}$0 ${bold}$PLAYGROUND${normal} [${bold}--name${normal} <project>] [${bold}--version${normal} <number format: 0.0.0>]"
+    echo "${normal}nef ${green}${bold}$PLAYGROUND${normal} ${optional}${bold}--name${normal} <project>${reset} ${optional}${bold}--bow-version${normal}${reset} <version format: x.y.z> ${optional}${bold}--bow-branch${normal}${reset} <branch-name> ${optional}${bold}--podfile${normal} <path>${reset}"
     echo ""
-    echo "    ${green}${bold}$PLAYGROUND${reset}${normal} build a playground with Bow compatibility."
-    echo "    ${lime}${bold}name${reset}${normal} create a playground project using this name [optional]."
-    echo "    ${lime}${bold}version${reset}${normal} bow's version to use [optional]."
+    echo "    Build a playground compatible with external frameworks"
+    echo ""
+    echo "    ${optional}${bold}--name${reset}${normal} specify the name for the Xcode project that you are creating ${optional}[default: $DEFAULT_PLAYGROUND]${reset}"
+    echo "    ${optional}${bold}--bow-version${reset}${normal} specify the version of Bow that you want to use in the project ${optional}[optional]${reset}"
+    echo "    ${optional}${bold}--bow-branch${reset}${normal} specify the branch of Bow that you want to use in the project ${optional}[optional]${reset}"
+    echo "    ${optional}${bold}--podfile${reset}${normal} specify a Podfile with your own dependencies ${optional}[optional]${reset}"
     echo ""
 }
 
@@ -53,14 +74,49 @@ printHelpClean() {
 
 printHelpCompileClean() {
     echo ""
-    echo "${normal}$0 ${bold}$COMPILE${normal} | ${bold}$CLEAN${normal} <project>"
+    echo "${normal}nef ${green}${bold}$COMPILE${normal}${reset} | ${green}${bold}$CLEAN${normal}${reset} <path>"
     echo ""
-    echo "    ${green}${bold}$COMPILE${reset}${normal} compile a Bow's playground."
-    echo "    ${green}${bold}$CLEAN${reset}${normal} clean nef dependencies in Bow's playground."
+    echo "    ${required}${bold}<path>${reset}${normal} path to the folder where the project and playgrounds are located"
     echo ""
 }
 
-#: - Playground
+#: - Jekyll
+
+##
+#   jekyll(List<String> args)
+#   - Parameter `args`: list of command line arguments
+##
+jekyll() {
+  projectPath=""
+  outputPath=""
+  mainPagePath=""
+
+  while [ "$1" != "" ]; do
+      case $1 in
+          --project )      shift; projectPath=$1 ;;
+          --output )       shift; outputPath=$1 ;;
+          --main-page )    shift; mainPagePath=$1 ;;
+
+          --name )         printHelpJekyll; exit 1 ;;
+          --bow-version )  printHelpPlayground; exit 1 ;;
+          --bow-branch )   printHelpPlayground; exit 1 ;;
+          --podfile )      printHelpPlayground; exit 1 ;;
+
+          $JEKYLL )        ;;
+          $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+          $COMPILE )       printHelpCompile; exit 1 ;;
+          $CLEAN )         printHelpClean; exit 1 ;;
+          * )              printHelpJekyll; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+      esac
+      shift
+  done
+
+  if [ "$projectPath" == "" ] || [ "$outputPath" == "" ]; then
+      printHelpJekyll; exit 1
+  else
+      nef-jekyll --project "$projectPath" --output "$outputPath" --main-page "$mainPagePath"
+  fi
+}
 
 ##
 #   playground(List<String> args)
@@ -69,23 +125,33 @@ printHelpCompileClean() {
 playground() {
     projectName=$DEFAULT_PLAYGROUND
     version=""
+    branch=""
+    podfile=""
 
     while [ "$1" != "" ]; do
         case $1 in
-            -n | --name )    shift; projectName=$1 ;;
-            -v | --version ) shift; version=$1 ;;
+            --project )      printHelpPlayground; exit 1 ;;
+            --output )       printHelpPlayground; exit 1 ;;
+            --main-page )    printHelpJekyll; exit 1 ;;
+
+            --name )         shift; projectName=$1 ;;
+            --bow-version )  shift; version=$1 ;;
+            --bow-branch )   shift; branch=$1 ;;
+            --podfile )      shift; podfile=$1 ;;
+
+            $JEKYLL )        printHelpJekyll; exit 1 ;;
             $PLAYGROUND )    ;;
-            $COMPILE )       printHelpPlayground; exit 1 ;;
-            $CLEAN )         printHelpPlayground; exit 1 ;;
+            $COMPILE )       printHelpCompile; exit 1 ;;
+            $CLEAN )         printHelpClean; exit 1 ;;
             * )              printHelpPlayground $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
         esac
         shift
     done
 
     if [ "${#version}" -gt 0 ]; then
-      nef-playground --name "$projectName" --version "$version"
+      nef-playground --name "$projectName" --bow-version "$version"
     else
-      nef-playground --name "$projectName"
+      nef-playground --name "$projectName" --bow-branch "$branch" --podfile "$podfile"
     fi
 
     nefc install  "$projectName"
@@ -102,11 +168,19 @@ compile() {
 
     while [ "$1" != "" ]; do
         case $1 in
+            --project )      printHelpJekyll; exit 1 ;;
+            --output )       printHelpJekyll; exit 1 ;;
+            --main-page )    printHelpJekyll; exit 1 ;;
+
+            --name )         printHelpPlayground; exit 1 ;;
+            --bow-version )  printHelpPlayground; exit 1 ;;
+            --bow-branch )   printHelpPlayground; exit 1 ;;
+            --podfile )      printHelpPlayground; exit 1 ;;
+
+            $JEKYLL )        printHelpJekyll; exit 1 ;;
+            $PLAYGROUND )    printHelpPlayground; exit 1 ;;
             $COMPILE )       shift; projectFolder=$1 ;;
-            -n | --name )    printHelpCompile; exit 1 ;;
-            -v | --version ) printHelpCompile; exit 1 ;;
-            $PLAYGROUND )    printHelpCompile; exit 1 ;;
-            $CLEAN )         printHelpCompile; exit 1 ;;
+            $CLEAN )         printHelpClean; exit 1 ;;
             * )              printHelpCompile; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
         esac
         shift
@@ -130,11 +204,19 @@ clean() {
 
     while [ "$1" != "" ]; do
         case $1 in
+            --project )      printHelpJekyll; exit 1 ;;
+            --output )       printHelpJekyll; exit 1 ;;
+            --main-page )    printHelpJekyll; exit 1 ;;
+
+            --name )         printHelpPlayground; exit 1 ;;
+            --bow-version )  printHelpPlayground; exit 1 ;;
+            --bow-branch )   printHelpPlayground; exit 1 ;;
+            --podfile )      printHelpPlayground; exit 1 ;;
+
+            $JEKYLL )        printHelpJekyll; exit 1 ;;
+            $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+            $COMPILE )       printHelpCompile; exit 1 ;;
             $CLEAN )         shift; projectFolder=$1 ;;
-            -n | --name )    printHelpClean; exit 1 ;;
-            -v | --version ) printHelpClean; exit 1 ;;
-            $PLAYGROUND )    printHelpClean; exit 1 ;;
-            $COMPILE )       printHelpClean; exit 1 ;;
             * )              printHelpClean; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
         esac
         shift
@@ -152,6 +234,7 @@ set -e
 
 while [ "$1" != "" ]; do
     case $1 in
+        $JEKYLL )     jekyll $@; exit 0 ;;
         $PLAYGROUND ) playground $@; exit 0 ;;
         $COMPILE )    compile $@; exit 0 ;;
         $CLEAN )      clean $@; exit 0 ;;

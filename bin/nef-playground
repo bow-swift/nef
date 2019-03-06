@@ -22,38 +22,87 @@ printHelp() {
     latestVersion=$(lastestBowVersion)
 
     echo ""
-    echo "${normal}$0 ${bold}--name ${normal}<project> ${bold}--version ${normal}<number format: 0.0.0>"
+    echo "${normal}nef-payground ${bold}--name ${normal}<project> ${bold}--bow-version ${normal}<number format: 0.0.0> ${bold}--bow-branch ${normal}<branch> ${bold}--podfile ${normal}<branch>"
     echo ""
-    echo "    ${lime}${bold}name${reset}${normal} create a playground project using this name [default: $DEFAULT_PLAYGROUND]"
-    echo "    ${lime}${bold}version${reset}${normal} bow's version to use [default: $latestVersion]"
+    echo "    ${lime}${bold}--name${reset}${normal} create a playground project using this name [default: $DEFAULT_PLAYGROUND]"
     echo ""
+    echo "    ${lime}${bold}--bow-version${reset}${normal} Bow's version to use [default: $latestVersion]"
+    echo "    ${lime}${bold}--bow-branch${reset}${normal} Bow's branch to use [optional]"
+    echo "    ${lime}${bold}--podfile${reset}${normal} podfile to use in playground [optional]"
+    echo "${reset}"
 }
 
 #: - Playground
 
 ##
-#   setBowVersion(String projectFolder, String version)
+#   setBowVersion(String projectFolder, String version, String branch, String podfile)
 #   - Parameter `projectFolder`: path to the project folder.
-#   - Parameter `version`: bow version which update Podfile.
+#   - Parameter `version`: Bow's version which update Podfile.
+#   - Parameter `branch`: Bow's branch which update Podfile.
+#   - Parameter `podfile`
 ##
 setBowVersion() {
   local projectFolder="$1" # parameter `projectFolder`
   local version="$2"       # parameter `version`
+  local branch="$3"        # parameter `branch`
+  local podfile="$4"       # parameter `podfile`
+  local podfilePath="$projectFolder/Podfile"
 
-  cd $projectFolder
-  echo -ne "${normal}Updating ${green}bow version ($version)${reset}..."
+  echo -ne "${normal}Updating ${green}Bow "
 
-  sed -i '' s/"~> 0.0.0"/"~> $version"/g './Podfile'
-  echo " ✅"
+  if [ -f "$podfilePath" ]; then
+      # A. update Podfile using `branch`
+      if [ "$branch" != "" ]; then
+          echo -ne "branch ($branch)${reset}..."
+          branch=$(echo "$branch" | sed 's/\//\\\//g')
+          sed -i '' s/"\"~> 0.0.0\""/":git => 'https\:\/\/github.com\/bow-swift\/bow.git', :branch => '$branch'"/g "$podfilePath"
+          echo " ✅"
+
+      # B. update Podfile using 'podfile'
+      elif [ "$podfile" != "" ] & [ -f "$podfile" ]; then
+          podfileName=`echo "$podfile" | rev | cut -d'/' -f -1 | rev`
+          echo -ne "podfile ($podfileName)${reset}..."
+          rm -rf "$podfilePath" 1>/dev/null 2>/dev/null
+          cp "$podfile" "$podfilePath" 1>/dev/null 2>/dev/null
+          echo " ✅"
+
+      # C. update Podfile using `version`
+      else
+          echo -ne "version ($version)${reset}..."
+          sed -i '' s/"~> 0.0.0"/"~> $version"/g "$podfilePath"
+          echo " ✅"
+      fi
+  else
+      echo " ❌"
+      echo "[!] ${bold}${red}error: ${reset}can not find file '$podfilePath'"
+      exit 1
+  fi
 }
 
 ##
 #   lastestBowVersion(): String
-#   - Return: latest bow version
+#   - Return: latest Bow version
 ##
 lastestBowVersion() {
   version=$(eval curl --silent \"$BOW_TAGS\" | grep name | tr -d "\n" | cut -d',' -f 1 | awk -F': "' '{print $2}' | awk -F'"' '{print $1}')
   echo $version
+}
+
+##
+#   checkCocoaPods() throws
+##
+checkCocoaPods() {
+  required='1.6.1'
+  podVersion=`pod --version`
+  minorPodVersionRequired=(`printf "$podVersion\n$required\n" | sort`)
+
+  if [ "$minorPodVersionRequired" != "$required" ]; then
+    echo "[!] ${bold}${red}error: ${reset}required cocoapods version ${bold}'$required'${normal} [found: ${red}'$podVersion'${reset}]"
+    echo ""
+    echo "Please ${bold}update your cocoapods${reset}. Run: 'sudo gem install cocoapods'"
+    echo ""
+    exit 1
+  fi
 }
 
 ##
@@ -73,18 +122,24 @@ playground() {
   cd $root
   echo -ne "${normal}Installing ${green}Playground ($projectName)${reset}..."
 
+  if [ -d "$projectName" ]; then
+    echo " ❌"
+    echo "[!] ${bold}${red}error: ${reset}destination path '$projectName' already exists and is not an empty directory."
+    exit 1
+  fi
+
   pod lib create "$projectName" --template-url="$NEF_TEMPLATE" 1> "$tempLog" 2>&1
-  makeStructure $projectFolder
+  makeStructure "$projectFolder"
   mv "$tempLog" "$log"
 
   error=`grep "Errno:" "$log"`
   fatalError=`grep "fatal:" "$log"`
+  gemError=`grep "LoadError" "$log"`
   otherErrors=`grep "[!]" "$log"`
 
-  if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
+  if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ] || [ "${#gemError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
     echo " ❌"
-    echo "[!] ${bold}${red}error: ${reset}${bold}building plaground ($projectName)${normal} review '$log' for more information."
-    cleanProject $projectFolder
+    echo "[!] ${bold}${red}error: ${reset}review '$log' for more information."
     exit 1
   else
     echo " ✅"
@@ -123,19 +178,26 @@ set -e
 root=`pwd`
 projectName=$DEFAULT_PLAYGROUND
 version=$(lastestBowVersion)
+branch=""
+podfile=""
 
 while [ "$1" != "" ]; do
     case $1 in
-        -v | --version | version )        shift; version=$1 ;;
-        -n | --name | name )              shift; projectName=$1 ;;
-        -p | --playground | playground )  shift; projectName=$1 ;;
-        -h | --help )                     printHelp $@; exit 1 ;;
-        * )                               printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
+        --bow-version | version )    shift; version=$1 ;;
+        --bow-branch | branch )      shift; branch=$1 ;;
+        --podfile | podfile )        shift; podfile=$1 ;;
+
+        --name | name )              shift; projectName=$1 ;;
+        --playground | playground )  shift; projectName=$1 ;;
+
+        -h | --help )                printHelp $@; exit 1 ;;
+        * )                          printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
     shift
 done
 
 projectFolder="$root/$projectName"
 
+checkCocoaPods
 playground "$root" "$projectName"
-setBowVersion "$projectFolder" "$version"
+setBowVersion "$projectFolder" "$version" "$branch" "$podfile"

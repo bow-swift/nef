@@ -21,9 +21,9 @@ reset=$(tput sgr0)
 ##
 printWrongArguments() {
     echo ""
-    echo "${bold}$1 ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
+    echo "${bold}nefc ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
     echo ""
-    echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected projec"
+    echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected project"
     echo "    ${bold}$DEPENDENCIES${normal}  builds dependencies in selected project"
     echo "    ${bold}$CLEAN${normal}  clean builds in selected project"
     echo ""
@@ -34,7 +34,7 @@ printWrongArguments() {
 ##
 printWrongConfig() {
     echo ""
-    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE ${normal}or ${bold}$DEPENDENCIES ${normal}or ${bold}$CLEAN"
+    echo "${bold}[!] ${normal}wrong configuration - should be ${bold}$COMPILE${normal} or ${bold}$DEPENDENCIES${normal} or ${bold}$CLEAN${normal}"
     echo ""
 }
 
@@ -166,7 +166,7 @@ buildPODS() {
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
         cd "$path"
 
-        pod install 1> "$log" 2>&1
+        pod install --repo-update 1> "$log" 2>&1
         installed=`grep "Pod installation complete" "$log"`
 
         if [ "${#installed}" -gt 0 ]; then
@@ -186,8 +186,8 @@ buildPODS() {
 ##
 addPlaygroundReference() {
     cd "$1"
+    playgroundForProjectPath "$1"
 
-    local playgrounds=$(playgroundForProjectPath "$1")
     local pattern="<FileRef"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
@@ -196,7 +196,7 @@ addPlaygroundReference() {
         ! [[ $workspace = .*".xcworkspace" ]] && continue
         grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
 
-        for playground in "${playgrounds[@]}"; do
+        for playground in "${playgroundForProjectPath[@]}"; do
             playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
             sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
         done
@@ -211,12 +211,12 @@ addPlaygroundReference() {
 playgroundForProjectPath() {
     cd "$1"
 
-    playgrounds=()
+    playgroundForProjectPath=()
     while read -r -d $'\0' playground; do
-        playgrounds+=("$playground")
+        playgroundForProjectPath+=("$playground")
     done < <(find . -name '*.playground' -print0)
 
-    echo $playgrounds
+    declare -p playgroundForProjectPath 1>/dev/null 2>/dev/null
 }
 
 ##
