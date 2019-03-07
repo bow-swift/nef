@@ -70,7 +70,7 @@ end
 ```
 
 ```bash
-nef playground --name MyPodsProject --Podfile ./folder/dependencies/Podfile
+nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
 ```
 
 The last three options are mutually exclusive.
