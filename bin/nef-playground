@@ -35,17 +35,18 @@ printHelp() {
 #: - Playground
 
 ##
-#   setBowVersion(String projectFolder, String version, String branch, String podfile)
+#   setDependency(String projectFolder, String projectName, String version, String branch, String podfile)
 #   - Parameter `projectFolder`: path to the project folder.
 #   - Parameter `version`: Bow's version which update Podfile.
 #   - Parameter `branch`: Bow's branch which update Podfile.
 #   - Parameter `podfile`
 ##
-setBowVersion() {
+setDependency() {
   local projectFolder="$1" # parameter `projectFolder`
-  local version="$2"       # parameter `version`
-  local branch="$3"        # parameter `branch`
-  local podfile="$4"       # parameter `podfile`
+  local projectName="$2"   # parameter `projectName`
+  local version="$3"       # parameter `version`
+  local branch="$4"        # parameter `branch`
+  local podfile="$5"       # parameter `podfile`
   local podfilePath="$projectFolder/Podfile"
 
   echo -ne "${normal}Updating ${green}"
@@ -62,8 +63,13 @@ setBowVersion() {
       elif [ "$podfile" != "" ] & [ -f "$podfile" ]; then
           podfileName=`echo "$podfile" | rev | cut -d'/' -f -1 | rev`
           echo -ne "podfile ($podfileName)${reset}..."
+          
           rm -rf "$podfilePath" 1>/dev/null 2>/dev/null
           cp "$podfile" "$podfilePath" 1>/dev/null 2>/dev/null
+
+          target=`cat "$podfilePath" | grep "target"`
+          sed -i '' s/"$target"/"target '$projectName' do"/g "$podfilePath"
+
           echo " ✅"
 
       # C. update Podfile using `version`
@@ -200,4 +206,4 @@ projectFolder="$root/$projectName"
 
 checkCocoaPods
 playground "$root" "$projectName"
-setBowVersion "$projectFolder" "$version" "$branch" "$podfile"
+setDependency "$projectFolder" "$projectName" "$version" "$branch" "$podfile"
