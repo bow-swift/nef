@@ -87,11 +87,10 @@ compile() {
 ##
 buildProject() {
     cd "$1" # parameter `folder`
-
     local logPath="nef/log"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        podProject=$(eval echo "\"$project\" | grep 'Pods.xcodeproj' | awk '{ print length; }'")
+        podProject=$(eval echo "\"$project\" | grep '/Pods.xcodeproj/' | awk '{ print length; }'")
         ! [ "$podProject" = "" ] && continue
 
         targetSection="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
@@ -105,6 +104,7 @@ buildProject() {
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
         xcodebuild -workspace "$workspace" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
+
         installed=`grep "BUILD SUCCEEDED" "$log"`
 
         if [ "${#installed}" -gt 0 ]; then
@@ -255,6 +255,11 @@ copyFrameworks() {
 
     cd $projectFolder
 
+    if [ ! -d "$DERIVED_DATA_DIR/build" ]; then
+      echo "Copy ${green}frameworks${reset} ❌"
+      exit 1
+    fi
+
     cp -a $(find "$DERIVED_DATA_DIR/build" -name '*.framework') nef/build/fw
     echo "Copy ${green}frameworks${reset} ✅"
 }
@@ -327,24 +332,24 @@ compilePlaygroundPages() {
 }
 
 ##
-#   compilePlaygroundPage(String folder, String playgroundName) throws
-#   - Parameter `folder`: path to the project folder.
+#   compilePlaygroundPage(String file, String playgroundName) throws
+#   - Parameter `file`: path to the playground's page.
 #   - Parameter `playgroundName`: playground page name (kind of: *.xcplaygroundpage)
 ##
 compilePlaygroundPage() {
     set +e
 
-    local file="$1"       # parameter `folder`
+    local file="$1"       # parameter `file`
     local playground="$2" # parameter `playgroundName`
     local log="nef/log/$playground.log"
 
-    xcrun swift -F "nef/build/fw" "$1" 1> "$log" 2>&1;
+    xcrun swift -F "nef/build/fw" "$file" 1> "$log" 2>&1;
 
     errors=`grep " error:" "$log"`
     [ "${#errors}" -eq 0 ] && return 0
 
     echo " ❌"
-    echo "$errors" | while read -r error; do echo "${bold}${red}error:${normal}${reset}$error"; done
+    echo "$errors" | while read -r error; do echo "${bold}${red}error: ${normal}${reset}$error"; done
     exit 1
 }
 
