@@ -1,0 +1,27 @@
+language: swift
+osx_image: xcode10
+
+env:
+  global:
+    - PROJECT="./markdown/JekyllMarkdown.xcodeproj"
+    - JOB="XCODE"
+    - DEST="arch=x86_64"
+    - SCHEME="Markup"
+    - SDK="macosx"
+    - ACTION="test"
+
+jobs:
+  include:
+    # No matrix support in Stages, but this is a matrix hack:
+    # Declare the same stage name multiple times to test multiple versions.
+    # Using a YAML alias to prevent redundancy.
+    # https://github.com/travis-ci/travis-ci/issues/8295#issuecomment-454167006
+    - &test
+      stage: test
+      script:
+        - set -o pipefail
+        - xcodebuild "$ACTION" -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" ONLY_ACTIVE_ARCH=NO -destination "$DEST" | xcpretty -c
+
+      #if: branch = master AND tag IS present
+      #script:
+      #  - sh ./bin/nef-release
