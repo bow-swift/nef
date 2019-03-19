@@ -63,13 +63,21 @@ setDependency() {
       elif [ "$podfile" != "" ] & [ -f "$podfile" ]; then
           podfileName=`echo "$podfile" | rev | cut -d'/' -f -1 | rev`
           echo -ne "podfile ($podfileName)${reset}..."
-          
+
           rm -rf "$podfilePath" 1>/dev/null 2>/dev/null
           cp "$podfile" "$podfilePath" 1>/dev/null 2>/dev/null
 
           target=`cat "$podfilePath" | grep "target"`
           sed -i '' s/"$target"/"target '$projectName' do"/g "$podfilePath"
 
+          platforms=()
+          platform=`cat "$podfilePath" | grep "platform"`
+          platform=`echo "$platform" | tr -s '\n' '\t'`
+          IFS=$'\t' read -r -a platforms <<< "$platform"
+          for platform in "${platforms[@]}"; do
+              sed -i '' s/"$platform"/"platform :osx, '10.14'"/g "$podfilePath"
+          done
+          
           echo " ✅"
 
       # C. update Podfile using `version`
