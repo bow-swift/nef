@@ -2,6 +2,7 @@
 
 LOG_PATH="/nef/docs"
 BASE_JEKYLL='docs'
+BASE_SIDEBAR='_data'
 SIDEBAR_FILE='sidebar.yml'
 
 #: terminal setup
@@ -41,7 +42,7 @@ generateDocumentation() {
     local sitePath="$2"
     local mainPagePath="$3"
 
-    makeStructure "$projectPath"
+    makeStructure "$projectPath" "$sitePath"
     buildMicrosite "$projectPath" "$sitePath"
     buildMainPage "$mainPagePath" "$sitePath"
 }
@@ -54,12 +55,8 @@ generateDocumentation() {
 buildMicrosite() {
     local projectPath="$1"
     local sitePath="$2/$BASE_JEKYLL"
-    local sidebarFolderPath="$2/_data"
-    local sidebarFilePath="$sidebarFolderPath/$SIDEBAR_FILE"
+    local sidebarFilePath="$2/$BASE_SIDEBAR/$SIDEBAR_FILE"
 
-    cleanStructure "$sitePath"
-    mkdir -p "$sitePath"
-    mkdir -p "$sidebarFolderPath"
     playgrounds "$projectPath"
 
     echo "options:" > "$sidebarFilePath" # sidebar start
@@ -86,7 +83,9 @@ buildMicrosite() {
             logFile="$LOG_PATH/$playgroundName-$pageName.log"
             log="$projectPath/$logFile"
 
+            cleanStructure "$output"
             mkdir -p "$output"
+
             nef-jekyll-page --from "$pagePath" --to "$output" --permalink "$permalink" 1> "$log" 2>&1
             echo -e "        - title: $pageName\n          url: $permalink\n" >> "$sidebarFilePath" # sidebar page
 
@@ -211,15 +210,21 @@ workspaceForProjectPath() {
 }
 
 ##
-#   makeStructure(String project)
+#   makeStructure(String project, String microsite)
 #   - Parameter `project`: path to the project folder.
+#   - Parameter `microsite`: path to the microsite folder.
 ##
 makeStructure() {
   set +e
   local logPath="$1/$LOG_PATH"  # parameter `project`
+  local sitePath="$2"           # parameter `site`
+  local sidebarFolderPath="$2/$BASE_SIDEBAR"
 
   cleanStructure "$logPath"
+  cleanStructure "$sitePath"
+
   mkdir -p "$logPath"
+  mkdir -p "$sidebarFolderPath"
 }
 
 cleanStructure() {
@@ -250,19 +255,32 @@ while [ "$1" != "" ]; do
 done
 
 if [ "$projectPath" == "" ]; then
-    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'project' argument is required"; exit 1
-elif [ "$sitePath" == "" ]; then
-    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'output' argument is required"; exit 1
-else
-    if [ -d "$root/$projectPath" ]; then
-      projectPath="$root/$projectPath"
-    fi
-    if [ -d "$root/$sitePath" ]; then
-      projectPath="$root/$sitePath"
-    fi
-    if [ -d "$root/$mainPagePath" ]; then
-      projectPath="$root/$mainPagePath"
-    fi
-
-    generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
+    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'project' argument is required";
+    exit 1
 fi
+
+if [ "$sitePath" == "" ]; then
+    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} 'output' argument is required";
+    exit 1
+fi
+
+# Fixes paths
+# 1. fix `projectPath`
+if [ -d "$root/$projectPath" ]; then
+  projectPath="$root/$projectPath"
+fi
+
+# 2. fix `mainPagePath`
+if [ -d "$root/$mainPagePath" ]; then
+  mainPagePath="$root/$mainPagePath"
+fi
+
+# 3. fix `sitePath`
+if [ -d "$root/$sitePath" ]; then
+  sitePath="$root/$sitePath"
+else
+  mkdir -p "$sitePath"
+  sitePath="$root/$sitePath"
+fi
+
+generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
