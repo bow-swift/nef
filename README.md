@@ -9,6 +9,7 @@
 `nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. You can run the following command to install `nef`:
 
 ```bash
+brew tap swift-bow/nef
 brew install nef
 ```
 
