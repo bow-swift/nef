@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bow-swift/nef.svg?branch=develop)](https://travis-ci.org/bow-swift/nef)
+
 # nef
 
 `nef`, short for [Nefertiti](https://en.wikipedia.org/wiki/Nefertiti), mother of Ankhesenamun, is a command line tool to ease the creation of documentation in the form of Swift Playgrounds. It provides compile-time verification of documentation and exports it in Markdown format that can be consumed by [Jekyll](https://jekyllrb.com/) to generate websites.
@@ -9,6 +11,7 @@
 `nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. You can run the following command to install `nef`:
 
 ```bash
+brew tap bow-swift/nef
 brew install nef
 ```
 
@@ -64,8 +67,8 @@ Your `Podfile`, located in `./folder/dependencies`:
 target 'MyPodsProject' do
   platform :osx, '10.14'
   use_frameworks!
-
-  pod 'Alamofire', '~> 4.0.0'
+  
+  pod 'Bow', '~> 0.3.0'
 end
 ```
 
