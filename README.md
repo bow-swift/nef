@@ -10,6 +10,7 @@
 
 ```bash
 brew tap bow-swift/nef
+
 brew install nef
 ```
 
