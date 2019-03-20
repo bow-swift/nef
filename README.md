@@ -65,8 +65,8 @@ Your `Podfile`, located in `./folder/dependencies`:
 target 'MyPodsProject' do
   platform :osx, '10.14'
   use_frameworks!
-
-  pod 'Alamofire', '~> 4.0.0'
+  
+  pod 'Bow', '~> 0.3.0'
 end
 ```
 
