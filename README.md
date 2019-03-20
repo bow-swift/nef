@@ -9,6 +9,7 @@
 `nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. You can run the following command to install `nef`:
 
 ```bash
+brew tap bow-swift/nef
 brew install nef
 ```
 
@@ -64,8 +65,8 @@ Your `Podfile`, located in `./folder/dependencies`:
 target 'MyPodsProject' do
   platform :osx, '10.14'
   use_frameworks!
-
-  pod 'Alamofire', '~> 4.0.0'
+  
+  pod 'Bow', '~> 0.3.0'
 end
 ```
 
