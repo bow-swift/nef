@@ -7,7 +7,7 @@ typealias SubstringType = (ouput: String, range: NSRange)
 
 extension String {
     func substring(pattern: String) -> SubstringType? {
-        let range = NSRange(location: 0, length: self.utf8.count)
+        let range = NSRange(location: 0, length: self.count)
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive),
               let match = regex.firstMatch(in: self, options: [], range: range) else { return nil }
 
