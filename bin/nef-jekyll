@@ -219,12 +219,14 @@ makeStructure() {
   local logPath="$1/$LOG_PATH"  # parameter `project`
   local sitePath="$2"           # parameter `site`
   local sidebarFolderPath="$2/$BASE_SIDEBAR"
+  local baseJekyllPath="$sitePath/$BASE_JEKYLL"
 
   cleanStructure "$logPath"
-  cleanStructure "$sitePath"
+  cleanStructure "$baseJekyllPath"
 
   mkdir -p "$logPath"
   mkdir -p "$sidebarFolderPath"
+  mkdir -p "$baseJekyllPath"
 }
 
 cleanStructure() {
