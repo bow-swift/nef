@@ -96,12 +96,12 @@ class MarkupSyntaxTests: XCTestCase {
         let input = """
                     /*:
                     // nef:begin:hidden
-                    This is a visible markup multiline
+                    This is a visible 👀 markup multiline ©
                     // nef:end
                      */
 
                     """
-        let expected: [Node] = [.markup(description: .some(""), "This is a visible markup multiline\n")]
+        let expected: [Node] = [.markup(description: .some(""), "This is a visible 👀 markup multiline ©\n")]
 
         let result = Markup.SyntaxAnalyzer.parse(content: input)
 
