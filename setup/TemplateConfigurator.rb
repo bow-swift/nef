@@ -13,7 +13,8 @@ module Pod
     end
 
     def run
-      ConfigureBow.perform(configurator: self)
+      clean_files
+      ConfigureNef.perform(configurator: self)
 
       replace_variables_in_files
       clean_template_files
@@ -45,8 +46,14 @@ module Pod
       end
     end
 
-    def clean_template_files
+    def clean_files
       [".git", ".gitignore", ".travis.yml", "LICENSE", "README.md", "bin", "configure", "lib", "markdown", "setup", "template"].each do |asset|
+        `rm -rf #{asset}`
+      end
+    end
+
+    def clean_template_files
+      ["template"].each do |asset|
         `rm -rf #{asset}`
       end
     end

@@ -1,6 +1,6 @@
 module Pod
 
-  class ConfigureBow
+  class ConfigureNef
     attr_reader :configurator
 
     def self.perform(options)
