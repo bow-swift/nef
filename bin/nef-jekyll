@@ -273,16 +273,22 @@ if [ -d "$root/$projectPath" ]; then
 fi
 
 # 2. fix `mainPagePath`
-if [ -d "$root/$mainPagePath" ]; then
+if [ -f "$root/$mainPagePath" ]; then
   mainPagePath="$root/$mainPagePath"
 fi
 
 # 3. fix `sitePath`
-if [ -d "$root/$sitePath" ]; then
+if [ -d "$sitePath" ]; then
+  sitePath="$sitePath"
+elif [ -d "$root/$sitePath" ]; then
   sitePath="$root/$sitePath"
 else
   mkdir -p "$sitePath"
   sitePath="$root/$sitePath"
 fi
+
+echo "$projectPath"
+echo "$sitePath"
+echo "$mainPagePath"
 
 generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
