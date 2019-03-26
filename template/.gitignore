@@ -1,6 +1,7 @@
 ## gitignore nef files
 **/build/
 **/nef/
+LICENSE
 
 ## User data
 **/xcuserdata/

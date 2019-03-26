@@ -67,7 +67,7 @@ Your `Podfile`, located in `./folder/dependencies`:
 target 'MyPodsProject' do
   platform :osx, '10.14'
   use_frameworks!
-  
+
   pod 'Bow', '~> 0.3.0'
 end
 ```
@@ -154,7 +154,7 @@ You can contribute in different ways to make `nef` better:
 
 # ⚖️ License
 
-    Copyright (C) 2019 The Bow Authors
+    Copyright (C) 2019 The nef Authors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
