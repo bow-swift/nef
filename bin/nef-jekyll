@@ -285,8 +285,4 @@ else
   sitePath="$root/$sitePath"
 fi
 
-echo "$projectPath"
-echo "$sitePath"
-echo "$mainPagePath"
-
 generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
