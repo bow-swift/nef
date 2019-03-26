@@ -46,7 +46,7 @@ module Pod
     end
 
     def clean_template_files
-      ["./**/.git", "./**/.travis.yml", "configure", "LICENSE", "template", "bin", "README.md", "setup", "markdown", "lib"].each do |asset|
+      [".git", ".travis.yml", "LICENSE", "README.md", "bin", "configure", "lib", "markdown", "setup", "template"].each do |asset|
         `rm -rf #{asset}`
       end
     end
