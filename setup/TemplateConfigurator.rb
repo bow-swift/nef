@@ -13,7 +13,7 @@ module Pod
     end
 
     def run
-      clean_files
+      clean_unuseful_files
       ConfigureNef.perform(configurator: self)
 
       replace_variables_in_files
@@ -46,7 +46,7 @@ module Pod
       end
     end
 
-    def clean_files
+    def clean_unuseful_files
       [".git", ".gitignore", ".travis.yml", "LICENSE", "README.md", "bin", "configure", "lib", "markdown", "setup"].each do |asset|
         `rm -rf #{asset}`
       end

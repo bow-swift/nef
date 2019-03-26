@@ -21,6 +21,7 @@ module Pod
       }).run
 
       `mv ./template/* ./`
+      `mv template/.gitignore ./`
     end
   end
 
