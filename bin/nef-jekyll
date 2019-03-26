@@ -278,9 +278,7 @@ if [ -f "$root/$mainPagePath" ]; then
 fi
 
 # 3. fix `sitePath`
-if [ -d "$sitePath" ]; then
-  sitePath="$sitePath"
-elif [ -d "$root/$sitePath" ]; then
+if [ -d "$root/$sitePath" ]; then
   sitePath="$root/$sitePath"
 else
   mkdir -p "$sitePath"
