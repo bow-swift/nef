@@ -13,7 +13,8 @@ module Pod
     end
 
     def run
-      ConfigureBow.perform(configurator: self)
+      clean_unuseful_files
+      ConfigureNef.perform(configurator: self)
 
       replace_variables_in_files
       clean_template_files
@@ -23,7 +24,7 @@ module Pod
     #----------------------------------------#
 
     def replace_variables_in_files
-      file_names = [podfile_path]
+      file_names = [podfile_path, license_path]
       file_names.each do |file_name|
         text = File.read(file_name)
         text.gsub!("${POD_NAME}", @pod_name)
@@ -45,8 +46,14 @@ module Pod
       end
     end
 
+    def clean_unuseful_files
+      [".git", ".gitignore", ".travis.yml", "LICENSE", "README.md", "bin", "configure", "lib", "markdown", "setup"].each do |asset|
+        `rm -rf #{asset}`
+      end
+    end
+
     def clean_template_files
-      ["./**/.git", "./**/.travis.yml", "configure", "LICENSE", "template", "bin", "README.md", "setup", "markdown", "lib"].each do |asset|
+      ["template"].each do |asset|
         `rm -rf #{asset}`
       end
     end
@@ -86,6 +93,10 @@ module Pod
 
     def podfile_path
       'Podfile'
+    end
+
+    def license_path
+      'LICENSE'
     end
 
     #----------------------------------------#
