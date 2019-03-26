@@ -24,7 +24,7 @@ module Pod
     #----------------------------------------#
 
     def replace_variables_in_files
-      file_names = [podfile_path]
+      file_names = [podfile_path, license_path]
       file_names.each do |file_name|
         text = File.read(file_name)
         text.gsub!("${POD_NAME}", @pod_name)
@@ -93,6 +93,10 @@ module Pod
 
     def podfile_path
       'Podfile'
+    end
+
+    def license_path
+      'LICENSE'
     end
 
     #----------------------------------------#
