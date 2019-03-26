@@ -47,7 +47,7 @@ module Pod
     end
 
     def clean_files
-      [".git", ".gitignore", ".travis.yml", "LICENSE", "README.md", "bin", "configure", "lib", "markdown", "setup", "template"].each do |asset|
+      [".git", ".gitignore", ".travis.yml", "LICENSE", "README.md", "bin", "configure", "lib", "markdown", "setup"].each do |asset|
         `rm -rf #{asset}`
       end
     end
