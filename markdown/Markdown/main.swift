@@ -105,8 +105,9 @@ private func arguments() -> (from: String, to: String)? {
     }
 
     if let from = from, let to = to {
-        var filename = from.components(separatedBy: "/")[from.count-2]
-        filename = filename.components(separatedBy: ".").dropLast().joined(separator: ".")
+        let filenameComponentes = from.components(separatedBy: "/")
+        let filenameWithExtension = filenameComponentes[filenameComponentes.count-2]
+        let filename = filenameWithExtension.components(separatedBy: ".").dropLast().joined(separator: ".")
 
         return (from, "\(to)/\(filename).md")
     } else {

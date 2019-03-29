@@ -61,6 +61,16 @@
             ReferencedContainer = "container:Markdown.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--from &quot;/Users/miguelangel/Desktop/BowPlayground/BowPlayground.playground/Pages/page.xcplaygroundpage&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--to &quot;/Users/miguelangel/Desktop&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
