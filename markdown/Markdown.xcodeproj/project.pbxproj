@@ -10,7 +10,8 @@
 		8B03C3422226A8C300EE4197 /* MarkupJekyllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */; };
 		8B424B26224E290800AF9010 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
 		8B424B28224E292200AF9010 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B27224E292200AF9010 /* main.swift */; };
-		8B424B2A224E2B2800AF9010 /* MarkupMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */; };
+		8B424B2C224E320600AF9010 /* MarkupUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B2B224E320600AF9010 /* MarkupUtils.swift */; };
+		8B424B2E224E361800AF9010 /* MarkupMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */; };
 		8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB92221F04A60001DCA2 /* MarkupRender.swift */; };
 		8B66EB9B221F04A70001DCA2 /* MarkupJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */; };
 		8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */; };
@@ -60,6 +61,7 @@
 		8B424B1F224E28FC00AF9010 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B424B27224E292200AF9010 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupMarkdown.swift; sourceTree = "<group>"; };
+		8B424B2B224E320600AF9010 /* MarkupUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupUtils.swift; sourceTree = "<group>"; };
 		8B66EB90221F04A60001DCA2 /* Markup-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Markup-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B66EB92221F04A60001DCA2 /* MarkupRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupRender.swift; sourceTree = "<group>"; };
 		8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupJekyll.swift; sourceTree = "<group>"; };
@@ -134,8 +136,9 @@
 			isa = PBXGroup;
 			children = (
 				8B66EB92221F04A60001DCA2 /* MarkupRender.swift */,
-				8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */,
 				8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */,
+				8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */,
+				8B424B2B224E320600AF9010 /* MarkupUtils.swift */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -342,7 +345,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B424B2A224E2B2800AF9010 /* MarkupMarkdown.swift in Sources */,
 				8B424B28224E292200AF9010 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,6 +371,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */,
+				8B424B2C224E320600AF9010 /* MarkupUtils.swift in Sources */,
+				8B424B2E224E361800AF9010 /* MarkupMarkdown.swift in Sources */,
 				8B66EB9E221F04A70001DCA2 /* MarkupLexical.swift in Sources */,
 				8B66EB9D221F04A70001DCA2 /* MarkupNode.swift in Sources */,
 				8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */,
