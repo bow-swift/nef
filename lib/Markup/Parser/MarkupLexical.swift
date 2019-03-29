@@ -27,11 +27,11 @@ struct LexicalAnalyzer {
     // MARK: helpers
     private enum Regex {
         static let nef = (begin: "//[ ]*nef:begin:[a-z]+\n", end: "//[ ]*nef:end[ ]*\n")
-        static let multiMarkup = (begin: "/\\*:.*\n")
+        static let multiMarkup = "/\\*:.*\n"
         static let markup = "^[ ]*//:.*\n"
         static let comment = "^[ ]*//.*\n"
-        static let multiComment = (begin: "/\\*.*\n")
-        static let markupComment = (end: "\\*/\n")
+        static let multiComment = "/\\*.*\n"
+        static let markupComment = "\\*/\n"
         static let line = ".*\n"
     }
 
@@ -43,7 +43,7 @@ struct LexicalAnalyzer {
         if let _ = line.substring(pattern: Regex.nef.end) {
             return Token.nefEnd
         }
-        if let markupBegin = line.substring(pattern: Regex.multiMarkup.begin) {
+        if let markupBegin = line.substring(pattern: Regex.multiMarkup) {
             let description = markupBegin.ouput.clean("/*:", "\n").trimmingWhitespaces
             return Token.markupBegin(description: description)
         }
@@ -53,10 +53,10 @@ struct LexicalAnalyzer {
         if let _ = line.substring(pattern: Regex.comment) {
             return Token.comment
         }
-        if let _ = line.substring(pattern: Regex.multiComment.begin) {
+        if let _ = line.substring(pattern: Regex.multiComment) {
             return Token.commentBegin(delimiter: line)
         }
-        if let _ = line.substring(pattern: Regex.markupComment.end) {
+        if let _ = line.substring(pattern: Regex.markupComment) {
             return Token.markupCommentEnd(delimiter: line)
         }
 
