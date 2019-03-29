@@ -1,6 +1,6 @@
 import Foundation
 
-public struct JekyllGenerator: Render {
+public struct JekyllGenerator: InternalRender {
     let permalink: String
     
     public init(permalink: String) {
@@ -20,33 +20,13 @@ extension Node {
         case let .nef(command, nodes):
             return command.jekyll(nodes: nodes, permalink: permalink)
 
-        case let .markup(_, text):
-            let textJekyll = text.components(separatedBy: "\n").map { line in
-                guard (line.substring(pattern: "^[ ]*[#]+.*") != nil) else { return line }
-                return line.trimmingLeftWhitespaces
-            }.joined(separator: "\n")
-
-            return "\n\(textJekyll)"
-
-        case let .block(nodes):
-            let nodesJekyll = nodes.map { $0.jekyll() }.joined()
-            guard !nodesJekyll.isEmpty else { return "" }
-            return "\n```swift\n\(nodesJekyll)```\n"
-            
-        case let .raw(description):
-            return description
-        }
-    }
-
-    var isHidden: Bool {
-        switch self {
-        case let .nef(command, _): return command == .hidden
-        default: return false
+        default:
+            return markdown()
         }
     }
 }
 
-private extension Node.Nef.Command {
+extension Node.Nef.Command {
     func jekyll(nodes: [Node], permalink: String) -> String {
         switch self {
         case .header:
@@ -63,19 +43,6 @@ private extension Node.Nef.Command {
             return ""
         case .invalid:
             fatalError("Found .invalid command in nef: \(nodes).")
-        }
-    }
-}
-
-private extension Node.Code {
-    func jekyll() -> String {
-        switch self {
-        case let .code(code):
-            return code
-
-        case let .comment(text):
-            guard !text.clean(" ", "\n").isEmpty else { return "" }
-            return text
         }
     }
 }
