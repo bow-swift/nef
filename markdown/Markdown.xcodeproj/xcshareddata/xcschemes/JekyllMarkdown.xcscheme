@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-               BuildableName = "libMarkup.a"
-               BlueprintName = "Markup"
-               ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
+               BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
+               BuildableName = "JekyllMarkdown"
+               BlueprintName = "JekyllMarkdown"
+               ReferencedContainer = "container:Markdown.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,46 +26,23 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      systemAttachmentLifetime = "keepNever"
-      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B66EBB0221FFF4F0001DCA2"
-               BuildableName = "MarkupTests.xctest"
-               BlueprintName = "MarkupTests"
-               ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
+            BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
+            BuildableName = "JekyllMarkdown"
+            BlueprintName = "JekyllMarkdown"
+            ReferencedContainer = "container:Markdown.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -74,15 +51,30 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
+            BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
+            BuildableName = "JekyllMarkdown"
+            BlueprintName = "JekyllMarkdown"
+            ReferencedContainer = "container:Markdown.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--from &quot;/Users/miguelangel/Desktop/BowPlayground/BowPlayground.playground/Pages/page.xcplaygroundpage&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--to &quot;/Users/miguelangel/Desktop&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--permalink &quot;/docs/testing/2&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -92,15 +84,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
+            BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
+            BuildableName = "JekyllMarkdown"
+            BlueprintName = "JekyllMarkdown"
+            ReferencedContainer = "container:Markdown.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
