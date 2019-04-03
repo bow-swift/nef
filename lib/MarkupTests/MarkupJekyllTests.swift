@@ -1,3 +1,5 @@
+//  Copyright © 2019 The nef Authors.
+
 import XCTest
 @testable import Markup
 
