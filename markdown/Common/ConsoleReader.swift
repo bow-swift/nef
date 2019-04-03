@@ -1,12 +1,15 @@
+//  Copyright © 2019 The nef Authors.
+
 import Foundation
 
+/// Protocol to define the `Console Output`
 protocol ConsoleOutput {
     func printError()
     func printSuccess()
     func printHelp()
 }
 
-/// Console output
+/// Console
 ///
 /// - error: show general error. The script fails.
 /// - success: show general success. The script finishes successfully.
@@ -24,7 +27,6 @@ enum Console: ConsoleOutput {
         }
     }
 }
-
 
 /// Get the parameters from the command line to configure the script.
 ///
@@ -57,9 +59,9 @@ func arguments(keys: String...) -> [String: String] {
 
     while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
         let match = keys.enumerated().first { (index, _) in opt == Int32(index) }
-        if let key = match?.element {
-            result[key] = String(cString: optarg)
-        }
+        guard let key = match?.element else { return [:] }
+
+        result[key] = String(cString: optarg)
     }
 
     return result

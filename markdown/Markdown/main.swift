@@ -1,3 +1,5 @@
+//  Copyright © 2019 The nef Authors.
+
 import Foundation
 import Markup
 
@@ -5,10 +7,14 @@ let scriptName = "nef-markdown-page"
 
 func main() {
     let result = arguments(keys: "from", "to")
-    guard let from = result["from"], let to = result["to"] else { Console.help.show(); exit(-1) }
+    guard let fromPage = result["from"],
+          let output = result["to"] else { Console.help.show(); exit(-1) }
+
+    let from = "\(fromPage)/Contents.swift"
+    let to = "\(output)/\(PlaygroundUtils.playgroundName(fromPage: fromPage)).md"
+
     renderMarkdown(from: from, to: to)
 }
-
 
 /// Method to render a page into Markdown format.
 ///
@@ -25,9 +31,6 @@ func renderMarkdown(from filePath: String, to outputPath: String) {
 
     Console.success.show()
 }
-
-
-
 
 // #: - MAIN <launcher>
 main()

@@ -1,10 +1,4 @@
-//
-//  Console.swift
-//  Markdown
-//
-//  Created by Miguel Ángel Díaz on 29/03/2019.
-//  Copyright © 2019 47 Degrees. All rights reserved.
-//
+//  Copyright © 2019 The nef Authors.
 
 import Foundation
 
