@@ -8,7 +8,10 @@ let scriptName = "nef-markdown-page"
 func main() {
     let result = arguments(keys: "from", "to")
     guard let fromPage = result["from"],
-          let output = result["to"] else { Console.help.show(); exit(-1) }
+          let output = result["to"] else {
+            Console.help.show();
+            exit(-1)
+    }
 
     let from = "\(fromPage)/Contents.swift"
     let to = "\(output)/\(PlaygroundUtils.playgroundName(fromPage: fromPage)).md"

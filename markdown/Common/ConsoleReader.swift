@@ -9,6 +9,12 @@ protocol ConsoleOutput {
     func printHelp()
 }
 
+extension ConsoleOutput {
+    func printSuccess() {
+        print("RENDER SUCCEEDED")
+    }
+}
+
 /// Console
 ///
 /// - error: show general error. The script fails.

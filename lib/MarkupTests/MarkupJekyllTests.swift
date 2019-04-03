@@ -97,5 +97,5 @@ class MarkupJekyllTests: XCTestCase {
 
         XCTAssertEqual(result, expected)
     }
-
+    
 }

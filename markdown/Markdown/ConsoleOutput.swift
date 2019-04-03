@@ -3,12 +3,9 @@
 import Foundation
 
 extension ConsoleOutput {
+
     func printError() {
         print("error:\(scriptName) could not render the Markdown file ❌")
-    }
-
-    func printSuccess() {
-        print("RENDER SUCCEEDED")
     }
 
     func printHelp() {
@@ -21,4 +18,3 @@ extension ConsoleOutput {
              """)
     }
 }
-

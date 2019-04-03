@@ -17,6 +17,7 @@
 		8B424B912254AA3000AF9010 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B902254AA3000AF9010 /* ConsoleOutput.swift */; };
 		8B424BA12254AEC300AF9010 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
 		8B424BA22254AEC300AF9010 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
+		8B424BA42254B26300AF9010 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
 		8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB92221F04A60001DCA2 /* MarkupRender.swift */; };
 		8B66EB9B221F04A70001DCA2 /* MarkupJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */; };
 		8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */; };
@@ -386,6 +387,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B424BA42254B26300AF9010 /* ConsoleReader.swift in Sources */,
 				8B424BA12254AEC300AF9010 /* PlaygroundUtils.swift in Sources */,
 				8B424B912254AA3000AF9010 /* ConsoleOutput.swift in Sources */,
 				8B6FC589221ECE6A008F7694 /* main.swift in Sources */,
