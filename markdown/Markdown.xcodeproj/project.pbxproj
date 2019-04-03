@@ -18,6 +18,7 @@
 		8B424BA12254AEC300AF9010 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
 		8B424BA22254AEC300AF9010 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
 		8B424BA42254B26300AF9010 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
+		8B424BB22254C3B500AF9010 /* MarkupMarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */; };
 		8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB92221F04A60001DCA2 /* MarkupRender.swift */; };
 		8B66EB9B221F04A70001DCA2 /* MarkupJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */; };
 		8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */; };
@@ -72,6 +73,7 @@
 		8B424B32224E602200AF9010 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B424B902254AA3000AF9010 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundUtils.swift; sourceTree = "<group>"; };
+		8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupMarkdownTests.swift; sourceTree = "<group>"; };
 		8B66EB90221F04A60001DCA2 /* Markup-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Markup-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B66EB92221F04A60001DCA2 /* MarkupRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupRender.swift; sourceTree = "<group>"; };
 		8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupJekyll.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */,
+				8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */,
 				8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */,
 				8B66EBBE221FFF760001DCA2 /* Info.plist */,
 			);
@@ -380,6 +383,7 @@
 			files = (
 				8B03C3422226A8C300EE4197 /* MarkupJekyllTests.swift in Sources */,
 				8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */,
+				8B424BB22254C3B500AF9010 /* MarkupMarkdownTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
