@@ -28,35 +28,31 @@ module Pod
       @project = Xcodeproj::Project.open(@xcodeproj_path)
       @project.save
 
-      rename_files
-      rename_project_folder
+      rename_files(project_folder + "/ios")
+      rename_files(project_folder + "/osx")
+      rename_project_folder(project_folder + "/ios")
+      rename_project_folder(project_folder + "/osx")
     end
 
     def project_folder
       File.dirname @xcodeproj_path
     end
 
-    def rename_files
+    def rename_files(projectFolder)
       # shared schemes have project specific names
-      scheme_path = project_folder + "/PROJECT.xcodeproj/xcshareddata/xcschemes/"
-      File.rename(scheme_path + "PROJECT-mac.xcscheme", scheme_path +  @configurator.pod_name + "-mac.xcscheme")
-      File.rename(scheme_path + "PROJECT-ios.xcscheme", scheme_path +  @configurator.pod_name + "-ios.xcscheme")
+      scheme_path = projectFolder + "/PROJECT.xcodeproj/xcshareddata/xcschemes/"
+      File.rename(scheme_path + "PROJECT.xcscheme", scheme_path +  @configurator.pod_name + ".xcscheme")
 
       # rename xcproject
-      File.rename(project_folder + "/PROJECT.xcodeproj", project_folder + "/" +  @configurator.pod_name + ".xcodeproj")
+      File.rename(projectFolder + "/PROJECT.xcodeproj", projectFolder + "/" +  @configurator.pod_name + ".xcodeproj")
 
       # rename playground
-      File.rename(project_folder + "/PROJECT-mac.playground", project_folder + "/" +  @configurator.pod_name + "-mac.playground")
-      File.rename(project_folder + "/PROJECT-ios.playground", project_folder + "/" +  @configurator.pod_name + "-ios.playground")
+      File.rename(projectFolder + "/PROJECT.playground", projectFolder + "/" +  @configurator.pod_name + ".playground")
     end
 
-    def rename_project_folder
-      if Dir.exist? project_folder + "/PROJECT-mac"
-        File.rename(project_folder + "/PROJECT-mac", project_folder + "/" + @configurator.pod_name + "-mac")
-      end
-
-      if Dir.exist? project_folder + "/PROJECT-ios"
-        File.rename(project_folder + "/PROJECT-ios", project_folder + "/" + @configurator.pod_name + "-ios")
+    def rename_project_folder(projectFolder)
+      if Dir.exist? projectFolder + "/PROJECT"
+        File.rename(projectFolder + "/PROJECT", projectFolder + "/" + @configurator.pod_name)
       end
     end
 

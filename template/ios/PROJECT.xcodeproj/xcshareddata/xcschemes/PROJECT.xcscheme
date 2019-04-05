@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8BACBE8222576CAD00266845"
-               BuildableName = "PROJECT_ios.framework"
-               BlueprintName = "PROJECT-ios"
+               BuildableName = "PROJECT.framework"
+               BlueprintName = "PROJECT"
                ReferencedContainer = "container:PROJECT.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BACBE8222576CAD00266845"
-            BuildableName = "PROJECT_ios.framework"
-            BlueprintName = "PROJECT-ios"
+            BuildableName = "PROJECT.framework"
+            BlueprintName = "PROJECT"
             ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BACBE8222576CAD00266845"
-            BuildableName = "PROJECT_ios.framework"
-            BlueprintName = "PROJECT-ios"
+            BuildableName = "PROJECT.framework"
+            BlueprintName = "PROJECT"
             ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
