@@ -28,31 +28,29 @@ module Pod
       @project = Xcodeproj::Project.open(@xcodeproj_path)
       @project.save
 
-      rename_files(project_folder + "/ios")
-      rename_files(project_folder + "/osx")
-      rename_project_folder(project_folder + "/ios")
-      rename_project_folder(project_folder + "/osx")
+      rename_files
+      rename_project_folder
     end
 
     def project_folder
       File.dirname @xcodeproj_path
     end
 
-    def rename_files(projectFolder)
+    def rename_files
       # shared schemes have project specific names
-      scheme_path = projectFolder + "/PROJECT.xcodeproj/xcshareddata/xcschemes/"
+      scheme_path = project_folder + "/PROJECT.xcodeproj/xcshareddata/xcschemes/"
       File.rename(scheme_path + "PROJECT.xcscheme", scheme_path +  @configurator.pod_name + ".xcscheme")
 
       # rename xcproject
-      File.rename(projectFolder + "/PROJECT.xcodeproj", projectFolder + "/" +  @configurator.pod_name + ".xcodeproj")
+      File.rename(project_folder + "/PROJECT.xcodeproj", project_folder + "/" +  @configurator.pod_name + ".xcodeproj")
 
       # rename playground
-      File.rename(projectFolder + "/PROJECT.playground", projectFolder + "/" +  @configurator.pod_name + ".playground")
+      File.rename(project_folder + "/PROJECT.playground", project_folder + "/" +  @configurator.pod_name + ".playground")
     end
 
-    def rename_project_folder(projectFolder)
-      if Dir.exist? projectFolder + "/PROJECT"
-        File.rename(projectFolder + "/PROJECT", projectFolder + "/" + @configurator.pod_name)
+    def rename_project_folder
+      if Dir.exist? project_folder + "/PROJECT"
+        File.rename(project_folder + "/PROJECT", project_folder + "/" + @configurator.pod_name)
       end
     end
 
