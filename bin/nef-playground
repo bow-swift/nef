@@ -37,6 +37,7 @@ printHelp() {
 ##
 #   setDependency(String projectFolder, String projectName, String version, String branch, String podfile)
 #   - Parameter `projectFolder`: path to the project folder.
+#   - Parameter `projectName`: the project name.
 #   - Parameter `version`: Bow's version which update Podfile.
 #   - Parameter `branch`: Bow's branch which update Podfile.
 #   - Parameter `podfile`
@@ -67,13 +68,8 @@ setDependency() {
           rm -rf "$podfilePath" 1>/dev/null 2>/dev/null
           cp "$podfile" "$podfilePath" 1>/dev/null 2>/dev/null
 
-          platforms=()
-          platform=`cat "$podfilePath" | grep "platform"`
-          platform=`echo "$platform" | tr -s '\n' '\t'`
-          IFS=$'\t' read -r -a platforms <<< "$platform"
-
           target=`cat "$podfilePath" | grep "target"`
-          sed -i '' s/"$target"/"target '$projectName-ios' do"/g "$podfilePath"
+          sed -i '' s/"$target"/"target '$projectName' do"/g "$podfilePath"
 
           echo " ✅"
 
@@ -83,10 +79,44 @@ setDependency() {
           sed -i '' s/"~> 0.0.0"/"~> $version"/g "$podfilePath"
           echo " ✅"
       fi
+
+      setPlaygroundPlatform "$projectFolder" "$projectName" "$podfilePath"
   else
       echo " ❌"
       echo "[!] ${bold}${red}error: ${reset}can not find file '$podfilePath'"
       exit 1
+  fi
+}
+
+##
+#   setPlaygroundPlatform(String projectFolder, String projectName, String podfilePath)
+#   - Parameter `projectFolder`: path to the project folder.
+#   - Parameter `projectName`: the project name.
+#   - Parameter `podfilePath`: path to the podfile inside project.
+##
+setPlaygroundPlatform() {
+  local projectFolder="$1" # parameter `projectFolder`
+  local projectName="$2"   # parameter `projectName`
+  local podfilePath="$3"   # parameter `podfilePath`
+
+  echo -ne "${normal}Selecting the ${green}target${reset} for the playgrounds"
+
+  platform=`cat "$podfilePath" | grep -m 1 "platform" | cut -d':' -f 2 | cut -d',' -f 1`
+
+  if [ "ios" = $platform ]; then
+    mv "$projectFolder/$projectName-ios.playground" "$projectFolder/$projectName.playground"
+    rm -rf "$projectFolder/$projectName-mac.playground"
+    echo " ✅"
+
+  elif [ "osx" = $platform ]; then
+    mv "$projectFolder/$projectName-mac.playground" "$projectFolder/$projectName.playground"
+    rm -rf "$projectFolder/$projectName-ios.playground"
+    echo " ✅"
+
+  else
+    echo " ❌"
+    echo "[!] ${bold}${red}error: ${reset}please define a platform (ios | osx) in podfile '$podfilePath'"
+    exit 1
   fi
 }
 
