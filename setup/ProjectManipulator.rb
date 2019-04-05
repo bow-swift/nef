@@ -46,7 +46,8 @@ module Pod
       File.rename(project_folder + "/PROJECT.xcodeproj", project_folder + "/" +  @configurator.pod_name + ".xcodeproj")
 
       # rename playground
-      File.rename(project_folder + "/PROJECT.playground", project_folder + "/" +  @configurator.pod_name + ".playground")
+      File.rename(project_folder + "/PROJECT-mac.playground", project_folder + "/" +  @configurator.pod_name + "-mac.playground")
+      File.rename(project_folder + "/PROJECT-ios.playground", project_folder + "/" +  @configurator.pod_name + "-ios.playground")
     end
 
     def rename_project_folder
