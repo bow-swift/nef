@@ -50,8 +50,12 @@ module Pod
     end
 
     def rename_project_folder
-      if Dir.exist? project_folder + "/PROJECT"
-        File.rename(project_folder + "/PROJECT", project_folder + "/" + @configurator.pod_name)
+      if Dir.exist? project_folder + "/PROJECT-mac"
+        File.rename(project_folder + "/PROJECT-mac", project_folder + "/" + @configurator.pod_name + "-mac")
+      end
+
+      if Dir.exist? project_folder + "/PROJECT-ios"
+        File.rename(project_folder + "/PROJECT-ios", project_folder + "/" + @configurator.pod_name + "-ios")
       end
     end
 
