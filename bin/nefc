@@ -376,24 +376,31 @@ compilePlaygroundPages() {
 }
 
 ##
-#   compilePlaygroundPage(String file, String playgroundName, String playground) throws
-#   - Parameter `file`: path to the playground's page.
+#   compilePlaygroundPage(String file, String playgroundName, String playgroundPage) throws
+#   - Parameter `file`: path to file to compile
 #   - Parameter `playgroundName`: playground page name (kind of: *.xcplaygroundpage)
-#   - Parameter `playground`
+#   - Parameter `playgroundPage`: path to the original playground's page
 ##
 compilePlaygroundPage() {
     set +e
 
     local file="$1"           # parameter `file`
     local playgroundName="$2" # parameter `playgroundName`
-    local playground="$3"     # parameter `playground`
+    local playgroundPage="$3" # parameter `playground`
+
+    local llog="nef/log/$playgroundName-dlyb.log"
     local log="nef/log/$playgroundName.log"
-    local platformIOS=$(isPlatfromIOSPlaygroundPage "$playground")
+
+    local platformIOS=$(isPlatfromIOSPlaygroundPage "$playgroundPage")
+    local sources="$playgroundPage/../../Sources/*"
+    local staticLib="$playgroundName-$playgroundPage-"$(uuidgen)
 
     if [ "$platformIOS" -eq "0" ]; then
-      xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" "$file" 1> "$log" 2>&1;
+      xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module $sources -o "nef/build/fw/$staticLib" 1> "$llog" 2>&1;
+      xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -static-executable "nef/build/fw/$staticLib" "$file" 1> "$log" 2>&1;
     else
-      xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" "$file" 1> "$log" 2>&1;
+      xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module $sources -o "nef/build/fw/$staticLib" 1> "$llog" 2>&1;
+      xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -static-executable "nef/build/fw/$staticLib" "$file" 1> "$log" 2>&1;
     fi
 
     errors=`grep " error:" "$log"`
