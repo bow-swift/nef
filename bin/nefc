@@ -320,7 +320,7 @@ makeHeaders() {
     local playground=$2 # parameter `playgroundName`
     local output="nef/build/$playground.swift"
 
-    libs=(`xcrun swiftc -emit-imported-modules "$content" | sort -r`)
+    libs=(`xcrun swiftc -emit-imported-modules "$content" | sort -r | grep -vE PlaygroundSupport`)
 
     local remove=()
     local imports=""
