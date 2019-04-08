@@ -114,13 +114,13 @@ setPlaygroundPlatform() {
     rm -rf "$projectFolder/osx"
     mv $projectFolder/ios/* $projectFolder
     rm -rf "$projectFolder/ios"
-    echo " ${green}ios${reset} ✅"
+    echo " ${green}iOS${reset} ✅"
 
   elif [ "osx" = $platform ]; then
     rm -rf "$projectFolder/ios" 1>/dev/null 2>/dev/null
     mv $projectFolder/osx/* $projectFolder
     rm -rf "$projectFolder/osx" 1>/dev/null 2>/dev/null
-    echo " ${green}osx${reset} ✅"
+    echo " ${green}macOS${reset} ✅"
 
   else
     echo " ❌"
