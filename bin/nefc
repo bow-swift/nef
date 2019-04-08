@@ -276,6 +276,7 @@ makeStructure() {
 
     cleanStructure $projectFolder
     mkdir -p nef/build/fw
+    mkdir -p nef/build/output
     mkdir -p nef/log
     mkdir -p $DERIVED_DATA_DIR
 }
@@ -383,24 +384,35 @@ compilePlaygroundPages() {
 ##
 compilePlaygroundPage() {
     set +e
-
     local file="$1"           # parameter `file`
     local playgroundName="$2" # parameter `playgroundName`
     local playgroundPage="$3" # parameter `playground`
-
     local llog="nef/log/$playgroundName-dlyb.log"
     local log="nef/log/$playgroundName.log"
-
-    local platformIOS=$(isPlatfromIOSPlaygroundPage "$playgroundPage")
     local sources="$playgroundPage/../../Sources/*"
-    local staticLib="$playgroundName-$playgroundPage-"$(uuidgen)
+    local staticLib="$playgroundName"$(date '+_%H_%M_%S')
+    local staticLibPath="nef/build/fw/$staticLib"
 
+    platformIOS=$(isPlatfromIOSPlaygroundPage "$playgroundPage")
+    hasSourceFolderFiles=$(ls $sources 2> /dev/null)
+
+    # A. macOS paltform
     if [ "$platformIOS" -eq "0" ]; then
-      xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module $sources -o "nef/build/fw/$staticLib" 1> "$llog" 2>&1;
-      xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -static-executable "nef/build/fw/$staticLib" "$file" 1> "$log" 2>&1;
+      if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module $sources -o "$staticLibPath" 1> "$llog" 2>&1;
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -static-executable "$staticLibPath" "$file" -o "nef/build/output/$playgroundPage" 1> "$log" 2>&1;
+      else
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundPage" 1> "$log" 2>&1;
+      fi
+
+    # B. iOS platform
     else
-      xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module $sources -o "nef/build/fw/$staticLib" 1> "$llog" 2>&1;
-      xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -static-executable "nef/build/fw/$staticLib" "$file" 1> "$log" 2>&1;
+      if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module $sources -o "$staticLibPath" 1> "$llog" 2>&1;
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -static-executable "$staticLibPath" "$file" -o "nef/build/output/$playgroundPage" 1> "$log" 2>&1;
+      else
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundPage" 1> "$log" 2>&1;
+      fi
     fi
 
     errors=`grep " error:" "$log"`
