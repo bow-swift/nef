@@ -74,10 +74,10 @@ dependencies() {
 #   - Parameter `folder`: path to the project folder.
 ##
 compile() {
-    #makeStructure "$1"
-    #buildDependencies "$1"
-    #buildProject "$1"
-    #copyFrameworks "$1"
+    makeStructure "$1"
+    buildDependencies "$1"
+    buildProject "$1"
+    copyFrameworks "$1"
     compilePlaygroundPages "$1"
 }
 
