@@ -99,14 +99,14 @@ setPlaygroundPlatform() {
   local projectName="$2"   # parameter `projectName`
   local podfile="$3"       # parameter `podfile`
   local podfilePath=""
-  
+
   if [ "$podfile" != "" ] & [ -f "$podfile" ]; then
     podfilePath=$podfile
   else
     podfilePath="$projectFolder/Podfile"
   fi
 
-  echo -ne "${normal}Set the ${green}target${reset} for the playgrounds"
+  echo -ne "${normal}Set $projectName ${green}target${reset} to"
 
   platform=`cat "$podfilePath" | grep -m 1 "platform" | cut -d':' -f 2 | cut -d',' -f 1`
 
@@ -114,13 +114,13 @@ setPlaygroundPlatform() {
     rm -rf "$projectFolder/osx"
     mv $projectFolder/ios/* $projectFolder
     rm -rf "$projectFolder/ios"
-    echo " to ${green}ios${reset} ✅"
+    echo " ${green}ios${reset} ✅"
 
   elif [ "osx" = $platform ]; then
     rm -rf "$projectFolder/ios" 1>/dev/null 2>/dev/null
     mv $projectFolder/osx/* $projectFolder
     rm -rf "$projectFolder/osx" 1>/dev/null 2>/dev/null
-    echo " to ${green}osx${reset} ✅"
+    echo " ${green}osx${reset} ✅"
 
   else
     echo " ❌"
