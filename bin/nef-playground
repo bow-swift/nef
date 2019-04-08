@@ -106,7 +106,7 @@ setPlaygroundPlatform() {
     podfilePath="$projectFolder/Podfile"
   fi
 
-  echo -ne "${normal}Set $projectName ${green}target${reset} to"
+  echo -ne "${normal}Set ${green}$projectName target${reset} to"
 
   platform=`cat "$podfilePath" | grep -m 1 "platform" | cut -d':' -f 2 | cut -d',' -f 1`
 
