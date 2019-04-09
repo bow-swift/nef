@@ -1,3 +1,5 @@
+![](assets/header-nef.png)
+
 [![Build Status](https://travis-ci.org/bow-swift/nef.svg?branch=develop)](https://travis-ci.org/bow-swift/nef)
 
 # nef
