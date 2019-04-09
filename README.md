@@ -1,6 +1,11 @@
 ![](assets/header-nef.png)
 
-[![Build Status](https://travis-ci.org/bow-swift/nef.svg?branch=develop)](https://travis-ci.org/bow-swift/nef)
+<p align="center">
+[!][Build Status](https://travis-ci.org/bow-swift/nef.svg?branch=develop)](https://travis-ci.org/bow-swift/nef)
+<a href="https://github.com/bow-swift/nef">
+<img src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS-orange.svg" alt="Platforms">
+</a>
+</p>
 
 # nef
 
