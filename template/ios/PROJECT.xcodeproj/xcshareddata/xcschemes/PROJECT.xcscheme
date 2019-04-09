@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-               BuildableName = "libMarkup.a"
-               BlueprintName = "Markup"
-               ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
+               BlueprintIdentifier = "8BACBE8222576CAD00266845"
+               BuildableName = "PROJECT.framework"
+               BlueprintName = "PROJECT"
+               ReferencedContainer = "container:PROJECT.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,41 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      systemAttachmentLifetime = "keepNever"
-      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B66EBB0221FFF4F0001DCA2"
-               BuildableName = "MarkupTests.xctest"
-               BlueprintName = "MarkupTests"
-               ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -77,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
+            BlueprintIdentifier = "8BACBE8222576CAD00266845"
+            BuildableName = "PROJECT.framework"
+            BlueprintName = "PROJECT"
+            ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -95,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:JekyllMarkdown.xcodeproj">
+            BlueprintIdentifier = "8BACBE8222576CAD00266845"
+            BuildableName = "PROJECT.framework"
+            BlueprintName = "PROJECT"
+            ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

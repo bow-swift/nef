@@ -37,6 +37,7 @@ printHelp() {
 ##
 #   setDependency(String projectFolder, String projectName, String version, String branch, String podfile)
 #   - Parameter `projectFolder`: path to the project folder.
+#   - Parameter `projectName`: the project name.
 #   - Parameter `version`: Bow's version which update Podfile.
 #   - Parameter `branch`: Bow's branch which update Podfile.
 #   - Parameter `podfile`
@@ -48,6 +49,8 @@ setDependency() {
   local branch="$4"        # parameter `branch`
   local podfile="$5"       # parameter `podfile`
   local podfilePath="$projectFolder/Podfile"
+
+  setPlaygroundPlatform "$projectFolder" "$projectName" "$podfile"
 
   echo -ne "${normal}Updating ${green}"
 
@@ -70,14 +73,6 @@ setDependency() {
           target=`cat "$podfilePath" | grep "target"`
           sed -i '' s/"$target"/"target '$projectName' do"/g "$podfilePath"
 
-          platforms=()
-          platform=`cat "$podfilePath" | grep "platform"`
-          platform=`echo "$platform" | tr -s '\n' '\t'`
-          IFS=$'\t' read -r -a platforms <<< "$platform"
-          for platform in "${platforms[@]}"; do
-              sed -i '' s/"$platform"/"platform :osx, '10.14'"/g "$podfilePath"
-          done
-          
           echo " ✅"
 
       # C. update Podfile using `version`
@@ -90,6 +85,47 @@ setDependency() {
       echo " ❌"
       echo "[!] ${bold}${red}error: ${reset}can not find file '$podfilePath'"
       exit 1
+  fi
+}
+
+##
+#   setPlaygroundPlatform(String projectFolder, String projectName, String podfilePath)
+#   - Parameter `projectFolder`: path to the project folder.
+#   - Parameter `projectName`: the project name.
+#   - Parameter `podfile`
+##
+setPlaygroundPlatform() {
+  local projectFolder="$1" # parameter `projectFolder`
+  local projectName="$2"   # parameter `projectName`
+  local podfile="$3"       # parameter `podfile`
+  local podfilePath=""
+
+  if [ "$podfile" != "" ] & [ -f "$podfile" ]; then
+    podfilePath=$podfile
+  else
+    podfilePath="$projectFolder/Podfile"
+  fi
+
+  echo -ne "${normal}Set ${green}$projectName target${reset} to"
+
+  platform=`cat "$podfilePath" | grep -m 1 "platform" | cut -d':' -f 2 | cut -d',' -f 1`
+
+  if [ "ios" = $platform ]; then
+    rm -rf "$projectFolder/osx"
+    mv $projectFolder/ios/* $projectFolder
+    rm -rf "$projectFolder/ios"
+    echo " ${green}iOS${reset} ✅"
+
+  elif [ "osx" = $platform ]; then
+    rm -rf "$projectFolder/ios" 1>/dev/null 2>/dev/null
+    mv $projectFolder/osx/* $projectFolder
+    rm -rf "$projectFolder/osx" 1>/dev/null 2>/dev/null
+    echo " ${green}macOS${reset} ✅"
+
+  else
+    echo " ❌"
+    echo "[!] ${bold}${red}error: ${reset}please define a platform (ios | osx) in podfile '$podfilePath'"
+    exit 1
   fi
 }
 

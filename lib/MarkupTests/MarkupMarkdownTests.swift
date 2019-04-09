@@ -3,7 +3,7 @@
 import XCTest
 @testable import Markup
 
-class MarkupJekyllTests: XCTestCase {
+class MarkupMarkdownTests: XCTestCase {
 
     func testPlainPlaygroundWithMultiMarkup_render_returnsMarkupNodeAndStartWithNewLine() {
         let input = """
@@ -13,7 +13,7 @@ class MarkupJekyllTests: XCTestCase {
 
                     """
         let expected = "\n### This is a markup\n"
-        let result = Markup.JekyllGenerator(permalink: "").render(content: input)
+        let result = Markup.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -30,7 +30,7 @@ class MarkupJekyllTests: XCTestCase {
 
                     """
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
-        let result = Markup.JekyllGenerator(permalink: "").render(content: input)
+        let result = Markup.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -41,12 +41,12 @@ class MarkupJekyllTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(input)```\n"
-        let result = Markup.JekyllGenerator(permalink: "").render(content: input)
+        let result = Markup.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
 
-    func testPlainPlaygroundWithNefHeader_render_returnsHeaderBlock() {
+    func testPlainPlaygroundWithNefHeader_render_returnsEmptyNode() {
         let input = """
                     // nef:begin:header
                     /*
@@ -57,45 +57,28 @@ class MarkupJekyllTests: XCTestCase {
                     // nef:end
 
                     """
-        let expected = """
-                       ---
-                       layout: docs
-                       title: title
-                       video: video
-                       permalink: permalink
-                       ---
-
-                       """
-
-        let result = Markup.JekyllGenerator(permalink: "permalink").render(content: input)
+        let expected = ""
+        
+        let result = Markup.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
 
-    func testPlainPlaygroundWithNefHeaderAndWhitespaces_render_returnsHeaderBlockTrimmed() {
+    func testPlainPlaygroundWithCodeAndNefHiddenBlock_render_returnsSwiftBlock() {
+        let code = """
+                    let nef = "It is awesone!"
+                   """
         let input = """
-                    // nef:begin:header
-                    /*
-                    layout: docs
-                       title: title
-                     video: video
-                    */
+                    // nef:begin:hidden
+                    import Bow
                     // nef:end
 
+                    \(code)
+
                     """
-        let expected = """
-                       ---
-                       layout: docs
-                       title: title
-                       video: video
-                       permalink: permalink
-                       ---
-
-                       """
-
-        let result = Markup.JekyllGenerator(permalink: "permalink").render(content: input)
+        let expected = "\n```swift\n\(code)\n```\n"
+        let result = Markup.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
-    
 }

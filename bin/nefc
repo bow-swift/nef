@@ -100,10 +100,11 @@ buildProject() {
         # build
         workspace=$(workspaceForProjectPath "$1" "$project")
         workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
+        sdk=$(sdkForWorkspaceAndScheme "$workspace" "$schemeName")
         log="$logPath/$workspaceName.log"
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
-        xcodebuild -workspace "$workspace" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
+        xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
 
         installed=`grep "BUILD SUCCEEDED" "$log"`
 
@@ -137,6 +138,42 @@ workspaceForProjectPath() {
     else
         echo "$xcprojectNoExtension.xcodeproj"
     fi
+}
+
+##
+#   sdkForWorkspaceAndScheme(String workspace, String schemeName): String
+#   - Parameter `workspace`
+#   - Parameter `schemeName`
+#   - Return `sdk` to compile the target `schemeName` in `workspace`
+##
+sdkForWorkspaceAndScheme() {
+  local workspace="$1"   # parameter `workspace`
+  local schemeName="$2"  # parameter `schemeName`
+
+  isIPHONE=$(eval xcodebuild -workspace "$workspace" -scheme "$schemeName" -quiet -showBuildSettings 2>&1 | grep 'SDKROOT' | grep 'iPhone' | awk '{ print length; }')
+  sdk="iphonesimulator"
+  if [ "$isIPHONE" = "" ]; then
+    sdk="macosx"
+  fi
+
+  echo $sdk
+}
+
+##
+#   isPlatfromIOSPlaygroundPage(String playgroundPagePath): String
+#   - Parameter `playgroundPagePath`
+#   - Return `isPlatformIOS` 1 - is target-platform iOS; 0 - another case
+##
+isPlatfromIOSPlaygroundPage() {
+  local playgroundPagePath="$1"   # parameter `playground`
+  local playgroundInfo="$playgroundPagePath/../../contents.xcplayground"
+
+  isPlatformIOS=$(eval cat "\"$playgroundInfo\"" | grep "target-platform='ios'" | awk '{ print length; }')
+  if [ "$isPlatformIOS" = "" ]; then
+    echo 0
+  else
+    echo 1
+  fi
 }
 
 ##
@@ -239,6 +276,7 @@ makeStructure() {
 
     cleanStructure $projectFolder
     mkdir -p nef/build/fw
+    mkdir -p nef/build/output
     mkdir -p nef/log
     mkdir -p $DERIVED_DATA_DIR
 }
@@ -283,7 +321,7 @@ makeHeaders() {
     local playground=$2 # parameter `playgroundName`
     local output="nef/build/$playground.swift"
 
-    libs=(`xcrun swiftc -emit-imported-modules "$content" | sort -r`)
+    libs=(`xcrun swiftc -emit-imported-modules "$content" | sort -r | grep -vE PlaygroundSupport`)
 
     local remove=()
     local imports=""
@@ -333,25 +371,49 @@ compilePlaygroundPages() {
         output=$(makeHeaders "$content" "$playgroundName")
 
         # compile
-        compilePlaygroundPage "$output" "$playgroundName"
-
+        compilePlaygroundPage "$output" "$playgroundName" "$baseAbsolute"
         echo " ✅"
     done
 }
 
 ##
-#   compilePlaygroundPage(String file, String playgroundName) throws
-#   - Parameter `file`: path to the playground's page.
+#   compilePlaygroundPage(String file, String playgroundName, String playgroundPage) throws
+#   - Parameter `file`: path to file to compile
 #   - Parameter `playgroundName`: playground page name (kind of: *.xcplaygroundpage)
+#   - Parameter `playgroundPage`: path to the original playground's page
 ##
 compilePlaygroundPage() {
     set +e
+    local file="$1"           # parameter `file`
+    local playgroundName="$2" # parameter `playgroundName`
+    local playgroundPage="$3" # parameter `playground`
+    local llog="nef/log/$playgroundName-dlyb.log"
+    local log="nef/log/$playgroundName.log"
+    local sources="$playgroundPage/../../Sources/*"
+    local staticLib="$playgroundName"$(date '+_%H_%M_%S')
+    local staticLibPath="nef/build/fw/$staticLib"
 
-    local file="$1"       # parameter `file`
-    local playground="$2" # parameter `playgroundName`
-    local log="nef/log/$playground.log"
+    platformIOS=$(isPlatfromIOSPlaygroundPage "$playgroundPage")
+    hasSourceFolderFiles=$(ls $sources 2> /dev/null)
 
-    xcrun swift -F "nef/build/fw" "$file" 1> "$log" 2>&1;
+    # A. macOS paltform
+    if [ "$platformIOS" -eq "0" ]; then
+      if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module $sources -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1;
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+      else
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+      fi
+
+    # B. iOS platform
+    else
+      if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module $sources -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1;
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+      else
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+      fi
+    fi
 
     errors=`grep " error:" "$log"`
     [ "${#errors}" -eq 0 ] && return 0

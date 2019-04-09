@@ -1,7 +1,6 @@
-import Foundation
+//  Copyright © 2019 The nef Authors.
 
-// MARK: Helpers
-// MARK: - <string>
+import Foundation
 
 typealias SubstringType = (ouput: String, range: NSRange)
 
