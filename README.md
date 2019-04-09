@@ -5,6 +5,10 @@
 <a href="https://github.com/bow-swift/nef">
 <img src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS-orange.svg" alt="Platforms">
 </a>
+<a href="https://gitter.im/bowswift/bow">
+<img src="https://img.shields.io/badge/gitter-nef-blueviolet.svg" alt="Gitter">
+</a>
+
 </p>
 
 # nef
