@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		8B03C3422226A8C300EE4197 /* MarkupJekyllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */; };
+		8B424B26224E290800AF9010 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
+		8B424B28224E292200AF9010 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B27224E292200AF9010 /* main.swift */; };
+		8B424B2C224E320600AF9010 /* MarkupUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B2B224E320600AF9010 /* MarkupUtils.swift */; };
+		8B424B2E224E361800AF9010 /* MarkupMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */; };
+		8B424B31224E5F8D00AF9010 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
+		8B424B33224E602200AF9010 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B32224E602200AF9010 /* ConsoleOutput.swift */; };
+		8B424B912254AA3000AF9010 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B902254AA3000AF9010 /* ConsoleOutput.swift */; };
+		8B424BA12254AEC300AF9010 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
+		8B424BA22254AEC300AF9010 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
+		8B424BA42254B26300AF9010 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
+		8B424BB22254C3B500AF9010 /* MarkupMarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */; };
 		8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB92221F04A60001DCA2 /* MarkupRender.swift */; };
 		8B66EB9B221F04A70001DCA2 /* MarkupJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */; };
 		8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */; };
@@ -32,6 +43,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		8B424B1D224E28FC00AF9010 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		8B6FC583221ECE6A008F7694 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
@@ -45,6 +65,15 @@
 
 /* Begin PBXFileReference section */
 		8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupJekyllTests.swift; sourceTree = "<group>"; };
+		8B424B1F224E28FC00AF9010 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B424B27224E292200AF9010 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupMarkdown.swift; sourceTree = "<group>"; };
+		8B424B2B224E320600AF9010 /* MarkupUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupUtils.swift; sourceTree = "<group>"; };
+		8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleReader.swift; sourceTree = "<group>"; };
+		8B424B32224E602200AF9010 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
+		8B424B902254AA3000AF9010 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
+		8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundUtils.swift; sourceTree = "<group>"; };
+		8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupMarkdownTests.swift; sourceTree = "<group>"; };
 		8B66EB90221F04A60001DCA2 /* Markup-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Markup-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B66EB92221F04A60001DCA2 /* MarkupRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupRender.swift; sourceTree = "<group>"; };
 		8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupJekyll.swift; sourceTree = "<group>"; };
@@ -61,6 +90,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8B424B1C224E28FC00AF9010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B424B26224E290800AF9010 /* libMarkup.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B66EBAE221FFF4F0001DCA2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -87,6 +124,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B424B20224E28FC00AF9010 /* Markdown */ = {
+			isa = PBXGroup;
+			children = (
+				8B424B27224E292200AF9010 /* main.swift */,
+				8B424B32224E602200AF9010 /* ConsoleOutput.swift */,
+			);
+			path = Markdown;
+			sourceTree = "<group>";
+		};
+		8B424B2F224E5F5F00AF9010 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */,
+				8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		8B66EB8F221F04A60001DCA2 /* Markup */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,7 +158,9 @@
 			isa = PBXGroup;
 			children = (
 				8B66EB92221F04A60001DCA2 /* MarkupRender.swift */,
+				8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */,
 				8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */,
+				8B424B2B224E320600AF9010 /* MarkupUtils.swift */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -122,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				8B03C33F2226A89E00EE4197 /* MarkupJekyllTests.swift */,
+				8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */,
 				8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */,
 				8B66EBBE221FFF760001DCA2 /* Info.plist */,
 			);
@@ -133,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				8B6FC587221ECE6A008F7694 /* JekyllMarkdown */,
+				8B424B20224E28FC00AF9010 /* Markdown */,
+				8B424B2F224E5F5F00AF9010 /* Common */,
 				8B66EB8F221F04A60001DCA2 /* Markup */,
 				8B66EBBC221FFF760001DCA2 /* MarkupTests */,
 				8B6FC656221EFF03008F7694 /* Frameworks */,
@@ -146,6 +206,7 @@
 				8B6FC585221ECE6A008F7694 /* JekyllMarkdown */,
 				8B6FC63C221EFE61008F7694 /* libMarkup.a */,
 				8B66EBB1221FFF4F0001DCA2 /* MarkupTests.xctest */,
+				8B424B1F224E28FC00AF9010 /* Markdown */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -154,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				8B6FC588221ECE6A008F7694 /* main.swift */,
+				8B424B902254AA3000AF9010 /* ConsoleOutput.swift */,
 			);
 			path = JekyllMarkdown;
 			sourceTree = "<group>";
@@ -179,6 +241,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		8B424B1E224E28FC00AF9010 /* Markdown */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B424B23224E28FC00AF9010 /* Build configuration list for PBXNativeTarget "Markdown" */;
+			buildPhases = (
+				8B424B1B224E28FC00AF9010 /* Sources */,
+				8B424B1C224E28FC00AF9010 /* Frameworks */,
+				8B424B1D224E28FC00AF9010 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Markdown;
+			productName = Markdown;
+			productReference = 8B424B1F224E28FC00AF9010 /* Markdown */;
+			productType = "com.apple.product-type.tool";
+		};
 		8B66EBB0221FFF4F0001DCA2 /* MarkupTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B66EBB9221FFF4F0001DCA2 /* Build configuration list for PBXNativeTarget "MarkupTests" */;
@@ -241,6 +320,9 @@
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "47 Degrees";
 				TargetAttributes = {
+					8B424B1E224E28FC00AF9010 = {
+						CreatedOnToolsVersion = 10.1;
+					};
 					8B66EBB0221FFF4F0001DCA2 = {
 						CreatedOnToolsVersion = 10.1;
 					};
@@ -253,7 +335,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8B6FC580221ECE6A008F7694 /* Build configuration list for PBXProject "JekyllMarkdown" */;
+			buildConfigurationList = 8B6FC580221ECE6A008F7694 /* Build configuration list for PBXProject "Markdown" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -266,6 +348,7 @@
 			projectRoot = "";
 			targets = (
 				8B6FC584221ECE6A008F7694 /* JekyllMarkdown */,
+				8B424B1E224E28FC00AF9010 /* Markdown */,
 				8B6FC63B221EFE61008F7694 /* Markup */,
 				8B66EBB0221FFF4F0001DCA2 /* MarkupTests */,
 			);
@@ -283,12 +366,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8B424B1B224E28FC00AF9010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B424B28224E292200AF9010 /* main.swift in Sources */,
+				8B424B33224E602200AF9010 /* ConsoleOutput.swift in Sources */,
+				8B424BA22254AEC300AF9010 /* PlaygroundUtils.swift in Sources */,
+				8B424B31224E5F8D00AF9010 /* ConsoleReader.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B66EBAD221FFF4F0001DCA2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8B03C3422226A8C300EE4197 /* MarkupJekyllTests.swift in Sources */,
 				8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */,
+				8B424BB22254C3B500AF9010 /* MarkupMarkdownTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +391,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B424BA42254B26300AF9010 /* ConsoleReader.swift in Sources */,
+				8B424BA12254AEC300AF9010 /* PlaygroundUtils.swift in Sources */,
+				8B424B912254AA3000AF9010 /* ConsoleOutput.swift in Sources */,
 				8B6FC589221ECE6A008F7694 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,6 +403,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */,
+				8B424B2C224E320600AF9010 /* MarkupUtils.swift in Sources */,
+				8B424B2E224E361800AF9010 /* MarkupMarkdown.swift in Sources */,
 				8B66EB9E221F04A70001DCA2 /* MarkupLexical.swift in Sources */,
 				8B66EB9D221F04A70001DCA2 /* MarkupNode.swift in Sources */,
 				8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */,
@@ -324,6 +424,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		8B424B24224E28FC00AF9010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		8B424B25224E28FC00AF9010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
 		8B66EBBA221FFF4F0001DCA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -550,6 +668,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8B424B23224E28FC00AF9010 /* Build configuration list for PBXNativeTarget "Markdown" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B424B24224E28FC00AF9010 /* Debug */,
+				8B424B25224E28FC00AF9010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8B66EBB9221FFF4F0001DCA2 /* Build configuration list for PBXNativeTarget "MarkupTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -559,7 +686,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8B6FC580221ECE6A008F7694 /* Build configuration list for PBXProject "JekyllMarkdown" */ = {
+		8B6FC580221ECE6A008F7694 /* Build configuration list for PBXProject "Markdown" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8B6FC58A221ECE6A008F7694 /* Debug */,
