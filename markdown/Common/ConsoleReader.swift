@@ -44,7 +44,10 @@ func arguments(keys: String...) -> [String: String] {
 
     func int8Ptr(fromString str: String) -> UnsafePointer<Int8>? {
         let data = str.data(using: .utf8)
-        let ptr: UnsafePointer<Int8>? = data?.withUnsafeBytes { $0 }
+        let ptr: UnsafePointer<Int8>? = data?.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> UnsafePointer<Int8>? in
+            return bytes.bindMemory(to: Int8.self).baseAddress
+        }
+        
         return ptr
     }
 
