@@ -86,6 +86,8 @@ compile() {
 #   - Parameter `folder`: path to the project folder.
 ##
 buildProject() {
+    set -e
+
     cd "$1" # parameter `folder`
     local logPath="nef/log"
 
@@ -112,7 +114,8 @@ buildProject() {
           echo " ✅"
         else
           echo " ❌"
-          echo "${bold}${red}error: ${reset}${bold}building $workspaceName${normal} review '$log' for more information."
+          echo "${bold}${red}error: ${reset}${bold}building $workspaceName${normal}"
+          cat "$log"
           exit 1
         fi
     done
