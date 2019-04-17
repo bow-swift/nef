@@ -139,23 +139,6 @@ lastestBowVersion() {
 }
 
 ##
-#   checkCocoaPods() throws
-##
-checkCocoaPods() {
-  required='1.6.1'
-  podVersion=`pod --version`
-  minorPodVersionRequired=(`printf "$podVersion\n$required\n" | sort`)
-
-  if [ "$minorPodVersionRequired" != "$required" ]; then
-    echo "[!] ${bold}${red}error: ${reset}required cocoapods version ${bold}'$required'${normal} [found: ${red}'$podVersion'${reset}]"
-    echo ""
-    echo "Please ${bold}update your cocoapods${reset}. Run: 'sudo gem install cocoapods'"
-    echo ""
-    exit 1
-  fi
-}
-
-##
 #   playground(String parent, String projecName)
 #   - Parameter `parent`: path to the project parent.
 #   - Parameter `projecName`: playground name.
@@ -248,6 +231,5 @@ done
 
 projectFolder="$root/$projectName"
 
-checkCocoaPods
 playground "$root" "$projectName"
 setDependency "$projectFolder" "$projectName" "$version" "$branch" "$podfile"
