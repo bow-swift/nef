@@ -86,8 +86,6 @@ compile() {
 #   - Parameter `folder`: path to the project folder.
 ##
 buildProject() {
-    set -e
-
     cd "$1" # parameter `folder`
     local logPath="nef/log"
 
@@ -106,9 +104,11 @@ buildProject() {
         log="$logPath/$workspaceName.log"
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
-        xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
 
+        set +e
+        xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
         installed=`grep "BUILD SUCCEEDED" "$log"`
+        set -e
 
         if [ "${#installed}" -gt 0 ]; then
           echo " ✅"
@@ -206,12 +206,13 @@ buildPODS() {
         path="${podfilePath::${#podfilePath}-${#podfile}-1}"
         cd "$path"
 
+        set +e
         pod install --repo-update 1> "$log" 2>&1
         installed=`grep "Pod installation complete" "$log"`
+        set -e
 
         if [ "${#installed}" -gt 0 ]; then
             echo " ✅"
-            return 0
         else
             echo " ❌"
             echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
@@ -402,19 +403,19 @@ compilePlaygroundPage() {
     # A. macOS paltform
     if [ "$platformIOS" -eq "0" ]; then
       if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
-        xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module $sources -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1;
-        xcrun -k swiftc -D NOT_IN_PLAYGROUND -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module $sources -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
       else
-        xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
       fi
 
     # B. iOS platform
     else
       if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
-        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module $sources -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1;
-        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module $sources -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
       else
-        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1;
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
       fi
     fi
 
