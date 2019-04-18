@@ -101,7 +101,7 @@ setPlaygroundPlatform() {
   local podfilePath=""
 
   if [ "$podfile" != "" ] & [ -f "$podfile" ]; then
-    podfilePath=$podfile
+    podfilePath="$podfile"
   else
     podfilePath="$projectFolder/Podfile"
   fi
@@ -112,13 +112,13 @@ setPlaygroundPlatform() {
 
   if [ "ios" = $platform ]; then
     rm -rf "$projectFolder/osx"
-    mv $projectFolder/ios/* $projectFolder
+    mv "$projectFolder"/ios/* "$projectFolder"
     rm -rf "$projectFolder/ios"
     echo " ${green}iOS${reset} ✅"
 
   elif [ "osx" = $platform ]; then
     rm -rf "$projectFolder/ios" 1>/dev/null 2>/dev/null
-    mv $projectFolder/osx/* $projectFolder
+    mv "$projectFolder"/osx/* "$projectFolder"
     rm -rf "$projectFolder/osx" 1>/dev/null 2>/dev/null
     echo " ${green}macOS${reset} ✅"
 
@@ -152,7 +152,7 @@ playground() {
   local tempLog="$root/init-playground.log"
   local log="$projectFolder/nef/playground/init-playground.log"
 
-  cd $root
+  cd "$root"
   echo -ne "${normal}Installing ${green}Playground ($projectName)${reset}..."
 
   if [ -d "$projectName" ]; then

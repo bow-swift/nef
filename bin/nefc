@@ -276,9 +276,9 @@ makeStructure() {
     set +e
     local projectFolder=$1  # parameter `folder`
 
-    cd $projectFolder
+    cd "$projectFolder"
 
-    cleanStructure $projectFolder
+    cleanStructure "$projectFolder"
     mkdir -p nef/build/fw
     mkdir -p nef/build/output
     mkdir -p nef/log
@@ -289,11 +289,11 @@ cleanStructure() {
     set +e
     local projectFolder=$1  # parameter `folder`
 
-    cd $projectFolder
+    cd "$projectFolder"
 
     rm -r nef/build 1>/dev/null 2>/dev/null
     rm -r nef/log 1>/dev/null 2>/dev/null
-    rm -r $DERIVED_DATA_DIR 1>/dev/null 2>/dev/null
+    rm -r "$DERIVED_DATA_DIR" 1>/dev/null 2>/dev/null
 }
 
 ##
@@ -303,7 +303,7 @@ cleanStructure() {
 copyFrameworks() {
     local projectFolder=$1  # parameter `folder`
 
-    cd $projectFolder
+    cd "$projectFolder"
 
     if [ ! -d "$DERIVED_DATA_DIR/build" ]; then
       echo "Copy ${green}frameworks${reset} ❌"
@@ -352,7 +352,7 @@ makeHeaders() {
 compilePlaygroundPages() {
     local projectFolder=$1  # parameter `folder`
 
-    cd $projectFolder
+    cd "$projectFolder"
 
     pages=()
     while read -r -d $'\0' playground; do
