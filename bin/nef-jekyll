@@ -85,12 +85,6 @@ buildMicrosite() {
 
             cleanStructure "$output"
             mkdir -p "$output"
-
-            echo ""
-            echo "PAGE: $pagePath"
-            echo "OUTPUT: $output"
-            echo "PERMALINK: $permalink"
-
             nef-jekyll-page --from "$pagePath" --to "$output" --permalink "$permalink" 1> "$log" 2>&1
             echo -e "        - title: $pageName\n          url: $permalink\n" >> "$sidebarFilePath" # sidebar page
 
@@ -283,9 +277,6 @@ if [ -f "$root/$mainPagePath" ]; then
 fi
 
 # 3. fix `sitePath`
-echo "$root/$sitePath"
-echo "$sitePath"
-
 if [ -d "$root/$sitePath" ]; then
   sitePath="$root/$sitePath"
 else

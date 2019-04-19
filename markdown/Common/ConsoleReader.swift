@@ -42,12 +42,6 @@ enum Console: ConsoleOutput {
 func arguments(keys: String...) -> [String: String] {
     var result: [String: String] = [:]
     
-    func newCCharPtrFromStaticString(_ str: StaticString) -> UnsafePointer<CChar> {
-        let rp = UnsafeRawPointer(str.utf8Start);
-        let rplen = str.utf8CodeUnitCount;
-        return rp.bindMemory(to: CChar.self, capacity: rplen);
-    }
-    
     var longopts: [option] {
         let lopts: [option] = keys.enumerated().map { (offset, element) -> option in
             return option(name: strdup(element),
