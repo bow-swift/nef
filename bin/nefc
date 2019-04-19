@@ -235,9 +235,9 @@ addPlaygroundReference() {
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
         workspace=$(workspaceForProjectPath "$1" "$project")
-        workspaceName=$(echo $workspace | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
+        workspaceName=$(echo "$workspace" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
         workspaceContent="$workspace/contents.xcworkspacedata"
-        ! [[ $workspace = .*".xcworkspace" ]] && continue
+        ! [[ "$workspace" = .*".xcworkspace" ]] && continue
         grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
 
         for playground in "${playgroundForProjectPath[@]}"; do
@@ -282,7 +282,7 @@ makeStructure() {
     mkdir -p nef/build/fw
     mkdir -p nef/build/output
     mkdir -p nef/log
-    mkdir -p $DERIVED_DATA_DIR
+    mkdir -p "$DERIVED_DATA_DIR"
 }
 
 cleanStructure() {
@@ -366,10 +366,10 @@ compilePlaygroundPages() {
         echo -ne "${normal}   Compiling ${green}$pageName${reset} ..."
 
         # paths
-        baseFile=$(echo $file | cut -c 2-)
+        baseFile=$(echo "$file" | cut -c 2-)
         baseAbsolute=$(echo "$projectFolder$baseFile")
-        content=$baseAbsolute/Contents.swift
-        playgroundName=$(echo $baseAbsolute | rev | cut -d'/' -f 1 | cut -d'.' -f 2 | rev)
+        content="$baseAbsolute/Contents.swift"
+        playgroundName=$(echo "$baseAbsolute" | rev | cut -d'/' -f 1 | cut -d'.' -f 2 | rev)
 
         # headers
         output=$(makeHeaders "$content" "$playgroundName")
@@ -393,17 +393,17 @@ compilePlaygroundPage() {
     local playgroundPage="$3" # parameter `playground`
     local llog="nef/log/$playgroundName-dlyb.log"
     local log="nef/log/$playgroundName.log"
-    local sources="$playgroundPage/../../Sources/"
+    local sources="$playgroundPage/../../Sources"
     local staticLib="$playgroundName"$(date '+_%H_%M_%S')
     local staticLibPath="nef/build/fw/$staticLib"
 
     platformIOS=$(isPlatfromIOSPlaygroundPage "$playgroundPage")
-    hasSourceFolderFiles=$(ls $sources 2> /dev/null)
+    hasSourceFolderFiles=$(ls "$sources" 2> /dev/null)
 
     # A. macOS paltform
     if [ "$platformIOS" -eq "0" ]; then
       if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
-        xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module "$sources"* -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1
+        xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module "$sources"/* -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1
         xcrun -k swiftc -D NOT_IN_PLAYGROUND -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
       else
         xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
@@ -412,7 +412,7 @@ compilePlaygroundPage() {
     # B. iOS platform
     else
       if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
-        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module "$sources"* -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1
+        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module "$sources"/* -F "nef/build/fw" -o "$staticLibPath" 1> "$llog" 2>&1
         xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -static-executable "$staticLibPath" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
       else
         xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
