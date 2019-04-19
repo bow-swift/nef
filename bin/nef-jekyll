@@ -85,7 +85,6 @@ buildMicrosite() {
 
             cleanStructure "$output"
             mkdir -p "$output"
-
             nef-jekyll-page --from "$pagePath" --to "$output" --permalink "$permalink" 1> "$log" 2>&1
             echo -e "        - title: $pageName\n          url: $permalink\n" >> "$sidebarFilePath" # sidebar page
 
@@ -218,7 +217,7 @@ makeStructure() {
   set +e
   local logPath="$1/$LOG_PATH"  # parameter `project`
   local sitePath="$2"           # parameter `site`
-  local sidebarFolderPath="$2/$BASE_SIDEBAR"
+  local sidebarFolderPath="$sitePath/$BASE_SIDEBAR"
   local baseJekyllPath="$sitePath/$BASE_JEKYLL"
 
   cleanStructure "$logPath"
@@ -282,7 +281,7 @@ if [ -d "$root/$sitePath" ]; then
   sitePath="$root/$sitePath"
 else
   mkdir -p "$sitePath"
-  sitePath="$root/$sitePath"
+  sitePath="$sitePath"
 fi
 
 generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"
