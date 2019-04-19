@@ -201,7 +201,7 @@ cleanStructure() {
 
 cleanProject() {
   local projectFolder="$1"  # parameter `folder`
-  rm -rf $projectFolder
+  rm -rf "$projectFolder"
 }
 
 
@@ -209,7 +209,7 @@ cleanProject() {
 set -e
 
 root=`pwd`
-projectName=$DEFAULT_PLAYGROUND
+projectName="$DEFAULT_PLAYGROUND"
 version=$(lastestBowVersion)
 branch=""
 podfile=""
