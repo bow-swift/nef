@@ -41,31 +41,25 @@ enum Console: ConsoleOutput {
 /// - Returns: the parameters to configure the script: path to parser file and output path for render.
 func arguments(keys: String...) -> [String: String] {
     var result: [String: String] = [:]
-
-    func int8Ptr(fromString str: String) -> UnsafePointer<Int8>? {
-        let data = str.data(using: .utf8)
-        let ptr: UnsafePointer<Int8>? = data?.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> UnsafePointer<Int8>? in
-            return bytes.bindMemory(to: Int8.self).baseAddress
-        }
-        
-        return ptr
+    
+    func newCCharPtrFromStaticString(_ str: StaticString) -> UnsafePointer<CChar> {
+        let rp = UnsafeRawPointer(str.utf8Start);
+        let rplen = str.utf8CodeUnitCount;
+        return rp.bindMemory(to: CChar.self, capacity: rplen);
     }
-
+    
     var longopts: [option] {
-        let lopts: [option] = keys.enumerated().map { (arg) -> option in
-
-            let (offset, element) = arg
-            return option(name: int8Ptr(fromString: element),
+        let lopts: [option] = keys.enumerated().map { (offset, element) -> option in
+            return option(name: strdup(element),
                           has_arg: required_argument,
                           flag: nil,
                           val: Int32(offset))
         }
-
         return lopts + [option()]
     }
 
     let optLongKey = keys.map { key in String(key[key.startIndex]) }.joined(separator: "")
-
+    
     while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
         let match = keys.enumerated().first { (index, _) in opt == Int32(index) }
         guard let key = match?.element else { return [:] }
