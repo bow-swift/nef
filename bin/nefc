@@ -32,7 +32,7 @@ printWrongArguments() {
     echo "    ${bold}$DEPENDENCIES${normal}  builds dependencies in selected project"
     echo "    ${bold}$CLEAN${normal}  clean builds in selected project"
     echo ""
-    echo "    ${optional}${bold}$COMPILE_CACHED_DEPENDENCIES${reset}${normal} is an option for '$COMPILE'. Use cached dependencies if it is possible. In another case, it will download them ${optional}[optional]${reset}"
+    echo "    ${optional}${bold}$COMPILE_CACHED_DEPENDENCIES${reset}${normal} is an option for '$COMPILE'. Use cached dependencies if it is possible. In another case, it will download and install them ${optional}[optional]${reset}"
     echo ""
 }
 
@@ -53,10 +53,10 @@ checkArguments() {
     # $0 - `nefc`
     # $1 - command
     # $2 - path
-    # $3 - optional param
+    # $3 - flag param
 
     local command="$1"
-    local option="$3"
+    local flag="$3"
     local isValidCommand=""
 
     if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then printWrongArguments $0; exit 1; fi
@@ -69,7 +69,7 @@ checkArguments() {
     if [[ "$isValidCommand" = "" ]]; then
         printWrongConfig; exit 1
     elif [[ "$command" = "$COMPILE" ]]; then
-        if [[ "$option" != "$COMPILE_CACHED_DEPENDENCIES" ]] && [[ "$option" != "" ]]; then
+        if [[ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ]] && [[ "$flag" != "" ]]; then
             printWrongArguments $0; exit 1;
         fi
     fi
@@ -91,25 +91,28 @@ dependencies() {
 #: - Compile
 
 ##
-#   compile(String folder)
+#   compile(String folder, String flag)
 #   - Parameter `folder`: path to the project folder.
+#   - parameter `flag`: configuration for building.
 ##
 compile() {
-    local option="$2"
+    local flag="$2"
 
-    makeStructure "$1"
-    buildDependencies "$1" "$option"
-    buildProject "$1"
+    makeStructure "$1" "$flag"
+    buildDependencies "$1" "$flag"
+    buildProject "$1" "$flag"
     copyFrameworks "$1"
     compilePlaygroundPages "$1"
 }
 
 ##
-#   buildProject(String folder) throws
+#   buildProject(String folder, String flag) throws
 #   - Parameter `folder`: path to the project folder.
+#   - parameter `flag`: configuration for building.
 ##
 buildProject() {
-    cd "$1" # parameter `folder`
+    cd "$1"          # parameter `folder`
+    local flag="$2"  # parameter `flag`
     local logPath="nef/log"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
@@ -128,18 +131,22 @@ buildProject() {
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
 
-        set +e
-        xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
-        installed=`grep "BUILD SUCCEEDED" "$log"`
-        set -e
+        if [[ $(shouldBuildWorkspace "$workspace" "$flag") = "1" ]]; then
+            set +e
+            xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
+            installed=`grep "BUILD SUCCEEDED" "$log"`
+            set -e
+        else
+            installed="OK!"
+        fi
 
         if [ "${#installed}" -gt 0 ]; then
-          echo " ✅"
+            echo " ✅"
         else
-          echo " ❌"
-          echo "${bold}${red}error: ${reset}${bold}building $workspaceName${normal}"
-          cat "$log"
-          exit 1
+            echo " ❌"
+            echo "${bold}${red}error: ${reset}${bold}building $workspaceName${normal}"
+            cat "$log"
+            exit 1
         fi
     done
 }
@@ -203,15 +210,32 @@ isPlatfromIOSPlaygroundPage() {
 }
 
 ##
-#   buildDependencies(String folder, String option)
+#   shouldBuildWorkspace(String workspace, String flag)
+#   - Parameter `workspace`
+#   - parameter `flag`: configuration for building.
+#   - Return `shouldBuildWorkspace` 1 - yes (is not cached); 0 - no (cached)
+##
+shouldBuildWorkspace() {
+    local workspace="$1" # parameter `workspace`
+    local flag="$2"      # parameter `flag`
+
+    local workspaceName=$(echo "$workspace" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
+    local workspaceFwPath="nef/build/fw/$workspaceName.framework"
+
+    [ -d "$DERIVED_DATA_DIR/build" ] && [ -d "$workspaceFwPath" ] && [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ] && echo 0;
+    echo 1
+}
+
+##
+#   buildDependencies(String folder, String flag)
 #   - Parameter `folder`: path to the project folder.
-#   - Parameter `option`: configuration for building.
+#   - parameter `flag`: configuration for building.
 ##
 buildDependencies() {
-    local path="$1"   # parameter `folder`
-    local option="$2" # parameter `option`
+    local path="$1" # parameter `folder`
+    local flag="$2" # parameter `flag`
 
-    buildPODS "$path" "$option"
+    buildPODS "$path" "$flag"
     addPlaygroundReference "$path"
 }
 
@@ -222,7 +246,7 @@ buildDependencies() {
 buildPODS() {
     cd "$1"
 
-    local option="$2"
+    local flag="$2"
     local podfile="Podfile"
     local log="nef/log/pod-install.log"
 
@@ -233,7 +257,7 @@ buildPODS() {
         cd "$path"
 
         set +e
-        if [[ "$option" = "$COMPILE_CACHED_DEPENDENCIES" ]]; then
+        if [[ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]]; then
             pod install 1> "$log" 2>&1
         else
             pod install --repo-update 1> "$log" 2>&1
@@ -300,16 +324,21 @@ playgroundForProjectPath() {
 }
 
 ##
-#   makeStructure(String folder)
+#   makeStructure(String folder, String flag)
 #   - Parameter `folder`: path to the project folder.
+#   - parameter `flag`: configuration for building.
 ##
 makeStructure() {
     set +e
-    local projectFolder=$1  # parameter `folder`
+    local projectFolder="$1" # parameter `folder`
+    local flag="$2"          # parameter `flag`
 
     cd "$projectFolder"
 
-    cleanStructure "$projectFolder"
+    if [[ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ]]; then
+        cleanStructure "$projectFolder"
+    fi
+
     mkdir -p nef/build/fw
     mkdir -p nef/build/output
     mkdir -p nef/log
@@ -510,8 +539,8 @@ else
 fi
 
 if [ $1 = "$COMPILE" ]; then
-    option="$3"
-    compile "$projectPath" "$option"
+    flag="$3"
+    compile "$projectPath" "$flag"
 elif [ $1 = "$DEPENDENCIES" ]; then
     dependencies "$projectPath"
 else
