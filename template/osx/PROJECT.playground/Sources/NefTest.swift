@@ -11,10 +11,10 @@ public extension Nef {
     }
 
     static private func startTestObserver() {
-        _ = testObserver
+        _ = testObserverInstalled
     }
 
-    static private var testObserver = { () -> NefTestFailObserver in
+    static private var testObserverInstalled = { () -> NefTestFailObserver in
         let testObserver = NefTestFailObserver()
         XCTestObservationCenter.shared.addTestObserver(testObserver)
         return testObserver
