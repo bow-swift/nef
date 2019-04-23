@@ -370,7 +370,7 @@ copyFrameworks() {
       exit 1
     fi
 
-    cp -a $(find "$DERIVED_DATA_DIR/build" -name '*.framework') nef/build/fw
+    cp -a $(find "$DERIVED_DATA_DIR/build" -name '*.framework') nef/build/fw 2>/dev/null
     echo "Copy ${green}frameworks${reset} ✅"
 }
 
