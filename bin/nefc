@@ -18,6 +18,7 @@ required=$(tput setaf 222)
 optional=$(tput setaf 230)
 reset=$(tput sgr0)
 
+
 #: IN - Check Args
 
 ##
@@ -73,6 +74,7 @@ checkArguments() {
         fi
     fi
 }
+
 
 #: - Dependencies
 
@@ -458,6 +460,7 @@ compilePlaygroundPage() {
     exit 1
 }
 
+
 #: - Clean
 
 ##
@@ -493,6 +496,7 @@ cleanPODS() {
     rm podfile.lock 2>/dev/null
     rm -rf ./*.xcworkspace 1>/dev/null 2>/dev/null
 }
+
 
 #: MAIN
 set -e
