@@ -4,6 +4,8 @@
 COMPILE="compile"
 CLEAN="clean"
 DEPENDENCIES="install"
+COMPILE_CACHED_DEPENDENCIES="--use-cache"
+
 DERIVED_DATA_DIR="nef/DerivedData"
 
 #: terminal setup
@@ -12,6 +14,8 @@ normal=$(tput sgr0)
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
+required=$(tput setaf 222)
+optional=$(tput setaf 230)
 reset=$(tput sgr0)
 
 #: IN - Check Args
@@ -21,11 +25,13 @@ reset=$(tput sgr0)
 ##
 printWrongArguments() {
     echo ""
-    echo "${bold}nefc ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project>"
+    echo "${bold}nefc ${normal}[${bold}$COMPILE ${normal}| ${bold}$DEPENDENCIES ${normal}| ${bold}$CLEAN${normal}]${bold} ${normal}<project> <options>"
     echo ""
     echo "    ${bold}$COMPILE${normal}  compile playground's pages for the selected project"
     echo "    ${bold}$DEPENDENCIES${normal}  builds dependencies in selected project"
     echo "    ${bold}$CLEAN${normal}  clean builds in selected project"
+    echo ""
+    echo "    ${optional}${bold}$COMPILE_CACHED_DEPENDENCIES${reset}${normal} is an option for '$COMPILE'. Use cached dependencies if it is possible. In another case, it will download them ${optional}[optional]${reset}"
     echo ""
 }
 
@@ -43,16 +49,29 @@ printWrongConfig() {
 #   - Parameter `args`: list of arguments received from command line
 ##
 checkArguments() {
-    # $0 and $1 in `args` are ref. to first and second parameter from command line
-    # $0 - command
-    # $1 - path
+    # $0 - `nefc`
+    # $1 - command
+    # $2 - path
+    # $3 - optional param
 
-    if [ "$#" -ne 2 ]; then printWrongArguments $0; exit 1; fi
+    local command="$1"
+    local option="$3"
+    local isValidCommand=""
 
-    local config=("$COMPILE" "$CLEAN" "$DEPENDENCIES")
-    for e in "${config[@]}"; do [ $1 = $e ] && return 0; done
+    if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then printWrongArguments $0; exit 1; fi
 
-    printWrongConfig; exit 1
+    local validCommands=("$COMPILE" "$CLEAN" "$DEPENDENCIES")
+    for valid in "${validCommands[@]}"; do
+        if [ "$command" = "$valid" ]; then isValidCommand="$command"; fi
+    done
+
+    if [[ "$isValidCommand" = "" ]]; then
+        printWrongConfig; exit 1
+    elif [[ "$command" = "$COMPILE" ]]; then
+        if [[ "$option" != "$COMPILE_CACHED_DEPENDENCIES" ]] && [[ "$option" != "" ]]; then
+            printWrongArguments $0; exit 1;
+        fi
+    fi
 }
 
 #: - Dependencies
@@ -74,8 +93,10 @@ dependencies() {
 #   - Parameter `folder`: path to the project folder.
 ##
 compile() {
+    local option="$2"
+
     makeStructure "$1"
-    buildDependencies "$1"
+    buildDependencies "$1" "$option"
     buildProject "$1"
     copyFrameworks "$1"
     compilePlaygroundPages "$1"
@@ -180,13 +201,15 @@ isPlatfromIOSPlaygroundPage() {
 }
 
 ##
-#   buildDependencies(String folder)
+#   buildDependencies(String folder, String option)
 #   - Parameter `folder`: path to the project folder.
+#   - Parameter `option`: configuration for building.
 ##
 buildDependencies() {
-    local path="$1" # parameter `folder`
+    local path="$1"   # parameter `folder`
+    local option="$2" # parameter `option`
 
-    buildPODS "$path"
+    buildPODS "$path" "$option"
     addPlaygroundReference "$path"
 }
 
@@ -197,6 +220,7 @@ buildDependencies() {
 buildPODS() {
     cd "$1"
 
+    local option="$2"
     local podfile="Podfile"
     local log="nef/log/pod-install.log"
 
@@ -207,7 +231,12 @@ buildPODS() {
         cd "$path"
 
         set +e
-        pod install --repo-update 1> "$log" 2>&1
+        if [[ "$option" = "$COMPILE_CACHED_DEPENDENCIES" ]]; then
+            pod install 1> "$log" 2>&1
+        else
+            pod install --repo-update 1> "$log" 2>&1
+        fi
+
         installed=`grep "Pod installation complete" "$log"`
         set -e
 
@@ -475,7 +504,8 @@ else
 fi
 
 if [ $1 = "$COMPILE" ]; then
-    compile "$projectPath"
+    option="$3"
+    compile "$projectPath" "$option"
 elif [ $1 = "$DEPENDENCIES" ]; then
     dependencies "$projectPath"
 else
