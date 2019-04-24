@@ -75,9 +75,10 @@ printHelpClean() {
 
 printHelpCompileClean() {
     echo ""
-    echo "${normal}nef ${green}${bold}$COMPILE${normal}${reset} | ${green}${bold}$CLEAN${normal}${reset} <path>"
+    echo "${normal}nef ${green}${bold}$COMPILE${normal}${reset} | ${green}${bold}$CLEAN${normal}${reset} <path> <options>"
     echo ""
     echo "    ${required}${bold}<path>${reset}${normal} path to the folder where the project and playgrounds are located"
+    echo "    ${optional}${bold}--use-cache${reset}${normal} is an option for 'compile' command. Use cached dependencies if it is possible. In another case, it will download them ${optional}[optional]${reset}"
     echo ""
 }
 
@@ -135,6 +136,8 @@ jekyll() {
           --bow-branch )   printHelpPlayground; exit 1 ;;
           --podfile )      printHelpPlayground; exit 1 ;;
 
+          --use-cache)     printHelpCompile; exit 1 ;;
+
           $JEKYLL )        ;;
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
@@ -172,6 +175,8 @@ playground() {
             --bow-branch )   shift; branch=$1 ;;
             --podfile )      shift; podfile=$1 ;;
 
+            --use-cache)     printHelpCompile; exit 1 ;;
+
             $JEKYLL )        printHelpJekyll; exit 1 ;;
             $PLAYGROUND )    ;;
             $COMPILE )       printHelpCompile; exit 1 ;;
@@ -198,6 +203,7 @@ playground() {
 ##
 compile() {
     projectFolder=""
+    flag=""
 
     while [ "$1" != "" ]; do
         case $1 in
@@ -210,6 +216,8 @@ compile() {
             --bow-branch )   printHelpPlayground; exit 1 ;;
             --podfile )      printHelpPlayground; exit 1 ;;
 
+            --use-cache)     flag="--use-cache" ;;
+
             $JEKYLL )        printHelpJekyll; exit 1 ;;
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
             $COMPILE )       shift; projectFolder=$1 ;;
@@ -220,7 +228,7 @@ compile() {
     done
 
     if [ "${#projectFolder}" -gt 0 ]; then
-      nefc compile "$projectFolder"
+      nefc compile "$projectFolder" "$flag"
     else
       printHelpCompile; echo "${bold}[!] ${normal}${red}error:${reset} command format."; exit 1
     fi
@@ -245,6 +253,8 @@ clean() {
             --bow-version )  printHelpPlayground; exit 1 ;;
             --bow-branch )   printHelpPlayground; exit 1 ;;
             --podfile )      printHelpPlayground; exit 1 ;;
+
+            --use-cache)     ;;
 
             $JEKYLL )        printHelpJekyll; exit 1 ;;
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
