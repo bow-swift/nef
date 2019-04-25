@@ -55,7 +55,7 @@ buildMarkdown() {
         playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
         playgroundPath="$projectPath/$playground"
 
-        echo -ne "${normal}Rendering Markdown file from ${green}Playground ($playgroundName)${reset}..."
+        echo -ne "${normal}Rendering Markdown files from ${green}Playground ($playgroundName)${reset}..."
 
         pagesInPlayground "$playgroundPath"
 
@@ -66,7 +66,7 @@ buildMarkdown() {
 
             cleanStructure "$output"
             mkdir -p "$output"
-            nef-markdown-page --from "$pagePath" --to "$output" 1> "$log" 2>&1
+            nef-markdown-page --from "$pagePath" --to "$output" --filename "$pageName" 1> "$log" 2>&1
 
             installed=`grep "RENDER SUCCEEDED" "$log"`
             if [ "${#installed}" -lt 7 ]; then

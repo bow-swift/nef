@@ -70,6 +70,10 @@
             argument = "--to &quot;/Users/miguelangel/Desktop&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--filename &quot;Render&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>

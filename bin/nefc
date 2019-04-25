@@ -66,10 +66,10 @@ checkArguments() {
         if [ "$command" = "$valid" ]; then isValidCommand="$command"; fi
     done
 
-    if [[ "$isValidCommand" = "" ]]; then
+    if [ "$isValidCommand" = "" ]; then
         printWrongConfig; exit 1
-    elif [[ "$command" = "$COMPILE" ]]; then
-        if [[ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ]] && [[ "$flag" != "" ]]; then
+    elif [ "$command" = "$COMPILE" ]; then
+        if [ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ] && [ "$flag" != "" ]; then
             printWrongArguments $0; exit 1;
         fi
     fi
@@ -131,7 +131,7 @@ buildProject() {
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
 
-        if [[ $(shouldBuildWorkspace "$workspace" "$flag") = "1" ]]; then
+        if [ $(shouldBuildWorkspace "$workspace" "$flag") = "1" ]; then
             set +e
             xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
             installed=`grep "BUILD SUCCEEDED" "$log"`
@@ -257,7 +257,7 @@ buildPODS() {
         cd "$path"
 
         set +e
-        if [[ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]]; then
+        if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
             pod install 1> "$log" 2>&1
         else
             pod install --repo-update 1> "$log" 2>&1
@@ -292,7 +292,7 @@ addPlaygroundReference() {
         workspace=$(workspaceForProjectPath "$1" "$project")
         workspaceName=$(echo "$workspace" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
         workspaceContent="$workspace/contents.xcworkspacedata"
-        ! [[ "$workspace" = .*".xcworkspace" ]] && continue
+        ! [ "$workspace" = .*".xcworkspace" ] && continue
         grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
 
         for playground in "${playgroundForProjectPath[@]}"; do
@@ -335,7 +335,7 @@ makeStructure() {
 
     cd "$projectFolder"
 
-    if [[ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ]]; then
+    if [ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ]; then
         cleanStructure "$projectFolder"
     fi
 

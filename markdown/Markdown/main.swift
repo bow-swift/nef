@@ -6,15 +6,16 @@ import Markup
 let scriptName = "nef-markdown-page"
 
 func main() {
-    let result = arguments(keys: "from", "to")
+    let result = arguments(keys: "from", "to", "filename")
     guard let fromPage = result["from"],
-          let output = result["to"] else {
+          let output = result["to"],
+          let filename = result["filename"] else {
             Console.help.show();
             exit(-1)
     }
 
     let from = "\(fromPage)/Contents.swift"
-    let to = "\(output)/\(PlaygroundUtils.playgroundName(fromPage: fromPage)).md"
+    let to = "\(output)/\(filename).md"
 
     renderMarkdown(from: from, to: to)
 }
@@ -29,8 +30,8 @@ func renderMarkdown(from filePath: String, to outputPath: String) {
     let outputURL = URL(fileURLWithPath: outputPath)
 
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8),
-        let rendered = MarkdownGenerator().render(content: content),
-        let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { Console.error.show(); return }
+          let rendered = MarkdownGenerator().render(content: content),
+          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { Console.error.show(); return }
 
     Console.success.show()
 }
