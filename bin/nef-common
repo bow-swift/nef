@@ -73,7 +73,7 @@ pagesInPlayground() {
 cleanStructure() {
   set +e
   local folder="$1"  # parameter `folder`
-  rm -rf "$folder" 1>/dev/null 2>/dev/null
+  rm -rf $folder 1>/dev/null 2>/dev/null
 }
 
 
