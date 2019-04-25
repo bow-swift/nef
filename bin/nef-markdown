@@ -56,7 +56,7 @@ buildMarkdown() {
         playgroundPath="$projectPath/$playground"
         output="$outputPath/$playgroundName"
 
-        echo -ne "${normal}Rendering Markdown files from ${green}Playground ($playgroundName)${reset}..."
+        echo -ne "${normal}Rendering Markdown files for ${green}$playgroundName${reset}..."
 
         cleanStructure "$output"
         mkdir -p "$output"
@@ -99,7 +99,7 @@ makeStructure() {
 set -e
 
 # Load common nef library
-commonNefLibName="/Users/miguelangel/Documents/3.projects/47deg/nef/bin/nef-common"
+commonNefLibName="nef-common"
 commonNefLibPath=$(which "$commonNefLibName")
 source "$commonNefLibPath"
 
