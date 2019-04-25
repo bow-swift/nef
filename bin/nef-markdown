@@ -99,7 +99,7 @@ makeStructure() {
 set -e
 
 # Load common nef library
-commonNefLibName="/Users/miguelangel/Documents/3.projects/47deg/nef/bin/nef-common"
+commonNefLibName="nef-common"
 commonNefLibPath=$(which "$commonNefLibName")
 source "$commonNefLibPath"
 
