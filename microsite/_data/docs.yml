@@ -1,0 +1,18 @@
+content:
+    - title: Compile
+      description: Lorem ip amet, consectetur adipiscing elit. Nullam blandit odio nec button amet, consectetur adip.
+      icon: /img/feature-icon-primary.svg
+      cta: learn more
+      url: /docs/compile/
+
+    - title: Evaluation
+      description: Lorem ip amet, consectetur adipiscing elit. Nullam blandit odio nec button amet, consectetur adip.
+      icon: /img/feature-icon-secondary.svg
+      url: /docs/evaluation/
+
+    - title: Verification
+      description: Lorem ip amet, consectetur adipiscing elit. Nullam blandit odio nec button amet, consectetur adip.
+      icon: /img/feature-icon-tertiary.svg
+      url: /docs/verification/
+          
+cta: learn more

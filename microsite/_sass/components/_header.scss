@@ -1,0 +1,46 @@
+// Header 
+// -----------------------------------------------
+// -----------------------------------------------
+
+#site-header {
+    height: 600px;
+    background: $brand-secondary;
+
+    .header-flex {
+        display: flex;
+        color: $white;
+
+        .header-text {
+            margin-right: $gutter-margin;
+            width: $column-5;
+
+            h1 {
+                color: $white;
+                font-size: 3.429rem;
+            }
+
+            .header-button {
+                text-transform: uppercase;
+                padding: ($base-point-grid * 1.5) ($base-point-grid * 5);
+                display: inline-block;
+                color: $brand-tertiary;
+                border: 2px solid $brand-tertiary;
+                background: none;
+            }
+        }
+
+        .header-image {
+            width: $column-7;
+        }
+    }
+}
+
+// Responsive
+// -----------------------------------------------
+@include bp(medium) {
+    #site-header {
+        .header-flex {
+            flex-direction: column;
+        }
+    }
+}
