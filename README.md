@@ -13,20 +13,15 @@
 
 </p>
 
-# nef
-
 `nef`, short for [Nefertiti](https://en.wikipedia.org/wiki/Nefertiti), mother of Ankhesenamun, is a command line tool to ease the creation of documentation in the form of Swift Playgrounds. It provides compile-time verification of documentation and exports it in Markdown format that can be consumed by [Jekyll](https://jekyllrb.com/) to generate websites.
 
 `nef` is inspired by [ΛNK](https://github.com/arrow-kt/ank) for Kotlin and [tut](https://github.com/tpolecat/tut) for Scala.
 
 ## 📥 Installation
 
-`nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. You can run the following command to install `nef`:
+`nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies.
 
-```bash
-brew tap bow-swift/nef
-brew install nef
-```
+![](assets/nef-installation.png)
 
 It will warn you if there is a missing dependency and provide guidance to install it.
 
