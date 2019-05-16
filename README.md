@@ -19,57 +19,59 @@
 
 ## 📥 Installation
 
-`nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies.
+`nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. It will warn you if there is a missing dependency and provide guidance to install it.
 
-![](assets/nef-installation.png)
-```bash
-brew tap bow-swift/nef
-brew install nef
-```
-
-It will warn you if there is a missing dependency and provide guidance to install it.
+<p align="center">
+<img src="assets/nef-installation.png">
+</p>
 
 ## 🌟 Features
 
 `nef` highlights the following features:
 
-- Eases the creation of Swift Playgrounds with support for third party libraries.
-- Compiles Swift Playgrounds with support for third party libraries from the command line.
-- Generates Markdown files that can be consumed from Jekyll to create a microsite.
+💡 Eases the creation of Swift Playgrounds with support for third party libraries.
+
+💡 Compiles Swift Playgrounds with support for third party libraries from the command line.
+
+💡 Generates Markdown project from Swift Playground.
+
+💡 Generates Markdown files that can be consumed from Jekyll to create a microsite.
+
+&nbsp;
 
 ### 📃 Creating a Swift Playground
 
 Swift Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make easier the creation of a Swift Playground with support for one or more libraries.
 
-By default, `nef` can create a Swift Playground with support for [Bow](http://bow-swift.io), the Functional Programming companion library for Swift. You can run the following command:
+By default, `nef` can create a Swift Playground with support for [Bow](http://bow-swift.io), the Functional Programming companion library for Swift.
 
 ```bash
-nef playground
+➜ nef playground
 ```
 
-It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Swift Playground where you can import Bow or any of its modules, and start trying some of its features.
+It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Swift Playground where you can import Bow or any of its modules, and start trying some of its features. 
 
-> Note: You may need to build the project before, in order to be able to use the dependencies in the playground.
+&nbsp;
 
-Besides this, you can use the following options with this command:
+Besides this, you can select any different `Bow version` or `Bow's branch`, even a `third-party` dependency.
 
-- `--name <project>`: Specify the name for the Xcode project that you are creating. Example:
-
-```bash
-nef playground --name LatestBowProject
-```
+> Note: The next three options are mutually exclusive.
 
 - `--bow-version <x.y.z>`: Specify the version of Bow that you want to use in the project. This option lets you test an old version of the library in a Swift Playground. Example:
 
 ```bash
-nef playground --name OldBowProject --bow-version 0.3.0
+➜ nef playground --name OldBowProject --bow-version 0.3.0
 ```
+
+##
 
 - `--bow-branch <branch-name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
 
 ```bash
-nef playground --name BranchBowProject --bow-branch master
+➜ nef playground --name BranchBowProject --bow-branch master
 ```
+
+##
 
 - `--podfile <Podfile>`: Specify a Podfile with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
 
@@ -85,26 +87,44 @@ end
 ```
 
 ```bash
-nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
+➜ nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
 ```
 
-The last three options are mutually exclusive.
+&nbsp;
+
+And you can use the following option to specify the name for the Xcode project that you are creating.
+
+```bash
+➜ nef playground --name LatestBowProject
+```
+
+&nbsp;
 
 ### ⚙️ Compiling a Swift Playground
 
 Xcode lets you check for correctness of your Swift Playground and run it. However, compiling a Swift Playground from the command line is not so easy when it has dependencies on third party libraries. This is particularly useful in Continuous Integration, when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile Swift Playgrounds in an Xcode project with dependencies. To do this, you can run the following command:
 
 ```bash
-nef compile <path>
+➜ nef compile <path>
 ```
 
-Where `<path>` is the path to the folder where the project and playgrounds are located. You can also clean the result of the compilation:
+Where `<path>` is the path to the folder where the project and playgrounds are located. You can use the following option with this command:
+
+- `--use-cache`: Use cached dependencies if it is possible, in another case, it will download them. Example:
 
 ```bash
-nef clean <path>
+➜ nef compile <path> --use-cache
 ```
 
-### 🖥 Generating Markdown files for Jekyll
+You can also clean the result of the compilation:
+
+```bash
+➜ nef clean <path>
+```
+
+&nbsp;
+
+### 🔖 Generating a Markdown project
 
 Swift Playgrounds let you write comments in Markdown format using the symbols `//:` for single line comments, or `/*: */` for multiline comments. Inside this comments, you can use any Markdown syntax; an exmaple:
 
@@ -119,10 +139,26 @@ protocol MyProtocol {}
 //: ## This is a single line heading 2
 ```
 
-This makes Swift Playgrounds very suitable to write documentation with compilable examples. Leveraging this, `nef` can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:
+It makes Swift Playgrounds very proper to write an article with compilable examples. The command `nef` provides to generate the Markdown files is:
 
 ```bash
-nef jekyll --project <path-to-input> --output <path-to-output> --main-page <path-to-index>
+➜ nef markdown --project <path-to-input> --output <path-to-output>
+```
+
+Options:
+
+- `--project`: Path to the folder containing the Xcode project with Swift Playgrounds.
+- `--output`: Path where the resulting Markdown project will be generated.
+
+&nbsp;
+
+### 🖥 Generating Markdown files for Jekyll
+
+As you can write comments in [Markdown](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html) in Swift Playgrounds, this makes very suitable to write documentation with compilable examples.
+Leveraging this, `nef` can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:
+
+```bash
+➜ nef jekyll --project <path-to-input> --output <path-to-output> --main-page <path-to-index>
 ```
 
 Options:
@@ -130,6 +166,8 @@ Options:
 - `--project`: Path to the folder containing the Xcode project with Swift Playgrounds.
 - `--output`: Path where the resulting Markdown files will be generated.
 - `--main-page`: Optional. Path to a `README.md` file to be used as the index page of the generated microsite.
+
+&nbsp;
 
 `nef` finds all the Swift Playgrounds in an Xcode project. Each playground is considered as a section in the generated microsite structure. For each page in a playground, an entry in the corresponding section is created. The page is transformed from Swift to Markdown using the syntax described above. As a result, a directory structure matching the Xcode project structure is generated, together with a `sidebar.yml` that can be used as a menu in Jekyll.
 
@@ -154,6 +192,7 @@ import Bow // This will be hidden in the Markdown file
 
 struct Person {} // This will be present in the Markdown file
 ```
+&nbsp;
 
 ## ❤️ Contributing to the project
 
