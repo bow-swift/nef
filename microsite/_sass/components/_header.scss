@@ -3,34 +3,65 @@
 // -----------------------------------------------
 
 #site-header {
-    height: 600px;
+    padding: ($base-point-grid * 18) 0 ($base-point-grid * 12) 0;
     background: $brand-secondary;
 
     .header-flex {
         display: flex;
+        align-items: center;
         color: $white;
 
         .header-text {
-            margin-right: $gutter-margin;
             width: $column-5;
 
             h1 {
                 color: $white;
                 font-size: 3.429rem;
+                line-height: 1.3;
+
+                span {
+                    display: block;
+                    margin: ($base-point-grid * 3) 0;
+                    font-size: 1.286rem;
+                    font-weight: $font-regular;
+
+                    strong {
+                        font-weight: $font-bold;
+                    }
+                }
             }
 
             .header-button {
-                text-transform: uppercase;
-                padding: ($base-point-grid * 1.5) ($base-point-grid * 5);
+                padding: ($base-point-grid * 1.5) ($base-point-grid * 6);
                 display: inline-block;
+                font-weight: $font-semibold;
+                text-transform: uppercase;
                 color: $brand-tertiary;
                 border: 2px solid $brand-tertiary;
                 background: none;
+                transition: color, background, $base-duration $base-timing;
+
+                &:visited {
+                    color: $brand-tertiary;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                    color: $brand-secondary;
+                    background: $brand-tertiary;
+                }
+
+                &:active {
+                    color: $brand-secondary;
+                    background: rgba($brand-tertiary, 0.9);
+        
+                }
             }
         }
 
         .header-image {
             width: $column-7;
+            text-align: center;
         }
     }
 }
@@ -38,9 +69,5 @@
 // Responsive
 // -----------------------------------------------
 @include bp(medium) {
-    #site-header {
-        .header-flex {
-            flex-direction: column;
-        }
-    }
+
 }

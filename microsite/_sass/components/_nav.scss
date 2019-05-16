@@ -2,8 +2,10 @@
 // -----------------------------------------------
 // -----------------------------------------------
 #site-nav {
-    padding: ($base-point-grid * 8) 0;
-    background: $brand-secondary;
+    position: fixed;
+    padding: ($base-point-grid * 5) 0;
+    width: 100%;
+    //background: darken($brand-secondary, 5%);
 
     .nav-flex {
         display: flex;

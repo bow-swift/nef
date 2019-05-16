@@ -1,0 +1,25 @@
+// Features 
+// -----------------------------------------------
+// -----------------------------------------------
+
+#site-main {
+     padding: ($base-point-grid * 10) 0 ;
+    .main-flex {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .main-item {
+            width: $column-4 - 3%;
+            box-sizing: border-box;
+            text-align: center;
+            img {
+                margin-bottom: ($base-point-grid * 2);
+            }
+            h2 {
+                margin-bottom: $base-point-grid;
+                font-size: 1.429rem;
+            }
+            p {}
+        }
+    }
+}
