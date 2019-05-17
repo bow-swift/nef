@@ -53,7 +53,7 @@ It will create an Xcode project with support for the latest available version of
 
 &nbsp;
 
-Besides this, you can select any different `Bow version` or `Bow's branch`, even a `third-party` dependency.
+Besides this, you can select any different `Bow` version or branch, even a third-party dependency.
 
 > Note: The next three options are mutually exclusive.
 
