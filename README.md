@@ -139,7 +139,7 @@ protocol MyProtocol {}
 //: ## This is a single line heading 2
 ```
 
-It makes Swift Playgrounds very proper to write an article with compilable examples. The command `nef` provides to generate the Markdown files is:
+It makes Swift Playgrounds the proper tool to write an article with compilable examples. The command provided by `nef` to generate the Markdown files is:
 
 ```bash
 ➜ nef markdown --project <path-to-input> --output <path-to-output>
