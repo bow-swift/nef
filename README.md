@@ -201,6 +201,8 @@ You can contribute in different ways to make `nef` better:
 - Open a Pull Request fixing a problem or adding new functionality.
 - Discuss with us in the [Gitter channel for Bow](https://gitter.im/bowswift/bow) about all the above.
 
+&nbsp;
+
 # ⚖️ License
 
     Copyright (C) 2019 The nef Authors
