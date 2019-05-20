@@ -49,7 +49,13 @@ By default, `nef` can create a Swift Playground with support for [Bow](http://bo
 ➜ nef playground
 ```
 
-It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Swift Playground where you can import Bow or any of its modules, and start trying some of its features. 
+And you can use the following option to specify the name for the Xcode project that you are creating.
+
+```bash
+➜ nef playground --name LatestBowProject
+```
+
+It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Swift Playground where you can import Bow or any of its modules, and start trying some of its features.
 
 &nbsp;
 
@@ -88,14 +94,6 @@ end
 
 ```bash
 ➜ nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
-```
-
-&nbsp;
-
-And you can use the following option to specify the name for the Xcode project that you are creating.
-
-```bash
-➜ nef playground --name LatestBowProject
 ```
 
 &nbsp;
