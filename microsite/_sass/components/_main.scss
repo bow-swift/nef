@@ -6,12 +6,16 @@
      padding: ($base-point-grid * 10) 0 ;
     .main-flex {
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-between;
         .main-item {
-            width: $column-4 - 3%;
+            width: $column-4;
             box-sizing: border-box;
             text-align: center;
+            
+            &:not(:last-child){
+                margin-right: $gutter-margin;
+            }
+            
             img {
                 margin-bottom: ($base-point-grid * 2);
             }

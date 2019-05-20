@@ -2,7 +2,7 @@ title: Λnk
 #-------------------------
 name: Ank
 #-------------------------
-description: Compile time docs verification and evaluation for Kotlin and Java
+description: Compile time docs verification and evaluation for Kotlin and Java.
 #-------------------------
 author: 47 Degrees
 keywords: functional-programming, kotlin-library, monads, monad-transformers, functional-data-structure, kotlin, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory

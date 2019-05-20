@@ -4,6 +4,8 @@
     <title>feature-image-3</title>
     <desc>Created with Sketch.</desc>
     <g id="feature-image-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect fill="#C0C0C0" x="0" y="0" width="68" height="68"></rect>
+        <polyline id="Path" stroke="#6C0BEF" stroke-width="2" points="61.999 43.165 33.999 27 6 43.166 6 43.166 33.999 59.331"></polyline>
+        <polygon id="path" stroke="#FBB040" stroke-width="2" fill-opacity="0.2" fill="#FBB040" points="6 34.165 33.999 50.331 61.999 34.165 33.999 18"></polygon>
+        <polyline id="Shape" stroke="#6C0BEF" stroke-width="2" points="6 25.165 33.999 41.331 61.999 25.165 33.999 9"></polyline>
     </g>
 </svg>

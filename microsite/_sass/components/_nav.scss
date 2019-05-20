@@ -6,6 +6,11 @@
     padding: ($base-point-grid * 5) 0;
     width: 100%;
     //background: darken($brand-secondary, 5%);
+    
+    &.nav-scroll {
+    padding: ($base-point-grid * 2) 0;
+    background: $brand-primary;
+  }
 
     .nav-flex {
         display: flex;

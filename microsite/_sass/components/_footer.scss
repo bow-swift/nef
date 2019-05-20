@@ -1,3 +1,47 @@
 // Footer
 // -----------------------------------------------
 // -----------------------------------------------
+#site-footer {
+    height: 300px;
+    padding: ($base-point-grid * 10) 0;
+    background: darken($gray-primary, 5%);
+    color: rgba($white, 0.5);
+
+    a {
+        color: rgba($white, 0.8);
+
+        &:visited {
+            color: rgba($white, 0.8); 
+        }
+
+        &:hover {
+            color: rgba($white, 0.6); 
+            text-decoration: underline;
+        }
+
+        &:active {
+            color: rgba($white, 0.8);
+        }
+        
+        
+    }
+
+    .footer-flex {
+        display: flex;
+        justify-content: space-between;
+
+        .footer-dev {
+            width: $column-4;
+        }
+
+        .footer-menu {
+            display: flex;
+            li {
+                &:not(:last-child) {
+                    margin-right: ($base-point-grid * 4)
+                }
+            }
+        }
+    }
+
+}
