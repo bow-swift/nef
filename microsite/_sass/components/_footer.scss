@@ -4,7 +4,7 @@
 #site-footer {
     height: 300px;
     padding: ($base-point-grid * 10) 0;
-    background: darken($gray-primary, 5%);
+    background: $gray-primary;
     color: rgba($white, 0.5);
 
     a {
