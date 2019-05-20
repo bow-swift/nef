@@ -69,5 +69,19 @@
 // Responsive
 // -----------------------------------------------
 @include bp(medium) {
-
+    #site-header {
+        .header-flex {
+             flex-direction: column;
+            .header-text,
+            .herader-image {
+                width: $column-12;
+            }
+            
+            .herader-image {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }
