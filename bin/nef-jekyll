@@ -66,7 +66,7 @@ buildMicrosite() {
         playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
         playgroundPath="$projectPath/$playground"
 
-        echo -ne "${normal}Rendering jekyll file from ${green}Playground ($playgroundName)${reset}..."
+        echo -ne "${normal}Rendering jekyll files for ${green}Playground ($playgroundName)${reset}..."
         pagesInPlayground "$playgroundPath"
 
         echo -e "\n  - title: $playgroundName\n\n    nested_options:\n" >> "$sidebarFilePath" # sidebar title
@@ -117,122 +117,23 @@ buildMainPage() {
 }
 
 ##
-#   pagesInPlayground(String playground)
-#   - Parameter `playground`: path to the playground where to get its pages.
-#   - Return `pagesInPlayground` list of the playground's pages.
-##
-pagesInPlayground() {
-    local playgroundPath="$1"         # parameter `playground`
-    if [ ! -d "$playgroundPath" ]; then
-        echo " ❌"
-        echo "${bold}${red}error: ${reset}can not open '$playgroundPath'. Please, review the path and it is linked correctly in the project."
-        exit 1
-    fi
-
-    cd "$playgroundPath"
-    pages=()
-
-    dependencies="awk -F'page name=' '{print \$2}'"
-    cleanUp="cut -d'/' -f -1"
-    pagesNames=$(eval cat "contents.xcplayground | $dependencies | $cleanUp" 2>/dev/null)
-
-    pagesNames=`echo "$pagesNames" | tr -s "\'" '\n' | tr -s '\n' '\t'` # ' -> \n -> \t
-    IFS=$'\t' read -r -a pagesNames <<< "$pagesNames"                   # split by \t
-
-    # A. in case `content.xcplayground` has not pages - get from folder `Pages`
-    if [ "${#pagesNames}" -eq 0 ]; then
-        pagesNames=`ls "Pages" | grep xcplaygroundpage`
-        pagesNames=`echo "$pagesNames" | tr -s '\n' '\t'`
-        IFS=$'\t' read -r -a pages <<< "$pagesNames"
-
-    # B. get pages from `contents.xcplayground`
-    else
-      for page in "${pagesNames[@]}"; do
-          pages+=("$page.xcplaygroundpage")
-      done
-    fi
-
-    # build pages path
-    pagesInPlayground=()
-    for page in "${pages[@]}"; do
-        pagesInPlayground+=("$playgroundPath/Pages/$page")
-    done
-
-    declare -p pagesInPlayground 1>/dev/null 2>/dev/null
-}
-
-##
-#   playgrounds(String folder)
-#   - Parameter `folder`: path to the project folder.
-#   - Return `playgrounds` list of the playgrounds.
-##
-playgrounds() {
-    local path="$1"   # parameter `folder`
-
-    workspace=$(workspaceForProjectPath "$1")
-    content="$workspace/contents.xcworkspacedata"
-
-    dependencies="awk -F'location = \"group:' '{print \$2}'"
-    cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
-    playgrounds=$(eval cat "\"$content\" | $dependencies | $cleanUp" )
-
-    playgrounds=`echo "$playgrounds" | tr -s '\n' '\t'` # '\n' -> '\t'
-    IFS=$'\t' read -r -a playgrounds <<< "$playgrounds" # split by '\t'
-
-    declare -p playgrounds 1>/dev/null 2>/dev/null
-}
-
-##
-#   workspaceForProjectPath(String folder, String projectPath): String
-#   - Parameter `folder`: path to the project folder.
-#   - Parameter `projectPath`: path to the *.pbxproj file.
-#   - Return `workspace` path
-##
-workspaceForProjectPath() {
-    local path="$1"         # parameter `folder`
-    local log="$1/$LOG_PATH/workspace.log"
-    cd "$path"
-
-    workspace=`ls | grep xcworkspace`
-    numberOfWorkspaces=`echo "$workspace" | wc -l`
-    workspacePath="$path/$workspace"
-
-    if [ "$numberOfWorkspaces" -ne 1 ]; then
-        echo "[!] error: found more than 1 workspace (total:$numberOfWorkspaces): '$workspace'" > "$log"
-        exit 1
-    elif [ -d "$workspacePath" ]; then
-        echo $workspacePath
-    else
-        echo "[!] error: not found any workspace in root project '$path'" > "$log"
-        exit 1
-    fi
-}
-
-##
 #   makeStructure(String project, String microsite)
 #   - Parameter `project`: path to the project folder.
 #   - Parameter `microsite`: path to the microsite folder.
 ##
 makeStructure() {
-  set +e
-  local logPath="$1/$LOG_PATH"  # parameter `project`
-  local sitePath="$2"           # parameter `site`
-  local sidebarFolderPath="$sitePath/$BASE_SIDEBAR"
-  local baseJekyllPath="$sitePath/$BASE_JEKYLL"
+    set +e
+    local logPath="$1/$LOG_PATH"  # parameter `project`
+    local sitePath="$2"           # parameter `site`
+    local sidebarFolderPath="$sitePath/$BASE_SIDEBAR"
+    local baseJekyllPath="$sitePath/$BASE_JEKYLL"
 
-  cleanStructure "$logPath"
-  cleanStructure "$baseJekyllPath"
+    cleanStructure "$logPath"
+    cleanStructure "$baseJekyllPath"
 
-  mkdir -p "$logPath"
-  mkdir -p "$sidebarFolderPath"
-  mkdir -p "$baseJekyllPath"
-}
-
-cleanStructure() {
-  set +e
-  local folder="$1"  # parameter `folder`
-
-  rm -rf "$folder" 1>/dev/null 2>/dev/null
+    mkdir -p "$logPath"
+    mkdir -p "$sidebarFolderPath"
+    mkdir -p "$baseJekyllPath"
 }
 
 
@@ -244,6 +145,12 @@ projectPath=""
 sitePath=""
 mainPagePath=""
 
+# Load common nef library
+commonNefLibName="nef-common"
+commonNefLibPath=$(which "$commonNefLibName")
+source "$commonNefLibPath"
+
+# Menu
 while [ "$1" != "" ]; do
     case $1 in
         --project | project )     shift; projectPath=$1 ;;
