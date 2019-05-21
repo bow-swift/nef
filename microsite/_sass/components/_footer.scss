@@ -11,19 +11,19 @@
         color: rgba($white, 0.8);
 
         &:visited {
-            color: rgba($white, 0.8); 
+            color: rgba($white, 0.8);
         }
 
         &:hover {
-            color: rgba($white, 0.6); 
+            color: rgba($white, 0.6);
             text-decoration: underline;
         }
 
         &:active {
             color: rgba($white, 0.8);
         }
-        
-        
+
+
     }
 
     .footer-flex {
@@ -36,9 +36,45 @@
 
         .footer-menu {
             display: flex;
+
             li {
                 &:not(:last-child) {
                     margin-right: ($base-point-grid * 4)
+                }
+            }
+        }
+    }
+}
+
+// Responsive
+// -----------------------------------------------
+
+@include bp(medium) {
+    #site-footer {
+        .footer-flex {
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .footer-dev,
+            .footer-menu {
+                width: $column-8;
+            }
+
+            .footer-dev {
+                padding-bottom: ($base-point-grid * 2);
+                margin-bottom: ($base-point-grid * 2);
+                text-align: center;
+                border-bottom: 1px solid rgba($white, 0.2);
+            }
+
+
+            .footer-menu {
+                justify-content: center;
+
+                li {
+                    &:not(:last-child) {
+                        margin-right: ($base-point-grid * 2);
+                    }
                 }
             }
         }

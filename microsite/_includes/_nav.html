@@ -3,18 +3,14 @@
         <div class="nav-flex">
             <a class="nav-brand" href="#">
                 <img src="../img/navbar-brand.svg" alt="">
-                <span>nef</span>
+                <span>{{ site.name }}</span>
             </a>
             <ul class="nav-menu">
+                {% for item in site.data.menu.nav%}
                 <li class="nav-menu-item">
-                    <a class="active" href="#">Documentation</a>
+                    <a href="{{ item.url }}" alt="{{ item.title }}">{{ item.title }}</a>
                 </li>
-                <li class="nav-menu-item">
-                    <a href="#">GitHub</a>
-                </li>
-                <li class="nav-menu-item">
-                    <a href="#">License</a>
-                </li>
+               {% endfor %}
             </ul>
         </div>
     </div>

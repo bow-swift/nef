@@ -68,19 +68,38 @@
 
 // Responsive
 // -----------------------------------------------
-@include bp(medium) {
+
+@include bp(large) {
     #site-header {
         .header-flex {
-             flex-direction: column;
-            .header-text,
-            .herader-image {
-                width: $column-12;
+            .header-text {
+                h1 {
+                    font-size: 2.9rem;
+                }
             }
-            
-            .herader-image {
+            .header-image {
                 img {
                     width: 100%;
                 }
+            }
+        }
+    }
+}
+@include bp(medium) {
+    #site-header {
+        padding-top: ($base-point-grid * 20);
+        .header-flex {
+             flex-direction: column;
+            .header-text {
+                text-align: center;
+                width: $column-12;
+                
+                h1 {
+                    font-size: 2.5rem;
+                }
+            }
+            .header-image {
+                display: none;
             }
         }
     }

@@ -3,26 +3,29 @@
 // -----------------------------------------------
 
 #site-main {
-     padding: ($base-point-grid * 10) 0 ;
+    padding: ($base-point-grid * 10) 0;
+
     .main-flex {
         display: flex;
         justify-content: space-between;
+
         .main-item {
             width: $column-4;
-            box-sizing: border-box;
             text-align: center;
-            
-            &:not(:last-child){
+
+            &:not(:last-child) {
                 margin-right: $gutter-margin;
             }
-            
+
             img {
-                margin-bottom: ($base-point-grid * 2);
+                margin-bottom: $base-point-grid;
             }
+
             h2 {
                 margin-bottom: $base-point-grid;
                 font-size: 1.429rem;
             }
+
             p {}
         }
     }
@@ -30,4 +33,18 @@
 
 // Responsive
 // -----------------------------------------------
-@include bp(medium) {}
+@include bp(medium) {
+    #site-main {
+        .main-flex {
+            flex-direction: column;
+            .main-item {
+                width: $column-12;
+                
+                &:not(:last-child) {
+                    margin-right: 0;
+                    margin-bottom: ($base-point-grid * 8);
+                }
+            }
+        }
+    }
+}

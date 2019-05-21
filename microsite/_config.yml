@@ -1,8 +1,8 @@
-title: Λnk 
+title: nef 
 #-------------------------
-name: Ank
+name: nef
 #-------------------------
-description: Compile time docs verification and evaluation for Kotlin and Java.
+description: A set of command line tools that let you have compile time verification of your documentation written as Swift Playground
 #-------------------------
 author: 47 Degrees
 keywords: functional-programming, kotlin-library, monads, monad-transformers, functional-data-structure, kotlin, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory
@@ -17,4 +17,5 @@ sass:
 permalink: pretty
 #-------------------------
 exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', 'Procfile', 'Rakefile']
+#-------------------------
     
