@@ -1,12 +1,16 @@
 content:
-    - title: Navigation
-      description: Navigate through JSON with the power of optics.
+    - title: Verification
+      description: Eases the creation of Swift Playgrounds with support for third party libraries.
       icon: img/main-image-primary.svg
 
-    - title: Serialization
-      description: JSON serialization with the advantage of Functional Programming with Arrow.
+    - title: Compile
+      description: Compiles Swift Playgrounds with support for third party libraries from the command line.
       icon: img/main-image-secondary.svg
 
-    - title: Parsing
-      description: Encoding and Decoding for all Kotlin and Arrow datatypes.
+    - title: Generation
+      description: Generates Markdown project from Swift Playground.
       icon: img/main-image-tertiary.svg
+      
+    - title: Integration
+      description: Integrates Swift Playgrounds with Jekyll to create a microsite.
+      icon: img/main-image-quaternary.svg

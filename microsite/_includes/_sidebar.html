@@ -1,8 +1,16 @@
 <div id="site-sidebar">
-    <div class="sidebar-brand"></div>
+    <div class="sidebar-brand">
+        <a href="#">
+            <img src="../../img/navbar-brand.svg" alt="">
+            <span>{{ site.name }}</span>
+        </a>
+        
+    </div>
     <ul class="sidebar-menu">
-        <li class="sidebar-menu-item"></li>
-        <li class="sidebar-menu-item"></li>
-        <li class="sidebar-menu-item"></li>
+         {% for item in site.data.sidebar.options %}
+        <li class="{% if item.url == page.url %}active{% endif %} sidebar-menu-item">
+            <a href="{{ item.url | relative_url }}" alt="{{ item.title }}">{{ item.title }}</a>
+        </li>
+        {% endfor %}
     </ul>
 </div>

@@ -9,7 +9,7 @@
     
     &.nav-scroll {
     padding: ($base-point-grid * 2) 0;
-    background: rgba($gray-primary, 0.9);
+    background: darken($brand-secondary, 3%);
   }
 
     .nav-flex {
@@ -58,5 +58,5 @@
 // Responsive
 // -----------------------------------------------
 @include bp(medium) {
-
+    
 }
