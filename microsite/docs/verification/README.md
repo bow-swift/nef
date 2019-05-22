@@ -2,17 +2,28 @@
 layout: docs
 title: Verification
 permalink: /docs/verification/
+
 ---
 
-## Current Benchmarks
+# Verification h1
+## Verification h2
+### Verification h3
+#### Verification h4
+##### Verification h5
+###### Verification h6
 
-You can see the current Helios benchmarks [here](https://github.com/47deg/helios/tree/master/benchmarks/master_benchmark.json)
+Lorem ipsum dolor sit amet, [consectetur adipiscing](#) elit. Nam lacinia auctor nunc, in commodo ante faucibus ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel neque ut nisi sodales aliquet. Ut nunc velit, feugiat et elit eget, lobortis sodales est. Integer turpis tellus, semper nec neque ut, elementum mollis metus. Ut `faucibus lorem` felis porta lorem vehicula accumsan. Duis sed tempor enim, ac porttitor mi. Maecenas non sollicitudin quam. Nam mollis scelerisque sapien eu viverra. Etiam tempor bibendum eros, a faucibus tellus ullamcorper a. Aliquam id lorem est. Vivamus in ipsum condimentum, vulputate nisl et, rutrum tellus.
 
-<fortyseven-robeen data-url="https://raw.githubusercontent.com/47deg/helios/master/benchmarks/master_benchmark.json"></fortyseven-robeen>
+- item 1
+- item 2
+- item 3
+- item 4
 
-## Comparing Helios
+```swift
+func impureAdd(x: Int, y: Int) -> Int {
+    print("Received (\(x), \(y))")
+    return x + y
+}
 
-We have [here](https://github.com/47deg/helios/tree/master/benchmarks/libraries_benchmark.json) a benchmark comparison
-between Helios and some of the most common Kotlin Json libraries.
-
-<fortyseven-robeen data-url="https://raw.githubusercontent.com/47deg/helios/master/benchmarks/libraries_benchmark.json"></fortyseven-robeen>
+let impureSquare = impureAdd(x: 2, y: 5) * impureAdd(x: 2, y: 5)
+```

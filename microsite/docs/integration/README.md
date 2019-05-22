@@ -2,71 +2,28 @@
 layout: docs
 title: Integration
 permalink: /docs/integration/
+
 ---
 
-# QuickStart
+# Integration h1
+## Integration h2
+### Integration h3
+#### Integration h4
+##### Integration h5
+###### Integration h6
 
-Once Helios is added to your project, you can start adding the necessary imports:
+Lorem ipsum dolor sit amet, [consectetur adipiscing](#) elit. Nam lacinia auctor nunc, in commodo ante faucibus ut. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel neque ut nisi sodales aliquet. Ut nunc velit, feugiat et elit eget, lobortis sodales est. Integer turpis tellus, semper nec neque ut, elementum mollis metus. Ut `faucibus lorem` felis porta lorem vehicula accumsan. Duis sed tempor enim, ac porttitor mi. Maecenas non sollicitudin quam. Nam mollis scelerisque sapien eu viverra. Etiam tempor bibendum eros, a faucibus tellus ullamcorper a. Aliquam id lorem est. Vivamus in ipsum condimentum, vulputate nisl et, rutrum tellus.
 
-```kotlin:ank:silent
-import arrow.core.*
-import helios.core.*
-import helios.meta.*
-import helios.typeclasses.*
-```
+- item 1
+- item 2
+- item 3
+- item 4
 
-Now, we can start to create our DSL.
-
-## DSL
-
-```kotlin
-@json
-data class Person(val name: String, val age: Int) {
-  companion object
-}
-```
-
-The `@json` annotation will provide the decoder and encoder for that data class,
-so we are able to read from and write to Json.
-
-## Decode
-
-We can decode from a `String`, a `File`, etc.
-
-```kotlin:ank
-val jsonStr =
-"""{
-     "name": "Simon",
-     "age": 30
-   }"""
-
-val jsonFromString : Json =
-  Json.parseFromString(jsonStr).getOrHandle {
-    println("Failed creating the Json ${it.localizedMessage}, creating an empty one")
-    JsString("")
-  }
-
-val personOrError: Either<DecodingError, Person> = Person.decoder().decode(jsonFromString)
-
-personOrError.fold({
-  "Something went wrong during decoding: $it"
-}, {
-  "Successfully decode the json: $it"
-})
-```
-
-## Encode
-
-We can also encode from a data class instance to a `Json`:
-
-```kotlin:ank
-val person = Person("Raul", 34)
-
-val jsonFromPerson = with(Person.encoder()) {
-  person.encode()
+```swift
+func impureAdd(x: Int, y: Int) -> Int {
+    print("Received (\(x), \(y))")
+    return x + y
 }
 
-jsonFromPerson.toJsonString()
+let impureSquare = impureAdd(x: 2, y: 5) * impureAdd(x: 2, y: 5)
 ```
-
-You can find more on the [`samples` module](https://github.com/47deg/helios/tree/master/helios-sample/src/main/kotlin/helios/sample).
