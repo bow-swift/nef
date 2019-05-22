@@ -18,12 +18,3 @@ function loadEvent() {
 // Attach the functions to each event they are interested in
 window.addEventListener("load", loadEvent);
 
-
-function w3_open() {
-    "use strict";
-    document.getElementById("sidebar").style.display = "block";
-}
-function w3_close() {
-    "use strict";
-    document.getElementById("sidebar").style.display = "none";
-}
