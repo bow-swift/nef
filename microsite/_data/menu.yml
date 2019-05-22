@@ -1,6 +1,6 @@
 nav:
     - title: Documentation
-      url: /docs/compile/
+      url: /docs
 
     - title: Github
       url: https://github.com/bow-swift/nef
