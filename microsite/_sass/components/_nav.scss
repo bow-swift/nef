@@ -6,11 +6,11 @@
     padding: ($base-point-grid * 5) 0;
     width: 100%;
     transition: all $base-duration $base-timing;
-    
+
     &.nav-scroll {
-    padding: ($base-point-grid * 2) 0;
-    background: darken($brand-secondary, 3%);
-  }
+        padding: ($base-point-grid * 2) 0;
+        background: darken($brand-secondary, 3%);
+    }
 
     .nav-flex {
         display: flex;
@@ -33,6 +33,7 @@
         }
 
         .nav-menu {
+            position: relative;
             display: flex;
 
             .nav-menu-item {
@@ -44,11 +45,30 @@
                     padding-bottom: 4px;
                     font-family: $base-font-family;
                     color: $white;
-                    
+
                     &:hover {
                         text-decoration: none;
                         border-bottom: 2px solid $brand-tertiary;
                     }
+                }
+            }
+        }
+        
+        .nav-icon-open {
+            display: none;
+        }
+        
+        .nav-icon-close {
+            display: none;
+            padding: 6px;
+            position: absolute;
+            background: rgba($gray-primary, 0.96);
+            left: -34px;
+            top: 32px;
+            
+            a {
+                img {
+                    display: block;
                 }
             }
         }
@@ -58,5 +78,31 @@
 // Responsive
 // -----------------------------------------------
 @include bp(medium) {
-    
+    #site-nav {
+        .nav-flex {
+            .nav-menu {
+                position: fixed;
+                padding: ($base-point-grid * 4) ($base-point-grid * 6);
+                flex-direction: column;
+                background: rgba($gray-primary, 0.96);
+                height: 100%;
+                right: 0;
+                top: 0;
+                //display: none;
+
+                .nav-menu-item {
+                    padding: $base-point-grid 0;
+                    &:not(:last-child) {
+                        margin-right: 0;
+                    }
+                }
+
+            }
+            
+            .nav-icon-open,
+            .nav-icon-close {
+                display: block;
+            }
+        }
+    }
 }

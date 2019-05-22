@@ -50,3 +50,15 @@
         }
     }
 }
+
+// Responsive
+// -----------------------------------------------
+@include bp(medium) {
+    #site-doc {
+        margin-left: 0;
+    }
+}
+
+
+
+

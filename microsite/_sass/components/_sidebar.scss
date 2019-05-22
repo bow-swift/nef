@@ -11,6 +11,8 @@
     .sidebar-brand {
         padding: ($base-point-grid * 2);
         background: rgba($brand-primary, 0.30);
+        display: flex;
+        justify-content: space-between;
 
         a {
             display: flex;
@@ -30,10 +32,15 @@
                 font-size: 2.143rem;
             }
         }
+
+
+
+
     }
 
     .sidebar-menu {
         margin-top: ($base-point-grid * 2);
+
         .sidebar-menu-item {
             a {
                 display: block;
@@ -55,16 +62,26 @@
                     color: $white;
                 }
             }
-            
-            &.active {
-                    a {
-                        padding-left: (($base-point-grid * 3) - 3);
-                        background: rgba($brand-primary, 0.30);
-                        border-left: 3px solid $brand-tertiary;
-                        pointer-events: none;
-                    }
 
+            &.active {
+                a {
+                    padding-left: (($base-point-grid * 3) - 3);
+                    background: rgba($brand-primary, 0.30);
+                    border-left: 3px solid $brand-tertiary;
+                    pointer-events: none;
                 }
+
+            }
         }
+    }
+}
+
+
+// Responsive
+// -----------------------------------------------
+@include bp(medium) {
+
+    #site-sidebar {
+        display: none;
     }
 }
