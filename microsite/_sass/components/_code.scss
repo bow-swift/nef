@@ -1,4 +1,4 @@
-// Code 
+// Code
 // ----------------------------------------------
 // ----------------------------------------------
 p code,
@@ -9,35 +9,15 @@ ul code {
     border-radius: 2px;
 }
 
+
+.highlight pre {
+  background: scale-color($brand-secondary, $lightness: -65%);
+  padding: ($base-point-grid * 3);
+  overflow: auto;
+  margin-bottom: ($base-point-grid * 2);
+}
+
+
 code {
-    margin-bottom: ($base-point-grid * 2);
     font-family: $code-font-family;
-
-    &.hljs {
-        padding: ($base-point-grid * 3);
-        background: $brand-secondary;
-        color: rgba($white, 0.9);
-
-        .hljs-keyword,
-        .hljs-selector-tag,
-        .hljs-deletion {
-            color: $brand-primary;
-        }
-
-        .hljs-attr,
-        .hljs-variable,
-        .hljs-template-variable,
-        .hljs-type,
-        .hljs-selector-class,
-        .hljs-selector-attr,
-        .hljs-selector-pseudo,
-        .hljs-number {
-            color: $brand-secondary;
-        }
-
-        .hljs-built_in,
-        .hljs-class .hljs-title {
-            color: rgba($brand-tertiary, 0.8);
-        }
-    }
 }
