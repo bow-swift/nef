@@ -1,11 +1,11 @@
-title: nef 
+title: nef
 #-------------------------
 name: nef
 #-------------------------
 description: A set of command line tools that let you have compile time verification of your documentation written as Swift Playground
 #-------------------------
 author: 47 Degrees
-keywords: functional-programming, kotlin-library, monads, monad-transformers, functional-data-structure, kotlin, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory
+keywords: functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory
 #-------------------------
 url: https://www.47deg.com
 #-------------------------
@@ -18,4 +18,3 @@ permalink: pretty
 #-------------------------
 exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', 'Procfile', 'Rakefile']
 #-------------------------
-    
