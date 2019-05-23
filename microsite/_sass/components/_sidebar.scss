@@ -5,10 +5,11 @@
 #site-sidebar {
     position: fixed;
     background: $brand-secondary;
-    width: 304px;
+    width: 250px;
     height: 100%;
 
     .sidebar-brand {
+        height: 88px;
         padding: ($base-point-grid * 2);
         background: rgba($brand-primary, 0.30);
         display: flex;
@@ -26,7 +27,9 @@
                 text-decoration: none;
             }
 
-            img {}
+            img {
+              height: 60px;
+            }
 
             span {
                 font-size: 2.143rem;

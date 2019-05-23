@@ -1,0 +1,19 @@
+// Buttons
+// ----------------------------------------------
+// ----------------------------------------------
+.button {
+  display: block;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  > img {
+    vertical-align: bottom;
+  }
+}

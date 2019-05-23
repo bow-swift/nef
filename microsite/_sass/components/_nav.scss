@@ -5,7 +5,7 @@
     position: fixed;
     padding: ($base-point-grid * 5) 0;
     width: 100%;
-    transition: all $base-duration $base-timing;
+    transition: background-color $base-duration $base-timing, padding $base-duration $base-timing;
 
     &.nav-scroll {
         padding: ($base-point-grid * 2) 0;
@@ -34,38 +34,41 @@
 
         .nav-menu {
             position: relative;
-            display: flex;
 
-            .nav-menu-item {
-                &:not(:last-child) {
-                    margin-right: ($base-point-grid * 5);
-                }
+            ul {
+              display: flex;
 
-                a {
-                    padding-bottom: 4px;
-                    font-family: $base-font-family;
-                    color: $white;
+              .nav-menu-item {
+                  &:not(:last-child) {
+                      margin-right: ($base-point-grid * 5);
+                  }
 
-                    &:hover {
-                        text-decoration: none;
-                        border-bottom: 2px solid $brand-tertiary;
-                    }
-                }
+                  a {
+                      padding-bottom: 4px;
+                      font-family: $base-font-family;
+                      color: $white;
+
+                      &:hover {
+                          text-decoration: none;
+                          border-bottom: 2px solid $brand-tertiary;
+                      }
+                  }
+              }
             }
         }
-        
+
         .nav-icon-open {
             display: none;
         }
-        
+
         .nav-icon-close {
             display: none;
             padding: 6px;
             position: absolute;
             background: rgba($gray-primary, 0.96);
-            left: -34px;
+            right: 100%;
             top: 32px;
-            
+
             a {
                 img {
                     display: block;
@@ -83,22 +86,30 @@
             .nav-menu {
                 position: fixed;
                 padding: ($base-point-grid * 4) ($base-point-grid * 6);
-                flex-direction: column;
                 background: rgba($gray-primary, 0.96);
                 height: 100%;
-                right: 0;
+                right: -100%;
                 top: 0;
-                //display: none;
+                width: 50%;
+                transition: right $base-duration $base-timing;
 
-                .nav-menu-item {
-                    padding: $base-point-grid 0;
-                    &:not(:last-child) {
-                        margin-right: 0;
-                    }
+                &.open {
+                  right: 0;
+                }
+
+                ul {
+                  flex-direction: column;
+
+                  .nav-menu-item {
+                      padding: $base-point-grid 0;
+                      &:not(:last-child) {
+                          margin-right: 0;
+                      }
+                  }
                 }
 
             }
-            
+
             .nav-icon-open,
             .nav-icon-close {
                 display: block;

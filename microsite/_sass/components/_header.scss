@@ -1,4 +1,4 @@
-// Header 
+// Header
 // -----------------------------------------------
 // -----------------------------------------------
 
@@ -39,7 +39,7 @@
                 color: $brand-tertiary;
                 border: 2px solid $brand-tertiary;
                 background: none;
-                transition: color, background, $base-duration $base-timing;
+                transition: color $base-duration $base-timing, background-color $base-duration $base-timing;
 
                 &:visited {
                     color: $brand-tertiary;
@@ -54,7 +54,7 @@
                 &:active {
                     color: $brand-secondary;
                     background: rgba($brand-tertiary, 0.9);
-        
+
                 }
             }
         }
@@ -93,7 +93,7 @@
             .header-text {
                 text-align: center;
                 width: $column-12;
-                
+
                 h1 {
                     font-size: 2.5rem;
                 }

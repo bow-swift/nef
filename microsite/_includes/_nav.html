@@ -1,24 +1,26 @@
 <nav id="site-nav">
     <div class="wrapper">
         <div class="nav-flex">
-            <a class="nav-brand" href="#">
+            <a class="nav-brand" href="{{ site.baseurl }}/">
                 <img src="../img/nav-brand.svg" alt="">
                 <span>{{ site.name }}</span>
             </a>
-            <ul class="nav-menu">
-               <li class="nav-icon-close">
-                   <a href="#"><img src="../img/nav-icon-close.svg" alt=""></a>
-               </li>
-                {% for item in site.data.menu.nav%}
-                <li class="nav-menu-item">
-                    <a href="{{ item.url }}" alt="{{ item.title }}">{{ item.title }}</a>
-                </li>
-               {% endfor %}
-            </ul>
-            
-            <a class="nav-icon-open" href="#">
+            <div class="nav-menu">
+                <button class="button nav-icon-close">
+                  <img src="../img/nav-icon-close.svg" alt="">
+                </button>
+                <ul>
+                  {% for item in site.data.menu.nav%}
+                  <li class="nav-menu-item">
+                      <a href="{{ item.url }}" alt="{{ item.title }}">{{ item.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+            </div>
+
+            <button class="button nav-icon-open">
                 <img src="../img/nav-icon-open.svg" alt="">
-            </a>
+            </button>
         </div>
     </div>
 </nav>

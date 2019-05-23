@@ -2,9 +2,33 @@
 // -----------------------------------------------
 // -----------------------------------------------
 #site-doc {
-    padding: ($base-point-grid * 3);
-    margin-left: 304px;
-    
+    margin-left: 250px;
+
+    .doc-header {
+      display: flex;
+      align-items: center;
+      height: ($base-point-grid * 11);
+      padding: 0 ($base-point-grid * 3);
+      background: $white;
+
+      .sidebar-toggle {
+        transition: color $base-duration $base-timing, transform $base-duration $base-timing;
+
+        &:hover {
+          transform: scaleX(1.5);
+        }
+
+        > * {
+          padding: ($base-point-grid * 2);
+          margin: (-$base-point-grid * 2);
+        }
+      }
+    }
+
+    .doc-content {
+      padding: ($base-point-grid * 3);
+    }
+
     h1 {
         font-size: 2.5rem;
         border-bottom: 1px solid $border-color;
@@ -36,12 +60,16 @@
             top: ($base-point-grid * 3);
             bottom: ($base-point-grid * 2);
         }
+
+        &:first-child {
+          margin-top: 0;
+        }
     }
-    
+
     p {
         margin: ($base-point-grid * 2) 0;
     }
-    
+
     ul {
         padding-left: 20px;
         margin-bottom: ($base-point-grid * 2);
@@ -58,7 +86,3 @@
         margin-left: 0;
     }
 }
-
-
-
-
