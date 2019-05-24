@@ -131,7 +131,8 @@ buildProject() {
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
 
-        if [ $(shouldBuildWorkspace "$workspace" "$flag") = "1" ]; then
+        needBuildProject=$(shouldBuildWorkspace "$workspace" "$flag")
+        if [ "$needBuildProject" = "1" ]; then
             set +e
             xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
             installed=`grep "BUILD SUCCEEDED" "$log"`
@@ -248,7 +249,7 @@ buildPODS() {
 
     local flag="$2"
     local podfile="Podfile"
-    local log="nef/log/pod-install.log"
+    local log="`pwd`/nef/log/pod-install.log"
 
     echo -ne "${normal}Installing ${green}Pods ${reset}..."
 
@@ -290,9 +291,11 @@ addPlaygroundReference() {
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
         workspace=$(workspaceForProjectPath "$1" "$project")
+        workspaceExtension=$(echo "$workspace" | rev | cut -d'.' -f1 | rev)
         workspaceName=$(echo "$workspace" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
         workspaceContent="$workspace/contents.xcworkspacedata"
-        ! [ "$workspace" = .*".xcworkspace" ] && continue
+
+        ! [ "$workspaceExtension" = "xcworkspace" ] && continue
         grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
 
         for playground in "${playgroundForProjectPath[@]}"; do
@@ -316,7 +319,7 @@ playgroundForProjectPath() {
 
     playgroundForProjectPath=()
     while read -r -d $'\0' playground; do
-        playground=$(echo "$playground" | sed 's/.\///g')
+        playground=$(echo "$playground" | rev | cut -d'/' -f1 | rev )
         playgroundForProjectPath+=("$playground")
     done < <(find . -name '*.playground' -print0)
 

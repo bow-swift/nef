@@ -71,8 +71,9 @@ buildMarkdown() {
             installed=`grep "RENDER SUCCEEDED" "$log"`
             if [ "${#installed}" -lt 7 ]; then
               echo " ❌"
-              echo "${bold}${red}error: ${reset}render page ${bold}$pageName${normal} in playground ${bold}$playgroundName${normal}, review '<project>$logFile' for more information."
+              echo "${bold}${red}error: ${reset}render page ${bold}$pageName${normal} in playground ${bold}$playgroundName${normal}, review '$log' for more information."
               exit 1
+
             fi
         done
 
@@ -139,7 +140,7 @@ if [ -d "$root/$outputPath" ]; then
   outputPath="$root/$outputPath"
 else
   mkdir -p "$outputPath"
-  outputPath="$outputPath"
+  outputPath="`pwd`/$outputPath"
 fi
 
 # Render Markdown
