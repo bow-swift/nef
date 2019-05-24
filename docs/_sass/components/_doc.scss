@@ -4,6 +4,9 @@
 #site-doc {
     position: absolute;
     left: 250px;
+    right: 0;
+    top: 0;
+    bottom: 0;
     transition: left $base-duration $base-timing;
 
     &.expanded {
