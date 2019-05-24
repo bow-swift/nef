@@ -6,7 +6,7 @@ const navElement = document.querySelector("#site-nav");
  * @param {string}	elemSelector The query selector specifying the target element.
  * @param {string}	[activeClass='active'] The class to be applied/removed.
  */
-function toggleClass(elemSelector, activeClass = 'active') {
+function toggleClass(elemSelector, activeClass = "active") {
   const elem = document.querySelector(elemSelector);
   if (elem) {
     elem.classList.toggle(activeClass);
