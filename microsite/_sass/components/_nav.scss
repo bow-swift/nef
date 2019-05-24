@@ -58,7 +58,14 @@
         }
 
         .nav-icon-open {
+            padding: 16px;
+            margin: -16px;
             display: none;
+            transition: transform $base-duration $base-timing;
+
+            &:hover {
+              transform: scaleX(1.5);
+            }
         }
 
         .nav-icon-close {
@@ -69,9 +76,12 @@
             right: 100%;
             top: 32px;
 
-            a {
-                img {
-                    display: block;
+            img {
+                display: block;
+                transition: transform .3s ease;
+
+                &:hover {
+                  transform: rotate(180deg);
                 }
             }
         }
@@ -91,6 +101,7 @@
                 right: -100%;
                 top: 0;
                 width: 50%;
+                z-index: 2;
                 transition: right $base-duration $base-timing;
 
                 &.open {

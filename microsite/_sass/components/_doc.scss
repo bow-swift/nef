@@ -2,7 +2,13 @@
 // -----------------------------------------------
 // -----------------------------------------------
 #site-doc {
-    margin-left: 250px;
+    position: absolute;
+    left: 250px;
+    transition: left $base-duration $base-timing;
+
+    &.expanded {
+      left: 0;
+    }
 
     .doc-header {
       display: flex;
@@ -11,8 +17,8 @@
       padding: 0 ($base-point-grid * 3);
       background: $white;
 
-      .sidebar-toggle {
-        transition: color $base-duration $base-timing, transform $base-duration $base-timing;
+      .doc-toggle {
+        transition: transform $base-duration $base-timing;
 
         &:hover {
           transform: scaleX(1.5);
@@ -83,6 +89,6 @@
 // -----------------------------------------------
 @include bp(medium) {
     #site-doc {
-        margin-left: 0;
+        left: 0;
     }
 }

@@ -1,7 +1,11 @@
 <main id="site-doc">
     <div class="doc-header">
-      <button type="button" id="main-toggle" class="button sidebar-toggle">
-          <img src="{{ site.baseurl }}/img/sidebar-icon-open.svg" alt="">
+      <button
+        type="button"
+        class="button doc-toggle"
+        title="Toggle"
+        onClick="toggleClasses(['#site-sidebar', '#site-doc'], ['toggled', 'expanded'])">
+          <img src="{{ site.baseurl }}/img/sidebar-icon-open.svg" alt="Toggle">
       </button>
     </div>
     <div class="doc-content">

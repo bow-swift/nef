@@ -7,6 +7,13 @@
     background: $brand-secondary;
     width: 250px;
     height: 100%;
+    left: 0;
+    z-index: 2;
+    transition: left $base-duration $base-timing;
+
+    &.toggled {
+      left: -100%;
+    }
 
     .sidebar-brand {
         height: 88px;
@@ -35,10 +42,10 @@
                 font-size: 2.143rem;
             }
         }
+    }
 
-
-
-
+    .sidebar-toggle {
+      display: none;
     }
 
     .sidebar-menu {
@@ -79,12 +86,28 @@
     }
 }
 
-
 // Responsive
 // -----------------------------------------------
 @include bp(medium) {
 
     #site-sidebar {
-        display: none;
+        left: -100%;
+        width: 100%;
+
+        &.toggled {
+          left: 0;
+        }
+
+        .sidebar-toggle {
+          padding: 24px 32px;
+          display: block;
+          opacity: 0.7;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+
+          &:hover {
+            opacity: 1;
+            transform: rotate(-180deg);
+          }
+        }
     }
 }
