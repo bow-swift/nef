@@ -1,0 +1,22 @@
+<div id="site-sidebar">
+    <div class="sidebar-brand">
+        <a href="{{ site.baseurl }}/" title="{{ site.name }}">
+            <img src="{{ site.baseurl }}/img/nav-brand.svg" alt="{{ site.name }}">
+            <span>{{ site.name }}</span>
+        </a>
+        <button
+          type="button"
+          title="Close"
+          class="button sidebar-toggle"
+          onClick="toggleClass('#site-sidebar', 'toggled')">
+            <span class="close"></span>
+        </button>
+    </div>
+    <ul class="sidebar-menu">
+         {% for item in site.data.sidebar.options %}
+        <li class="{% if item.url == page.url %}active{% endif %} sidebar-menu-item">
+            <a href="{{ item.url | relative_url }}" title="{{ item.title }}">{{ item.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

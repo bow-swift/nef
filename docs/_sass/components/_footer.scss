@@ -1,0 +1,82 @@
+// Footer
+// -----------------------------------------------
+// -----------------------------------------------
+#site-footer {
+    height: 300px;
+    padding: ($base-point-grid * 10) 0;
+    background: $gray-primary;
+    color: rgba($white, 0.5);
+
+    a {
+        color: rgba($white, 0.8);
+
+        &:visited {
+            color: rgba($white, 0.8);
+        }
+
+        &:hover {
+            color: rgba($white, 0.6);
+            text-decoration: underline;
+        }
+
+        &:active {
+            color: rgba($white, 0.8);
+        }
+
+
+    }
+
+    .footer-flex {
+        display: flex;
+        justify-content: space-between;
+
+        .footer-dev {
+            width: $column-4;
+        }
+
+        .footer-menu {
+            display: flex;
+
+            li {
+                &:not(:last-child) {
+                    margin-right: ($base-point-grid * 4)
+                }
+            }
+        }
+    }
+}
+
+// Responsive
+// -----------------------------------------------
+
+@include bp(medium) {
+    #site-footer {
+        .footer-flex {
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .footer-dev,
+            .footer-menu {
+                width: $column-8;
+            }
+
+            .footer-dev {
+                padding-bottom: ($base-point-grid * 2);
+                margin-bottom: ($base-point-grid * 2);
+                text-align: center;
+                border-bottom: 1px solid rgba($white, 0.2);
+            }
+
+
+            .footer-menu {
+                justify-content: center;
+
+                li {
+                    &:not(:last-child) {
+                        margin-right: ($base-point-grid * 2);
+                    }
+                }
+            }
+        }
+    }
+}

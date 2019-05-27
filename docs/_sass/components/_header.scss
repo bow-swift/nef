@@ -1,0 +1,106 @@
+// Header
+// -----------------------------------------------
+// -----------------------------------------------
+
+#site-header {
+    padding: ($base-point-grid * 18) 0 ($base-point-grid * 12) 0;
+    background: $brand-secondary;
+
+    .header-flex {
+        display: flex;
+        align-items: center;
+        color: $white;
+
+        .header-text {
+            width: $column-5;
+
+            h1 {
+                color: $white;
+                font-size: 3.429rem;
+                line-height: 1.3;
+
+                span {
+                    display: block;
+                    margin: ($base-point-grid * 3) 0;
+                    font-size: 1.286rem;
+                    font-weight: $font-regular;
+
+                    strong {
+                        font-weight: $font-bold;
+                    }
+                }
+            }
+
+            .header-button {
+                padding: ($base-point-grid * 1.5) ($base-point-grid * 6);
+                display: inline-block;
+                font-weight: $font-semibold;
+                text-transform: uppercase;
+                color: $brand-tertiary;
+                border: 2px solid $brand-tertiary;
+                background: none;
+                transition: color $base-duration $base-timing, background-color $base-duration $base-timing;
+
+                &:visited {
+                    color: $brand-tertiary;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                    color: $brand-secondary;
+                    background: $brand-tertiary;
+                }
+
+                &:active {
+                    color: $brand-secondary;
+                    background: rgba($brand-tertiary, 0.9);
+
+                }
+            }
+        }
+
+        .header-image {
+            width: $column-7;
+            text-align: center;
+        }
+    }
+}
+
+// Responsive
+// -----------------------------------------------
+
+@include bp(large) {
+    #site-header {
+        .header-flex {
+            .header-text {
+                h1 {
+                    font-size: 2.9rem;
+                }
+            }
+            .header-image {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+@include bp(medium) {
+    #site-header {
+        padding-top: ($base-point-grid * 20);
+        .header-flex {
+             flex-direction: column;
+            .header-text {
+                text-align: center;
+                width: $column-12;
+
+                h1 {
+                    font-size: 2.5rem;
+                }
+            }
+            .header-image {
+                display: none;
+            }
+        }
+    }
+}
