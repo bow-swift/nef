@@ -147,6 +147,10 @@ markdown() {
   outputPath=""
 
   while [ "$1" != "" ]; do
+      case $2 in
+          -h | --help | help )  printHelpMarkdown; exit 0 ;;
+      esac
+
       case $1 in
           --project )      shift; projectPath=$1 ;;
           --output )       shift; outputPath=$1 ;;
@@ -164,7 +168,7 @@ markdown() {
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
           $CLEAN )         printHelpClean; exit 1 ;;
-          * )              printHelpMarkdown; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+          * )              printHelpMarkdown; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
       esac
       shift
   done
@@ -186,6 +190,10 @@ jekyll() {
   mainPagePath=""
 
   while [ "$1" != "" ]; do
+      case $2 in
+          -h | --help | help )  printHelpJekyll; exit 0 ;;
+      esac
+
       case $1 in
           --project )      shift; projectPath=$1 ;;
           --output )       shift; outputPath=$1 ;;
@@ -203,7 +211,7 @@ jekyll() {
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
           $CLEAN )         printHelpClean; exit 1 ;;
-          * )              printHelpJekyll; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+          * )              printHelpJekyll; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
       esac
       shift
   done
@@ -226,6 +234,10 @@ playground() {
     podfile=""
 
     while [ "$1" != "" ]; do
+        case $2 in
+            -h | --help | help )  printHelpPlayground; exit 0 ;;
+        esac
+
         case $1 in
             --project )      printHelpPlayground; exit 1 ;;
             --output )       printHelpPlayground; exit 1 ;;
@@ -243,7 +255,7 @@ playground() {
             $PLAYGROUND )    ;;
             $COMPILE )       printHelpCompile; exit 1 ;;
             $CLEAN )         printHelpClean; exit 1 ;;
-            * )              printHelpPlayground $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+            * )              printHelpPlayground $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
         esac
         shift
     done
@@ -268,6 +280,10 @@ compile() {
     flag=""
 
     while [ "$1" != "" ]; do
+        case $2 in
+            -h | --help | help )  printHelpCompile; exit 0 ;;
+        esac
+
         case $1 in
             --project )      printHelpJekyll; exit 1 ;;
             --output )       printHelpJekyll; exit 1 ;;
@@ -285,7 +301,7 @@ compile() {
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
             $COMPILE )       shift; projectFolder=$1 ;;
             $CLEAN )         printHelpClean; exit 1 ;;
-            * )              printHelpCompile; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+            * )              printHelpCompile; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
         esac
         shift
     done
@@ -293,7 +309,7 @@ compile() {
     if [ "${#projectFolder}" -gt 0 ]; then
       nefc compile "$projectFolder" "$flag"
     else
-      printHelpCompile; echo "${bold}[!] ${normal}${red}error:${reset} command format."; exit 1
+      printHelpCompile; echo "${bold}[!] ${normal}${red}error:${reset} command format"; exit 1
     fi
 }
 
@@ -307,6 +323,10 @@ clean() {
     projectFolder=""
 
     while [ "$1" != "" ]; do
+        case $2 in
+            -h | --help | help )  printHelpClean; exit 0 ;;
+        esac
+
         case $1 in
             --project )      printHelpJekyll; exit 1 ;;
             --output )       printHelpJekyll; exit 1 ;;
@@ -324,7 +344,7 @@ clean() {
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
             $COMPILE )       printHelpCompile; exit 1 ;;
             $CLEAN )         shift; projectFolder=$1 ;;
-            * )              printHelpClean; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1 ;;
+            * )              printHelpClean; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
         esac
         shift
     done
@@ -332,7 +352,7 @@ clean() {
     if [ "${#projectFolder}" -gt 0 ]; then
       nefc clean "$projectFolder"
     else
-      printHelpClean; echo "${bold}[!] ${normal}${red}error:${reset} command format."; exit 1
+      printHelpClean; echo "${bold}[!] ${normal}${red}error:${reset} command format"; exit 1
     fi
 }
 
@@ -349,7 +369,7 @@ while [ "$1" != "" ]; do
         $COMPILE )    compile $@; exit 0 ;;
         $CLEAN )      clean $@; exit 0 ;;
         -h | --help | help )  printHelp; exit 0 ;;
-        * )                   printHelp; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}."; exit 1
+        * )                   printHelp; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
     shift
 done
