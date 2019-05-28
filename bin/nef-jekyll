@@ -188,7 +188,10 @@ if [ -d "$root/$sitePath" ]; then
   sitePath="$root/$sitePath"
 else
   mkdir -p "$sitePath"
-  sitePath="$sitePath"
+
+  if [ ${sitePath:0:1} = "." ]; then
+      sitePath="$root/$sitePath"
+  fi
 fi
 
 generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"

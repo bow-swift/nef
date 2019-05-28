@@ -140,7 +140,10 @@ if [ -d "$root/$outputPath" ]; then
   outputPath="$root/$outputPath"
 else
   mkdir -p "$outputPath"
-  outputPath="`pwd`/$outputPath"
+
+  if [ ${outputPath:0:1} = "." ]; then
+      outputPath="$root/$outputPath"
+  fi
 fi
 
 # Render Markdown
