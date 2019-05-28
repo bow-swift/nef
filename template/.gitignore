@@ -13,3 +13,6 @@ podfile.lock
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+## CocoaPods
+**Pods**

@@ -137,7 +137,11 @@ fi
 
 # 1. fix `outputPath`
 if [ -d "$root/$outputPath" ]; then
-  outputPath="$root/$outputPath"
+  if [ "$outputPath" = "." ]; then
+      outputPath="$root/nef-markdown"
+  else
+      outputPath="$root/$outputPath"
+  fi
 else
   mkdir -p "$outputPath"
 
