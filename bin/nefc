@@ -451,8 +451,8 @@ compilePlaygroundPages() {
 ##
 compilePlaygroundPage() {
     set +e
-    local file="$1"           # parameter `file`
-    local playgroundName="$2" # parameter `playgroundName`
+    local file="$1" # parameter `file`
+    local playgroundName=$(echo "$2" | sed 's/ /_/g') # parameter `playgroundName`
     local playgroundPage="$3" # parameter `playground`
     local llog="nef/log/$playgroundName-dlyb.log"
     local log="nef/log/$playgroundName.log"
