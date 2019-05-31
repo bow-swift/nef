@@ -1,0 +1,63 @@
+// Sidebar menu
+// -----------------------------------------------
+// -----------------------------------------------
+
+.sidebar-menu {
+  .sidebar-menu-item {
+      &.active {
+        a {
+          box-shadow: 3px 0px $brand-tertiary inset;
+        }
+      }
+
+      &.open {
+          a {
+              background: rgba($brand-primary, 0.3);
+          }
+
+          .sub-menu {
+            display: block;
+            // opacity: 1;
+            // transform: scaleY(1);
+            // transition: transform 0.9s ease, opacity 0.9s ease;
+            // position: relative;
+
+            a {
+                padding-left: (($base-point-grid * 3));
+            }
+          }
+      }
+
+      button, a {
+        padding: $base-point-grid * 2;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        font-size: 1rem;
+        font-family: $base-font-family;
+        color: $white;
+        transition: background $base-duration $base-timing;
+
+        &:hover {
+            background: rgba($brand-primary, 0.15);
+            color: $white;
+            text-decoration: none;
+        }
+      }
+
+      .sub-menu {
+        display: none;
+        // opacity: 0;
+        // transform: scaleY(0);
+        // transition: transform 0.9s ease, opacity 0.9s ease;
+        // transform-origin: top;
+        // position: absolute;
+        // width: 100%;
+
+        a {
+          font-size: 0.875rem;
+        }
+      }
+  }
+}

@@ -12,11 +12,31 @@
             <span class="close"></span>
         </button>
     </div>
-    <ul class="sidebar-menu">
-         {% for item in site.data.sidebar.options %}
-        <li class="{% if item.url == page.url %}active{% endif %} sidebar-menu-item">
-            <a href="{{ item.url | relative_url }}" title="{{ item.title }}">{{ item.title }}</a>
-        </li>
+    <div class="sidebar-menu">
+        {% for item in site.data.sidebar.options %}
+        <div class="sidebar-menu-item {% if item.url == page.url %}active{% endif %}">
+        {% if item.nested_options %}
+            <button
+              type="button"
+              title="Open {{ item.title }}"
+              class="button"
+              onClick="activateParent(event.target, 'open');">
+                {{ item.title }}
+            </button>
+
+            <div class="sub-menu">
+                {% for nested_item in item.nested_options %}
+                <a  class="sidebar-menu-item {% if nested_item.url == page.url %}active{% endif %}"
+                    href="{{ nested_item.url }}"
+                    title="{{ nested_item.title }}">{{ nested_item.title }}</a>
+                {% endfor %}
+            </div>
+        {% else %}
+          <a
+            href="{{ item.url | relative_url }}"
+            title="{{ item.title }}">{{ item.title }}</a>
+        {% endif %}
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
