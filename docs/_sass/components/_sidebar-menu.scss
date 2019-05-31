@@ -4,60 +4,103 @@
 
 .sidebar-menu {
   .sidebar-menu-item {
-      &.active {
-        a {
-          box-shadow: 3px 0px $brand-tertiary inset;
-        }
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &.active {
+      > a,
+      a.active {
+        box-shadow: 3px 0 $brand-tertiary inset;
       }
 
-      &.open {
-          a {
-              background: rgba($brand-primary, 0.3);
-          }
+      & > button {
+        box-shadow: 3px 0 rgba($brand-tertiary, 0.5) inset;
+      }
+    }
 
-          .sub-menu {
-            display: block;
-            // opacity: 1;
-            // transform: scaleY(1);
-            // transition: transform 0.9s ease, opacity 0.9s ease;
-            // position: relative;
-
-            a {
-                padding-left: (($base-point-grid * 3));
-            }
-          }
+    &.open {
+      a {
+        background: rgba($brand-primary, 0.3);
       }
 
-      button, a {
-        padding: $base-point-grid * 2;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        width: 100%;
-        font-size: 1rem;
-        font-family: $base-font-family;
-        color: $white;
-        transition: background $base-duration $base-timing;
+      .caret::before {
+        top: 4px;
+        left: -6px;
+        border-top: 6px solid rgba($white, 0.8);
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+      }
 
-        &:hover {
-            background: rgba($brand-primary, 0.15);
-            color: $white;
-            text-decoration: none;
-        }
+      .caret::after {
+        left: -4px;
+        top: 4px;
+        border-top: 4px solid $brand-secondary;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
       }
 
       .sub-menu {
-        display: none;
-        // opacity: 0;
-        // transform: scaleY(0);
-        // transition: transform 0.9s ease, opacity 0.9s ease;
-        // transform-origin: top;
-        // position: absolute;
-        // width: 100%;
-
-        a {
-          font-size: 0.875rem;
-        }
+        max-height: 600px; // This will suffice for 9 entries in a submenu tops
       }
+    }
+
+    button,
+    a {
+      text-align: left;
+      padding: $base-point-grid * 2;
+      width: 100%;
+      font-size: 1rem;
+      font-family: $base-font-family;
+      color: $white;
+      transition: background $base-duration $base-timing;
+
+      &:hover {
+        background: rgba($brand-primary, 0.15);
+        color: $white;
+        text-decoration: none;
+      }
+    }
+
+    .caret {
+      position: absolute;
+      right: ($base-point-grid * 3);
+      top: $base-point-grid * 2;
+      pointer-events: none;
+    }
+
+    .caret::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 6px solid rgba($white, 0.8);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      transition: border 0.3s ease, top 0.2s ease, left 0.2s ease;
+    }
+
+    .caret::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      border-left: 4px solid $brand-secondary;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      transition: border 0.3s ease, top 0.3s ease, left 0.3s ease;
+    }
+
+
+    .sub-menu {
+      max-height: 0px;
+      transition: max-height 0.6s ease-in-out;
+      overflow: hidden;
+
+      a {
+        font-size: 0.875rem;
+        padding-left: (($base-point-grid * 3));
+      }
+    }
   }
 }

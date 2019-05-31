@@ -14,7 +14,20 @@
     </div>
     <div class="sidebar-menu">
         {% for item in site.data.sidebar.options %}
-        <div class="sidebar-menu-item {% if item.url == page.url %}active{% endif %}">
+
+        {% comment %}
+        <!-- Needed logic to show the submenu open when the active entry is an inner element -->
+        {% endcomment %}
+        {% assign open_submenu = '' %}
+        {% if item.nested_options %}
+          {% for nested_item in item.nested_options %}
+            {% if nested_item.url == page.url %}
+              {% assign open_submenu = 'open' %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        <div class="sidebar-menu-item {% if item.url == page.url or open_submenu == 'open' %}active{% endif %} {{ open_submenu }}">
         {% if item.nested_options %}
             <button
               type="button"
@@ -23,6 +36,8 @@
               onClick="activateParent(event.target, 'open');">
                 {{ item.title }}
             </button>
+
+            <div class="caret"></div>
 
             <div class="sub-menu">
                 {% for nested_item in item.nested_options %}
