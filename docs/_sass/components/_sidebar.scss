@@ -50,39 +50,6 @@
 
     .sidebar-menu {
         margin-top: ($base-point-grid * 2);
-
-        .sidebar-menu-item {
-            a {
-                display: block;
-                padding: ($base-point-grid * 2) ($base-point-grid * 3);
-                color: $white;
-                transition: background $base-duration $base-timing;
-
-                &:visited {
-                    color: $white;
-                }
-
-                &:hover {
-                    background: rgba($brand-primary, 0.15);
-                    color: $white;
-                    text-decoration: none;
-                }
-
-                &:active {
-                    color: $white;
-                }
-            }
-
-            &.active {
-                a {
-                    padding-left: (($base-point-grid * 3) - 3);
-                    background: rgba($brand-primary, 0.30);
-                    border-left: 3px solid $brand-tertiary;
-                    pointer-events: none;
-                }
-
-            }
-        }
     }
 }
 

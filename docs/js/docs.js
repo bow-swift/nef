@@ -20,3 +20,23 @@ function toggleClasses(elemSelectors, activeClasses) {
 		toggleClass(elemSelector, activeClasses[idx]);
 	});
 }
+
+/**
+ * Remove active class from siblings DOM elements and apply it to event target.
+ * @param {Element}		element The element receiving the class, and whose siblings will lose it.
+ * @param {string}		[activeClass='active'] The class to be applied.
+ */
+function activate(element, activeClass = 'active') {
+	[...element.parentNode.children].map((elem) => elem.classList.remove(activeClass));
+	element.classList.add(activeClass);
+}
+
+/**
+ * Remove active class from siblings parent DOM elements and apply it to element target parent.
+ * @param {Element}		element The element receiving the class, and whose siblings will lose it.
+ * @param {string}		[activeClass='active'] The class to be applied.
+ */
+function activateParent(element, activeClass = 'active') {
+	const elemParent = element.parentNode;
+	activate(elemParent, activeClass);
+}
