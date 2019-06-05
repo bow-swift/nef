@@ -29,17 +29,16 @@ jobs:
       script:
         - set -o pipefail
         - xcodebuild "$ACTION" -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" ONLY_ACTIVE_ARCH=NO -destination "$DEST" | xcpretty -c
-
-      - stage: deploy-docs
-        if: branch = master AND type != pull_request
-        before_install:
-          - gem update --system
-          - gem install bundler
-        script:
-          - nef jekyll --project contents/Documentation --output docs --main-page contents/Home.md
-        deploy:
-          provider: pages
-          skip-cleanup: true
-          github-token: $GITHUB_TOKEN
-          keep-history: true
-          local-dir: docs
+    - stage: deploy-docs
+      if: branch = master AND type != pull_request
+      before_install:
+        - gem update --system
+        - gem install bundler
+      script:
+        - nef jekyll --project contents/Documentation --output docs --main-page contents/Home.md
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
+        local-dir: docs
