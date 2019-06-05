@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Verification.playground">
+      location = "group:Quick start.playground">
    </FileRef>
    <FileRef
-      location = "group:Compile.playground">
+      location = "group:Verification and Compile.playground">
    </FileRef>
    <FileRef
       location = "group:Generation.playground">
