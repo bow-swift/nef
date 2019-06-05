@@ -10,7 +10,7 @@ Nef.Playground.needsIndefiniteExecution(false)
 // nef:end
 
 /*:
- ## 🔖 Generating a Markdown project
+ ## 🔖 Generating a Markdown document
  Xcode Playgrounds let you write comments in Markdown format using the symbols `//:` for single line comments, or `/•: ... •/` for multiline comments. Inside this comments, you can use any Markdown syntax; an exmaple:
  
  ```swift

@@ -10,7 +10,7 @@ Nef.Playground.needsIndefiniteExecution(false)
 // nef:end
 
 /*:
- ## 📃 Creating a Xcode Playground
+ ## 📃 Creating an Xcode Playground
  Xcode Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make easier the creation of a Xcode Playground with support for one or more libraries.
  
  By default, `nef` can create a Xcode Playground with support for [Bow](http://bow-swift.io), the Functional Programming companion library for Swift.
