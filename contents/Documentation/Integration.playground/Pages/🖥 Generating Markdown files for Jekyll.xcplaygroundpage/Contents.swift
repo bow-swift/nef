@@ -33,7 +33,7 @@ Nef.Playground.needsIndefiniteExecution(false)
  
  ```swift
  // nef:begin:header
- /*
+ /&#42;
  layout: docs
  &#42;/
  // nef:end
