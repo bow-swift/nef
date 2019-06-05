@@ -4,7 +4,9 @@ title: nef
 permalink: /docs/
 ---
 
-![](https://github.com/bow-swift/nef/blob/master/assets/header-nef.png)
+<p align="center">
+<img src="https://github.com/bow-swift/nef/raw/master/assets/header-nef.png">
+</p>
 
 <p align="center">
 <a href="https://travis-ci.org/bow-swift/nef">
@@ -28,7 +30,7 @@ permalink: /docs/
 `nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. It will warn you if there is a missing dependency and will provide guidance to install it.
 
 <p align="center">
-<img src="https://github.com/bow-swift/nef/blob/master/assets/nef-installation.gif">
+<img src="https://github.com/bow-swift/nef/raw/master/assets/nef-installation.gif">
 </p>
 
 ## 🌟 Features

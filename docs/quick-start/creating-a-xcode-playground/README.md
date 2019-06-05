@@ -1,8 +1,9 @@
 ---
 layout: docs
-permalink: /docs/verification/📃-creating-a-xcode-playground/
+permalink: /docs/quick-start/creating-a-xcode-playground/
 ---
 
+## 📃 Creating a Xcode Playground
  Xcode Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make easier the creation of a Xcode Playground with support for one or more libraries.
  
  By default, `nef` can create a Xcode Playground with support for [Bow](http://bow-swift.io), the Functional Programming companion library for Swift.
@@ -10,8 +11,9 @@ permalink: /docs/verification/📃-creating-a-xcode-playground/
  ```bash
  ➜ nef playground
  ```
+  &nbsp;
 
-### Command for creating a Xcode Playground
+### Commands for creating a Xcode Playground
  You can use the following option to specify the name for the Xcode project that you are creating.
  
  ```bash
@@ -32,7 +34,7 @@ permalink: /docs/verification/📃-creating-a-xcode-playground/
  ➜ nef playground --name OldBowProject --bow-version 0.3.0
  ```
  
-##
+ ___
  
  - `--bow-branch <branch-name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
  
@@ -40,7 +42,7 @@ permalink: /docs/verification/📃-creating-a-xcode-playground/
  ➜ nef playground --name BranchBowProject --bow-branch master
  ```
  
-##
+ ___
  
  - `--podfile <Podfile>`: Specify a Podfile with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
  
@@ -58,3 +60,4 @@ permalink: /docs/verification/📃-creating-a-xcode-playground/
  ```bash
  ➜ nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
  ```
+  &nbsp;

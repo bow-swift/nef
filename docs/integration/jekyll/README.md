@@ -1,8 +1,9 @@
 ---
 layout: docs
-permalink: /docs/integration/🖥-generating-markdown-files-for-jekyll/
+permalink: /docs/integration/jekyll/
 ---
 
+## 🖥 Generating Markdown files for Jekyll
  As you can write comments in [Markdown](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html) in Swift Playgrounds, this makes very suitable to write documentation with compilable examples.
  Leveraging this, `nef` can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:
  
@@ -12,9 +13,9 @@ permalink: /docs/integration/🖥-generating-markdown-files-for-jekyll/
  
  Options:
  
- - `--project`: Path to the folder containing the Xcode project with Swift Playgrounds.
- - `--output`: Path where the resulting Markdown files will be generated.
- - `--main-page`: Optional. Path to a `README.md` file to be used as the index page of the generated microsite.
+ - `--project` Path to the folder containing the Xcode project with Swift Playgrounds.
+ - `--output` Path where the resulting Markdown files will be generated.
+ - `--main-page` Optional. Path to a `README.md` file to be used as the index page of the generated microsite.
  
  &nbsp;
  
@@ -22,18 +23,22 @@ permalink: /docs/integration/🖥-generating-markdown-files-for-jekyll/
  
  `nef` adds some commands to modify the Markdown transformation process. All `nef` commands are included as Swift comments. They begin with `// nef:begin:` and end with `// nef:end`. The supported commands are:
  
- - `header`: It lets you add metadata to a playground page to be consumed by Jekyll. You must provide the layout that this page will use in Jekyll. The rest of attributes are optional and you may include any of them according to your Jekyll configuration. `nef` will take care of the permalinks as well. Example (at the beginning of the playground page):
+ - `header` It lets you add metadata to a playground page to be consumed by Jekyll. You must provide the layout that this page will use in Jekyll. The rest of attributes are optional and you may include any of them according to your Jekyll configuration. `nef` will take care of the permalinks as well. Example (at the beginning of the playground page):
  
  ```swift
- /&#42;
+ // nef:begin:header‌‌
+ /•
  layout: docs
- &#42;/
+  •/
+ // nef:end‌‌
  ```
  
- - `hidden`: It lets you hide a portion of your playground in the output Markdown file. It is useful to hide imports or supporting utility code to make an example work. Example:
+ - `hidden` It lets you hide a portion of your playground in the output Markdown file. It is useful to hide imports or supporting utility code to make an example work. Example:
  
  ```swift
+ // nef:begin:hidden‌‌
  import Bow // This will be hidden in the Markdown file
+ // nef:end‌‌
  
  struct Person {} // This will be present in the Markdown file
  ```
