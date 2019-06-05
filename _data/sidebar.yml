@@ -1,12 +1,33 @@
 options:
+
   - title: Verification
-    url: /docs/verification/
+
+    nested_options:
+
+        - title: 📃 Creating a Xcode Playground
+          url: /docs/verification/📃-creating-a-xcode-playground/
+
 
   - title: Compile
-    url: /docs/compile/
+
+    nested_options:
+
+        - title: ⚙️ Compiling a Swift Playground
+          url: /docs/compile/⚙️-compiling-a-swift-playground/
+
 
   - title: Generation
-    url: /docs/generation/
+
+    nested_options:
+
+        - title: 🔖 Generating a Markdown project
+          url: /docs/generation/🔖-generating-a-markdown-project/
+
 
   - title: Integration
-    url: /docs/integration/
+
+    nested_options:
+
+        - title: 🖥 Generating Markdown files for Jekyll
+          url: /docs/integration/🖥-generating-markdown-files-for-jekyll/
+
