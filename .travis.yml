@@ -46,4 +46,5 @@ jobs:
         keep-history: true
         local-dir: docs
         target-branch: gh-pages
-        all_branches: true
+        on:
+          all_branches: true
