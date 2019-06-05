@@ -11,7 +11,7 @@ Nef.Playground.needsIndefiniteExecution(false)
 
 /*:
  ## 🔖 Generating a Markdown project
- Swift Playgrounds let you write comments in Markdown format using the symbols `//:` for single line comments, or `/•: ... •/` for multiline comments. Inside this comments, you can use any Markdown syntax; an exmaple:
+ Xcode Playgrounds let you write comments in Markdown format using the symbols `//:` for single line comments, or `/•: ... •/` for multiline comments. Inside this comments, you can use any Markdown syntax; an exmaple:
  
  ```swift
 /•:
@@ -24,7 +24,7 @@ protocol MyProtocol {}
 //:‌‌ ## This is a single line heading 2‌‌
 ```
  
- It makes Swift Playgrounds the proper tool to write an article with compilable examples. The command provided by `nef` to generate the Markdown files is:
+ It makes Xcode Playgrounds the proper tool to write an article with compilable examples. The command provided by `nef` to generate the Markdown files is:
  
  ```bash
  ➜ nef markdown --project <path-to-input> --output <path-to-output>
@@ -32,7 +32,7 @@ protocol MyProtocol {}
  
  Options:
  
- - `--project`: Path to the folder containing the Xcode project with Swift Playgrounds.
+ - `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
  - `--output`: Path where the resulting Markdown project will be generated.
  
  */
