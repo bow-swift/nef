@@ -62,7 +62,7 @@ Nef.Playground.needsIndefiniteExecution(false)
  platform :osx, '10.14'
  use_frameworks!
  
- pod 'Bow', '~> 0.3.0'
+ pod 'Bow', '~> 0.4.0'
  end
  ```
  
