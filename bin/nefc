@@ -185,7 +185,7 @@ sdkForWorkspaceAndScheme() {
   local schemeName="$2"  # parameter `schemeName`
 
   isIPHONE=$(eval xcodebuild -workspace "$workspace" -scheme "$schemeName" -quiet -showBuildSettings 2>&1 | grep 'SDKROOT' | grep 'iPhone' | awk '{ print length; }')
-  sdk="iphonesimulator"
+  sdk="iphoneos"
   if [ "$isIPHONE" = "" ]; then
     sdk="macosx"
   fi
@@ -482,17 +482,13 @@ compilePlaygroundPage() {
     # B. iOS platform
     else
         if [ "${#hasSourceFolderFiles}" -gt 0 ] && [ "${#hasResourceFolderFiles}" -gt 0 ]; then
-          xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -F "$iOSFwPath" -F "$resources" "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest -F "$resources" "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         elif [ "${#hasSourceFolderFiles}" -gt 0 ]; then
-          echo ""
-          echo "COMMAND: xcrun -k -sdk iphonesimulator swiftc -D NOT_IN_PLAYGROUND -target x86_64-apple-ios12.1-simulator -F 'nef/build/fw' -F \"$iOSFwPath\" \"$file\" \"$sources\"/* -o \"nef/build/output/$playgroundName\""
-          echo ""
-
-          xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -F "$iOSFwPath" "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         elif [ "${#hasResourceFolderFiles}" -gt 0 ]; then
-          xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -F "$iOSFwPath" -F "$resources" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest -F "$resources" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         else
-          xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -F "$iOSFwPath" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         fi
     fi
 
