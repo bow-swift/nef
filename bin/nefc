@@ -459,34 +459,24 @@ compilePlaygroundPage() {
     local playgroundPage="$3" # parameter `playground`
     local log="nef/log/$playgroundName.log"
     local sources="$playgroundPage/../../Sources"
-    local resources="$playgroundPage/../../Resources"
     local iOSFwPath=`xcode-select -p`"/Platforms/iPhoneOS.platform/Developer/Library/Frameworks"
     local macOSFwPath=`xcode-select -p`"/Platforms/MacOSX.platform/Developer/Library/Frameworks"
 
     platformIOS=$(isPlatfromIOSPlaygroundPage "$playgroundPage")
     hasSourceFolderFiles=$(ls "$sources" 2> /dev/null)
-    hasResourceFolderFiles=$(ls "$resources" 2> /dev/null)
 
     # A. macOS paltform
     if [ "$platformIOS" -eq "0" ]; then
-        if [ "${#hasSourceFolderFiles}" -gt 0 ] && [ "${#hasResourceFolderFiles}" -gt 0 ]; then
-          xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore -F "$resources" "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-        elif [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
           xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-        elif [ "${#hasResourceFolderFiles}" -gt 0 ]; then
-          xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore -F "$resources" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         else
           xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         fi
 
     # B. iOS platform
     else
-        if [ "${#hasSourceFolderFiles}" -gt 0 ] && [ "${#hasResourceFolderFiles}" -gt 0 ]; then
-          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest -F "$resources" "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-        elif [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
           xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-        elif [ "${#hasResourceFolderFiles}" -gt 0 ]; then
-          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest -F "$resources" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         else
           xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
         fi
