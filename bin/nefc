@@ -185,7 +185,7 @@ sdkForWorkspaceAndScheme() {
   local schemeName="$2"  # parameter `schemeName`
 
   isIPHONE=$(eval xcodebuild -workspace "$workspace" -scheme "$schemeName" -quiet -showBuildSettings 2>&1 | grep 'SDKROOT' | grep 'iPhone' | awk '{ print length; }')
-  sdk="iphonesimulator"
+  sdk="iphoneos"
   if [ "$isIPHONE" = "" ]; then
     sdk="macosx"
   fi
@@ -386,7 +386,8 @@ copyFrameworks() {
 makeHeaders() {
     local content=$1    # parameter `folder`
     local playground=$2 # parameter `playgroundName`
-    local output="nef/build/$playground.swift"
+    local outputFolder="nef/build/$playground"
+    local output="$outputFolder/main.swift"
 
     libs=(`xcrun swiftc -emit-imported-modules "$content" | sort -r | grep -vE PlaygroundSupport`)
 
@@ -398,6 +399,8 @@ makeHeaders() {
         remove+=("| sed s/\"import $lib\"//g")
         imports="import $lib$'\n'$imports"
     done
+
+    mkdir -p "$outputFolder"
 
     if [ "${#remove[@]}" -ne 0 ]; then
         eval "{ echo $imports; cat \"$content\" ${remove[@]}; } > \"$output\""
@@ -454,11 +457,8 @@ compilePlaygroundPage() {
     local file="$1" # parameter `file`
     local playgroundName=$(echo "$2" | sed 's/ /_/g') # parameter `playgroundName`
     local playgroundPage="$3" # parameter `playground`
-    local llog="nef/log/$playgroundName-dlyb.log"
     local log="nef/log/$playgroundName.log"
     local sources="$playgroundPage/../../Sources"
-    local staticLib="$playgroundName"$(date '+_%H_%M_%S')
-    local staticLibPath="nef/build/fw/$staticLib"
     local iOSFwPath=`xcode-select -p`"/Platforms/iPhoneOS.platform/Developer/Library/Frameworks"
     local macOSFwPath=`xcode-select -p`"/Platforms/MacOSX.platform/Developer/Library/Frameworks"
 
@@ -467,24 +467,22 @@ compilePlaygroundPage() {
 
     # A. macOS paltform
     if [ "$platformIOS" -eq "0" ]; then
-      if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
-        xcrun -k swiftc -D NOT_IN_PLAYGROUND -emit-module "$sources"/* -F "nef/build/fw" -F "$macOSFwPath" -o "$staticLibPath" 1> "$llog" 2>&1
-        xcrun -k swiftc -D NOT_IN_PLAYGROUND -static-executable "$staticLibPath" -F "nef/build/fw" -F "$macOSFwPath" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-      else
-        xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-      fi
+        if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+          xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        else
+          xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        fi
 
     # B. iOS platform
     else
-      if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
-        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -emit-module "$sources"/* -F "nef/build/fw" -F "$iOSFwPath" -o "$staticLibPath" 1> "$llog" 2>&1
-        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -static-executable "$staticLibPath" -F "nef/build/fw" -F "$iOSFwPath" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-      else
-        xcrun -k -sdk "iphonesimulator" swiftc -D NOT_IN_PLAYGROUND -target "x86_64-apple-ios12.1-simulator" -F "nef/build/fw" -F "$iOSFwPath" "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
-      fi
+        if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        else
+          xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios12.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        fi
     fi
 
-    errors=`grep " error:" "$log"`
+    errors=`cat "$log" | awk '{print tolower($0)}' | grep "error:"`
     [ "${#errors}" -eq 0 ] && return 0
 
     echo " ❌"
