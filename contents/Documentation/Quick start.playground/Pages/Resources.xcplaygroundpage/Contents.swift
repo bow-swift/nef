@@ -10,7 +10,7 @@
  
  ## GitHub projects
  
- - [Bow Documentation](https://github.com/bow-swift/bow/tree/master/contents): A microsite which documentation has been built using `nef`. You can see how it looks [here](https://bow-swift.io/docs) and read more about how it works in [this article](https://www.47deg.com/blog/nef-announcement/).
+ - [Bow Documentation](https://github.com/bow-swift/bow/tree/master/contents): This microsite documentation has been built using `nef`. You can see how it looks [here](https://bow-swift.io/docs) and read more about how it works in [this article](https://www.47deg.com/blog/nef-announcement/).
  
  ## Libraries
  
@@ -18,7 +18,7 @@
  
  ## Presentations
  
- - [Error management and data validation with Bow](https://altconf.miguelangel.me) by Miguel Ángel Díaz-López at AltConf Madrid. June 2019.
+ - [Hard drugs for Playgrounds: `nef`](https://altconf.miguelangel.me) by Miguel Ángel Díaz-López at AltConf Madrid. June 2019.
  
  ## Blog posts
  
