@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/android,intellij
 
+# User files
+**/*.xcuserdatad
+
 # Java class files
 *.class
 
