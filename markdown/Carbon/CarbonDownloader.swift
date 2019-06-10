@@ -22,6 +22,11 @@ class CarbonApp {
 }
 
 // MARK: Carbon downloader
+protocol CarbonWebViewDelegate: class {
+    func didFailLoadCarbon()
+    func didLoadCarbon()
+}
+
 class CarbonWebView: WKWebView, WKNavigationDelegate {
     
     enum CarbonSize: String {
@@ -33,6 +38,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     
     private let filename: String
     private let carbon: Carbon
+    weak var carbonDelegate: CarbonWebViewDelegate?
     
     init(frame: CGRect, carbon: Carbon, filename: String) {
         self.carbon = carbon
@@ -60,10 +66,14 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     
     private func screenshot() {
         hideCopyButton(in: self)
-        carbonRectArea(in: self) { configuration in
-            guard let configuration = configuration else { return }
+        carbonRectArea(in: self) { res in
+            guard let (configuration, needsScroll) = res else {
+                self.carbonDelegate?.didFailLoadCarbon(); return
+            }
+            
             self.takeSnapshot(with: configuration) { (image, error) in
                 _ = image?.writeToFile(file: "\(self.filename).png", atomically: true, usingType: .png)
+                self.carbonDelegate?.didLoadCarbon()
             }
         }
     }
@@ -74,7 +84,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     }
     
     // MARK: javascript <helpers>
-    private func carbonRectArea(in webView: WKWebView, completion: @escaping (WKSnapshotConfiguration?) -> Void) {
+    private func carbonRectArea(in webView: WKWebView, completion: @escaping ((configuration: WKSnapshotConfiguration, needsScroll: Bool)?) -> Void) {
         let xJS = "document.getElementsByClassName('container-bg')[0].offsetParent.offsetLeft"
         let widthJS = "document.getElementsByClassName('container-bg')[0].scrollWidth"
         let heightJS = "document.getElementsByClassName('container-bg')[0].scrollHeight"
@@ -86,11 +96,12 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
                         completion(nil); return
                     }
                     
-                    let rect = CGRect(x: x, y: 0, width: w, height: h)
+                    let rect = CGRect(x: x, y: 0, width: w, height: min(h, webView.visibleRect.height))
+                    let needsScroll = h > webView.visibleRect.height
                     let configuration = WKSnapshotConfiguration()
                     configuration.rect = rect
                     
-                    completion(configuration)
+                    completion((configuration: configuration, needsScroll: needsScroll))
                 }
             }
         }
@@ -103,7 +114,8 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
 }
 
 
-class CarbonAppDelegate: NSObject, NSApplicationDelegate {
+class CarbonAppDelegate: NSObject, NSApplicationDelegate, CarbonWebViewDelegate {
+    
     let window = NSWindow(contentRect: NSMakeRect(0, 0, 2000, 4000),
                           styleMask: [.titled, .closable, .miniaturizable, .resizable],
                           backing: .buffered,
@@ -123,10 +135,20 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        window.makeKeyAndOrderFront(nil)
         let carbonWebView = CarbonWebView(frame: window.contentView!.bounds, carbon: carbon, filename: filename)
-        window.contentView?.addSubview(carbonWebView)
+        carbonWebView.carbonDelegate = self
         
+        window.makeKeyAndOrderFront(nil)
+        window.contentView?.addSubview(carbonWebView)
         carbonWebView.loadCarbon(isEmbeded: true)
+    }
+    
+    // MARK: delegate methods <CarbonWebViewDelegate>
+    func didFailLoadCarbon() {
+        // TODO
+    }
+    
+    func didLoadCarbon() {
+        // TODO
     }
 }
