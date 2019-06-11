@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: docs-white
 title: nef
 permalink: /docs/
 ---

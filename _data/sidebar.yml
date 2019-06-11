@@ -7,24 +7,27 @@ options:
         - title: Installation
           url: /docs/quick-start/installation/
 
-        - title: Creating a Xcode Playground
-          url: /docs/quick-start/creating-a-xcode-playground/
+        - title: Creating an Xcode Playground
+          url: /docs/quick-start/creating-an-xcode-playground/
+
+        - title: Resources
+          url: /docs/quick-start/resources/
 
 
-  - title: Verification and Compile
+  - title: Verification and Compilation
 
     nested_options:
 
-        - title: Compiling a Swift Playground
-          url: /docs/verification-and-compile/compiling-a-swift-playground/
+        - title: Compiling an Xcode Playground
+          url: /docs/verification-and-compilation/compiling-an-xcode-playground/
 
 
   - title: Generation
 
     nested_options:
 
-        - title: Generating a Markdown project
-          url: /docs/generation/generating-a-markdown-project/
+        - title: Generating a Markdown document
+          url: /docs/generation/generating-a-markdown-document/
 
 
   - title: Integration
