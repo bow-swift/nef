@@ -4,37 +4,33 @@ import Foundation
 import WebKit
 import AppKit
 
-struct Carbon {
-    let size: CarbonWebView.CarbonSize
-    let code: String
-}
 
 class CarbonApp {
     let app = NSApplication.shared
     
-    func downloadCarbon(_ configuration: Carbon, filename: String, completion: @escaping (Result<String, Error>) -> Void) {
-        app.deactivate()
+    func downloadCarbon(_ configuration: Carbon, filename: String, completion: @escaping (Result<String, CarbonError>) -> Void) {
+        stop()
+        let carbonAppDelegate = CarbonAppDelegate(carbon: configuration, filename: filename) { result in
+            self.stop()
+            completion(result)
+        }
         
-        let carbonAppDelegate = CarbonAppDelegate(carbon: configuration, filename: filename, completion: completion)
         app.delegate = carbonAppDelegate
         app.run()
+    }
+    
+    private func stop() {
+        app.deactivate()
     }
 }
 
 // MARK: Carbon downloader
 protocol CarbonWebViewDelegate: class {
-    func didFailLoadCarbon()
+    func didFailLoadCarbon(error: CarbonError)
     func didLoadCarbon()
 }
 
 class CarbonWebView: WKWebView, WKNavigationDelegate {
-    
-    enum CarbonSize: String {
-        case x1 = "14px"
-        case x2 = "18px"
-        case x4 = "22px"
-    }
-    
     
     private let filename: String
     private let carbon: Carbon
@@ -55,7 +51,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     func loadCarbon(isEmbeded: Bool = true) {
         let embededParam = isEmbeded ? "/embeded" : ""
         let customization = "bg=rgba(171%2C%20184%2C%20195%2C%201)&t=lucario&wt=none&l=swift&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=35px&ph=35px&ln=true&fm=Hack&lh=133%25&si=false&es=2x&wm=false"
-        let size = "fs=\(carbon.size.rawValue)"
+        let size = "fs=\(carbon.style.size.rawValue)"
         let code = "code=\(carbon.code.requestPathEncoding)"
         let query = "https://carbon.now.sh\(embededParam)/?\(customization)&\(size)&\(code)"
         let truncatedQuery = query[URLRequest.URLLenghtAllowed]
@@ -68,11 +64,11 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
         hideCopyButton(in: self)
         carbonRectArea(in: self) { configuration in
             guard let configuration = configuration else {
-                self.carbonDelegate?.didFailLoadCarbon(); return
+                self.carbonDelegate?.didFailLoadCarbon(error: .invalidSnapshot); return
             }
             
             self.takeSnapshot(with: configuration) { (image, error) in
-                guard let image = image else { self.carbonDelegate?.didFailLoadCarbon(); return }
+                guard let image = image else { self.carbonDelegate?.didFailLoadCarbon(error: .invalidSnapshot); return }
                 _ = image.writeToFile(file: "\(self.filename).png", atomically: true, usingType: .png)
                 self.carbonDelegate?.didLoadCarbon()
             }
@@ -82,6 +78,10 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     // MARK: delegate <WKNavigationDelegate>
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         screenshot()
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {
+        carbonDelegate?.didFailLoadCarbon(error: .notFound)
     }
     
     // MARK: javascript <helpers>
@@ -130,10 +130,9 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
     
     private let carbon: Carbon
     private let filename: String
-    private let completion: (Result<String, Error>) -> Void
-    private var carbonWebView: CarbonWebView?
+    private let completion: (Result<String, CarbonError>) -> Void
     
-    init(carbon: Carbon, filename: String, completion: @escaping (Result<String, Error>) -> Void) {
+    init(carbon: Carbon, filename: String, completion: @escaping (Result<String, CarbonError>) -> Void) {
         self.carbon = carbon
         self.filename = filename
         self.completion = completion
@@ -142,21 +141,21 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        carbonWebView = CarbonWebView(frame: window.contentView!.bounds, carbon: carbon, filename: filename)
-        carbonWebView?.carbonDelegate = self
+        let carbonWebView = CarbonWebView(frame: window.contentView!.bounds, carbon: carbon, filename: filename)
+        carbonWebView.carbonDelegate = self
         
-        window.contentView?.addSubview(carbonWebView!)
-        carbonWebView?.loadCarbon(isEmbeded: true)
+        window.contentView?.addSubview(carbonWebView)
+        carbonWebView.loadCarbon(isEmbeded: true)
     }
 }
 
 extension CarbonAppDelegate: CarbonWebViewDelegate {
     
-    func didFailLoadCarbon() {
-        // TODO
+    func didFailLoadCarbon(error: CarbonError) {
+        completion(.failure(error))
     }
     
     func didLoadCarbon() {
-        // TODO
+        completion(.success(filename))
     }
 }

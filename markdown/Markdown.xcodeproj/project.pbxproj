@@ -13,14 +13,16 @@
 		8B0CA52122AE67C800181BC0 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52022AE67C800181BC0 /* ConsoleOutput.swift */; };
 		8B0CA52222AE682A00181BC0 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
 		8B0CA52322AE682A00181BC0 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
-		8B0CA52522AEAA0400181BC0 /* URLQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52422AEAA0400181BC0 /* URLQuery.swift */; };
-		8B0CA52722AEAAB000181BC0 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */; };
-		8B0CA52822AEAABD00181BC0 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */; };
-		8B0CA52922AEAABE00181BC0 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */; };
-		8B0CA52B22AEAB5900181BC0 /* CarbonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52A22AEAB5900181BC0 /* CarbonDownloader.swift */; };
-		8B0CA52D22AEAB9500181BC0 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */; };
-		8B0CA52E22AEAB9500181BC0 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */; };
-		8B0CA52F22AEAB9500181BC0 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */; };
+		8B0CA53122AEC55600181BC0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53022AEC55600181BC0 /* String+Path.swift */; };
+		8B0CA53222AEC55600181BC0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53022AEC55600181BC0 /* String+Path.swift */; };
+		8B0CA53322AEC55600181BC0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53022AEC55600181BC0 /* String+Path.swift */; };
+		8B0CA53522AFD71300181BC0 /* MarkupCarbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53422AFD71300181BC0 /* MarkupCarbon.swift */; };
+		8B0CA53722AFD82B00181BC0 /* CarbonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52A22AEAB5900181BC0 /* CarbonDownloader.swift */; };
+		8B0CA53822AFD82B00181BC0 /* URLQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52422AEAA0400181BC0 /* URLQuery.swift */; };
+		8B0CA55222AFD88900181BC0 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */; };
+		8B0CA55322AFD88900181BC0 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */; };
+		8B0CA55522AFDAF200181BC0 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA55422AFDAF200181BC0 /* String+Error.swift */; };
+		8B0CA55822AFE06000181BC0 /* CarbonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA55722AFE06000181BC0 /* CarbonModel.swift */; };
 		8B424B26224E290800AF9010 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
 		8B424B28224E292200AF9010 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B27224E292200AF9010 /* main.swift */; };
 		8B424B2C224E320600AF9010 /* MarkupUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B2B224E320600AF9010 /* MarkupUtils.swift */; };
@@ -37,7 +39,7 @@
 		8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */; };
 		8B66EB9D221F04A70001DCA2 /* MarkupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB96221F04A60001DCA2 /* MarkupNode.swift */; };
 		8B66EB9E221F04A70001DCA2 /* MarkupLexical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB97221F04A60001DCA2 /* MarkupLexical.swift */; };
-		8B66EB9F221F04A70001DCA2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB98221F04A60001DCA2 /* Utils.swift */; };
+		8B66EB9F221F04A70001DCA2 /* String+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB98221F04A60001DCA2 /* String+Format.swift */; };
 		8B66EBA0221F04CA0001DCA2 /* Markup-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B66EB90221F04A60001DCA2 /* Markup-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B66EBB6221FFF4F0001DCA2 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
 		8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */; };
@@ -95,6 +97,10 @@
 		8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Slice.swift"; sourceTree = "<group>"; };
 		8B0CA52A22AEAB5900181BC0 /* CarbonDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonDownloader.swift; sourceTree = "<group>"; };
 		8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Store.swift"; sourceTree = "<group>"; };
+		8B0CA53022AEC55600181BC0 /* String+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
+		8B0CA53422AFD71300181BC0 /* MarkupCarbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupCarbon.swift; sourceTree = "<group>"; };
+		8B0CA55422AFDAF200181BC0 /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
+		8B0CA55722AFE06000181BC0 /* CarbonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonModel.swift; sourceTree = "<group>"; };
 		8B424B1F224E28FC00AF9010 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B424B27224E292200AF9010 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupMarkdown.swift; sourceTree = "<group>"; };
@@ -110,7 +116,7 @@
 		8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupSyntax.swift; sourceTree = "<group>"; };
 		8B66EB96221F04A60001DCA2 /* MarkupNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupNode.swift; sourceTree = "<group>"; };
 		8B66EB97221F04A60001DCA2 /* MarkupLexical.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupLexical.swift; sourceTree = "<group>"; };
-		8B66EB98221F04A60001DCA2 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		8B66EB98221F04A60001DCA2 /* String+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Format.swift"; sourceTree = "<group>"; };
 		8B66EBB1221FFF4F0001DCA2 /* MarkupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarkupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupSyntaxTests.swift; sourceTree = "<group>"; };
 		8B66EBBE221FFF760001DCA2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -167,8 +173,6 @@
 			children = (
 				8B0CA51D22AE66AE00181BC0 /* main.swift */,
 				8B0CA52022AE67C800181BC0 /* ConsoleOutput.swift */,
-				8B0CA52A22AEAB5900181BC0 /* CarbonDownloader.swift */,
-				8B0CA52422AEAA0400181BC0 /* URLQuery.swift */,
 			);
 			path = Carbon;
 			sourceTree = "<group>";
@@ -179,6 +183,27 @@
 				8B0CA51822AE669600181BC0 /* main.swift */,
 			);
 			path = Carbon;
+			sourceTree = "<group>";
+		};
+		8B0CA53622AFD81F00181BC0 /* Carbon */ = {
+			isa = PBXGroup;
+			children = (
+				8B0CA52A22AEAB5900181BC0 /* CarbonDownloader.swift */,
+				8B0CA55722AFE06000181BC0 /* CarbonModel.swift */,
+				8B0CA52422AEAA0400181BC0 /* URLQuery.swift */,
+			);
+			path = Carbon;
+			sourceTree = "<group>";
+		};
+		8B0CA53922AFD84500181BC0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */,
+				8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */,
+				8B0CA55422AFDAF200181BC0 /* String+Error.swift */,
+				8B66EB98221F04A60001DCA2 /* String+Format.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		8B424B20224E28FC00AF9010 /* Markdown */ = {
@@ -195,8 +220,7 @@
 			children = (
 				8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */,
 				8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */,
-				8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */,
-				8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */,
+				8B0CA53022AEC55600181BC0 /* String+Path.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -205,9 +229,9 @@
 			isa = PBXGroup;
 			children = (
 				8B66EB90221F04A60001DCA2 /* Markup-Bridging-Header.h */,
-				8B66EB98221F04A60001DCA2 /* Utils.swift */,
 				8B66EB94221F04A60001DCA2 /* Parser */,
 				8B66EB91221F04A60001DCA2 /* Render */,
+				8B0CA53922AFD84500181BC0 /* Utils */,
 			);
 			name = Markup;
 			path = ../lib/Markup;
@@ -216,10 +240,12 @@
 		8B66EB91221F04A60001DCA2 /* Render */ = {
 			isa = PBXGroup;
 			children = (
-				8B66EB92221F04A60001DCA2 /* MarkupRender.swift */,
-				8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */,
+				8B0CA53422AFD71300181BC0 /* MarkupCarbon.swift */,
 				8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */,
+				8B424B29224E2B2800AF9010 /* MarkupMarkdown.swift */,
+				8B66EB92221F04A60001DCA2 /* MarkupRender.swift */,
 				8B424B2B224E320600AF9010 /* MarkupUtils.swift */,
+				8B0CA53622AFD81F00181BC0 /* Carbon */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -455,14 +481,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B0CA52722AEAAB000181BC0 /* Array+Slice.swift in Sources */,
 				8B0CA52222AE682A00181BC0 /* ConsoleReader.swift in Sources */,
-				8B0CA52F22AEAB9500181BC0 /* NSImage+Store.swift in Sources */,
 				8B0CA52122AE67C800181BC0 /* ConsoleOutput.swift in Sources */,
 				8B0CA52322AE682A00181BC0 /* PlaygroundUtils.swift in Sources */,
-				8B0CA52B22AEAB5900181BC0 /* CarbonDownloader.swift in Sources */,
 				8B0CA51922AE669600181BC0 /* main.swift in Sources */,
-				8B0CA52522AEAA0400181BC0 /* URLQuery.swift in Sources */,
+				8B0CA53322AEC55600181BC0 /* String+Path.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,11 +493,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B0CA52922AEAABE00181BC0 /* Array+Slice.swift in Sources */,
 				8B424B28224E292200AF9010 /* main.swift in Sources */,
 				8B424B33224E602200AF9010 /* ConsoleOutput.swift in Sources */,
+				8B0CA53122AEC55600181BC0 /* String+Path.swift in Sources */,
 				8B424BA22254AEC300AF9010 /* PlaygroundUtils.swift in Sources */,
-				8B0CA52D22AEAB9500181BC0 /* NSImage+Store.swift in Sources */,
 				8B424B31224E5F8D00AF9010 /* ConsoleReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -493,11 +515,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B0CA52822AEAABD00181BC0 /* Array+Slice.swift in Sources */,
 				8B424BA42254B26300AF9010 /* ConsoleReader.swift in Sources */,
 				8B424BA12254AEC300AF9010 /* PlaygroundUtils.swift in Sources */,
+				8B0CA53222AEC55600181BC0 /* String+Path.swift in Sources */,
 				8B424B912254AA3000AF9010 /* ConsoleOutput.swift in Sources */,
-				8B0CA52E22AEAB9500181BC0 /* NSImage+Store.swift in Sources */,
 				8B6FC589221ECE6A008F7694 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,13 +528,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */,
+				8B0CA55522AFDAF200181BC0 /* String+Error.swift in Sources */,
+				8B0CA53722AFD82B00181BC0 /* CarbonDownloader.swift in Sources */,
 				8B424B2C224E320600AF9010 /* MarkupUtils.swift in Sources */,
+				8B0CA55822AFE06000181BC0 /* CarbonModel.swift in Sources */,
+				8B0CA55322AFD88900181BC0 /* NSImage+Store.swift in Sources */,
+				8B0CA53822AFD82B00181BC0 /* URLQuery.swift in Sources */,
 				8B424B2E224E361800AF9010 /* MarkupMarkdown.swift in Sources */,
 				8B66EB9E221F04A70001DCA2 /* MarkupLexical.swift in Sources */,
+				8B0CA55222AFD88900181BC0 /* Array+Slice.swift in Sources */,
 				8B66EB9D221F04A70001DCA2 /* MarkupNode.swift in Sources */,
+				8B0CA53522AFD71300181BC0 /* MarkupCarbon.swift in Sources */,
 				8B66EB9A221F04A70001DCA2 /* MarkupRender.swift in Sources */,
 				8B66EB9B221F04A70001DCA2 /* MarkupJekyll.swift in Sources */,
-				8B66EB9F221F04A70001DCA2 /* Utils.swift in Sources */,
+				8B66EB9F221F04A70001DCA2 /* String+Format.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
