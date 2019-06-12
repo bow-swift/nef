@@ -4,16 +4,16 @@ import AppKit
 import Markup
 
 class CarbonAppDelegate: NSObject, NSApplicationDelegate {
-    let main: (CarbonDownloader) -> Void
-    let carbonWebView: CarbonWebView
-    let downloader: CarbonDownloader
-    let queue: DispatchQueue
+    private let main: (CarbonDownloader) -> Void
+    private let carbonWebView: CarbonWebView
+    private let downloader: CarbonDownloader
+    private let queue: DispatchQueue
     
-    let window = NSWindow(contentRect: CarbonScreen.bounds,
-                          styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                          backing: .buffered,
-                          defer: true,
-                          screen: CarbonScreen())
+    private let window = NSWindow(contentRect: CarbonScreen.bounds,
+                                  styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                                  backing: .buffered,
+                                  defer: true,
+                                  screen: CarbonScreen())
     
     init(main: @escaping (CarbonDownloader) -> Void, provider: CarbonProvider) {
         self.carbonWebView = CarbonWebView(frame: CarbonScreen.bounds)

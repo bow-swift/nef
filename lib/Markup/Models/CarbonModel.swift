@@ -21,7 +21,27 @@ public struct CarbonStyle {
     }
 }
 
-public enum CarbonError: Error {
-    case notFound
-    case invalidSnapshot
+public struct CarbonError: Error {
+    public let filename: String
+    public let snippet: String
+    public let error: CarbonErrorOption
+    
+    public init(filename: String, snippet: String, error: CarbonErrorOption) {
+        self.filename = filename
+        self.snippet = snippet
+        self.error = error
+    }
+    
+    // MARK: Error options
+    public enum CarbonErrorOption: CustomStringConvertible {
+        case notFound
+        case invalidSnapshot
+        
+        public var description: String {
+            switch self {
+            case .notFound: return "can not open carbon with selected code snippet"
+            case .invalidSnapshot: return "can not take a snapshot"
+            }
+        }
+    }
 }

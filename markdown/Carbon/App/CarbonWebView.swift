@@ -5,6 +5,7 @@ import WebKit
 import Markup
 
 
+/// Carbon view definition
 protocol CarbonView: class {
     func load(carbon: Carbon, filename: String, isEmbeded: Bool)
 }
@@ -15,7 +16,9 @@ protocol CarbonViewDelegate: class {
 }
 
 
+/// Web view where loading/downloading the carbon configuration
 class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
+
     private var filename: String?
     private var carbon: Carbon?
     weak var carbonDelegate: CarbonViewDelegate?
@@ -46,16 +49,24 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     
     // MARK: private methods
     private func screenshot() {
+        guard let filename = filename, let code = carbon?.code else { didFailLoadingCarbonWebView(); return }
+        let screenshotError = CarbonError(filename: filename, snippet: code, error: .invalidSnapshot)
+        
         hideCopyButton(in: self)
         carbonRectArea(in: self) { configuration in
             guard let configuration = configuration else {
-                self.carbonDelegate?.didFailLoadCarbon(error: .invalidSnapshot); return
+                self.carbonDelegate?.didFailLoadCarbon(error: screenshotError)
+                return
             }
             
             self.takeSnapshot(with: configuration) { (image, error) in
-                guard let filename = self.filename, let image = image else { self.carbonDelegate?.didFailLoadCarbon(error: .invalidSnapshot); return }
+                guard let image = image else {
+                    self.carbonDelegate?.didFailLoadCarbon(error: screenshotError)
+                    return
+                }
+                
                 _ = image.writeToFile(file: "\(filename).png", atomically: true, usingType: .png)
-                self.carbonDelegate?.didLoadCarbon(filename: self.filename!)
+                self.carbonDelegate?.didLoadCarbon(filename: filename)
             }
         }
     }
@@ -66,7 +77,12 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {
-        carbonDelegate?.didFailLoadCarbon(error: .notFound)
+        didFailLoadingCarbonWebView()
+    }
+    
+    private func didFailLoadingCarbonWebView() {
+        let error = CarbonError(filename: filename ?? "", snippet: carbon?.code ?? "", error: .notFound)
+        carbonDelegate?.didFailLoadCarbon(error: error)
     }
     
     // MARK: javascript <helpers>

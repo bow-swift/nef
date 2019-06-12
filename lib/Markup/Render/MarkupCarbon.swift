@@ -2,14 +2,16 @@
 
 import Foundation
 
+public typealias CarbonResult = Result<String, CarbonError>
+
 public protocol CarbonDownloader: class {
-    func carbon(withConfiguration configuration: Carbon, filename: String) -> Result<String, CarbonError>
+    func carbon(withConfiguration configuration: Carbon, filename: String) -> CarbonResult
 }
 
 public struct CarbonGenerator: InternalRender {
-    let downloader: CarbonDownloader
-    let style: CarbonStyle
-    let output: String
+    private let downloader: CarbonDownloader
+    private let style: CarbonStyle
+    private let output: String
 
     public init(downloader: CarbonDownloader, style: CarbonStyle, output: String) {
         self.downloader = downloader
@@ -18,44 +20,46 @@ public struct CarbonGenerator: InternalRender {
     }
     
     func render(node: Node) -> String {
-        node.carbon(downloader: self)
-        return ""
+        return node.carbon(downloader: self)
     }
 }
 
+// MARK: - Node Downloader
+protocol CarbonCodeDownloader {
+    func carbon(code: String) -> CarbonResult
+}
+
 extension CarbonGenerator: CarbonCodeDownloader {
-    
-    func carbon(code: String) {
+    func carbon(code: String) -> CarbonResult {
         let configuration = Carbon(code: code, style: style)
-        let result = self.downloader.carbon(withConfiguration: configuration, filename: "\(self.output)-\(2)")
-        if case .failure(let e) = result {
-                
-        }
+        return downloader.carbon(withConfiguration: configuration, filename: output)
     }
 }
 
 // MARK: - Carbon definition for each node
-
-protocol CarbonCodeDownloader {
-    func carbon(code: String)
-}
-
-enum CarbonNodeError: Error {
-    case invalid
-}
-
 extension Node {
     
-    func carbon(downloader: CarbonCodeDownloader) -> CarbonNodeError? {
+    func carbon(downloader: CarbonCodeDownloader) -> String {
         switch self {
         case let .block(nodes):
             let code = nodes.map { $0.carbon() }.joined()
-            guard !code.isEmpty else { return nil }
-            downloader.carbon(code: code)
-            return nil
+            guard !code.isEmpty else { return "" }
+            
+            switch downloader.carbon(code: code) {
+            case let .success(filename):
+                return "Download Carbon snippet for '\(filename)' ✓"
+            case let .failure(carbonError):
+                let error = """
+                            Download Carbon snippet for '\(carbonError.filename)' ☓
+                                error: \(carbonError.error)
+                                code snippet:
+                                    \(carbonError.snippet)
+                            """
+                return error
+            }
             
         default:
-            return nil
+            return ""
         }
     }
 }

@@ -4,9 +4,9 @@ import AppKit
 import Markup
 
 class CarbonApplication {
-    let app = NSApplication.shared
-    let appDelegate: CarbonAppDelegate
-    let assembler = CarbonAssembler()
+    private let app = NSApplication.shared
+    private let appDelegate: CarbonAppDelegate
+    private let assembler = CarbonAssembler()
     
     init(main: @escaping (CarbonDownloader) -> Void) {
         self.appDelegate = CarbonAppDelegate(main: main, provider: assembler)

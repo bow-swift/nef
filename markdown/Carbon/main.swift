@@ -30,7 +30,7 @@ func renderCarbon(downloader: CarbonDownloader, from filePath: String, to output
     
     let style = CarbonStyle(size: .x4)
     if let error = CarbonGenerator(downloader: downloader, style: style, output: outputPath).render(content: content) {
-        
+        Console.error.show()
     } else {
         Console.success.show()
     }
