@@ -34,6 +34,8 @@ func renderCarbon(downloader: CarbonDownloader, from filePath: String, to output
     } else {
         Console.success.show()
     }
+    
+    CarbonApplication.terminate()
 }
 
 

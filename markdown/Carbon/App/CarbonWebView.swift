@@ -16,7 +16,6 @@ protocol CarbonViewDelegate: class {
 
 
 class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
-    
     private var filename: String?
     private var carbon: Carbon?
     weak var carbonDelegate: CarbonViewDelegate?

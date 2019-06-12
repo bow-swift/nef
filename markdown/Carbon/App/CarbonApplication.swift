@@ -13,6 +13,10 @@ class CarbonApplication {
         app.delegate = appDelegate
         app.run()
     }
+    
+    static func terminate() {
+        NSApplication.shared.terminate(nil)
+    }
 }
 
 // MARK: Assembler
@@ -22,7 +26,7 @@ protocol CarbonProvider {
 
 class CarbonAssembler: CarbonProvider {
     func resolveCarbonDownloader(view: CarbonWebView & CarbonView) -> CarbonDownloader {
-        let downloader = CarbonAppDownloader(view: view)
+        let downloader = CarbonSyncDownloader(view: view)
         view.carbonDelegate = downloader
         return downloader
     }
