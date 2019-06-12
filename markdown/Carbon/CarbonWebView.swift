@@ -1,45 +1,27 @@
 //  Copyright © 2019 The nef Authors.
 
-import Foundation
-import WebKit
 import AppKit
+import WebKit
+import Markup
 
 
-class CarbonApp {
-    let app = NSApplication.shared
-    
-    func downloadCarbon(_ configuration: Carbon, filename: String, completion: @escaping (Result<String, CarbonError>) -> Void) {
-        stop()
-        let carbonAppDelegate = CarbonAppDelegate(carbon: configuration, filename: filename) { result in
-            self.stop()
-            completion(result)
-        }
-        
-        app.delegate = carbonAppDelegate
-        app.run()
-    }
-    
-    private func stop() {
-        app.deactivate()
-    }
+protocol CarbonView: class {
+    func load(carbon: Carbon, filename: String, isEmbeded: Bool)
 }
 
-// MARK: Carbon downloader
-protocol CarbonWebViewDelegate: class {
+protocol CarbonViewDelegate: class {
     func didFailLoadCarbon(error: CarbonError)
-    func didLoadCarbon()
+    func didLoadCarbon(filename: String)
 }
 
-class CarbonWebView: WKWebView, WKNavigationDelegate {
+
+class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     
-    private let filename: String
-    private let carbon: Carbon
-    weak var carbonDelegate: CarbonWebViewDelegate?
+    private var filename: String?
+    private var carbon: Carbon?
+    weak var carbonDelegate: CarbonViewDelegate?
     
-    init(frame: CGRect, carbon: Carbon, filename: String) {
-        self.carbon = carbon
-        self.filename = filename
-        
+    init(frame: CGRect) {
         super.init(frame: frame, configuration: WKWebViewConfiguration())
         self.navigationDelegate = self
     }
@@ -48,7 +30,10 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func loadCarbon(isEmbeded: Bool = true) {
+    func load(carbon: Carbon, filename: String, isEmbeded: Bool) {
+        self.filename = filename
+        self.carbon = carbon
+        
         let embededParam = isEmbeded ? "/embeded" : ""
         let customization = "bg=rgba(171%2C%20184%2C%20195%2C%201)&t=lucario&wt=none&l=swift&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=35px&ph=35px&ln=true&fm=Hack&lh=133%25&si=false&es=2x&wm=false"
         let size = "fs=\(carbon.style.size.rawValue)"
@@ -60,6 +45,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
         load(URLRequest(url: url))
     }
     
+    // MARK: private methods
     private func screenshot() {
         hideCopyButton(in: self)
         carbonRectArea(in: self) { configuration in
@@ -68,9 +54,9 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
             }
             
             self.takeSnapshot(with: configuration) { (image, error) in
-                guard let image = image else { self.carbonDelegate?.didFailLoadCarbon(error: .invalidSnapshot); return }
-                _ = image.writeToFile(file: "\(self.filename).png", atomically: true, usingType: .png)
-                self.carbonDelegate?.didLoadCarbon()
+                guard let filename = self.filename, let image = image else { self.carbonDelegate?.didFailLoadCarbon(error: .invalidSnapshot); return }
+                _ = image.writeToFile(file: "\(filename).png", atomically: true, usingType: .png)
+                self.carbonDelegate?.didLoadCarbon(filename: self.filename!)
             }
         }
     }
@@ -109,53 +95,5 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     private func hideCopyButton(in webView: WKWebView) {
         let hideCopyButton = "document.getElementsByClassName('copy-button')[0].style.display = 'none'"
         webView.evaluateJavaScript(hideCopyButton) { (_, _) in }
-    }
-}
-
-
-class CarbonAppDelegate: NSObject, NSApplicationDelegate {
-    
-    private class CarbonScreen: NSScreen {
-        static let bounds = NSRect(x: 0, y: 0, width: 3000, height: 5000)
-        
-        override var frame: NSRect { return CarbonScreen.bounds }
-        override var visibleFrame: NSRect { return CarbonScreen.bounds }
-    }
-    
-    let window = NSWindow(contentRect: CarbonScreen.bounds,
-                          styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                          backing: .buffered,
-                          defer: true,
-                          screen: CarbonScreen())
-    
-    private let carbon: Carbon
-    private let filename: String
-    private let completion: (Result<String, CarbonError>) -> Void
-    
-    init(carbon: Carbon, filename: String, completion: @escaping (Result<String, CarbonError>) -> Void) {
-        self.carbon = carbon
-        self.filename = filename
-        self.completion = completion
-        
-        super.init()
-    }
-    
-    func applicationDidFinishLaunching(_ notification: Notification) {
-        let carbonWebView = CarbonWebView(frame: window.contentView!.bounds, carbon: carbon, filename: filename)
-        carbonWebView.carbonDelegate = self
-        
-        window.contentView?.addSubview(carbonWebView)
-        carbonWebView.loadCarbon(isEmbeded: true)
-    }
-}
-
-extension CarbonAppDelegate: CarbonWebViewDelegate {
-    
-    func didFailLoadCarbon(error: CarbonError) {
-        completion(.failure(error))
-    }
-    
-    func didLoadCarbon() {
-        completion(.success(filename))
     }
 }

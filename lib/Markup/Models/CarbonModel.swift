@@ -3,12 +3,12 @@
 import Foundation
 
 public struct Carbon {
-    let code: String
-    let style: CarbonStyle
+    public let code: String
+    public let style: CarbonStyle
 }
 
 public struct CarbonStyle {
-    let size: CarbonSize
+    public let size: CarbonSize
     
     public init(size: CarbonSize) {
         self.size = size
