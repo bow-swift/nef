@@ -2,10 +2,8 @@
 
 import Foundation
 
-public typealias CarbonResult = Result<String, CarbonError>
-
 public protocol CarbonDownloader: class {
-    func carbon(withConfiguration configuration: Carbon, filename: String) -> CarbonResult
+    func carbon(withConfiguration configuration: Carbon, filename: String) -> Result<String, CarbonError>
 }
 
 public struct CarbonGenerator: InternalRender {
@@ -30,36 +28,37 @@ public struct CarbonGenerator: InternalRender {
 
 // MARK: - Node Downloader
 protocol CarbonCodeDownloader {
-    func carbon(code: String) -> CarbonResult
+    func carbon(code: String) -> String
 }
 
 extension CarbonGenerator: CarbonCodeDownloader {
-    func carbon(code: String) -> CarbonResult {
+    func carbon(code: String) -> String {
         let configuration = Carbon(code: code, style: style)
-        return downloader.carbon(withConfiguration: configuration, filename: output)
+        let result = downloader.carbon(withConfiguration: configuration, filename: output)
+        
+        switch result {
+        case let .success(filename):
+            return "Download Carbon snippet for '\(filename)' ✓"
+            
+        case let .failure(carbonError):
+            return """
+                    Download Carbon snippet for '\(carbonError.filename)' ☓
+                        error: \(carbonError.error)
+                        code snippet:
+                            \(carbonError.snippet)
+                   """
+        }
     }
 }
 
 // MARK: - Carbon definition for each node
 extension Node {
-    
     func carbon(downloader: CarbonCodeDownloader) -> String {
         switch self {
         case let .block(nodes):
             let code = nodes.map { $0.carbon() }.joined()
             guard !code.isEmpty else { return "" }
-            
-            switch downloader.carbon(code: code) {
-            case let .success(filename):
-                return "Download Carbon snippet for '\(filename)' ✓"
-            case let .failure(carbonError):
-                return """
-                        Download Carbon snippet for '\(carbonError.filename)' ☓
-                            error: \(carbonError.error)
-                            code snippet:
-                                \(carbonError.snippet)
-                       """
-            }
+            return downloader.carbon(code: code)
             
         default:
             return ""
