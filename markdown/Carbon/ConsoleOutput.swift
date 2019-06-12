@@ -4,8 +4,11 @@ import Foundation
 
 extension ConsoleOutput {
 
-    func printError() {
-        print("error:\(scriptName) could not render the Carbon's snippets ❌")
+    func printError(information: String) {
+        print("""
+              error:\(scriptName) could not render the Carbon's snippets ❌
+              trace: \(information)
+              """)
     }
 
     func printHelp() {

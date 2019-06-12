@@ -19,6 +19,10 @@ public struct CarbonGenerator: InternalRender {
         self.output = output
     }
     
+    public func isValid(trace: String) -> Bool {
+        return !trace.contains("☓")
+    }
+    
     func render(node: Node) -> String {
         return node.carbon(downloader: self)
     }
@@ -49,13 +53,12 @@ extension Node {
             case let .success(filename):
                 return "Download Carbon snippet for '\(filename)' ✓"
             case let .failure(carbonError):
-                let error = """
-                            Download Carbon snippet for '\(carbonError.filename)' ☓
-                                error: \(carbonError.error)
-                                code snippet:
-                                    \(carbonError.snippet)
-                            """
-                return error
+                return """
+                        Download Carbon snippet for '\(carbonError.filename)' ☓
+                            error: \(carbonError.error)
+                            code snippet:
+                                \(carbonError.snippet)
+                       """
             }
             
         default:

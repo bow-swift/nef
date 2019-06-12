@@ -4,7 +4,7 @@ import Foundation
 
 extension ConsoleOutput {
 
-    func printError() {
+    func printError(information: String) {
         print("error:\(scriptName) could not render the Markdown file ❌")
     }
 
