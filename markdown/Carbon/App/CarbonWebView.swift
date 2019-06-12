@@ -37,9 +37,10 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         self.carbon = carbon
         
         let embededParam = isEmbeded ? "/embeded" : ""
-        let customization = "bg=rgba(171%2C%20184%2C%20195%2C%201)&t=lucario&wt=none&l=swift&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=35px&ph=35px&ln=true&fm=Hack&lh=133%25&si=false&es=2x&wm=false"
+        let backgroundColor = "rgba(\(carbon.style.background))"
         let size = "fs=\(carbon.style.size.rawValue)"
         let code = "code=\(carbon.code.requestPathEncoding)"
+        let customization = "bg=\(backgroundColor)&t=lucario&wt=none&l=swift&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=35px&ph=35px&ln=true&fm=Hack&lh=133%25&si=false&es=2x&wm=false"
         let query = "https://carbon.now.sh\(embededParam)/?\(customization)&\(size)&\(code)"
         let truncatedQuery = query[URLRequest.URLLenghtAllowed]
         
