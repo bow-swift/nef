@@ -1,6 +1,6 @@
 //  Copyright © 2019 The nef Authors.
 
-import AppKit
+import Foundation
 import Markup
 
 let scriptName = "nef-carbon-page"

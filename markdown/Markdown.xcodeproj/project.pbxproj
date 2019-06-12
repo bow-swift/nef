@@ -227,8 +227,8 @@
 			children = (
 				8B0CA52A22AEAB5900181BC0 /* CarbonApplication.swift */,
 				8B0CA56B22B0F7E200181BC0 /* CarbonAppDelegate.swift */,
-				8B0CA56F22B0F89400181BC0 /* CarbonAppDownloader.swift */,
 				8B0CA56D22B0F84100181BC0 /* CarbonWebView.swift */,
+				8B0CA56F22B0F89400181BC0 /* CarbonAppDownloader.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
