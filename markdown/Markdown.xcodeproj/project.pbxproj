@@ -181,12 +181,9 @@
 		8B0CA51122AE657C00181BC0 /* Carbon */ = {
 			isa = PBXGroup;
 			children = (
-				8B0CA52A22AEAB5900181BC0 /* CarbonApplication.swift */,
-				8B0CA56B22B0F7E200181BC0 /* CarbonAppDelegate.swift */,
-				8B0CA56F22B0F89400181BC0 /* CarbonAppDownloader.swift */,
-				8B0CA56D22B0F84100181BC0 /* CarbonWebView.swift */,
 				8B0CA51D22AE66AE00181BC0 /* main.swift */,
 				8B0CA52022AE67C800181BC0 /* ConsoleOutput.swift */,
+				8B0CA57222B1003300181BC0 /* App */,
 				8B0CA57122B0F8A000181BC0 /* Utils */,
 			);
 			path = Carbon;
@@ -223,6 +220,17 @@
 				8B0CA52422AEAA0400181BC0 /* URLQuery.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		8B0CA57222B1003300181BC0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8B0CA52A22AEAB5900181BC0 /* CarbonApplication.swift */,
+				8B0CA56B22B0F7E200181BC0 /* CarbonAppDelegate.swift */,
+				8B0CA56F22B0F89400181BC0 /* CarbonAppDownloader.swift */,
+				8B0CA56D22B0F84100181BC0 /* CarbonWebView.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		8B424B20224E28FC00AF9010 /* Markdown */ = {
