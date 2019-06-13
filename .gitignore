@@ -1,3 +1,14 @@
+## User files
 **/.DS_Store
 **/xcuserdata/
 BowPlayground
+
+## Jekyll
+_site
+.sass-cache
+.jekyll-metadata
+
+## Ruby environment normalization:
+.bundle/
+vendor/
+/lib/bundler/man/
