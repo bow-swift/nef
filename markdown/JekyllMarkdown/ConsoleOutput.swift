@@ -19,6 +19,6 @@ extension ConsoleOutput {
                     to: path where Jekyll markdown are saved to. ex. `/home`
                     permalink: is the relative path where Jekyll will render the documentation. ex. `/about/`
 
-             """)
+              """)
     }
 }

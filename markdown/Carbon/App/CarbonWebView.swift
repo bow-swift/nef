@@ -88,23 +88,24 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     
     // MARK: javascript <helpers>
     private func carbonRectArea(in webView: WKWebView, completion: @escaping (WKSnapshotConfiguration?) -> Void) {
-        let xJS = "document.getElementsByClassName('container-bg')[0].offsetParent.offsetLeft"
-        let widthJS = "document.getElementsByClassName('container-bg')[0].scrollWidth"
-        let heightJS = "document.getElementsByClassName('container-bg')[0].scrollHeight"
+        let container = "document.getElementsByClassName('container-bg')[0]"
+        let getX = "\(container).offsetParent.offsetLeft"
+        let getY = "\(container).offsetParent.offsetTop"
+        let getWidth = "\(container).scrollWidth"
+        let getHeight = "\(container).scrollHeight"
         
-        webView.evaluateJavaScript(xJS) { (x, _) in
-            webView.evaluateJavaScript(widthJS) { (w, _) in
-                webView.evaluateJavaScript(heightJS) { (h, _) in
-                    guard let x = x as? CGFloat, let w = w as? CGFloat, let h = h as? CGFloat else {
-                        completion(nil); return
-                    }
-                    let rect = CGRect(x: x, y: 0, width: w, height: h)
-                    let configuration = WKSnapshotConfiguration()
-                    configuration.rect = rect
-                    
-                    completion(configuration)
-                }
+        webView.evaluateJavaScript("[\(getX), \(getY), \(getWidth), \(getHeight)]") { (result, _) in
+            guard let inset = result as? [CGFloat], inset.count == 4 else {
+                completion(nil); return
             }
+            
+            let offset: CGFloat = 6
+            let (x, y, w, h) = (inset[0]+offset, inset[1]+offset, inset[2]-2*offset, inset[3]-2*offset)
+            let rect = CGRect(x: x, y: y, width: w, height: h)
+            let configuration = WKSnapshotConfiguration()
+            configuration.rect = rect
+            
+            completion(configuration)
         }
     }
     

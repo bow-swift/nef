@@ -19,6 +19,6 @@ extension ConsoleOutput {
                     to: path where markdown are saved to. ex. `/home`
                     filename: name for the rendered Markdown file (without any extension). ex. `Readme`
 
-             """)
+              """)
     }
 }

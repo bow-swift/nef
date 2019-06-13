@@ -18,6 +18,6 @@ extension ConsoleOutput {
                     from: path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`
                     to: path where Carbon snippets are saved to. ex. `/home`
 
-             """)
+              """)
     }
 }
