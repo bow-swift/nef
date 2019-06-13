@@ -38,11 +38,11 @@ extension CarbonGenerator: CarbonCodeDownloader {
         
         switch result {
         case let .success(filename):
-            return "Download Carbon snippet for '\(filename)' ✓"
+            return "Downloading Carbon snippet for '\(filename)' ✓"
             
         case let .failure(carbonError):
             return """
-                    Download Carbon snippet for '\(carbonError.filename)' ☓
+                    Downloading Carbon snippet for '\(carbonError.filename)' ☓
                         error: \(carbonError.error)
                         code snippet:
                             \(carbonError.snippet)

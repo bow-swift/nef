@@ -5,6 +5,9 @@ import Foundation
 extension ConsoleOutput {
 
     func printError(information: String) {
+        if !information.isEmpty {
+            print("information: \(information)")
+        }
         print("error:\(scriptName) could not render the Markdown file ❌")
     }
 

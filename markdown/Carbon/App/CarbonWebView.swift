@@ -42,7 +42,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         let code = "code=\(carbon.code.requestPathEncoding)"
         let customization = "bg=\(backgroundColor)&t=lucario&wt=none&l=swift&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=35px&ph=35px&ln=true&fm=Hack&lh=133%25&si=false&es=2x&wm=false"
         let query = "https://carbon.now.sh\(embededParam)/?\(customization)&\(size)&\(code)"
-        let truncatedQuery = query[URLRequest.URLLenghtAllowed]
+        let truncatedQuery = query.urlLength(limit: URLRequest.URLLenghtLimit)
         
         let url = URL(string: truncatedQuery)!
         load(URLRequest(url: url))

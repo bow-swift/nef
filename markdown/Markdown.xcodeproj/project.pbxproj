@@ -13,7 +13,6 @@
 		8B0CA53122AEC55600181BC0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53022AEC55600181BC0 /* String+Path.swift */; };
 		8B0CA53222AEC55600181BC0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53022AEC55600181BC0 /* String+Path.swift */; };
 		8B0CA53522AFD71300181BC0 /* MarkupCarbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53422AFD71300181BC0 /* MarkupCarbon.swift */; };
-		8B0CA55522AFDAF200181BC0 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA55422AFDAF200181BC0 /* String+Error.swift */; };
 		8B0CA55922AFE22900181BC0 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52022AE67C800181BC0 /* ConsoleOutput.swift */; };
 		8B0CA55A22AFE32300181BC0 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
 		8B0CA55B22AFE32300181BC0 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
@@ -106,7 +105,6 @@
 		8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Store.swift"; sourceTree = "<group>"; };
 		8B0CA53022AEC55600181BC0 /* String+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
 		8B0CA53422AFD71300181BC0 /* MarkupCarbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupCarbon.swift; sourceTree = "<group>"; };
-		8B0CA55422AFDAF200181BC0 /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
 		8B0CA55722AFE06000181BC0 /* CarbonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonModel.swift; sourceTree = "<group>"; };
 		8B0CA56B22B0F7E200181BC0 /* CarbonAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAppDelegate.swift; sourceTree = "<group>"; };
 		8B0CA56D22B0F84100181BC0 /* CarbonWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonWebView.swift; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 		8B0CA53922AFD84500181BC0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				8B0CA55422AFDAF200181BC0 /* String+Error.swift */,
 				8B66EB98221F04A60001DCA2 /* String+Format.swift */,
 			);
 			path = Utils;
@@ -568,7 +565,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B66EB9C221F04A70001DCA2 /* MarkupSyntax.swift in Sources */,
-				8B0CA55522AFDAF200181BC0 /* String+Error.swift in Sources */,
 				8B424B2C224E320600AF9010 /* MarkupUtils.swift in Sources */,
 				8B424B2E224E361800AF9010 /* MarkupMarkdown.swift in Sources */,
 				8B66EB9E221F04A70001DCA2 /* MarkupLexical.swift in Sources */,

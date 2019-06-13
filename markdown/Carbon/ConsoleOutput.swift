@@ -6,8 +6,8 @@ extension ConsoleOutput {
 
     func printError(information: String) {
         print("""
-              error:\(scriptName) could not render the Carbon's snippets ❌
               trace: \(information)
+              error:\(scriptName) could not render the Carbon's snippets ❌
               """)
     }
 
