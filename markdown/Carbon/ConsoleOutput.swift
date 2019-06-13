@@ -12,7 +12,7 @@ extension ConsoleOutput {
     }
 
     func printHelp() {
-        print("\(scriptName) --from <playground's page> --to <output carbon>")
+        print("\(scriptName) --from <playground page> --to <carbon output>")
         print("""
 
                     from: is the path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`
