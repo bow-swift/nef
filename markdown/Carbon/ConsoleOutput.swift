@@ -15,7 +15,7 @@ extension ConsoleOutput {
         print("\(scriptName) --from <playground page> --to <carbon output>")
         print("""
 
-                    from: is the path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`
+                    from: path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`
                     to: is the path where render the Carbon's snippets. ex. `/home`
 
              """)
