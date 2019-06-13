@@ -30,15 +30,24 @@ public struct CarbonStyle {
         }
         
         public var description: String {
-            guard a > 0 else { return "\(r)%2C%20\(g)%2C%20\(b)%2C%20\(1)" }
-            return "\(r)%2C%20\(g)%2C%20\(b)%2C%20\(a)"
+            guard a > 0 else { return "rgba(\(r),\(g),\(b),\(1))" }
+            return "rgba(\(r),\(g),\(b),\(a))"
         }
     }
     
-    public enum CarbonSize: String {
-        case x1 = "14px"
-        case x2 = "18px"
-        case x4 = "22px"
+    public enum CarbonSize: String, CustomStringConvertible {
+        case x1 = "1x"
+        case x2 = "2x"
+        case x4 = "4x"
+        
+        public var description: String { return rawValue }
+        public var fontSize: String {
+            switch self {
+            case .x1: return "14px"
+            case .x2: return "18px"
+            case .x4: return "22px"
+            }
+        }
     }
 }
 

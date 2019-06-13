@@ -35,20 +35,40 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     func load(carbon: Carbon, filename: String, isEmbeded: Bool) {
         self.filename = filename
         self.carbon = carbon
-        
-        let embededParam = isEmbeded ? "/embeded" : ""
-        let backgroundColor = "rgba(\(carbon.style.background))"
-        let size = "fs=\(carbon.style.size.rawValue)"
-        let code = "code=\(carbon.code.requestPathEncoding)"
-        let customization = "bg=\(backgroundColor)&t=lucario&wt=none&l=swift&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=35px&ph=35px&ln=true&fm=Hack&lh=133%25&si=false&es=2x&wm=false"
-        let query = "https://carbon.now.sh\(embededParam)/?\(customization)&\(size)&\(code)"
-        let truncatedQuery = query.urlLength(limit: URLRequest.URLLenghtLimit)
-        
-        let url = URL(string: truncatedQuery)!
-        load(URLRequest(url: url))
+        load(urlRequest(from: carbon, isEmbeded: isEmbeded))
     }
     
     // MARK: private methods
+    private func urlRequest(from carbon: Carbon, isEmbeded: Bool) -> URLRequest {
+        let backgroundColorItem = URLQueryItem(name: "bg", value: "\(carbon.style.background)")
+        let themeItem = URLQueryItem(name: "t", value: "lucario")
+        let windowsThemeItem = URLQueryItem(name: "wt", value: "none")
+        let languageItem = URLQueryItem(name: "l", value: "swift")
+        let dropShadowItem = URLQueryItem(name: "ds", value: "true")
+        let shadowYoffsetItem = URLQueryItem(name: "dsyoff", value: "20px")
+        let shadowBlurItem = URLQueryItem(name: "dsblur", value: "68px")
+        let windowsControlItem = URLQueryItem(name: "wc", value: "true")
+        let autoAdjustWidthItem = URLQueryItem(name: "wa", value: "true")
+        let verticalPaddingItem = URLQueryItem(name: "pv", value: "35px")
+        let horizontalPaddingItem = URLQueryItem(name: "ph", value: "35px")
+        let lineNumbersItem = URLQueryItem(name: "ln", value: "true")
+        let fontItem = URLQueryItem(name: "fm", value: "Hack")
+        let fontSizeItem = URLQueryItem(name: "fs", value: "\(carbon.style.size.fontSize)")
+        let lineHeightItem = URLQueryItem(name: "lh", value: "133%25")
+        let exportSizeItem = URLQueryItem(name: "sl", value: "\(carbon.style.size)")
+        let carbonWatermarkItem = URLQueryItem(name: "wm", value: "false")
+        let codeItem = URLQueryItem(name: "code", value: carbon.code.length(limit: URLRequest.URLLenghtLimit))
+        
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "carbon.now.sh"
+        urlComponents.path = isEmbeded ? "/embeded" : ""
+        urlComponents.queryItems = [backgroundColorItem, themeItem, windowsThemeItem, languageItem, dropShadowItem, shadowYoffsetItem, shadowBlurItem, windowsControlItem, autoAdjustWidthItem, verticalPaddingItem, horizontalPaddingItem, lineNumbersItem, fontItem, fontSizeItem, lineHeightItem, exportSizeItem, carbonWatermarkItem, codeItem]
+        
+        let url = urlComponents.url?.absoluteString.urlEncoding ?? ""
+        return URLRequest(url: URL(string: url)!)
+    }
+    
     private func screenshot() {
         guard let filename = filename, let code = carbon?.code else { didFailLoadingCarbonWebView(); return }
         let screenshotError = CarbonError(filename: filename, snippet: code, error: .invalidSnapshot)

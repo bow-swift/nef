@@ -28,7 +28,7 @@ func main(downloader: CarbonDownloader) {
 func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String) {
     guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else { Console.error(information: "").show(); return }
     
-    let style = CarbonStyle(size: .x2,
+    let style = CarbonStyle(size: .x4,
                             background: CarbonStyle.Color(r: 213, g: 64, b: 72, a: 1))
     
     let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)

@@ -4,20 +4,19 @@ import Foundation
 
 // MARK: Constants
 extension URLRequest {
-    static let URLLenghtLimit = 5200
+    static let URLLenghtLimit = 2500
 }
 
 // MARK: URL Query <actions>
 extension String {
-    var requestPathEncoding: String {
-        return addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+    
+    var urlEncoding: String {
+        return replacingOccurrences(of: "+", with: "%2B")
     }
     
-    func urlLength(limit length: Int) -> String {
-        guard count > length else { return self }
-        
-        let sliced = compactMap { $0 }[0..<length]
-        let slicedQuery = sliced.dropLast(while: { $0 != "%" }, include: false)
-        return slicedQuery.reduce(into: "") { (acc, char) in acc = "\(acc)\(char)" }
+    func length(limit: Int) -> String {
+        guard count > limit else { return self }
+        let sliced = compactMap { $0 }[0..<limit]
+        return sliced.reduce(into: "") { (acc, char) in acc = "\(acc)\(char)" }
     }
 }
