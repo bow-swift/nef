@@ -4,7 +4,7 @@ import Foundation
 
 // MARK: Constants
 extension URLRequest {
-    static let URLLenghtLimit = 2500
+    static let urlLengthAllowed = 2500
 }
 
 // MARK: URL Query <actions>
