@@ -65,7 +65,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         urlComponents.path = isEmbeded ? "/embeded" : ""
         urlComponents.queryItems = [backgroundColorItem, themeItem, windowsThemeItem, languageItem, dropShadowItem, shadowYoffsetItem, shadowBlurItem, windowsControlItem, autoAdjustWidthItem, verticalPaddingItem, horizontalPaddingItem, lineNumbersItem, fontItem, fontSizeItem, lineHeightItem, exportSizeItem, carbonWatermarkItem, codeItem]
         
-        let url = urlComponents.url?.absoluteString.urlEncoding ?? ""
+        let url = urlComponents.url?.absoluteString.urlEncoding ?? "https://github.com/bow-swift/nef"
         return URLRequest(url: URL(string: url)!)
     }
     
