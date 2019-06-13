@@ -57,7 +57,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         let lineHeightItem = URLQueryItem(name: "lh", value: "133%25")
         let exportSizeItem = URLQueryItem(name: "sl", value: "\(carbon.style.size)")
         let carbonWatermarkItem = URLQueryItem(name: "wm", value: "false")
-        let codeItem = URLQueryItem(name: "code", value: carbon.code.length(limit: URLRequest.URLLenghtLimit))
+        let codeItem = URLQueryItem(name: "code", value: carbon.code.length(limit: URLRequest.urlLengthAllowed))
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
