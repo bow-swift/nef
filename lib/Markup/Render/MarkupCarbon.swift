@@ -58,7 +58,7 @@ extension Node {
         case let .block(nodes):
             let code = nodes.map { $0.carbon() }.joined()
             guard !code.isEmpty else { return "" }
-            return downloader.carbon(code: code)
+            return downloader.carbon(code: code.trimmingNewLines)
             
         default:
             return ""

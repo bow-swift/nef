@@ -32,4 +32,8 @@ extension String {
     var trimmingLeftWhitespaces: String {
         return String(drop { $0 == " " })
     }
+    
+    var trimmingNewLines: String {
+        return trimmingCharacters(in: .newlines)
+    }
 }
