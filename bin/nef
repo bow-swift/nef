@@ -3,6 +3,7 @@
 #: Valid Args
 MARKDOWN="markdown"
 JEKYLL="jekyll"
+CARBON="carbon"
 PLAYGROUND="playground"
 COMPILE="compile"
 CLEAN="clean"
@@ -30,11 +31,12 @@ printHelp() {
     echo "${required}${bold}nef${normal}${reset}"
     echo ""
     echo "${bold}Commands${reset}"
-    echo "   ${green}${bold}$COMPILE${normal}${reset}     Compile Swift Playgrounds given a <path>"
+    echo "   ${green}${bold}$COMPILE${normal}${reset}     Compile Xcode Playgrounds given a <path>"
     echo "   ${green}${bold}$CLEAN${normal}${reset}       Clean a generated nef project from a <path>"
     echo "   ${green}${bold}$PLAYGROUND${normal}${reset}  Build a playground compatible with external frameworks"
+    echo "   ${green}${bold}$MARKDOWN${normal}${reset}    Render Markdown files for given Xcode Playgrounds"
     echo "   ${green}${bold}$JEKYLL${normal}${reset}      Render Markdown files that can be consumed from Jekyll to generate a microsite"
-    echo "   ${green}${bold}$MARKDOWN${normal}${reset}    Render Markdown files for given Swift Playgrounds"
+    echo "   ${green}${bold}$CARBON${normal}${reset}      Export Carbon code snippets for given Xcode Playgrounds"
     echo ""
 }
 
@@ -47,7 +49,7 @@ printHelpMarkdown() {
     echo ""
     echo "    Render Markdown files"
     echo ""
-    echo "    ${required}${bold}--project${normal}${reset} path to the folder containing the Xcode project with Swift Playgrounds"
+    echo "    ${required}${bold}--project${normal}${reset} path to the folder containing the Xcode project with Xcode Playgrounds"
     echo "    ${required}${bold}--output${normal}${reset} path where the resulting Markdown files will be generated"
     echo ""
 }
@@ -61,9 +63,23 @@ printHelpJekyll() {
     echo ""
     echo "    Render Markdown files that can be consumed from Jekyll to generate a microsite"
     echo ""
-    echo "    ${required}${bold}--project${normal}${reset} path to the folder containing the Xcode project with Swift Playgrounds"
+    echo "    ${required}${bold}--project${normal}${reset} path to the folder containing the Xcode project with Xcode Playgrounds"
     echo "    ${required}${bold}--output${normal}${reset} path where the resulting Markdown files will be generated"
     echo "    ${optional}${bold}--main-page${normal}${reset} path to a README.md file to be used as the index page of the generated microsite ${optional}[optional]${reset}"
+    echo ""
+}
+
+##
+#   printHelpCarbon()
+##
+printHelpCarbon() {
+    echo ""
+    echo "${normal}nef ${green}${bold}$CARBON${normal} ${required}${bold}--project${normal}${reset} <path-to-input> ${required}${bold}--output${normal}${reset} <path-to-output>"
+    echo ""
+    echo "    Generates Carbon code snippets"
+    echo ""
+    echo "    ${required}${bold}--project${normal}${reset} path to the folder containing the Xcode project with Xcode Playgrounds"
+    echo "    ${required}${bold}--output${normal}${reset} path where Carbon snippets are saved to"
     echo ""
 }
 
@@ -164,7 +180,8 @@ markdown() {
           --use-cache)     printHelpCompile; exit 1 ;;
 
           $MARKDOWN )      ;;
-          $JEKYLL )        printHelpJekyll; exit 1;;
+          $JEKYLL )        printHelpJekyll; exit 1 ;;
+          $CARBON )        printHelpCarbon; exit 1 ;;
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
           $CLEAN )         printHelpClean; exit 1 ;;
@@ -208,6 +225,7 @@ jekyll() {
 
           $MARKDOWN )      printHelpMarkdown; exit 1 ;;
           $JEKYLL )        ;;
+          $CARBON )        printHelpCarbon; exit 1 ;;
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
           $CLEAN )         printHelpClean; exit 1 ;;
@@ -220,6 +238,49 @@ jekyll() {
       printHelpJekyll; exit 1
   else
       nef-jekyll --project "$projectPath" --output "$outputPath" --main-page "$mainPagePath"
+  fi
+}
+
+##
+#   carbon(List<String> args)
+#   - Parameter `args`: list of command line arguments
+##
+carbon() {
+  projectPath=""
+  outputPath=""
+
+  while [ "$1" != "" ]; do
+      case $2 in
+          -h | --help | help )  printHelpCarbon; exit 0 ;;
+      esac
+
+      case $1 in
+          --project )      shift; projectPath=$1 ;;
+          --output )       shift; outputPath=$1 ;;
+          --main-page )    printHelpJekyll; exit 1 ;;
+
+          --name )         printHelpPlayground; exit 1 ;;
+          --bow-version )  printHelpPlayground; exit 1 ;;
+          --bow-branch )   printHelpPlayground; exit 1 ;;
+          --podfile )      printHelpPlayground; exit 1 ;;
+
+          --use-cache)     printHelpCompile; exit 1 ;;
+
+          $MARKDOWN )      printHelpMarkdown; exit 1 ;;
+          $JEKYLL )        printHelpJekyll; exit 1;;
+          $CARBON )        ;;
+          $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+          $COMPILE )       printHelpCompile; exit 1 ;;
+          $CLEAN )         printHelpClean; exit 1 ;;
+          * )              printHelpCarbon; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
+      esac
+      shift
+  done
+
+  if [ "$projectPath" == "" ] || [ "$outputPath" == "" ]; then
+      printHelpCarbon; exit 1
+  else
+      nef-carbon --project "$projectPath" --output "$outputPath"
   fi
 }
 
@@ -252,6 +313,7 @@ playground() {
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
+            $CARBON )        printHelpCarbon; exit 1 ;;
             $PLAYGROUND )    ;;
             $COMPILE )       printHelpCompile; exit 1 ;;
             $CLEAN )         printHelpClean; exit 1 ;;
@@ -298,6 +360,7 @@ compile() {
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
+            $CARBON )        printHelpCarbon; exit 1 ;;
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
             $COMPILE )       shift; projectFolder=$1 ;;
             $CLEAN )         printHelpClean; exit 1 ;;
@@ -341,6 +404,7 @@ clean() {
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
+            $CARBON )        printHelpCarbon; exit 1 ;;
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
             $COMPILE )       printHelpCompile; exit 1 ;;
             $CLEAN )         shift; projectFolder=$1 ;;
@@ -365,6 +429,7 @@ while [ "$1" != "" ]; do
     case $1 in
         $MARKDOWN )   markdown $@; exit 0 ;;
         $JEKYLL )     jekyll $@; exit 0 ;;
+        $CARBON )     carbon $@; exit 0 ;;
         $PLAYGROUND ) playground $@; exit 0 ;;
         $COMPILE )    compile $@; exit 0 ;;
         $CLEAN )      clean $@; exit 0 ;;
