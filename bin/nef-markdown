@@ -145,7 +145,7 @@ if [ -d "$root/$outputPath" ]; then
 else
   mkdir -p "$outputPath"
 
-  if [ ${outputPath:0:1} = "." ]; then
+  if [ ${outputPath:0:1} = "." ] || [ -d "$root/$outputPath" ]; then
       outputPath="$root/$outputPath"
   fi
 fi
