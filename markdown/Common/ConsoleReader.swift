@@ -4,7 +4,7 @@ import Foundation
 
 /// Protocol to define the `Console Output`
 protocol ConsoleOutput {
-    func printError()
+    func printError(information: String)
     func printSuccess()
     func printHelp()
 }
@@ -21,13 +21,13 @@ extension ConsoleOutput {
 /// - success: show general success. The script finishes successfully.
 /// - help: show the help. How to use this script.
 enum Console: ConsoleOutput {
-    case error
+    case error(information: String)
     case success
     case help
 
     func show() {
         switch self {
-        case .error: printError()
+        case let .error(information): printError(information: information)
         case .success: printSuccess()
         case .help: printHelp()
         }

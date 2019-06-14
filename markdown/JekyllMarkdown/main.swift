@@ -32,7 +32,7 @@ func renderJekyll(from filePath: String, to outputPath: String, permalink: Strin
 
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8),
           let rendered = JekyllGenerator(permalink: permalink).render(content: content),
-          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { Console.error.show(); return }
+          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { Console.error(information: "").show(); return }
 
     Console.success.show()
 }

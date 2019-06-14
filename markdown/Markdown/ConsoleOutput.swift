@@ -4,7 +4,10 @@ import Foundation
 
 extension ConsoleOutput {
 
-    func printError() {
+    func printError(information: String) {
+        if !information.isEmpty {
+            print("information: \(information)")
+        }
         print("error:\(scriptName) could not render the Markdown file ❌")
     }
 
@@ -12,10 +15,10 @@ extension ConsoleOutput {
         print("\(scriptName) --from <playground's page> --to <output path> --filename <markdown's filename>")
         print("""
 
-                    from: is the path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`
-                    to: is the path where render the markdown. ex. `/home`
+                    from: path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`
+                    to: path where markdown are saved to. ex. `/home`
                     filename: name for the rendered Markdown file (without any extension). ex. `Readme`
 
-             """)
+              """)
     }
 }

@@ -44,7 +44,7 @@ extension Node.Nef.Command {
         case .hidden:
             return ""
         case .invalid:
-            fatalError("Found .invalid command in nef: \(nodes).")
+            fatalError("error: found .invalid command in nef: \(nodes).")
         }
     }
 }
