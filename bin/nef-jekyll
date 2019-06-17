@@ -189,7 +189,7 @@ if [ -d "$root/$sitePath" ]; then
 else
   mkdir -p "$sitePath"
 
-  if [ ${sitePath:0:1} = "." ]; then
+  if [ ${sitePath:0:1} = "." ] || [ -d "$root/$sitePath" ]; then
       sitePath="$root/$sitePath"
   fi
 fi
