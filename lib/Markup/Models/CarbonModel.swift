@@ -16,7 +16,7 @@ public struct CarbonStyle {
     
     public init(background: Color, size: Size, theme: Theme, fontType: Font, lineNumbers: Bool) {
         self.background = background
-        self.size = .x4
+        self.size = size
         self.theme = theme
         self.fontType = fontType
         self.lineNumbers = lineNumbers
