@@ -8,12 +8,35 @@ public struct Carbon {
 }
 
 public struct CarbonStyle {
-    public let size: CarbonSize
     public let background: Color
+    public let size: Size
+    public let theme: Theme
+    public let fontType: Font
+    public let lineNumbers: Bool
     
-    public init(size: CarbonSize, background: Color) {
-        self.size = size
+    public init(background: Color, size: Size, theme: Theme, fontType: Font, lineNumbers: Bool) {
         self.background = background
+        self.size = .x4
+        self.theme = theme
+        self.fontType = fontType
+        self.lineNumbers = lineNumbers
+    }
+    
+    public enum Size: CGFloat {
+        case x1 = 1
+        case x2 = 2
+        case x3 = 3
+        case x4 = 4
+        case x5 = 5
+    }
+    
+    public enum Theme: String {
+        case dracula
+    }
+    
+    public enum Font: String {
+        case hack = "Hack"
+        case firaCode = "Fira Code"
     }
     
     public struct Color: CustomStringConvertible {
@@ -33,21 +56,9 @@ public struct CarbonStyle {
             guard a > 0 else { return "rgba(\(r),\(g),\(b),\(1))" }
             return "rgba(\(r),\(g),\(b),\(a))"
         }
-    }
-    
-    public enum CarbonSize: String, CustomStringConvertible {
-        case x1 = "1x"
-        case x2 = "2x"
-        case x4 = "4x"
         
-        public var description: String { return rawValue }
-        public var fontSize: String {
-            switch self {
-            case .x1: return "14px"
-            case .x2: return "18px"
-            case .x4: return "22px"
-            }
-        }
+        // MARK: - defined
+        public static let bow = Color(r: 213, g: 64, b: 72, a: 1)
     }
 }
 
