@@ -91,12 +91,20 @@ public struct CarbonStyle {
         }
         
         public var description: String {
-            guard a > 0 else { return "rgba(\(r),\(g),\(b),\(1))" }
+            guard a >= 0, a <= 1 else { return "rgba(\(r),\(g),\(b),\(1))" }
             return "rgba(\(r),\(g),\(b),\(a))"
         }
         
         // MARK: - defined
+        public static let all: [Color] = [transparent, nef, bow, white, green, blue, yellow]
+        
+        public static let nef = Color(r: 140, g: 68, b: 255, a: 1)
         public static let bow = Color(r: 213, g: 64, b: 72, a: 1)
+        public static let transparent = Color(r: 255, g: 255, b: 255, a: 0)
+        public static let white = Color(r: 255, g: 255, b: 255, a: 1)
+        public static let yellow = Color(r: 255, g: 237, b: 117, a: 1)
+        public static let green = Color(r: 110, g: 240, b: 167, a: 1)
+        public static let blue = Color(r: 66, g: 197, b: 255, a: 1)
     }
 }
 
@@ -122,5 +130,38 @@ public struct CarbonError: Error {
             case .invalidSnapshot: return "can not take a snapshot"
             }
         }
+    }
+}
+
+// MARK: - Helpers
+
+extension CarbonStyle.Size {
+    public init?(factor string: String) {
+        guard let factor = Int8(string),
+              let size = CarbonStyle.Size(rawValue: CGFloat(factor)) else { return nil }
+        self = size
+    }
+}
+
+extension CarbonStyle.Color {
+    public init?(hex: String) {
+        let hex = hex.replacingOccurrences(of: "#", with: "")
+        let hexRaw = hex.count < 8 ? "\(hex)FF" : hex
+        guard !hexRaw.isEmpty, hexRaw.count == 8 else { return nil }
+        
+        guard let r = String(hexRaw.dropLast(6)).hexToUInt8,
+              let g = String(hexRaw.dropFirst(2).dropLast(4)).hexToUInt8,
+              let b = String(hexRaw.dropFirst(4).dropLast(2)).hexToUInt8,
+              let a = String(hexRaw.dropFirst(6)).hexToUInt8 else { return nil }
+        
+        self = CarbonStyle.Color(r: r, g: g, b: b, a: min(Double(a)/255.0, 1))
+    }
+}
+
+extension String {
+    var hexToUInt8: UInt8? {
+        var result: CUnsignedInt = 666
+        Scanner(string: self).scanHexInt32(&result)
+        return result >= 0 && result <= 255 ? UInt8(result) : nil
     }
 }
