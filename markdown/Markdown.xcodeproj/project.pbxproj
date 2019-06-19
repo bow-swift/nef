@@ -51,6 +51,7 @@
 		8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */; };
 		8B6FC589221ECE6A008F7694 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6FC588221ECE6A008F7694 /* main.swift */; };
 		8B6FC657221EFF03008F7694 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
+		8BF63C3422BA339F00372D40 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF63C3322BA339F00372D40 /* Assets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +67,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		8B0CA51422AE669600181BC0 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
@@ -131,6 +132,7 @@
 		8B6FC585221ECE6A008F7694 /* JekyllMarkdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JekyllMarkdown; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6FC588221ECE6A008F7694 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B6FC63C221EFE61008F7694 /* libMarkup.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMarkup.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF63C3322BA339F00372D40 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +228,7 @@
 				8B0CA56B22B0F7E200181BC0 /* CarbonAppDelegate.swift */,
 				8B0CA56D22B0F84100181BC0 /* CarbonWebView.swift */,
 				8B0CA56F22B0F89400181BC0 /* CarbonSyncDownloader.swift */,
+				8BF63C3322BA339F00372D40 /* Assets.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				8B0CA55A22AFE32300181BC0 /* ConsoleReader.swift in Sources */,
 				8B0CA55B22AFE32300181BC0 /* PlaygroundUtils.swift in Sources */,
 				8B0CA56C22B0F7E200181BC0 /* CarbonAppDelegate.swift in Sources */,
+				8BF63C3422BA339F00372D40 /* Assets.swift in Sources */,
 				8B0CA55E22B018BE00181BC0 /* CarbonApplication.swift in Sources */,
 				8B0CA56522B01BE900181BC0 /* Array+Slice.swift in Sources */,
 				8B0CA56622B01BE900181BC0 /* NSImage+Store.swift in Sources */,

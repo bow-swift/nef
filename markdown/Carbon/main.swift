@@ -29,10 +29,11 @@ func renderCarbon(downloader: CarbonDownloader, from filePath: String, to output
     guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else { Console.error(information: "").show(); return }
     
     let style = CarbonStyle(background: CarbonStyle.Color.bow,
-                            size: .x1,
+                            size: .x4,
                             theme: .dracula,
                             fontType: .firaCode,
-                            lineNumbers: true)
+                            lineNumbers: true,
+                            watermark: true)
     
     let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
     guard let trace = carbonGenerator.render(content: content) else {  Console.error(information: "").show(); return }

@@ -13,13 +13,15 @@ public struct CarbonStyle {
     public let theme: Theme
     public let fontType: Font
     public let lineNumbers: Bool
+    public let watermark: Bool
     
-    public init(background: Color, size: Size, theme: Theme, fontType: Font, lineNumbers: Bool) {
+    public init(background: Color, size: Size, theme: Theme, fontType: Font, lineNumbers: Bool, watermark: Bool) {
         self.background = background
         self.size = size
         self.theme = theme
         self.fontType = fontType
         self.lineNumbers = lineNumbers
+        self.watermark = watermark
     }
     
     public enum Size: CGFloat {

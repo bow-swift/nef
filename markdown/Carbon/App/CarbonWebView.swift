@@ -35,7 +35,8 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     func load(carbon: Carbon, filename: String, isEmbeded: Bool) {
         self.filename = filename
         self.carbon = carbon
-        injectFontsScripts()
+        
+        loadFontsScripts()
         load(urlRequest(from: carbon, isEmbeded: isEmbeded))
     }
     
@@ -96,9 +97,17 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         }
     }
     
+    private func setZoom(in webView: WKWebView, scale: CGFloat) {
+        let w = webView.visibleRect.width
+        let w_2 = w * 0.5
+        webView.setMagnification(scale, centeredAt: CGPoint(x: -(w_2*scale-w_2)/scale, y: 0))
+    }
+    
     // MARK: delegate <WKNavigationDelegate>
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        screenshot()
+        self.injectWatermark {
+            self.screenshot()
+        }
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {
@@ -140,30 +149,63 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     }
     
     private func hideCopyButton(in webView: WKWebView) {
+        let showWatermark = carbon?.style.watermark ?? false
+        guard !showWatermark else { return }
         let hideCopyButton = "document.getElementsByClassName('copy-button')[0].style.display = 'none'"
         webView.evaluateJavaScript(hideCopyButton) { (_, _) in }
     }
     
-    private func setZoom(in webView: WKWebView, scale: CGFloat) {
-        let w = webView.visibleRect.width
-        let w_2 = w * 0.5
-        webView.setMagnification(scale, centeredAt: CGPoint(x: -(w_2*scale-w_2)/scale, y: 0))
+    private func injectWatermark(complete: @escaping () -> Void) {
+        let showWatermark = carbon?.style.watermark ?? false
+        guard showWatermark else { complete(); return }
+        
+        self.injectPoweredBy {
+            self.injectNefLogo(complete)
+        }
     }
 }
 
-
+// MARK: nef watermark
 private extension CarbonWebView {
-    func injectFontsScripts() {
+    func injectPoweredBy(_ complete: @escaping () -> Void) {
+        let javascript = "var terminalTitle = document.getElementsByClassName('window-title-container')[0];" +
+                         "terminalTitle.firstElementChild.hidden = true;" +
+                         "var titleNode = document.createElement('span');" +
+                         "titleNode.innerHTML = 'Powered by <span style=\"color:#b2b2b2;\">nef</span>';" +
+                         "titleNode.setAttribute('style', 'color:#999999; font-size:13px; font-family:arial; font-weight: 50');" +
+                         "terminalTitle.appendChild(titleNode);"
+        
+        evaluateJavaScript(javascript) { (_, _) in complete() }
+    }
+    
+    func injectNefLogo(_ complete: @escaping () -> Void) {
+        let javascript = "var logoButton = document.getElementsByClassName('copy-button')[0];" +
+                         "logoButton.firstElementChild.hidden = true;" +
+                         "var logoNode = document.createElement('img');" +
+                         "logoNode.setAttribute('src', 'data:image/png;base64,\(Assets.Base64.favicon)');" +
+                         "logoNode.setAttribute('height', '28');" +
+                         "logoButton.appendChild(logoNode);" +
+                         "logoButton.setAttribute('style', 'margin-top: -8px; margin-right: -9px');"
+        
+        evaluateJavaScript(javascript) { (_, _) in complete() }
+    }
+}
+
+// MARK: fonts and styles <user scripts>
+private extension CarbonWebView {
+    
+    func loadFontsScripts() {
         let script = WKUserScript(source: headersStyleScript + fontStyleScript, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(script)
     }
     
+    // MARK: - Javascript for inject user scripts
     private var headersStyleScript: String {
         return "var style = document.createElement('style');"  +
-            "style.setAttribute('id', '__jsx-86296889');" +
-            "style.innerHTML = '\(clean(javascript: headerStyle))';" +
-            "var head = document.getElementsByTagName('head')[0];"  +
-            "head.appendChild(style);";
+               "style.setAttribute('id', '__jsx-86296889');" +
+               "style.innerHTML = '\(clean(javascript: headerStyle))';" +
+               "var head = document.getElementsByTagName('head')[0];"  +
+               "head.appendChild(style);";
     }
     
     private var fontStyleScript: String {
@@ -174,6 +216,7 @@ private extension CarbonWebView {
                "head.appendChild(style);";
     }
     
+    // MARK: - Style definitions
     private var headerStyle: String {
         return """
         html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font-weight:inherit;font-family:inherit;font-style:inherit;vertical-align:baseline;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}table{border-collapse:collapse;border-spacing:0;}html,body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;background:#121212;color:white;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue', sans-serif;font-weight:400;font-style:normal;text-transform:initial;-webkit-letter-spacing:initial;-moz-letter-spacing:initial;-ms-letter-spacing:initial;letter-spacing:initial;min-height:704px;}*{box-sizing:border-box;}h1,h2,h3,h4,h5,h6{font-weight:500;}a{color:inherit;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}*::selection{background:rgba(255,255,255,0.99);color:#121212;}.link{color:#fff;-webkit-text-decoration:none;text-decoration:none;padding-bottom:3px;background:linear-gradient( to right, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 100% );background-size:1px 1px;background-position:0 100%;background-repeat:repeat-x;}.link:hover{color:#F8E81C;background:none;}.react-spinner{z-index:999;position:relative;width:32px;height:32px;top:50%;left:50%;}.react-spinner_bar{-webkit-animation:react-spinner_spin 1.2s linear infinite;-moz-animation:react-spinner_spin 1.2s linear infinite;-webkit-animation:react-spinner_spin 1.2s linear infinite;animation:react-spinner_spin 1.2s linear infinite;border-radius:5px;background-color:#fff;position:absolute;width:20%;height:7.8%;top:-3.9%;left:-10%;}[role='button']:focus{outline:none;}@-webkit-keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}@keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}@-moz-keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}@-webkit-keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}
@@ -186,6 +229,7 @@ private extension CarbonWebView {
         """
     }
     
+    // MARK: - internal helpers
     func clean(javascript: String) -> String {
         return javascript.replacingOccurrences(of: "'", with: "\\\'")
     }
