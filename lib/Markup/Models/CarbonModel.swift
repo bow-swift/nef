@@ -5,6 +5,11 @@ import Foundation
 public struct Carbon {
     public let code: String
     public let style: CarbonStyle
+    
+    public init(code: String, style: CarbonStyle) {
+        self.code = code
+        self.style = style
+    }
 }
 
 public struct CarbonStyle {
@@ -15,16 +20,16 @@ public struct CarbonStyle {
     public let lineNumbers: Bool
     public let watermark: Bool
     
-    public init(background: Color, size: Size, theme: Theme, fontType: Font, lineNumbers: Bool, watermark: Bool) {
+    public init(background: Color, theme: Theme, size: Size, fontType: Font, lineNumbers: Bool, watermark: Bool) {
         self.background = background
-        self.size = size
         self.theme = theme
+        self.size = size
         self.fontType = fontType
         self.lineNumbers = lineNumbers
         self.watermark = watermark
     }
     
-    public enum Size: CGFloat {
+    public enum Size: CGFloat, CaseIterable {
         case x1 = 1
         case x2 = 2
         case x3 = 3
@@ -32,13 +37,44 @@ public struct CarbonStyle {
         case x5 = 5
     }
     
-    public enum Theme: String {
+    public enum Theme: String, CaseIterable {
+        case cobalt
+        case blackboard
         case dracula
+        case duotone = "duotone-dark"
+        case hopscotch
+        case lucario
+        case material
+        case monokai
+        case nord
+        case oceanicNext = "oceanic-next"
+        case oneDark = "one-dark"
+        case panda = "panda-syntax"
+        case paraiso = "paraiso-dark"
+        case seti
+        case purple = "shades-of-purple"
+        case solarized = "solarized dark"
+        case tomorrow = "tomorrow-night-bright"
+        case twilight
+        case verminal
+        case vscode
+        case zenburn
     }
     
-    public enum Font: String {
-        case hack = "Hack"
+    public enum Font: String, CaseIterable {
         case firaCode = "Fira Code"
+        case hack = "Hack"
+        case inconsolata = "Inconsolata"
+        case iosevka = "Iosevka"
+        case monoid = "Monoid"
+        case anonymous = "Anonymous Pro"
+        case sourceCodePro = "Source Code Pro"
+        case darkMono = "dm"
+        case droidMono = "Droid Sans Mono"
+        case fantasqueMono = "Fantasque Sans Mono"
+        case ibmPlexMono = "IBM Plex Mono"
+        case spaceMono = "Space Mono"
+        case ubuntuMono = "Ubuntu Mono"
     }
     
     public struct Color: CustomStringConvertible {

@@ -29,8 +29,8 @@ func renderCarbon(downloader: CarbonDownloader, from filePath: String, to output
     guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else { Console.error(information: "").show(); return }
     
     let style = CarbonStyle(background: CarbonStyle.Color.bow,
-                            size: .x4,
                             theme: .dracula,
+                            size: .x1,
                             fontType: .firaCode,
                             lineNumbers: true,
                             watermark: true)

@@ -7,7 +7,7 @@ import Markup
 
 /// Carbon view definition
 protocol CarbonView: class {
-    func load(carbon: Carbon, filename: String, isEmbeded: Bool)
+    func load(carbon: Carbon, filename: String)
 }
 
 protocol CarbonViewDelegate: class {
@@ -21,6 +21,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
 
     private var filename: String?
     private var carbon: Carbon?
+    private var isCached: Bool = false
     weak var carbonDelegate: CarbonViewDelegate?
     
     init(frame: CGRect) {
@@ -32,16 +33,26 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func load(carbon: Carbon, filename: String, isEmbeded: Bool) {
+    func load(carbon: Carbon, filename: String) {
         self.filename = filename
         self.carbon = carbon
         
-        loadFontsScripts()
-        load(urlRequest(from: carbon, isEmbeded: isEmbeded))
+        isCached ? load(carbonRequest: urlRequest(from: carbon)) : cached()
+    }
+    
+    private func cached() {
+        let style  = CarbonStyle(background: .bow, theme: .dracula, size: .x5, fontType: .firaCode, lineNumbers: true, watermark: true)
+        let carbon = Carbon(code: "", style: style)
+        load(carbonRequest: urlRequest(from: carbon))
     }
     
     // MARK: private methods
-    private func urlRequest(from carbon: Carbon, isEmbeded: Bool) -> URLRequest {
+    private func load(carbonRequest: URLRequest) {
+        loadFontsScripts()
+        load(carbonRequest)
+    }
+    
+    private func urlRequest(from carbon: Carbon) -> URLRequest {
         let backgroundColorItem = URLQueryItem(name: "bg", value: "\(carbon.style.background)")
         let themeItem = URLQueryItem(name: "t", value: carbon.style.theme.rawValue)
         let windowsThemeItem = URLQueryItem(name: "wt", value: "none")
@@ -65,7 +76,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "carbon.now.sh"
-        urlComponents.path = isEmbeded ? "/embeded" : ""
+        urlComponents.path = "/embeded"
         urlComponents.queryItems = [backgroundColorItem, themeItem, windowsThemeItem, languageItem, dropShadowItem, shadowYoffsetItem, shadowBlurItem, windowsControlItem, autoAdjustWidthItem, verticalPaddingItem, horizontalPaddingItem, lineNumbersItem, fontItem, fontSizeItem, lineHeightItem, exportSizeCondition, exportSize, carbonWatermarkItem, codeItem]
         
         let url = urlComponents.url?.absoluteString.urlEncoding ?? "https://github.com/bow-swift/nef"
@@ -105,8 +116,15 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     
     // MARK: delegate <WKNavigationDelegate>
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        self.injectWatermark {
-            self.screenshot()
+        injectWatermark()
+        
+        if isCached {
+            screenshot()
+        } else {
+            isCached = true
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in 
+                self.load(carbon: self.carbon!, filename: self.filename!)
+            }
         }
     }
     
@@ -152,52 +170,50 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         let showWatermark = carbon?.style.watermark ?? false
         guard !showWatermark else { return }
         let hideCopyButton = "document.getElementsByClassName('copy-button')[0].style.display = 'none'"
-        webView.evaluateJavaScript(hideCopyButton) { (_, _) in }
+        webView.evaluateJavaScript(hideCopyButton)
     }
     
-    private func injectWatermark(complete: @escaping () -> Void) {
+    private func loadFontsScripts() {
+        load(script: headersStyleScript + fontStyleScript)
+    }
+    
+    private func injectWatermark() {
         let showWatermark = carbon?.style.watermark ?? false
-        guard showWatermark else { complete(); return }
-        
-        self.injectPoweredBy {
-            self.injectNefLogo(complete)
-        }
+        guard showWatermark else { return }
+        evaluateJavaScript(injectPoweredByJS +  injectNefLogoJS)
+    }
+    
+    // MARK: - helpers
+    func load(script source: String) {
+        let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        configuration.userContentController.addUserScript(script)
     }
 }
 
 // MARK: nef watermark
 private extension CarbonWebView {
-    func injectPoweredBy(_ complete: @escaping () -> Void) {
-        let javascript = "var terminalTitle = document.getElementsByClassName('window-title-container')[0];" +
-                         "terminalTitle.firstElementChild.hidden = true;" +
-                         "var titleNode = document.createElement('span');" +
-                         "titleNode.innerHTML = 'Powered by <span style=\"color:#b2b2b2;\">nef</span>';" +
-                         "titleNode.setAttribute('style', 'color:#999999; font-size:13px; font-family:arial; font-weight: 50');" +
-                         "terminalTitle.appendChild(titleNode);"
-        
-        evaluateJavaScript(javascript) { (_, _) in complete() }
+    private var injectPoweredByJS: String {
+        return "var terminalTitle = document.getElementsByClassName('window-title-container')[0];" +
+               "terminalTitle.firstElementChild.hidden = true;" +
+               "var titleNode = document.createElement('span');" +
+               "titleNode.innerHTML = 'Powered by <span style=\"color:#b2b2b2;\">nef</span>';" +
+               "titleNode.setAttribute('style', 'color:#999999; font-size:13px; font-family:\"Space Mono\"; font-weight: 50');" +
+               "terminalTitle.appendChild(titleNode);"
     }
     
-    func injectNefLogo(_ complete: @escaping () -> Void) {
-        let javascript = "var logoButton = document.getElementsByClassName('copy-button')[0];" +
-                         "logoButton.firstElementChild.hidden = true;" +
-                         "var logoNode = document.createElement('img');" +
-                         "logoNode.setAttribute('src', 'data:image/png;base64,\(Assets.Base64.favicon)');" +
-                         "logoNode.setAttribute('height', '28');" +
-                         "logoButton.appendChild(logoNode);" +
-                         "logoButton.setAttribute('style', 'margin-top: -8px; margin-right: -9px');"
-        
-        evaluateJavaScript(javascript) { (_, _) in complete() }
+    private var injectNefLogoJS: String {
+        return "var logoButton = document.getElementsByClassName('copy-button')[0];" +
+               "logoButton.firstElementChild.hidden = true;" +
+               "var logoNode = document.createElement('img');" +
+               "logoNode.setAttribute('src', 'data:image/png;base64,\(Assets.Base64.favicon)');" +
+               "logoNode.setAttribute('height', '28');" +
+               "logoButton.setAttribute('style', 'margin-top: -8px; margin-right: -9px');" +
+               "logoButton.appendChild(logoNode);"
     }
 }
 
 // MARK: fonts and styles <user scripts>
 private extension CarbonWebView {
-    
-    func loadFontsScripts() {
-        let script = WKUserScript(source: headersStyleScript + fontStyleScript, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-        configuration.userContentController.addUserScript(script)
-    }
     
     // MARK: - Javascript for inject user scripts
     private var headersStyleScript: String {
