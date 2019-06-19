@@ -36,18 +36,27 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     func load(carbon: Carbon, filename: String) {
         self.filename = filename
         self.carbon = carbon
-        
-        isCached ? load(carbonRequest: urlRequest(from: carbon)) : cached()
-    }
-    
-    private func cached() {
-        let style  = CarbonStyle(background: .bow, theme: .dracula, size: .x5, fontType: .firaCode, lineNumbers: true, watermark: true)
-        let carbon = Carbon(code: "", style: style)
-        load(carbonRequest: urlRequest(from: carbon))
+        isCached ? launchCachedRequest() : buildCache()
     }
     
     // MARK: private methods
-    private func load(carbonRequest: URLRequest) {
+    private func buildCache() {
+        let style  = CarbonStyle(background: .bow, theme: .dracula, size: .x5, fontType: .firaCode, lineNumbers: true, watermark: true)
+        let carbon = Carbon(code: "", style: style)
+        let request = urlRequest(from: carbon)
+        launch(carbonRequest: request)
+    }
+    
+    private func launchCachedRequest() {
+        guard let carbon = carbon else { didFailLoadingCarbonWebView(); return }
+        let request = urlRequest(from: carbon)
+        
+        Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+            self.launch(carbonRequest: request)
+        }
+    }
+    
+    private func launch(carbonRequest: URLRequest) {
         loadFontsScripts()
         load(carbonRequest)
     }
@@ -117,15 +126,8 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     // MARK: delegate <WKNavigationDelegate>
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         injectWatermark()
-        
-        if isCached {
-            screenshot()
-        } else {
-            isCached = true
-            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in 
-                self.load(carbon: self.carbon!, filename: self.filename!)
-            }
-        }
+        isCached ? screenshot() : launchCachedRequest()
+        isCached = true
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation: WKNavigation!, withError: Error) {

@@ -30,7 +30,7 @@ func renderCarbon(downloader: CarbonDownloader, from filePath: String, to output
     
     let style = CarbonStyle(background: CarbonStyle.Color.bow,
                             theme: .dracula,
-                            size: .x1,
+                            size: .x5,
                             fontType: .firaCode,
                             lineNumbers: true,
                             watermark: true)
