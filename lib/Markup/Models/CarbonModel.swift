@@ -12,6 +12,7 @@ public struct Carbon {
     }
 }
 
+// MARK: - Style
 public struct CarbonStyle {
     public let background: Color
     public let size: Size
@@ -94,26 +95,31 @@ public struct CarbonStyle {
             guard a >= 0, a <= 1 else { return "rgba(\(r),\(g),\(b),\(1))" }
             return "rgba(\(r),\(g),\(b),\(a))"
         }
-        
-        // MARK: - defined
-        public static let all: [String: Color] = ["transparent": transparent,
-                                                  "nef": nef,
-                                                  "bow": bow,
-                                                  "white": white,
-                                                  "green": green,
-                                                  "blue": blue,
-                                                  "yellow": yellow]
-        
-        public static let nef = Color(r: 140, g: 68, b: 255, a: 1)
-        public static let bow = Color(r: 213, g: 64, b: 72, a: 1)
-        public static let transparent = Color(r: 255, g: 255, b: 255, a: 0)
-        public static let white = Color(r: 255, g: 255, b: 255, a: 1)
-        public static let yellow = Color(r: 255, g: 237, b: 117, a: 1)
-        public static let green = Color(r: 110, g: 240, b: 167, a: 1)
-        public static let blue = Color(r: 66, g: 197, b: 255, a: 1)
     }
 }
 
+// MARK: Default colors
+extension CarbonStyle.Color {
+    public static let all: [String: CarbonStyle.Color] = ["transparent": transparent,
+                                                          "nef": nef,
+                                                          "bow": bow,
+                                                          "white": white,
+                                                          "green": green,
+                                                          "blue": blue,
+                                                          "yellow": yellow,
+                                                          "orange": orange]
+    
+    public static let nef = CarbonStyle.Color(r: 140, g: 68, b: 255, a: 1)
+    public static let bow = CarbonStyle.Color(r: 213, g: 64, b: 72, a: 1)
+    public static let transparent = CarbonStyle.Color(r: 255, g: 255, b: 255, a: 0)
+    public static let white = CarbonStyle.Color(r: 255, g: 255, b: 255, a: 1)
+    public static let yellow = CarbonStyle.Color(r: 255, g: 237, b: 117, a: 1)
+    public static let green = CarbonStyle.Color(r: 110, g: 240, b: 167, a: 1)
+    public static let blue = CarbonStyle.Color(r: 66, g: 197, b: 255, a: 1)
+    public static let orange = CarbonStyle.Color(r: 255, g: 159, b: 56, a: 1)
+}
+
+// MARK: Error
 public struct CarbonError: Error {
     public let filename: String
     public let snippet: String
@@ -139,8 +145,7 @@ public struct CarbonError: Error {
     }
 }
 
-// MARK: - Helpers
-
+// MARK: - Constructors
 extension CarbonStyle.Size {
     public init?(factor string: String) {
         guard let factor = Int8(string),
@@ -169,7 +174,8 @@ extension CarbonStyle.Color {
     }
 }
 
-extension String {
+// MARK: Helpers
+private extension String {
     var hexToUInt8: UInt8? {
         var result: CUnsignedInt = 666
         Scanner(string: self).scanHexInt32(&result)
