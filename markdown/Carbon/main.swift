@@ -17,7 +17,7 @@ func main(downloader: CarbonDownloader) {
     let playgroundName = PlaygroundUtils.playgroundName(fromPage: from)
     let to = "\(output)/\(playgroundName)".expandingTildeInPath
     
-    let backgroundColor = CarbonStyle.Color(hex: result["background"] ?? "") ?? CarbonStyle.Color.nef
+    let backgroundColor = CarbonStyle.Color(hex: result["background"] ?? "") ?? CarbonStyle.Color(default: result["background"] ?? "") ?? CarbonStyle.Color.nef
     let theme = CarbonStyle.Theme(rawValue: result["theme"] ?? "") ?? CarbonStyle.Theme.dracula
     let fontType = CarbonStyle.Font(rawValue: result["font"] ?? "") ?? CarbonStyle.Font.firaCode
     let size = CarbonStyle.Size(factor: result["size"] ?? "") ?? CarbonStyle.Size.x2

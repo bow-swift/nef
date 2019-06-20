@@ -96,7 +96,13 @@ public struct CarbonStyle {
         }
         
         // MARK: - defined
-        public static let all: [Color] = [transparent, nef, bow, white, green, blue, yellow]
+        public static let all: [String: Color] = ["transparent": transparent,
+                                                  "nef": nef,
+                                                  "bow": bow,
+                                                  "white": white,
+                                                  "green": green,
+                                                  "blue": blue,
+                                                  "yellow": yellow]
         
         public static let nef = Color(r: 140, g: 68, b: 255, a: 1)
         public static let bow = Color(r: 213, g: 64, b: 72, a: 1)
@@ -155,6 +161,11 @@ extension CarbonStyle.Color {
               let a = String(hexRaw.dropFirst(6)).hexToUInt8 else { return nil }
         
         self = CarbonStyle.Color(r: r, g: g, b: b, a: min(Double(a)/255.0, 1))
+    }
+    
+    public init?(default string: String) {
+        guard let value = CarbonStyle.Color.all[string.lowercased()] else { return nil }
+        self = value
     }
 }
 
