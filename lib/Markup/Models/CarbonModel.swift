@@ -182,13 +182,13 @@ private extension String {
     
     var hexColorWithAlpha: String {
         let hex = lowercased().replacingOccurrences(of: "#", with: "")
-        return hex.count < 8 ? "\(hex)FF" : hex
+        return hex.count < 8 ? "\(hex)ff" : hex
     }
     
     var isHexColor: Bool {
         let normalized = hexColorWithAlpha
         let hexSet = CharacterSet(charactersIn: "0123456789abcdef")
         let colorSet = CharacterSet(charactersIn: normalized)
-        return colorSet.intersection(hexSet) == hexSet && normalized.count == 8
+        return colorSet.intersection(hexSet) == colorSet && normalized.count == 8
     }
 }
