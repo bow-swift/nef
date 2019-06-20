@@ -61,10 +61,8 @@ buildMicrosite() {
 
     echo "options:" > "$sidebarFilePath" # sidebar start
 
-    for playground in "${playgrounds[@]}"; do
-
-        playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-        playgroundPath="$projectPath/$playground"
+    for playgroundPath in "${playgroundsPaths[@]}"; do
+        playgroundName=`echo "$playgroundPath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
 
         echo -ne "${normal}Rendering jekyll files for ${green}Playground ($playgroundName)${reset}..."
         pagesInPlayground "$playgroundPath"

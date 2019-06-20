@@ -1,12 +1,12 @@
 #!/bin/bash
 
 ##
-#   playgrounds(String folder)
+#   playgrounds(String folder) throws
 #   - Parameter `folder`: path to the project folder.
 #   - Return `playgrounds` list of the playgrounds given a project path.
 ##
 playgrounds() {
-    local path="$1"   # parameter `folder`
+    local root="$1"   # parameter `folder`
 
     workspace=$(workspaceForProjectPath "$1")
     content="$workspace/contents.xcworkspacedata"
@@ -18,11 +18,25 @@ playgrounds() {
     playgrounds=`echo "$playgrounds" | tr -s '\n' '\t'` # '\n' -> '\t'
     IFS=$'\t' read -r -a playgrounds <<< "$playgrounds" # split by '\t'
 
-    declare -p playgrounds 1>/dev/null 2>/dev/null
+    # build playground path
+    playgroundsPaths=()
+    for playground in "${playgrounds[@]}"; do
+        if [ -d "$playground" ]; then
+            playgroundsPaths+=("$playground")
+        elif [ -d "$root/$playground" ]; then
+            playgroundsPaths+=("$root/$playground")
+        else
+          echo " ❌"
+          echo "${bold}${red}error: ${reset}file '$playground' does not exist. Please, review if this playground is linked properly."
+          exit 1
+        fi
+    done
+
+    declare -p playgroundsPaths 1>/dev/null 2>/dev/null
 }
 
 ##
-#   pagesInPlayground(String playground)
+#   pagesInPlayground(String playground) throws
 #   - Parameter `playground`: path to the playground where to get its pages.
 #   - Return `pagesInPlayground` list of the playground's pages given a playground.
 ##
