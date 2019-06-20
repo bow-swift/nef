@@ -81,6 +81,16 @@ printHelpCarbon() {
     echo "    ${required}${bold}--project${normal}${reset} path to the folder containing the Xcode project with Xcode Playgrounds"
     echo "    ${required}${bold}--output${normal}${reset} path where Carbon snippets are saved to"
     echo ""
+    echo ""
+    echo "    Options:"
+    echo ""
+    echo "    ${optional}${bold}--background${normal}${reset} background color in hexadecimal. ${optional}default: 'nef' (#8c44ff)${reset}"
+    echo "    ${optional}${bold}--theme${normal}${reset} carbon's theme. ${optional}default: 'dracula'${reset}"
+    echo "    ${optional}${bold}--size${normal}${reset} export file size [1-5]. ${optional}default: '2'${reset}"
+    echo "    ${optional}${bold}--font${normal}${reset} carbon's font type. ${optional}default: 'firaCode'${reset}"
+    echo "    ${optional}${bold}--show-lines${normal}${reset} shows/hides lines of code [true | false]. ${optional}default: 'true'${reset}"
+    echo "    ${optional}${bold}--show-watermark${normal}${reset} shows/hides the watermark [true | false]. ${optional}default: 'true'${reset}"
+    echo ""
 }
 
 ##
@@ -179,6 +189,13 @@ markdown() {
 
           --use-cache)     printHelpCompile; exit 1 ;;
 
+          --background)    printHelpCarbon; exit 1 ;;
+          --theme)         printHelpCarbon; exit 1 ;;
+          --size)          printHelpCarbon; exit 1 ;;
+          --font)          printHelpCarbon; exit 1 ;;
+          --show-lines)    printHelpCarbon; exit 1 ;;
+          --show-watermark) printHelpCarbon; exit 1 ;;
+
           $MARKDOWN )      ;;
           $JEKYLL )        printHelpJekyll; exit 1 ;;
           $CARBON )        printHelpCarbon; exit 1 ;;
@@ -223,6 +240,13 @@ jekyll() {
 
           --use-cache)     printHelpCompile; exit 1 ;;
 
+          --background)    printHelpCarbon; exit 1 ;;
+          --theme)         printHelpCarbon; exit 1 ;;
+          --size)          printHelpCarbon; exit 1 ;;
+          --font)          printHelpCarbon; exit 1 ;;
+          --show-lines)    printHelpCarbon; exit 1 ;;
+          --show-watermark) printHelpCarbon; exit 1 ;;
+
           $MARKDOWN )      printHelpMarkdown; exit 1 ;;
           $JEKYLL )        ;;
           $CARBON )        printHelpCarbon; exit 1 ;;
@@ -249,6 +273,13 @@ carbon() {
   projectPath=""
   outputPath=""
 
+  background="nef"
+  theme="dracula"
+  size="2"
+  font="firaCode"
+  lines="true"
+  watermark="true"
+
   while [ "$1" != "" ]; do
       case $2 in
           -h | --help | help )  printHelpCarbon; exit 0 ;;
@@ -266,6 +297,13 @@ carbon() {
 
           --use-cache)     printHelpCompile; exit 1 ;;
 
+          --background)    shift; background=$1 ;;
+          --theme)         shift; theme=$1 ;;
+          --size)          shift; size=$1 ;;
+          --font)          shift; font=$1 ;;
+          --show-lines)    shift; lines=$1 ;;
+          --show-watermark) shift; watermark=$1 ;;
+
           $MARKDOWN )      printHelpMarkdown; exit 1 ;;
           $JEKYLL )        printHelpJekyll; exit 1;;
           $CARBON )        ;;
@@ -280,7 +318,7 @@ carbon() {
   if [ "$projectPath" == "" ] || [ "$outputPath" == "" ]; then
       printHelpCarbon; exit 1
   else
-      nef-carbon --project "$projectPath" --output "$outputPath"
+      nef-carbon --project "$projectPath" --output "$outputPath" --background "$background" --theme "$theme" --size "$size" --font "$font" --lines "$lines" --watermark "$watermark"
   fi
 }
 
@@ -310,6 +348,13 @@ playground() {
             --podfile )      shift; podfile=$1 ;;
 
             --use-cache)     printHelpCompile; exit 1 ;;
+
+            --background)    printHelpCarbon; exit 1 ;;
+            --theme)         printHelpCarbon; exit 1 ;;
+            --size)          printHelpCarbon; exit 1 ;;
+            --font)          printHelpCarbon; exit 1 ;;
+            --show-lines)    printHelpCarbon; exit 1 ;;
+            --show-watermark) printHelpCarbon; exit 1 ;;
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
@@ -358,6 +403,13 @@ compile() {
 
             --use-cache)     flag="--use-cache" ;;
 
+            --background)    printHelpCarbon; exit 1 ;;
+            --theme)         printHelpCarbon; exit 1 ;;
+            --size)          printHelpCarbon; exit 1 ;;
+            --font)          printHelpCarbon; exit 1 ;;
+            --show-lines)    printHelpCarbon; exit 1 ;;
+            --show-watermark) printHelpCarbon; exit 1 ;;
+
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
             $CARBON )        printHelpCarbon; exit 1 ;;
@@ -401,6 +453,13 @@ clean() {
             --podfile )      printHelpPlayground; exit 1 ;;
 
             --use-cache)     ;;
+
+            --background)    printHelpCarbon; exit 1 ;;
+            --theme)         printHelpCarbon; exit 1 ;;
+            --size)          printHelpCarbon; exit 1 ;;
+            --font)          printHelpCarbon; exit 1 ;;
+            --show-lines)    printHelpCarbon; exit 1 ;;
+            --show-watermark) printHelpCarbon; exit 1 ;;
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
