@@ -116,7 +116,7 @@ extension CarbonStyle.Color {
     public static let yellow = CarbonStyle.Color(r: 255, g: 237, b: 117, a: 1)
     public static let green = CarbonStyle.Color(r: 110, g: 240, b: 167, a: 1)
     public static let blue = CarbonStyle.Color(r: 66, g: 197, b: 255, a: 1)
-    public static let orange = CarbonStyle.Color(r: 255, g: 159, b: 56, a: 1)
+    public static let orange = CarbonStyle.Color(r: 255, g: 159, b: 70, a: 1)
 }
 
 // MARK: Error
