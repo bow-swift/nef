@@ -31,8 +31,8 @@ printHelp() {
     echo "    ${lime}--theme${reset} carbon's theme."
     echo "    ${lime}--size${reset} export file size [1-5]."
     echo "    ${lime}--font${reset} carbon's font type."
-    echo "    ${lime}--show-lines${reset} shows/hides lines of code [true | false]."
-    echo "    ${lime}--show-watermark${reset} shows/hides the watermark [true | false]."
+    echo "    ${lime}--lines${reset} shows/hides lines of code [true | false]."
+    echo "    ${lime}--watermark${reset} shows/hides the watermark [true | false]."
     echo "${reset}"
 }
 
@@ -157,8 +157,8 @@ while [ "$1" != "" ]; do
         --theme)               shift; theme=$1 ;;
         --size)                shift; size=$1 ;;
         --font)                shift; font=$1 ;;
-        --show-lines)          shift; lines=$1 ;;
-        --show-watermark)      shift; watermark=$1 ;;
+        --lines)               shift; lines=$1 ;;
+        --watermark)           shift; watermark=$1 ;;
         --help )               printHelp $@; exit 1 ;;
         * )                    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac

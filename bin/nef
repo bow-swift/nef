@@ -88,8 +88,8 @@ printHelpCarbon() {
     echo "    ${optional}${bold}--theme${normal}${reset} carbon's theme. ${optional}default: 'dracula'${reset}"
     echo "    ${optional}${bold}--size${normal}${reset} export file size [1-5]. ${optional}default: '2'${reset}"
     echo "    ${optional}${bold}--font${normal}${reset} carbon's font type. ${optional}default: 'firaCode'${reset}"
-    echo "    ${optional}${bold}--show-lines${normal}${reset} shows/hides lines of code [true | false]. ${optional}default: 'true'${reset}"
-    echo "    ${optional}${bold}--show-watermark${normal}${reset} shows/hides the watermark [true | false]. ${optional}default: 'true'${reset}"
+    echo "    ${optional}${bold}--lines${normal}${reset} shows/hides lines of code [true | false]. ${optional}default: 'true'${reset}"
+    echo "    ${optional}${bold}--watermark${normal}${reset} shows/hides the watermark [true | false]. ${optional}default: 'true'${reset}"
     echo ""
 }
 
@@ -193,8 +193,8 @@ markdown() {
           --theme)         printHelpCarbon; exit 1 ;;
           --size)          printHelpCarbon; exit 1 ;;
           --font)          printHelpCarbon; exit 1 ;;
-          --show-lines)    printHelpCarbon; exit 1 ;;
-          --show-watermark) printHelpCarbon; exit 1 ;;
+          --lines)         printHelpCarbon; exit 1 ;;
+          --watermark)     printHelpCarbon; exit 1 ;;
 
           $MARKDOWN )      ;;
           $JEKYLL )        printHelpJekyll; exit 1 ;;
@@ -244,8 +244,8 @@ jekyll() {
           --theme)         printHelpCarbon; exit 1 ;;
           --size)          printHelpCarbon; exit 1 ;;
           --font)          printHelpCarbon; exit 1 ;;
-          --show-lines)    printHelpCarbon; exit 1 ;;
-          --show-watermark) printHelpCarbon; exit 1 ;;
+          --lines)         printHelpCarbon; exit 1 ;;
+          --watermark)     printHelpCarbon; exit 1 ;;
 
           $MARKDOWN )      printHelpMarkdown; exit 1 ;;
           $JEKYLL )        ;;
@@ -301,8 +301,8 @@ carbon() {
           --theme)         shift; theme=$1 ;;
           --size)          shift; size=$1 ;;
           --font)          shift; font=$1 ;;
-          --show-lines)    shift; lines=$1 ;;
-          --show-watermark) shift; watermark=$1 ;;
+          --lines)         shift; lines=$1 ;;
+          --watermark)     shift; watermark=$1 ;;
 
           $MARKDOWN )      printHelpMarkdown; exit 1 ;;
           $JEKYLL )        printHelpJekyll; exit 1;;
@@ -353,8 +353,8 @@ playground() {
             --theme)         printHelpCarbon; exit 1 ;;
             --size)          printHelpCarbon; exit 1 ;;
             --font)          printHelpCarbon; exit 1 ;;
-            --show-lines)    printHelpCarbon; exit 1 ;;
-            --show-watermark) printHelpCarbon; exit 1 ;;
+            --lines)         printHelpCarbon; exit 1 ;;
+            --watermark)     printHelpCarbon; exit 1 ;;
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
@@ -407,8 +407,8 @@ compile() {
             --theme)         printHelpCarbon; exit 1 ;;
             --size)          printHelpCarbon; exit 1 ;;
             --font)          printHelpCarbon; exit 1 ;;
-            --show-lines)    printHelpCarbon; exit 1 ;;
-            --show-watermark) printHelpCarbon; exit 1 ;;
+            --lines)         printHelpCarbon; exit 1 ;;
+            --watermark)     printHelpCarbon; exit 1 ;;
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
@@ -458,8 +458,8 @@ clean() {
             --theme)         printHelpCarbon; exit 1 ;;
             --size)          printHelpCarbon; exit 1 ;;
             --font)          printHelpCarbon; exit 1 ;;
-            --show-lines)    printHelpCarbon; exit 1 ;;
-            --show-watermark) printHelpCarbon; exit 1 ;;
+            --lines)         printHelpCarbon; exit 1 ;;
+            --watermark)     printHelpCarbon; exit 1 ;;
 
             $MARKDOWN )      printHelpMarkdown; exit 1 ;;
             $JEKYLL )        printHelpJekyll; exit 1 ;;
