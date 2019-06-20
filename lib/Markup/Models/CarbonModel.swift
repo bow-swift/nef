@@ -156,16 +156,14 @@ extension CarbonStyle.Size {
 
 extension CarbonStyle.Color {
     public init?(hex: String) {
-        let hex = hex.replacingOccurrences(of: "#", with: "")
-        let hexRaw = hex.count < 8 ? "\(hex)FF" : hex
-        guard !hexRaw.isEmpty, hexRaw.count == 8 else { return nil }
-        
+        let hexRaw = hex.hexColorWithAlpha
+        guard hex.isHexColor else { return nil }
         guard let r = String(hexRaw.dropLast(6)).hexToUInt8,
               let g = String(hexRaw.dropFirst(2).dropLast(4)).hexToUInt8,
               let b = String(hexRaw.dropFirst(4).dropLast(2)).hexToUInt8,
               let a = String(hexRaw.dropFirst(6)).hexToUInt8 else { return nil }
         
-        self = CarbonStyle.Color(r: r, g: g, b: b, a: min(Double(a)/255.0, 1))
+        self = CarbonStyle.Color(r: r, g: g, b: b, a: min(Double(a)/255.0, 1.0))
     }
     
     public init?(default string: String) {
@@ -180,5 +178,17 @@ private extension String {
         var result: CUnsignedInt = 666
         Scanner(string: self).scanHexInt32(&result)
         return result >= 0 && result <= 255 ? UInt8(result) : nil
+    }
+    
+    var hexColorWithAlpha: String {
+        let hex = lowercased().replacingOccurrences(of: "#", with: "")
+        return hex.count < 8 ? "\(hex)FF" : hex
+    }
+    
+    var isHexColor: Bool {
+        let normalized = hexColorWithAlpha
+        let hexSet = CharacterSet(charactersIn: "0123456789abcdef")
+        let colorSet = CharacterSet(charactersIn: normalized)
+        return colorSet.intersection(hexSet) == hexSet && normalized.count == 8
     }
 }
