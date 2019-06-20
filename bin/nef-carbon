@@ -99,7 +99,7 @@ buildCarbon() {
             log="$projectPath/$LOG_PATH/$playgroundName-$pageName.log"
 
             echo -ne "    ${normal}| code snippets for ${green}$pageName${reset}..."
-            nef-carbon-page --from "$pagePath" --to "$output" --background "$background" --theme "$theme" --size "$size" --font "$font" --lines "$lines" --watermark "$watermark" 1> "$log" 2>&1
+            nef-carbon-page --from "$pagePath" --to "$output" --background "$background" --theme "$theme" --size "$size" --font "$font" --show-lines "$lines" --show-watermark "$watermark" 1> "$log" 2>&1
 
             installed=`grep "RENDER SUCCEEDED" "$log"`
             if [ "${#installed}" -lt 7 ]; then
