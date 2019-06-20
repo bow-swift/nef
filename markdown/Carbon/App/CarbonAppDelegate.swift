@@ -33,7 +33,7 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: private classes
     private class CarbonScreen: NSScreen {
-        static let bounds = NSRect(x: 0, y: 0, width: 3000, height: 5000)
+        static let bounds = NSRect(x: 0, y: 0, width: 5000, height: 15000)
         
         override var frame: NSRect { return CarbonScreen.bounds }
         override var visibleFrame: NSRect { return CarbonScreen.bounds }

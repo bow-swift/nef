@@ -21,7 +21,7 @@ class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
         guard let view = view else { return .failure(CarbonError(filename: filename, snippet: configuration.code, error: .notFound)) }
         
         DispatchQueue.main.async {
-            view.load(carbon: configuration, filename: "\(filename)-\(self.counter)", isEmbeded: true)
+            view.load(carbon: configuration, filename: "\(filename)-\(self.counter)")
             self.counter += 1
         }
         semaphore.wait()
