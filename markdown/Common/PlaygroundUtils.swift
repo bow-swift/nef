@@ -15,6 +15,6 @@ struct PlaygroundUtils {
 
         let filenameComponentes = page.components(separatedBy: "/")
         let filenameWithExtension = filenameComponentes.first(where: { $0.contains("xcplaygroundpage") })
-        return filenameWithExtension?.components(separatedBy: ".").first ?? PlaygroundUtils.defaultName
+        return filenameWithExtension?.replacingOccurrences(of: ".xcplaygroundpage", with: "") ?? PlaygroundUtils.defaultName
     }
 }
