@@ -8,14 +8,15 @@
 playgrounds() {
     local root="$1"   # parameter `folder`
 
-    workspace=$(workspaceForProjectPath "$1")
-    content="$workspace/contents.xcworkspacedata"
+    local workspace=$(workspaceForProjectPath "$1")
+    local content="$workspace/contents.xcworkspacedata"
+    checkWorkspaceIsValid "$workspace"
 
-    dependencies="awk -F'location = \"group:' '{print \$2}'"
-    cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
-    playgrounds=$(eval cat "\"$content\" | $dependencies | $cleanUp" )
+    local dependencies="awk -F'location = \"group:' '{print \$2}'"
+    local cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
+    local playgrounds=$(eval cat "\"$content\" | $dependencies | $cleanUp" )
 
-    playgrounds=`echo "$playgrounds" | tr -s '\n' '\t'` # '\n' -> '\t'
+    local playgrounds=`echo "$playgrounds" | tr -s '\n' '\t'` # '\n' -> '\t'
     IFS=$'\t' read -r -a playgrounds <<< "$playgrounds" # split by '\t'
 
     # build playground path
@@ -49,13 +50,13 @@ pagesInPlayground() {
     fi
 
     cd "$playgroundPath"
-    pages=()
+    local pages=()
 
-    dependencies="awk -F'page name=' '{print \$2}'"
-    cleanUp="cut -d'/' -f -1"
-    pagesNames=$(eval cat "contents.xcplayground | $dependencies | $cleanUp" 2>/dev/null)
+    local dependencies="awk -F'page name=' '{print \$2}'"
+    local cleanUp="cut -d'/' -f -1"
+    local pagesNames=$(eval cat "contents.xcplayground | $dependencies | $cleanUp" 2>/dev/null)
 
-    pagesNames=`echo "$pagesNames" | tr -s "\'" '\n' | tr -s '\n' '\t'` # ' -> \n -> \t
+    local pagesNames=`echo "$pagesNames" | tr -s "\'" '\n' | tr -s '\n' '\t'` # ' -> \n -> \t
     IFS=$'\t' read -r -a pagesNames <<< "$pagesNames"                   # split by \t
 
     # A. in case `content.xcplayground` has not pages - get from folder `Pages`
@@ -157,8 +158,8 @@ checkOutputNotSameInput() {
   local projectPath="$2"
   local root=$(echo "$projectPath" | rev | cut -d'/' -f2- | rev)
 
-  lsOutput=$(ls "$outputPath" 2>&1)
-  lsProject=$(ls "$projectPath" 2>&1)
+  local lsOutput=$(ls "$outputPath" 2>&1)
+  local lsProject=$(ls "$projectPath" 2>&1)
 
   if [ "$lsOutput" == "$lsProject" ]; then
       echo ""
@@ -182,16 +183,20 @@ workspaceForProjectPath() {
     local log="$1/$LOG_PATH/workspace.log"
     cd "$path"
 
-    workspace=`ls | grep xcworkspace`
-    numberOfWorkspaces=`echo "$workspace" | wc -l`
-    workspacePath="$path/$workspace"
+    local workspace=$(ls | grep xcworkspace)
+    local workspacePath="$path/$workspace"
+
+    echo $workspacePath
+}
+
+checkWorkspaceIsValid() {
+    local workspacePath="$1" # parameter `workspace`
+    local numberOfWorkspaces=$(echo "$workspace" | wc -l)
 
     if [ "$numberOfWorkspaces" -ne 1 ]; then
         echo "[!] error: found more than 1 workspace (total:$numberOfWorkspaces): '$workspace'" > "$log"
         exit 1
-    elif [ -d "$workspacePath" ]; then
-        echo $workspacePath
-    else
+    elif ! [ -d "$workspacePath" ]; then
         echo "[!] error: not found any workspace in root project '$path'" > "$log"
         exit 1
     fi
