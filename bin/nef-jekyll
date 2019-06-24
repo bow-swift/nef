@@ -81,6 +81,7 @@ buildMicrosite() {
             logFile="$LOG_PATH/$playgroundName-$pageName.log"
             log="$projectPath/$logFile"
 
+            checkOutputNotSameInput "$output" "$projectPath"
             cleanStructure "$output"
             mkdir -p "$output"
             nef-jekyll-page --from "$pagePath" --to "$output" --permalink "$permalink" 1> "$log" 2>&1
@@ -171,25 +172,9 @@ if [ "$sitePath" == "" ]; then
 fi
 
 # Fixes paths
-# 1. fix `projectPath`
-if [ -d "$root/$projectPath" ]; then
-  projectPath="$root/$projectPath"
-fi
+mainPagePath=$(absoluteFilePath "$root" "$mainPagePath")
+projectPath=$(absoluteInputDirectoryPath "$root" "$projectPath")
+sitePath=$(absoluteOutputDirectoryPath "$root" "$sitePath")
 
-# 2. fix `mainPagePath`
-if [ -f "$root/$mainPagePath" ]; then
-  mainPagePath="$root/$mainPagePath"
-fi
-
-# 3. fix `sitePath`
-if [ -d "$root/$sitePath" ]; then
-  sitePath="$root/$sitePath"
-else
-  mkdir -p "$sitePath"
-
-  if [ ${sitePath:0:1} = "." ] || [ -d "$root/$sitePath" ]; then
-      sitePath="$root/$sitePath"
-  fi
-fi
-
+# MAIN
 generateDocumentation "$projectPath" "$sitePath" "$mainPagePath"

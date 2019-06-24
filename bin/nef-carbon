@@ -89,6 +89,8 @@ buildCarbon() {
         output="$outputPath/$playgroundName"
 
         echo "${normal}Downloading Carbon's snippets for ${green}$playgroundName${reset}"
+
+        checkOutputNotSameInput "$output" "$projectPath"
         cleanStructure "$output"
         mkdir -pv "$output"
         pagesInPlayground "$playgroundPath"
@@ -175,25 +177,8 @@ if [ "$outputPath" == "" ]; then
 fi
 
 # Fixes paths
-# 1. fix `projectPath`
-if [ -d "$root/$projectPath" ]; then
-  projectPath="$root/$projectPath"
-fi
-
-# 1. fix `outputPath`
-if [ -d "$root/$outputPath" ]; then
-  if [ "$outputPath" = "." ]; then
-      outputPath="$root/nef-carbon"
-  else
-      outputPath="$root/$outputPath"
-  fi
-else
-  mkdir -p "$outputPath"
-
-  if [ ${outputPath:0:1} = "." ] || [ -d "$root/$outputPath" ]; then
-      outputPath="$root/$outputPath"
-  fi
-fi
+projectPath=$(absoluteInputDirectoryPath "$root" "$projectPath")
+outputPath=$(absoluteOutputDirectoryPath "$root" "$outputPath")
 
 # Donwload Carbon code snippets
 generateCarbon "$projectPath" "$outputPath" "$background" "$theme" "$size" "$font" "$lines" "$watermark"

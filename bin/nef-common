@@ -90,6 +90,84 @@ cleanStructure() {
   rm -rf $folder 1>/dev/null 2>/dev/null
 }
 
+##
+#   absoluteFilePath(String root, String filePath)
+#   - Parameter `root`: path to the root directory
+#   - Parameter `filePath`: path to file
+#   - Return: the absolute file path
+##
+absoluteFilePath() {
+  local root="$1"
+  local filePath="$2"
+
+  if [ -f "$root/$filePath" ]; then # is it 'relative path'?
+    filePath="$root/$filePath"
+  fi
+
+  echo "$filePath"
+}
+
+##
+#   absoluteInputDirectoryPath(String root, String folderPath)
+#   - Parameter `root`: path to the root directory
+#   - Parameter `folderPath`: path to directory
+#   - Return: the absolute directory path
+##
+absoluteInputDirectoryPath() {
+  local root="$1"
+  local folderPath="$2"
+
+  if [ -f "$root/$folderPath" ]; then # is it 'relative path'?
+    folderPath="$root/$folderPath"
+  fi
+
+  echo "$folderPath"
+}
+
+##
+#   absoluteOutputDirectoryPath(String root, String folderPath)
+#   - Parameter `root`: path to the root directory
+#   - Parameter `folderPath`: path to directory
+#   - Return: the absolute directory path
+##
+absoluteOutputDirectoryPath() {
+  local root="$1"
+  local folderPath="$2"
+
+  if [ -d "$root/$folderPath" ]; then # is it 'relative path'?
+    folderPath="$root/$folderPath"
+  else                            # in another case
+    mkdir -p "$folderPath"
+
+    if [ ${folderPath:0:1} = "." ] || [ -d "$root/$folderPath" ]; then
+        folderPath="$root/$folderPath"
+    fi
+  fi
+
+  echo "$folderPath"
+}
+
+##
+#   checkOutputNotSameInput(String outputPath, String projectPath) throws
+#   - Parameter `outputPath`: path to output directory - where to build nef project
+#   - Parameter `projectPath`: path to the path directory
+##
+checkOutputNotSameInput() {
+  local outputPath="$1"
+  local projectPath="$2"
+  local root=$(echo "$projectPath" | rev | cut -d'/' -f2- | rev)
+
+  lsOutput=$(ls "$outputPath" 2>&1)
+  lsProject=$(ls "$projectPath" 2>&1)
+
+  if [ "$lsOutput" == "$lsProject" ]; then
+      echo ""
+      echo "${bold}[!] ${normal}${red}error:${reset} 'output' path could not be the same path as 'project'. [${bold}$projectPath${reset}]"
+      echo "${bold}Please, select different directory for 'output'.${reset} ex. $root/output-nef"
+      echo ""
+      exit 1
+  fi
+}
 
 ###: - Internal methods
 
