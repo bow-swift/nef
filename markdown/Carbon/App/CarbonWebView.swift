@@ -118,9 +118,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     }
     
     private func setZoom(in webView: WKWebView, scale: CGFloat) {
-        let w = webView.visibleRect.width
-        let w_2 = w * 0.5
-        webView.setMagnification(scale, centeredAt: CGPoint(x: -(w_2*scale-w_2)/scale, y: 0))
+        webView.setMagnification(scale, centeredAt: CGPoint(x: 0, y: 0))
     }
     
     // MARK: delegate <WKNavigationDelegate>
@@ -145,22 +143,13 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         let getWidth = "\(container).scrollWidth"
         let getHeight = "\(container).scrollHeight"
         
-        webView.evaluateJavaScript("[\(getWidth), \(getHeight)]") { (result, _) in
-            let offset: CGFloat = 6
+        webView.evaluateJavaScript(resetPosition + "[\(getWidth), \(getHeight)]") { (result, _) in
             guard let inset = result as? [CGFloat], inset.count == 2 else {
                 completion(nil); return
             }
             
             let (w, h) = (inset[0], inset[1])
-            let xwindow_2 = webView.visibleRect.width * 0.5
-            let width_2 = w * zoom * 0.5
-            
-            let x: CGFloat = xwindow_2 - width_2
-            let y: CGFloat = 0
-            let width: CGFloat = w * zoom
-            let height: CGFloat = h * zoom
-            
-            let rect = CGRect(x: x + offset, y: y + offset, width: width - 2*offset, height: height - 2*offset)
+            let rect = CGRect(x: 0, y: 0, width: w * zoom, height: h * zoom)
             let configuration = WKSnapshotConfiguration()
             configuration.rect = rect
             
@@ -216,6 +205,11 @@ private extension CarbonWebView {
 
 // MARK: fonts and styles <user scripts>
 private extension CarbonWebView {
+    
+    private var resetPosition: String {
+        return "var body = document.getElementsByClassName('section')[0];" +
+               "body.setAttribute('style', 'float: left;');"
+    }
     
     // MARK: - Javascript for inject user scripts
     private var headersStyleScript: String {

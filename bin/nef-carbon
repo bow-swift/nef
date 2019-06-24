@@ -20,34 +20,67 @@ printHelp() {
     echo ""
     echo "${normal}$0 ${bold}--project ${normal}<project> ${bold}--output ${normal}<output> ${reset}"
     echo ""
+    echo "    Parameters"
+    echo ""
     echo "    ${lime}${bold}--project${reset}${normal} path where playground's pages are.${reset}"
     echo "    ${lime}${bold}--output${reset}${normal} path where Carbon snippets are saved to.${reset}"
+    echo ""
+    echo "    Options"
+    echo ""
+    echo "    ${lime}--background${reset} background color in hexadecimal."
+    echo "    ${lime}--theme${reset} carbon's theme."
+    echo "    ${lime}--size${reset} export file size [1-5]."
+    echo "    ${lime}--font${reset} carbon's font type."
+    echo "    ${lime}--lines${reset} shows/hides lines of code [true | false]."
+    echo "    ${lime}--watermark${reset} shows/hides the watermark [true | false]."
     echo "${reset}"
 }
 
 #: - Render
 
 ##
-#   generateCarbon(String projectPath, String outputPath)
+#   generateCarbon(String projectPath, String outputPath, background: String, theme: String, size: String, font: String, lines: String, watermark: String)
 #   - Parameter `project`: path to the project folder.
 #   - Parameter `outputPath`: path where Carbon snippets are saved to.
+#
+#   Options:
+#   - Parameter `background`: background color in hexadecimal or form a list of predefined colors. ex. 'bow'
+#   - Parameter `theme`: carbon's theme. ex. 'dracula'
+#   - Parameter `size`: export file size [1-5]. ex. '4'
+#   - Parameter `font`: carbon's font type. ex. 'ubuntuMono'
+#   - Parameter `lines`: shows/hides lines of code [true | false]. ex. 'false'
+#   - Parameter `watermark`: shows/hides the watermark [true | false]. ex. 'true'
 ##
 generateCarbon() {
     local projectPath="$1" # parameter 'projectPath'
     local outputPath="$2"  # parameter 'outputPath'
+    local background="$3"  # parameter 'background'
+    local theme="$4"       # parameter 'theme'
+    local size="$5"        # parameter 'size'
+    local font="$6"        # parameter 'font'
+    local lines="$7"       # parameter 'lines'
+    local watermark="$8"   # parameter 'watermark'
 
     makeStructure "$projectPath" "$outputPath"
-    buildCarbon "$projectPath" "$outputPath"
+    buildCarbon "$projectPath" "$outputPath" "$background" "$theme" "$size" "$font" "$lines" "$watermark"
 }
 
 ##
-#   buildCarbon(String projectPath, String outputPath)
+#   buildCarbon(String projectPath, String outputPath, background: String, theme: String, size: String, font: String, lines: String, watermark: String)
 #   - Parameter `projectPath`: path to the project folder.
 #   - Parameter `outputPath`: path where Carbon snippets are saved to.
+#   - Parameters: options for carbon.
 ##
 buildCarbon() {
     local projectPath="$1" # parameter 'projectPath'
     local outputPath="$2"  # parameter 'outputPath'
+
+    local background="$3"  # parameter 'background'
+    local theme="$4"       # parameter 'theme'
+    local size="$5"        # parameter 'size'
+    local font="$6"        # parameter 'font'
+    local lines="$7"       # parameter 'lines'
+    local watermark="$8"   # parameter 'watermark'
 
     playgrounds "$projectPath"
 
@@ -66,7 +99,7 @@ buildCarbon() {
             log="$projectPath/$LOG_PATH/$playgroundName-$pageName.log"
 
             echo -ne "    ${normal}| code snippets for ${green}$pageName${reset}..."
-            nef-carbon-page --from "$pagePath" --to "$output" 1> "$log" 2>&1
+            nef-carbon-page --from "$pagePath" --to "$output" --background "$background" --theme "$theme" --size "$size" --font "$font" --show-lines "$lines" --show-watermark "$watermark" 1> "$log" 2>&1
 
             installed=`grep "RENDER SUCCEEDED" "$log"`
             if [ "${#installed}" -lt 7 ]; then
@@ -109,10 +142,23 @@ root=`pwd`
 projectPath=""
 outputPath=""
 
+background="nef"
+theme="dracula"
+size="2"
+font="firaCode"
+lines="true"
+watermark="true"
+
 while [ "$1" != "" ]; do
     case $1 in
         --project | project )  shift; projectPath=$1 ;;
         --output  | output )   shift; outputPath=$1 ;;
+        --background)          shift; background=$1 ;;
+        --theme)               shift; theme=$1 ;;
+        --size)                shift; size=$1 ;;
+        --font)                shift; font=$1 ;;
+        --lines)               shift; lines=$1 ;;
+        --watermark)           shift; watermark=$1 ;;
         --help )               printHelp $@; exit 1 ;;
         * )                    printHelp $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
@@ -151,4 +197,4 @@ else
 fi
 
 # Donwload Carbon code snippets
-generateCarbon "$projectPath" "$outputPath"
+generateCarbon "$projectPath" "$outputPath" "$background" "$theme" "$size" "$font" "$lines" "$watermark"
