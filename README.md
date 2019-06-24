@@ -57,7 +57,9 @@ And you can use the following option to specify the name for the Xcode project t
 
 It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
 
-<details><summary>You can select any different `Bow` version or branch, even a third-party dependency</summary>
+<details><summary>You can select any different Bow version or branch, even a third-party dependency</summary>
+
+&nbsp;
 
 - `--bow-version <x.y.z>`: Specify the version of Bow that you want to use in the project. This option lets you test an old version of the library in a Xcode Playground. Example:
 
@@ -91,8 +93,6 @@ end
 ```bash
 ➜ nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
 ```
-
-&nbsp;
 
 > Note: The next three options are mutually exclusive.
 
@@ -161,11 +161,13 @@ Leveraging this, `nef` can create Markdown files that can be consumed from Jekyl
 ➜ nef jekyll --project <path-to-input> --output <path-to-output> --main-page <path-to-index>
 ```
 
-<details><summary>Options</summary>
+Options:
 
 - `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
 - `--output`: Path where the resulting Markdown files will be generated.
 - `--main-page`: Optional. Path to a `README.md` file to be used as the index page of the generated microsite.
+
+<details><summary>How to setup a Xcode Playgroud for Jekyll?</summary>
 
 &nbsp;
 
