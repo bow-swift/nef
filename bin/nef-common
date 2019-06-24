@@ -10,7 +10,7 @@ playgrounds() {
 
     local workspace=$(workspaceForProjectPath "$1")
     local content="$workspace/contents.xcworkspacedata"
-    checkWorkspaceIsValid "$workspace"
+    checkIsWorkspaceValid "$workspace"
 
     local dependencies="awk -F'location = \"group:' '{print \$2}'"
     local cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
@@ -196,7 +196,7 @@ workspaceForProjectPath() {
     echo $workspacePath
 }
 
-checkWorkspaceIsValid() {
+checkIsWorkspaceValid() {
     local workspacePath="$1" # parameter `workspace`
     local numberOfWorkspaces=$(echo "$workspace" | wc -l)
 
