@@ -118,7 +118,7 @@ absoluteInputDirectoryPath() {
   local root="$1"
   local folderPath="$2"
 
-  if [ -f "$root/$folderPath" ]; then # is it 'relative path'?
+  if [ -d "$root/$folderPath" ]; then # is it 'relative path'?
     folderPath="$root/$folderPath"
   fi
 
@@ -135,9 +135,16 @@ absoluteOutputDirectoryPath() {
   local root="$1"
   local folderPath="$2"
 
-  if [ -d "$root/$folderPath" ]; then # is it 'relative path'?
-    folderPath="$root/$folderPath"
-  else                            # in another case
+  # A. is it 'relative path'?
+  if [ -d "$root/$folderPath" ]; then
+    if [ "$folderPath" = "." ]; then
+      folderPath="$root/nef-output"
+    else
+      folderPath="$root/$folderPath"
+    fi
+
+  # B. in another case
+  else
     mkdir -p "$folderPath"
 
     if [ ${folderPath:0:1} = "." ] || [ -d "$root/$folderPath" ]; then
