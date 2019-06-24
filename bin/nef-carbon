@@ -84,9 +84,8 @@ buildCarbon() {
 
     playgrounds "$projectPath"
 
-    for playground in "${playgrounds[@]}"; do
-        playgroundName=`echo "$playground" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-        playgroundPath="$projectPath/$playground"
+    for playgroundPath in "${playgroundsPaths[@]}"; do
+        playgroundName=`echo "$playgroundPath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
         output="$outputPath/$playgroundName"
 
         echo "${normal}Downloading Carbon's snippets for ${green}$playgroundName${reset}"

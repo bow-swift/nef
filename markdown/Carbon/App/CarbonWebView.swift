@@ -51,7 +51,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         guard let carbon = carbon else { didFailLoadingCarbonWebView(); return }
         let request = urlRequest(from: carbon)
         
-        Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+        Timer.scheduledTimer(withTimeInterval: 3.5, repeats: false) { _ in
             self.launch(carbonRequest: request)
         }
     }
