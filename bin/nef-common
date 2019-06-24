@@ -22,10 +22,10 @@ playgrounds() {
     # build playground path
     playgroundsPaths=()
     for playground in "${playgrounds[@]}"; do
-        if [ -d "$playground" ]; then
-            playgroundsPaths+=("$playground")
-        elif [ -d "$root/$playground" ]; then
+        if [ -d "$root/$playground" ]; then # is it relative path?
             playgroundsPaths+=("$root/$playground")
+        elif [ -d "$playground" ]; then     # is it a absolute path?
+            playgroundsPaths+=("$playground")
         else
           echo " ❌"
           echo "${bold}${red}error: ${reset}file '$playground' does not exist. Please, review if this playground is linked properly."
