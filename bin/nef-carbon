@@ -44,7 +44,7 @@ printHelp() {
 #   - Parameter `outputPath`: path where Carbon snippets are saved to.
 #
 #   Options:
-#   - Parameter `background`: background color in hexadecimal. ex. 'bow'
+#   - Parameter `background`: background color in hexadecimal or form a list of predefined colors. ex. 'bow'
 #   - Parameter `theme`: carbon's theme. ex. 'dracula'
 #   - Parameter `size`: export file size [1-5]. ex. '4'
 #   - Parameter `font`: carbon's font type. ex. 'ubuntuMono'
