@@ -57,9 +57,7 @@ And you can use the following option to specify the name for the Xcode project t
 
 It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
 
-<details><summary>You can select any different __`Bow` version__ or __branch__, even a __third-party dependency__</summary>
-
-> Note: The next three options are mutually exclusive.
+<details><summary>You can select any different `Bow` version or branch, even a third-party dependency</summary>
 
 - `--bow-version <x.y.z>`: Specify the version of Bow that you want to use in the project. This option lets you test an old version of the library in a Xcode Playground. Example:
 
@@ -93,6 +91,10 @@ end
 ```bash
 ➜ nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
 ```
+
+&nbsp;
+
+> Note: The next three options are mutually exclusive.
 
 </details>
 
@@ -190,7 +192,7 @@ import Bow // This will be hidden in the Markdown file
 
 struct Person {} // This will be present in the Markdown file
 ```
-<details>
+</details>
 
 &nbsp;
 
