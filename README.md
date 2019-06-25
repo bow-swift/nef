@@ -131,7 +131,7 @@ You can also clean the result of the compilation:
 
 ### 🔖 Generating a Markdown project
 
-Xcode Playgrounds let you write comments in Markdown format using the symbols `//:` for single line comments, or `/*: */` for multiline comments. Inside this comments, you can use any Markdown syntax; an exmaple:
+Xcode Playgrounds let you write comments in Markdown format using the symbols `//:` for single line comments, or `/*: */` for multiline comments. Inside this comments, you can use any Markdown syntax; an example:
 
 ```swift
 /*:
@@ -262,14 +262,14 @@ Options:
     <td align="center"><code>firaCode</code></td>
   </tr>
   <tr>
-    <td align="center"><code>--show-lines</code></td>
+    <td align="center"><code>--lines</code></td>
     <td>shows/hides number of lines in code snippet</td>
     <td align="center">Bool</td>
     <td><code>true</code> <code>false</code></td>
     <td align="center"><code>true</code></td>
   </tr>
   <tr>
-    <td align="center"><code>--show-watermark</code></td>
+    <td align="center"><code>--watermark</code></td>
     <td>shows/hides watermark in code snippet</td>
     <td align="center">Bool</td>
     <td><code>true</code> <code>false</code></td>
@@ -277,8 +277,25 @@ Options:
   </tr>
 </table>
   
+#### Example of use
+
+If we have a project created by `nef`, and a Xcode playground, with the next content:
+```swift
+let example = "This is an example"
+print("nef is super cool: \(example)")
+
+// nef is super cool: This is an example
+```
+
+```bash
+➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --lines false
+```
+
+![](assets/nef-carbon-example.png)
+
 </details>
 
+&nbsp;
 
 ## ❤️ Contributing to the project
 
