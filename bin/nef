@@ -130,6 +130,15 @@ printHelpCompileClean() {
     echo ""
 }
 
+#: - Version
+
+printVersion() {
+    nefVersion=$(brew info nef | grep Cellar/nef | cut -d' ' -f1 | rev | cut -d'/' -f1 | rev)
+    echo ""
+    echo "${normal}nef version ${green}${bold}$nefVersion${reset}"
+    echo ""
+}
+
 #: - Dependencies
 
 ##
@@ -492,8 +501,9 @@ while [ "$1" != "" ]; do
         $PLAYGROUND ) playground $@; exit 0 ;;
         $COMPILE )    compile $@; exit 0 ;;
         $CLEAN )      clean $@; exit 0 ;;
-        -h | --help | help )  printHelp; exit 0 ;;
-        * )                   printHelp; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
+        -h | --help | help )        printHelp; exit 0 ;;
+        -v | --version | version )  printVersion; exit 0 ;;
+        * )                         printHelp; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
     esac
     shift
 done
