@@ -29,15 +29,15 @@
 
 `nef` highlights the following features:
 
-💡 Eases the creation of Xcode Playgrounds with support for __third party libraries__.
+💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-xcode-playground).
 
-💡 __Compiles Xcode Playgrounds__ with support for third party libraries from the command line.
+💡 [__Compiles Xcode Playgrounds__](#-compiling-a-xcode-playground) with support for third party libraries from the command line.
 
-💡 Generates __Markdown__ project from Xcode Playground.
+💡 Generates [__Markdown__](#-generating-a-markdown-project) project from Xcode Playground.
 
-💡 Generates Markdown files that can be consumed from __Jekyll__ to create a microsite.
+💡 Generates Markdown files that can be consumed from [__Jekyll__](#-generating-markdown-files-for-jekyll) to create a microsite.
 
-💡 Export __Carbon__ code snippets for given Xcode Playgrounds.
+💡 Export [__Carbon__](#-exporting-carbon-code-snippets) code snippets for given Xcode Playgrounds.
 
 &nbsp;
 
