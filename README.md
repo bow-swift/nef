@@ -289,9 +289,12 @@ print("nef is super cool: \(example)")
 // nef is super cool: This is an example
 ```
 
+running the next command we will customize the `background color` to ![#d54048](https://placehold.it/15/d54048/000000?text=+) bow, `hides the number of lines` and set the export file to `size 3`:
+
 ```bash
 ➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --lines false
 ```
+
 <p align="center">
 <img src="assets/nef-carbon-example.png" width="600"/>
 </p>
