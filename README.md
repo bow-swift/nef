@@ -107,7 +107,7 @@ end
 
 &nbsp;
 
-### ⚙️ Compiling a Xcode Playground
+### 🔨 Compiling a Xcode Playground
 
 Xcode lets you check for correctness of your Xcode Playground and run it. However, compiling a Xcode Playground from the command line is not so easy when it has dependencies on third party libraries. This is particularly useful in Continuous Integration, when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile Xcode Playgrounds in an Xcode project with dependencies. To do this, you can run the following command:
 
