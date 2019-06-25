@@ -37,6 +37,8 @@
 
 💡 Generates Markdown files that can be consumed from Jekyll to create a microsite.
 
+💡 Export Carbon code snippets for given Xcode Playgrounds.
+
 &nbsp;
 
 ### 📃 Creating a Xcode Playground
@@ -290,8 +292,9 @@ print("nef is super cool: \(example)")
 ```bash
 ➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --lines false
 ```
-
-![](assets/nef-carbon-example.png)
+<p align="center">
+<img src="assets/nef-carbon-example.png" width="600"/>
+</p>
 
 </details>
 
