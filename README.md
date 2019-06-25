@@ -210,7 +210,7 @@ struct Person {} // This will be present in the Markdown file
 
 ### 🌁 Exporting Carbon code snippets
 
-Xcode Playgrounds are a great place where prototyping and trying new concepts. Many times we want to share some Swift snippets, for this `Carbon` is a cool tool and `nef` lovely integrated it. You can take your Xcode Playground, write several pieces of code and keep it on verified. Later you can export the whole code snippets, with the next command:
+Xcode Playgrounds are a great place where prototyping and trying new concepts. Oftentimes we want to share some Swift snippets; for this, `Carbon` is a cool tool and `nef` lovely integrated it. You can take your Xcode Playground, write several pieces of code and keep it verified. Later you can export all your code snippets, with the next command:
 
 ```bash
 ➜ nef carbon --project <path-to-input> --output <path-to-output>
