@@ -237,7 +237,7 @@ Options:
     <td align="center"><code>--background</code></td>
     <td>Background color applied to image</td>
     <td>hexadecimal <code>#AABBCC</code>, <code>#AABBCCDD</code> or predefined colors</td>
-    <td><img src="https://placehold.it/15/8c44ff/000000?text=+"> <code>nef</code> <img src="https://placehold.it/15/d54048/000000?text=+"> <code>bow</code> <img src="https://placehold.it/15/ffffff/000000?text=+"> <code>white</code> <br \><img src="https://placehold.it/15/6ef0a7/000000?text=+"> <code>green</code> <img src="https://placehold.it/15/42c5ff/000000?text=+"><code>blue</code> <img src="https://placehold.it/15/ffed75/000000?text=+"><code>yellow</code> <img src="https://placehold.it/15/ff9f46/000000?text=+"> <code>orange</code</td>
+    <td><img src="https://placehold.it/15/8c44ff/000000?text=+"> <code>nef</code> <img src="https://placehold.it/15/d54048/000000?text=+"> <code>bow</code> <img src="https://placehold.it/15/ffffff/000000?text=+"> <code>white</code> <br \><img src="https://placehold.it/15/6ef0a7/000000?text=+"> <code>green</code> <img src="https://placehold.it/15/42c5ff/000000?text=+"><code>blue</code> <img src="https://placehold.it/15/ffed75/000000?text=+"><code>yellow</code> <br \><img src="https://placehold.it/15/ff9f46/000000?text=+"> <code>orange</code</td>
     <td align="center"><code>nef</code></td>
   </tr>
   <tr>
