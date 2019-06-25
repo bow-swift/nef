@@ -57,8 +57,9 @@ And you can use the following option to specify the name for the Xcode project t
 
 It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
 
-<details>
+###
 
+<details>
 <summary>You can select any different Bow version or branch, even a third-party dependency</summary>
 
 ###
@@ -171,6 +172,8 @@ Options:
 - `--output`: Path where the resulting Markdown files will be generated.
 - `--main-page`: Optional. Path to a `README.md` file to be used as the index page of the generated microsite.
 
+###
+
 <details>
 <summary>How to setup a Xcode Playgroud for Jekyll?</summary>
 
@@ -202,6 +205,31 @@ struct Person {} // This will be present in the Markdown file
 </details>
 
 &nbsp;
+
+### 🌁 Exporting Carbon code snippets
+
+The command to do this is:
+
+```bash
+➜ nef carbon --project <path-to-input> --output <path-to-output>
+```
+
+Options:
+
+- `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
+- `--output`: Path where the resulting Carbon snippets will be generated.
+
+<details>
+<summary>You can customize the output with the next commands</summary>
+
+###
+
+| Command | Description | Format | Options |
+| --- | --- | --- | --- |
+| `--background` | Background color applied to image | hexadecimal `#AABBCC` or predefined colors | nef #8c44ff, bow #d54048, white #ffffff, green #6ef0a7, blue #42c5ff, yellow #ffed75, orange #ff9f46 |
+| `git diff` | Show file differences that **haven't been** staged | Show file differences that **haven't been** staged | Show file differences that **haven't been** staged |
+
+</details>
 
 ## ❤️ Contributing to the project
 
