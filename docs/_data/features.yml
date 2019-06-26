@@ -12,5 +12,5 @@ content:
       icon: img/main-image-tertiary.svg
 
     - title: Integration
-      description: Integrates Xcode Playgrounds with Jekyll to create a microsite and Carbon to export code snippets.
+      description: Integrates Xcode Playgrounds with Carbon to export code snippets and Jekyll to create a microsite.
       icon: img/main-image-quaternary.svg

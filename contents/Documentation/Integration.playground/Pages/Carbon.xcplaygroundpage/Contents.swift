@@ -123,23 +123,3 @@ Nef.Playground.needsIndefiniteExecution(false)
  </tr>
  </table>
  */
-
-/*:
- ### Example of use
- 
- If we have a project created by `nef`, and a Xcode playground, with the next content:
- ```swift
- let example = "This is an example"
- print("nef is super cool: \(example)")
- 
- // nef is super cool: This is an example
- ```
- 
- Running the following command we will customize the `background color` to ![#d54048](https://placehold.it/15/d54048/000000?text=+) bow, `hides the number of lines` and set the export file to `size 3`:
- 
- ```bash
- ➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --lines false
- ```
- 
- <img src="/assets/nef-carbon-example.png" width="600"/>
- */

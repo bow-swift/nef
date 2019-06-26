@@ -14,6 +14,9 @@
       location = "group:Integration.playground">
    </FileRef>
    <FileRef
+      location = "group:Tutorials.playground">
+   </FileRef>
+   <FileRef
       location = "group:Documentation.xcodeproj">
    </FileRef>
    <FileRef
