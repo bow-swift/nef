@@ -13,7 +13,7 @@ Nef.Playground.needsIndefiniteExecution(false)
 /*:
  ## How to export my snippets?
  
- For this tutorial, we suppose you do not have any project, and we will follow up from the beginning. If you have a current project, you can go to third step.
+In this tutorial, we assume you do not have any project, and we will follow up from the beginning. If you have a current project, you can jump straight to third step.
  
  ### 1. Create a new `nef` project
  
