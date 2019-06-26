@@ -278,7 +278,7 @@ Options:
     <td align="center"><code>true</code></td>
   </tr>
 </table>
-  
+
 #### Example of use
 
 If we have a project created by `nef`, and a Xcode playground, with the next content:

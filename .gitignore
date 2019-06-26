@@ -12,3 +12,5 @@ _site
 .bundle/
 vendor/
 /lib/bundler/man/
+docs/docs/*
+/docs/_data/sidebar.yml
