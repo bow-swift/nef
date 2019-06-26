@@ -33,7 +33,7 @@ Nef.Playground.needsIndefiniteExecution(false)
  
  ![](/assets/nef-playground-view.png)
  
- Now we will add some content to our Xcode Playground. Open the associate `page` and write:
+ Now we will add some content to our Xcode Playground. Open the associated `page` and write:
  
  ```swift
  let example = "This is my first snippet"
