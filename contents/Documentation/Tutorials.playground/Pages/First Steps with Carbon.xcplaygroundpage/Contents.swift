@@ -29,7 +29,7 @@ Nef.Playground.needsIndefiniteExecution(false)
  &nbsp;
  ### 2. Add content to Xcode Playground
  
- Great! Go to `TutorialCarbon` and open the `xcworkspace` associate. It is an easy view where to see the futures Playgrounds you are creating and its pages.
+ Great! Go to `TutorialCarbon` and open its `xcworkspace`. It is an easy view where to see the future Playgrounds you will be creating and their pages.
  
  ![](/assets/nef-playground-view.png)
  
