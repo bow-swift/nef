@@ -56,7 +56,7 @@ Nef.Playground.needsIndefiniteExecution(false)
  
   ![](/assets/nef-tutorial-carbon-defaultsnippet.png)
  
- But let's not stop here, we can customize the output! Running the following command we will customize the `background color` to ![#d54048](https://placehold.it/15/d54048/000000?text=+) bow, `hides the number of lines` and set the export file to `size 3`
+ But let's not stop here, we can customize the output! Running the following command we will customize the `background color` to ![#d54048](https://placehold.it/15/d54048/000000?text=+) bow, `hide the number of lines` and set the export file to `size 3`
  
  ```bash
  ➜ nef carbon --project . --output ~/Desktop/snippets --background bow --size 3 --lines false
