@@ -46,7 +46,7 @@ Nef.Playground.needsIndefiniteExecution(false)
 
 /*:
  &nbsp;
- ### 3. Generates code snippets
+ ### 3. Generate code snippets
  
  Open a terminal and go to your `nef` project, in our case to `TutorialCarbon` and type
  
