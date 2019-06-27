@@ -24,7 +24,6 @@ In this tutorial, we assume you do not have any project, and we will follow up f
  ```
  */
 
-
 /*:
  &nbsp;
  ### 2. Add content to Xcode Playground
@@ -34,16 +33,11 @@ In this tutorial, we assume you do not have any project, and we will follow up f
  ![](/assets/nef-playground-view.png)
  
  Now we will add some content to our Xcode Playground. Open the associated `page` and write:
- 
- ```swift
+ */
  let example = "This is my first snippet"
  print("\(example) created by nef!")
  
  // This is my first snippet created by nef!
- ```
- */
-
-
 /*:
  &nbsp;
  ### 3. Generate code snippets
@@ -65,7 +59,6 @@ In this tutorial, we assume you do not have any project, and we will follow up f
  ![](/assets/nef-tutorial-carbon-customsnippet.png)
  
  */
-
 
 /*:
  &nbsp;
