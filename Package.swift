@@ -4,13 +4,9 @@ import PackageDescription
 let package = Package(
     name: "Markdown",
     products: [
-        .executable(name: "nef-markdown", targets: ["Markdown"]),
-        .executable(name: "nef-jekyll", targets: ["JekyllMarkdown"]),
-        .executable(name: "nef-carbon", targets: ["Carbon"]),
-    ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .executable(name: "nef-markdown-page", targets: ["Markdown"]),
+        .executable(name: "nef-jekyll-page", targets: ["JekyllMarkdown"]),
+        .executable(name: "nef-carbon-page", targets: ["Carbon"]),
     ],
     targets: [
         .target(name: "Markup", path: "lib/Markup"),
