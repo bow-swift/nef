@@ -2,6 +2,7 @@
 
 import Foundation
 import Markup
+import Common
 
 let scriptName = "nef-markdown-page"
 let console = MarkdownConsole()

@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct PlaygroundUtils {
+public struct PlaygroundUtils {
 
     private static let defaultName = "page-default"
     
@@ -10,7 +10,7 @@ struct PlaygroundUtils {
     ///
     /// - Parameter page: the paht to playground's page
     /// - Returns: the filename
-    static func playgroundName(fromPage page: String) -> String {
+    public static func playgroundName(fromPage page: String) -> String {
         guard !page.isEmpty else { return PlaygroundUtils.defaultName }
 
         let filenameComponentes = page.components(separatedBy: "/")

@@ -3,13 +3,13 @@
 import Foundation
 
 /// Protocol to define the `Console Output`
-protocol ConsoleOutput {
+public protocol ConsoleOutput {
     func printError(information: String)
     func printSuccess()
     func printHelp()
 }
 
-extension ConsoleOutput {
+public extension ConsoleOutput {
     func printSuccess() {
         print("RENDER SUCCEEDED")
     }
@@ -20,12 +20,12 @@ extension ConsoleOutput {
 /// - error: show general error. The script fails.
 /// - success: show general success. The script finishes successfully.
 /// - help: show the help. How to use this script.
-enum Console {
+public enum Console {
     case error(information: String)
     case success
     case help
 
-    func show(output console: ConsoleOutput) {
+    public func show(output console: ConsoleOutput) {
         switch self {
         case let .error(information): console.printError(information: information)
         case .success: console.printSuccess()
@@ -39,7 +39,7 @@ enum Console {
 /// In case the parameters are not correct or are incompleted it won't return anything.
 ///
 /// - Returns: the parameters to configure the script: path to parser file and output path for render.
-func arguments(keys: String...) -> [String: String] {
+public func arguments(keys: String...) -> [String: String] {
     var result: [String: String] = [:]
     
     var longopts: [option] {

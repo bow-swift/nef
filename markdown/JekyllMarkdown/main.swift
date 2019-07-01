@@ -2,6 +2,7 @@
 
 import Foundation
 import Markup
+import Common
 
 let scriptName = "nef-jekyll-page"
 let console = JekyllConsole()

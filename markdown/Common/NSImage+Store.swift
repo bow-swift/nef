@@ -2,7 +2,7 @@
 
 import AppKit
 
-extension NSImage {
+public extension NSImage {
     
     func writeToFile(file: String, atomically: Bool, usingType type: NSBitmapImageRep.FileType) -> Bool {
         let properties = [NSBitmapImageRep.PropertyKey.compressionFactor: 1.0]
