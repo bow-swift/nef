@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "Markdown",
     products: [
-        .library(name: "nef", targets: ["Nef"]),
+        .library(name: "AppNef", targets: ["Nef"]),
     ],
     targets: [
         .target(name: "Markup", path: "lib/Markup"),
