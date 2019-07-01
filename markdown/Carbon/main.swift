@@ -4,13 +4,12 @@ import Foundation
 import Markup
 
 let scriptName = "nef-carbon-page"
+let console = CarbonOutput()
 
 func main(downloader: CarbonDownloader) {
     let result = arguments(keys: "from", "to", "background", "theme", "size", "font", "show-lines", "show-watermark")
-    guard let fromPage = result["from"],
-          let output = result["to"] else {
-            Console.help.show();
-            exit(-1)
+    guard let fromPage = result["from"], let output = result["to"] else {
+        Console.help.show(output: console); exit(-1)
     }
     
     let from = "\(fromPage)/Contents.swift"
@@ -34,15 +33,15 @@ func main(downloader: CarbonDownloader) {
 ///   - filePath: input page in Apple's playground format.
 ///   - outputPath: output where to render the snippets.
 func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String, style: CarbonStyle) {
-    guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else { Console.error(information: "").show(); return }
+    guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else { Console.error(information: "").show(output: console); return }
     
     let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
-    guard let trace = carbonGenerator.render(content: content) else {  Console.error(information: "").show(); return }
+    guard let trace = carbonGenerator.render(content: content) else {  Console.error(information: "").show(output: console); return }
     
     if carbonGenerator.isValid(trace: trace) {
-        Console.success.show()
+        Console.success.show(output: console)
     } else {
-        Console.error(information: trace).show()
+        Console.error(information: trace).show(output: console)
     }
     
     CarbonApplication.terminate()

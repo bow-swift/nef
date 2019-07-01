@@ -20,16 +20,16 @@ extension ConsoleOutput {
 /// - error: show general error. The script fails.
 /// - success: show general success. The script finishes successfully.
 /// - help: show the help. How to use this script.
-enum Console: ConsoleOutput {
+enum Console {
     case error(information: String)
     case success
     case help
 
-    func show() {
+    func show(output console: ConsoleOutput) {
         switch self {
-        case let .error(information): printError(information: information)
-        case .success: printSuccess()
-        case .help: printHelp()
+        case let .error(information): console.printError(information: information)
+        case .success: console.printSuccess()
+        case .help: console.printHelp()
         }
     }
 }

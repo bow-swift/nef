@@ -2,7 +2,7 @@
 
 import Foundation
 
-extension ConsoleOutput {
+class CarbonOutput: ConsoleOutput {
 
     func printError(information: String) {
         print("""

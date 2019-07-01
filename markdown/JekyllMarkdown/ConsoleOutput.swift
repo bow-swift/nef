@@ -2,7 +2,7 @@
 
 import Foundation
 
-extension ConsoleOutput {
+class JekyllConsole: ConsoleOutput {
 
     func printError(information: String) {
         if !information.isEmpty {

@@ -4,13 +4,14 @@ import Foundation
 import Markup
 
 let scriptName = "nef-markdown-page"
+let console = MarkdownConsole()
 
 func main() {
     let result = arguments(keys: "from", "to", "filename")
     guard let fromPage = result["from"],
           let output = result["to"],
           let filename = result["filename"] else {
-            Console.help.show();
+            Console.help.show(output: console);
             exit(-1)
     }
 
@@ -31,9 +32,12 @@ func renderMarkdown(from filePath: String, to outputPath: String) {
 
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8),
           let rendered = MarkdownGenerator().render(content: content),
-          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { Console.error(information: "").show(); return }
+          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else {
+            Console.error(information: "").show(output: console)
+            return
+    }
 
-    Console.success.show()
+    Console.success.show(output: console)
 }
 
 // #: - MAIN <launcher>

@@ -4,13 +4,14 @@ import Foundation
 import Markup
 
 let scriptName = "nef-jekyll-page"
+let console = JekyllConsole()
 
 func main() {
     let result = arguments(keys: "from", "to", "permalink")
     guard let fromPage = result["from"],
           let output = result["to"],
           let permalink = result["permalink"] else {
-            Console.help.show();
+            Console.help.show(output: console);
             exit(-1)
     }
 
@@ -32,9 +33,9 @@ func renderJekyll(from filePath: String, to outputPath: String, permalink: Strin
 
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8),
           let rendered = JekyllGenerator(permalink: permalink).render(content: content),
-          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { Console.error(information: "").show(); return }
+          let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { Console.error(information: "").show(output: console); return }
 
-    Console.success.show()
+    Console.success.show(output: console)
 }
 
 // #: - MAIN <launcher>
