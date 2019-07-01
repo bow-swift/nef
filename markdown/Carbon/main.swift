@@ -28,27 +28,6 @@ func main(downloader: CarbonDownloader) {
     renderCarbon(downloader: downloader, from: from, to: to, style: style)
 }
 
-/// Method to render a page into Carbon's images.
-///
-/// - Parameters:
-///   - filePath: input page in Apple's playground format.
-///   - outputPath: output where to render the snippets.
-func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String, style: CarbonStyle) {
-    guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else { Console.error(information: "").show(output: console); return }
-    
-    let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
-    guard let trace = carbonGenerator.render(content: content) else {  Console.error(information: "").show(output: console); return }
-    
-    if carbonGenerator.isValid(trace: trace) {
-        Console.success.show(output: console)
-    } else {
-        Console.error(information: trace).show(output: console)
-    }
-    
-    CarbonApplication.terminate()
-}
-
-
 // #: - MAIN <launcher - AppKit>
 _ = CarbonApplication { downloader in
     main(downloader: downloader)
