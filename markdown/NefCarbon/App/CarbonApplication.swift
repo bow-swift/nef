@@ -3,12 +3,12 @@
 import AppKit
 import Markup
 
-class CarbonApplication {
+public class CarbonApplication {
     private let app = NSApplication.shared
     private let appDelegate: CarbonAppDelegate
     private let assembler = CarbonAssembler()
     
-    init(main: @escaping (CarbonDownloader) -> Void) {
+    public init(main: @escaping (CarbonDownloader) -> Void) {
         self.appDelegate = CarbonAppDelegate(main: main, provider: assembler)
         app.delegate = appDelegate
         app.run()

@@ -3,16 +3,20 @@
 import Foundation
 import Common
 
-class CarbonOutput: ConsoleOutput {
+public class CarbonOutput: ConsoleOutput {
 
-    func printError(information: String) {
+    let scriptName = "nef-carbon-page"
+    
+    public init() {}
+    
+    public func printError(information: String) {
         print("""
               trace: \(information)
               error:\(scriptName) could not render the Carbon's snippets ❌
               """)
     }
 
-    func printHelp() {
+    public func printHelp() {
         print("\(scriptName) --from <playground's page> --to <carbon output>")
         print("""
 

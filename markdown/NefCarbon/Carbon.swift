@@ -4,14 +4,7 @@ import Foundation
 import Markup
 import Common
 
-public enum NefCarbon {
-    static public func run(code: String, style: CarbonStyle, outputPath: String) {
-        _ = CarbonApplication { downloader in
-            renderCarbon(downloader: downloader, code: code, style: style, outputPath: outputPath)
-        }
-    }
-}
-
+let console = CarbonOutput()
 
 /// Method to render a page into Carbon's images.
 ///
@@ -19,7 +12,7 @@ public enum NefCarbon {
 ///   - filePath: input page in Apple's playground format.
 ///   - outputPath: output where to render the snippets.
 ///   - style: style to apply to export code snippet.
-func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String, style: CarbonStyle) {
+public func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String, style: CarbonStyle) {
     guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else {
         Console.error(information: "").show(output: console)
         return
@@ -43,7 +36,7 @@ func renderCarbon(downloader: CarbonDownloader, from filePath: String, to output
 ///   - code: content to export snippet.
 ///   - style: style to apply to export code snippet.
 ///   - outputPath: output where to render the snippets.
-private func renderCarbon(downloader: CarbonDownloader, code content: String, style: CarbonStyle, outputPath: String) {
+public func renderCarbon(downloader: CarbonDownloader, code content: String, style: CarbonStyle, outputPath: String) {
     let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
     guard let trace = carbonGenerator.render(content: content) else {  Console.error(information: "").show(output: console); return }
     

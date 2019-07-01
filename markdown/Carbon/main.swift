@@ -1,16 +1,14 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import Markup
+import NefCarbon
 import Common
-
-let scriptName = "nef-carbon-page"
-let console = CarbonOutput()
+import Markup
 
 func main(downloader: CarbonDownloader) {
     let result = arguments(keys: "from", "to", "background", "theme", "size", "font", "show-lines", "show-watermark")
     guard let fromPage = result["from"], let output = result["to"] else {
-        Console.help.show(output: console); exit(-1)
+        Console.help.show(output: CarbonOutput()); exit(-1)
     }
     
     let from = "\(fromPage)/Contents.swift"
