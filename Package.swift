@@ -3,19 +3,22 @@ import PackageDescription
 
 let package = Package(
     name: "Markdown",
+    platforms: [
+        .macOS(.v10_13),
+    ],
     products: [
-        .library(name: "AppNef", targets: ["Nef"]),
+        .library(name: "nef", targets: ["Nef"]),
     ],
     targets: [
         .target(name: "Markup", path: "lib/Markup"),
         .testTarget(name: "MarkupTests", path: "lib/MarkupTests"),
-        .target(name: "Common", dependencies: [], path: "markdown/Common"),
-        
-        .target(name: "NefCarbon", dependencies: ["Markup", "Common"], path: "markdown/NefCarbon"),
-        .target(name: "Nef", dependencies: ["NefCarbon", "Markup", "Common"], path: "markdown/Nef"),
-        
-        .target(name: "Markdown", dependencies: ["Markup", "Common"], path: "markdown/Markdown"),
-        .target(name: "JekyllMarkdown", dependencies: ["Markup", "Common"], path: "markdown/JekyllMarkdown"),
-        .target(name: "Carbon", dependencies: ["NefCarbon"], path: "markdown/Carbon"),
+        .target(name: "Common", dependencies: [], path: "core/Common"),
+
+        .target(name: "NefCarbon", dependencies: ["Markup", "Common"], path: "core/NefCarbon"),
+        .target(name: "Nef", dependencies: ["NefCarbon", "Markup", "Common"], path: "core/Nef"),
+
+        .target(name: "Markdown", dependencies: ["Markup", "Common"], path: "core/Markdown"),
+        .target(name: "Jekyll", dependencies: ["Markup", "Common"], path: "core/Jekyll"),
+        .target(name: "Carbon", dependencies: ["NefCarbon"], path: "core/Carbon"),
     ]
 )

@@ -17,7 +17,7 @@
                BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
                BuildableName = "libMarkup.a"
                BlueprintName = "Markup"
-               ReferencedContainer = "container:Markdown.xcodeproj">
+               ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
             BuildableName = "libMarkup.a"
             BlueprintName = "Markup"
-            ReferencedContainer = "container:Markdown.xcodeproj">
+            ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -48,7 +48,7 @@
                BlueprintIdentifier = "8B66EBB0221FFF4F0001DCA2"
                BuildableName = "MarkupTests.xctest"
                BlueprintName = "MarkupTests"
-               ReferencedContainer = "container:Markdown.xcodeproj">
+               ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
             BuildableName = "libMarkup.a"
             BlueprintName = "Markup"
-            ReferencedContainer = "container:Markdown.xcodeproj">
+            ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,7 +80,7 @@
             BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
             BuildableName = "libMarkup.a"
             BlueprintName = "Markup"
-            ReferencedContainer = "container:Markdown.xcodeproj">
+            ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -98,7 +98,7 @@
             BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
             BuildableName = "libMarkup.a"
             BlueprintName = "Markup"
-            ReferencedContainer = "container:Markdown.xcodeproj">
+            ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1010"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
-               BuildableName = "JekyllMarkdown"
-               BlueprintName = "JekyllMarkdown"
-               ReferencedContainer = "container:Markdown.xcodeproj">
+               BuildableName = "Jekyll"
+               BlueprintName = "Jekyll"
+               ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,16 +33,16 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
-            BuildableName = "JekyllMarkdown"
-            BlueprintName = "JekyllMarkdown"
-            ReferencedContainer = "container:Markdown.xcodeproj">
+            BuildableName = "Jekyll"
+            BlueprintName = "Jekyll"
+            ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -56,25 +56,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
-            BuildableName = "JekyllMarkdown"
-            BlueprintName = "JekyllMarkdown"
-            ReferencedContainer = "container:Markdown.xcodeproj">
+            BuildableName = "Jekyll"
+            BlueprintName = "Jekyll"
+            ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "--from &quot;/Users/miguelangel/Desktop/BowPlayground/BowPlayground.playground/Pages/page.xcplaygroundpage&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--to &quot;/Users/miguelangel/Desktop&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--permalink &quot;/docs/testing/2&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -89,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B6FC584221ECE6A008F7694"
-            BuildableName = "JekyllMarkdown"
-            BlueprintName = "JekyllMarkdown"
-            ReferencedContainer = "container:Markdown.xcodeproj">
+            BuildableName = "Jekyll"
+            BlueprintName = "Jekyll"
+            ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
