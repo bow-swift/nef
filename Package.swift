@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Markdown",
+    name: "nef",
     platforms: [
         .macOS(.v10_13),
     ],
