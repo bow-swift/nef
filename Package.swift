@@ -1,13 +1,13 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.0
 import PackageDescription
 
 let package = Package(
     name: "nef",
     platforms: [
-        .macOS(.v10_15),
+        .macOS(.v10_13),
     ],
     products: [
-        .library(name: "nef", targets: ["Nef"]),
+        .library(name: "AppNef", targets: ["Nef", "Markup"]),
     ],
     targets: [
         .target(name: "Markup", path: "lib/Markup"),
@@ -15,7 +15,7 @@ let package = Package(
         .target(name: "Common", dependencies: [], path: "core/Common"),
 
         .target(name: "NefCarbon", dependencies: ["Markup", "Common"], path: "core/NefCarbon"),
-        .target(name: "Nef", dependencies: ["NefCarbon", "Markup", "Common"], path: "core/Nef"),
+        .target(name: "Nef", dependencies: ["NefCarbon", "Markup"], path: "core/Nef"),
 
         .target(name: "Markdown", dependencies: ["Markup", "Common"], path: "core/Markdown"),
         .target(name: "Jekyll", dependencies: ["Markup", "Common"], path: "core/Jekyll"),
