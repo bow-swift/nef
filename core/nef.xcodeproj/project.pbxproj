@@ -28,6 +28,9 @@
 		8B66EBBF221FFF760001DCA2 /* MarkupSyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */; };
 		8B6FC589221ECE6A008F7694 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6FC588221ECE6A008F7694 /* main.swift */; };
 		8B6FC657221EFF03008F7694 /* libMarkup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
+		8BDCD0C022CB7F46003212B7 /* NefCarbon.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; };
+		8BDCD0C122CB7F56003212B7 /* libMarkup.a in Resources */ = {isa = PBXBuildFile; fileRef = 8B6FC63C221EFE61008F7694 /* libMarkup.a */; };
+		8BDCD0C222CB7F56003212B7 /* Common.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; };
 		8BF75F6722CA637B00EC53A1 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BF75F5922CA637B00EC53A1 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BF75F6F22CA63F000EC53A1 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */; };
 		8BF75F7022CA63F000EC53A1 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
@@ -713,6 +716,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BDCD0C122CB7F56003212B7 /* libMarkup.a in Resources */,
+				8BDCD0C222CB7F56003212B7 /* Common.framework in Resources */,
+				8BDCD0C022CB7F46003212B7 /* NefCarbon.framework in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
