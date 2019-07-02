@@ -1,10 +1,10 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
     name: "nef",
     platforms: [
-        .macOS(.v10_13),
+        .macOS(.v10_15),
     ],
     products: [
         .library(name: "nef", targets: ["Nef"]),
