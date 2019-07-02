@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-               BuildableName = "libMarkup.a"
+               BlueprintIdentifier = "8B6B119322CB9FDE0060177F"
+               BuildableName = "Markup.framework"
                BlueprintName = "Markup"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
@@ -26,14 +26,23 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
       systemAttachmentLifetime = "keepNever"
-      codeCoverageEnabled = "YES"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      codeCoverageEnabled = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8B6B119322CB9FDE0060177F"
+            BuildableName = "Markup.framework"
+            BlueprintName = "Markup"
+            ReferencedContainer = "container:nef.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
+            BlueprintIdentifier = "8B6B119322CB9FDE0060177F"
+            BuildableName = "Markup.framework"
             BlueprintName = "Markup"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
@@ -45,24 +54,13 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B66EBB0221FFF4F0001DCA2"
+               BlueprintIdentifier = "8B6B119B22CB9FDE0060177F"
                BuildableName = "MarkupTests.xctest"
                BlueprintName = "MarkupTests"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
-            BlueprintName = "Markup"
-            ReferencedContainer = "container:nef.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -77,14 +75,12 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
+            BlueprintIdentifier = "8B6B119322CB9FDE0060177F"
+            BuildableName = "Markup.framework"
             BlueprintName = "Markup"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -95,8 +91,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B6FC63B221EFE61008F7694"
-            BuildableName = "libMarkup.a"
+            BlueprintIdentifier = "8B6B119322CB9FDE0060177F"
+            BuildableName = "Markup.framework"
             BlueprintName = "Markup"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
