@@ -20,12 +20,11 @@ class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
     func carbon(withConfiguration configuration: Carbon, filename: String) -> Result<String, CarbonError> {
         guard let view = view else { return .failure(CarbonError(filename: filename, snippet: configuration.code, error: .notFound)) }
         
-        DispatchQueue.main.async {
+        run {
             view.load(carbon: configuration, filename: "\(filename)-\(self.counter)")
             self.counter += 1
         }
-        semaphore.wait()
-        
+
         return syncResult
     }
     
@@ -38,5 +37,11 @@ class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
     func didLoadCarbon(filename: String) {
         syncResult = .success(filename)
         semaphore.signal()
+    }
+    
+    // MARK: private methods <helpers>
+    private func run(operation: @escaping () -> Void) {
+        DispatchQueue.main.async { operation() }
+        semaphore.wait()
     }
 }

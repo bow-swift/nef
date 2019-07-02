@@ -58,7 +58,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     
     private func launch(carbonRequest: URLRequest) {
         loadFontsScripts()
-        load(carbonRequest)
+        self.load(carbonRequest)
     }
     
     private func urlRequest(from carbon: Carbon) -> URLRequest {

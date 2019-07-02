@@ -13,6 +13,7 @@ let console = CarbonOutput()
 ///   - outputPath: output where to render the snippets.
 ///   - style: style to apply to export code snippet.
 public func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String, style: CarbonStyle) {
+    defer { CarbonApplication.terminate() }
     guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else {
         Console.error(information: "").show(output: console)
         return
@@ -26,8 +27,6 @@ public func renderCarbon(downloader: CarbonDownloader, from filePath: String, to
     } else {
         Console.error(information: trace).show(output: console)
     }
-    
-    CarbonApplication.terminate()
 }
 
 /// Method to render a page into Carbon's images.
@@ -37,14 +36,16 @@ public func renderCarbon(downloader: CarbonDownloader, from filePath: String, to
 ///   - style: style to apply to export code snippet.
 ///   - outputPath: output where to render the snippets.
 public func renderCarbon(downloader: CarbonDownloader, code content: String, style: CarbonStyle, outputPath: String) {
+    defer { CarbonApplication.terminate() }
     let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
-    guard let trace = carbonGenerator.render(content: content) else {  Console.error(information: "").show(output: console); return }
+    guard let trace = carbonGenerator.render(content: content) else {
+        Console.error(information: "").show(output: console)
+        return
+    }
     
     if carbonGenerator.isValid(trace: trace) {
         Console.success.show(output: console)
     } else {
         Console.error(information: trace).show(output: console)
     }
-    
-    CarbonApplication.terminate()
 }

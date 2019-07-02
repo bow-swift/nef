@@ -4,18 +4,20 @@ import AppKit
 import Markup
 
 public class CarbonApplication {
-    private let app = NSApplication.shared
+    private static let app = NSApplication.shared
     private let appDelegate: CarbonAppDelegate
     private let assembler = CarbonAssembler()
     
     public init(main: @escaping (CarbonDownloader) -> Void) {
-        self.appDelegate = CarbonAppDelegate(main: main, provider: assembler)
-        app.delegate = appDelegate
-        app.run()
+        appDelegate = CarbonAppDelegate(main: main, provider: assembler)
+        CarbonApplication.app.delegate = appDelegate
+        CarbonApplication.app.run()
     }
     
     static func terminate() {
-        NSApplication.shared.terminate(nil)
+        DispatchQueue.main.async {
+            CarbonApplication.app.terminate(nil)
+        }
     }
 }
 

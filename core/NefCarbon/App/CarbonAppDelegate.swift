@@ -25,6 +25,7 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         window.contentView?.addSubview(carbonWebView)
+        window.makeKey()
         
         queue.async { // the whole CLI will run in our thread
             self.main(self.downloader)

@@ -211,7 +211,7 @@
 		8BF75F5722CA637B00EC53A1 /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75F5922CA637B00EC53A1 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		8BF75F5A22CA637B00EC53A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8BF75F8522CA71E700EC53A1 /* Nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF75F8522CA71E700EC53A1 /* AppNef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppNef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75F8722CA71E700EC53A1 /* Nef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Nef.h; sourceTree = "<group>"; };
 		8BF75F8822CA71E700EC53A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BF75FAB22CA72F100EC53A1 /* Carbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carbon.swift; sourceTree = "<group>"; };
@@ -422,7 +422,7 @@
 				8B6FC587221ECE6A008F7694 /* Jekyll */,
 				8B0CA51122AE657C00181BC0 /* Carbon */,
 				8B424B2F224E5F5F00AF9010 /* Common */,
-				8BF75F8622CA71E700EC53A1 /* Nef */,
+				8BF75F8622CA71E700EC53A1 /* AppNef */,
 				8BF75FC722CA7DA500EC53A1 /* NefCarbon */,
 				8B66EB8F221F04A60001DCA2 /* Markup */,
 				8B66EBBC221FFF760001DCA2 /* MarkupTests */,
@@ -438,7 +438,7 @@
 				8B424B1F224E28FC00AF9010 /* Markdown */,
 				8B0CA51622AE669600181BC0 /* Carbon */,
 				8BF75F5722CA637B00EC53A1 /* Common.framework */,
-				8BF75F8522CA71E700EC53A1 /* Nef.framework */,
+				8BF75F8522CA71E700EC53A1 /* AppNef.framework */,
 				8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */,
 				8B6B119422CB9FDE0060177F /* Markup.framework */,
 				8B6B119C22CB9FDE0060177F /* MarkupTests.xctest */,
@@ -472,13 +472,13 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
-		8BF75F8622CA71E700EC53A1 /* Nef */ = {
+		8BF75F8622CA71E700EC53A1 /* AppNef */ = {
 			isa = PBXGroup;
 			children = (
 				8B0E93EE22CBA8760033861B /* nef.swift */,
 				8BF75F9C22CA71FB00EC53A1 /* Support Files */,
 			);
-			path = Nef;
+			path = AppNef;
 			sourceTree = "<group>";
 		};
 		8BF75F9C22CA71FB00EC53A1 /* Support Files */ = {
@@ -661,9 +661,9 @@
 			productReference = 8BF75F5722CA637B00EC53A1 /* Common.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8BF75F8422CA71E700EC53A1 /* Nef */ = {
+		8BF75F8422CA71E700EC53A1 /* AppNef */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "Nef" */;
+			buildConfigurationList = 8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "AppNef" */;
 			buildPhases = (
 				8BF75F8022CA71E700EC53A1 /* Headers */,
 				8BF75F8122CA71E700EC53A1 /* Sources */,
@@ -676,9 +676,9 @@
 				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
 				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
 			);
-			name = Nef;
+			name = AppNef;
 			productName = Nef;
-			productReference = 8BF75F8522CA71E700EC53A1 /* Nef.framework */;
+			productReference = 8BF75F8522CA71E700EC53A1 /* AppNef.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8BF75FC522CA7DA500EC53A1 /* NefCarbon */ = {
@@ -756,7 +756,7 @@
 				8B6FC584221ECE6A008F7694 /* Jekyll */,
 				8B0CA51522AE669600181BC0 /* Carbon */,
 				8BF75F5622CA637B00EC53A1 /* Common */,
-				8BF75F8422CA71E700EC53A1 /* Nef */,
+				8BF75F8422CA71E700EC53A1 /* AppNef */,
 				8BF75FC522CA7DA500EC53A1 /* NefCarbon */,
 				8B6B119322CB9FDE0060177F /* Markup */,
 				8B6B119B22CB9FDE0060177F /* MarkupTests */,
@@ -1489,7 +1489,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "Nef" */ = {
+		8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "AppNef" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BF75F9622CA71E700EC53A1 /* Debug */,
