@@ -35,17 +35,12 @@ public func renderCarbon(downloader: CarbonDownloader, from filePath: String, to
 ///   - code: content to export snippet.
 ///   - style: style to apply to export code snippet.
 ///   - outputPath: output where to render the snippets.
-public func renderCarbon(downloader: CarbonDownloader, code content: String, style: CarbonStyle, outputPath: String) {
-    defer { CarbonApplication.terminate() }
-    let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
-    guard let trace = carbonGenerator.render(content: content) else {
-        Console.error(information: "").show(output: console)
-        return
-    }
+///   - success: callback if everything go well.
+///   - failure: callback if something go wrong.
+public func renderCarbon(downloader: CarbonDownloader, code content: String, style: CarbonStyle, outputPath: String,
+                         success: @escaping () -> Void, failure: @escaping () -> Void) {
     
-    if carbonGenerator.isValid(trace: trace) {
-        Console.success.show(output: console)
-    } else {
-        Console.error(information: trace).show(output: console)
-    }
+    let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
+    guard let trace = carbonGenerator.render(content: content) else { failure(); return }
+    carbonGenerator.isValid(trace: trace) ? success() : failure()
 }

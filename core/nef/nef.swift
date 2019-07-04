@@ -13,17 +13,25 @@ import Markup
 //    }
 //
 
-public func carbon(parentView: NSView, code: String, style: CarbonStyle, outputPath: String) {
+// MARK: Carbon <api>
+public func carbon(parentView: NSView,
+                   code: String,
+                   style: CarbonStyle,
+                   outputPath: String,
+                   success: @escaping () -> Void, failure: @escaping () -> Void) {
+    
     let assembler = CarbonAssembler()
     let carbonView = assembler.resolveCarbonView(frame: parentView.bounds)
     let downloader = assembler.resolveCarbonDownloader(view: carbonView)
     
     parentView.addSubview(carbonView)
     
-    DispatchQueue(label: "nef-fw", qos: .userInitiated).async {
+    DispatchQueue(label: "nef-framework", qos: .userInitiated).async {
         renderCarbon(downloader: downloader,
-                     code: code,
+                     code: "\(code)\n",
                      style: style,
-                     outputPath: outputPath)
+                     outputPath: outputPath,
+                     success: success,
+                     failure: failure)
     }
 }
