@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-               BuildableName = "Carbon"
-               BlueprintName = "Carbon"
+               BlueprintIdentifier = "8BF75FC522CA7DA500EC53A1"
+               BuildableName = "NefCarbon.framework"
+               BlueprintName = "NefCarbon"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -40,34 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-            BuildableName = "Carbon"
-            BlueprintName = "Carbon"
-            ReferencedContainer = "container:nef.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "--from &quot;/Users/miguelangel/Desktop/BowShots/1. DataTypes.playground/Pages/1. Option.xcplaygroundpage&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--to &quot;/Users/miguelangel/Desktop&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--size 3"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--background #6ef0a7"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -78,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-            BuildableName = "Carbon"
-            BlueprintName = "Carbon"
+            BlueprintIdentifier = "8BF75FC522CA7DA500EC53A1"
+            BuildableName = "NefCarbon.framework"
+            BlueprintName = "NefCarbon"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

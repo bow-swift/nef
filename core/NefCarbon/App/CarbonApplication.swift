@@ -22,14 +22,6 @@ public class CarbonApplication {
 }
 
 // MARK: Assembler
-protocol CarbonProvider {
-    func resolveCarbonDownloader(view: CarbonWebView & CarbonView) -> CarbonDownloader
-}
-
-class CarbonAssembler: CarbonProvider {
-    func resolveCarbonDownloader(view: CarbonWebView & CarbonView) -> CarbonDownloader {
-        let downloader = CarbonSyncDownloader(view: view)
-        view.carbonDelegate = downloader
-        return downloader
-    }
+public protocol CarbonProvider {
+    func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader
 }

@@ -6,11 +6,12 @@ import Markup
 
 
 /// Carbon view definition
-protocol CarbonView: class {
+public protocol CarbonView: NSView {
+    var carbonDelegate: CarbonViewDelegate? { get set }
     func load(carbon: Carbon, filename: String)
 }
 
-protocol CarbonViewDelegate: class {
+public protocol CarbonViewDelegate: class {
     func didFailLoadCarbon(error: CarbonError)
     func didLoadCarbon(filename: String)
 }

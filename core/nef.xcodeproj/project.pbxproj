@@ -27,6 +27,7 @@
 		8B6B11B722CBA0470060177F /* MarkupMarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */; };
 		8B6B11B822CBA0470060177F /* MarkupSyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */; };
 		8B6FC589221ECE6A008F7694 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6FC588221ECE6A008F7694 /* main.swift */; };
+		8BCCE9DD22CE42E300BF0A62 /* CarbonAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCCE9DC22CE42E300BF0A62 /* CarbonAssembler.swift */; };
 		8BDCD0C022CB7F46003212B7 /* NefCarbon.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; };
 		8BDCD0C222CB7F56003212B7 /* Common.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; };
 		8BF75F6722CA637B00EC53A1 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BF75F5922CA637B00EC53A1 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,7 +36,7 @@
 		8BF75F7122CA63F000EC53A1 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */; };
 		8BF75F7222CA63F000EC53A1 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */; };
 		8BF75F7322CA63F000EC53A1 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA53022AEC55600181BC0 /* String+Path.swift */; };
-		8BF75F9522CA71E700EC53A1 /* Nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BF75F8722CA71E700EC53A1 /* Nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BF75F9522CA71E700EC53A1 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BF75F8722CA71E700EC53A1 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BF75FAF22CA74CD00EC53A1 /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF75FAE22CA74CD00EC53A1 /* Jekyll.swift */; };
 		8BF75FBD22CA7D1800EC53A1 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF75FB022CA75BE00EC53A1 /* Markdown.swift */; };
 		8BF75FD622CA7DA500EC53A1 /* NefCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BF75FC822CA7DA500EC53A1 /* NefCarbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,12 +208,13 @@
 		8B6B11A322CB9FDE0060177F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B6FC585221ECE6A008F7694 /* Jekyll */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Jekyll; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6FC588221ECE6A008F7694 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8BCCE9DC22CE42E300BF0A62 /* CarbonAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAssembler.swift; sourceTree = "<group>"; };
 		8BF63C3322BA339F00372D40 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		8BF75F5722CA637B00EC53A1 /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75F5922CA637B00EC53A1 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		8BF75F5A22CA637B00EC53A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8BF75F8522CA71E700EC53A1 /* AppNef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppNef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BF75F8722CA71E700EC53A1 /* Nef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Nef.h; sourceTree = "<group>"; };
+		8BF75F8522CA71E700EC53A1 /* nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF75F8722CA71E700EC53A1 /* nef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8BF75F8822CA71E700EC53A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BF75FAB22CA72F100EC53A1 /* Carbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carbon.swift; sourceTree = "<group>"; };
 		8BF75FAE22CA74CD00EC53A1 /* Jekyll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jekyll.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		8B0CA57222B1003300181BC0 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				8BCCE9DC22CE42E300BF0A62 /* CarbonAssembler.swift */,
 				8B0CA52A22AEAB5900181BC0 /* CarbonApplication.swift */,
 				8B0CA56B22B0F7E200181BC0 /* CarbonAppDelegate.swift */,
 				8B0CA56D22B0F84100181BC0 /* CarbonWebView.swift */,
@@ -422,10 +425,10 @@
 				8B6FC587221ECE6A008F7694 /* Jekyll */,
 				8B0CA51122AE657C00181BC0 /* Carbon */,
 				8B424B2F224E5F5F00AF9010 /* Common */,
-				8BF75F8622CA71E700EC53A1 /* AppNef */,
-				8BF75FC722CA7DA500EC53A1 /* NefCarbon */,
 				8B66EB8F221F04A60001DCA2 /* Markup */,
 				8B66EBBC221FFF760001DCA2 /* MarkupTests */,
+				8BF75F8622CA71E700EC53A1 /* nef */,
+				8BF75FC722CA7DA500EC53A1 /* NefCarbon */,
 				8B6FC656221EFF03008F7694 /* Frameworks */,
 				8B6FC586221ECE6A008F7694 /* Products */,
 			);
@@ -438,7 +441,7 @@
 				8B424B1F224E28FC00AF9010 /* Markdown */,
 				8B0CA51622AE669600181BC0 /* Carbon */,
 				8BF75F5722CA637B00EC53A1 /* Common.framework */,
-				8BF75F8522CA71E700EC53A1 /* AppNef.framework */,
+				8BF75F8522CA71E700EC53A1 /* nef.framework */,
 				8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */,
 				8B6B119422CB9FDE0060177F /* Markup.framework */,
 				8B6B119C22CB9FDE0060177F /* MarkupTests.xctest */,
@@ -472,19 +475,19 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
-		8BF75F8622CA71E700EC53A1 /* AppNef */ = {
+		8BF75F8622CA71E700EC53A1 /* nef */ = {
 			isa = PBXGroup;
 			children = (
 				8B0E93EE22CBA8760033861B /* nef.swift */,
 				8BF75F9C22CA71FB00EC53A1 /* Support Files */,
 			);
-			path = AppNef;
+			path = nef;
 			sourceTree = "<group>";
 		};
 		8BF75F9C22CA71FB00EC53A1 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				8BF75F8722CA71E700EC53A1 /* Nef.h */,
+				8BF75F8722CA71E700EC53A1 /* nef.h */,
 				8BF75F8822CA71E700EC53A1 /* Info.plist */,
 			);
 			path = "Support Files";
@@ -534,7 +537,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BF75F9522CA71E700EC53A1 /* Nef.h in Headers */,
+				8BF75F9522CA71E700EC53A1 /* nef.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,9 +664,9 @@
 			productReference = 8BF75F5722CA637B00EC53A1 /* Common.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8BF75F8422CA71E700EC53A1 /* AppNef */ = {
+		8BF75F8422CA71E700EC53A1 /* nef */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "AppNef" */;
+			buildConfigurationList = 8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "nef" */;
 			buildPhases = (
 				8BF75F8022CA71E700EC53A1 /* Headers */,
 				8BF75F8122CA71E700EC53A1 /* Sources */,
@@ -676,9 +679,9 @@
 				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
 				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
 			);
-			name = AppNef;
+			name = nef;
 			productName = Nef;
-			productReference = 8BF75F8522CA71E700EC53A1 /* AppNef.framework */;
+			productReference = 8BF75F8522CA71E700EC53A1 /* nef.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8BF75FC522CA7DA500EC53A1 /* NefCarbon */ = {
@@ -756,7 +759,7 @@
 				8B6FC584221ECE6A008F7694 /* Jekyll */,
 				8B0CA51522AE669600181BC0 /* Carbon */,
 				8BF75F5622CA637B00EC53A1 /* Common */,
-				8BF75F8422CA71E700EC53A1 /* AppNef */,
+				8BF75F8422CA71E700EC53A1 /* nef */,
 				8BF75FC522CA7DA500EC53A1 /* NefCarbon */,
 				8B6B119322CB9FDE0060177F /* Markup */,
 				8B6B119B22CB9FDE0060177F /* MarkupTests */,
@@ -889,6 +892,7 @@
 				8BF75FE722CA7DF100EC53A1 /* URLQuery.swift in Sources */,
 				8BF75FDE22CA7DBB00EC53A1 /* Carbon.swift in Sources */,
 				8BF75FE422CA7DF100EC53A1 /* CarbonWebView.swift in Sources */,
+				8BCCE9DD22CE42E300BF0A62 /* CarbonAssembler.swift in Sources */,
 				8BF75FDD22CA7DBB00EC53A1 /* CarbonOutput.swift in Sources */,
 				8BF75FE222CA7DF100EC53A1 /* CarbonApplication.swift in Sources */,
 				8BF75FE322CA7DF100EC53A1 /* CarbonAppDelegate.swift in Sources */,
@@ -1317,7 +1321,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Nef/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/nef/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1347,7 +1351,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Nef/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/nef/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1489,7 +1493,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "AppNef" */ = {
+		8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "nef" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BF75F9622CA71E700EC53A1 /* Debug */,

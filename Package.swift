@@ -10,7 +10,7 @@ let package = Package(
         .executable(name: "nef-markdown", targets: ["Markdown"]),
         .executable(name: "nef-jekyll", targets: ["Jekyll"]),
         .executable(name: "nef-carbon", targets: ["Carbon"]),
-        .library(name: "AppNef", targets: ["AppNef"]),
+        .library(name: "nef", targets: ["nef"]),
     ],
     targets: [
         .target(name: "Markup", path: "lib/Markup"),
@@ -18,7 +18,7 @@ let package = Package(
         .target(name: "Common", dependencies: [], path: "core/Common"),
 
         .target(name: "NefCarbon", dependencies: ["Markup", "Common"], path: "core/NefCarbon"),
-        .target(name: "AppNef", dependencies: ["NefCarbon", "Markup"], path: "core/AppNef"),
+        .target(name: "nef", dependencies: ["NefCarbon", "Markup"], path: "core/nef"),
 
         .target(name: "Markdown", dependencies: ["Markup", "Common"], path: "core/Markdown"),
         .target(name: "Jekyll", dependencies: ["Markup", "Common"], path: "core/Jekyll"),
