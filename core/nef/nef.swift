@@ -4,16 +4,24 @@ import AppKit
 import NefCarbon
 import Markup
 
-//    static public func markdown(content: String, outputPath: String) {
-//        NefMarkdown.run(content: content, outputPath: outputPath)
-//    }
-//
-//    static public func jekyll(content: String, outputPath: String, permalink: String) {
-//        NefJekyll.run(content: content, outputPath: outputPath, permalink: permalink)
-//    }
-//
-
 // MARK: Carbon <api>
+public func carbon(code: String,
+                   style: CarbonStyle,
+                   outputPath: String,
+                   success: @escaping () -> Void, failure: @escaping () -> Void) -> NSWindow {
+    
+    let assembler = CarbonAssembler()
+    let window = assembler.resolveWindow()
+    
+    carbon(parentView: window.contentView!,
+           code: code,
+           style: style,
+           outputPath: outputPath,
+           success: success, failure: failure)
+    
+    return window
+}
+
 public func carbon(parentView: NSView,
                    code: String,
                    style: CarbonStyle,

@@ -9,7 +9,7 @@ public class CarbonApplication {
     private let assembler = CarbonAssembler()
     
     public init(main: @escaping (CarbonDownloader) -> Void) {
-        appDelegate = CarbonAppDelegate(main: main, provider: assembler)
+        appDelegate = CarbonAppDelegate(assembler: assembler, provider: assembler, main: main)
         CarbonApplication.app.delegate = appDelegate
         CarbonApplication.app.run()
     }

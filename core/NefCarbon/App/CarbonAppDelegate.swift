@@ -8,16 +8,12 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
     private let carbonView: CarbonView
     private let downloader: CarbonDownloader
     private let queue: DispatchQueue
+    private let window: NSWindow
     
-    private let window = NSWindow(contentRect: CarbonScreen.bounds,
-                                  styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                                  backing: .buffered,
-                                  defer: true,
-                                  screen: CarbonScreen())
-    
-    init(main: @escaping (CarbonDownloader) -> Void, provider: CarbonProvider) {
+    init(assembler: CarbonAppDelegateAssembler, provider: CarbonProvider, main: @escaping (CarbonDownloader) -> Void) {
         self.main = main
-        self.carbonView = CarbonWebView(frame: CarbonAppDelegate.CarbonScreen.bounds)
+        self.window = assembler.resolveWindow()
+        self.carbonView = assembler.resolveCarbonView(frame: window.frame)
         self.downloader = provider.resolveCarbonDownloader(view: carbonView)
         self.queue = DispatchQueue(label: String(describing: CarbonAppDelegate.self), qos: .userInitiated)
         super.init()
@@ -31,17 +27,10 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
             self.main(self.downloader)
         }
     }
-    
-    // MARK: private classes
-    fileprivate class CarbonScreen: NSScreen {
-        static let bounds = NSRect(x: 0, y: 0, width: 5000, height: 15000)
-        
-        override var frame: NSRect { return CarbonScreen.bounds }
-        override var visibleFrame: NSRect { return CarbonScreen.bounds }
-    }
 }
 
 // MARK: Assembler
 public protocol CarbonAppDelegateAssembler {
+    func resolveWindow() -> NSWindow
     func resolveCarbonView(frame: NSRect) -> CarbonView
 }
