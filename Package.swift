@@ -7,9 +7,6 @@ let package = Package(
         .macOS(.v10_13),
     ],
     products: [
-        .executable(name: "nef-markdown", targets: ["Markdown"]),
-        .executable(name: "nef-jekyll", targets: ["Jekyll"]),
-        .executable(name: "nef-carbon", targets: ["Carbon"]),
         .library(name: "nef", targets: ["nef"]),
     ],
     targets: [

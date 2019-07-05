@@ -11,6 +11,8 @@
 		8B424B28224E292200AF9010 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B27224E292200AF9010 /* main.swift */; };
 		8B424B33224E602200AF9010 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B32224E602200AF9010 /* ConsoleOutput.swift */; };
 		8B424B912254AA3000AF9010 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B902254AA3000AF9010 /* ConsoleOutput.swift */; };
+		8B465CC922CF92F700804DD7 /* Markup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Markup.framework */; };
+		8B465CCD22CF94F700804DD7 /* Markup.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Markup.framework */; };
 		8B6B119D22CB9FDE0060177F /* Markup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Markup.framework */; };
 		8B6B11A422CB9FDE0060177F /* Markup.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B6B119622CB9FDE0060177F /* Markup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B11AC22CBA0410060177F /* CarbonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA55722AFE06000181BC0 /* CarbonModel.swift */; };
@@ -272,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B465CC922CF92F700804DD7 /* Markup.framework in Frameworks */,
 				8BF75FEC22CA7FA500EC53A1 /* NefCarbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -793,6 +796,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B465CCD22CF94F700804DD7 /* Markup.framework in Resources */,
 				8BDCD0C222CB7F56003212B7 /* Common.framework in Resources */,
 				8BDCD0C022CB7F46003212B7 /* NefCarbon.framework in Resources */,
 			);

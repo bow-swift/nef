@@ -5,6 +5,15 @@ import NefCarbon
 import Markup
 
 // MARK: Carbon <api>
+
+/// Method to render a code selection into Carbon's image.
+///
+/// - Parameters:
+///   - code: content for generation the snippet.
+///   - style: style to apply to export code snippet.
+///   - outputPath: output where to render the snippets.
+///   - success: callback if everything go well.
+///   - failure: callback if something go wrong.
 public func carbon(code: String,
                    style: CarbonStyle,
                    outputPath: String,
@@ -22,6 +31,15 @@ public func carbon(code: String,
     return window
 }
 
+/// Method to render a code selection into Carbon's image.
+///
+/// - Parameters:
+///   - parentView: canvas works where to render Carbon image.
+///   - code: content for generation the snippet.
+///   - style: style to apply to export code snippet.
+///   - outputPath: output where to render the snippets.
+///   - success: callback if everything go well.
+///   - failure: callback if something go wrong.
 public func carbon(parentView: NSView,
                    code: String,
                    style: CarbonStyle,

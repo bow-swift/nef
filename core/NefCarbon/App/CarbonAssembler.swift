@@ -8,7 +8,6 @@ public class CarbonAssembler: CarbonProvider, CarbonAppDelegateAssembler {
 }
 
 // MARK: dependency injection
-
 extension CarbonAssembler {
     public func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader {
         let downloader = CarbonSyncDownloader(view: view)
