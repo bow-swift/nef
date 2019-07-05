@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/miguelangel/Documents/47deg/nef/core/nef.xcodeproj">
+      location = "self:../lib/Markup">
    </FileRef>
 </Workspace>

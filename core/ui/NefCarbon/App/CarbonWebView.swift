@@ -2,8 +2,7 @@
 
 import AppKit
 import WebKit
-import Markup
-
+import NefModels
 
 /// Carbon view definition
 public protocol CarbonView: NSView {

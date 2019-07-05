@@ -11,11 +11,10 @@
 		8B424B28224E292200AF9010 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B27224E292200AF9010 /* main.swift */; };
 		8B424B33224E602200AF9010 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B32224E602200AF9010 /* ConsoleOutput.swift */; };
 		8B424B912254AA3000AF9010 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B902254AA3000AF9010 /* ConsoleOutput.swift */; };
-		8B465CC922CF92F700804DD7 /* Markup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Markup.framework */; };
-		8B465CCD22CF94F700804DD7 /* Markup.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Markup.framework */; };
+		8B4F45D222CF9F4B00E6F471 /* CarbonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4F45CE22CF9F4B00E6F471 /* CarbonModel.swift */; };
+		8B4F45D322CF9F4B00E6F471 /* NefModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B4F45D022CF9F4B00E6F471 /* NefModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* Markup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Markup.framework */; };
 		8B6B11A422CB9FDE0060177F /* Markup.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B6B119622CB9FDE0060177F /* Markup.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B6B11AC22CBA0410060177F /* CarbonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA55722AFE06000181BC0 /* CarbonModel.swift */; };
 		8B6B11AD22CBA0410060177F /* MarkupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB96221F04A60001DCA2 /* MarkupNode.swift */; };
 		8B6B11AE22CBA0410060177F /* MarkupLexical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB97221F04A60001DCA2 /* MarkupLexical.swift */; };
 		8B6B11AF22CBA0410060177F /* MarkupSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */; };
@@ -30,8 +29,6 @@
 		8B6B11B822CBA0470060177F /* MarkupSyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66EBBD221FFF760001DCA2 /* MarkupSyntaxTests.swift */; };
 		8B6FC589221ECE6A008F7694 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6FC588221ECE6A008F7694 /* main.swift */; };
 		8BCCE9DD22CE42E300BF0A62 /* CarbonAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCCE9DC22CE42E300BF0A62 /* CarbonAssembler.swift */; };
-		8BDCD0C022CB7F46003212B7 /* NefCarbon.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; };
-		8BDCD0C222CB7F56003212B7 /* Common.framework in Resources */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; };
 		8BF75F6722CA637B00EC53A1 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BF75F5922CA637B00EC53A1 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BF75F6F22CA63F000EC53A1 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52622AEAAB000181BC0 /* Array+Slice.swift */; };
 		8BF75F7022CA63F000EC53A1 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B424B30224E5F8D00AF9010 /* ConsoleReader.swift */; };
@@ -51,10 +48,16 @@
 		8BF75FE622CA7DF100EC53A1 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF63C3322BA339F00372D40 /* Assets.swift */; };
 		8BF75FE722CA7DF100EC53A1 /* URLQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA52422AEAA0400181BC0 /* URLQuery.swift */; };
 		8BF75FEB22CA7EE200EC53A1 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0CA51D22AE66AE00181BC0 /* main.swift */; };
-		8BF75FEC22CA7FA500EC53A1 /* NefCarbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
+			remoteInfo = NefModels;
+		};
 		8B6B118722CB9E8F0060177F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -182,7 +185,6 @@
 		8B0CA52C22AEAB9500181BC0 /* NSImage+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Store.swift"; sourceTree = "<group>"; };
 		8B0CA53022AEC55600181BC0 /* String+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
 		8B0CA53422AFD71300181BC0 /* MarkupCarbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupCarbon.swift; sourceTree = "<group>"; };
-		8B0CA55722AFE06000181BC0 /* CarbonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonModel.swift; sourceTree = "<group>"; };
 		8B0CA56B22B0F7E200181BC0 /* CarbonAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAppDelegate.swift; sourceTree = "<group>"; };
 		8B0CA56D22B0F84100181BC0 /* CarbonWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonWebView.swift; sourceTree = "<group>"; };
 		8B0CA56F22B0F89400181BC0 /* CarbonSyncDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonSyncDownloader.swift; sourceTree = "<group>"; };
@@ -196,6 +198,10 @@
 		8B424B902254AA3000AF9010 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B424BA02254AEC300AF9010 /* PlaygroundUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundUtils.swift; sourceTree = "<group>"; };
 		8B424BB02254C3AE00AF9010 /* MarkupMarkdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkupMarkdownTests.swift; sourceTree = "<group>"; };
+		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B4F45CE22CF9F4B00E6F471 /* CarbonModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbonModel.swift; sourceTree = "<group>"; };
+		8B4F45D022CF9F4B00E6F471 /* NefModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NefModels.h; sourceTree = "<group>"; };
+		8B4F45D122CF9F4B00E6F471 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B66EB92221F04A60001DCA2 /* MarkupRender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupRender.swift; sourceTree = "<group>"; };
 		8B66EB93221F04A60001DCA2 /* MarkupJekyll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupJekyll.swift; sourceTree = "<group>"; };
 		8B66EB95221F04A60001DCA2 /* MarkupSyntax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkupSyntax.swift; sourceTree = "<group>"; };
@@ -241,6 +247,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B4F45A222CF9AF400E6F471 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B6B119122CB9FDE0060177F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -274,8 +287,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B465CC922CF92F700804DD7 /* Markup.framework in Frameworks */,
-				8BF75FEC22CA7FA500EC53A1 /* NefCarbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +305,8 @@
 			children = (
 				8B0CA51D22AE66AE00181BC0 /* main.swift */,
 			);
-			path = Carbon;
+			name = Carbon;
+			path = ui/Carbon;
 			sourceTree = "<group>";
 		};
 		8B0CA53922AFD84500181BC0 /* Utils */ = {
@@ -303,14 +315,6 @@
 				8B66EB98221F04A60001DCA2 /* String+Format.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		8B0CA56122B01A9800181BC0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				8B0CA55722AFE06000181BC0 /* CarbonModel.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		8B0CA57122B0F8A000181BC0 /* Utils */ = {
@@ -341,7 +345,8 @@
 				8B424B32224E602200AF9010 /* ConsoleOutput.swift */,
 				8BF75FB022CA75BE00EC53A1 /* Markdown.swift */,
 			);
-			path = Markdown;
+			name = Markdown;
+			path = ui/Markdown;
 			sourceTree = "<group>";
 		};
 		8B424B2F224E5F5F00AF9010 /* Common */ = {
@@ -354,20 +359,39 @@
 				8B0CA53022AEC55600181BC0 /* String+Path.swift */,
 				8BF75F6E22CA639400EC53A1 /* Support Files */,
 			);
-			path = Common;
+			name = Common;
+			path = ui/Common;
+			sourceTree = "<group>";
+		};
+		8B4F45A622CF9AF400E6F471 /* NefModels */ = {
+			isa = PBXGroup;
+			children = (
+				8B4F45CE22CF9F4B00E6F471 /* CarbonModel.swift */,
+				8B4F45CF22CF9F4B00E6F471 /* Support Files */,
+			);
+			name = NefModels;
+			path = ui/NefModels;
+			sourceTree = "<group>";
+		};
+		8B4F45CF22CF9F4B00E6F471 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8B4F45D022CF9F4B00E6F471 /* NefModels.h */,
+				8B4F45D122CF9F4B00E6F471 /* Info.plist */,
+			);
+			path = "Support Files";
 			sourceTree = "<group>";
 		};
 		8B66EB8F221F04A60001DCA2 /* Markup */ = {
 			isa = PBXGroup;
 			children = (
-				8B0CA56122B01A9800181BC0 /* Models */,
 				8B66EB94221F04A60001DCA2 /* Parser */,
 				8B66EB91221F04A60001DCA2 /* Render */,
 				8B0CA53922AFD84500181BC0 /* Utils */,
 				8B6B11AB22CB9FEE0060177F /* Support Files */,
 			);
 			name = Markup;
-			path = ../lib/Markup;
+			path = lib/Markup;
 			sourceTree = "<group>";
 		};
 		8B66EB91221F04A60001DCA2 /* Render */ = {
@@ -401,7 +425,7 @@
 				8B6B11B922CBA1160060177F /* Support Files */,
 			);
 			name = MarkupTests;
-			path = ../lib/MarkupTests;
+			path = lib/MarkupTests;
 			sourceTree = "<group>";
 		};
 		8B6B11AB22CB9FEE0060177F /* Support Files */ = {
@@ -432,6 +456,7 @@
 				8B66EBBC221FFF760001DCA2 /* MarkupTests */,
 				8BF75F8622CA71E700EC53A1 /* nef */,
 				8BF75FC722CA7DA500EC53A1 /* NefCarbon */,
+				8B4F45A622CF9AF400E6F471 /* NefModels */,
 				8B6FC656221EFF03008F7694 /* Frameworks */,
 				8B6FC586221ECE6A008F7694 /* Products */,
 			);
@@ -448,6 +473,7 @@
 				8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */,
 				8B6B119422CB9FDE0060177F /* Markup.framework */,
 				8B6B119C22CB9FDE0060177F /* MarkupTests.xctest */,
+				8B4F45A522CF9AF400E6F471 /* NefModels.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -459,7 +485,8 @@
 				8B424B902254AA3000AF9010 /* ConsoleOutput.swift */,
 				8BF75FAE22CA74CD00EC53A1 /* Jekyll.swift */,
 			);
-			path = Jekyll;
+			name = Jekyll;
+			path = ui/Jekyll;
 			sourceTree = "<group>";
 		};
 		8B6FC656221EFF03008F7694 /* Frameworks */ = {
@@ -484,7 +511,8 @@
 				8B0E93EE22CBA8760033861B /* nef.swift */,
 				8BF75F9C22CA71FB00EC53A1 /* Support Files */,
 			);
-			path = nef;
+			name = nef;
+			path = ui/nef;
 			sourceTree = "<group>";
 		};
 		8BF75F9C22CA71FB00EC53A1 /* Support Files */ = {
@@ -505,7 +533,8 @@
 				8B0CA57122B0F8A000181BC0 /* Utils */,
 				8BF75FDF22CA7DBD00EC53A1 /* Support Files */,
 			);
-			path = NefCarbon;
+			name = NefCarbon;
+			path = ui/NefCarbon;
 			sourceTree = "<group>";
 		};
 		8BF75FDF22CA7DBD00EC53A1 /* Support Files */ = {
@@ -520,6 +549,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		8B4F45A022CF9AF400E6F471 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B4F45D322CF9F4B00E6F471 /* NefModels.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B6B118F22CB9FDE0060177F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -594,6 +631,24 @@
 			productReference = 8B424B1F224E28FC00AF9010 /* Markdown */;
 			productType = "com.apple.product-type.tool";
 		};
+		8B4F45A422CF9AF400E6F471 /* NefModels */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B4F45B622CF9AF400E6F471 /* Build configuration list for PBXNativeTarget "NefModels" */;
+			buildPhases = (
+				8B4F45A022CF9AF400E6F471 /* Headers */,
+				8B4F45A122CF9AF400E6F471 /* Sources */,
+				8B4F45A222CF9AF400E6F471 /* Frameworks */,
+				8B4F45A322CF9AF400E6F471 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NefModels;
+			productName = NefModels;
+			productReference = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		8B6B119322CB9FDE0060177F /* Markup */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B6B11A522CB9FDE0060177F /* Build configuration list for PBXNativeTarget "Markup" */;
@@ -606,6 +661,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */,
 			);
 			name = Markup;
 			productName = Markup;
@@ -724,6 +780,10 @@
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
 					};
+					8B4F45A422CF9AF400E6F471 = {
+						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1100;
+					};
 					8B6B119322CB9FDE0060177F = {
 						CreatedOnToolsVersion = 11.0;
 					};
@@ -764,6 +824,7 @@
 				8BF75F5622CA637B00EC53A1 /* Common */,
 				8BF75F8422CA71E700EC53A1 /* nef */,
 				8BF75FC522CA7DA500EC53A1 /* NefCarbon */,
+				8B4F45A422CF9AF400E6F471 /* NefModels */,
 				8B6B119322CB9FDE0060177F /* Markup */,
 				8B6B119B22CB9FDE0060177F /* MarkupTests */,
 			);
@@ -771,6 +832,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8B4F45A322CF9AF400E6F471 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B6B119222CB9FDE0060177F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -796,9 +864,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B465CCD22CF94F700804DD7 /* Markup.framework in Resources */,
-				8BDCD0C222CB7F56003212B7 /* Common.framework in Resources */,
-				8BDCD0C022CB7F46003212B7 /* NefCarbon.framework in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,6 +895,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B4F45A122CF9AF400E6F471 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B4F45D222CF9F4B00E6F471 /* CarbonModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B6B119022CB9FDE0060177F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -838,7 +911,6 @@
 				8B6B11B122CBA0410060177F /* MarkupJekyll.swift in Sources */,
 				8B6B11AF22CBA0410060177F /* MarkupSyntax.swift in Sources */,
 				8B6B11B022CBA0410060177F /* MarkupCarbon.swift in Sources */,
-				8B6B11AC22CBA0410060177F /* CarbonModel.swift in Sources */,
 				8B6B11B322CBA0410060177F /* MarkupRender.swift in Sources */,
 				8B6B11B422CBA0410060177F /* MarkupUtils.swift in Sources */,
 				8B6B11AE22CBA0410060177F /* MarkupLexical.swift in Sources */,
@@ -906,6 +978,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
+			targetProxy = 8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */;
+		};
 		8B6B118822CB9E8F0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8BF75F5622CA637B00EC53A1 /* Common */;
@@ -1009,6 +1086,63 @@
 			};
 			name = Release;
 		};
+		8B4F45B722CF9AF400E6F471 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/ui/NefModels/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefModels;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8B4F45B822CF9AF400E6F471 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/ui/NefModels/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefModels;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		8B6B11A622CB9FDE0060177F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1022,7 +1156,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "../lib/Markup/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/lib/Markup/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1052,7 +1186,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "../lib/Markup/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/lib/Markup/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1077,7 +1211,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "../lib/MarkupTests/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/lib/MarkupTests/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1098,7 +1232,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "../lib/MarkupTests/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/lib/MarkupTests/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1268,7 +1402,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Common/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ui/Common/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1296,7 +1430,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Common/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ui/Common/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1315,6 +1449,7 @@
 		8BF75F9622CA71E700EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -1325,7 +1460,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/nef/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ui/nef/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1345,6 +1480,7 @@
 		8BF75F9722CA71E700EC53A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -1355,7 +1491,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/nef/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ui/nef/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1384,7 +1520,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/NefCarbon/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ui/NefCarbon/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1414,7 +1550,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/NefCarbon/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ui/NefCarbon/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1448,6 +1584,15 @@
 			buildConfigurations = (
 				8B424B24224E28FC00AF9010 /* Debug */,
 				8B424B25224E28FC00AF9010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B4F45B622CF9AF400E6F471 /* Build configuration list for PBXNativeTarget "NefModels" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B4F45B722CF9AF400E6F471 /* Debug */,
+				8B4F45B822CF9AF400E6F471 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

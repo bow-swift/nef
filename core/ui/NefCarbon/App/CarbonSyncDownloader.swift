@@ -2,6 +2,7 @@
 
 import Foundation
 import Markup
+import NefModels
 
 class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
     
