@@ -13,7 +13,7 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n### This is a markup\n"
-        let result = Markup.MarkdownGenerator().render(content: input)
+        let result = Core.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -30,7 +30,7 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
-        let result = Markup.MarkdownGenerator().render(content: input)
+        let result = Core.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -41,7 +41,7 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(input)```\n"
-        let result = Markup.MarkdownGenerator().render(content: input)
+        let result = Core.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -59,7 +59,7 @@ class MarkdownTests: XCTestCase {
                     """
         let expected = ""
         
-        let result = Markup.MarkdownGenerator().render(content: input)
+        let result = Core.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -77,7 +77,7 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(code)\n```\n"
-        let result = Markup.MarkdownGenerator().render(content: input)
+        let result = Core.MarkdownGenerator().render(content: input)
 
         XCTAssertEqual(result, expected)
     }
