@@ -17,7 +17,7 @@ import NefModels
 public func carbon(code: String,
                    style: CarbonStyle,
                    outputPath: String,
-                   success: @escaping () -> Void, failure: @escaping () -> Void) -> NSWindow {
+                   success: @escaping () -> Void, failure: @escaping (String) -> Void) -> NSWindow {
     
     let assembler = CarbonAssembler()
     let window = assembler.resolveWindow()
@@ -44,7 +44,7 @@ public func carbon(parentView: NSView,
                    code: String,
                    style: CarbonStyle,
                    outputPath: String,
-                   success: @escaping () -> Void, failure: @escaping () -> Void) {
+                   success: @escaping () -> Void, failure: @escaping (String) -> Void) {
     
     let assembler = CarbonAssembler()
     let carbonView = assembler.resolveCarbonView(frame: parentView.bounds)

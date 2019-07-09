@@ -14,7 +14,7 @@ public class CarbonApplication {
         CarbonApplication.app.run()
     }
     
-    static func terminate() {
+    static public func terminate() {
         DispatchQueue.main.async {
             CarbonApplication.app.terminate(nil)
         }

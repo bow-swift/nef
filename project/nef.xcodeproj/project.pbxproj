@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B22247B22D4C7B400C85856 /* CarbonOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* CarbonOutput.swift */; };
+		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B3CB87E22D3931D00919F36 /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* Jekyll.swift */; };
 		8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85622D392C000919F36 /* ConsoleOutput.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
@@ -16,7 +18,6 @@
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
 		8B3CB88522D3933D00919F36 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85F22D392C000919F36 /* String+Path.swift */; };
 		8B3CB88622D3933D00919F36 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86322D392C000919F36 /* ConsoleReader.swift */; };
-		8B3CB88722D3933D00919F36 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B3CB88822D3933D00919F36 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */; };
 		8B3CB88922D3933D00919F36 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86622D392C000919F36 /* Array+Slice.swift */; };
 		8B3CB8A122D393F100919F36 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB89322D393C300919F36 /* Render.swift */; };
@@ -32,7 +33,6 @@
 		8B3CB8B322D394E600919F36 /* JekyllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8AE22D394E600919F36 /* JekyllTests.swift */; };
 		8B3CB8B522D394E600919F36 /* MarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8B122D394E600919F36 /* MarkdownTests.swift */; };
 		8B3CB8B622D3963300919F36 /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB84B22D3929B00919F36 /* Carbon.swift */; };
-		8B3CB8B722D3963300919F36 /* CarbonOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* CarbonOutput.swift */; };
 		8B3CB8B822D3963300919F36 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB84522D3929B00919F36 /* Assets.swift */; };
 		8B3CB8B922D3963300919F36 /* CarbonAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB84622D3929B00919F36 /* CarbonAssembler.swift */; };
 		8B3CB8BA22D3963300919F36 /* CarbonSyncDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB84722D3929B00919F36 /* CarbonSyncDownloader.swift */; };
@@ -351,7 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB84B22D3929B00919F36 /* Carbon.swift */,
-				8B3CB85122D3929B00919F36 /* CarbonOutput.swift */,
 				8B3CB84422D3929B00919F36 /* App */,
 				8B3CB84F22D3929B00919F36 /* Utils */,
 				8B3CB84C22D3929B00919F36 /* Support Files */,
@@ -384,6 +383,7 @@
 		8B3CB84F22D3929B00919F36 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				8B3CB86422D392C000919F36 /* NSImage+Store.swift */,
 				8B3CB85022D3929B00919F36 /* URLQuery.swift */,
 			);
 			path = Utils;
@@ -414,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85922D392C000919F36 /* main.swift */,
+				8B3CB85122D3929B00919F36 /* CarbonOutput.swift */,
 			);
 			path = Carbon;
 			sourceTree = "<group>";
@@ -433,7 +434,6 @@
 			children = (
 				8B3CB85F22D392C000919F36 /* String+Path.swift */,
 				8B3CB86322D392C000919F36 /* ConsoleReader.swift */,
-				8B3CB86422D392C000919F36 /* NSImage+Store.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
 				8B3CB86622D392C000919F36 /* Array+Slice.swift */,
 				8B3CB86022D392C000919F36 /* Support Files */,
@@ -899,6 +899,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88122D3932000919F36 /* main.swift in Sources */,
+				8B22247B22D4C7B400C85856 /* CarbonOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -962,7 +963,6 @@
 			files = (
 				8B3CB88922D3933D00919F36 /* Array+Slice.swift in Sources */,
 				8B3CB88622D3933D00919F36 /* ConsoleReader.swift in Sources */,
-				8B3CB88722D3933D00919F36 /* NSImage+Store.swift in Sources */,
 				8B3CB88822D3933D00919F36 /* PlaygroundUtils.swift in Sources */,
 				8B3CB88522D3933D00919F36 /* String+Path.swift in Sources */,
 			);
@@ -983,11 +983,11 @@
 				8B3CB8BA22D3963300919F36 /* CarbonSyncDownloader.swift in Sources */,
 				8B3CB8BC22D3963300919F36 /* CarbonApplication.swift in Sources */,
 				8B3CB8B622D3963300919F36 /* Carbon.swift in Sources */,
-				8B3CB8B722D3963300919F36 /* CarbonOutput.swift in Sources */,
 				8B3CB8BD22D3963300919F36 /* CarbonWebView.swift in Sources */,
 				8B3CB8BB22D3963300919F36 /* CarbonAppDelegate.swift in Sources */,
 				8B3CB8BE22D3963300919F36 /* URLQuery.swift in Sources */,
 				8B3CB8B822D3963300919F36 /* Assets.swift in Sources */,
+				8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */,
 				8B3CB8B922D3963300919F36 /* CarbonAssembler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

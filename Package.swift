@@ -14,7 +14,7 @@ let package = Package(
         .target(name: "Core", dependencies: ["NefModels"], path: "project/Core"),
 
         .target(name: "NefModels", path: "project/Component/NefModels"),
-        .target(name: "NefCarbon", dependencies: ["Core", "Common"], path: "project/Component/NefCarbon"),
+        .target(name: "NefCarbon", dependencies: ["Core"], path: "project/Component/NefCarbon"),
         .target(name: "nef", dependencies: ["NefCarbon", "NefModels"], path: "project/Component/nef"),
 
         .target(name: "Common", path: "project/UI/Common"),
