@@ -8,12 +8,14 @@ class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
     
     private weak var view: CarbonView?
 
+    private let multiFiles: Bool
     private let semaphore: DispatchSemaphore
     private var syncResult: Result<String, CarbonError>!
     private var counter: Int = 0
     
-    init(view: CarbonView) {
+    init(view: CarbonView, multiFiles: Bool) {
         self.view = view
+        self.multiFiles = multiFiles
         self.semaphore = DispatchSemaphore(value: 0)
     }
     
@@ -22,7 +24,8 @@ class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
         guard let view = view else { return .failure(CarbonError(filename: filename, snippet: configuration.code, error: .notFound)) }
         
         run {
-            view.load(carbon: configuration, filename: "\(filename)-\(self.counter)")
+            let filename = self.multiFiles ? "\(filename)-\(self.counter)" : filename
+            view.load(carbon: configuration, filename: filename)
             self.counter += 1
         }
 

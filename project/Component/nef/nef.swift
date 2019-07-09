@@ -61,7 +61,7 @@ public func carbon(parentView: NSView,
     
     let assembler = CarbonAssembler()
     let carbonView = assembler.resolveCarbonView(frame: parentView.bounds)
-    let downloader = assembler.resolveCarbonDownloader(view: carbonView)
+    let downloader = assembler.resolveCarbonDownloader(view: carbonView, multiFiles: false)
     
     parentView.addSubview(carbonView)
     

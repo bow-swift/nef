@@ -20,8 +20,3 @@ public class CarbonApplication {
         }
     }
 }
-
-// MARK: Assembler
-public protocol CarbonProvider {
-    func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader
-}
