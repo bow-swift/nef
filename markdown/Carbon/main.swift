@@ -34,6 +34,7 @@ func main(downloader: CarbonDownloader) {
 ///   - filePath: input page in Apple's playground format.
 ///   - outputPath: output where to render the snippets.
 func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String, style: CarbonStyle) {
+    defer { CarbonApplication.terminate() }
     guard let content = try? String(contentsOf: URL(fileURLWithPath: filePath), encoding: .utf8) else { Console.error(information: "").show(); return }
     
     let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
@@ -44,8 +45,6 @@ func renderCarbon(downloader: CarbonDownloader, from filePath: String, to output
     } else {
         Console.error(information: trace).show()
     }
-    
-    CarbonApplication.terminate()
 }
 
 
