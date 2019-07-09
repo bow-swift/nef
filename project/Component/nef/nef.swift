@@ -6,7 +6,7 @@ import NefModels
 
 // MARK: Carbon <api>
 
-/// Method to render a code selection into Carbon's image.
+/// Renders a code selection into multiple Carbon images.
 ///
 /// - Parameters:
 ///   - code: content for generation the snippet.
@@ -31,7 +31,7 @@ public func carbon(code: String,
     return window
 }
 
-/// Method to render a code selection into Carbon's image.
+/// Renders a code selection into multiple Carbon images.
 ///
 /// - Parameters:
 ///   - parentView: canvas works where to render Carbon image.

@@ -11,10 +11,10 @@ public enum NefMarkdown {
 }
 
 
-/// Method to render a page into Markdown format.
+/// Renders a page into Markdown format.
 ///
 /// - Parameters:
-///   - filePath: input page in Apple's playground format.
+///   - filePath: input page in Xcode playground format.
 ///   - outputPath: output where to write the Markdown render.
 func renderMarkdown(from filePath: String, to outputPath: String) {
     let fileURL = URL(fileURLWithPath: filePath)
@@ -30,7 +30,7 @@ func renderMarkdown(from filePath: String, to outputPath: String) {
     Console.success.show(output: console)
 }
 
-/// Method to render a page into Markdown format.
+/// Renders a page into Markdown format.
 ///
 /// - Parameters:
 ///   - content: content page in Xcode playground.

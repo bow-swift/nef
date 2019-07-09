@@ -29,10 +29,10 @@ func main(downloader: CarbonDownloader) {
     renderCarbon(downloader: downloader, from: from, to: to, style: style)
 }
 
-/// Method to render a page into Carbon's images.
+/// Renders a page into multiple Carbon images.
 ///
 /// - Parameters:
-///   - filePath: input page in Apple's playground format.
+///   - filePath: input page in Xcode playground format.
 ///   - outputPath: output where to render the snippets.
 ///   - style: style to apply to export code snippet.
 private func renderCarbon(downloader: CarbonDownloader, from filePath: String, to outputPath: String, style: CarbonStyle) {
