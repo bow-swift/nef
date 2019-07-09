@@ -37,3 +37,14 @@ options:
         - title: Jekyll
           url: /docs/integration/jekyll/
 
+        - title: Carbon
+          url: /docs/integration/carbon/
+
+
+  - title: Tutorials
+
+    nested_options:
+
+        - title: First Steps with Carbon
+          url: /docs/tutorials/first-steps-with-carbon/
+
