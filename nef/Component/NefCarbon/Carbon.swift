@@ -1,5 +1,6 @@
 //  Copyright © 2019 The nef Authors.
 
+import Foundation
 import Common
 import Core
 import NefModels

@@ -392,9 +392,9 @@
 		8B3CB85322D392C000919F36 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8B3CB85A22D392C000919F36 /* Markdown */,
 				8B3CB85422D392C000919F36 /* Jekyll */,
 				8B3CB85822D392C000919F36 /* Carbon */,
-				8B3CB85A22D392C000919F36 /* Markdown */,
 				8B3CB85E22D392C000919F36 /* Common */,
 			);
 			path = UI;

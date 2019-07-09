@@ -10,16 +10,16 @@ let package = Package(
         .library(name: "nef", targets: ["nef"]),
     ],
     targets: [
-        .target(name: "Common", path: "core/ui/Common"),
-        .target(name: "NefModels", path: "core/ui/NefModels"),
-        .target(name: "Markup", dependencies: ["NefModels"], path: "core/lib/Markup"),
-        .testTarget(name: "MarkupTests", dependencies: ["Markup"], path: "core/lib/MarkupTests"),
+        .testTarget(name: "CoreTests", dependencies: ["Core"], path: "nef/Tests/CoreTests"),
+        .target(name: "Core", dependencies: ["NefModels"], path: "nef/Core"),
 
-        .target(name: "NefCarbon", dependencies: ["Markup", "Common"], path: "core/ui/NefCarbon"),
-        .target(name: "nef", dependencies: ["NefCarbon", "NefModels"], path: "core/ui/nef"),
+        .target(name: "NefModels", path: "nef/Component/NefModels"),
+        .target(name: "NefCarbon", dependencies: ["Core", "Common"], path: "nef/Component/NefCarbon"),
+        .target(name: "nef", dependencies: ["NefCarbon", "NefModels"], path: "nef/Component/nef"),
 
-        .target(name: "Markdown", dependencies: ["Markup", "Common"], path: "core/ui/Markdown"),
-        .target(name: "Jekyll", dependencies: ["Markup", "Common"], path: "core/ui/Jekyll"),
-        .target(name: "Carbon", dependencies: ["Markup", "Common", "NefCarbon"], path: "core/ui/Carbon"),
+        .target(name: "Common", path: "nef/UI/Common"),
+        .target(name: "Markdown", dependencies: ["Core", "Common"], path: "nef/UI/Markdown"),
+        .target(name: "Jekyll", dependencies: ["Core", "Common"], path: "nef/UI/Jekyll"),
+        .target(name: "Carbon", dependencies: ["Core", "Common", "NefCarbon"], path: "nef/UI/Carbon"),
     ]
 )
