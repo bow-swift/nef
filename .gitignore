@@ -3,6 +3,7 @@
 **/xcuserdata/
 BowPlayground
 /.build
+.swiftpm
 
 ## Jekyll
 _site
