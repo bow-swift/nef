@@ -8,16 +8,24 @@ import NefModels
 
 /// Renders a code selection into multiple Carbon images.
 ///
+/// - Precondition: this method must be invoked from main thread.
+/// - Postcondition: you should manage the output `NSWindow`.
+///
 /// - Parameters:
 ///   - code: content for generation the snippet.
 ///   - style: style to apply to export code snippet.
 ///   - outputPath: output where to render the snippets.
 ///   - success: callback if everything go well.
 ///   - failure: callback if something go wrong.
+///
+/// - Returns: `NSWindow` where Carbon snippet will be rendered.
 public func carbon(code: String,
                    style: CarbonStyle,
                    outputPath: String,
                    success: @escaping () -> Void, failure: @escaping (String) -> Void) -> NSWindow {
+    guard Thread.isMainThread else {
+        fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
+    }
     
     let assembler = CarbonAssembler()
     let window = assembler.resolveWindow()
@@ -33,6 +41,8 @@ public func carbon(code: String,
 
 /// Renders a code selection into multiple Carbon images.
 ///
+/// - Precondition: this method must be invoked from main thread.
+///
 /// - Parameters:
 ///   - parentView: canvas works where to render Carbon image.
 ///   - code: content for generation the snippet.
@@ -45,6 +55,9 @@ public func carbon(parentView: NSView,
                    style: CarbonStyle,
                    outputPath: String,
                    success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    guard Thread.isMainThread else {
+        fatalError("carbon(parentView:code:style:outputPath:success:failure:) should be invoked in main thread")
+    }
     
     let assembler = CarbonAssembler()
     let carbonView = assembler.resolveCarbonView(frame: parentView.bounds)
