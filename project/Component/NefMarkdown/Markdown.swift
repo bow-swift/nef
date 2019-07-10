@@ -10,10 +10,13 @@ import Core
 ///   - outputPath: output where to write the Markdown render.
 ///   - success: callback to notify if everything goes well.
 ///   - failure: callback with information to notify if something goes wrong.
-public func renderMarkdown(content: String, to outputPath: String,
-                            success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+public func renderMarkdown(content: String,
+                           to outputPath: String,
+                           success: @escaping () -> Void,
+                           failure: @escaping (String) -> Void) {
+    
     let outputURL = URL(fileURLWithPath: outputPath)
-    guard let rendered = MarkdownGenerator().render(content: content) else { failure("can not render markdown from input"); return }
+    guard let rendered = MarkdownGenerator().render(content: content) else { failure("can not render input page into Markdown file"); return }
     guard let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { failure("invalid output path"); return }
     
     success()
