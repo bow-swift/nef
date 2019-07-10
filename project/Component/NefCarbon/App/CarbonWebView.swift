@@ -196,9 +196,9 @@ private extension CarbonWebView {
         return "var logoButton = document.getElementsByClassName('copy-button')[0];" +
                "logoButton.firstElementChild.hidden = true;" +
                "var logoNode = document.createElement('img');" +
-               "logoNode.setAttribute('src', 'data:image/png;base64,\(Assets.Base64.favicon)');" +
-               "logoNode.setAttribute('height', '28');" +
-               "logoButton.setAttribute('style', 'margin-top: -8px; margin-right: -9px');" +
+               "logoNode.setAttribute('src', 'data:image/svg+xml;base64,\(Assets.Base64.favicon)');" +
+               "logoNode.setAttribute('height', '24');" +
+               "logoButton.setAttribute('style', 'margin-top: -7.5px; margin-right: -8px');" +
                "logoButton.appendChild(logoNode);"
     }
 }
