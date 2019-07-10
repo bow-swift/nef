@@ -150,6 +150,13 @@
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
 			remoteInfo = Markup;
 		};
+		8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B22248222D5EAD500C85856;
+			remoteInfo = NefMarkdown;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -818,6 +825,7 @@
 			dependencies = (
 				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
 				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
+				8B8AA94022D62266006BE290 /* PBXTargetDependency */,
 			);
 			name = nef;
 			productName = Nef;
@@ -1146,6 +1154,11 @@
 			isa = PBXTargetDependency;
 			target = 8B6B119322CB9FDE0060177F /* Core */;
 			targetProxy = 8B6B11CA22CBA1BF0060177F /* PBXContainerItemProxy */;
+		};
+		8B8AA94022D62266006BE290 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
+			targetProxy = 8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -1,10 +1,34 @@
 //  Copyright © 2019 The nef Authors.
 
 import AppKit
-import NefCarbon
 import NefModels
+import NefMarkdown
+import NefCarbon
 
-// MARK: Carbon <api>
+// MARK: - Markdown <api>
+
+/// Renders a code selection into Markdown files.
+///
+/// - Precondition: this method must be invoked from main thread.
+///
+/// - Parameters:
+///   - content: content page in Xcode playground.
+///   - outputPath: output where to write the Markdown render.
+///   - success: callback to notify if everything goes well.
+///   - failure: callback with information to notify if something goes wrong.
+public func renderMarkdown(content: String, to outputPath: String,
+                           success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    guard Thread.isMainThread else {
+        fatalError("renderMarkdown(content:style:outputPath:success:failure:) should be invoked in main thread")
+    }
+    
+    NefMarkdown.renderMarkdown(content: content,
+                               to: outputPath,
+                               success: success,
+                               failure: failure)
+}
+
+// MARK: - Carbon <api>
 
 /// Renders a code selection into multiple Carbon images.
 ///
@@ -15,8 +39,8 @@ import NefModels
 ///   - code: content for generation the snippet.
 ///   - style: style to apply to export code snippet.
 ///   - outputPath: output where to render the snippets.
-///   - success: callback if everything go well.
-///   - failure: callback if something go wrong.
+///   - success: callback to notify if everything goes well.
+///   - failure: callback with information to notify if something goes wrong.
 ///
 /// - Returns: `NSWindow` where Carbon snippet will be rendered.
 public func carbon(code: String,
@@ -48,8 +72,8 @@ public func carbon(code: String,
 ///   - code: content for generation the snippet.
 ///   - style: style to apply to export code snippet.
 ///   - outputPath: output where to render the snippets.
-///   - success: callback if everything go well.
-///   - failure: callback if something go wrong.
+///   - success: callback to notify if everything goes well.
+///   - failure: callback with information to notify if something goes wrong.
 public func carbon(parentView: NSView,
                    code: String,
                    style: CarbonStyle,
