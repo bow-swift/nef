@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		8B12D79F22D6235200D05A70 /* NefJekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12D79D22D6235200D05A70 /* NefJekyll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D7A422D6238300D05A70 /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* Jekyll.swift */; };
+		8B12D7B822D63EAD00D05A70 /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B12D7B922D63EAD00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B12D7BA22D63EAD00D05A70 /* NefMarkdown.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B22248322D5EAD500C85856 /* NefMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B12D7BB22D6404300D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7BC22D645AA00D05A70 /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7BD22D645AE00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7BE22D645B300D05A70 /* NefJekyll.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B12D79B22D6235200D05A70 /* NefJekyll.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7BF22D645B700D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7C022D645EE00D05A70 /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7C122D645EE00D05A70 /* NefCarbon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7C222D645EE00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7C322D645EE00D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249322D5EAD600C85856 /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -66,6 +78,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B12D79A22D6235200D05A70;
 			remoteInfo = NefJekyll;
+		};
+		8B12D7C422D6498900D05A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BF75F5622CA637B00EC53A1;
+			remoteInfo = Common;
+		};
+		8B12D7C622D6498900D05A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
+			remoteInfo = Core;
+		};
+		8B12D7C822D6498F00D05A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BF75F5622CA637B00EC53A1;
+			remoteInfo = Common;
+		};
+		8B12D7CA22D6498F00D05A70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
+			remoteInfo = Core;
 		};
 		8B22249B22D5EB2200C85856 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -177,30 +217,42 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		8B0CA51422AE669600181BC0 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = nef/frameworks/carbon;
+			dstSubfolderSpec = 16;
 			files = (
+				8B12D7C022D645EE00D05A70 /* Common.framework in CopyFiles */,
+				8B12D7C122D645EE00D05A70 /* NefCarbon.framework in CopyFiles */,
+				8B12D7C222D645EE00D05A70 /* Core.framework in CopyFiles */,
+				8B12D7C322D645EE00D05A70 /* NefModels.framework in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B424B1D224E28FC00AF9010 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = nef/frameworks/markdown;
+			dstSubfolderSpec = 16;
 			files = (
+				8B12D7BB22D6404300D05A70 /* NefModels.framework in CopyFiles */,
+				8B12D7B822D63EAD00D05A70 /* Common.framework in CopyFiles */,
+				8B12D7B922D63EAD00D05A70 /* Core.framework in CopyFiles */,
+				8B12D7BA22D63EAD00D05A70 /* NefMarkdown.framework in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B6FC583221ECE6A008F7694 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = /usr/share/man/man1;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = nef/frameworks/jekyll;
+			dstSubfolderSpec = 16;
 			files = (
+				8B12D7BF22D645B700D05A70 /* NefModels.framework in CopyFiles */,
+				8B12D7BE22D645B300D05A70 /* NefJekyll.framework in CopyFiles */,
+				8B12D7BD22D645AE00D05A70 /* Core.framework in CopyFiles */,
+				8B12D7BC22D645AA00D05A70 /* Common.framework in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -745,6 +797,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				8B12D7C522D6498900D05A70 /* PBXTargetDependency */,
+				8B12D7C722D6498900D05A70 /* PBXTargetDependency */,
 			);
 			name = NefJekyll;
 			productName = NefJekyll;
@@ -763,6 +817,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				8B12D7C922D6498F00D05A70 /* PBXTargetDependency */,
+				8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */,
 			);
 			name = NefMarkdown;
 			productName = NefMarkdown;
@@ -1185,6 +1241,26 @@
 			target = 8B12D79A22D6235200D05A70 /* NefJekyll */;
 			targetProxy = 8B12D7A722D624E800D05A70 /* PBXContainerItemProxy */;
 		};
+		8B12D7C522D6498900D05A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			targetProxy = 8B12D7C422D6498900D05A70 /* PBXContainerItemProxy */;
+		};
+		8B12D7C722D6498900D05A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B6B119322CB9FDE0060177F /* Core */;
+			targetProxy = 8B12D7C622D6498900D05A70 /* PBXContainerItemProxy */;
+		};
+		8B12D7C922D6498F00D05A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			targetProxy = 8B12D7C822D6498F00D05A70 /* PBXContainerItemProxy */;
+		};
+		8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B6B119322CB9FDE0060177F /* Core */;
+			targetProxy = 8B12D7CA22D6498F00D05A70 /* PBXContainerItemProxy */;
+		};
 		8B22249C22D5EB2200C85856 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
@@ -1268,6 +1344,8 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1278,6 +1356,8 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1404,6 +1484,9 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1414,6 +1497,9 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1693,6 +1779,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = 0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1707,6 +1794,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = 0;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
