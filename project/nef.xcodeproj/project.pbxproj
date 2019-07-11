@@ -1345,7 +1345,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "";
-				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/carbon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1357,7 +1357,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "";
-				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/carbon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1485,7 +1485,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "";
-				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/markdown;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1498,7 +1498,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "";
-				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/markdown;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1779,7 +1779,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/jekyll;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1794,7 +1794,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/local/lib/nef/**";
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/jekyll;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
