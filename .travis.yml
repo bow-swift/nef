@@ -11,10 +11,10 @@ addons:
 
 env:
   global:
-    - PROJECT="./markdown/Markdown.xcodeproj"
+    - PROJECT="./project/nef.xcodeproj"
     - JOB="XCODE"
     - DEST="arch=x86_64"
-    - SCHEME="Markup"
+    - SCHEME="Core"
     - SDK="macosx"
     - ACTION="test"
 

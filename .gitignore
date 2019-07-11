@@ -2,6 +2,8 @@
 **/.DS_Store
 **/xcuserdata/
 BowPlayground
+/.build
+.swiftpm
 
 ## Jekyll
 _site
