@@ -63,8 +63,8 @@ public func jekyll(content: String, to outputPath: String, permalink: String,
 /// - Postcondition: you should manage the output `NSWindow`.
 ///
 /// - Parameters:
-///   - code: content for generation the snippet.
-///   - style: style to apply to export code snippet.
+///   - code: content to generate the snippet.
+///   - style: style to apply to exported code snippet.
 ///   - outputPath: output where to render the snippets.
 ///   - success: callback to notify if everything goes well.
 ///   - failure: callback with information to notify if something goes wrong.
@@ -95,9 +95,9 @@ public func carbon(code: String,
 /// - Precondition: this method must be invoked from main thread.
 ///
 /// - Parameters:
-///   - parentView: canvas works where to render Carbon image.
-///   - code: content for generation the snippet.
-///   - style: style to apply to export code snippet.
+///   - parentView: canvas view where to render Carbon image.
+///   - code: content to generate the snippet.
+///   - style: style to apply to exported code snippet.
 ///   - outputPath: output where to render the snippets.
 ///   - success: callback to notify if everything goes well.
 ///   - failure: callback with information to notify if something goes wrong.
