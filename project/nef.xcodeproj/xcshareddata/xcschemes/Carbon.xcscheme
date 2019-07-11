@@ -62,7 +62,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--size 1"
+            argument = "--size 3"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

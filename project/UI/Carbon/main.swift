@@ -6,6 +6,7 @@ import Core
 import NefModels
 import NefCarbon
 
+let scriptName = "nef-carbon-page"
 let console = CarbonOutput()
 
 func main(downloader: CarbonDownloader) {

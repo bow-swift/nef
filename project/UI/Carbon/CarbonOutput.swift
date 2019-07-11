@@ -4,10 +4,6 @@ import Foundation
 import Common
 
 public class CarbonOutput: ConsoleOutput {
-
-    let scriptName = "nef-carbon-page"
-    
-    public init() {}
     
     public func printError(information: String) {
         print("""
