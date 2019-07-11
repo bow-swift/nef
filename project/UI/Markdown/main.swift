@@ -31,7 +31,7 @@ func main() {
 private func renderMarkdown(from filePath: String, to outputPath: String) {
     let fileURL = URL(fileURLWithPath: filePath)
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8) else {
-        Console.error(information: "invalid input file").show(output: console)
+        Console.error(information: "invalid input file '\(filePath)'").show(output: console)
         return
     }
     

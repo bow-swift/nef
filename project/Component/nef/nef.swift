@@ -1,13 +1,15 @@
 //  Copyright © 2019 The nef Authors.
 
 import AppKit
-import NefModels
+
 import NefMarkdown
+import NefJekyll
 import NefCarbon
+import NefModels
 
 // MARK: - Markdown <api>
 
-/// Renders a code selection into Markdown files.
+/// Renders content into Markdown files.
 ///
 /// - Precondition: this method must be invoked from main thread.
 ///
@@ -16,16 +18,41 @@ import NefCarbon
 ///   - outputPath: output where to write the Markdown render.
 ///   - success: callback to notify if everything goes well.
 ///   - failure: callback with information to notify if something goes wrong.
-public func renderMarkdown(content: String, to outputPath: String,
+public func markdown(content: String, to outputPath: String,
                            success: @escaping () -> Void, failure: @escaping (String) -> Void) {
     guard Thread.isMainThread else {
-        fatalError("renderMarkdown(content:style:outputPath:success:failure:) should be invoked in main thread")
+        fatalError("markdown(content:outputPath:success:failure:) should be invoked in main thread")
     }
     
-    NefMarkdown.renderMarkdown(content: content,
-                               to: outputPath,
-                               success: success,
-                               failure: failure)
+    renderMarkdown(content: content,
+                   to: outputPath,
+                   success: success,
+                   failure: failure)
+}
+
+// MARK: - Jekyll <api>
+
+/// Renders content into Jekyll format.
+///
+/// - Precondition: this method must be invoked from main thread.
+///
+/// - Parameters:
+///   - content: content page in Xcode playground.
+///   - outputPath: output where to write the Markdown render.
+///   - permalink: website relative url where locate the page.
+///   - success: callback to notify if everything goes well.
+///   - failure: callback with information to notify if something goes wrong.
+public func jekyll(content: String, to outputPath: String, permalink: String,
+                   success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    guard Thread.isMainThread else {
+        fatalError("jekyll(content:outputPath:permalink:success:failure:) should be invoked in main thread")
+    }
+    
+    renderJekyll(content: content,
+                 to: outputPath,
+                 permalink: permalink,
+                 success: success,
+                 failure: failure)
 }
 
 // MARK: - Carbon <api>
