@@ -57,7 +57,6 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     }
     
     private func launch(carbonRequest: URLRequest) {
-        loadFontsScripts()
         self.load(carbonRequest)
     }
     
@@ -85,7 +84,6 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "carbon.now.sh"
-        urlComponents.path = "/embeded"
         urlComponents.queryItems = [backgroundColorItem, themeItem, windowsThemeItem, languageItem, dropShadowItem, shadowYoffsetItem, shadowBlurItem, windowsControlItem, autoAdjustWidthItem, verticalPaddingItem, horizontalPaddingItem, lineNumbersItem, fontItem, fontSizeItem, lineHeightItem, exportSizeCondition, exportSize, carbonWatermarkItem, codeItem]
         
         let url = urlComponents.url?.absoluteString.urlEncoding ?? "https://github.com/bow-swift/nef"
@@ -98,7 +96,6 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         let scale: CGFloat = carbon?.style.size.rawValue ?? 1
         
         setZoom(in: self, scale: scale)
-        hideCopyButton(in: self)
         carbonRectArea(in: self, zoom: scale) { configuration in
             guard let configuration = configuration else {
                 self.carbonDelegate?.didFailLoadCarbon(error: screenshotError)
@@ -139,7 +136,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     
     // MARK: javascript <helpers>
     private func carbonRectArea(in webView: WKWebView, zoom: CGFloat, completion: @escaping (WKSnapshotConfiguration?) -> Void) {
-        let container = "document.getElementsByClassName('container-bg')[0]"
+        let container = "document.getElementsByClassName('export-container')[0]"
         let getWidth = "\(container).scrollWidth"
         let getHeight = "\(container).scrollHeight"
         
@@ -149,23 +146,14 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
             }
             
             let (w, h) = (inset[0], inset[1])
-            let rect = CGRect(x: 0, y: 0, width: w * zoom, height: h * zoom)
+            let padding: CGFloat = 10
+            let padding_x2 = 2 * padding
+            let rect = CGRect(x: padding, y: padding, width: w * zoom - padding_x2, height: h * zoom - padding_x2)
             let configuration = WKSnapshotConfiguration()
             configuration.rect = rect
             
             completion(configuration)
         }
-    }
-    
-    private func hideCopyButton(in webView: WKWebView) {
-        let showWatermark = carbon?.style.watermark ?? false
-        guard !showWatermark else { return }
-        let hideCopyButton = "document.getElementsByClassName('copy-button')[0].style.display = 'none'"
-        webView.evaluateJavaScript(hideCopyButton)
-    }
-    
-    private func loadFontsScripts() {
-        load(script: headersStyleScript + fontStyleScript)
     }
     
     private func injectWatermark() {
@@ -193,13 +181,12 @@ private extension CarbonWebView {
     }
     
     private var injectNefLogoJS: String {
-        return "var logoButton = document.getElementsByClassName('copy-button')[0];" +
-               "logoButton.firstElementChild.hidden = true;" +
+        return "var controlContainer = document.getElementsByClassName('window-controls')[0];" +
                "var logoNode = document.createElement('img');" +
                "logoNode.setAttribute('src', 'data:image/svg+xml;base64,\(Assets.Base64.favicon)');" +
-               "logoNode.setAttribute('height', '24');" +
-               "logoButton.setAttribute('style', 'margin-top: -7.5px; margin-right: -8px');" +
-               "logoButton.appendChild(logoNode);"
+               "logoNode.setAttribute('height', '25');" +
+               "logoNode.setAttribute('style', 'position: absolute; top: -4px; right: 6px');" +
+               "controlContainer.appendChild(logoNode);"
     }
 }
 
@@ -207,38 +194,11 @@ private extension CarbonWebView {
 private extension CarbonWebView {
     
     private var resetPosition: String {
-        return "var body = document.getElementsByClassName('section')[0];" +
-               "body.setAttribute('style', 'float: left;');"
-    }
-    
-    // MARK: - Javascript for inject user scripts
-    private var headersStyleScript: String {
-        return "var style = document.createElement('style');"  +
-               "style.setAttribute('id', '__jsx-86296889');" +
-               "style.innerHTML = '\(clean(javascript: headerStyle))';" +
-               "var head = document.getElementsByTagName('head')[0];"  +
-               "head.appendChild(style);";
-    }
-    
-    private var fontStyleScript: String {
-        return "var style = document.createElement('style');"  +
-               "style.setAttribute('id', '__jsx-3893451684');" +
-               "style.innerHTML = '\(clean(javascript: fontsStyle))';" +
-               "var head = document.getElementsByTagName('head')[0];"  +
-               "head.appendChild(style);";
-    }
-    
-    // MARK: - Style definitions
-    private var headerStyle: String {
-        return """
-        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font-weight:inherit;font-family:inherit;font-style:inherit;vertical-align:baseline;}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}ol,ul{list-style:none;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}table{border-collapse:collapse;border-spacing:0;}html,body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;background:#121212;color:white;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue', sans-serif;font-weight:400;font-style:normal;text-transform:initial;-webkit-letter-spacing:initial;-moz-letter-spacing:initial;-ms-letter-spacing:initial;letter-spacing:initial;min-height:704px;}*{box-sizing:border-box;}h1,h2,h3,h4,h5,h6{font-weight:500;}a{color:inherit;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}*::selection{background:rgba(255,255,255,0.99);color:#121212;}.link{color:#fff;-webkit-text-decoration:none;text-decoration:none;padding-bottom:3px;background:linear-gradient( to right, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 100% );background-size:1px 1px;background-position:0 100%;background-repeat:repeat-x;}.link:hover{color:#F8E81C;background:none;}.react-spinner{z-index:999;position:relative;width:32px;height:32px;top:50%;left:50%;}.react-spinner_bar{-webkit-animation:react-spinner_spin 1.2s linear infinite;-moz-animation:react-spinner_spin 1.2s linear infinite;-webkit-animation:react-spinner_spin 1.2s linear infinite;animation:react-spinner_spin 1.2s linear infinite;border-radius:5px;background-color:#fff;position:absolute;width:20%;height:7.8%;top:-3.9%;left:-10%;}[role='button']:focus{outline:none;}@-webkit-keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}@keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}@-moz-keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}@-webkit-keyframes react-spinner_spin{0%{opacity:1;}100%{opacity:0.15;}}
-        """
-    }
-    
-    private var fontsStyle: String {
-        return """
-        @font-face{font-family:'Iosevka';font-display:swap;src:url('//cdn.jsdelivr.net/npm/@typopro/web-iosevka@3.7.5/TypoPRO-iosevka-term-bold.woff') format('woff');font-weight:400;font-style:normal;}@font-face{font-family:'Monoid';font-display:swap;src:url('//cdn.jsdelivr.net/npm/@typopro/web-monoid@3.7.5/TypoPRO-Monoid-Regular.woff') format('woff2'), url('//cdn.jsdelivr.net/npm/@typopro/web-monoid@3.7.5/TypoPRO-Monoid-Regular.woff') format('woff');font-weight:400;font-style:normal;}@font-face{font-family:'Fantasque Sans Mono';font-display:swap;src:url('//cdn.jsdelivr.net/npm/@typopro/web-fantasque-sans-mono@3.7.5/TypoPRO-FantasqueSansMono-Regular.woff') format('woff2'), url('//cdn.jsdelivr.net/npm/@typopro/web-fantasque-sans-mono@3.7.5/TypoPRO-FantasqueSansMono-Regular.woff') format('woff');font-weight:400;font-style:normal;}@font-face{font-family:'Hack';font-display:swap;src:url('//cdn.jsdelivr.net/font-hack/2.020/fonts/woff2/hack-regular-webfont.woff2?v=2.020') format('woff2'), url('//cdn.jsdelivr.net/font-hack/2.020/fonts/woff/hack-regular-webfont.woff?v=2.020') format('woff');font-weight:400;font-style:normal;}@font-face{font-family:'Fira Code';font-display:swap;src:url('//cdn.rawgit.com/tonsky/FiraCode/1.204/distr/woff2/FiraCode-Regular.woff2') format('woff2'), url('//cdn.rawgit.com/tonsky/FiraCode/1.204/distr/woff/FiraCode-Regular.woff') format('woff');font-weight:400;font-style:normal;}@font-face{font-family:'IBM Plex Mono';font-display:swap;font-style:italic;font-weight:500;src:local('IBM Plex Mono Medium Italic'),local('IBMPlexMono-MediumItalic'), url(https://fonts.gstatic.com/s/ibmplexmono/v2/-F6sfjptAgt5VM-kVkqdyU8n1ioSJlR1gMoQPttozw.woff2) format('woff2');unicode-range:U + 0000-00ff,U + 0131,U + 0152-0153,U + 02bb-02bc,U + 02c6,U + 02da, U + 02dc,U + 2000-206f,U + 2074,U + 20ac,U + 2122,U + 2191,U + 2193,U + 2212, U + 2215,U + FEFF,U + FFFD;}@font-face{font-family:'Anonymous Pro';font-display:swap;font-style:normal;font-weight:400;src:local('Anonymous:Pro Regular'),local('AnonymousPro-Regular'), url(//fonts.gstatic.com/s/anonymouspro/v11/Zhfjj_gat3waL4JSju74E3n3cbdKJftHIk87C9ihfO8.woff2) format('woff2');unicode-range:U + 0000-00ff,U + 0131,U + 0152-0153,U + 02bb-02bc,U + 02c6,U + 02da, U + 02dc,U + 2000-206f,U + 2074,U + 20ac,U + 2122,U + 2212,U + 2215;}@font-face{font-family:'Droid Sans Mono';font-display:swap;font-style:normal;font-weight:400;src:local('Droid:Sans Mono Regular'),local('DroidSansMono-Regular'), url(//fonts.gstatic.com/s/droidsansmono/v9/ns-m2xQYezAtqh7ai59hJVlgUn8GogvcKKzoM9Dh-4E.woff2) format('woff2');unicode-range:U + 0000-00ff,U + 0131,U + 0152-0153,U + 02bb-02bc,U + 02c6,U + 02da, U + 02dc,U + 2000-206f,U + 2074,U + 20ac,U + 2122,U + 2212,U + 2215;}@font-face{font-family:'Inconsolata';font-display:swap;font-style:normal;font-weight:400;src:local('Inconsolata:Regular'),local('Inconsolata-Regular'), url(//fonts.gstatic.com/s/inconsolata/v16/BjAYBlHtW3CJxDcjzrnZCIgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');unicode-range:U + 0000-00ff,U + 0131,U + 0152-0153,U + 02bb-02bc,U + 02c6,U + 02da, U + 02dc,U + 2000-206f,U + 2074,U + 20ac,U + 2122,U + 2212,U + 2215;}@font-face{font-family:'Source Code Pro';font-display:swap;font-style:normal;font-weight:400;src:local('Source:Code Pro'),local('SourceCodePro-Regular'), url(//fonts.gstatic.com/s/sourcecodepro/v7/mrl8jkM18OlOQN8JLgasD5bPFduIYtoLzwST68uhz_Y.woff2) format('woff2');unicode-range:U + 0000-00ff,U + 0131,U + 0152-0153,U + 02bb-02bc,U + 02c6,U + 02da, U + 02dc,U + 2000-206f,U + 2074,U + 20ac,U + 2122,U + 2212,U + 2215;}@font-face{font-family:'Ubuntu Mono';font-display:swap;font-style:normal;font-weight:400;src:local('Ubuntu:Mono'),local('UbuntuMono-Regular'), url(//fonts.gstatic.com/s/ubuntumono/v7/ViZhet7Ak-LRXZMXzuAfkYgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');unicode-range:U + 0000-00ff,U + 0131,U + 0152-0153,U + 02bb-02bc,U + 02c6,U + 02da, U + 02dc,U + 2000-206f,U + 2074,U + 20ac,U + 2122,U + 2212,U + 2215;}@font-face{font-family:'Space Mono';font-display:swap;font-style:normal;font-weight:400;src:local('Space Mono'),local('SpaceMono-Regular'), url(https://fonts.gstatic.com/s/spacemono/v2/i7dPIFZifjKcF5UAWdDRYEF8RQ.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC, U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
-        """
+        return "var main = document.getElementsByClassName('main')[0];" +
+               "var container = document.getElementsByClassName('export-container')[0];" +
+               "main.replaceWith(container);" +
+               "container.className = 'export-container';" +
+               "container.setAttribute('style', 'position: absolute; float: left; top: 0px');"
     }
     
     // MARK: - internal helpers
