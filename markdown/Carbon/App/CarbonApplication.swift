@@ -15,7 +15,9 @@ class CarbonApplication {
     }
     
     static func terminate() {
-        NSApplication.shared.terminate(nil)
+        DispatchQueue.main.async {
+            NSApplication.shared.terminate(nil)
+        }
     }
 }
 
