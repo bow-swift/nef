@@ -47,7 +47,7 @@ module Pod
     end
 
     def clean_unuseful_files
-      [".git", ".gitignore", ".travis.yml", ".mailmap", "LICENSE", "README.md", "bin", "configure", "lib", "markdown", "setup", "assets", "docs", "contents"].each do |asset|
+      [".git", ".gitignore", ".travis.yml", ".mailmap", "LICENSE", "README.md", "Package.swift", "assets", "bin", "configure", "contents", "docs", "project", "setup"].each do |asset|
         `rm -rf #{asset}`
       end
     end
