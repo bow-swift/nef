@@ -2,7 +2,7 @@
 
 import Foundation
 
-public struct Carbon {
+public struct Carbon: Codable {
     public let code: String
     public let style: CarbonStyle
     
@@ -13,7 +13,7 @@ public struct Carbon {
 }
 
 // MARK: - Style
-public struct CarbonStyle {
+public struct CarbonStyle: Codable {
     public let background: Color
     public let size: Size
     public let theme: Theme
@@ -30,7 +30,7 @@ public struct CarbonStyle {
         self.watermark = watermark
     }
     
-    public enum Size: CGFloat, CaseIterable {
+    public enum Size: Double, Codable, CaseIterable {
         case x1 = 1
         case x2 = 2
         case x3 = 3
@@ -38,7 +38,7 @@ public struct CarbonStyle {
         case x5 = 5
     }
     
-    public enum Theme: String, CaseIterable {
+    public enum Theme: String, Codable, CaseIterable {
         case cobalt
         case blackboard
         case dracula
@@ -62,7 +62,7 @@ public struct CarbonStyle {
         case zenburn
     }
     
-    public enum Font: String, CaseIterable {
+    public enum Font: String, Codable, CaseIterable {
         case firaCode = "Fira Code"
         case hack = "Hack"
         case inconsolata = "Inconsolata"
@@ -78,7 +78,7 @@ public struct CarbonStyle {
         case ubuntuMono = "Ubuntu Mono"
     }
     
-    public struct Color: CustomStringConvertible {
+    public struct Color: CustomStringConvertible, Codable, Equatable {
         public let r: UInt8
         public let g: UInt8
         public let b: UInt8
@@ -149,7 +149,7 @@ public struct CarbonError: Error {
 extension CarbonStyle.Size {
     public init?(factor string: String) {
         guard let factor = Int8(string),
-              let size = CarbonStyle.Size(rawValue: CGFloat(factor)) else { return nil }
+              let size = CarbonStyle.Size(rawValue: Double(factor)) else { return nil }
         self = size
     }
 }

@@ -95,7 +95,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     private func screenshot() {
         guard let filename = filename, let code = carbon?.code else { didFailLoadingCarbonWebView(); return }
         let screenshotError = CarbonError(filename: filename, snippet: code, error: .invalidSnapshot)
-        let scale: CGFloat = carbon?.style.size.rawValue ?? 1
+        let scale = CGFloat(carbon?.style.size.rawValue ?? 1)
         
         setZoom(in: self, scale: scale)
         hideCopyButton(in: self)
