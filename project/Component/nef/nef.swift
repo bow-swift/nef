@@ -131,5 +131,5 @@ public func carbon(parentView: NSView,
 /// - Parameter carbon: configuration
 /// - Returns: URL request to carbon.now.sh
 public func carbonURLRequest(withConfiguration carbon: Carbon) -> URLRequest {
-    return CarbonViewer.urlRequest(from: configuration)
+    return CarbonViewer.urlRequest(from: carbon)
 }
