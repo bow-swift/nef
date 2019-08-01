@@ -110,7 +110,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         let getWidth  = "\(container).scrollWidth"
         let getHeight = "\(container).scrollHeight"
         
-        webView.evaluateJavaScript(resetPosition + "[\(getWidth), \(getHeight)]") { (result, _) in
+        webView.evaluateJavaScript(resetPosition + resetBackgroundColor + "[\(getWidth), \(getHeight)]") { (result, _) in
             guard let inset = result as? [CGFloat], inset.count == 2 else {
                 completion(nil); return
             }
@@ -137,10 +137,19 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
 private extension CarbonWebView {
     private var resetPosition: String {
         return "var main = document.getElementsByClassName('main')[0];" +
-            "var container = document.getElementsByClassName('export-container')[0];" +
-            "main.replaceWith(container);" +
-            "container.className = 'export-container';" +
-        "container.setAttribute('style', 'position: absolute; float: left; top: 0px');"
+               "var container = document.getElementsByClassName('export-container')[0];" +
+               "main.replaceWith(container);" +
+               "container.className = 'export-container';" +
+               "container.setAttribute('style', 'position: absolute; float: left; top: 0px');"
+    }
+    
+    private var resetBackgroundColor: String {
+        return "var html = document.getElementsByTagName('html')[0];" +
+               "var body = document.getElementsByTagName('body')[0];" +
+               "var layersToEliminate = document.getElementsByClassName('eliminateOnRender');" +
+               "html.setAttribute('style', 'background-color: white');" +
+               "body.setAttribute('style', 'background-color: white');" +
+               "while (layersToEliminate.length > 0) { layersToEliminate[0].parentNode.removeChild(layersToEliminate[0]); };"
     }
     
     private var injectPoweredByJS: String {
