@@ -31,7 +31,7 @@ public enum CarbonViewer {
         urlComponents.host = "carbon.now.sh"
         urlComponents.queryItems = [backgroundColorItem, themeItem, windowsThemeItem, languageItem, dropShadowItem, shadowYoffsetItem, shadowBlurItem, windowsControlItem, autoAdjustWidthItem, verticalPaddingItem, horizontalPaddingItem, lineNumbersItem, fontItem, fontSizeItem, lineHeightItem, exportSizeCondition, exportSize, carbonWatermarkItem, codeItem]
         
-        let url = urlComponents.url?.absoluteString.urlEncoding ?? "https://github.com/bow-swift/nef"
+        let url = urlComponents.url!.absoluteString.urlEncoding
         return URLRequest(url: URL(string: url)!)
     }
 }

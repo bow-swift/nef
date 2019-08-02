@@ -2,7 +2,7 @@
 
 import Foundation
 
-public struct Carbon: Codable {
+public struct Carbon: Codable, Equatable {
     public let code: String
     public let style: CarbonStyle
     
@@ -13,7 +13,7 @@ public struct Carbon: Codable {
 }
 
 // MARK: - Style
-public struct CarbonStyle: Codable {
+public struct CarbonStyle: Codable, Equatable {
     public let background: Color
     public let size: Size
     public let theme: Theme
@@ -30,7 +30,7 @@ public struct CarbonStyle: Codable {
         self.watermark = watermark
     }
     
-    public enum Size: Double, Codable, CaseIterable {
+    public enum Size: Double, Codable, Equatable, CaseIterable {
         case x1 = 1
         case x2 = 2
         case x3 = 3
@@ -38,7 +38,7 @@ public struct CarbonStyle: Codable {
         case x5 = 5
     }
     
-    public enum Theme: String, Codable, CaseIterable {
+    public enum Theme: String, Codable, Equatable, CaseIterable {
         case cobalt
         case blackboard
         case dracula
@@ -62,7 +62,7 @@ public struct CarbonStyle: Codable {
         case zenburn
     }
     
-    public enum Font: String, Codable, CaseIterable {
+    public enum Font: String, Codable, Equatable, CaseIterable {
         case firaCode = "Fira Code"
         case hack = "Hack"
         case inconsolata = "Inconsolata"
