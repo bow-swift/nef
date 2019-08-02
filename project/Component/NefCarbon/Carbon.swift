@@ -19,3 +19,12 @@ public func renderCarbon(downloader: CarbonDownloader, code content: String, sty
     guard let trace = carbonGenerator.render(content: content) else { failure(""); return }
     carbonGenerator.isValid(trace: trace) ? success() : failure(trace)
 }
+
+
+/// Get an URL Request given a carbon configuration
+///
+/// - Parameter carbon: configuration
+/// - Returns: URL request to carbon.now.sh
+public func carbonURLRequest(from carbon: Carbon) -> URLRequest {
+    return CarbonViewer.urlRequest(from: carbon)
+}

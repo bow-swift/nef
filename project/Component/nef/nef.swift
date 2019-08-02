@@ -19,7 +19,7 @@ import NefModels
 ///   - success: callback to notify if everything goes well.
 ///   - failure: callback with information to notify if something goes wrong.
 public func markdown(content: String, to outputPath: String,
-                           success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+                     success: @escaping () -> Void, failure: @escaping (String) -> Void) {
     guard Thread.isMainThread else {
         fatalError("markdown(content:outputPath:success:failure:) should be invoked in main thread")
     }
@@ -124,4 +124,12 @@ public func carbon(parentView: NSView,
                      success: success,
                      failure: failure)
     }
+}
+
+/// Get an URL Request given a carbon configuration
+///
+/// - Parameter carbon: configuration
+/// - Returns: URL request to carbon.now.sh
+public func carbonURLRequest(withConfiguration carbon: Carbon) -> URLRequest {
+    return CarbonViewer.urlRequest(from: carbon)
 }
