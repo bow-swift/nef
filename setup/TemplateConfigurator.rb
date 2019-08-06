@@ -1,48 +1,33 @@
 require 'fileutils'
-require 'colored2'
 
-module Pod
+module Nef
+
   class TemplateConfigurator
+    attr_reader :project_name
 
-    attr_reader :pod_name, :pods_for_podfile, :prefixes, :username, :email
-
-    def initialize(pod_name)
-      @pod_name = pod_name
-      @pods_for_podfile = []
-      @prefixes = []
+    def initialize(project_name)
+      @project_name = project_name
     end
 
     def run
-      clean_unuseful_files
+      #clean_unuseful_files
       ConfigureNef.perform(configurator: self)
-
       replace_variables_in_files
-      clean_template_files
-      add_pods_to_podfile
+      #clean_template_files
     end
 
-    #----------------------------------------#
-
+    # private methods
     def replace_variables_in_files
       file_names = [podfile_path, license_path]
       file_names.each do |file_name|
         text = File.read(file_name)
-        text.gsub!("${POD_NAME}", @pod_name)
-        text.gsub!("${REPO_NAME}", @pod_name.gsub('+', '-'))
+        text.gsub!("${POD_NAME}", @project_name)
+        text.gsub!("${REPO_NAME}", @project_name.gsub('+', '-'))
         text.gsub!("${USER_NAME}", user_name)
         text.gsub!("${USER_EMAIL}", user_email)
         text.gsub!("${YEAR}", year)
         text.gsub!("${DATE}", date)
         File.open(file_name, "w") { |file| file.puts text }
-      end
-    end
-
-    def run_pod_install
-      puts "\nRunning " + "pod install".magenta + " on your new library."
-      puts ""
-
-      Dir.chdir(".") do
-        system "pod install"
       end
     end
 
@@ -58,17 +43,7 @@ module Pod
       end
     end
 
-    def add_pods_to_podfile
-      podfile = File.read podfile_path
-      podfile_content = @pods_for_podfile.map do |pod|
-        "pod '" + pod + "'"
-      end.join("\n    ")
-      podfile.gsub!("${INCLUDED_PODS}", podfile_content)
-      File.open(podfile_path, "w") { |file| file.puts podfile }
-    end
-
-    #----------------------------------------#
-
+    # properties
     def user_name
       (ENV['GIT_COMMITTER_NAME'] || github_user_name || `git config user.name` || `<GITHUB_USERNAME>` ).strip
     end
@@ -99,6 +74,5 @@ module Pod
       'LICENSE'
     end
 
-    #----------------------------------------#
   end
 end

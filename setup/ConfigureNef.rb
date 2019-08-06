@@ -1,4 +1,4 @@
-module Pod
+module Nef
 
   class ConfigureNef
     attr_reader :configurator
@@ -13,14 +13,14 @@ module Pod
 
     def perform
 
-      Pod::ProjectManipulator.new({
+      Nef::ProjectManipulator.new({
         :configurator => @configurator,
         :xcodeproj_path => "template/osx/PROJECT.xcodeproj",
         :platform => :osx,
         :prefix => ''
       }).run
 
-      Pod::ProjectManipulator.new({
+      Nef::ProjectManipulator.new({
         :configurator => @configurator,
         :xcodeproj_path => "template/ios/PROJECT.xcodeproj",
         :platform => :ios,

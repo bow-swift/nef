@@ -1,33 +1,28 @@
-require 'xcodeproj'
 
-module Pod
+module Nef
 
   class ProjectManipulator
-    attr_reader :configurator, :xcodeproj_path, :platform, :string_replacements, :prefix
+    attr_reader :configurator, :xcodeproj_path, :platform, :prefix, :string_replacements
 
     def self.perform(options)
       new(options).perform
     end
 
     def initialize(options)
-      @xcodeproj_path = options.fetch(:xcodeproj_path)
       @configurator = options.fetch(:configurator)
+      @xcodeproj_path = options.fetch(:xcodeproj_path)
       @platform = options.fetch(:platform)
       @prefix = options.fetch(:prefix)
-    end
-
-    def run
       @string_replacements = {
         "PROJECT_OWNER" => @configurator.user_name,
         "TODAYS_DATE" => @configurator.date,
         "TODAYS_YEAR" => @configurator.year,
-        "PROJECT" => @configurator.pod_name
+        "PROJECT" => @configurator.project_name
       }
+    end
+
+    def run
       replace_internal_project_settings
-
-      @project = Xcodeproj::Project.open(@xcodeproj_path)
-      @project.save
-
       rename_files
       rename_project_folder
     end
@@ -39,18 +34,18 @@ module Pod
     def rename_files
       # shared schemes have project specific names
       scheme_path = project_folder + "/PROJECT.xcodeproj/xcshareddata/xcschemes/"
-      File.rename(scheme_path + "PROJECT.xcscheme", scheme_path +  @configurator.pod_name + ".xcscheme")
+      File.rename(scheme_path + "PROJECT.xcscheme", scheme_path +  @configurator.project_name + ".xcscheme")
 
       # rename xcproject
-      File.rename(project_folder + "/PROJECT.xcodeproj", project_folder + "/" +  @configurator.pod_name + ".xcodeproj")
+      File.rename(project_folder + "/PROJECT.xcodeproj", project_folder + "/" +  @configurator.project_name + ".xcodeproj")
 
       # rename playground
-      File.rename(project_folder + "/PROJECT.playground", project_folder + "/" +  @configurator.pod_name + ".playground")
+      File.rename(project_folder + "/PROJECT.playground", project_folder + "/" +  @configurator.project_name + ".playground")
     end
 
     def rename_project_folder
       if Dir.exist? project_folder + "/PROJECT"
-        File.rename(project_folder + "/PROJECT", project_folder + "/" + @configurator.pod_name)
+        File.rename(project_folder + "/PROJECT", project_folder + "/" + @configurator.project_name)
       end
     end
 
@@ -68,5 +63,4 @@ module Pod
     end
 
   end
-
 end
