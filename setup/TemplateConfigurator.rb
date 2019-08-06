@@ -10,10 +10,10 @@ module Nef
     end
 
     def run
-      #clean_unuseful_files
+      clean_unuseful_files
       ConfigureNef.perform(configurator: self)
       replace_variables_in_files
-      #clean_template_files
+      clean_template_files
     end
 
     # private methods
