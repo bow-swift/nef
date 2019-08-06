@@ -171,6 +171,7 @@ installPlaygroundTemplate() {
   local projectFolder="$1" # parameter `parent`
   local projectName="$2"   # parameter `projecName`
   local log="$projectFolder/nef/playground/init-playground.log"
+  local tempFolder="template-master"
 
   cd "$projectFolder"
 
@@ -178,12 +179,11 @@ installPlaygroundTemplate() {
   echo ">----------------------------------------- download GitHub project" >> "$log"
   curl -LkSs $NEF_ZIP -o master.zip 1>> "$log" 2>&1
   echo ">----------------------------------------- unzip GitHub project" >> "$log"
-  unzip *master.zip 1>> "$log" 2>&1
-  rm *zip 1>> "$log" 2>&1
+  unzip master.zip -d $tempFolder 1>> "$log" 2>&1
+  rm *.zip 1>> "$log" 2>&1
   echo ">----------------------------------------- move files to parent :: $projectFolder" >> "$log"
-  mv *master/* . 1>> "$log" 2>&1
-  rm *master/.* 1>> "$log" 2>&1
-  rmdir *master 1>> "$log" 2>&1
+  mv $tempFolder/*/* . 1>> "$log" 2>&1
+  rm -rf $tempFolder 1>> "$log" 2>&1
 
   # install template
   echo ">----------------------------------------- installing playground template" >> "$log"
