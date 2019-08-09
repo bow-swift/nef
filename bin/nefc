@@ -87,6 +87,23 @@ dependencies() {
     buildDependencies "$1"
 }
 
+##
+#   isPathFromDependencies(String path)
+#   - Parameter `path`: path to check if it is in dependencies folder
+#   - Return `isDependency` 1 - is a dependency; 0 - another case
+##
+isPathFromDependencies() {
+    local path="$1"  # parameter `path`
+
+    podProject=$(eval echo "\"$path\" | grep '/Pods/' | awk '{ print length; }'")
+    carthageProject=$(eval echo "\"$path\" | grep '/Carthage/' | awk '{ print length; }'")
+
+    if [ "$podProject" != "" ] || [ "$carthageProject" != "" ]; then
+      echo 1
+    else
+      echo 0
+    fi
+}
 
 #: - Compile
 
@@ -116,16 +133,13 @@ buildProject() {
     local logPath="nef/log"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        podProject=$(eval echo "\"$project\" | grep '/Pods.xcodeproj/' | awk '{ print length; }'")
-        ! [ "$podProject" = "" ] && continue
-
-        targetSection="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
-        targetName="grep 'name = ' | awk -F' = ' '{print \$2}' | awk -F';' '{print \$1}'"
-        schemeName=$(eval cat "\"$project\" | $targetSection | $targetName")
+        isDependency=$(isPathFromDependencies "$project")
+        [ $isDependency -eq 1 ] && continue
 
         # build
         workspace=$(workspaceForProjectPath "$1" "$project")
         workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
+        schemeName=$(schemeNameFromProject "$project")
         sdk=$(sdkForWorkspaceAndScheme "$workspace" "$schemeName")
         log="$logPath/$workspaceName.log"
 
@@ -150,6 +164,18 @@ buildProject() {
             exit 1
         fi
     done
+}
+
+schemeNameFromProject() {
+    local project="$1"  # parameter `project`
+
+    targetNative="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
+    targetAggregate="sed -n '/Begin PBXAggregateTarget section/, /End PBXAggregateTarget section/p'"
+    targetName="grep 'name = ' | awk -F' = ' '{print \$2}' | awk -F';' '{print \$1}'"
+    schemeName1=$(eval cat "\"$project\" | $targetNative | $targetName")
+    schemeName2=$(eval cat "\"$project\" | $targetAggregate | $targetName")
+
+    [ -z "$schemeName1" ] && echo "$schemeName2" || echo "$schemeName1"
 }
 
 ##
@@ -422,6 +448,8 @@ compilePlaygroundPages() {
 
     pages=()
     while read -r -d $'\0' playground; do
+        isDependency=$(isPathFromDependencies "$playground")
+        [ $isDependency -eq 1 ] && continue
         pages+=("$playground")
     done < <(find . -name '*.xcplaygroundpage' -print0)
 
