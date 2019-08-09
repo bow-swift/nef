@@ -180,9 +180,9 @@ buildCarthage() {
     [ $platformIOS -eq 1 ] && platform="iOS" || platform="osx"
 
     if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
-        carthage update --cache-builds --platform $platform 1> "$log" 2>&1
+        carthage bootstrap --cache-builds --platform $platform 1> "$log" 2>&1
     else
-        carthage update --platform $platform 1> "$log" 2>&1
+        carthage bootstrap --platform $platform 1> "$log" 2>&1
     fi
 
     # check errors
