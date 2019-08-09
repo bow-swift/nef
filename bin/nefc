@@ -191,12 +191,40 @@ buildCarthage() {
     failed=`grep "failed with exit code" "$log"`
 
     if [ "${#installed}" -eq 0 ] && [ "${#errors}" -eq 0 ] && [ "${#failed}" -eq 0 ]; then
+        createEmptyWorkspace "$project"
         echo " ✅"
     else
         echo " ❌"
         echo "${bold}${red}error: ${reset}${bold}carthage install${normal} review 'nef/log/carthage-install.log' for more information."
         exit 1
     fi
+}
+
+##
+#   createEmptyWorkspace(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+createEmptyWorkspace() {
+    cd "$1"
+
+    find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
+        workspacePath=$(workspaceForProjectPath "$1" "$project")
+        workspaceExtension=$(echo "$workspacePath" | rev | cut -d'.' -f1 | rev)
+        workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
+        workspace="$workspaceName.xcworkspace"
+        isDependency=$(isPathFromDependencies "$workspacePath")
+
+        ([ "$workspaceExtension" = "xcworkspace" ] || [ $isDependency -eq 1 ]) && continue
+
+        content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+         <Workspace
+            version = \"1.0\">
+            <FileRef location = \"container:$workspaceName.xcodeproj\"></FileRef>
+         </Workspace>"
+
+        mkdir "$workspace"
+        echo "$content" > "$workspace/contents.xcworkspacedata"
+    done
 }
 
 
@@ -372,7 +400,7 @@ addPlaygroundReference() {
         workspaceContent="$workspace/contents.xcworkspacedata"
 
         ! [ "$workspaceExtension" = "xcworkspace" ] && continue
-        grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
+        grep -q ".playground\"" "$workspaceContent"; [ $? -eq 0 ] && continue
 
         for playground in "${playgroundsForProjectPath[@]}"; do
             playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
