@@ -164,15 +164,39 @@ buildPODS() {
 #   - parameter `flag`: configuration for building.
 ##
 buildCarthage() {
-    set +e
     cd "$1"
-
+    local project="$1"
     local flag="$2"
     local cartfile="Cartfile"
     local log="`pwd`/nef/log/carthage-install.log"
 
     [ -f $cartfile ] || return
     echo -ne "${normal}Installing ${green}Carthage ${reset}..."
+
+    # build
+    playgroundPagesForProjectPath "$project"
+    playgroundPage=${playgroundPagesForProjectPath[0]}
+    platformIOS=$(isPlatformIOSPlaygroundPage "$playgroundPage")
+    [ $platformIOS -eq 1 ] && platform="iOS" || platform="osx"
+
+    if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
+        carthage update --cache-builds --platform $platform 1> "$log" 2>&1
+    else
+        carthage update --platform $platform 1> "$log" 2>&1
+    fi
+
+    # check errors
+    installed=`grep "Build Failed" "$log"`
+    errors=`grep "error:" "$log"`
+    failed=`grep "failed with exit code" "$log"`
+
+    if [ "${#installed}" -eq 0 ] && [ "${#errors}" -eq 0 ] && [ "${#failed}" -eq 0 ]; then
+        echo " ✅"
+    else
+        echo " ❌"
+        echo "${bold}${red}error: ${reset}${bold}carthage install${normal} review 'nef/log/carthage-install.log' for more information."
+        exit 1
+    fi
 }
 
 
@@ -363,7 +387,7 @@ addPlaygroundReference() {
 
 ##
 #   playgroundsForProjectPath(String projectPath): [String]
-#   - Parameter `projectPath`: path to the *.playground file.
+#   - Parameter `projectPath`: path to project folder.
 #   - Return list of path `playground`
 ##
 playgroundsForProjectPath() {
@@ -376,6 +400,24 @@ playgroundsForProjectPath() {
     done < <(find . -name '*.playground' -print0)
 
     declare -p playgroundsForProjectPath 1>/dev/null 2>/dev/null
+}
+
+##
+#   playgroundPagesForProjectPath(String projectPath): [String]
+#   - Parameter `projectPath`: path to project folder.
+#   - Return list of the whole path `playground pages` in project
+##
+playgroundPagesForProjectPath() {
+    cd "$1"
+
+    playgroundPagesForProjectPath=()
+    while read -r -d $'\0' page; do
+        isDependency=$(isPathFromDependencies "$page")
+        [ $isDependency -eq 1 ] && continue
+        playgroundPagesForProjectPath+=("$page")
+    done < <(find . -name '*.xcplaygroundpage' -print0)
+
+    declare -p playgroundPagesForProjectPath 1>/dev/null 2>/dev/null
 }
 
 ##
@@ -417,24 +459,17 @@ makeHeaders() {
 #   - Parameter `folder`: path to the project folder.
 ##
 compilePlaygroundPages() {
-    cd "$1"
     local projectFolder="$1"  # parameter `folder`
+    playgroundPagesForProjectPath "$projectFolder"
 
-    pages=()
-    while read -r -d $'\0' playground; do
-        isDependency=$(isPathFromDependencies "$playground")
-        [ $isDependency -eq 1 ] && continue
-        pages+=("$playground")
-    done < <(find . -name '*.xcplaygroundpage' -print0)
+    echo "${bold}Found ${#playgroundPagesForProjectPath[@]} playgrounds${normal}"
 
-    echo "${bold}Found ${#pages[@]} playgrounds${normal}"
-
-    for file in "${pages[@]}"; do
-        pageName=$(echo "$file" | rev | cut -d'/' -f 1 | rev)
+    for page in "${playgroundPagesForProjectPath[@]}"; do
+        pageName=$(echo "$page" | rev | cut -d'/' -f 1 | rev)
         echo -ne "${normal}   Compiling ${green}$pageName${reset} ..."
 
         # paths
-        baseFile=$(echo "$file" | cut -c 2-)
+        baseFile=$(echo "$page" | cut -c 2-)
         baseAbsolute=$(echo "$projectFolder$baseFile")
         content="$baseAbsolute/Contents.swift"
         playgroundName=$(echo "$baseAbsolute" | rev | cut -d'/' -f 1 | cut -d'.' -f 2 | rev)
