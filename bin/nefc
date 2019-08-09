@@ -569,9 +569,7 @@ makeStructure() {
 
 cleanStructure() {
     set +e
-    local projectFolder=$1  # parameter `folder`
-
-    cd "$projectFolder"
+    cd "$1" # parameter `folder`
 
     rm -r nef/build 1>/dev/null 2>/dev/null
     rm -r nef/log 1>/dev/null 2>/dev/null
@@ -588,8 +586,11 @@ cleanStructure() {
 clean() {
     set +e
 
-    $(cleanNEF "$1");   echo "Clean nef   ✅"
-    $(cleanPODS "$1");  echo "Clean PODS  ✅"
+    echo -ne "${normal}Clean ${green}nef${reset} ... ";
+    $(cleanNEF "$1"); echo "✅"
+
+    echo -ne "${normal}Clean ${green}dependencies${reset} ... ";
+    $(cleanDependencies "$1"); echo "✅"
 }
 
 ##
@@ -603,9 +604,14 @@ cleanNEF() {
 }
 
 ##
-#   cleanPODS(String folder)
+#   cleanDependencies(String folder)
 #   - Parameter `folder`: path to the project folder.
 ##
+cleanDependencies() {
+    $(cleanPODS "$1");
+    $(cleanCarthage "$1");
+}
+
 cleanPODS() {
     cd "$1"
     pod deintegrate 1>/dev/null 2>/dev/null
@@ -615,6 +621,12 @@ cleanPODS() {
     rm -rf ./*.xcworkspace 1>/dev/null 2>/dev/null
 }
 
+cleanCarthage() {
+    cd "$1"
+    rm -rf Carthage 2>/dev/null
+    rm Cartfile.resolved 2>/dev/null
+    rm -rf ./*.xcworkspace 1>/dev/null 2>/dev/null
+}
 
 #: MAIN
 set -e
