@@ -12,23 +12,27 @@ module Nef
     end
 
     def perform
-
-      Nef::ProjectManipulator.new({
-        :configurator => @configurator,
-        :xcodeproj_path => "template/osx/PROJECT.xcodeproj",
-        :platform => :osx,
-        :prefix => ''
-      }).run
-
-      Nef::ProjectManipulator.new({
-        :configurator => @configurator,
-        :xcodeproj_path => "template/ios/PROJECT.xcodeproj",
-        :platform => :ios,
-        :prefix => ''
-      }).run
+      performProject("cocoapods")
+      performProject("carthage")
 
       `mv ./template/* ./`
       `mv template/.gitignore ./`
+    end
+
+    def performProject(dependency_manager)
+        Nef::ProjectManipulator.new({
+          :configurator => @configurator,
+          :xcodeproj_path => "template/osx/"+dependency_manager+"/PROJECT.xcodeproj",
+          :platform => :osx,
+          :prefix => ''
+        }).run
+
+        Nef::ProjectManipulator.new({
+          :configurator => @configurator,
+          :xcodeproj_path => "template/ios/"+dependency_manager+"/PROJECT.xcodeproj",
+          :platform => :ios,
+          :prefix => ''
+        }).run
     end
   end
 
