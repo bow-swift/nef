@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1020"
+   LastUpgradeVersion = "1030"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8BACBE8222576CAD00266845"
-               BuildableName = "PROJECT.framework"
-               BlueprintName = "PROJECT"
+               BlueprintIdentifier = "07E5010A20CABF0000EDBFB7"
+               BuildableName = "nef"
+               BlueprintName = "nef"
                ReferencedContainer = "container:PROJECT.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8BACBE8222576CAD00266845"
-            BuildableName = "PROJECT.framework"
-            BlueprintName = "PROJECT"
+            BlueprintIdentifier = "07E5010A20CABF0000EDBFB7"
+            BuildableName = "nef"
+            BlueprintName = "nef"
             ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8BACBE8222576CAD00266845"
-            BuildableName = "PROJECT.framework"
-            BlueprintName = "PROJECT"
+            BlueprintIdentifier = "07E5010A20CABF0000EDBFB7"
+            BuildableName = "nef"
+            BlueprintName = "nef"
             ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

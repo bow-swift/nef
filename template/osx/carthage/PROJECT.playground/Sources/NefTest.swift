@@ -1,8 +1,6 @@
 import Foundation
 import XCTest
 
-public enum Nef {}
-
 public extension Nef {
 
     static func run<T: XCTestCase>(testCase class: T.Type) {
