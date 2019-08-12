@@ -98,15 +98,17 @@ printHelpCarbon() {
 ##
 printHelpPlayground() {
     echo ""
-    echo "${normal}nef ${green}${bold}$PLAYGROUND${normal} ${optional}${bold}--name${normal}${reset} <project> ${optional}${bold}--bow-version${normal}${reset} <version format: x.y.z> ${optional}${bold}--bow-branch${normal}${reset} <branch-name> ${optional}${bold}--podfile${normal}${reset} <path>"
+    echo "${normal}nef ${green}${bold}$PLAYGROUND${normal} ${optional}${bold}--name${normal}${reset} <project> ${bold}--platform${normal}${reset} <ios|osx> ${optional}${bold}--bow-version${normal}${reset} <version format: x.y.z> ${optional}${bold}--bow-branch${normal}${reset} <branch-name> ${optional}${bold}--podfile${normal}${reset} <path> ${optional}${bold}--cartfile${normal}${reset} <path>"
     echo ""
     echo "    Build a playground compatible with external frameworks"
     echo ""
     echo "    ${optional}${bold}--name${reset}${normal} specify the name for the Xcode project that you are creating ${optional}[default: $DEFAULT_PLAYGROUND]${reset}"
+    echo "    ${optional}${bold}--platform${reset}${normal} set the target to iOS or macOS ${optional}[default: ios, values: ios|osx]${reset}"
     echo ""
     echo "    ${optional}${bold}--bow-version${reset}${normal} specify the version of Bow that you want to use in the project ${optional}[optional]${reset}"
     echo "    ${optional}${bold}--bow-branch${reset}${normal} specify the branch of Bow that you want to use in the project ${optional}[optional]${reset}"
     echo "    ${optional}${bold}--podfile${reset}${normal} specify a Podfile with your own dependencies ${optional}[optional]${reset}"
+    echo "    ${optional}${bold}--cartfile${reset}${normal} specify a Cartfile with your own dependencies ${optional}[optional]${reset}"
     echo ""
 }
 
@@ -160,9 +162,11 @@ markdown() {
           --main-page )    printHelpJekyll; exit 1 ;;
 
           --name )         printHelpPlayground; exit 1 ;;
+          --platform )     printHelpPlayground; exit 1 ;;
           --bow-version )  printHelpPlayground; exit 1 ;;
           --bow-branch )   printHelpPlayground; exit 1 ;;
           --podfile )      printHelpPlayground; exit 1 ;;
+          --cartfile )     printHelpPlayground; exit 1 ;;
 
           --use-cache)     printHelpCompile; exit 1 ;;
 
@@ -211,9 +215,11 @@ jekyll() {
           --main-page )    shift; mainPagePath=$1 ;;
 
           --name )         printHelpJekyll; exit 1 ;;
+          --platform )     printHelpPlayground; exit 1 ;;
           --bow-version )  printHelpPlayground; exit 1 ;;
           --bow-branch )   printHelpPlayground; exit 1 ;;
           --podfile )      printHelpPlayground; exit 1 ;;
+          --cartfile )     printHelpPlayground; exit 1 ;;
 
           --use-cache)     printHelpCompile; exit 1 ;;
 
@@ -268,9 +274,11 @@ carbon() {
           --main-page )    printHelpJekyll; exit 1 ;;
 
           --name )         printHelpPlayground; exit 1 ;;
+          --platform )     printHelpPlayground; exit 1 ;;
           --bow-version )  printHelpPlayground; exit 1 ;;
           --bow-branch )   printHelpPlayground; exit 1 ;;
           --podfile )      printHelpPlayground; exit 1 ;;
+          --cartfile )     printHelpPlayground; exit 1 ;;
 
           --use-cache)     printHelpCompile; exit 1 ;;
 
@@ -305,9 +313,11 @@ carbon() {
 ##
 playground() {
     projectName=$DEFAULT_PLAYGROUND
+    platform="ios"
     version=""
     branch=""
     podfile=""
+    carfile=""
 
     while [ "$1" != "" ]; do
         case $2 in
@@ -320,9 +330,11 @@ playground() {
             --main-page )    printHelpJekyll; exit 1 ;;
 
             --name )         shift; projectName=$1 ;;
+            --platform )     shift; platform=$1 ;;
             --bow-version )  shift; version=$1 ;;
             --bow-branch )   shift; branch=$1 ;;
             --podfile )      shift; podfile=$1 ;;
+            --carfile )      shift; carfile=$1 ;;
 
             --use-cache)     printHelpCompile; exit 1 ;;
 
@@ -345,9 +357,9 @@ playground() {
     done
 
     if [ "${#version}" -gt 0 ]; then
-      nef-playground --name "$projectName" --bow-version "$version"
+      nef-playground --name "$projectName" --platform "$platform" --bow-version "$version"
     else
-      nef-playground --name "$projectName" --bow-branch "$branch" --podfile "$podfile"
+      nef-playground --name "$projectName" --platform "$platform" --bow-branch "$branch" --podfile "$podfile" --carfile "$carfile"
     fi
 
     nefc install  "$projectName"
@@ -374,9 +386,11 @@ compile() {
             --main-page )    printHelpJekyll; exit 1 ;;
 
             --name )         printHelpPlayground; exit 1 ;;
+            --platform )     printHelpPlayground; exit 1 ;;
             --bow-version )  printHelpPlayground; exit 1 ;;
             --bow-branch )   printHelpPlayground; exit 1 ;;
             --podfile )      printHelpPlayground; exit 1 ;;
+            --cartfile )     printHelpPlayground; exit 1 ;;
 
             --use-cache)     flag="--use-cache" ;;
 
@@ -425,9 +439,11 @@ clean() {
             --main-page )    printHelpJekyll; exit 1 ;;
 
             --name )         printHelpPlayground; exit 1 ;;
+            --platform )     printHelpPlayground; exit 1 ;;
             --bow-version )  printHelpPlayground; exit 1 ;;
             --bow-branch )   printHelpPlayground; exit 1 ;;
             --podfile )      printHelpPlayground; exit 1 ;;
+            --cartfile )     printHelpPlayground; exit 1 ;;
 
             --use-cache)     ;;
 
