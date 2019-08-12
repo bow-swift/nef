@@ -98,7 +98,7 @@ printHelpCarbon() {
 ##
 printHelpPlayground() {
     echo ""
-    echo "${normal}nef ${green}${bold}$PLAYGROUND${normal} ${optional}${bold}--name${normal}${reset} <project> ${bold}--platform${normal}${reset} <ios|osx> ${optional}${bold}--bow-version${normal}${reset} <version format: x.y.z> ${optional}${bold}--bow-branch${normal}${reset} <branch-name> ${optional}${bold}--podfile${normal}${reset} <path> ${optional}${bold}--cartfile${normal}${reset} <path>"
+    echo "${normal}nef ${green}${bold}$PLAYGROUND${normal} ${optional}${bold}--name${normal}${reset} <project> ${optional}${bold}--platform${normal}${reset} <ios|osx> ${optional}${bold}--bow-version${normal}${reset} <version format: x.y.z> ${optional}${bold}--bow-branch${normal}${reset} <branch-name> ${optional}${bold}--podfile${normal}${reset} <path> ${optional}${bold}--cartfile${normal}${reset} <path>"
     echo ""
     echo "    Build a playground compatible with external frameworks"
     echo ""
