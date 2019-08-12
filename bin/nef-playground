@@ -61,6 +61,7 @@ setDependency() {
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setCocoaPodsDependency "$projectFolder" "$projectName" "$platform" "$podfile"
   elif [ "$cartfile" != "" ] & [ -f "$cartfile" ]; then
+      checkCarthage
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "carthage"
       setCarthageDependency "$projectFolder" "$projectName" "$platform" "$cartfile"
   elif [ "$branch" != "" ]; then
@@ -171,6 +172,15 @@ checkCocoaPods() {
     echo ""
     echo "Please ${bold}update your cocoapods${reset}. Run: 'sudo gem install cocoapods'"
     echo ""
+    exit 1
+  fi
+}
+
+checkCarthage() {
+  totalCommandsPod=$(command -v carthage | wc -l)
+
+  if [ $totalCommandsPod -eq 0 ]; then
+    echo "[!] ${bold}${red}error: ${reset}required carthage. Please ${bold}install carthage${reset}. Run: 'brew install carthage'"
     exit 1
   fi
 }
