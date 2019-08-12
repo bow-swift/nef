@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		07E5010A20CABF0000EDBFB7 /* nef */ = {
+		07E5010A20CABF0000EDBFB7 /* PROJECT */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "nef" */;
+			buildConfigurationList = 07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "PROJECT" */;
 			buildPhases = (
 				07E5010E20CABF0D00EDBFB7 /* Copy Frameworks */,
 			);
 			dependencies = (
 			);
-			name = nef;
+			name = PROJECT;
 			productName = "PROJECT";
 		};
 /* End PBXAggregateTarget section */
@@ -58,7 +58,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				07E5010A20CABF0000EDBFB7 /* nef */,
+				07E5010A20CABF0000EDBFB7 /* PROJECT */,
 			);
 		};
 /* End PBXProject section */
@@ -184,7 +184,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "nef" */ = {
+		07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "PROJECT" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07E5010B20CABF0000EDBFB7 /* Debug */,

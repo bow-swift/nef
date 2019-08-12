@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		07E5010A20CABF0000EDBFB7 /* nef */ = {
+		07E5010A20CABF0000EDBFB7 /* PROJECT */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "nef" */;
+			buildConfigurationList = 07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "PROJECT" */;
 			buildPhases = (
 				07E5010E20CABF0D00EDBFB7 /* Copy Frameworks */,
 			);
 			dependencies = (
 			);
-			name = nef;
-			productName = "PROJECT";
+			name = PROJECT;
+			productName = "MiguePod";
 		};
 /* End PBXAggregateTarget section */
 
@@ -45,7 +45,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 07E5010620CABD1000EDBFB7 /* Build configuration list for PBXProject "PROJECT" */;
+			buildConfigurationList = 07E5010620CABD1000EDBFB7 /* Build configuration list for PBXProject "MiguePod" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -58,7 +58,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				07E5010A20CABF0000EDBFB7 /* nef */,
+				07E5010A20CABF0000EDBFB7 /* PROJECT */,
 			);
 		};
 /* End PBXProject section */
@@ -173,7 +173,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		07E5010620CABD1000EDBFB7 /* Build configuration list for PBXProject "PROJECT" */ = {
+		07E5010620CABD1000EDBFB7 /* Build configuration list for PBXProject "MiguePod" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07E5010720CABD1000EDBFB7 /* Debug */,
@@ -182,7 +182,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "nef" */ = {
+		07E5010D20CABF0000EDBFB7 /* Build configuration list for PBXAggregateTarget "PROJECT" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07E5010B20CABF0000EDBFB7 /* Debug */,
