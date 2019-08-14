@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Swiftline",
+        "repositoryURL": "https://github.com/bow-swift/Swiftline.git",
+        "state": {
+          "branch": null,
+          "revision": "080dc1765abb73ff3c5f545e572d21188c60dfd9",
+          "version": "0.5.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

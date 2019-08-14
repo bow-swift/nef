@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -61,6 +61,8 @@
 		8B3CB8C322D3964000919F36 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB83C22D3929B00919F36 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C622D396E300919F36 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB86122D392C000919F36 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C822D3987500919F36 /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* Carbon.swift */; };
+		8B6AA74F230429420008C1D0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6AA74E230429420008C1D0 /* main.swift */; };
+		8B6AA7552304298E0008C1D0 /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B6AA7542304298E0008C1D0 /* Swiftline */; };
 		8B6B119D22CB9FDE0060177F /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 /* End PBXBuildFile section */
@@ -242,6 +244,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B6AA74A230429420008C1D0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		8B6FC583221ECE6A008F7694 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -313,6 +324,8 @@
 		8B3CB8C722D3987500919F36 /* Carbon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Carbon.swift; sourceTree = "<group>"; };
 		8B424B1F224E28FC00AF9010 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B6AA74C230429420008C1D0 /* iPad */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iPad; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B6AA74E230429420008C1D0 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B6B119422CB9FDE0060177F /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6B119C22CB9FDE0060177F /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6FC585221ECE6A008F7694 /* Jekyll */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Jekyll; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -356,6 +369,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B6AA749230429420008C1D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B6AA7552304298E0008C1D0 /* Swiftline in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +556,7 @@
 		8B3CB85322D392C000919F36 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8B6AA747230429230008C1D0 /* iPad */,
 				8B3CB85A22D392C000919F36 /* Markdown */,
 				8B3CB85422D392C000919F36 /* Jekyll */,
 				8B3CB85822D392C000919F36 /* Carbon */,
@@ -669,6 +691,14 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
+		8B6AA747230429230008C1D0 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				8B6AA74E230429420008C1D0 /* main.swift */,
+			);
+			path = iPad;
+			sourceTree = "<group>";
+		};
 		8B6FC57C221ECE6A008F7694 = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +725,7 @@
 				8B4F45A522CF9AF400E6F471 /* NefModels.framework */,
 				8B22248322D5EAD500C85856 /* NefMarkdown.framework */,
 				8B12D79B22D6235200D05A70 /* NefJekyll.framework */,
+				8B6AA74C230429420008C1D0 /* iPad */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -866,6 +897,26 @@
 			productReference = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		8B6AA74B230429420008C1D0 /* iPad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B6AA750230429420008C1D0 /* Build configuration list for PBXNativeTarget "iPad" */;
+			buildPhases = (
+				8B6AA748230429420008C1D0 /* Sources */,
+				8B6AA749230429420008C1D0 /* Frameworks */,
+				8B6AA74A230429420008C1D0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iPad;
+			packageProductDependencies = (
+				8B6AA7542304298E0008C1D0 /* Swiftline */,
+			);
+			productName = iPad;
+			productReference = 8B6AA74C230429420008C1D0 /* iPad */;
+			productType = "com.apple.product-type.tool";
+		};
 		8B6B119322CB9FDE0060177F /* Core */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B6B11A522CB9FDE0060177F /* Build configuration list for PBXNativeTarget "Core" */;
@@ -989,7 +1040,7 @@
 		8B6FC57D221ECE6A008F7694 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "47 Degrees";
 				TargetAttributes = {
@@ -1009,6 +1060,9 @@
 					8B4F45A422CF9AF400E6F471 = {
 						CreatedOnToolsVersion = 11.0;
 						LastSwiftMigration = 1100;
+					};
+					8B6AA74B230429420008C1D0 = {
+						CreatedOnToolsVersion = 11.0;
 					};
 					8B6B119322CB9FDE0060177F = {
 						CreatedOnToolsVersion = 11.0;
@@ -1040,10 +1094,14 @@
 				Base,
 			);
 			mainGroup = 8B6FC57C221ECE6A008F7694;
+			packageReferences = (
+				8B6AA7532304298E0008C1D0 /* XCRemoteSwiftPackageReference "Swiftline" */,
+			);
 			productRefGroup = 8B6FC586221ECE6A008F7694 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				8B6AA74B230429420008C1D0 /* iPad */,
 				8B424B1E224E28FC00AF9010 /* Markdown */,
 				8B6FC584221ECE6A008F7694 /* Jekyll */,
 				8B0CA51522AE669600181BC0 /* Carbon */,
@@ -1158,6 +1216,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB8C022D3963B00919F36 /* CarbonModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B6AA748230429420008C1D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B6AA74F230429420008C1D0 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1562,6 +1628,26 @@
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8B6AA751230429420008C1D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8B6AA752230429420008C1D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -2029,6 +2115,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		8B6AA750230429420008C1D0 /* Build configuration list for PBXNativeTarget "iPad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B6AA751230429420008C1D0 /* Debug */,
+				8B6AA752230429420008C1D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8B6B11A522CB9FDE0060177F /* Build configuration list for PBXNativeTarget "Core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2093,6 +2188,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8B6AA7532304298E0008C1D0 /* XCRemoteSwiftPackageReference "Swiftline" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bow-swift/Swiftline.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8B6AA7542304298E0008C1D0 /* Swiftline */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B6AA7532304298E0008C1D0 /* XCRemoteSwiftPackageReference "Swiftline" */;
+			productName = Swiftline;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8B6FC57D221ECE6A008F7694 /* Project object */;
 }
