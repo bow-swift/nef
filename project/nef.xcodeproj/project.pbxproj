@@ -64,6 +64,10 @@
 		8B6AA74F230429420008C1D0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6AA74E230429420008C1D0 /* main.swift */; };
 		8B6AA7552304298E0008C1D0 /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B6AA7542304298E0008C1D0 /* Swiftline */; };
 		8B6B119D22CB9FDE0060177F /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; };
+		8B907C4823046EFE001495DE /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4723046EFE001495DE /* Module.swift */; };
+		8B907C4A23046F15001495DE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4923046F15001495DE /* String+Extensions.swift */; };
+		8B907C4C23047040001495DE /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4B23047040001495DE /* ConsoleOutput.swift */; };
+		8B907C502304757A001495DE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4F2304757A001495DE /* File.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 /* End PBXBuildFile section */
 
@@ -215,6 +219,13 @@
 			remoteGlobalIDString = 8B22248222D5EAD500C85856;
 			remoteInfo = NefMarkdown;
 		};
+		8B907C4D23047419001495DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BF75F5622CA637B00EC53A1;
+			remoteInfo = Common;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -329,6 +340,10 @@
 		8B6B119422CB9FDE0060177F /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6B119C22CB9FDE0060177F /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6FC585221ECE6A008F7694 /* Jekyll */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Jekyll; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B907C4723046EFE001495DE /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		8B907C4923046F15001495DE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		8B907C4B23047040001495DE /* ConsoleOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
+		8B907C4F2304757A001495DE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BF75F5722CA637B00EC53A1 /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -595,10 +610,11 @@
 		8B3CB85E22D392C000919F36 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8B3CB85F22D392C000919F36 /* String+Path.swift */,
-				8B3CB86322D392C000919F36 /* ConsoleReader.swift */,
-				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
 				8B3CB86622D392C000919F36 /* Array+Slice.swift */,
+				8B3CB86322D392C000919F36 /* ConsoleReader.swift */,
+				8B907C4F2304757A001495DE /* File.swift */,
+				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
+				8B3CB85F22D392C000919F36 /* String+Path.swift */,
 				8B3CB86022D392C000919F36 /* Support Files */,
 			);
 			path = Common;
@@ -695,6 +711,9 @@
 			isa = PBXGroup;
 			children = (
 				8B6AA74E230429420008C1D0 /* main.swift */,
+				8B907C4723046EFE001495DE /* Module.swift */,
+				8B907C4923046F15001495DE /* String+Extensions.swift */,
+				8B907C4B23047040001495DE /* ConsoleOutput.swift */,
 			);
 			path = iPad;
 			sourceTree = "<group>";
@@ -908,6 +927,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8B907C4E23047419001495DE /* PBXTargetDependency */,
 			);
 			name = iPad;
 			packageProductDependencies = (
@@ -1224,6 +1244,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6AA74F230429420008C1D0 /* main.swift in Sources */,
+				8B907C4A23046F15001495DE /* String+Extensions.swift in Sources */,
+				8B907C4C23047040001495DE /* ConsoleOutput.swift in Sources */,
+				8B907C4823046EFE001495DE /* Module.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1266,6 +1289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B907C502304757A001495DE /* File.swift in Sources */,
 				8B3CB88922D3933D00919F36 /* Array+Slice.swift in Sources */,
 				8B3CB88622D3933D00919F36 /* ConsoleReader.swift in Sources */,
 				8B3CB88822D3933D00919F36 /* PlaygroundUtils.swift in Sources */,
@@ -1405,6 +1429,11 @@
 			isa = PBXTargetDependency;
 			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
 			targetProxy = 8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */;
+		};
+		8B907C4E23047419001495DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			targetProxy = 8B907C4D23047419001495DE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1634,6 +1663,7 @@
 		8B6AA751230429420008C1D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1644,6 +1674,7 @@
 		8B6AA752230429420008C1D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
