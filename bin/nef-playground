@@ -2,7 +2,7 @@
 
 DEFAULT_PLAYGROUND="BowPlayground"
 BOW_TAGS="https://api.github.com/repos/bow-swift/bow/tags"
-NEF_TEMPLATE="https://github.com/bow-swift/nef"
+NEF_ZIP="https://github.com/bow-swift/nef/archive/master.zip"
 
 #: terminal setup
 bold=$(tput bold)
@@ -145,12 +145,9 @@ lastestBowVersion() {
 ##
 playground() {
   set +e
-
   local root="$1"          # parameter `parent`
   local projectName="$2"   # parameter `projecName`
   local projectFolder="$root/$projectName"
-  local tempLog="$root/init-playground.log"
-  local log="$projectFolder/nef/playground/init-playground.log"
 
   cd "$root"
   echo -ne "${normal}Installing ${green}Playground ($projectName)${reset}..."
@@ -161,16 +158,43 @@ playground() {
     exit 1
   fi
 
-  pod lib create "$projectName" --template-url="$NEF_TEMPLATE" 1> "$tempLog" 2>&1
   makeStructure "$projectFolder"
-  mv "$tempLog" "$log"
+  installPlaygroundTemplate "$projectFolder" "$projectName"
+}
 
-  error=`grep "Errno:" "$log"`
-  fatalError=`grep "fatal:" "$log"`
-  gemError=`grep "LoadError" "$log"`
+##
+#   installPlaygroundTemplate(String projectFolder, String projecName)
+#   - Parameter `projectFolder`: path to the project.
+#   - Parameter `projecName`: playground name.
+##
+installPlaygroundTemplate() {
+  local projectFolder="$1" # parameter `parent`
+  local projectName="$2"   # parameter `projecName`
+  local log="$projectFolder/nef/playground/init-playground.log"
+  local tempFolder="template-master"
+
+  cd "$projectFolder"
+
+  # download project
+  echo ">----------------------------------------- download GitHub project" >> "$log"
+  curl -LkSs $NEF_ZIP -o master.zip 1>> "$log" 2>&1
+  echo ">----------------------------------------- unzip GitHub project" >> "$log"
+  unzip master.zip -d $tempFolder 1>> "$log" 2>&1
+  rm *.zip 1>> "$log" 2>&1
+  echo ">----------------------------------------- move files to parent :: $projectFolder" >> "$log"
+  mv $tempFolder/*/* . 1>> "$log" 2>&1
+  rm -rf $tempFolder 1>> "$log" 2>&1
+
+  # install template
+  echo ">----------------------------------------- installing playground template" >> "$log"
+  ruby setup/nef.rb "$projectName" 1>> "$log" 2>&1
+
+  # check errors
+  rubyError=`grep "ruby:" "$log"`
+  curlError=`grep "curl:" "$log"`
   otherErrors=`grep "[!]" "$log"`
 
-  if [ "${#error}" -gt 0 ] || [ "${#fatalError}" -gt 0 ] || [ "${#gemError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
+  if [ "${#rubyError}" -gt 0 ] || [ "${#curlError}" -gt 0 ] || [ "${#otherErrors}" -gt 0 ]; then
     echo " ❌"
     echo "[!] ${bold}${red}error: ${reset}review '$log' for more information."
     exit 1
@@ -178,7 +202,6 @@ playground() {
     echo " ✅"
   fi
 }
-
 
 ##
 #   makeStructure(String folder)
