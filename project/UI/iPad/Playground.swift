@@ -22,6 +22,10 @@ struct Playground {
         let modules = repos.flatMap { modulesInRepository($0).filter { $0.type == .library && $0.moduleType == .swift } }
         guard modules.count > 0 else { return .checkout }
         
+        makePlaygroundBook(name: resolvePath.projectName,
+                           dependencies: modules,
+                           playgroundModulePath: resolvePath.playgroundModulePath)
+        
         return nil
     }
     
@@ -31,14 +35,38 @@ struct Playground {
         storage.createFolder(path: buildPath)
     }
 
+    private func makePlaygroundBook(name: String, dependencies modules: [Module], playgroundModulePath: String) {
+        makePlayroundBookStructure()
+        addModules(modules, toPlaygroundModulePath: playgroundModulePath)
+    }
+    
+    private func makePlayroundBookStructure() {
+        
+    }
+    
+    private func addModules(_ modules: [Module], toPlaygroundModulePath playroundModulePath: String) {
+        modules.forEach { module in
+            let modulePath = "\(playroundModulePath)/\(module.name).playgroundmodule"
+            let sourcesPath = "\(modulePath)/Sources"
+            storage.createFolder(path: sourcesPath)
+            
+            module.sources.forEach { source in
+                let filePath = "\(module.path)/\(source)".resolvePath
+                storage.copy(filePath, to: sourcesPath)
+            }
+        }
+    }
+    
+    
+    // MARK: private methods <spm>
     private func buildPackage(_ packagePath: String, nefPath: String, buildPath: String) -> Bool {
         guard case .success = storage.copy(packagePath, to: nefPath) else { return false }
+        
         
         let result = run("swift package --package-path \(nefPath)/.. --build-path \(buildPath) resolve")
         return result.exitStatus == 0
     }
-
-    // MARK: private methods <module>
+    
     private func repositories(checkoutPath: String) -> [String] {
         let result = run("ls \(checkoutPath)")
         guard result.exitStatus == 0 else { return [] }
@@ -81,4 +109,7 @@ fileprivate struct ResolvePath {
     var nefPath: String { "\(projectPath)/\(nefFolder)"}
     var buildPath: String { "\(projectPath)/\(buildFolder)"}
     var checkoutPath: String { "\(projectPath)/nef/build/checkouts" }
+    
+    var playgroundPath: String { "\(projectPath)/\(projectName).playgroundbook" }
+    var playgroundModulePath: String { "\(playgroundPath)/Contents/UserModules" }
 }

@@ -351,6 +351,7 @@
 		8BF75F8522CA71E700EC53A1 /* nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCarbon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF79EC623083D550048B30E /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
+		8BF79ECA2309F6080048B30E /* nef.playgroundbook */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = nef.playgroundbook; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -717,6 +718,7 @@
 				8BF79EC623083D550048B30E /* Playground.swift */,
 				8B907C4B23047040001495DE /* ConsoleOutput.swift */,
 				8B907C4923046F15001495DE /* String+Extensions.swift */,
+				8BF79EC82309729E0048B30E /* Assets */,
 			);
 			path = iPad;
 			sourceTree = "<group>";
@@ -757,6 +759,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8BF79EC82309729E0048B30E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				8BF79ECA2309F6080048B30E /* nef.playgroundbook */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

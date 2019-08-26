@@ -11,4 +11,10 @@ public extension String {
     var expandingTildeInPath: String {
         return NSString(string: self).expandingTildeInPath
     }
+    
+    var parentPath: String {
+        var pathComponents = components(separatedBy: "/")
+        pathComponents.removeLast()
+        return pathComponents.joined(separator: "/")
+    }
 }
