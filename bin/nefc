@@ -19,7 +19,7 @@ optional=$(tput setaf 230)
 reset=$(tput sgr0)
 
 
-#: IN - Check Args
+#: IN ----------------- Check Args
 
 ##
 #   printWrongArguments()
@@ -76,7 +76,7 @@ checkArguments() {
 }
 
 
-#: - Dependencies
+#: ----------------- Dependencies
 
 ##
 #   dependencies(String folder)
@@ -87,11 +87,151 @@ dependencies() {
     buildDependencies "$1"
 }
 
+##
+#   isPathFromDependencies(String path): Bool
+#   - Parameter `path`: path to check if it is in dependencies folder
+#   - Return `isDependency` 1 - is a dependency; 0 - another case
+##
+isPathFromDependencies() {
+    local path="$1"  # parameter `path`
 
-#: - Compile
+    podProject=$(eval echo "\"$path\" | grep '/Pods/' | awk '{ print length; }'")
+    carthageProject=$(eval echo "\"$path\" | grep '/Carthage/' | awk '{ print length; }'")
+
+    if [ "$podProject" != "" ] || [ "$carthageProject" != "" ]; then
+      echo 1
+    else
+      echo 0
+    fi
+}
 
 ##
-#   compile(String folder, String flag)
+#   buildDependencies(String folder, String flag)
+#   - Parameter `folder`: path to the project folder.
+#   - parameter `flag`: configuration for building.
+##
+buildDependencies() {
+    local path="$1" # parameter `folder`
+    local flag="$2" # parameter `flag`
+
+    buildPODS "$path" "$flag"
+    buildCarthage "$path" "$flag"
+    addPlaygroundReference "$path"
+}
+
+##
+#   buildPODS(String folder, String flag) throws
+#   - Parameter `folder`: path to the project folder.
+#   - parameter `flag`: configuration for building.
+##
+buildPODS() {
+    cd "$1"
+
+    local flag="$2"
+    local podfile="Podfile"
+    local log="`pwd`/nef/log/pod-install.log"
+
+    [ -f $podfile ] || return
+    echo -ne "${normal}Installing ${green}Pods ${reset}..."
+
+    find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
+        path="${podfilePath::${#podfilePath}-${#podfile}-1}"
+        cd "$path"
+
+        set +e
+        if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
+            pod install 1> "$log" 2>&1
+        else
+            pod install --repo-update 1> "$log" 2>&1
+        fi
+
+        installed=`grep "Pod installation complete" "$log"`
+        set -e
+
+        if [ "${#installed}" -gt 0 ]; then
+            echo " ✅"
+        else
+            echo " ❌"
+            echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
+            exit 1
+        fi
+    done
+}
+
+##
+#   buildCarthage(String folder, String flag) throws
+#   - Parameter `folder`: path to the project folder.
+#   - parameter `flag`: configuration for building.
+##
+buildCarthage() {
+    cd "$1"
+    local project="$1"
+    local flag="$2"
+    local cartfile="Cartfile"
+    local log="`pwd`/nef/log/carthage-install.log"
+
+    [ -f $cartfile ] || return
+    echo -ne "${normal}Installing ${green}Carthage ${reset}..."
+
+    # build
+    playgroundPagesForProjectPath "$project"
+    playgroundPage=${playgroundPagesForProjectPath[0]}
+    platformIOS=$(isPlatformIOSPlaygroundPage "$playgroundPage")
+    [ $platformIOS -eq 1 ] && platform="iOS" || platform="osx"
+
+    if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
+        carthage bootstrap --cache-builds --platform $platform 1> "$log" 2>&1
+    else
+        carthage bootstrap --platform $platform 1> "$log" 2>&1
+    fi
+
+    # check errors
+    installed=`grep "Build Failed" "$log"`
+    errors=`grep "error:" "$log"`
+    failed=`grep "failed with exit code" "$log"`
+
+    if [ "${#installed}" -eq 0 ] && [ "${#errors}" -eq 0 ] && [ "${#failed}" -eq 0 ]; then
+        createEmptyWorkspace "$project"
+        echo " ✅"
+    else
+        echo " ❌"
+        echo "${bold}${red}error: ${reset}${bold}carthage install${normal} review 'nef/log/carthage-install.log' for more information."
+        exit 1
+    fi
+}
+
+##
+#   createEmptyWorkspace(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+createEmptyWorkspace() {
+    cd "$1"
+
+    find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
+        workspacePath=$(workspaceForProjectPath "$1" "$project")
+        workspaceExtension=$(echo "$workspacePath" | rev | cut -d'.' -f1 | rev)
+        workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
+        workspace="$workspaceName.xcworkspace"
+        isDependency=$(isPathFromDependencies "$workspacePath")
+
+        ([ "$workspaceExtension" = "xcworkspace" ] || [ $isDependency -eq 1 ]) && continue
+
+        content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+         <Workspace
+            version = \"1.0\">
+            <FileRef location = \"container:$workspaceName.xcodeproj\"></FileRef>
+         </Workspace>"
+
+        mkdir "$workspace"
+        echo "$content" > "$workspace/contents.xcworkspacedata"
+    done
+}
+
+
+#: ----------------- Compile
+
+##
+#   compile(String folder, String flag) throws
 #   - Parameter `folder`: path to the project folder.
 #   - parameter `flag`: configuration for building.
 ##
@@ -116,16 +256,13 @@ buildProject() {
     local logPath="nef/log"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        podProject=$(eval echo "\"$project\" | grep '/Pods.xcodeproj/' | awk '{ print length; }'")
-        ! [ "$podProject" = "" ] && continue
-
-        targetSection="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
-        targetName="grep 'name = ' | awk -F' = ' '{print \$2}' | awk -F';' '{print \$1}'"
-        schemeName=$(eval cat "\"$project\" | $targetSection | $targetName")
+        isDependency=$(isPathFromDependencies "$project")
+        [ $isDependency -eq 1 ] && continue
 
         # build
         workspace=$(workspaceForProjectPath "$1" "$project")
         workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
+        schemeName=$(schemeNameFromProject "$project")
         sdk=$(sdkForWorkspaceAndScheme "$workspace" "$schemeName")
         log="$logPath/$workspaceName.log"
 
@@ -150,6 +287,23 @@ buildProject() {
             exit 1
         fi
     done
+}
+
+##
+#   schemeNameFromProject(String projectPath): String
+#   - Parameter `projectPath`: path to the *.pbxproj file.
+#   - Return `scheme name`
+##
+schemeNameFromProject() {
+    local project="$1"  # parameter `project`
+
+    targetNative="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
+    targetAggregate="sed -n '/Begin PBXAggregateTarget section/, /End PBXAggregateTarget section/p'"
+    targetName="grep 'name = ' | awk -F' = ' '{print \$2}' | awk -F';' '{print \$1}'"
+    schemeName1=$(eval cat "\"$project\" | $targetNative | $targetName")
+    schemeName2=$(eval cat "\"$project\" | $targetAggregate | $targetName")
+
+    [ -z "$schemeName1" ] && echo "$schemeName2" || echo "$schemeName1"
 }
 
 ##
@@ -194,11 +348,11 @@ sdkForWorkspaceAndScheme() {
 }
 
 ##
-#   isPlatfromIOSPlaygroundPage(String playgroundPagePath): String
+#   isPlatformIOSPlaygroundPage(String playgroundPagePath): String
 #   - Parameter `playgroundPagePath`
 #   - Return `isPlatformIOS` 1 - is target-platform iOS; 0 - another case
 ##
-isPlatfromIOSPlaygroundPage() {
+isPlatformIOSPlaygroundPage() {
   local playgroundPagePath="$1"   # parameter `playground`
   local playgroundInfo="$playgroundPagePath/../../contents.xcplayground"
 
@@ -228,63 +382,13 @@ shouldBuildWorkspace() {
 }
 
 ##
-#   buildDependencies(String folder, String flag)
-#   - Parameter `folder`: path to the project folder.
-#   - parameter `flag`: configuration for building.
-##
-buildDependencies() {
-    local path="$1" # parameter `folder`
-    local flag="$2" # parameter `flag`
-
-    buildPODS "$path" "$flag"
-    addPlaygroundReference "$path"
-}
-
-##
-#   buildPODS(String folder) throws
-#   - Parameter `folder`: path to the project folder.
-##
-buildPODS() {
-    cd "$1"
-
-    local flag="$2"
-    local podfile="Podfile"
-    local log="`pwd`/nef/log/pod-install.log"
-
-    echo -ne "${normal}Installing ${green}Pods ${reset}..."
-
-    find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
-        path="${podfilePath::${#podfilePath}-${#podfile}-1}"
-        cd "$path"
-
-        set +e
-        if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
-            pod install 1> "$log" 2>&1
-        else
-            pod install --repo-update 1> "$log" 2>&1
-        fi
-
-        installed=`grep "Pod installation complete" "$log"`
-        set -e
-
-        if [ "${#installed}" -gt 0 ]; then
-            echo " ✅"
-        else
-            echo " ❌"
-            echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
-            exit 1
-        fi
-    done
-}
-
-##
 #   addPlaygroundReference(String folder)
 #   - Parameter `folder`: path to the project folder.
 ##
 addPlaygroundReference() {
     projectPath="$1"
     cd "$projectPath"
-    playgroundForProjectPath "$projectPath"
+    playgroundsForProjectPath "$projectPath"
 
     local logPath="nef/log"
     local pattern="<FileRef"
@@ -296,9 +400,9 @@ addPlaygroundReference() {
         workspaceContent="$workspace/contents.xcworkspacedata"
 
         ! [ "$workspaceExtension" = "xcworkspace" ] && continue
-        grep -q ".playground" "$workspaceContent"; [ $? -eq 0 ] && continue
+        grep -q ".playground\"" "$workspaceContent"; [ $? -eq 0 ] && continue
 
-        for playground in "${playgroundForProjectPath[@]}"; do
+        for playground in "${playgroundsForProjectPath[@]}"; do
             playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
             sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
         done
@@ -310,71 +414,38 @@ addPlaygroundReference() {
 }
 
 ##
-#   playgroundForProjectPath(String projectPath): [String]
-#   - Parameter `projectPath`: path to the *.playground file.
+#   playgroundsForProjectPath(String projectPath): [String]
+#   - Parameter `projectPath`: path to project folder.
 #   - Return list of path `playground`
 ##
-playgroundForProjectPath() {
+playgroundsForProjectPath() {
     cd "$1"
 
-    playgroundForProjectPath=()
+    playgroundsForProjectPath=()
     while read -r -d $'\0' playground; do
         playground=$(echo "$playground" | rev | cut -d'/' -f1 | rev )
-        playgroundForProjectPath+=("$playground")
+        playgroundsForProjectPath+=("$playground")
     done < <(find . -name '*.playground' -print0)
 
-    declare -p playgroundForProjectPath 1>/dev/null 2>/dev/null
+    declare -p playgroundsForProjectPath 1>/dev/null 2>/dev/null
 }
 
 ##
-#   makeStructure(String folder, String flag)
-#   - Parameter `folder`: path to the project folder.
-#   - parameter `flag`: configuration for building.
+#   playgroundPagesForProjectPath(String projectPath): [String]
+#   - Parameter `projectPath`: path to project folder.
+#   - Return list of the whole path `playground pages` in project
 ##
-makeStructure() {
-    set +e
-    local projectFolder="$1" # parameter `folder`
-    local flag="$2"          # parameter `flag`
+playgroundPagesForProjectPath() {
+    cd "$1"
 
-    cd "$projectFolder"
+    playgroundPagesForProjectPath=()
+    while read -r -d $'\0' page; do
+        isDependency=$(isPathFromDependencies "$page")
+        [ $isDependency -eq 1 ] && continue
+        playgroundPagesForProjectPath+=("$page")
+    done < <(find . -name '*.xcplaygroundpage' -print0)
 
-    if [ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ]; then
-        cleanStructure "$projectFolder"
-    fi
-
-    mkdir -p nef/build/fw
-    mkdir -p nef/build/output
-    mkdir -p nef/log
-    mkdir -p "$DERIVED_DATA_DIR"
-}
-
-cleanStructure() {
-    set +e
-    local projectFolder=$1  # parameter `folder`
-
-    cd "$projectFolder"
-
-    rm -r nef/build 1>/dev/null 2>/dev/null
-    rm -r nef/log 1>/dev/null 2>/dev/null
-    rm -r "$DERIVED_DATA_DIR" 1>/dev/null 2>/dev/null
-}
-
-##
-#   copyFrameworks(String folder)
-#   - Parameter `folder`: path to the project folder.
-##
-copyFrameworks() {
-    local projectFolder=$1  # parameter `folder`
-
-    cd "$projectFolder"
-
-    if [ ! -d "$DERIVED_DATA_DIR/build" ]; then
-      echo "Copy ${green}frameworks${reset} ❌"
-      exit 1
-    fi
-
-    cp -a $(find "$DERIVED_DATA_DIR/build" -name '*.framework') nef/build/fw 2>/dev/null
-    echo "Copy ${green}frameworks${reset} ✅"
+    declare -p playgroundPagesForProjectPath 1>/dev/null 2>/dev/null
 }
 
 ##
@@ -416,23 +487,17 @@ makeHeaders() {
 #   - Parameter `folder`: path to the project folder.
 ##
 compilePlaygroundPages() {
-    local projectFolder=$1  # parameter `folder`
+    local projectFolder="$1"  # parameter `folder`
+    playgroundPagesForProjectPath "$projectFolder"
 
-    cd "$projectFolder"
+    echo "${bold}Found ${#playgroundPagesForProjectPath[@]} playgrounds${normal}"
 
-    pages=()
-    while read -r -d $'\0' playground; do
-        pages+=("$playground")
-    done < <(find . -name '*.xcplaygroundpage' -print0)
-
-    echo "${bold}Found ${#pages[@]} playgrounds${normal}"
-
-    for file in "${pages[@]}"; do
-        pageName=$(echo "$file" | rev | cut -d'/' -f 1 | rev)
+    for page in "${playgroundPagesForProjectPath[@]}"; do
+        pageName=$(echo "$page" | rev | cut -d'/' -f 1 | rev)
         echo -ne "${normal}   Compiling ${green}$pageName${reset} ..."
 
         # paths
-        baseFile=$(echo "$file" | cut -c 2-)
+        baseFile=$(echo "$page" | cut -c 2-)
         baseAbsolute=$(echo "$projectFolder$baseFile")
         content="$baseAbsolute/Contents.swift"
         playgroundName=$(echo "$baseAbsolute" | rev | cut -d'/' -f 1 | cut -d'.' -f 2 | rev)
@@ -462,7 +527,7 @@ compilePlaygroundPage() {
     local iOSFwPath=`xcode-select -p`"/Platforms/iPhoneOS.platform/Developer/Library/Frameworks"
     local macOSFwPath=`xcode-select -p`"/Platforms/MacOSX.platform/Developer/Library/Frameworks"
 
-    platformIOS=$(isPlatfromIOSPlaygroundPage "$playgroundPage")
+    platformIOS=$(isPlatformIOSPlaygroundPage "$playgroundPage")
     hasSourceFolderFiles=$(ls "$sources" 2> /dev/null)
 
     # A. macOS paltform
@@ -490,6 +555,55 @@ compilePlaygroundPage() {
     exit 1
 }
 
+##
+#   copyFrameworks(String folder)
+#   - Parameter `folder`: path to the project folder.
+##
+copyFrameworks() {
+    local projectFolder=$1  # parameter `folder`
+
+    cd "$projectFolder"
+
+    if [ ! -d "$DERIVED_DATA_DIR/build" ]; then
+      echo "Copy ${green}frameworks${reset} ❌"
+      exit 1
+    fi
+
+    cp -a $(find "$DERIVED_DATA_DIR/build" -name '*.framework') nef/build/fw 2>/dev/null
+    echo "Copy ${green}frameworks${reset} ✅"
+}
+
+##
+#   makeStructure(String folder, String flag)
+#   - Parameter `folder`: path to the project folder.
+#   - parameter `flag`: configuration for building.
+##
+makeStructure() {
+    set +e
+    local projectFolder="$1" # parameter `folder`
+    local flag="$2"          # parameter `flag`
+
+    cd "$projectFolder"
+
+    if [ "$flag" != "$COMPILE_CACHED_DEPENDENCIES" ]; then
+        cleanStructure "$projectFolder"
+    fi
+
+    mkdir -p nef/build/fw
+    mkdir -p nef/build/output
+    mkdir -p nef/log
+    mkdir -p "$DERIVED_DATA_DIR"
+}
+
+cleanStructure() {
+    set +e
+    cd "$1" # parameter `folder`
+
+    rm -r nef/build 1>/dev/null 2>/dev/null
+    rm -r nef/log 1>/dev/null 2>/dev/null
+    rm -r "$DERIVED_DATA_DIR" 1>/dev/null 2>/dev/null
+}
+
 
 #: - Clean
 
@@ -500,8 +614,11 @@ compilePlaygroundPage() {
 clean() {
     set +e
 
-    $(cleanNEF "$1");   echo "Clean nef   ✅"
-    $(cleanPODS "$1");  echo "Clean PODS  ✅"
+    echo -ne "${normal}Clean ${green}nef${reset} ... ";
+    $(cleanNEF "$1"); echo "✅"
+
+    echo -ne "${normal}Clean ${green}dependencies${reset} ... ";
+    $(cleanDependencies "$1"); echo "✅"
 }
 
 ##
@@ -515,9 +632,14 @@ cleanNEF() {
 }
 
 ##
-#   cleanPODS(String folder)
+#   cleanDependencies(String folder)
 #   - Parameter `folder`: path to the project folder.
 ##
+cleanDependencies() {
+    $(cleanPODS "$1");
+    $(cleanCarthage "$1");
+}
+
 cleanPODS() {
     cd "$1"
     pod deintegrate 1>/dev/null 2>/dev/null
@@ -527,6 +649,12 @@ cleanPODS() {
     rm -rf ./*.xcworkspace 1>/dev/null 2>/dev/null
 }
 
+cleanCarthage() {
+    cd "$1"
+    rm -rf Carthage 2>/dev/null
+    rm Cartfile.resolved 2>/dev/null
+    rm -rf ./*.xcworkspace 1>/dev/null 2>/dev/null
+}
 
 #: MAIN
 set -e
