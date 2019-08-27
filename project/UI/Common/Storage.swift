@@ -26,6 +26,15 @@ public class Storage {
     }
     
     @discardableResult
+    public func createFile(withContent content: String, atPath filePath: String) -> Result<String, StorageError> {
+        guard !fileManager.fileExists(atPath: filePath) else { return .failure(.exist) }
+        guard let content = content.data(using: .utf8),
+              fileManager.createFile(atPath: filePath, contents: content, attributes: nil) else { return .failure(.notCreated) }
+        
+        return .success(filePath)
+    }
+    
+    @discardableResult
     public func copy(_ itemPath: String, to outputPath: String, override: Bool = true) -> Result<String, StorageError> {
         let itemURL = URL(fileURLWithPath: itemPath)
         let outputURL = URL(fileURLWithPath: "\(outputPath)/\(itemPath.filename)")
@@ -42,8 +51,7 @@ public class Storage {
         }
     }
     
-    // MARK: private methods
-    private func remove(filePath: String) {
+    public func remove(filePath: String) {
         let fileURL = URL(fileURLWithPath: filePath)
         _ = try? fileManager.removeItem(at: fileURL)
     }
