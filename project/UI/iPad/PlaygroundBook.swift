@@ -4,7 +4,6 @@ import Foundation
 import Common
 
 class PlaygroundBook {
-    
     private let name: String
     private let path: String
     private let storage: Storage
@@ -36,8 +35,8 @@ class PlaygroundBook {
         storage.createFile(withContent: Manifiest.general(chapterName: chapterName), atPath: "\(contentsPath)/Manifest.plist")
         storage.createFile(withContent: Manifiest.chapter(pageName: pageName), atPath: "\(chapterPath)/Manifest.plist")
         
-        storage.createFile(withContent: "", atPath: "\(pagePath)/main.swift")
-        storage.createFile(withContent: "", atPath: "\(templatePagePath)/main.swift")
+        storage.createFile(withContent: PlaygroundCode.header, atPath: "\(pagePath)/main.swift")
+        storage.createFile(withContent: PlaygroundCode.header, atPath: "\(templatePagePath)/main.swift")
         storage.createFile(withContent: Manifiest.page(name: pageName), atPath: "\(pagePath)/Manifest.plist")
         storage.createFile(withContent: Manifiest.page(name: "Template"), atPath: "\(templatePagePath)/Manifest.plist")
     }
@@ -57,8 +56,37 @@ class PlaygroundBook {
         }
     }
     
-    // MARK: Helpers <Manifiest>
-    enum Manifiest {
+    // MARK: Constants <Code>
+    private enum PlaygroundCode {
+        static let header = """
+                            //#-hidden-code
+                            import UIKit
+                            import PlaygroundSupport
+
+                            let liveView = UIView()
+                            
+                            PlaygroundPage.current.liveView = liveView
+                            PlaygroundPage.current.needsIndefiniteExecution = true
+
+                            enum PlaygroundColor {
+                                static let nef = UIColor(red: 140/255.0, green: 68/255.0, blue: 1, alpha: 1)
+                                static let bow = UIColor(red: 213/255.0, green: 64/255.0, blue: 72/255.0, alpha: 1)
+                                static let white = UIColor.white
+                                static let black = UIColor.black
+                                static let yellow = UIColor(red: 1, green: 237/255.0, blue: 117/255.0, alpha: 1)
+                                static let green = UIColor(red: 110/255.0, green: 240/255.0, blue: 167/255.0, alpha: 1)
+                                static let blue = UIColor(red: 66/255.0, green: 197/255.0, blue: 1, alpha: 1)
+                                static let orange = UIColor(red: 1, green: 159/255.0, blue: 70/255.0, alpha: 1)
+                            }
+                            //#-end-hidden-code
+                            liveView.backgroundColor = PlaygroundColor.nef
+
+                            """
+                            
+    }
+    
+    // MARK: Constants <Manifiest>
+    private enum Manifiest {
         static let header = """
                             <?xml version="1.0" encoding="UTF-8"?>
                              <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
