@@ -30,7 +30,7 @@ class PlaygroundBook {
                 .flatMap { _ in addModules(modules) }
     }
     
-    // MARK: private methods
+    // MARK: private methods <structure>
     private func create(chapterName: String, pageName: String) -> Result<Void, PlaygroundBookError> {
         let contentsPath = "\(path)/Contents"
         let resourcesPath = "\(contentsPath)/PrivateResources"
@@ -44,31 +44,6 @@ class PlaygroundBook {
             .flatMap { _ in makePage(path: pagePath) }
             .flatMap { _ in makePage(path: templatePagePath) }
             .flatMap { _ in makeResources(path: resourcesPath, imageReference: imageReference, base64: AssetsBase64.imageReference) }
-    }
-    
-    private func addModules(_ modules: [Module]) -> Result<Void, PlaygroundBookError> {
-        let modulesPath = "\(path)/Contents/UserModules"
-        
-        let copiedModules = modules.reduce(true) { partial, module in
-            guard partial else { return false }
-            
-            let modulePath = "\(modulesPath)/\(module.name).playgroundmodule"
-            let sourcesPath = "\(modulePath)/Sources"
-            storage.createFolder(path: sourcesPath)
-            
-            let copiedModule = module.sources.reduce(true) { (partial, source) in
-                guard partial else { return false }
-                
-                let filePath = "\(module.path)/\(source)".resolvePath
-                let result = storage.copy(filePath, to: sourcesPath)
-                let copiedFile = (try? result.get()) != nil
-                return copiedFile
-            }
-            
-            return copiedModule
-        }
-        
-        return copiedModules ? .success(()) : .failure(.resource)
     }
     
     private func makeGeneralManifest(contentsPath: String, chapterPath: String, imageReference: String) -> Result<Void, PlaygroundBookError> {
@@ -112,6 +87,36 @@ class PlaygroundBook {
         }
 
         return .success(())
+    }
+    
+    // MARK: private methods <modules>
+    private func addModules(_ modules: [Module]) -> Result<Void, PlaygroundBookError> {
+        let modulesPath = "\(path)/Contents/UserModules"
+        
+        return modules.reduce(.success(())) { (partial, module) in
+            partial.flatMap { _ in
+                let destinationPath = createModuleFolder(module.name, in: modulesPath)
+                return copy(sources: module.sources, atPath: module.path, inModulePath: destinationPath)
+            }
+        }
+    }
+    
+    private func createModuleFolder(_ name: String, in path: String) -> String {
+        let modulePath = "\(path)/\(name).playgroundmodule"
+        let sourcesPath = "\(modulePath)/Sources"
+        storage.createFolder(path: sourcesPath)
+        
+        return sourcesPath
+    }
+    
+    private func copy(sources: [String], atPath: String, inModulePath modulePath: String) -> Result<Void, PlaygroundBookError> {
+        return sources.reduce(.success(())) { (partial, source) in
+            partial.flatMap { _ in
+                let filePath = "\(atPath)/\(source)".resolvePath
+                return storage.copy(filePath, to: modulePath).flatMap { _ in .success(()) }
+                                                             .flatMapError { _ in .failure(.invalidModule) }
+            }
+        }
     }
     
     // MARK: Constants <Code>
