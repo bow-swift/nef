@@ -22,4 +22,16 @@ class iPadConsole: ConsoleOutput {
 
               """)
     }
+    
+    func printStep(information: String) {
+        print(information, separator: " ", terminator: "")
+    }
+    
+    func printSubstep(information: String) {
+        print("\t\(information)", separator: " ", terminator: "\n")
+    }
+    
+    func printStatus(success: Bool) {
+        print(" \(success ? "✅" : "❌")", separator: "", terminator: "\n")
+    }
 }

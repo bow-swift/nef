@@ -717,10 +717,10 @@
 			isa = PBXGroup;
 			children = (
 				8B6AA74E230429420008C1D0 /* main.swift */,
+				8B907C4B23047040001495DE /* ConsoleOutput.swift */,
 				8BF79EC623083D550048B30E /* Playground.swift */,
 				8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */,
 				8B907C4723046EFE001495DE /* Module.swift */,
-				8B907C4B23047040001495DE /* ConsoleOutput.swift */,
 				8BEF949A231593C400AFA4CC /* Assets.swift */,
 				8B907C4923046F15001495DE /* String+Extensions.swift */,
 			);

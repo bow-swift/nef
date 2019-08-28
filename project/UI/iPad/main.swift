@@ -12,14 +12,14 @@ func main() {
           let outputPath = result["to"],
           let projectName = result["name"] else {
             Console.help.show(output: console)
-            exit(-1)
+            return
     }
     
-    let playground = Playground(packagePath: packagePath, projectName: projectName, outputPath: outputPath)
-    if let error = playground.build() {
+    let playground = Playground(packagePath: packagePath, projectName: projectName, outputPath: outputPath, console: console)
+    if case let .failure(error) = playground.build() {
+        console.printStatus(success: false)
         Console.error(information: error.information).show(output: console)
-    } else {
-        Console.success.show(output: console)
+        exit(-1)
     }
 }
 

@@ -7,30 +7,63 @@ import Swiftline
 struct Playground {
     private let resolvePath: ResolvePath
     private let storage = Storage()
+    private let console: iPadConsole
     
-    init(packagePath: String, projectName: String, outputPath: String) {
-        resolvePath = ResolvePath(packagePath: packagePath, projectName: projectName, outputPath: outputPath)
+    init(packagePath: String, projectName: String, outputPath: String, console: iPadConsole) {
+        self.resolvePath = ResolvePath(packagePath: packagePath, projectName: projectName, outputPath: outputPath)
+        self.console = console
     }
     
-    func build() -> PlaygroundError? {
-        makeStructure(projectPath: resolvePath.projectPath, buildPath: resolvePath.buildPath)
-        guard buildPackage(resolvePath.packagePath, nefPath: resolvePath.nefPath, buildPath: resolvePath.buildPath) else {
-            return .package(packagePath: resolvePath.packagePath)
+    func build() -> Result<Void, PlaygroundError> {
+        return stepStructure().flatMap(stepChekout).flatMap(stepPlayground)
+    }
+    
+    private func stepStructure() -> Result<Void, PlaygroundError> {
+        console.printStep(information: "Creating swift playground structure \(resolvePath.projectName)")
+        
+        if makeStructure(projectPath: resolvePath.projectPath, buildPath: resolvePath.buildPath) {
+            console.printStatus(success: true)
+            return .success(())
+        } else {
+            return .failure(.structure)
         }
+    }
+    
+    private func stepChekout() -> Result<[Module], PlaygroundError> {
+        console.printStep(information: "Get the whole modules from dependencies")
         
         let repos = repositories(checkoutPath: resolvePath.checkoutPath)
         let modules = repos.flatMap { modulesInRepository($0).filter { $0.type == .library && $0.moduleType == .swift } }
-        guard modules.count > 0 else { return .checkout }
         
-        buildPlaygroundBook(modules: modules)
-        
-        return nil
+        if modules.count > 0 {
+            console.printStatus(success: true)
+            modules.forEach { console.printSubstep(information: $0.name) }
+            return .success(modules)
+        } else {
+            return .failure(.checkout)
+        }
     }
     
-    // MARK: private methods
-    private func makeStructure(projectPath: String, buildPath: String) {
+    private func stepPlayground(modules: [Module]) -> Result<Void, PlaygroundError> {
+        console.printStep(information: "Building Swift Playground")
+        
+        buildPlaygroundBook(modules: modules)
+        console.printStatus(success: true)
+        return .success(())
+    }
+    
+    // MARK: private methods <step helpers>
+    private func makeStructure(projectPath: String, buildPath: String) -> Bool {
         storage.createFolder(path: projectPath)
-        storage.createFolder(path: buildPath)
+        let result = storage.createFolder(path: buildPath)
+        
+        if case .success = result {
+            return true
+        } else if case .failure(.exist) = result {
+            return true
+        } else {
+            return false
+        }
     }
     
     private func buildPlaygroundBook(modules: [Module]) {
@@ -38,7 +71,7 @@ struct Playground {
         PlaygroundBook(name: "nef", path: resolvePath.playgroundPath, storage: storage).create(withModules: modules)
     }
     
-    // MARK: private methods <spm>
+    // MARK: private methods <swift-package-manager>
     private func buildPackage(_ packagePath: String, nefPath: String, buildPath: String) -> Bool {
         guard case .success = storage.copy(packagePath, to: nefPath) else { return false }
         
@@ -64,11 +97,14 @@ struct Playground {
 }
 
 enum PlaygroundError: Error {
+    case structure
     case package(packagePath: String)
     case checkout
     
     var information: String {
         switch self {
+        case .structure:
+            return "could not create project structure"
         case .package(let path):
             return "could not build project 'Package.swift' :: \(path)"
         case .checkout:
