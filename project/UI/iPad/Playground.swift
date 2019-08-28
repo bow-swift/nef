@@ -95,7 +95,6 @@ struct Playground {
     private func buildPackage(_ packagePath: String, nefPath: String, buildPath: String) -> Bool {
         guard case .success = storage.copy(packagePath, to: nefPath) else { return false }
         
-        
         let result = run("swift package --package-path \(nefPath)/.. --build-path \(buildPath) resolve")
         return result.exitStatus == 0
     }
