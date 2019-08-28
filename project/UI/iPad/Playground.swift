@@ -33,6 +33,11 @@ struct Playground {
     private func stepChekout() -> Result<[String], PlaygroundError> {
         console.printStep(information: "Downloading dependencies...")
         
+        guard buildPackage(resolvePath.packagePath, nefPath: resolvePath.nefPath, buildPath: resolvePath.buildPath) else {
+            console.printStatus(success: false)
+            return .failure(.package(packagePath: resolvePath.packagePath))
+        }
+        
         let repos = repositories(checkoutPath: resolvePath.checkoutPath)
         if repos.count > 0 {
             console.printStatus(success: true)
