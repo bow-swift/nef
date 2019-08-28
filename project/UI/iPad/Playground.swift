@@ -15,41 +15,59 @@ struct Playground {
     }
     
     func build() -> Result<Void, PlaygroundError> {
-        return stepStructure().flatMap(stepChekout).flatMap(stepPlayground)
+        return stepStructure().flatMap(stepChekout).flatMap(stepGetModules).flatMap(stepPlayground)
     }
     
     private func stepStructure() -> Result<Void, PlaygroundError> {
-        console.printStep(information: "Creating swift playground structure \(resolvePath.projectName)")
+        console.printStep(information: "Creating swift playground structure (\(resolvePath.projectName))")
         
         if makeStructure(projectPath: resolvePath.projectPath, buildPath: resolvePath.buildPath) {
             console.printStatus(success: true)
             return .success(())
         } else {
+            console.printStatus(success: false)
             return .failure(.structure)
         }
     }
     
-    private func stepChekout() -> Result<[Module], PlaygroundError> {
-        console.printStep(information: "Get the whole modules from dependencies")
+    private func stepChekout() -> Result<[String], PlaygroundError> {
+        console.printStep(information: "Downloading dependencies...")
         
         let repos = repositories(checkoutPath: resolvePath.checkoutPath)
-        let modules = repos.flatMap { modulesInRepository($0).filter { $0.type == .library && $0.moduleType == .swift } }
+        if repos.count > 0 {
+            console.printStatus(success: true)
+            return .success(repos)
+        } else {
+            console.printStatus(success: false)
+            return .failure(.checkout)
+        }
+    }
+    
+    private func stepGetModules(fromRepositories repos: [String]) -> Result<[Module], PlaygroundError> {
+        console.printStep(information: "Get modules from repositories")
+        
+        let modules = repos.flatMap {
+            modulesInRepository($0).filter { $0.type == .library && $0.moduleType == .swift }
+        }
         
         if modules.count > 0 {
             console.printStatus(success: true)
             modules.forEach { console.printSubstep(information: $0.name) }
             return .success(modules)
         } else {
+            console.printStatus(success: false)
             return .failure(.checkout)
         }
     }
     
     private func stepPlayground(modules: [Module]) -> Result<Void, PlaygroundError> {
-        console.printStep(information: "Building Swift Playground")
+        console.printStep(information: "Building Swift Playground...")
         
-        buildPlaygroundBook(modules: modules)
-        console.printStatus(success: true)
-        return .success(())
+        let result = makePlaygroundBook(modules: modules)
+        let createdPaygroundBook = (try? result.get()) != nil
+        
+        console.printStatus(success: createdPaygroundBook)
+        return result
     }
     
     // MARK: private methods <step helpers>
@@ -66,9 +84,11 @@ struct Playground {
         }
     }
     
-    private func buildPlaygroundBook(modules: [Module]) {
+    private func makePlaygroundBook(modules: [Module]) -> Result<Void, PlaygroundError> {
         storage.remove(filePath: resolvePath.playgroundPath)
-        PlaygroundBook(name: "nef", path: resolvePath.playgroundPath, storage: storage).create(withModules: modules)
+        return PlaygroundBook(name: "nef", path: resolvePath.playgroundPath, storage: storage)
+                .create(withModules: modules)
+                .flatMapError { _ in .failure(.playgroundBook) }
     }
     
     // MARK: private methods <swift-package-manager>
@@ -100,6 +120,7 @@ enum PlaygroundError: Error {
     case structure
     case package(packagePath: String)
     case checkout
+    case playgroundBook
     
     var information: String {
         switch self {
@@ -109,6 +130,8 @@ enum PlaygroundError: Error {
             return "could not build project 'Package.swift' :: \(path)"
         case .checkout:
             return "command 'swift package describe' failed"
+        case .playgroundBook:
+            return "could not create Swift Playground"
         }
     }
 }

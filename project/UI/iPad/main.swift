@@ -17,7 +17,6 @@ func main() {
     
     let playground = Playground(packagePath: packagePath, projectName: projectName, outputPath: outputPath, console: console)
     if case let .failure(error) = playground.build() {
-        console.printStatus(success: false)
         Console.error(information: error.information).show(output: console)
         exit(-1)
     }
