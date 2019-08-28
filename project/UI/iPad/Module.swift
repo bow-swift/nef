@@ -45,14 +45,26 @@ extension Module {
     typealias ModuleDict = [String : String]
 
     static func modules(from raw: String) -> [Module] {
-        guard let moduleSection = raw.components(separatedBy: "Modules:").last else { return [] }
+        guard let jsonObject = moduleSection(from: raw).flatMap(modulesRaw).flatMap(modulesDict),
+              let modulesJSON = try? JSONSerialization.data(withJSONObject: jsonObject, options: .sortedKeys),
+              let modules = try? JSONDecoder().decode([Module].self, from: modulesJSON) else { return [] }
         
-        let modulesRaw: [String] = moduleSection.components(separatedBy: "Name: ").compactMap { m in
+        return modules
+    }
+    
+    private static func moduleSection(from raw: String) -> String? {
+        return raw.components(separatedBy: "Modules:").last
+    }
+    
+    private static func modulesRaw(fromModuleSection section: String) -> [String] {
+        return section.components(separatedBy: "Name: ").compactMap { m in
             let module = m.trimmingEmptyCharacters
             return !module.isEmpty ? "Name: \(module)" : nil
         }
-        
-        let modulesDict: [ModuleDict] = modulesRaw.map { module in
+    }
+    
+    private static func modulesDict(fromModulesRaw modulesRaw: [String]) -> [ModuleDict] {
+        return modulesRaw.map { module in
             let elements = module.components(separatedBy: "\n")
             return elements.map { $0.components(separatedBy: ":") }.reduce(into: ModuleDict(), { (acc, pair) in
                 guard pair.count == 2 else { return }
@@ -60,10 +72,5 @@ extension Module {
                 acc[key] = value
             })
         }
-        
-        guard let modulesJSON = try? JSONSerialization.data(withJSONObject: modulesDict, options: .sortedKeys),
-              let modules = try? JSONDecoder().decode([Module].self, from: modulesJSON) else { return [] }
-        
-        return modules
     }
 }
