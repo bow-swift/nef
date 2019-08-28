@@ -2,6 +2,7 @@
 
 import Foundation
 import Common
+import AppKit
 
 class PlaygroundBook {
     private let name: String
@@ -25,20 +26,17 @@ class PlaygroundBook {
     // MARK: private methods
     private func create(chapterName: String, pageName: String) {
         let contentsPath = "\(path)/Contents"
-        let chaptersPath = "\(contentsPath)/Chapters"
-        let chapterPath = "\(chaptersPath)/\(chapterName).playgroundchapter"
+        let resourcesPath = "\(contentsPath)/PrivateResources"
+        let chapterPath = "\(contentsPath)/Chapters/\(chapterName).playgroundchapter"
         let pagePath = "\(chapterPath)/Pages/\(pageName).playgroundpage"
         let templatePagePath = "\(chapterPath)/Pages/Template.playgroundpage"
+        let imageReference = "nef-playground.png"
         
-        storage.createFolder(path: pagePath)
-        storage.createFolder(path: templatePagePath)
-        storage.createFile(withContent: Manifiest.general(chapterName: chapterName), atPath: "\(contentsPath)/Manifest.plist")
-        storage.createFile(withContent: Manifiest.chapter(pageName: pageName), atPath: "\(chapterPath)/Manifest.plist")
-        
-        storage.createFile(withContent: PlaygroundCode.header, atPath: "\(pagePath)/main.swift")
-        storage.createFile(withContent: PlaygroundCode.header, atPath: "\(templatePagePath)/main.swift")
-        storage.createFile(withContent: Manifiest.page(name: pageName), atPath: "\(pagePath)/Manifest.plist")
-        storage.createFile(withContent: Manifiest.page(name: "Template"), atPath: "\(templatePagePath)/Manifest.plist")
+        makeGeneralManifest(contentsPath: contentsPath, chapterPath: chapterPath, imageReference: imageReference)
+        makeChapterManifest(chapterPath: chapterPath, pageName: pageName)
+        makePage(path: pagePath)
+        makePage(path: templatePagePath)
+        makeResources(path: resourcesPath, imageReference: imageReference, base64: AssetsBase64.imageReference)
     }
     
     private func addModules(_ modules: [Module]) {
@@ -54,6 +52,28 @@ class PlaygroundBook {
                 storage.copy(filePath, to: sourcesPath)
             }
         }
+    }
+    
+    private func makeGeneralManifest(contentsPath: String, chapterPath: String, imageReference: String) {
+        let manifest = Manifiest.general(chapterName: chapterPath.filename.removeExtension, imageReference: imageReference)
+        storage.createFolder(path: contentsPath)
+        storage.createFile(withContent: manifest, atPath: "\(contentsPath)/Manifest.plist")
+    }
+    
+    private func makeChapterManifest(chapterPath: String, pageName: String) {
+        storage.createFolder(path: chapterPath)
+        storage.createFile(withContent: Manifiest.chapter(pageName: pageName), atPath: "\(chapterPath)/Manifest.plist")
+    }
+    
+    private func makePage(path pagePath: String) {
+        storage.createFolder(path: pagePath)
+        storage.createFile(withContent: PlaygroundCode.header, atPath: "\(pagePath)/main.swift")
+        storage.createFile(withContent: Manifiest.page(name: pagePath.filename.removeExtension), atPath: "\(pagePath)/Manifest.plist")
+    }
+    
+    private func makeResources(path resourcesPath: String, imageReference: String, base64: String) {
+        storage.createFolder(path: resourcesPath)
+        try? Data(base64Encoded: base64)?.write(to: URL(fileURLWithPath: "\(resourcesPath)/\(imageReference)"))
     }
     
     // MARK: Constants <Code>
@@ -125,7 +145,7 @@ class PlaygroundBook {
             """
         }
         
-        static func general(chapterName: String) -> String {
+        static func general(chapterName: String, imageReference: String) -> String {
             """
             \(Manifiest.header)
             <dict>
@@ -141,6 +161,8 @@ class PlaygroundBook {
                 <string>ios11.0</string>
                 <key>DevelopmentRegion</key>
                 <string>en</string>
+                <key>ImageReference</key>
+                <string>\(imageReference)</string>
                 <key>Name</key>
                 <string>Blank</string>
                 <key>SwiftVersion</key>

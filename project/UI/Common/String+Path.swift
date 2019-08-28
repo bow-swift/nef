@@ -5,16 +5,24 @@ import Foundation
 public extension String {
     
     var filename: String {
-        return components(separatedBy: "/").last ?? ""
+        components(separatedBy: "/").last ?? ""
+    }
+    
+    var removeExtension: String {
+        removeLastComponent(separatedBy: ".")
     }
     
     var expandingTildeInPath: String {
-        return NSString(string: self).expandingTildeInPath
+        NSString(string: self).expandingTildeInPath
     }
     
     var parentPath: String {
-        var pathComponents = components(separatedBy: "/")
+        removeLastComponent(separatedBy: "/")
+    }
+    
+    private func removeLastComponent(separatedBy separator: String) -> String {
+        var pathComponents = components(separatedBy: separator)
         pathComponents.removeLast()
-        return pathComponents.joined(separator: "/")
+        return pathComponents.joined(separator: separator)
     }
 }

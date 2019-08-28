@@ -70,6 +70,7 @@
 		8B907C502304757A001495DE /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4F2304757A001495DE /* Storage.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 		8BEF94972314259C00AFA4CC /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */; };
+		8BEF949B231593C400AFA4CC /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF949A231593C400AFA4CC /* Assets.swift */; };
 		8BF79EC723083D550048B30E /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF79EC623083D550048B30E /* Playground.swift */; };
 /* End PBXBuildFile section */
 
@@ -349,6 +350,7 @@
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBook.swift; sourceTree = "<group>"; };
+		8BEF949A231593C400AFA4CC /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		8BF75F5722CA637B00EC53A1 /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75F8522CA71E700EC53A1 /* nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCarbon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -719,6 +721,7 @@
 				8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */,
 				8B907C4723046EFE001495DE /* Module.swift */,
 				8B907C4B23047040001495DE /* ConsoleOutput.swift */,
+				8BEF949A231593C400AFA4CC /* Assets.swift */,
 				8B907C4923046F15001495DE /* String+Extensions.swift */,
 			);
 			path = iPad;
@@ -1250,6 +1253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6AA74F230429420008C1D0 /* main.swift in Sources */,
+				8BEF949B231593C400AFA4CC /* Assets.swift in Sources */,
 				8BEF94972314259C00AFA4CC /* PlaygroundBook.swift in Sources */,
 				8BF79EC723083D550048B30E /* Playground.swift in Sources */,
 				8B907C4A23046F15001495DE /* String+Extensions.swift in Sources */,
