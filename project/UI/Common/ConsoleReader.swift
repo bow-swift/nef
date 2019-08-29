@@ -13,6 +13,18 @@ public extension ConsoleOutput {
     func printSuccess() {
         print("RENDER SUCCEEDED")
     }
+    
+    func printLog(step information: String) {
+        print(information, separator: " ", terminator: "")
+    }
+    
+    func printLog(substep information: String) {
+        print("\t\(information)", separator: " ", terminator: "\n")
+    }
+    
+    func printLog(status: Bool) {
+        print(" \(status ? "✅" : "❌")", separator: "", terminator: "\n")
+    }
 }
 
 /// Console

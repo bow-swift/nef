@@ -25,6 +25,14 @@
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249322D5EAD600C85856 /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B22249D22D5EC6B00C85856 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* Markdown.swift */; };
+		8B2CF35723183954007F58BF /* NefiPad.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B2CF35523183954007F58BF /* NefiPad.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B2CF35B2318398E007F58BF /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4923046F15001495DE /* String+Extensions.swift */; };
+		8B2CF35C2318398E007F58BF /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4723046EFE001495DE /* Module.swift */; };
+		8B2CF35D2318398E007F58BF /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */; };
+		8B2CF35E2318398E007F58BF /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF79EC623083D550048B30E /* Playground.swift */; };
+		8B2CF35F2318398E007F58BF /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF949A231593C400AFA4CC /* Assets.swift */; };
+		8B2CF36A231839CE007F58BF /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; };
+		8B2CF37223183ACD007F58BF /* NefiPad.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B2CF35323183954007F58BF /* NefiPad.framework */; };
 		8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85622D392C000919F36 /* ConsoleOutput.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
@@ -62,16 +70,12 @@
 		8B3CB8C622D396E300919F36 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB86122D392C000919F36 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C822D3987500919F36 /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* Carbon.swift */; };
 		8B6AA74F230429420008C1D0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6AA74E230429420008C1D0 /* main.swift */; };
-		8B6AA7552304298E0008C1D0 /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B6AA7542304298E0008C1D0 /* Swiftline */; };
 		8B6B119D22CB9FDE0060177F /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; };
-		8B907C4823046EFE001495DE /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4723046EFE001495DE /* Module.swift */; };
-		8B907C4A23046F15001495DE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4923046F15001495DE /* String+Extensions.swift */; };
+		8B6F2EE12317D78F008D413A /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; };
 		8B907C4C23047040001495DE /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4B23047040001495DE /* ConsoleOutput.swift */; };
 		8B907C502304757A001495DE /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4F2304757A001495DE /* Storage.swift */; };
+		8B91F86323183D5300417EDB /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B91F86223183D5300417EDB /* Swiftline */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
-		8BEF94972314259C00AFA4CC /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */; };
-		8BEF949B231593C400AFA4CC /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF949A231593C400AFA4CC /* Assets.swift */; };
-		8BF79EC723083D550048B30E /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF79EC623083D550048B30E /* Playground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +127,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B22248222D5EAD500C85856;
 			remoteInfo = NefMarkdown;
+		};
+		8B2CF36B231839CE007F58BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BF75F5622CA637B00EC53A1;
+			remoteInfo = Common;
+		};
+		8B2CF37023183AB1007F58BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B2CF35223183954007F58BF;
+			remoteInfo = NefiPad;
+		};
+		8B2CF37423183B39007F58BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BF75F5622CA637B00EC53A1;
+			remoteInfo = Common;
 		};
 		8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -229,6 +254,13 @@
 			remoteGlobalIDString = 8BF75F5622CA637B00EC53A1;
 			remoteInfo = Common;
 		};
+		8B91F86423183D7B00417EDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B2CF35223183954007F58BF;
+			remoteInfo = NefiPad;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -260,12 +292,14 @@
 		};
 		8B6AA74A230429420008C1D0 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = nef/frameworks/ipad;
+			dstSubfolderSpec = 16;
 			files = (
+				8B6F2EE12317D78F008D413A /* Common.framework in CopyFiles */,
+				8B2CF37223183ACD007F58BF /* NefiPad.framework in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B6FC583221ECE6A008F7694 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -290,6 +324,11 @@
 		8B22248322D5EAD500C85856 /* NefMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B22248522D5EAD600C85856 /* NefMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefMarkdown.h; sourceTree = "<group>"; };
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B2CF32E231833E1007F58BF /* ModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTests.swift; sourceTree = "<group>"; };
+		8B2CF35323183954007F58BF /* NefiPad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefiPad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B2CF35523183954007F58BF /* NefiPad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefiPad.h; sourceTree = "<group>"; };
+		8B2CF35623183954007F58BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B2CF365231839CE007F58BF /* ComponentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComponentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B3CB83A22D3929B00919F36 /* nef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nef.swift; sourceTree = "<group>"; };
 		8B3CB83C22D3929B00919F36 /* nef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B3CB83D22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -347,7 +386,7 @@
 		8B907C4923046F15001495DE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		8B907C4B23047040001495DE /* ConsoleOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B907C4F2304757A001495DE /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
+		8BC8E94022D3A65D009740E4 /* NefTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = NefTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBook.swift; sourceTree = "<group>"; };
 		8BEF949A231593C400AFA4CC /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -379,6 +418,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B2CF35023183954007F58BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B91F86323183D5300417EDB /* Swiftline in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B2CF362231839CE007F58BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B2CF36A231839CE007F58BF /* Common.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B424B1C224E28FC00AF9010 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -397,7 +452,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B6AA7552304298E0008C1D0 /* Swiftline in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,10 +537,57 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
+		8B2CF32C231833B4007F58BF /* ComponentTests */ = {
+			isa = PBXGroup;
+			children = (
+				8B2CF32D231833CE007F58BF /* iPad */,
+			);
+			path = ComponentTests;
+			sourceTree = "<group>";
+		};
+		8B2CF32D231833CE007F58BF /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				8B2CF32E231833E1007F58BF /* ModuleTests.swift */,
+			);
+			path = iPad;
+			sourceTree = "<group>";
+		};
+		8B2CF35423183954007F58BF /* NefiPad */ = {
+			isa = PBXGroup;
+			children = (
+				8BF79EC623083D550048B30E /* Playground.swift */,
+				8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */,
+				8B907C4723046EFE001495DE /* Module.swift */,
+				8BEF949A231593C400AFA4CC /* Assets.swift */,
+				8B2CF37323183B15007F58BF /* Utils */,
+				8B2CF36023183993007F58BF /* Support Files */,
+			);
+			path = NefiPad;
+			sourceTree = "<group>";
+		};
+		8B2CF36023183993007F58BF /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8B2CF35523183954007F58BF /* NefiPad.h */,
+				8B2CF35623183954007F58BF /* Info.plist */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		8B2CF37323183B15007F58BF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8B907C4923046F15001495DE /* String+Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		8B3CB83822D3929B00919F36 /* Component */ = {
 			isa = PBXGroup;
 			children = (
 				8B3CB83922D3929B00919F36 /* nef */,
+				8B2CF35423183954007F58BF /* NefiPad */,
 				8B22248422D5EAD500C85856 /* NefMarkdown */,
 				8B12D79C22D6235200D05A70 /* NefJekyll */,
 				8B3CB84322D3929B00919F36 /* NefCarbon */,
@@ -688,8 +789,10 @@
 		8B3CB8AB22D394E600919F36 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */,
+				8BC8E94022D3A65D009740E4 /* NefTestPlan.xctestplan */,
+				8B2CF32C231833B4007F58BF /* ComponentTests */,
 				8B3CB8AC22D394E600919F36 /* CoreTests */,
+				8B3CB8AF22D394E600919F36 /* Support Files */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -700,7 +803,6 @@
 				8B3CB8AD22D394E600919F36 /* SyntaxTests.swift */,
 				8B3CB8AE22D394E600919F36 /* JekyllTests.swift */,
 				8B3CB8B122D394E600919F36 /* MarkdownTests.swift */,
-				8B3CB8AF22D394E600919F36 /* Support Files */,
 			);
 			path = CoreTests;
 			sourceTree = "<group>";
@@ -718,11 +820,6 @@
 			children = (
 				8B6AA74E230429420008C1D0 /* main.swift */,
 				8B907C4B23047040001495DE /* ConsoleOutput.swift */,
-				8BF79EC623083D550048B30E /* Playground.swift */,
-				8BEF94962314259C00AFA4CC /* PlaygroundBook.swift */,
-				8B907C4723046EFE001495DE /* Module.swift */,
-				8BEF949A231593C400AFA4CC /* Assets.swift */,
-				8B907C4923046F15001495DE /* String+Extensions.swift */,
 			);
 			path = iPad;
 			sourceTree = "<group>";
@@ -754,6 +851,8 @@
 				8B22248322D5EAD500C85856 /* NefMarkdown.framework */,
 				8B12D79B22D6235200D05A70 /* NefJekyll.framework */,
 				8B6AA74C230429420008C1D0 /* iPad */,
+				8B2CF35323183954007F58BF /* NefiPad.framework */,
+				8B2CF365231839CE007F58BF /* ComponentTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -781,6 +880,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B22249322D5EAD600C85856 /* NefMarkdown.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B2CF34E23183954007F58BF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B2CF35723183954007F58BF /* NefiPad.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +994,46 @@
 			productReference = 8B22248322D5EAD500C85856 /* NefMarkdown.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		8B2CF35223183954007F58BF /* NefiPad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B2CF35823183954007F58BF /* Build configuration list for PBXNativeTarget "NefiPad" */;
+			buildPhases = (
+				8B2CF34E23183954007F58BF /* Headers */,
+				8B2CF34F23183954007F58BF /* Sources */,
+				8B2CF35023183954007F58BF /* Frameworks */,
+				8B2CF35123183954007F58BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B2CF37523183B39007F58BF /* PBXTargetDependency */,
+			);
+			name = NefiPad;
+			packageProductDependencies = (
+				8B91F86223183D5300417EDB /* Swiftline */,
+			);
+			productName = NefiPad;
+			productReference = 8B2CF35323183954007F58BF /* NefiPad.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8B2CF364231839CE007F58BF /* ComponentTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B2CF36D231839CE007F58BF /* Build configuration list for PBXNativeTarget "ComponentTests" */;
+			buildPhases = (
+				8B2CF361231839CE007F58BF /* Sources */,
+				8B2CF362231839CE007F58BF /* Frameworks */,
+				8B2CF363231839CE007F58BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B2CF36C231839CE007F58BF /* PBXTargetDependency */,
+			);
+			name = ComponentTests;
+			productName = ComponentTests;
+			productReference = 8B2CF365231839CE007F58BF /* ComponentTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8B424B1E224E28FC00AF9010 /* Markdown */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B424B23224E28FC00AF9010 /* Build configuration list for PBXNativeTarget "Markdown" */;
@@ -937,10 +1084,10 @@
 			);
 			dependencies = (
 				8B907C4E23047419001495DE /* PBXTargetDependency */,
+				8B2CF37123183AB1007F58BF /* PBXTargetDependency */,
 			);
 			name = iPad;
 			packageProductDependencies = (
-				8B6AA7542304298E0008C1D0 /* Swiftline */,
 			);
 			productName = iPad;
 			productReference = 8B6AA74C230429420008C1D0 /* iPad */;
@@ -1037,6 +1184,7 @@
 				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
 				8B12D7A622D624D900D05A70 /* PBXTargetDependency */,
 				8B8AA94022D62266006BE290 /* PBXTargetDependency */,
+				8B91F86523183D7B00417EDB /* PBXTargetDependency */,
 			);
 			name = nef;
 			productName = Nef;
@@ -1055,8 +1203,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				8B6B11BB22CBA1710060177F /* PBXTargetDependency */,
 				8B6B118822CB9E8F0060177F /* PBXTargetDependency */,
+				8B6B11BB22CBA1710060177F /* PBXTargetDependency */,
 			);
 			name = NefCarbon;
 			productName = NefCarbon;
@@ -1081,6 +1229,12 @@
 					};
 					8B22248222D5EAD500C85856 = {
 						CreatedOnToolsVersion = 10.2.1;
+					};
+					8B2CF35223183954007F58BF = {
+						CreatedOnToolsVersion = 11.0;
+					};
+					8B2CF364231839CE007F58BF = {
+						CreatedOnToolsVersion = 11.0;
 					};
 					8B424B1E224E28FC00AF9010 = {
 						CreatedOnToolsVersion = 10.1;
@@ -1136,12 +1290,14 @@
 				8B0CA51522AE669600181BC0 /* Carbon */,
 				8BF75F5622CA637B00EC53A1 /* Common */,
 				8BF75F8422CA71E700EC53A1 /* nef */,
+				8B2CF35223183954007F58BF /* NefiPad */,
 				8B22248222D5EAD500C85856 /* NefMarkdown */,
 				8B12D79A22D6235200D05A70 /* NefJekyll */,
 				8BF75FC522CA7DA500EC53A1 /* NefCarbon */,
 				8B4F45A422CF9AF400E6F471 /* NefModels */,
 				8B6B119322CB9FDE0060177F /* Core */,
 				8B6B119B22CB9FDE0060177F /* CoreTests */,
+				8B2CF364231839CE007F58BF /* ComponentTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1155,6 +1311,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B22248122D5EAD500C85856 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B2CF35123183954007F58BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B2CF363231839CE007F58BF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1231,12 +1401,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B2CF34F23183954007F58BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B2CF35E2318398E007F58BF /* Playground.swift in Sources */,
+				8B2CF35B2318398E007F58BF /* String+Extensions.swift in Sources */,
+				8B2CF35D2318398E007F58BF /* PlaygroundBook.swift in Sources */,
+				8B2CF35F2318398E007F58BF /* Assets.swift in Sources */,
+				8B2CF35C2318398E007F58BF /* Module.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B2CF361231839CE007F58BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B424B1B224E28FC00AF9010 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3CB88322D3932400919F36 /* ConsoleOutput.swift in Sources */,
 				8B3CB88422D3932400919F36 /* main.swift in Sources */,
+				8B3CB88322D3932400919F36 /* ConsoleOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1253,12 +1442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6AA74F230429420008C1D0 /* main.swift in Sources */,
-				8BEF949B231593C400AFA4CC /* Assets.swift in Sources */,
-				8BEF94972314259C00AFA4CC /* PlaygroundBook.swift in Sources */,
-				8BF79EC723083D550048B30E /* Playground.swift in Sources */,
-				8B907C4A23046F15001495DE /* String+Extensions.swift in Sources */,
 				8B907C4C23047040001495DE /* ConsoleOutput.swift in Sources */,
-				8B907C4823046EFE001495DE /* Module.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1292,8 +1476,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */,
 				8B3CB88022D3931D00919F36 /* main.swift in Sources */,
+				8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1372,6 +1556,21 @@
 			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
 			targetProxy = 8B22249B22D5EB2200C85856 /* PBXContainerItemProxy */;
 		};
+		8B2CF36C231839CE007F58BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			targetProxy = 8B2CF36B231839CE007F58BF /* PBXContainerItemProxy */;
+		};
+		8B2CF37123183AB1007F58BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B2CF35223183954007F58BF /* NefiPad */;
+			targetProxy = 8B2CF37023183AB1007F58BF /* PBXContainerItemProxy */;
+		};
+		8B2CF37523183B39007F58BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			targetProxy = 8B2CF37423183B39007F58BF /* PBXContainerItemProxy */;
+		};
 		8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
@@ -1446,6 +1645,11 @@
 			isa = PBXTargetDependency;
 			target = 8BF75F5622CA637B00EC53A1 /* Common */;
 			targetProxy = 8B907C4D23047419001495DE /* PBXContainerItemProxy */;
+		};
+		8B91F86523183D7B00417EDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B2CF35223183954007F58BF /* NefiPad */;
+			targetProxy = 8B91F86423183D7B00417EDB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1590,6 +1794,96 @@
 			};
 			name = Release;
 		};
+		8B2CF35923183954007F58BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Component/NefiPad/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefiPad;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8B2CF35A23183954007F58BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Component/NefiPad/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefiPad;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8B2CF36E231839CE007F58BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ComponentTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.ComponentTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8B2CF36F231839CE007F58BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = ComponentTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.ComponentTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		8B424B24224E28FC00AF9010 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1677,6 +1971,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/ipad;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1688,6 +1983,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = /usr/local/lib/nef/frameworks/ipad;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1759,7 +2055,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "Tests/CoreTests/Support Files/Info.plist";
+				INFOPLIST_FILE = "Tests/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1776,7 +2072,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "Tests/CoreTests/Support Files/Info.plist";
+				INFOPLIST_FILE = "Tests/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -2140,6 +2436,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		8B2CF35823183954007F58BF /* Build configuration list for PBXNativeTarget "NefiPad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B2CF35923183954007F58BF /* Debug */,
+				8B2CF35A23183954007F58BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B2CF36D231839CE007F58BF /* Build configuration list for PBXNativeTarget "ComponentTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B2CF36E231839CE007F58BF /* Debug */,
+				8B2CF36F231839CE007F58BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8B424B23224E28FC00AF9010 /* Build configuration list for PBXNativeTarget "Markdown" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2244,7 +2558,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8B6AA7542304298E0008C1D0 /* Swiftline */ = {
+		8B91F86223183D5300417EDB /* Swiftline */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B6AA7532304298E0008C1D0 /* XCRemoteSwiftPackageReference "Swiftline" */;
 			productName = Swiftline;

@@ -7,9 +7,9 @@ import Swiftline
 struct Playground {
     private let resolvePath: ResolvePath
     private let storage = Storage()
-    private let console: iPadConsole
+    private let console: ConsoleOutput
     
-    init(packagePath: String, projectName: String, outputPath: String, console: iPadConsole) {
+    init(packagePath: String, projectName: String, outputPath: String, console: ConsoleOutput) {
         self.resolvePath = ResolvePath(packagePath: packagePath, projectName: projectName, outputPath: outputPath)
         self.console = console
     }
@@ -24,69 +24,69 @@ struct Playground {
     }
     
     private func stepStructure() -> Result<Void, PlaygroundError> {
-        console.printStep(information: "Creating swift playground structure (\(resolvePath.projectName))")
+        console.printLog(step: "Creating swift playground structure (\(resolvePath.projectName))")
         
         if makeStructure(projectPath: resolvePath.projectPath, buildPath: resolvePath.buildPath) {
-            console.printStatus(success: true)
+            console.printLog(status: true)
             return .success(())
         } else {
-            console.printStatus(success: false)
+            console.printLog(status: false)
             return .failure(.structure)
         }
     }
     
     private func stepChekout() -> Result<[String], PlaygroundError> {
-        console.printStep(information: "Downloading dependencies...")
+        console.printLog(step: "Downloading dependencies...")
         
         guard buildPackage(resolvePath.packagePath, nefPath: resolvePath.nefPath, buildPath: resolvePath.buildPath) else {
-            console.printStatus(success: false)
+            console.printLog(status: false)
             return .failure(.package(packagePath: resolvePath.packagePath))
         }
         
         let repos = repositories(checkoutPath: resolvePath.checkoutPath)
         if repos.count > 0 {
-            console.printStatus(success: true)
+            console.printLog(status: true)
             return .success(repos)
         } else {
-            console.printStatus(success: false)
+            console.printLog(status: false)
             return .failure(.checkout)
         }
     }
     
     private func stepGetModules(fromRepositories repos: [String]) -> Result<[Module], PlaygroundError> {
-        console.printStep(information: "Get modules from repositories")
+        console.printLog(step: "Get modules from repositories")
         
         let modules = repos.flatMap {
-            modulesInRepository($0).filter { $0.type == .library && $0.moduleType == .swift }
+            modulesInRepository($0).filter { $0.type == .library && $0.language == .swift }
         }
         
         if modules.count > 0 {
-            console.printStatus(success: true)
-            modules.forEach { console.printSubstep(information: $0.name) }
+            console.printLog(status: true)
+            modules.forEach { console.printLog(substep: $0.name) }
             return .success(modules)
         } else {
-            console.printStatus(success: false)
+            console.printLog(status: false)
             return .failure(.checkout)
         }
     }
     
     private func stepPlayground(modules: [Module]) -> Result<Void, PlaygroundError> {
-        console.printStep(information: "Building Swift Playground...")
+        console.printLog(step: "Building Swift Playground...")
         
         let result = makePlaygroundBook(modules: modules)
         let createdPaygroundBook = (try? result.get()) != nil
         
-        console.printStatus(success: createdPaygroundBook)
+        console.printLog(status: createdPaygroundBook)
         return result
     }
     
     private func stepCleanUp(deintegrate: Bool) -> Result<Void, PlaygroundError> {
-        console.printStep(information: "Clean up generated files for building")
+        console.printLog(step: "Clean up files for building")
         
         removePackageResolved()
         if (deintegrate) { cleanBuildFolder() }
         
-        console.printStatus(success: true)
+        console.printLog(status: true)
         return .success(())
     }
     

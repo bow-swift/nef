@@ -2,6 +2,7 @@
 
 import Foundation
 import Common
+import NefiPad
 
 let scriptName = "nef-playground-ipad"
 let console = iPadConsole()
@@ -15,7 +16,7 @@ func main() {
             return
     }
     
-    let playground = Playground(packagePath: packagePath, projectName: projectName, outputPath: outputPath, console: console)
+    let playground = NefiPad.Playground(packagePath: packagePath, projectName: projectName, outputPath: outputPath, console: console)
     let result = playground.build(cached: true)
     
     if case let .failure(error) = result {

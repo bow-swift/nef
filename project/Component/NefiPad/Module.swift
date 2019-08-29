@@ -5,16 +5,16 @@ import Foundation
 struct Module: Codable {
     let name: String
     let path: String
-    let type: Type
-    let moduleType: ModuleType
+    let type: ModuleType
+    let language: Language
     let sources: [String]
     
-    enum ModuleType: String, Codable {
+    enum Language: String, Codable {
         case swift = "SwiftTarget"
         case clang = "ClangTarget"
     }
 
-    enum `Type`: String, Codable {
+    enum ModuleType: String, Codable {
         case test
         case library
         case executable
@@ -24,7 +24,7 @@ struct Module: Codable {
         case name = "Name"
         case path = "Path"
         case type = "Type"
-        case moduleType = "Module type"
+        case language = "Module type"
         case sources = "Sources"
     }
     
@@ -32,11 +32,19 @@ struct Module: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)
         path = try container.decode(String.self, forKey: .path)
-        type = try container.decode(Type.self, forKey: .type)
-        moduleType = try container.decode(ModuleType.self, forKey: .moduleType)
+        type = try container.decode(ModuleType.self, forKey: .type)
+        language = try container.decode(Language.self, forKey: .language)
         
         let sourcesRaw = try container.decode(String.self, forKey: .sources)
         sources = sourcesRaw.components(separatedBy: ",").map { $0.trimmingEmptyCharacters }
+    }
+    
+    init(name: String, path: String, type: ModuleType, language: Language, sources: [String]) {
+        self.name = name
+        self.path = path
+        self.type = type
+        self.language = language
+        self.sources = sources
     }
 }
 
@@ -73,4 +81,9 @@ extension Module {
             })
         }
     }
+}
+
+// MARK: - Testing proposals
+extension Module {
+    
 }
