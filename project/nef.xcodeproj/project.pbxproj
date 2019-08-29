@@ -2238,7 +2238,7 @@
 			repositoryURL = "https://github.com/bow-swift/Swiftline.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.1;
+				minimumVersion = 0.5.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

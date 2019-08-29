@@ -7,16 +7,18 @@ let scriptName = "nef-playground-ipad"
 let console = iPadConsole()
 
 func main() {
-    let result = arguments(keys: "package", "to", "name")
-    guard let packagePath = result["package"],
-          let outputPath = result["to"],
-          let projectName = result["name"] else {
+    let args = arguments(keys: "package", "to", "name")
+    guard let packagePath = args["package"],
+          let outputPath = args["to"],
+          let projectName = args["name"] else {
             Console.help.show(output: console)
             return
     }
     
     let playground = Playground(packagePath: packagePath, projectName: projectName, outputPath: outputPath, console: console)
-    if case let .failure(error) = playground.build() {
+    let result = playground.build()
+    
+    if case let .failure(error) = result {
         Console.error(information: error.information).show(output: console)
         exit(-1)
     }

@@ -15,7 +15,10 @@ struct Playground {
     }
     
     func build() -> Result<Void, PlaygroundError> {
-        return stepStructure().flatMap(stepChekout).flatMap(stepGetModules).flatMap(stepPlayground)
+        return stepStructure()
+            .flatMap(stepChekout)
+            .flatMap(stepGetModules)
+            .flatMap(stepPlayground)
     }
     
     private func stepStructure() -> Result<Void, PlaygroundError> {
@@ -80,12 +83,10 @@ struct Playground {
         storage.createFolder(path: projectPath)
         let result = storage.createFolder(path: buildPath)
         
-        if case .success = result {
-            return true
-        } else if case .failure(.exist) = result {
-            return true
-        } else {
-            return false
+        switch result {
+        case .success: return true
+        case .failure(.exist): return true
+        default: return false
         }
     }
     
