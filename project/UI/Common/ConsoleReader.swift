@@ -2,14 +2,18 @@
 
 import Foundation
 
-/// Protocol to define the `Console Output`
-public protocol ConsoleOutput {
+/// Console
+///
+/// - error: show general error. The script fails.
+/// - success: show general success. The script finishes successfully.
+/// - help: show the help. How to use this script.
+public protocol Console {
     func printError(information: String)
     func printSuccess()
     func printHelp()
 }
 
-public extension ConsoleOutput {
+public extension Console {
     func printSuccess() {
         print("RENDER SUCCEEDED")
     }
@@ -24,25 +28,6 @@ public extension ConsoleOutput {
     
     func printLog(status: Bool) {
         print(" \(status ? "✅" : "❌")", separator: "", terminator: "\n")
-    }
-}
-
-/// Console
-///
-/// - error: show general error. The script fails.
-/// - success: show general success. The script finishes successfully.
-/// - help: show the help. How to use this script.
-public enum Console {
-    case error(information: String)
-    case success
-    case help
-
-    public func show(output console: ConsoleOutput) {
-        switch self {
-        case let .error(information): console.printError(information: information)
-        case .success: console.printSuccess()
-        case .help: console.printHelp()
-        }
     }
 }
 

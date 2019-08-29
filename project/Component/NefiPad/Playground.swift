@@ -4,17 +4,17 @@ import Foundation
 import Common
 import Swiftline
 
-struct Playground {
+public struct Playground {
     private let resolvePath: ResolvePath
     private let storage = Storage()
-    private let console: ConsoleOutput
+    private let console: Console
     
-    init(packagePath: String, projectName: String, outputPath: String, console: ConsoleOutput) {
+    public init(packagePath: String, projectName: String, outputPath: String, console: Console) {
         self.resolvePath = ResolvePath(packagePath: packagePath, projectName: projectName, outputPath: outputPath)
         self.console = console
     }
     
-    func build(cached: Bool) -> Result<Void, PlaygroundError> {
+    public func build(cached: Bool) -> Result<Void, PlaygroundError> {
         return stepCleanUp(deintegrate: !cached)
             .flatMap(stepStructure)
             .flatMap(stepChekout)
@@ -142,13 +142,13 @@ struct Playground {
     }
 }
 
-enum PlaygroundError: Error {
+public enum PlaygroundError: Error {
     case structure
     case package(packagePath: String)
     case checkout
     case playgroundBook
     
-    var information: String {
+    public var information: String {
         switch self {
         case .structure:
             return "could not create project structure"

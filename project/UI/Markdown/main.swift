@@ -13,7 +13,7 @@ func main() {
     guard let fromPage = result["from"],
           let output = result["to"],
           let filename = result["filename"] else {
-            Console.help.show(output: console);
+            console.printHelp()
             exit(-1)
     }
 
@@ -31,14 +31,14 @@ func main() {
 private func renderMarkdown(from filePath: String, to outputPath: String) {
     let fileURL = URL(fileURLWithPath: filePath)
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8) else {
-        Console.error(information: "invalid input file '\(filePath)'").show(output: console)
+        console.printError(information: "invalid input file '\(filePath)'")
         return
     }
     
     renderMarkdown(content: content,
                    to: outputPath,
-                   success: { Console.success.show(output: console) },
-                   failure: { Console.error(information: $0).show(output: console) })
+                   success: { console.printSuccess() },
+                   failure: { console.printError(information: $0) })
 }
 
 // #: - MAIN <launcher>

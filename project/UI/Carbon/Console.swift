@@ -3,7 +3,7 @@
 import Foundation
 import Common
 
-public class CarbonOutput: ConsoleOutput {
+public class CarbonOutput: Console {
     
     public func printError(information: String) {
         print("""

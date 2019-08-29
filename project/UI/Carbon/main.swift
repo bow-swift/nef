@@ -12,7 +12,8 @@ let console = CarbonOutput()
 func main(downloader: CarbonDownloader) {
     let result = arguments(keys: "from", "to", "background", "theme", "size", "font", "show-lines", "show-watermark")
     guard let fromPage = result["from"], let output = result["to"] else {
-        Console.help.show(output: console); exit(-1)
+        console.printHelp()
+        exit(-1)
     }
     
     let from = "\(fromPage)/Contents.swift"
@@ -50,12 +51,12 @@ private func renderCarbon(downloader: CarbonDownloader, from filePath: String, t
 }
 
 private func consoleSuccess() {
-    Console.success.show(output: console)
+    console.printSuccess()
     CarbonApplication.terminate()
 }
 
 private func consoleError(information: String) {
-    Console.error(information: "").show(output: console)
+    console.printError(information: "")
     CarbonApplication.terminate()
 }
 

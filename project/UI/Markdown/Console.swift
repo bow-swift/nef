@@ -3,7 +3,7 @@
 import Foundation
 import Common
 
-class MarkdownConsole: ConsoleOutput {
+class MarkdownConsole: Console {
 
     func printError(information: String) {
         if !information.isEmpty {

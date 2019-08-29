@@ -21,7 +21,7 @@
 		8B12D7C122D645EE00D05A70 /* NefCarbon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7C222D645EE00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7C322D645EE00D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */; };
+		8B22247B22D4C7B400C85856 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* Console.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249322D5EAD600C85856 /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B22249D22D5EC6B00C85856 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* Markdown.swift */; };
@@ -33,10 +33,10 @@
 		8B2CF35F2318398E007F58BF /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF949A231593C400AFA4CC /* Assets.swift */; };
 		8B2CF36A231839CE007F58BF /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; };
 		8B2CF37223183ACD007F58BF /* NefiPad.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B2CF35323183954007F58BF /* NefiPad.framework */; };
-		8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85622D392C000919F36 /* ConsoleOutput.swift */; };
+		8B3CB87F22D3931D00919F36 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85622D392C000919F36 /* Console.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
-		8B3CB88322D3932400919F36 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */; };
+		8B3CB88322D3932400919F36 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85C22D392C000919F36 /* Console.swift */; };
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
 		8B3CB88522D3933D00919F36 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85F22D392C000919F36 /* String+Path.swift */; };
 		8B3CB88622D3933D00919F36 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86322D392C000919F36 /* ConsoleReader.swift */; };
@@ -72,7 +72,7 @@
 		8B6AA74F230429420008C1D0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6AA74E230429420008C1D0 /* main.swift */; };
 		8B6B119D22CB9FDE0060177F /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; };
 		8B6F2EE12317D78F008D413A /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; };
-		8B907C4C23047040001495DE /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4B23047040001495DE /* ConsoleOutput.swift */; };
+		8B907C4C23047040001495DE /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4B23047040001495DE /* Console.swift */; };
 		8B907C502304757A001495DE /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4F2304757A001495DE /* Storage.swift */; };
 		8B91F86323183D5300417EDB /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B91F86223183D5300417EDB /* Swiftline */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
@@ -345,13 +345,13 @@
 		8B3CB84D22D3929B00919F36 /* NefCarbon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCarbon.h; sourceTree = "<group>"; };
 		8B3CB84E22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB85022D3929B00919F36 /* URLQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLQuery.swift; sourceTree = "<group>"; };
-		8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
+		8B3CB85122D3929B00919F36 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8B3CB85522D392C000919F36 /* Jekyll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jekyll.swift; sourceTree = "<group>"; };
-		8B3CB85622D392C000919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
+		8B3CB85622D392C000919F36 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8B3CB85722D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB85922D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB85B22D392C000919F36 /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
-		8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
+		8B3CB85C22D392C000919F36 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8B3CB85D22D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB85F22D392C000919F36 /* String+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
 		8B3CB86122D392C000919F36 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
@@ -384,7 +384,7 @@
 		8B6FC585221ECE6A008F7694 /* Jekyll */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Jekyll; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B907C4723046EFE001495DE /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		8B907C4923046F15001495DE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		8B907C4B23047040001495DE /* ConsoleOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
+		8B907C4B23047040001495DE /* Console.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8B907C4F2304757A001495DE /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		8BC8E94022D3A65D009740E4 /* NefTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = NefTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
@@ -691,7 +691,7 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85722D392C000919F36 /* main.swift */,
-				8B3CB85622D392C000919F36 /* ConsoleOutput.swift */,
+				8B3CB85622D392C000919F36 /* Console.swift */,
 			);
 			path = Jekyll;
 			sourceTree = "<group>";
@@ -700,7 +700,7 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85922D392C000919F36 /* main.swift */,
-				8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */,
+				8B3CB85122D3929B00919F36 /* Console.swift */,
 			);
 			path = Carbon;
 			sourceTree = "<group>";
@@ -709,7 +709,7 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85D22D392C000919F36 /* main.swift */,
-				8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */,
+				8B3CB85C22D392C000919F36 /* Console.swift */,
 			);
 			path = Markdown;
 			sourceTree = "<group>";
@@ -819,7 +819,7 @@
 			isa = PBXGroup;
 			children = (
 				8B6AA74E230429420008C1D0 /* main.swift */,
-				8B907C4B23047040001495DE /* ConsoleOutput.swift */,
+				8B907C4B23047040001495DE /* Console.swift */,
 			);
 			path = iPad;
 			sourceTree = "<group>";
@@ -1381,7 +1381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88122D3932000919F36 /* main.swift in Sources */,
-				8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */,
+				8B22247B22D4C7B400C85856 /* Console.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1425,7 +1425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88422D3932400919F36 /* main.swift in Sources */,
-				8B3CB88322D3932400919F36 /* ConsoleOutput.swift in Sources */,
+				8B3CB88322D3932400919F36 /* Console.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1442,7 +1442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6AA74F230429420008C1D0 /* main.swift in Sources */,
-				8B907C4C23047040001495DE /* ConsoleOutput.swift in Sources */,
+				8B907C4C23047040001495DE /* Console.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1477,7 +1477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88022D3931D00919F36 /* main.swift in Sources */,
-				8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */,
+				8B3CB87F22D3931D00919F36 /* Console.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1811,7 +1811,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefiPad;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1838,7 +1837,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefiPad;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

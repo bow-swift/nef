@@ -3,7 +3,7 @@
 import Foundation
 import Common
 
-class JekyllConsole: ConsoleOutput {
+class JekyllConsole: Console {
 
     func printError(information: String) {
         if !information.isEmpty {

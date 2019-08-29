@@ -13,7 +13,7 @@ func main() {
     guard let fromPage = result["from"],
           let output = result["to"],
           let permalink = result["permalink"] else {
-            Console.help.show(output: console);
+            console.printHelp()
             exit(-1)
     }
 
@@ -32,15 +32,15 @@ func main() {
 func renderJekyll(from filePath: String, to outputPath: String, permalink: String) {
     let fileURL = URL(fileURLWithPath: filePath)
     guard let content = try? String(contentsOf: fileURL, encoding: .utf8) else {
-        Console.error(information: "invalid input file '\(filePath)'").show(output: console)
+        console.printError(information: "invalid input file '\(filePath)'")
         return
     }
     
     renderJekyll(content: content,
                  to: outputPath,
                  permalink: permalink,
-                 success: { Console.success.show(output: console) },
-                 failure: { Console.error(information: $0).show(output: console) })
+                 success: { console.printSuccess() },
+                 failure: { console.printError(information: $0) })
 }
 
 // #: - MAIN <launcher>

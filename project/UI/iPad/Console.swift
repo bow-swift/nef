@@ -3,7 +3,7 @@
 import Foundation
 import Common
 
-class iPadConsole: ConsoleOutput {
+class iPadConsole: Console {
 
     func printError(information: String) {
         if !information.isEmpty {
