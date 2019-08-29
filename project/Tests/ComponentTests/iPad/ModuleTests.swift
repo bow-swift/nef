@@ -7,5 +7,6 @@ class ModuleTests: XCTestCase {
     
     func testMigue() {
         let module = Module(name: "migue", path: "adios", type: .test, language: .swift, sources: ["hola"])
+        module.name
     }
 }

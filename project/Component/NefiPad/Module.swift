@@ -38,14 +38,6 @@ struct Module: Codable {
         let sourcesRaw = try container.decode(String.self, forKey: .sources)
         sources = sourcesRaw.components(separatedBy: ",").map { $0.trimmingEmptyCharacters }
     }
-    
-    init(name: String, path: String, type: ModuleType, language: Language, sources: [String]) {
-        self.name = name
-        self.path = path
-        self.type = type
-        self.language = language
-        self.sources = sources
-    }
 }
 
 // MARK: - Helpers
@@ -83,7 +75,13 @@ extension Module {
     }
 }
 
-// MARK: - Testing proposals
+// MARK: - testing proposals
 extension Module {
-    
+    init(name: String, path: String, type: ModuleType, language: Language, sources: [String]) {
+        self.name = name
+        self.path = path
+        self.type = type
+        self.language = language
+        self.sources = sources
+    }
 }

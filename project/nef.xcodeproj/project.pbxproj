@@ -75,6 +75,7 @@
 		8B907C4C23047040001495DE /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4B23047040001495DE /* Console.swift */; };
 		8B907C502304757A001495DE /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B907C4F2304757A001495DE /* Storage.swift */; };
 		8B91F86323183D5300417EDB /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B91F86223183D5300417EDB /* Swiftline */; };
+		8B91F8662318432300417EDB /* ModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2CF32E231833E1007F58BF /* ModuleTests.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 /* End PBXBuildFile section */
 
@@ -1417,6 +1418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B91F8662318432300417EDB /* ModuleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1851,7 +1853,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = ComponentTests/Info.plist;
+				INFOPLIST_FILE = "Tests/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1869,7 +1871,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = ComponentTests/Info.plist;
+				INFOPLIST_FILE = "Tests/Support Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

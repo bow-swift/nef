@@ -18,6 +18,13 @@
         "identifier" : "8B6B119B22CB9FDE0060177F",
         "name" : "CoreTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:nef.xcodeproj",
+        "identifier" : "8B2CF364231839CE007F58BF",
+        "name" : "ComponentTests"
+      }
     }
   ],
   "version" : 1
