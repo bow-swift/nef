@@ -16,7 +16,7 @@ func main() {
     }
     
     let playground = Playground(packagePath: packagePath, projectName: projectName, outputPath: outputPath, console: console)
-    let result = playground.build()
+    let result = playground.build(cached: true)
     
     if case let .failure(error) = result {
         Console.error(information: error.information).show(output: console)

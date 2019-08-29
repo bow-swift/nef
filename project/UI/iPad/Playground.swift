@@ -14,11 +14,13 @@ struct Playground {
         self.console = console
     }
     
-    func build() -> Result<Void, PlaygroundError> {
-        return stepStructure()
+    func build(cached: Bool) -> Result<Void, PlaygroundError> {
+        return stepCleanUp(deintegrate: !cached)
+            .flatMap(stepStructure)
             .flatMap(stepChekout)
             .flatMap(stepGetModules)
             .flatMap(stepPlayground)
+            .flatMap { _ in stepCleanUp(deintegrate: false) }
     }
     
     private func stepStructure() -> Result<Void, PlaygroundError> {
@@ -78,6 +80,16 @@ struct Playground {
         return result
     }
     
+    private func stepCleanUp(deintegrate: Bool) -> Result<Void, PlaygroundError> {
+        console.printStep(information: "Clean up generated files for building")
+        
+        removePackageResolved()
+        if (deintegrate) { cleanBuildFolder() }
+        
+        console.printStatus(success: true)
+        return .success(())
+    }
+    
     // MARK: private methods <step helpers>
     private func makeStructure(projectPath: String, buildPath: String) -> Bool {
         storage.createFolder(path: projectPath)
@@ -95,6 +107,15 @@ struct Playground {
         return PlaygroundBook(name: "nef", path: resolvePath.playgroundPath, storage: storage)
                 .create(withModules: modules)
                 .flatMapError { _ in .failure(.playgroundBook) }
+    }
+    
+    private func removePackageResolved() {
+        let packageResolvedPath = "\(resolvePath.packagePath.parentPath)/Package.resolved"
+        storage.remove(filePath: packageResolvedPath)
+    }
+    
+    private func cleanBuildFolder() {
+        storage.remove(filePath: resolvePath.nefPath)
     }
     
     // MARK: private methods <swift-package-manager>
