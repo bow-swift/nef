@@ -7,9 +7,9 @@ import Foundation
 /// - error: show general error. The script fails.
 /// - success: show general success. The script finishes successfully.
 /// - help: show the help. How to use this script.
+/// - log: show information about script execution status.
 public protocol Console {
     func printError(information: String)
-    func printSuccess()
     func printHelp()
 }
 
