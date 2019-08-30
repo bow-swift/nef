@@ -152,14 +152,13 @@ class PlaygroundBook {
                                     }
                                 }
 
-                                static func print(_ message: String, clearAfter seconds: Int = 0) {
+                                static func print(_ message: String) {
                                     let newMessage = \"◦ \\(message)\"
                                     let assessmentStatus = log.isEmpty ? newMessage : \"\\(log)\\n\\n\\(newMessage)\"
                                     PlaygroundPage.current.assessmentStatus = .pass(message: assessmentStatus)
-                                    if (seconds > 0) { PlaygroundLog.clear(after: seconds) }
                                 }
 
-                                static func clear(after seconds: Int = 0) {
+                                static func clear(afterSeconds seconds: Int = 0) {
                                     guard seconds > 0 else {
                                         PlaygroundPage.current.assessmentStatus = nil; return
                                 	}
