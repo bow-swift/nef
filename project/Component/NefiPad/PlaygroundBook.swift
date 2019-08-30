@@ -65,12 +65,12 @@ class PlaygroundBook {
     }
     
     private func makePage(path pagePath: String) -> Result<Void, PlaygroundBookError> {
-        let swiftCode = PlaygroundCode.header
-        let manifest  = Manifiest.page(name: pagePath.filename.removeExtension)
+        let template = PlaygroundCode.template
+        let manifest = Manifiest.page(name: pagePath.filename.removeExtension)
         
         storage.createFolder(path: pagePath)
         
-        let fileResult = storage.createFile(withContent: swiftCode, atPath: "\(pagePath)/main.swift")
+        let fileResult = storage.createFile(withContent: template, atPath: "\(pagePath)/main.swift")
                                 .flatMap { _ in .success(()) }.flatMapError { _ in .failure(PlaygroundBookError.page) }
         
         let manifestResult = storage.createFile(withContent: manifest, atPath: "\(pagePath)/Manifest.plist")
@@ -121,59 +121,59 @@ class PlaygroundBook {
     
     // MARK: Constants <Code>
     private enum PlaygroundCode {
-        static let header = """
-                            //#-hidden-code
-                            import UIKit
-                            import PlaygroundSupport
+        static let template = """
+                              //#-hidden-code
+                              import UIKit
+                              import PlaygroundSupport
 
-                            let liveView = UIView()
-                            
-                            PlaygroundPage.current.liveView = liveView
-                            PlaygroundPage.current.needsIndefiniteExecution = true
+                              let liveView = UIView()
+                              
+                              PlaygroundPage.current.liveView = liveView
+                              PlaygroundPage.current.needsIndefiniteExecution = true
 
-                            enum PlaygroundColor {
-                                static let nef = UIColor(red: 140/255.0, green: 68/255.0, blue: 1, alpha: 1)
-                                static let bow = UIColor(red: 213/255.0, green: 64/255.0, blue: 72/255.0, alpha: 1)
-                                static let white = UIColor.white
-                                static let black = UIColor.black
-                                static let yellow = UIColor(red: 1, green: 237/255.0, blue: 117/255.0, alpha: 1)
-                                static let green = UIColor(red: 110/255.0, green: 240/255.0, blue: 167/255.0, alpha: 1)
-                                static let blue = UIColor(red: 66/255.0, green: 197/255.0, blue: 1, alpha: 1)
-                                static let orange = UIColor(red: 1, green: 159/255.0, blue: 70/255.0, alpha: 1)
-                            }
+                              enum PlaygroundColor {
+                                  static let nef = UIColor(red: 140/255.0, green: 68/255.0, blue: 1, alpha: 1)
+                                  static let bow = UIColor(red: 213/255.0, green: 64/255.0, blue: 72/255.0, alpha: 1)
+                                  static let white = UIColor.white
+                                  static let black = UIColor.black
+                                  static let yellow = UIColor(red: 1, green: 237/255.0, blue: 117/255.0, alpha: 1)
+                                  static let green = UIColor(red: 110/255.0, green: 240/255.0, blue: 167/255.0, alpha: 1)
+                                  static let blue = UIColor(red: 66/255.0, green: 197/255.0, blue: 1, alpha: 1)
+                                  static let orange = UIColor(red: 1, green: 159/255.0, blue: 70/255.0, alpha: 1)
+                              }
 
-                            enum PlaygroundLog {
-                                static var log: String {
-                                    guard let assessmentStatus = PlaygroundPage.current.assessmentStatus else { return "" }
+                              enum PlaygroundLog {
+                                  static var log: String {
+                                      guard let assessmentStatus = PlaygroundPage.current.assessmentStatus else { return "" }
 
-                                    switch assessmentStatus {
-                                    case let .pass(message): return message ?? ""
-                                    default: return ""
-                                    }
-                                }
+                                      switch assessmentStatus {
+                                      case let .pass(message): return message ?? ""
+                                      default: return ""
+                                      }
+                                  }
 
-                                static func print(_ message: String) {
-                                    let newMessage = \"◦ \\(message)\"
-                                    let assessmentStatus = log.isEmpty ? newMessage : \"\\(log)\\n\\n\\(newMessage)\"
-                                    PlaygroundPage.current.assessmentStatus = .pass(message: assessmentStatus)
-                                }
+                                  static func print(_ message: String) {
+                                      let newMessage = \"◦ \\(message)\"
+                                      let assessmentStatus = log.isEmpty ? newMessage : \"\\(log)\\n\\n\\(newMessage)\"
+                                      PlaygroundPage.current.assessmentStatus = .pass(message: assessmentStatus)
+                                  }
 
-                                static func clear(afterSeconds seconds: Int = 0) {
-                                    guard seconds > 0 else {
-                                        PlaygroundPage.current.assessmentStatus = nil; return
-                                	}
+                                  static func clear(afterSeconds seconds: Int = 0) {
+                                      guard seconds > 0 else {
+                                          PlaygroundPage.current.assessmentStatus = nil; return
+                                      }
 
-                                    DispatchQueue.main.asyncValueAfter(.now() + .seconds(seconds)) {
-                                        PlaygroundPage.current.assessmentStatus = nil
-                                    }
-                                }
-                            }
+                                      DispatchQueue.main.asyncValueAfter(.now() + .seconds(seconds)) {
+                                          PlaygroundPage.current.assessmentStatus = nil
+                                      }
+                                  }
+                              }
 
-                            PlaygroundLog.clear()
-                            //#-end-hidden-code
-                            liveView.backgroundColor = PlaygroundColor.nef
+                              PlaygroundLog.clear()
+                              //#-end-hidden-code
+                              liveView.backgroundColor = PlaygroundColor.nef
 
-                            """
+                              """
                             
     }
     
