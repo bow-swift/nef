@@ -21,6 +21,9 @@
 		8B12D7C122D645EE00D05A70 /* NefCarbon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7C222D645EE00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7C322D645EE00D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B1B1E8323191FE500008640 /* bow-describe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8B1B1E8223191FE500008640 /* bow-describe.txt */; };
+		8B1B1E862319210400008640 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1B1E852319210400008640 /* File.swift */; };
+		8B1B1E882319256B00008640 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1B1E872319256B00008640 /* String+Extensions.swift */; };
 		8B22247B22D4C7B400C85856 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* Console.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249322D5EAD600C85856 /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -322,6 +325,9 @@
 		8B12D79B22D6235200D05A70 /* NefJekyll.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefJekyll.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12D79D22D6235200D05A70 /* NefJekyll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefJekyll.h; sourceTree = "<group>"; };
 		8B12D79E22D6235200D05A70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B1B1E8223191FE500008640 /* bow-describe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "bow-describe.txt"; sourceTree = "<group>"; };
+		8B1B1E852319210400008640 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		8B1B1E872319256B00008640 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		8B22248322D5EAD500C85856 /* NefMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B22248522D5EAD600C85856 /* NefMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefMarkdown.h; sourceTree = "<group>"; };
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -520,6 +526,15 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
+		8B1B1E8423191FF000008640 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8B1B1E852319210400008640 /* File.swift */,
+				8B1B1E872319256B00008640 /* String+Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		8B22248422D5EAD500C85856 /* NefMarkdown */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				8B2CF32E231833E1007F58BF /* ModuleTests.swift */,
+				8B1B1E8223191FE500008640 /* bow-describe.txt */,
 			);
 			path = iPad;
 			sourceTree = "<group>";
@@ -793,6 +809,7 @@
 				8BC8E94022D3A65D009740E4 /* NefTestPlan.xctestplan */,
 				8B2CF32C231833B4007F58BF /* ComponentTests */,
 				8B3CB8AC22D394E600919F36 /* CoreTests */,
+				8B1B1E8423191FF000008640 /* Utils */,
 				8B3CB8AF22D394E600919F36 /* Support Files */,
 			);
 			path = Tests;
@@ -1329,6 +1346,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B1B1E8323191FE500008640 /* bow-describe.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1419,6 +1437,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B91F8662318432300417EDB /* ModuleTests.swift in Sources */,
+				8B1B1E882319256B00008640 /* String+Extensions.swift in Sources */,
+				8B1B1E862319210400008640 /* File.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

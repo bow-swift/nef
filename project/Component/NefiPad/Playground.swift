@@ -24,7 +24,7 @@ public struct Playground {
     }
     
     private func stepStructure() -> Result<Void, PlaygroundError> {
-        console.printLog(step: "Creating swift playground structure (\(resolvePath.projectName))")
+        console.printLog(step: "Creating structure for swift playground project (\(resolvePath.projectName))")
         
         if makeStructure(projectPath: resolvePath.projectPath, buildPath: resolvePath.buildPath) {
             console.printLog(status: true)
@@ -81,7 +81,7 @@ public struct Playground {
     }
     
     private func stepCleanUp(deintegrate: Bool) -> Result<Void, PlaygroundError> {
-        console.printLog(step: "Clean up files for building")
+        console.printLog(step: deintegrate ? "Clean up building files" : "Clean up unused files")
         
         removePackageResolved()
         if (deintegrate) { cleanBuildFolder() }

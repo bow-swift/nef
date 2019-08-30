@@ -1,0 +1,171 @@
+Name: Bow
+Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow
+Modules:
+    Name: BowTests
+    C99name: BowTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowTests
+    Sources: Arrow/Function0Test.swift, Arrow/Function1Test.swift, Arrow/KleisliTest.swift, Data/ArrayKTest.swift, Data/ConstTest.swift, Data/DayTest.swift, Data/EitherKTest.swift, Data/EitherTest.swift, Data/EvalTest.swift, Data/IdTest.swift, Data/IorTest.swift, Data/MooreTest.swift, Data/NonEmptyArrayTest.swift, Data/OptionTest.swift, Data/ResultTest.swift, Data/SetKTest.swift, Data/StoreTest.swift, Data/SumTest.swift, Data/TryTest.swift, Data/ValidatedTest.swift, Instances/NumberInstancesTest.swift, Instances/StringInstancesTest.swift, Syntax/BooleanFunctionsTest.swift, Syntax/CurryTest.swift, Syntax/MemoizationTest.swift, Syntax/PartialApplicationTest.swift, Syntax/PredefTest.swift, Syntax/ReverseTest.swift, Transformers/EitherTTest.swift, Transformers/OptionTTest.swift, Transformers/StateTTest.swift, Transformers/WriterTTest.swift
+
+    Name: BowRxTests
+    C99name: BowRxTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowRxTests
+    Sources: MaybeKTest.swift, ObservableKTest.swift, SingleKTest.swift
+
+    Name: BowRxGenerators
+    C99name: BowRxGenerators
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowRxGenerators
+    Sources: MaybeK+Gen.swift, ObservableK+Gen.swift, SingleK+Gen.swift
+
+    Name: BowRx
+    C99name: BowRx
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/BowRx
+    Sources: MaybeK.swift, ObservableK.swift, SingleK.swift
+
+    Name: BowRecursionSchemesTests
+    C99name: BowRecursionSchemesTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowRecursionSchemesTests
+    Sources: RecursionTest.swift
+
+    Name: BowRecursionSchemes
+    C99name: BowRecursionSchemes
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/BowRecursionSchemes
+    Sources: Data/Fix.swift, Data/Mu.swift, Data/Nu.swift, Recursion.swift, Typeclasses/Birecursive.swift, Typeclasses/Corecursive.swift, Typeclasses/Recursive.swift
+
+    Name: BowOpticsTests
+    C99name: BowOpticsTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowOpticsTests
+    Sources: FoldTest.swift, GetterTest.swift, IsoTest.swift, LensTest.swift, OptionalTest.swift, PrismTest.swift, SetterTest.swift, TestDomain.swift, TraversalTest.swift
+
+    Name: BowOpticsLaws
+    C99name: BowOpticsLaws
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowOpticsLaws
+    Sources: IsoLaws.swift, LensLaws.swift, OptionalLaws.swift, PrismLaws.swift, SetterLaws.swift, TraversalLaws.swift
+
+    Name: BowOptics
+    C99name: BowOptics
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/BowOptics
+    Sources: Auto/AutoFold.swift, Auto/AutoGetter.swift, Auto/AutoLens.swift, Auto/AutoOptics.swift, Auto/AutoOptional.swift, Auto/AutoPrism.swift, Auto/AutoSetter.swift, Auto/AutoTraversal.swift, BoundSetter.swift, DSL/At+Optics.swift, DSL/Each+Optics.swift, DSL/Index+Optics.swift, DSL/Kind+Optics.swift, Fold.swift, Getter.swift, Instances/ArrayKOpticsInstances.swift, Instances/ArrayOpticsInstances.swift, Instances/ConstOpticsInstances.swift, Instances/EitherKOpticsInstances.swift, Instances/EitherOpticsInstances.swift, Instances/IdOpticsInstances.swift, Instances/IorOpticsInstances.swift, Instances/NonEmptyArrayOpticsInstances.swift, Instances/OptionOpticsInstances.swift, Instances/StringOpticsInstances.swift, Instances/TryOpticsInstances.swift, Instances/ValidatedOpticsInstances.swift, Iso.swift, Lens.swift, Optional.swift, Prism.swift, STD/ArrayK+Optics.swift, STD/Either+Optics.swift, STD/Id+Optics.swift, STD/Ior+Optics.swift, STD/NonEmptyArray+Optics.swift, STD/Option+Optics.swift, STD/Result+Optics.swift, STD/String+Optics.swift, STD/Try+Optics.swift, STD/Validated+Optics.swift, Setter.swift, Traversal.swift, Tuple/Tuple10.swift, Tuple/Tuple2.swift, Tuple/Tuple3.swift, Tuple/Tuple4.swift, Tuple/Tuple5.swift, Tuple/Tuple6.swift, Tuple/Tuple7.swift, Tuple/Tuple8.swift, Tuple/Tuple9.swift, Typeclasses/At.swift, Typeclasses/Cons.swift, Typeclasses/Each.swift, Typeclasses/FilterIndex.swift, Typeclasses/Index.swift, Typeclasses/Snoc.swift
+
+    Name: BowLaws
+    C99name: BowLaws
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowLaws
+    Sources: AlternativeLaws.swift, ApplicativeErrorLaws.swift, ApplicativeLaws.swift, BimonadLaws.swift, BindingOperatorOverload.swift, ComonadLaws.swift, ComparableLaws.swift, ContravariantLaws.swift, CustomStringConvertibleLaws.swift, EqualityFunctions.swift, EquatableKLaws.swift, EquatableLaws.swift, FoldableLaws.swift, FunctorFilterLaws.swift, FunctorLaws.swift, InvariantLaws.swift, MonadCombineLaws.swift, MonadErrorLaws.swift, MonadFilterLaws.swift, MonadLaws.swift, MonadStateLaws.swift, MonadWriterLaws.swift, MonoidKLaws.swift, MonoidLaws.swift, PropertyOperatorOverload.swift, SelectiveLaws.swift, SemigroupKLaws.swift, SemigroupLaws.swift, TraverseFilterLaws.swift, TraverseLaws.swift
+
+    Name: BowGenericTests
+    C99name: BowGenericTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowGenericTests
+    Sources: GenericTest.swift
+
+    Name: BowGeneric
+    C99name: BowGeneric
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/BowGeneric
+    Sources: Coproduct10.swift, Coproduct2.swift, Coproduct3.swift, Coproduct4.swift, Coproduct5.swift, Coproduct6.swift, Coproduct7.swift, Coproduct8.swift, Coproduct9.swift, Generic.swift, HList.swift, Product.swift
+
+    Name: BowGenerators
+    C99name: BowGenerators
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowGenerators
+    Sources: Arrow/Function0+Gen.swift, Arrow/Function1+Gen.swift, Arrow/Kleisli+Gen.swift, Data/ArrayK+Gen.swift, Data/Const+Gen.swift, Data/Day+Gen.swift, Data/Either+Gen.swift, Data/EitherK+Gen.swift, Data/Eval+Gen.swift, Data/Id+Gen.swift, Data/Ior+Gen.swift, Data/Moore+Gen.swift, Data/NonEmptyArray+Gen.swift, Data/Option+Gen.swift, Data/Store+Gen.swift, Data/Sum+Gen.swift, Data/Try+Gen.swift, Data/Validated+Gen.swift, Transformers/EitherT+Gen.swift, Transformers/OptionT+Gen.swift, Transformers/StateT+Gen.swift, Transformers/WriterT+Gen.swift, Typeclasses/ArbitraryK.swift
+
+    Name: BowFreeTests
+    C99name: BowFreeTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowFreeTests
+    Sources: FreeTest.swift
+
+    Name: BowFreeGenerators
+    C99name: BowFreeGenerators
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowFreeGenerators
+    Sources: Free+Gen.swift
+
+    Name: BowFree
+    C99name: BowFree
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/BowFree
+    Sources: Cofree.swift, Coyoneda.swift, Free.swift, Yoneda.swift
+
+    Name: BowEffectsTests
+    C99name: BowEffectsTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowEffectsTests
+    Sources: IOTest.swift
+
+    Name: BowEffectsLaws
+    C99name: BowEffectsLaws
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowEffectsLaws
+    Sources: AsyncLaws.swift, BracketLaws.swift, MonadDeferLaws.swift
+
+    Name: BowEffectsGenerators
+    C99name: BowEffectsGenerators
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowEffectsGenerators
+    Sources: IO+Gen.swift
+
+    Name: BowEffects
+    C99name: BowEffects
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/BowEffects
+    Sources: Data/IO.swift, Data/Internal/Atomic.swift, Data/Internal/Dictionary+Extensions.swift, Data/Internal/DispatchQueue+Extensions.swift, Data/Ref.swift, Data/Resource.swift, Typeclasses/Async.swift, Typeclasses/Bracket.swift, Typeclasses/Concurrent.swift, Typeclasses/ConcurrentEffect.swift, Typeclasses/Effect.swift, Typeclasses/MonadDefer.swift, Typeclasses/UnsafeRun.swift
+
+    Name: BowBrightFuturesTests
+    C99name: BowBrightFuturesTests
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowBrightFuturesTests
+    Sources: FutureKTest.swift
+
+    Name: BowBrightFuturesGenerators
+    C99name: BowBrightFuturesGenerators
+    Type: test
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Tests/BowBrightFuturesGenerators
+    Sources: FutureK+Gen.swift
+
+    Name: BowBrightFutures
+    C99name: BowBrightFutures
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/BowBrightFutures
+    Sources: FutureK.swift
+
+    Name: Bow
+    C99name: Bow
+    Type: library
+    Module type: SwiftTarget
+    Path: /Users/miguelangel/Desktop/iPadPlayground/nef/build/checkouts/bow/Sources/Bow
+    Sources: Arrow/Cokleisli.swift, Arrow/Function0.swift, Arrow/Function1.swift, Arrow/FunctionK.swift, Arrow/Kleisli.swift, Data/ArrayK.swift, Data/Const.swift, Data/Coreader.swift, Data/Day.swift, Data/DictionaryK.swift, Data/Either.swift, Data/EitherK.swift, Data/Eval.swift, Data/Id.swift, Data/Ior.swift, Data/Moore.swift, Data/NonEmptyArray.swift, Data/Option.swift, Data/Reader.swift, Data/Result.swift, Data/SetK.swift, Data/Store.swift, Data/Sum.swift, Data/Try.swift, Data/Validated.swift, Instances/BoolInstances.swift, Instances/NumberInstances.swift, Instances/OptionInstances.swift, Instances/StringInstances.swift, Syntax/BooleanFunctions.swift, Syntax/Curry.swift, Syntax/HigherKinds.swift, Syntax/Memoization.swift, Syntax/PartialApplication.swift, Syntax/Predef.swift, Syntax/Reverse.swift, Transformers/EitherT.swift, Transformers/OptionT.swift, Transformers/StateT.swift, Transformers/WriterT.swift, Typeclasses/Alternative.swift, Typeclasses/Applicative.swift, Typeclasses/ApplicativeError.swift, Typeclasses/Bimonad.swift, Typeclasses/Comonad.swift, Typeclasses/Comparable.swift, Typeclasses/Contravariant.swift, Typeclasses/EquatableK.swift, Typeclasses/Foldable.swift, Typeclasses/Functor.swift, Typeclasses/FunctorFilter.swift, Typeclasses/Invariant.swift, Typeclasses/Monad.swift, Typeclasses/MonadCombine.swift, Typeclasses/MonadComprehensions/BindingExpression.swift, Typeclasses/MonadComprehensions/BindingOperator.swift, Typeclasses/MonadComprehensions/BoundVar.swift, Typeclasses/MonadComprehensions/MonadComprenhensions.swift, Typeclasses/MonadComprehensions/ReaderBindingExpression.swift, Typeclasses/MonadComprehensions/StateBindingExpression.swift, Typeclasses/MonadComprehensions/WriterBindingExpression.swift, Typeclasses/MonadError.swift, Typeclasses/MonadFilter.swift, Typeclasses/MonadReader.swift, Typeclasses/MonadState.swift, Typeclasses/MonadWriter.swift, Typeclasses/Monoid.swift, Typeclasses/MonoidK.swift, Typeclasses/NonEmptyReducible.swift, Typeclasses/Reducible.swift, Typeclasses/Selective.swift, Typeclasses/Semigroup.swift, Typeclasses/SemigroupK.swift, Typeclasses/Traverse.swift, Typeclasses/TraverseFilter.swift
+

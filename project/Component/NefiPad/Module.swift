@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct Module: Codable {
+struct Module: Codable, Equatable {
     let name: String
     let path: String
     let type: ModuleType
@@ -35,8 +35,11 @@ struct Module: Codable {
         type = try container.decode(ModuleType.self, forKey: .type)
         language = try container.decode(Language.self, forKey: .language)
         
-        let sourcesRaw = try container.decode(String.self, forKey: .sources)
-        sources = sourcesRaw.components(separatedBy: ",").map { $0.trimmingEmptyCharacters }
+        if let sourcesRaw = try? container.decode(String.self, forKey: .sources) {
+            sources = sourcesRaw.components(separatedBy: ",").map { $0.trimmingEmptyCharacters }
+        } else {
+            sources = try container.decode([String].self, forKey: .sources)
+        }
     }
 }
 
