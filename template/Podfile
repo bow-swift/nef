@@ -5,7 +5,6 @@ target '${POD_NAME}' do
   pod "Bow", "~> 0.0.0"
   pod "BowEffects", "~> 0.0.0"
   pod "BowRx", "~> 0.0.0"
-  pod "BowBrightFutures", "~> 0.0.0"
   pod "BowOptics", "~> 0.0.0"
   pod "BowGeneric", "~> 0.0.0"
   pod "BowRecursionSchemes", "~> 0.0.0"
