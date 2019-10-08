@@ -100,8 +100,7 @@ public struct CarbonStyle: Codable, Equatable {
 
 // MARK: Default colors
 extension CarbonStyle.Color {
-    public static let all: [String: CarbonStyle.Color] = ["transparent": transparent,
-                                                          "nef": nef,
+    public static let all: [String: CarbonStyle.Color] = ["nef": nef,
                                                           "bow": bow,
                                                           "white": white,
                                                           "green": green,
@@ -111,7 +110,6 @@ extension CarbonStyle.Color {
     
     public static let nef = CarbonStyle.Color(r: 140, g: 68, b: 255, a: 1)
     public static let bow = CarbonStyle.Color(r: 213, g: 64, b: 72, a: 1)
-    public static let transparent = CarbonStyle.Color(r: 255, g: 255, b: 255, a: 0)
     public static let white = CarbonStyle.Color(r: 255, g: 255, b: 255, a: 1)
     public static let yellow = CarbonStyle.Color(r: 255, g: 237, b: 117, a: 1)
     public static let green = CarbonStyle.Color(r: 110, g: 240, b: 167, a: 1)
