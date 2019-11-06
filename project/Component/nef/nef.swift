@@ -75,7 +75,7 @@ public func carbon(code: String,
                    outputPath: String,
                    success: @escaping () -> Void, failure: @escaping (String) -> Void) {
     guard Thread.isMainThread else {
-        fatalError("carbon(parentView:code:style:outputPath:success:failure:) should be invoked in main thread")
+        fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
     }
     
     let assembler = CarbonAssembler()

@@ -14,7 +14,7 @@
  
  ## Libraries
  
- Be the first one showing here!
+- [nef plugin](https://github.com/bow-swift/nef-plugin): This Xcode extension enables you to make a code selection and export it to a snippets. Available on [Mac App Store](https://apps.apple.com/app/nef/id1479391704?mt=8).
  
  ## Presentations
  
