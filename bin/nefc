@@ -131,31 +131,33 @@ buildPODS() {
     local podfile="Podfile"
     local log="`pwd`/nef/log/pod-install.log"
 
-    [ -f $podfile ] || return
+    podfilePath=""
+    while read -r -d $'\0' path; do
+        podfilePath="${path::${#path}-${#podfile}-1}"
+    done < <(find . -name $podfile -print0)
+
+    [ "$podfilePath" = "" ] && return
+
     echo -ne "${normal}Installing ${green}Pods ${reset}..."
+    cd "$podfilePath"
 
-    find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
-        path="${podfilePath::${#podfilePath}-${#podfile}-1}"
-        cd "$path"
+    set +e
+    if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
+        pod install 1> "$log" 2>&1
+    else
+        pod install --repo-update 1> "$log" 2>&1
+    fi
 
-        set +e
-        if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
-            pod install 1> "$log" 2>&1
-        else
-            pod install --repo-update 1> "$log" 2>&1
-        fi
+    installed=`grep "Pod installation complete" "$log"`
+    set -e
 
-        installed=`grep "Pod installation complete" "$log"`
-        set -e
-
-        if [ "${#installed}" -gt 0 ]; then
-            echo " ✅"
-        else
-            echo " ❌"
-            echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
-            exit 1
-        fi
-    done
+    if [ "${#installed}" -gt 0 ]; then
+        echo " ✅"
+    else
+        echo " ❌"
+        echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
+        exit 1
+    fi
 }
 
 ##
@@ -211,7 +213,7 @@ createEmptyWorkspace() {
         workspacePath=$(workspaceForProjectPath "$1" "$project")
         workspaceExtension=$(echo "$workspacePath" | rev | cut -d'.' -f1 | rev)
         workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
-        workspace="$workspaceName.xcworkspace"
+        workspace="nef.xcworkspace"
         isDependency=$(isPathFromDependencies "$workspacePath")
 
         ([ "$workspaceExtension" = "xcworkspace" ] || [ $isDependency -eq 1 ]) && continue
