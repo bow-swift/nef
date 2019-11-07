@@ -262,7 +262,7 @@ buildProject() {
         workspace=$(workspaceForProjectPath "$projectPath" "$project")
         workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
         schemeName=$(schemeNameFromProject "$project")
-        sdk=$(sdkForWorkspaceAndScheme "$workspace" "$schemeName")
+        sdk=$(sdkForWorkspaceAndScheme "$projectPath/$workspace" "$schemeName")
         log="$logPath/$workspaceName.log"
 
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
@@ -339,7 +339,7 @@ sdkForWorkspaceAndScheme() {
   local workspace="$1"   # parameter `workspace`
   local schemeName="$2"  # parameter `schemeName`
 
-  isIPHONE=$(eval xcodebuild -workspace "$workspace" -scheme "$schemeName" -quiet -showBuildSettings 2>&1 | grep 'SDKROOT' | grep 'iPhone' | awk '{ print length; }')
+  isIPHONE=$(eval xcodebuild -workspace "$workspace" -scheme "$schemeName" -quiet -showBuildSettings 2>/dev/null | grep 'SDKROOT' | grep 'iPhone' | awk '{ print length; }')
   sdk="iphoneos"
   if [ "$isIPHONE" = "" ]; then
     sdk="macosx"
