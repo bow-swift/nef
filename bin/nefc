@@ -258,7 +258,8 @@ buildProject() {
         [ $isDependency -eq 1 ] && continue
 
         # build
-        workspace=$(workspaceForProjectPath "$1" "$project")
+        projectPath=$(echo "$1/$project" | rev | cut -d'/' -f3- | rev)
+        workspace=$(workspaceForProjectPath "$projectPath" "$project")
         workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
         schemeName=$(schemeNameFromProject "$project")
         sdk=$(sdkForWorkspaceAndScheme "$workspace" "$schemeName")
@@ -269,7 +270,7 @@ buildProject() {
         needBuildProject=$(shouldBuildWorkspace "$workspace" "$flag")
         if [ "$needBuildProject" = "1" ]; then
             set +e
-            xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
+            xcodebuild -workspace "$projectPath/$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
             installed=`grep "BUILD SUCCEEDED" "$log"`
             set -e
         else
