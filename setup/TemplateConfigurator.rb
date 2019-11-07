@@ -14,6 +14,7 @@ module Nef
       ConfigureNef.perform(configurator: self)
       replace_variables_in_files
       clean_template_files
+      setPlaygroundApp
     end
 
     # private methods
@@ -41,6 +42,10 @@ module Nef
       ["template"].each do |asset|
         `rm -rf #{asset}`
       end
+    end
+
+    def setPlaygroundApp
+      `mv PROJECT.app #{@project_name}.app`
     end
 
     # properties
