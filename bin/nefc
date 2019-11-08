@@ -125,7 +125,6 @@ buildDependencies() {
 ##
 buildPODS() {
     cd "$1"
-
     local flag="$2"
     local podfile="Podfile"
     local log="`pwd`/nef/log/pod-install.log"
@@ -136,7 +135,6 @@ buildPODS() {
     done < <(find . -name $podfile -print0)
 
     [ "$podfilePath" = "" ] && return
-
     echo -ne "${normal}Installing ${green}Pods ${reset}..."
     cd "$podfilePath"
 
@@ -168,8 +166,14 @@ buildCarthage() {
     local cartfile="Cartfile"
     local log="`pwd`/nef/log/carthage-install.log"
 
-    [ -f $cartfile ] || return
+    cartfilePath=""
+    while read -r -d $'\0' path; do
+        cartfilePath="${path::${#path}-${#cartfile}-1}"
+    done < <(find . -name $cartfile -print0)
+
+    [ "$cartfilePath" = "" ] && return
     echo -ne "${normal}Installing ${green}Carthage ${reset}..."
+    cd "$cartfilePath"
 
     # build
     playgroundPagesForProjectPath "$project"

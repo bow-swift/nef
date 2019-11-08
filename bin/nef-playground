@@ -47,6 +47,7 @@ printHelp() {
 #   - Parameter `podfile`
 ##
 setDependency() {
+  cd "$1"
   local projectFolder="$1" # parameter `projectFolder`
   local projectName="$2"   # parameter `projectName`
   local platform="$3"      # parameter `platform`
@@ -56,14 +57,12 @@ setDependency() {
   local cartfile="$6"      # parameter `cartfile`
   local podfile="$7"       # parameter `podfile`
 
-  cd "$projectFolder"
-
-  if [ "$podfile" != "" ] & [ -f "$podfile" ]; then
+  if [ "$podfile" != "" ] && [ -f "$podfile" ]; then
       checkCocoaPods
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setCocoaPodsDependency "$projectFolder" "$projectName" "$platform" "$podfile"
       setDefaultWorkspace "$projectFolder"
-  elif [ "$cartfile" != "" ] & [ -f "$cartfile" ]; then
+  elif [ "$cartfile" != "" ] && [ -f "$cartfile" ]; then
       checkCarthage
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "carthage"
       setCarthageDependency "$projectFolder" "$projectName" "$platform" "$cartfile"
@@ -367,6 +366,8 @@ done
 projectName="$projectName"
 project="$root/$projectName.app"
 projectFolder="$project/Contents/MacOS"
+cartfilePath="$root/$cartfile"
+podfilePath="$root/$podfile"
 
 playground "$project" "$projectFolder" "$projectName"
-setDependency "$projectFolder" "$projectName" "$platform" "$version" "$branch" "$cartfile" "$podfile"
+setDependency "$projectFolder" "$projectName" "$platform" "$version" "$branch" "$cartfilePath" "$podfilePath"
