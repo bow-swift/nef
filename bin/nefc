@@ -110,12 +110,9 @@ isPathFromDependencies() {
 #   - parameter `flag`: configuration for building.
 ##
 buildDependencies() {
-    local path="$1" # parameter `folder`
-    local flag="$2" # parameter `flag`
-
-    buildPODS "$path" "$flag"
-    buildCarthage "$path" "$flag"
-    addPlaygroundReference "$path"
+    buildPODS "$1" "$2"
+    buildCarthage "$1" "$2"
+    addPlaygroundReference "$1"
 }
 
 ##
@@ -128,6 +125,7 @@ buildPODS() {
     local flag="$2"
     local podfile="Podfile"
     local log="`pwd`/nef/log/pod-install.log"
+    local path=""
 
     podfilePath=""
     while read -r -d $'\0' path; do
@@ -173,7 +171,7 @@ buildCarthage() {
 
     [ "$cartfilePath" = "" ] && return
     echo -ne "${normal}Installing ${green}Carthage ${reset}..."
-    cd "$cartfilePath"
+    cartfilePath="$project/$cartfilePath"
 
     # build
     playgroundPagesForProjectPath "$project"
@@ -181,6 +179,7 @@ buildCarthage() {
     platformIOS=$(isPlatformIOSPlaygroundPage "$playgroundPage")
     [ $platformIOS -eq 1 ] && platform="iOS" || platform="osx"
 
+    cd "$cartfilePath"
     if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
         carthage bootstrap --cache-builds --platform $platform 1> "$log" 2>&1
     else
@@ -193,7 +192,7 @@ buildCarthage() {
     failed=`grep "failed with exit code" "$log"`
 
     if [ "${#installed}" -eq 0 ] && [ "${#errors}" -eq 0 ] && [ "${#failed}" -eq 0 ]; then
-        createEmptyWorkspace "$project"
+        createEmptyWorkspace "$cartfilePath"
         echo " ✅"
     else
         echo " ❌"
@@ -316,18 +315,17 @@ schemeNameFromProject() {
 #   - Return `workspace` path
 ##
 workspaceForProjectPath() {
+    cd "$1"
     local path="$1"         # parameter `folder`
     local projectPath="$2"  # parameter `projectPath`
-
-    cd "$path"
 
     local xcprojectPath=$(echo "$projectPath" | rev | cut -d'/' -f 2- | rev)
     local xcprojectNoExtension=$(echo "$xcprojectPath" | rev | cut -d'.' -f 2- | rev)
 
-    if [ -d "$xcprojectNoExtension.xcworkspace" ]; then
-        echo "$xcprojectNoExtension.xcworkspace"
-    elif [ -d "nef.xcworkspace" ]; then
+    if [ -d "nef.xcworkspace" ]; then
         echo "nef.xcworkspace"
+    elif [ -d "$xcprojectNoExtension.xcworkspace" ]; then
+        echo "$xcprojectNoExtension.xcworkspace"
     else
         echo "$xcprojectNoExtension.xcodeproj"
     fi
@@ -391,21 +389,23 @@ shouldBuildWorkspace() {
 #   - Parameter `folder`: path to the project folder.
 ##
 addPlaygroundReference() {
-    projectPath="$1"
-    cd "$projectPath"
-
-    playgroundsForProjectPath "$projectPath"
-    local logPath="nef/log"
+    cd "$1"
+    local folder="$1"
+    local logPath="`pwd`/nef/log"
     local pattern="<FileRef"
 
+    playgroundsForProjectPath "$folder"
+
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        workspace=$(workspaceForProjectPath "$1" "$project")
+        parentProjectPath=$(echo "$folder/$project" | rev | cut -d'/' -f3- | rev)
+        workspace=$(workspaceForProjectPath "$parentProjectPath" "$project")
         workspaceExtension=$(echo "$workspace" | rev | cut -d'.' -f1 | rev)
         workspaceName=$(echo "$workspace" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
         workspaceContent="$workspace/contents.xcworkspacedata"
 
+        cd "$parentProjectPath"
         ! [ "$workspaceExtension" = "xcworkspace" ] && continue
-        grep -q ".playground\"" "$workspaceContent"; [ $? -eq 0 ] && continue
+        grep -q "\.playground\"" "$workspaceContent"; [ $? -eq 0 ] && continue
 
         for playground in "${playgroundsForProjectPath[@]}"; do
             playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
