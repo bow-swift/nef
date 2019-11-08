@@ -164,11 +164,7 @@ setDefaultWorkspace() {
     ! [ -f "$podfilePath" ] && continue
 
     echo -ne "${normal}Updating podfile with ${green}default workspace${reset}..."
-
-    tmp="$podfilePath.tmp"
-    awk '{ gsub("end", "end\n\nworkspace \x27nef\x27") }1' "$podfilePath" 1> "$tmp"
-    mv "$tmp" "$podfilePath"
-
+    echo "workspace 'nef'" >> $podfilePath
     echo " ✅"
 }
 

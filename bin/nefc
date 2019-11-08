@@ -267,7 +267,7 @@ buildProject() {
         schemeName=$(schemeNameFromProject "$project")
         sdk=$(sdkForWorkspaceAndScheme "$projectPath/$workspace" "$schemeName")
         log="$logPath/$workspaceName.log"
-
+        
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
 
         needBuildProject=$(shouldBuildWorkspace "$workspace" "$flag")
@@ -302,8 +302,9 @@ schemeNameFromProject() {
     targetNative="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
     targetAggregate="sed -n '/Begin PBXAggregateTarget section/, /End PBXAggregateTarget section/p'"
     targetName="grep 'name = ' | awk -F' = ' '{print \$2}' | awk -F';' '{print \$1}'"
-    schemeName1=$(eval cat "\"$project\" | $targetNative | $targetName")
-    schemeName2=$(eval cat "\"$project\" | $targetAggregate | $targetName")
+    removeQuotes="tr -d '\"'"
+    schemeName1=$(eval cat "\"$project\" | $targetNative | $targetName | $removeQuotes")
+    schemeName2=$(eval cat "\"$project\" | $targetAggregate | $targetName | $removeQuotes")
 
     [ -z "$schemeName1" ] && echo "$schemeName2" || echo "$schemeName1"
 }
