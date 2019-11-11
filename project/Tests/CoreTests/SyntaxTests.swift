@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import XCTest
-@testable import Core
+@testable import NefCore
 
 class SyntaxTests: XCTestCase {
 
@@ -9,7 +9,7 @@ class SyntaxTests: XCTestCase {
         let input = "import Bow // testing\n"
         let expected: [Node] = [.block([.code("import Bow // testing\n")])]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -18,7 +18,7 @@ class SyntaxTests: XCTestCase {
         let input = "// import Bow // testing\n"
         let expected: [Node] = [.block([.comment("// import Bow // testing\n")])]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -32,7 +32,7 @@ class SyntaxTests: XCTestCase {
                     """
         let expected: [Node] = [.block([.comment(input)])]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -41,7 +41,7 @@ class SyntaxTests: XCTestCase {
         let input = "//: This is a test\n"
         let expected: [Node] = [.markup(description: nil, "This is a test\n")]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -55,7 +55,7 @@ class SyntaxTests: XCTestCase {
                     """
         let expected: [Node] = [.markup(description: .some(""), "This is a test\n")]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -69,7 +69,7 @@ class SyntaxTests: XCTestCase {
                     """
         let expected: [Node] = [.markup(description: .some("information"), "This is a test\n")]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -89,7 +89,7 @@ class SyntaxTests: XCTestCase {
         let expected: [Node] = [.nef(command: .hidden, [.raw("This is a hidden markup\n")]),
                                 .markup(description: .some(""), "This is a visible markup multiline\n")]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -105,7 +105,7 @@ class SyntaxTests: XCTestCase {
                     """
         let expected: [Node] = [.markup(description: .some(""), "This is a visible 👀 markup multiline ©\n")]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -121,7 +121,7 @@ class SyntaxTests: XCTestCase {
                     """
         let expected: [Node] = [.block([.comment("/*\nThis is a visible comment multiline\n */\n")])]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -142,7 +142,7 @@ class SyntaxTests: XCTestCase {
                                                        ])
                                ]
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -158,7 +158,7 @@ class SyntaxTests: XCTestCase {
                     """
 
         let expected: [Node] = [.nef(command: .hidden, [.raw("This is a raw comment\n")])]
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -174,7 +174,7 @@ class SyntaxTests: XCTestCase {
                     """
 
         let expected: [Node] = [.nef(command: .hidden, [.raw("This is a raw markup\n")])]
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -189,7 +189,7 @@ class SyntaxTests: XCTestCase {
 
                     """
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, [])
     }
@@ -205,7 +205,7 @@ class SyntaxTests: XCTestCase {
 
                     """
         let expected: [Node] = []
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -226,7 +226,7 @@ class SyntaxTests: XCTestCase {
                                         .code("public func add(_ a: Int, _ b: Int) -> Bool {\n    return a + b\n}\n")
                                        ])
                                ]
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -243,8 +243,8 @@ class SyntaxTests: XCTestCase {
                         """
         let input = "\n\n\n\n\n\(blockCode)\n\n"
 
-        let result = Core.SyntaxAnalyzer.parse(content: input)
-        let resultWithoutLeadingTrailingEmptyLines = Core.SyntaxAnalyzer.parse(content: blockCode)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
+        let resultWithoutLeadingTrailingEmptyLines = NefCore.SyntaxAnalyzer.parse(content: blockCode)
 
         XCTAssertEqual(result, resultWithoutLeadingTrailingEmptyLines)
     }
@@ -257,7 +257,7 @@ class SyntaxTests: XCTestCase {
 
                     """
         let expected: [Node] = [.nef(command: .invalid, [.raw("This is a nef block\n")])]
-        let result = Core.SyntaxAnalyzer.parse(content: input)
+        let result = NefCore.SyntaxAnalyzer.parse(content: input)
 
         XCTAssertEqual(result, expected)
     }

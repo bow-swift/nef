@@ -1,0 +1,23 @@
+framework module nef {
+    header "nef.h"
+    
+    explicit module Core {
+        header "Core.h"
+        header "Common.h"
+    }
+    
+    explicit module Markdown {
+        header "Markdown.h"
+        export Core
+    }
+
+    explicit module Jekyll {
+        header "Jekyll.h"
+        export Core
+    }
+  
+    explicit module Carbon {
+        header "Carbon.h"
+        export Core
+    }
+}

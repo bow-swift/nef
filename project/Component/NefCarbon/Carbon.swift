@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import Core
+import NefCore
 import NefModels
 
 /// Renders a page into multiple Carbon images.

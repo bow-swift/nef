@@ -9,21 +9,20 @@
 /* Begin PBXBuildFile section */
 		8B12D79F22D6235200D05A70 /* NefJekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12D79D22D6235200D05A70 /* NefJekyll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D7A422D6238300D05A70 /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* Jekyll.swift */; };
-		8B12D7B822D63EAD00D05A70 /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8B12D7B922D63EAD00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B12D7B822D63EAD00D05A70 /* NefCommon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* NefCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8B12D7B922D63EAD00D05A70 /* NefCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B12D7BA22D63EAD00D05A70 /* NefMarkdown.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B22248322D5EAD500C85856 /* NefMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B12D7BB22D6404300D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8B12D7BC22D645AA00D05A70 /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8B12D7BD22D645AE00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7BC22D645AA00D05A70 /* NefCommon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* NefCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7BD22D645AE00D05A70 /* NefCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7BE22D645B300D05A70 /* NefJekyll.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B12D79B22D6235200D05A70 /* NefJekyll.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7BF22D645B700D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8B12D7C022D645EE00D05A70 /* Common.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7C022D645EE00D05A70 /* NefCommon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75F5722CA637B00EC53A1 /* NefCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7C122D645EE00D05A70 /* NefCarbon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8B12D7C222D645EE00D05A70 /* Core.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8B12D7C222D645EE00D05A70 /* NefCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B12D7C322D645EE00D05A70 /* NefModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
-		8B22249322D5EAD600C85856 /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B22249D22D5EC6B00C85856 /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* Markdown.swift */; };
 		8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85622D392C000919F36 /* ConsoleOutput.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
@@ -42,7 +41,7 @@
 		8B3CB8A722D393F100919F36 /* Syntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB89E22D393C300919F36 /* Syntax.swift */; };
 		8B3CB8A822D393F100919F36 /* MarkupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB89F22D393C300919F36 /* MarkupNode.swift */; };
 		8B3CB8A922D393F100919F36 /* Lexical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8A022D393C300919F36 /* Lexical.swift */; };
-		8B3CB8AA22D393F100919F36 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB89922D393C300919F36 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B3CB8AA22D393F100919F36 /* NefCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB89922D393C300919F36 /* NefCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8B222D394E600919F36 /* SyntaxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8AD22D394E600919F36 /* SyntaxTests.swift */; };
 		8B3CB8B322D394E600919F36 /* JekyllTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8AE22D394E600919F36 /* JekyllTests.swift */; };
 		8B3CB8B522D394E600919F36 /* MarkdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8B122D394E600919F36 /* MarkdownTests.swift */; };
@@ -58,10 +57,16 @@
 		8B3CB8C022D3963B00919F36 /* CarbonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB84222D3929B00919F36 /* CarbonModel.swift */; };
 		8B3CB8C122D3963B00919F36 /* NefModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB84022D3929B00919F36 /* NefModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C222D3964000919F36 /* nef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB83A22D3929B00919F36 /* nef.swift */; };
-		8B3CB8C322D3964000919F36 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB83C22D3929B00919F36 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B3CB8C622D396E300919F36 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB86122D392C000919F36 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B3CB8C622D396E300919F36 /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB86122D392C000919F36 /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C822D3987500919F36 /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* Carbon.swift */; };
-		8B6B119D22CB9FDE0060177F /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* Core.framework */; };
+		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
+		8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B9955192379A24F00C81A2A /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB83C22D3929B00919F36 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B9955542379BE4600C81A2A /* Carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9955522379BE4200C81A2A /* Carbon.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		8B9955552379BE4600C81A2A /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B99554F2379BE4200C81A2A /* Common.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		8B9955562379BE4700C81A2A /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9955502379BE4200C81A2A /* Core.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		8B9955572379BE4700C81A2A /* Jekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9955532379BE4200C81A2A /* Jekyll.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		8B9955582379BE4700C81A2A /* Markdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9955512379BE4200C81A2A /* Markdown.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 		8BF53F56235F09780081C27C /* nef+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF53F55235F09770081C27C /* nef+helpers.swift */; };
 /* End PBXBuildFile section */
@@ -115,6 +120,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B22248222D5EAD500C85856;
 			remoteInfo = NefMarkdown;
+		};
+		8B27832A237979870052189A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
+			remoteInfo = NefModels;
 		};
 		8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -223,9 +235,9 @@
 			dstPath = nef/frameworks/carbon;
 			dstSubfolderSpec = 16;
 			files = (
-				8B12D7C022D645EE00D05A70 /* Common.framework in CopyFiles */,
+				8B12D7C022D645EE00D05A70 /* NefCommon.framework in CopyFiles */,
 				8B12D7C122D645EE00D05A70 /* NefCarbon.framework in CopyFiles */,
-				8B12D7C222D645EE00D05A70 /* Core.framework in CopyFiles */,
+				8B12D7C222D645EE00D05A70 /* NefCore.framework in CopyFiles */,
 				8B12D7C322D645EE00D05A70 /* NefModels.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,8 +249,8 @@
 			dstSubfolderSpec = 16;
 			files = (
 				8B12D7BB22D6404300D05A70 /* NefModels.framework in CopyFiles */,
-				8B12D7B822D63EAD00D05A70 /* Common.framework in CopyFiles */,
-				8B12D7B922D63EAD00D05A70 /* Core.framework in CopyFiles */,
+				8B12D7B822D63EAD00D05A70 /* NefCommon.framework in CopyFiles */,
+				8B12D7B922D63EAD00D05A70 /* NefCore.framework in CopyFiles */,
 				8B12D7BA22D63EAD00D05A70 /* NefMarkdown.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,8 +263,8 @@
 			files = (
 				8B12D7BF22D645B700D05A70 /* NefModels.framework in CopyFiles */,
 				8B12D7BE22D645B300D05A70 /* NefJekyll.framework in CopyFiles */,
-				8B12D7BD22D645AE00D05A70 /* Core.framework in CopyFiles */,
-				8B12D7BC22D645AA00D05A70 /* Common.framework in CopyFiles */,
+				8B12D7BD22D645AE00D05A70 /* NefCore.framework in CopyFiles */,
+				8B12D7BC22D645AA00D05A70 /* NefCommon.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,7 +303,7 @@
 		8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B3CB85D22D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB85F22D392C000919F36 /* String+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
-		8B3CB86122D392C000919F36 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		8B3CB86122D392C000919F36 /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
 		8B3CB86222D392C000919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB86322D392C000919F36 /* ConsoleReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleReader.swift; sourceTree = "<group>"; };
 		8B3CB86422D392C000919F36 /* NSImage+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Store.swift"; sourceTree = "<group>"; };
@@ -301,7 +313,7 @@
 		8B3CB89422D393C300919F36 /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
 		8B3CB89522D393C300919F36 /* Node+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Render.swift"; sourceTree = "<group>"; };
 		8B3CB89622D393C300919F36 /* Jekyll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jekyll.swift; sourceTree = "<group>"; };
-		8B3CB89922D393C300919F36 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		8B3CB89922D393C300919F36 /* NefCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCore.h; sourceTree = "<group>"; };
 		8B3CB89A22D393C300919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB89C22D393C300919F36 /* String+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Format.swift"; sourceTree = "<group>"; };
 		8B3CB89E22D393C300919F36 /* Syntax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syntax.swift; sourceTree = "<group>"; };
@@ -314,33 +326,25 @@
 		8B3CB8C722D3987500919F36 /* Carbon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Carbon.swift; sourceTree = "<group>"; };
 		8B424B1F224E28FC00AF9010 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B6B119422CB9FDE0060177F /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B6B119422CB9FDE0060177F /* NefCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6B119C22CB9FDE0060177F /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6FC585221ECE6A008F7694 /* Jekyll */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Jekyll; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B99554F2379BE4200C81A2A /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		8B9955502379BE4200C81A2A /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		8B9955512379BE4200C81A2A /* Markdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Markdown.h; sourceTree = "<group>"; };
+		8B9955522379BE4200C81A2A /* Carbon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Carbon.h; sourceTree = "<group>"; };
+		8B9955532379BE4200C81A2A /* Jekyll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Jekyll.h; sourceTree = "<group>"; };
+		8B99555A2379C62300C81A2A /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = Component/module.modulemap; sourceTree = SOURCE_ROOT; };
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BF53F55235F09770081C27C /* nef+helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "nef+helpers.swift"; sourceTree = "<group>"; };
-		8BF75F5722CA637B00EC53A1 /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF75F5722CA637B00EC53A1 /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75F8522CA71E700EC53A1 /* nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCarbon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		8B0CA51322AE669600181BC0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B12D79822D6235200D05A70 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B22248022D5EAD500C85856 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -354,50 +358,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8B4F45A222CF9AF400E6F471 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B6B119122CB9FDE0060177F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8B6B119922CB9FDE0060177F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B6B119D22CB9FDE0060177F /* Core.framework in Frameworks */,
+				8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8B6FC582221ECE6A008F7694 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BF75F5422CA637B00EC53A1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BF75F8222CA71E700EC53A1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BF75FC322CA7DA500EC53A1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -469,6 +438,12 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB83C22D3929B00919F36 /* nef.h */,
+				8B9955512379BE4200C81A2A /* Markdown.h */,
+				8B9955532379BE4200C81A2A /* Jekyll.h */,
+				8B9955522379BE4200C81A2A /* Carbon.h */,
+				8B9955502379BE4200C81A2A /* Core.h */,
+				8B99554F2379BE4200C81A2A /* Common.h */,
+				8B99555A2379C62300C81A2A /* module.modulemap */,
 				8B3CB83D22D3929B00919F36 /* Info.plist */,
 			);
 			path = "Support Files";
@@ -541,7 +516,6 @@
 				8B3CB85A22D392C000919F36 /* Markdown */,
 				8B3CB85422D392C000919F36 /* Jekyll */,
 				8B3CB85822D392C000919F36 /* Carbon */,
-				8B3CB85E22D392C000919F36 /* Common */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -588,7 +562,7 @@
 		8B3CB86022D392C000919F36 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				8B3CB86122D392C000919F36 /* Common.h */,
+				8B3CB86122D392C000919F36 /* NefCommon.h */,
 				8B3CB86222D392C000919F36 /* Info.plist */,
 			);
 			path = "Support Files";
@@ -619,7 +593,7 @@
 		8B3CB89822D393C300919F36 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				8B3CB89922D393C300919F36 /* Core.h */,
+				8B3CB89922D393C300919F36 /* NefCore.h */,
 				8B3CB89A22D393C300919F36 /* Info.plist */,
 			);
 			path = "Support Files";
@@ -678,6 +652,7 @@
 				8B3CB85322D392C000919F36 /* UI */,
 				8B3CB83822D3929B00919F36 /* Component */,
 				8B3CB88B22D393C300919F36 /* Core */,
+				8B3CB85E22D392C000919F36 /* Common */,
 				8B3CB8AB22D394E600919F36 /* Tests */,
 				8B6FC656221EFF03008F7694 /* Frameworks */,
 				8B6FC586221ECE6A008F7694 /* Products */,
@@ -690,10 +665,10 @@
 				8B6FC585221ECE6A008F7694 /* Jekyll */,
 				8B424B1F224E28FC00AF9010 /* Markdown */,
 				8B0CA51622AE669600181BC0 /* Carbon */,
-				8BF75F5722CA637B00EC53A1 /* Common.framework */,
+				8BF75F5722CA637B00EC53A1 /* NefCommon.framework */,
 				8BF75F8522CA71E700EC53A1 /* nef.framework */,
 				8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */,
-				8B6B119422CB9FDE0060177F /* Core.framework */,
+				8B6B119422CB9FDE0060177F /* NefCore.framework */,
 				8B6B119C22CB9FDE0060177F /* CoreTests.xctest */,
 				8B4F45A522CF9AF400E6F471 /* NefModels.framework */,
 				8B22248322D5EAD500C85856 /* NefMarkdown.framework */,
@@ -724,7 +699,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B22249322D5EAD600C85856 /* NefMarkdown.h in Headers */,
+				8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,7 +715,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3CB8AA22D393F100919F36 /* Core.h in Headers */,
+				8B3CB8AA22D393F100919F36 /* NefCore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,7 +723,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3CB8C622D396E300919F36 /* Common.h in Headers */,
+				8B3CB8C622D396E300919F36 /* NefCommon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,7 +731,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3CB8C322D3964000919F36 /* nef.h in Headers */,
+				8B9955572379BE4700C81A2A /* Jekyll.h in Headers */,
+				8B9955192379A24F00C81A2A /* nef.h in Headers */,
+				8B9955562379BE4700C81A2A /* Core.h in Headers */,
+				8B9955552379BE4600C81A2A /* Common.h in Headers */,
+				8B9955542379BE4600C81A2A /* Carbon.h in Headers */,
+				8B9955582379BE4700C81A2A /* Markdown.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,14 +777,12 @@
 			buildPhases = (
 				8B12D79622D6235200D05A70 /* Headers */,
 				8B12D79722D6235200D05A70 /* Sources */,
-				8B12D79822D6235200D05A70 /* Frameworks */,
-				8B12D79922D6235200D05A70 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8B12D7C522D6498900D05A70 /* PBXTargetDependency */,
 				8B12D7C722D6498900D05A70 /* PBXTargetDependency */,
+				8B12D7C522D6498900D05A70 /* PBXTargetDependency */,
 			);
 			name = NefJekyll;
 			productName = NefJekyll;
@@ -817,14 +795,12 @@
 			buildPhases = (
 				8B22247E22D5EAD500C85856 /* Headers */,
 				8B22247F22D5EAD500C85856 /* Sources */,
-				8B22248022D5EAD500C85856 /* Frameworks */,
-				8B22248122D5EAD500C85856 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8B12D7C922D6498F00D05A70 /* PBXTargetDependency */,
 				8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */,
+				8B12D7C922D6498F00D05A70 /* PBXTargetDependency */,
 			);
 			name = NefMarkdown;
 			productName = NefMarkdown;
@@ -857,8 +833,6 @@
 			buildPhases = (
 				8B4F45A022CF9AF400E6F471 /* Headers */,
 				8B4F45A122CF9AF400E6F471 /* Sources */,
-				8B4F45A222CF9AF400E6F471 /* Frameworks */,
-				8B4F45A322CF9AF400E6F471 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -869,23 +843,21 @@
 			productReference = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8B6B119322CB9FDE0060177F /* Core */ = {
+		8B6B119322CB9FDE0060177F /* NefCore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8B6B11A522CB9FDE0060177F /* Build configuration list for PBXNativeTarget "Core" */;
+			buildConfigurationList = 8B6B11A522CB9FDE0060177F /* Build configuration list for PBXNativeTarget "NefCore" */;
 			buildPhases = (
 				8B6B118F22CB9FDE0060177F /* Headers */,
 				8B6B119022CB9FDE0060177F /* Sources */,
-				8B6B119122CB9FDE0060177F /* Frameworks */,
-				8B6B119222CB9FDE0060177F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */,
 			);
-			name = Core;
+			name = NefCore;
 			productName = Markup;
-			productReference = 8B6B119422CB9FDE0060177F /* Core.framework */;
+			productReference = 8B6B119422CB9FDE0060177F /* NefCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8B6B119B22CB9FDE0060177F /* CoreTests */ = {
@@ -926,22 +898,20 @@
 			productReference = 8B6FC585221ECE6A008F7694 /* Jekyll */;
 			productType = "com.apple.product-type.tool";
 		};
-		8BF75F5622CA637B00EC53A1 /* Common */ = {
+		8BF75F5622CA637B00EC53A1 /* NefCommon */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8BF75F6C22CA637B00EC53A1 /* Build configuration list for PBXNativeTarget "Common" */;
+			buildConfigurationList = 8BF75F6C22CA637B00EC53A1 /* Build configuration list for PBXNativeTarget "NefCommon" */;
 			buildPhases = (
 				8BF75F5222CA637B00EC53A1 /* Headers */,
 				8BF75F5322CA637B00EC53A1 /* Sources */,
-				8BF75F5422CA637B00EC53A1 /* Frameworks */,
-				8BF75F5522CA637B00EC53A1 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Common;
+			name = NefCommon;
 			productName = Common;
-			productReference = 8BF75F5722CA637B00EC53A1 /* Common.framework */;
+			productReference = 8BF75F5722CA637B00EC53A1 /* NefCommon.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8BF75F8422CA71E700EC53A1 /* nef */ = {
@@ -950,16 +920,15 @@
 			buildPhases = (
 				8BF75F8022CA71E700EC53A1 /* Headers */,
 				8BF75F8122CA71E700EC53A1 /* Sources */,
-				8BF75F8222CA71E700EC53A1 /* Frameworks */,
-				8BF75F8322CA71E700EC53A1 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
-				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
-				8B12D7A622D624D900D05A70 /* PBXTargetDependency */,
+				8B27832B237979870052189A /* PBXTargetDependency */,
 				8B8AA94022D62266006BE290 /* PBXTargetDependency */,
+				8B12D7A622D624D900D05A70 /* PBXTargetDependency */,
+				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
 			);
 			name = nef;
 			productName = Nef;
@@ -972,8 +941,6 @@
 			buildPhases = (
 				8BF75FC122CA7DA500EC53A1 /* Headers */,
 				8BF75FC222CA7DA500EC53A1 /* Sources */,
-				8BF75FC322CA7DA500EC53A1 /* Frameworks */,
-				8BF75FC422CA7DA500EC53A1 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -1050,69 +1017,20 @@
 				8B424B1E224E28FC00AF9010 /* Markdown */,
 				8B6FC584221ECE6A008F7694 /* Jekyll */,
 				8B0CA51522AE669600181BC0 /* Carbon */,
-				8BF75F5622CA637B00EC53A1 /* Common */,
 				8BF75F8422CA71E700EC53A1 /* nef */,
 				8B22248222D5EAD500C85856 /* NefMarkdown */,
 				8B12D79A22D6235200D05A70 /* NefJekyll */,
 				8BF75FC522CA7DA500EC53A1 /* NefCarbon */,
 				8B4F45A422CF9AF400E6F471 /* NefModels */,
-				8B6B119322CB9FDE0060177F /* Core */,
+				8B6B119322CB9FDE0060177F /* NefCore */,
+				8BF75F5622CA637B00EC53A1 /* NefCommon */,
 				8B6B119B22CB9FDE0060177F /* CoreTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8B12D79922D6235200D05A70 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B22248122D5EAD500C85856 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B4F45A322CF9AF400E6F471 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B6B119222CB9FDE0060177F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8B6B119A22CB9FDE0060177F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BF75F5522CA637B00EC53A1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BF75F8322CA71E700EC53A1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BF75FC422CA7DA500EC53A1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1251,28 +1169,33 @@
 		};
 		8B12D7C522D6498900D05A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			target = 8BF75F5622CA637B00EC53A1 /* NefCommon */;
 			targetProxy = 8B12D7C422D6498900D05A70 /* PBXContainerItemProxy */;
 		};
 		8B12D7C722D6498900D05A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B12D7C622D6498900D05A70 /* PBXContainerItemProxy */;
 		};
 		8B12D7C922D6498F00D05A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			target = 8BF75F5622CA637B00EC53A1 /* NefCommon */;
 			targetProxy = 8B12D7C822D6498F00D05A70 /* PBXContainerItemProxy */;
 		};
 		8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B12D7CA22D6498F00D05A70 /* PBXContainerItemProxy */;
 		};
 		8B22249C22D5EB2200C85856 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
 			targetProxy = 8B22249B22D5EB2200C85856 /* PBXContainerItemProxy */;
+		};
+		8B27832B237979870052189A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
+			targetProxy = 8B27832A237979870052189A /* PBXContainerItemProxy */;
 		};
 		8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1281,7 +1204,7 @@
 		};
 		8B6B118822CB9E8F0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			target = 8BF75F5622CA637B00EC53A1 /* NefCommon */;
 			targetProxy = 8B6B118722CB9E8F0060177F /* PBXContainerItemProxy */;
 		};
 		8B6B118C22CB9EA20060177F /* PBXTargetDependency */ = {
@@ -1291,17 +1214,17 @@
 		};
 		8B6B119F22CB9FDE0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B119E22CB9FDE0060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11BB22CBA1710060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11BA22CBA1710060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11BD22CBA1770060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11BC22CBA1770060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11BF22CBA1950060177F /* PBXTargetDependency */ = {
@@ -1311,32 +1234,32 @@
 		};
 		8B6B11C122CBA1AC0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			target = 8BF75F5622CA637B00EC53A1 /* NefCommon */;
 			targetProxy = 8B6B11C022CBA1AC0060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11C322CBA1AC0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11C222CBA1AC0060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11C522CBA1B90060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			target = 8BF75F5622CA637B00EC53A1 /* NefCommon */;
 			targetProxy = 8B6B11C422CBA1B90060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11C722CBA1B90060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11C622CBA1B90060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11C922CBA1BF0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BF75F5622CA637B00EC53A1 /* Common */;
+			target = 8BF75F5622CA637B00EC53A1 /* NefCommon */;
 			targetProxy = 8B6B11C822CBA1BF0060177F /* PBXContainerItemProxy */;
 		};
 		8B6B11CB22CBA1BF0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* Core */;
+			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11CA22CBA1BF0060177F /* PBXContainerItemProxy */;
 		};
 		8B8AA94022D62266006BE290 /* PBXTargetDependency */ = {
@@ -1374,7 +1297,6 @@
 		8B12D7A022D6235200D05A70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1390,7 +1312,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefJekyll;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1403,7 +1324,6 @@
 		8B12D7A122D6235200D05A70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1419,7 +1339,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefJekyll;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1432,7 +1351,6 @@
 		8B22249522D5EAD600C85856 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1461,7 +1379,6 @@
 		8B22249622D5EAD600C85856 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1516,7 +1433,6 @@
 		8B4F45B722CF9AF400E6F471 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1544,7 +1460,6 @@
 		8B4F45B822CF9AF400E6F471 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1572,7 +1487,6 @@
 		8B6B11A622CB9FDE0060177F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1591,7 +1505,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1602,7 +1515,6 @@
 		8B6B11A722CB9FDE0060177F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1621,7 +1533,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1722,6 +1633,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				USE_HEADERMAP = YES;
 			};
 			name = Debug;
 		};
@@ -1777,6 +1689,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
+				USE_HEADERMAP = YES;
 			};
 			name = Release;
 		};
@@ -1813,7 +1726,6 @@
 		8BF75F6822CA637B00EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1822,7 +1734,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/ui/Common/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Common/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1841,7 +1753,6 @@
 		8BF75F6922CA637B00EC53A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1850,7 +1761,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/ui/Common/Support Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Common/Support Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1869,8 +1780,6 @@
 		8BF75F9622CA71E700EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1886,6 +1795,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = "$(SRCROOT)/Component/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Nef;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1899,8 +1809,6 @@
 		8BF75F9722CA71E700EC53A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1916,6 +1824,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = "$(SRCROOT)/Component/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Nef;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1928,7 +1837,6 @@
 		8BF75FD822CA7DA500EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1947,7 +1855,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefCarbon;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1958,7 +1865,6 @@
 		8BF75FD922CA7DA500EC53A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1977,7 +1883,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.NefCarbon;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2033,7 +1938,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8B6B11A522CB9FDE0060177F /* Build configuration list for PBXNativeTarget "Core" */ = {
+		8B6B11A522CB9FDE0060177F /* Build configuration list for PBXNativeTarget "NefCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8B6B11A622CB9FDE0060177F /* Debug */,
@@ -2069,7 +1974,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BF75F6C22CA637B00EC53A1 /* Build configuration list for PBXNativeTarget "Common" */ = {
+		8BF75F6C22CA637B00EC53A1 /* Build configuration list for PBXNativeTarget "NefCommon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BF75F6822CA637B00EC53A1 /* Debug */,

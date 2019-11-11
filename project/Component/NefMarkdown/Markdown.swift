@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import Core
+import NefCore
 
 /// Renders a page into Markdown format.
 ///
