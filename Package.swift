@@ -17,7 +17,8 @@ let package = Package(
                           "Component/NefModels",
                           "Component/NefMarkdown",
                           "Component/NefJekyll",
-                          "Component/NefCarbon"]),
+                          "Component/NefCarbon"],
+                publicHeadersPath: "Component/nef/Support Files"),
 
 
         .testTarget(name: "CoreTests", dependencies: ["nef"], path: "project/Tests/CoreTests"),
