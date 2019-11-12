@@ -2,7 +2,6 @@
 
 import Foundation
 import NefCommon
-import NefCore
 import NefJekyll
 
 let scriptName = "nef-jekyll-page"

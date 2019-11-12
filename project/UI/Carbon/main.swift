@@ -2,8 +2,8 @@
 
 import Foundation
 import NefCommon
-import NefCore
 import NefModels
+import NefCore
 import NefCarbon
 
 let scriptName = "nef-carbon-page"

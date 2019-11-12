@@ -2,7 +2,6 @@
 
 import Foundation
 import NefCommon
-import NefCore
 import NefMarkdown
 
 let scriptName = "nef-markdown-page"
