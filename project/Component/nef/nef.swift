@@ -5,7 +5,6 @@ import AppKit
 import NefMarkdown
 import NefJekyll
 import NefCarbon
-import NefModels
 
 
 // MARK: - Markdown <api>

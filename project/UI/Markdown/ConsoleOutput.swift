@@ -1,6 +1,6 @@
 //  Copyright © 2019 The nef Authors.
 
-import NefCommon
+import Common
 
 class MarkdownConsole: ConsoleOutput {
 

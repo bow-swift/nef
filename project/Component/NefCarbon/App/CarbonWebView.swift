@@ -2,7 +2,6 @@
 
 import AppKit
 import WebKit
-import NefModels
 
 /// Carbon view definition
 public protocol CarbonView: NSView {

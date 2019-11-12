@@ -1,8 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefCommon
-import NefMarkdown
+import Common
 
 let scriptName = "nef-markdown-page"
 let console = MarkdownConsole()

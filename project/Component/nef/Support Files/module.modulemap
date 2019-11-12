@@ -5,17 +5,13 @@ framework module nef {
     
     explicit module Core {
         header "Core.h"
-        header "Common.h"
         link "NefCore"
-        link "NefCommon"
         export *
     }
     
     explicit module Markdown {
         header "Markdown.h"
         link "NefMarkdown"
-        link "NefCore"
-        link "NefCommon"
         export Core
         export *
     }
@@ -23,8 +19,6 @@ framework module nef {
     explicit module Jekyll {
         header "Jekyll.h"
         link "NefJekyll"
-        link "NefCore"
-        link "NefCommon"
         export Core
         export *
     }
@@ -32,8 +26,6 @@ framework module nef {
     explicit module Carbon {
         header "Carbon.h"
         link "NefCarbon"
-        link "NefCore"
-        link "NefCommon"
         export Core
         export *
     }

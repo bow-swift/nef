@@ -3,11 +3,10 @@
 #import <Cocoa/Cocoa.h>
 
 //! Project version number for Markup.
-FOUNDATION_EXPORT double MarkupVersionNumber;
+FOUNDATION_EXPORT double CoreVersionNumber;
 
 //! Project version string for Markup.
-FOUNDATION_EXPORT const unsigned char MarkupVersionString[];
+FOUNDATION_EXPORT const unsigned char CoreVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <Markup/PublicHeader.h>
-
-
+#import "NefModels.h"

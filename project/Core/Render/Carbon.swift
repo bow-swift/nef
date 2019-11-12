@@ -1,7 +1,6 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefModels
 
 public protocol CarbonDownloader: class {
     func carbon(withConfiguration configuration: Carbon, filename: String) -> Result<String, CarbonError>

@@ -9,3 +9,4 @@ FOUNDATION_EXPORT double NefCarbonVersionNumber;
 FOUNDATION_EXPORT const unsigned char NefCarbonVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <NefCarbon/PublicHeader.h>
+#import "NefCore.h"

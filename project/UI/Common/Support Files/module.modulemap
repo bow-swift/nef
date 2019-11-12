@@ -1,0 +1,4 @@
+framework module Common {
+    umbrella header "NefCommon.h"
+    export *
+}

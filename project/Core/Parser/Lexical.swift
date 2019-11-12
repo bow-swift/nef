@@ -81,6 +81,8 @@ struct LexicalAnalyzer {
 
 // MARK: token definition for lexical analysis
 
+import Foundation
+
 enum Token: Equatable {
     case nefBegin(command: Node.Nef.Command)
     case nefEnd

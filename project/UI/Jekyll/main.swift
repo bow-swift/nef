@@ -1,8 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefCommon
-import NefJekyll
+import Common
 
 let scriptName = "nef-jekyll-page"
 let console = JekyllConsole()
