@@ -1,0 +1,4 @@
+framework module CLIKit {
+    umbrella header "CLIKit.h"
+    export *
+}

@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import Common
+import CLIKit
 
 let scriptName = "nef-markdown-page"
 let console = MarkdownConsole()

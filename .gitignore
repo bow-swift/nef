@@ -4,6 +4,7 @@
 BowPlayground
 .build
 .swiftpm
+bin-cli
 
 ## Jekyll
 _site

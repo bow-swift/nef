@@ -1,6 +1,6 @@
 //  Copyright © 2019 The nef Authors.
 
-import Common
+import CLIKit
 
 class JekyllConsole: ConsoleOutput {
 

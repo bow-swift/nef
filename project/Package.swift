@@ -7,20 +7,20 @@ let package = Package(
         .macOS(.v10_14),
     ],
     products: [
-        .executable(name: "nef-markdown-page", targets: ["Markdown"]),
-        .executable(name: "nef-jekyll-page", targets: ["Jekyll"]),
-        .executable(name: "nef-carbon-page", targets: ["Carbon"]),
+        .executable(name: "nef-markdown-page", targets: ["MarkdownPage"]),
+        .executable(name: "nef-jekyll-page", targets: ["JekyllPage"]),
+        .executable(name: "nef-carbon-page", targets: ["CarbonPage"]),
     ],
     targets: [
-        .target(name: "Common", path: ".", sources: ["Component/NefMarkdown",
+        .target(name: "CLIKit", path: ".", sources: ["Component/NefMarkdown",
                                                      "Component/NefJekyll",
                                                      "Component/NefCarbon",
-                                                     "UI/Common",
                                                      "Component/NefModels",
-                                                     "Core"], publicHeadersPath: "UI/Common/Support Files"),
+                                                     "UI/CLIKit",
+                                                     "Core"], publicHeadersPath: "UI/CLIKit/Support Files"),
         
-        .target(name: "Markdown", dependencies: ["Common"], path: ".", sources: ["UI/Markdown"]),
-        .target(name: "Jekyll", dependencies: ["Common"], path: ".", sources: ["UI/Jekyll"]),
-        .target(name: "Carbon", dependencies: ["Common"], path: ".", sources: ["UI/Carbon"]),
+        .target(name: "MarkdownPage", dependencies: ["CLIKit"], path: ".", sources: ["UI/MarkdownPage"]),
+        .target(name: "JekyllPage", dependencies: ["CLIKit"], path: ".", sources: ["UI/JekyllPage"]),
+        .target(name: "CarbonPage", dependencies: ["CLIKit"], path: ".", sources: ["UI/CarbonPage"]),
     ]
 )
