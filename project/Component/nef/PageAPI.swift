@@ -1,6 +1,9 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import Bow
+import BowEffects
+
 
 public extension PageAPI {
     
@@ -25,5 +28,37 @@ public extension PageAPI {
                      permalink: permalink,
                      success: success,
                      failure: failure)
+    }
+}
+
+public extension PageFP where Self: PageAPI {
+    
+    func markdownIO(content: String, to output: URL) -> IO<PageError, URL> {
+        IO.async { callback in
+            self.markdown(content: content,
+                          to: output.path,
+                          success: {
+                            let fileExist = FileManager.default.fileExists(atPath: output.path)
+                            fileExist ? callback(.right(output)) : callback(.left(.markdown))
+                          },
+                          failure: { error in
+                            callback(.left(.markdown))
+                          })
+        }^
+    }
+    
+    func jekyllIO(content: String, to output: URL, permalink: String) -> IO<PageError, URL> {
+        IO.async { callback in
+            self.jekyll(content: content,
+                        to: output.path,
+                        permalink: permalink,
+                        success: {
+                            let fileExist = FileManager.default.fileExists(atPath: output.path)
+                            fileExist ? callback(.right(output)) : callback(.left(.markdown))
+                        },
+                        failure: { error in
+                            callback(.left(.markdown))
+                        })
+        }^
     }
 }

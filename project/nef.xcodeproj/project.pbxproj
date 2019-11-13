@@ -17,6 +17,7 @@
 		8B0FB5A8237C1DD000221548 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A4237C1D3700221548 /* BowOptics */; };
 		8B0FB5A9237C1DD000221548 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A5237C1D3700221548 /* BowEffects */; };
 		8B0FB5AA237C1DD000221548 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A6237C1D3700221548 /* Bow */; };
+		8B0FB5B8237C61C000221548 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB5B7237C61C000221548 /* Models.swift */; };
 		8B12D79F22D6235200D05A70 /* NefJekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12D79D22D6235200D05A70 /* NefJekyll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
 		8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */; };
@@ -168,6 +169,7 @@
 		8B0FB587237C0A5600221548 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B0FB59D237C0EF000221548 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8B0FB5A1237C1AC700221548 /* PageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAPI.swift; sourceTree = "<group>"; };
+		8B0FB5B7237C61C000221548 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		8B12D79B22D6235200D05A70 /* NefJekyll.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefJekyll.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12D79D22D6235200D05A70 /* NefJekyll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefJekyll.h; sourceTree = "<group>"; };
 		8B12D79E22D6235200D05A70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				8B0FB59D237C0EF000221548 /* API.swift */,
 				8B3CB83A22D3929B00919F36 /* RenderAPI.swift */,
 				8B0FB5A1237C1AC700221548 /* PageAPI.swift */,
+				8B0FB5B7237C61C000221548 /* Models.swift */,
 				8B3CB83B22D3929B00919F36 /* Support Files */,
 			);
 			path = nef;
@@ -998,6 +1001,7 @@
 				8B3CB8C222D3964000919F36 /* RenderAPI.swift in Sources */,
 				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
 				8B0FB5A2237C1AC700221548 /* PageAPI.swift in Sources */,
+				8B0FB5B8237C61C000221548 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

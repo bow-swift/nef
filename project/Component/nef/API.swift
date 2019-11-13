@@ -7,7 +7,7 @@ import BowEffects
 
 public enum Render: RenderAPI, RenderFP {
     case api
-    public enum Page: PageAPI {
+    public enum Page: PageAPI, PageFP {
         case api
     }
 }
@@ -68,4 +68,27 @@ public protocol PageAPI {
     ///   - success: callback to notify if everything goes well.
     ///   - failure: callback with information to notify if something goes wrong.
     func jekyll(content: String, to outputPath: String, permalink: String, success: @escaping () -> Void, failure: @escaping (String) -> Void)
+}
+
+public protocol PageFP {
+    /// Renders content into Markdown file.
+    ///
+    /// - Precondition: this method must be invoked from main thread.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - output: output where to write the Markdown render.
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `PageError` and values with the file generated of type `URL`.
+    func markdownIO(content: String, to output: URL) -> IO<PageError, URL>
+    
+    /// Renders content into Jekyll format.
+    ///
+    /// - Precondition: this method must be invoked from main thread.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - output: output where to write the Markdown render.
+    ///   - permalink: website relative url where locate the page.
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `PageError` and values with the file generated of type `URL`.
+    func jekyllIO(content: String, to output: URL, permalink: String) -> IO<PageError, URL>
 }
