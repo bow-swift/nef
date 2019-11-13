@@ -49,7 +49,7 @@ public extension RenderFP where Self: RenderAPI {
         }
         
         guard !Thread.isMainThread else {
-            fatalError("carbon(outputPath:) should be invoked in background thread")
+            fatalError("carbonIO(_ carbon:,output:) should be invoked in background thread")
         }
         
         let file = IO<CarbonError.Option, URL>.var()
