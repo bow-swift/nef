@@ -38,9 +38,11 @@ public protocol RenderFP: RenderAPI {
     ///
     /// - Precondition: this method must be invoked from background thread.
     ///
-    /// - Parameter carbon: content+style to generate code snippet.
-    /// - Returns: An `EnvIO` to perform IO operations that produce carbon error of type `CarbonError.Option` and values with the file generated of type `URL`. It has access to an immutable environment of type `URL` with the output URL. It can be seen as a Kleisli function `(URL) -> IO<CarbonError.Option, URL>`.
-    func carbonIO(_ carbon: Carbon) -> EnvIO<URL, CarbonError.Option, URL>
+    /// - Parameters:
+    ///   - carbon: content+style to generate code snippet.
+    ///   - output: output where to render the snippets.
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `CarbonError.Option` and values with the file generated of type `URL`.
+    func carbonIO(_ carbon: Carbon, output: URL) -> IO<CarbonError.Option, URL>
 }
 
 public protocol PageAPI {

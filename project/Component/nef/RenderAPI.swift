@@ -31,7 +31,7 @@ public extension RenderAPI {
 
 public extension RenderFP where Self: RenderAPI {
     
-    func carbonIO(_ carbon: Carbon) -> EnvIO<URL, CarbonError.Option, URL> {
+    func carbonIO(_ carbon: Carbon, output: URL) -> IO<CarbonError.Option, URL> {
         func runAsync(carbon: Carbon, outputURL: URL) -> IO<CarbonError.Option, URL> {
             IO.async { callback in
                 self.carbon(code: carbon.code,
@@ -52,14 +52,12 @@ public extension RenderFP where Self: RenderAPI {
             fatalError("carbon(outputPath:) should be invoked in background thread")
         }
         
-        return EnvIO { outputURL in
-            let file = IO<CarbonError.Option, URL>.var()
-            
-            return binding(
-                        continueOn(.main),
-                file <- runAsync(carbon: carbon, outputURL: outputURL),
-            yield: file.get)
-        }^
+        let file = IO<CarbonError.Option, URL>.var()
+        
+        return binding(
+                    continueOn(.main),
+            file <- runAsync(carbon: carbon, outputURL: output),
+        yield: file.get)^
     }
 }
 
