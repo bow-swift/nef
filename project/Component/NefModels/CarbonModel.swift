@@ -121,16 +121,16 @@ extension CarbonStyle.Color {
 public struct CarbonError: Error {
     public let filename: String
     public let snippet: String
-    public let error: CarbonErrorOption
+    public let error: CarbonError.Option
     
-    public init(filename: String, snippet: String, error: CarbonErrorOption) {
+    public init(filename: String, snippet: String, error: CarbonError.Option) {
         self.filename = filename
         self.snippet = snippet
         self.error = error
     }
     
     // MARK: Error options
-    public enum CarbonErrorOption: CustomStringConvertible {
+    public enum Option: Error, CustomStringConvertible {
         case notFound
         case invalidSnapshot
         

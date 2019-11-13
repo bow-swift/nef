@@ -2,7 +2,7 @@
 
 import Foundation
 
-public protocol Render {
+public protocol CoreRender {
     func render(content: String) -> String?
 }
 
@@ -19,7 +19,7 @@ extension Node: Jekyll {}
 extension Node: Markdown {}
 
 // MARK: - default Render :: render(content:)
-protocol InternalRender: Render {
+protocol InternalRender: CoreRender {
     func render(node: Node) -> String
 }
 

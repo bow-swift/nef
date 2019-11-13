@@ -1,11 +1,12 @@
 //  Copyright © 2019 The nef Authors.
 
-import NefMarkdown
-import NefJekyll
-import NefCarbon
+import AppKit
+import Bow
+import BowEffects
 
 
 public extension RenderAPI {
+    
     func carbon(code: String, style: CarbonStyle, outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         guard Thread.isMainThread else {
             fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
@@ -25,6 +26,41 @@ public extension RenderAPI {
     }
 
     func carbonURLRequest(withConfiguration carbon: Carbon) -> URLRequest { CarbonViewer.urlRequest(from: carbon) }
+}
+
+
+public extension RenderFP where Self: RenderAPI {
+    
+    func carbonIO(_ carbon: Carbon) -> EnvIO<URL, CarbonError.Option, URL> {
+        func runAsync(carbon: Carbon, outputURL: URL) -> IO<CarbonError.Option, URL> {
+            IO.async { callback in
+                self.carbon(code: carbon.code,
+                            style: carbon.style,
+                            outputPath: outputURL.path,
+                            success: {
+                                let file = URL(fileURLWithPath: "\(outputURL.path).png")
+                                let fileExist = FileManager.default.fileExists(atPath: file.path)
+                                fileExist ? callback(.right(file)) : callback(.left(.notFound))
+                            },
+                            failure: { error in
+                                callback(.left(.invalidSnapshot))
+                            })
+            }^
+        }
+        
+        guard !Thread.isMainThread else {
+            fatalError("carbon(outputPath:) should be invoked in background thread")
+        }
+        
+        return EnvIO { outputURL in
+            let file = IO<CarbonError.Option, URL>.var()
+            
+            return binding(
+                        continueOn(.main),
+                file <- runAsync(carbon: carbon, outputURL: outputURL),
+            yield: file.get)
+        }^
+    }
 }
 
 

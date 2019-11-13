@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,7 +13,10 @@
 		8B0FB59B237C0B9A00221548 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86622D392C000919F36 /* Array+Slice.swift */; };
 		8B0FB59C237C0B9A00221548 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85F22D392C000919F36 /* String+Path.swift */; };
 		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
-		8B0FB5A2237C1AC700221548 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB5A1237C1AC700221548 /* Page.swift */; };
+		8B0FB5A2237C1AC700221548 /* PageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB5A1237C1AC700221548 /* PageAPI.swift */; };
+		8B0FB5A8237C1DD000221548 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A4237C1D3700221548 /* BowOptics */; };
+		8B0FB5A9237C1DD000221548 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A5237C1D3700221548 /* BowEffects */; };
+		8B0FB5AA237C1DD000221548 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A6237C1D3700221548 /* Bow */; };
 		8B12D79F22D6235200D05A70 /* NefJekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12D79D22D6235200D05A70 /* NefJekyll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
 		8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */; };
@@ -47,12 +50,8 @@
 		8B3CB8BF22D3963300919F36 /* NefCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB84D22D3929B00919F36 /* NefCarbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C022D3963B00919F36 /* CarbonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB84222D3929B00919F36 /* CarbonModel.swift */; };
 		8B3CB8C122D3963B00919F36 /* NefModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB84022D3929B00919F36 /* NefModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B3CB8C222D3964000919F36 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB83A22D3929B00919F36 /* Render.swift */; };
+		8B3CB8C222D3964000919F36 /* RenderAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB83A22D3929B00919F36 /* RenderAPI.swift */; };
 		8B3CB8C822D3987500919F36 /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* Carbon.swift */; };
-		8B603EA2237A3CFE0059C9C7 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E99237A3CFE0059C9C7 /* Core.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		8B603EA3237A3CFE0059C9C7 /* Jekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9A237A3CFE0059C9C7 /* Jekyll.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		8B603EA5237A3CFE0059C9C7 /* Carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9C237A3CFE0059C9C7 /* Carbon.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		8B603EA6237A3CFE0059C9C7 /* Markdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9D237A3CFE0059C9C7 /* Markdown.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -168,14 +167,14 @@
 		8B0FB586237C0A5600221548 /* CLIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLIKit.h; sourceTree = "<group>"; };
 		8B0FB587237C0A5600221548 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B0FB59D237C0EF000221548 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		8B0FB5A1237C1AC700221548 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		8B0FB5A1237C1AC700221548 /* PageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAPI.swift; sourceTree = "<group>"; };
 		8B12D79B22D6235200D05A70 /* NefJekyll.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefJekyll.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12D79D22D6235200D05A70 /* NefJekyll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefJekyll.h; sourceTree = "<group>"; };
 		8B12D79E22D6235200D05A70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B22248322D5EAD500C85856 /* NefMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B22248522D5EAD600C85856 /* NefMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefMarkdown.h; sourceTree = "<group>"; };
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B3CB83A22D3929B00919F36 /* Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Render.swift; sourceTree = "<group>"; };
+		8B3CB83A22D3929B00919F36 /* RenderAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderAPI.swift; sourceTree = "<group>"; };
 		8B3CB83D22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB84022D3929B00919F36 /* NefModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefModels.h; sourceTree = "<group>"; };
 		8B3CB84122D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -220,10 +219,6 @@
 		8B3CB8C722D3987500919F36 /* Carbon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Carbon.swift; sourceTree = "<group>"; };
 		8B424B1F224E28FC00AF9010 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B603E99237A3CFE0059C9C7 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
-		8B603E9A237A3CFE0059C9C7 /* Jekyll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Jekyll.h; sourceTree = "<group>"; };
-		8B603E9C237A3CFE0059C9C7 /* Carbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carbon.h; sourceTree = "<group>"; };
-		8B603E9D237A3CFE0059C9C7 /* Markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Markdown.h; sourceTree = "<group>"; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B6B119422CB9FDE0060177F /* NefCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6B119C22CB9FDE0060177F /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,6 +230,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8B0FB5A7237C1D6B00221548 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B0FB5AA237C1DD000221548 /* Bow in Frameworks */,
+				8B0FB5A9237C1DD000221548 /* BowEffects in Frameworks */,
+				8B0FB5A8237C1DD000221548 /* BowOptics in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B6B119922CB9FDE0060177F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -320,8 +325,8 @@
 			isa = PBXGroup;
 			children = (
 				8B0FB59D237C0EF000221548 /* API.swift */,
-				8B3CB83A22D3929B00919F36 /* Render.swift */,
-				8B0FB5A1237C1AC700221548 /* Page.swift */,
+				8B3CB83A22D3929B00919F36 /* RenderAPI.swift */,
+				8B0FB5A1237C1AC700221548 /* PageAPI.swift */,
 				8B3CB83B22D3929B00919F36 /* Support Files */,
 			);
 			path = nef;
@@ -330,9 +335,8 @@
 		8B3CB83B22D3929B00919F36 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				8B603E98237A3CFE0059C9C7 /* Private */,
-				8B603E9E237A3CFE0059C9C7 /* Public */,
 				8B0FB557237B0E6200221548 /* module.modulemap */,
+				8B603E9F237A3CFE0059C9C7 /* nef.h */,
 				8B3CB83D22D3929B00919F36 /* Info.plist */,
 			);
 			path = "Support Files";
@@ -515,25 +519,6 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
-		8B603E98237A3CFE0059C9C7 /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				8B603E99237A3CFE0059C9C7 /* Core.h */,
-				8B603E9A237A3CFE0059C9C7 /* Jekyll.h */,
-				8B603E9C237A3CFE0059C9C7 /* Carbon.h */,
-				8B603E9D237A3CFE0059C9C7 /* Markdown.h */,
-			);
-			path = Private;
-			sourceTree = "<group>";
-		};
-		8B603E9E237A3CFE0059C9C7 /* Public */ = {
-			isa = PBXGroup;
-			children = (
-				8B603E9F237A3CFE0059C9C7 /* nef.h */,
-			);
-			path = Public;
-			sourceTree = "<group>";
-		};
 		8B6FC57C221ECE6A008F7694 = {
 			isa = PBXGroup;
 			children = (
@@ -619,10 +604,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */,
-				8B603EA6237A3CFE0059C9C7 /* Markdown.h in Headers */,
-				8B603EA3237A3CFE0059C9C7 /* Jekyll.h in Headers */,
-				8B603EA2237A3CFE0059C9C7 /* Core.h in Headers */,
-				8B603EA5237A3CFE0059C9C7 /* Carbon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +774,7 @@
 			buildPhases = (
 				8BF75F8022CA71E700EC53A1 /* Headers */,
 				8BF75F8122CA71E700EC53A1 /* Sources */,
+				8B0FB5A7237C1D6B00221548 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -804,6 +786,11 @@
 				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
 			);
 			name = nef;
+			packageProductDependencies = (
+				8B0FB5A4237C1D3700221548 /* BowOptics */,
+				8B0FB5A5237C1D3700221548 /* BowEffects */,
+				8B0FB5A6237C1D3700221548 /* Bow */,
+			);
 			productName = Nef;
 			productReference = 8BF75F8522CA71E700EC53A1 /* nef.framework */;
 			productType = "com.apple.product-type.framework";
@@ -883,6 +870,9 @@
 				Base,
 			);
 			mainGroup = 8B6FC57C221ECE6A008F7694;
+			packageReferences = (
+				8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */,
+			);
 			productRefGroup = 8B6FC586221ECE6A008F7694 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1005,9 +995,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3CB8C222D3964000919F36 /* Render.swift in Sources */,
+				8B3CB8C222D3964000919F36 /* RenderAPI.swift in Sources */,
 				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
-				8B0FB5A2237C1AC700221548 /* Page.swift in Sources */,
+				8B0FB5A2237C1AC700221548 /* PageAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1638,7 +1628,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MODULEMAP_FILE = "$(SRCROOT)/Component/nef/Support Files/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Nef;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1667,7 +1656,6 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MODULEMAP_FILE = "$(SRCROOT)/Component/nef/Support Files/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Nef;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1845,6 +1833,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bow-swift/bow.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8B0FB5A4237C1D3700221548 /* BowOptics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowOptics;
+		};
+		8B0FB5A5237C1D3700221548 /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
+		8B0FB5A6237C1D3700221548 /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8B6FC57D221ECE6A008F7694 /* Project object */;
 }

@@ -1,8 +1,11 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import Bow
+import BowEffects
 
-public enum Render: RenderAPI {
+
+public enum Render: RenderAPI, RenderFP {
     case api
     public enum Page: PageAPI {
         case api
@@ -28,6 +31,16 @@ public protocol RenderAPI {
     /// - Parameter carbon: configuration
     /// - Returns: URL request to carbon.now.sh
     func carbonURLRequest(withConfiguration carbon: Carbon) -> URLRequest
+}
+
+public protocol RenderFP: RenderAPI {
+    /// Renders a code selection into multiple Carbon images.
+    ///
+    /// - Precondition: this method must be invoked from background thread.
+    ///
+    /// - Parameter carbon: content+style to generate code snippet.
+    /// - Returns: An `EnvIO` to perform IO operations that produce carbon error of type `CarbonError.Option` and values with the file generated of type `URL`. It has access to an immutable environment of type `URL` with the output URL. It can be seen as a Kleisli function `(URL) -> IO<CarbonError.Option, URL>`.
+    func carbonIO(_ carbon: Carbon) -> EnvIO<URL, CarbonError.Option, URL>
 }
 
 public protocol PageAPI {

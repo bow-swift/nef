@@ -2,7 +2,10 @@
 **/.DS_Store
 **/xcuserdata/
 BowPlayground
+
+## SPM
 .build
+Package.resolved
 .swiftpm
 bin-cli
 

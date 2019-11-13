@@ -1,32 +1,4 @@
 framework module nef {
     umbrella header "nef.h"
-    link "NefModels"
     export *
-    
-    explicit module Core {
-        header "Core.h"
-        link "NefCore"
-        export *
-    }
-    
-    explicit module Markdown {
-        header "Markdown.h"
-        link "NefMarkdown"
-        export Core
-        export *
-    }
-
-    explicit module Jekyll {
-        header "Jekyll.h"
-        link "NefJekyll"
-        export Core
-        export *
-    }
-  
-    explicit module Carbon {
-        header "Carbon.h"
-        link "NefCarbon"
-        export Core
-        export *
-    }
 }

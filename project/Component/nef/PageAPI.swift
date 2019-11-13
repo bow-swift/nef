@@ -1,11 +1,9 @@
 //  Copyright © 2019 The nef Authors.
 
-import NefMarkdown
-import NefJekyll
-import NefCarbon
-
+import Foundation
 
 public extension PageAPI {
+    
     func markdown(content: String, to outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         guard Thread.isMainThread else {
             fatalError("markdown(content:outputPath:success:failure:) should be invoked in main thread")
