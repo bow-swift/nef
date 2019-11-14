@@ -42,7 +42,7 @@ public protocol RenderFP: RenderAPI {
     ///   - carbon: content+style to generate code snippet.
     ///   - output: output where to render the snippets.
     /// - Returns: An `IO` to perform IO operations that produce carbon error of type `CarbonError.Option` and values with the file generated of type `URL`.
-    func carbonIO(_ carbon: Carbon, output: URL) -> IO<CarbonError.Option, URL>
+    func carbonIO(_ carbon: Carbon, output: URL) -> IO<nef.Error, URL>
 }
 
 public protocol PageAPI {
@@ -79,7 +79,7 @@ public protocol PageFP {
     ///   - content: content page in Xcode playground.
     ///   - output: output where to write the Markdown render.
     /// - Returns: An `IO` to perform IO operations that produce carbon error of type `PageError` and values with the file generated of type `URL`.
-    func markdownIO(content: String, to output: URL) -> IO<PageError, URL>
+    func markdownIO(content: String, to output: URL) -> IO<nef.Error, URL>
     
     /// Renders content into Jekyll format.
     ///
@@ -90,5 +90,5 @@ public protocol PageFP {
     ///   - output: output where to write the Markdown render.
     ///   - permalink: website relative url where locate the page.
     /// - Returns: An `IO` to perform IO operations that produce carbon error of type `PageError` and values with the file generated of type `URL`.
-    func jekyllIO(content: String, to output: URL, permalink: String) -> IO<PageError, URL>
+    func jekyllIO(content: String, to output: URL, permalink: String) -> IO<nef.Error, URL>
 }

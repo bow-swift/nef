@@ -37,7 +37,7 @@ public extension PageAPI {
 
 public extension PageFP where Self: PageAPI {
     
-    func markdownIO(content: String, to output: URL) -> IO<PageError, URL> {
+    func markdownIO(content: String, to output: URL) -> IO<nef.Error, URL> {
         IO.async { callback in
             self.markdown(content: content,
                           to: output.path,
@@ -51,7 +51,7 @@ public extension PageFP where Self: PageAPI {
         }^
     }
     
-    func jekyllIO(content: String, to output: URL, permalink: String) -> IO<PageError, URL> {
+    func jekyllIO(content: String, to output: URL, permalink: String) -> IO<nef.Error, URL> {
         IO.async { callback in
             self.jekyll(content: content,
                         to: output.path,

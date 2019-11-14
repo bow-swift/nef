@@ -34,8 +34,8 @@ public extension RenderAPI {
 
 public extension RenderFP where Self: RenderAPI {
     
-    func carbonIO(_ carbon: Carbon, output: URL) -> IO<CarbonError.Option, URL> {
-        func runAsync(carbon: Carbon, outputURL: URL) -> IO<CarbonError.Option, URL> {
+    func carbonIO(_ carbon: Carbon, output: URL) -> IO<nef.Error, URL> {
+        func runAsync(carbon: Carbon, outputURL: URL) -> IO<nef.Error, URL> {
             IO.async { callback in
                 self.carbon(code: carbon.code,
                             style: carbon.style,
@@ -43,7 +43,7 @@ public extension RenderFP where Self: RenderAPI {
                             success: {
                                 let file = URL(fileURLWithPath: "\(outputURL.path).png")
                                 let fileExist = FileManager.default.fileExists(atPath: file.path)
-                                fileExist ? callback(.right(file)) : callback(.left(.notFound))
+                                fileExist ? callback(.right(file)) : callback(.left(.carbon))
                             },
                             failure: { error in
                                 callback(.left(.invalidSnapshot))
@@ -55,8 +55,7 @@ public extension RenderFP where Self: RenderAPI {
             fatalError("carbonIO(_ carbon:,output:) should be invoked in background thread")
         }
         
-        let file = IO<CarbonError.Option, URL>.var()
-        
+        let file = IO<nef.Error, URL>.var()
         return binding(
                     continueOn(.main),
             file <- runAsync(carbon: carbon, outputURL: output),

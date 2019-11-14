@@ -2,7 +2,9 @@
 
 import Foundation
 
-public enum PageError: Error {
+public enum Error: Swift.Error {
     case markdown
     case jekyll
+    case carbon
+    case invalidSnapshot
 }
