@@ -180,6 +180,8 @@ buildCarthage() {
     [ $platformIOS -eq 1 ] && platform="iOS" || platform="osx"
 
     cd "$cartfilePath"
+    rm "Cartfile.resolved" 1>/dev/null 2>/dev/null
+    
     if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
         carthage bootstrap --cache-builds --platform $platform 1> "$log" 2>&1
     else
@@ -267,7 +269,7 @@ buildProject() {
         schemeName=$(schemeNameFromProject "$project")
         sdk=$(sdkForWorkspaceAndScheme "$projectPath/$workspace" "$schemeName")
         log="$logPath/$workspaceName.log"
-        
+
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
 
         needBuildProject=$(shouldBuildWorkspace "$workspace" "$flag")
