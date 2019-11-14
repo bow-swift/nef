@@ -47,6 +47,7 @@ printHelp() {
 #   - Parameter `podfile`
 ##
 setDependency() {
+  cd "$1"
   local projectFolder="$1" # parameter `projectFolder`
   local projectName="$2"   # parameter `projectName`
   local platform="$3"      # parameter `platform`
@@ -56,11 +57,12 @@ setDependency() {
   local cartfile="$6"      # parameter `cartfile`
   local podfile="$7"       # parameter `podfile`
 
-  if [ "$podfile" != "" ] & [ -f "$podfile" ]; then
+  if [ "$podfile" != "" ] && [ -f "$podfile" ]; then
       checkCocoaPods
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setCocoaPodsDependency "$projectFolder" "$projectName" "$platform" "$podfile"
-  elif [ "$cartfile" != "" ] & [ -f "$cartfile" ]; then
+      setDefaultWorkspace "$projectFolder"
+  elif [ "$cartfile" != "" ] && [ -f "$cartfile" ]; then
       checkCarthage
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "carthage"
       setCarthageDependency "$projectFolder" "$projectName" "$platform" "$cartfile"
@@ -68,10 +70,12 @@ setDependency() {
       checkCocoaPods
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setBowBranchDependency "$projectFolder" "$projectName" "$platform" "$branch"
+      setDefaultWorkspace "$projectFolder"
   else # version
       checkCocoaPods
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setBowVersionDependency "$projectFolder" "$projectName" "$platform" "$version"
+      setDefaultWorkspace "$projectFolder"
   fi
 }
 
@@ -153,6 +157,17 @@ setBowVersionDependency() {
     fi
 }
 
+setDefaultWorkspace() {
+    local projectFolder="$1" # parameter `projectFolder`
+    podfilePath="$projectFolder/Podfile"
+
+    ! [ -f "$podfilePath" ] && continue
+
+    echo -ne "${normal}Updating podfile with ${green}default workspace${reset}..."
+    echo "workspace 'nef'" >> $podfilePath
+    echo " ✅"
+}
+
 ##
 #   checkCocoaPods() throws
 ##
@@ -164,7 +179,7 @@ checkCocoaPods() {
   fi
 
   requiredVersion='1.6.1'
-  podVersion=`pod --version`
+  podVersion=$(pod --version)
   minorPodVersionRequired=(`printf "$podVersion\n$requiredVersion\n" | sort`)
 
   if [ "$minorPodVersionRequired" != "$requiredVersion" ]; then
@@ -225,51 +240,56 @@ lastestBowVersion() {
 }
 
 ##
-#   playground(String parent, String projecName)
-#   - Parameter `parent`: path to the project parent.
+#   playground(String parent, String projecFolder, String projecName)
+#   - Parameter `parent`: path to the root project.
+#   - Parameter `projectFolder`: path to the project.
 #   - Parameter `projecName`: playground name.
 ##
 playground() {
   set +e
-  local root="$1"          # parameter `parent`
-  local projectName="$2"   # parameter `projecName`
-  local projectFolder="$root/$projectName"
+  local project="$1"       # parameter `parent`
+  local projectFolder="$2" # parameter `projectFolder`
+  local projectName="$3"   # parameter `projecName`
 
-  cd "$root"
   echo -ne "${normal}Installing ${green}Playground ($projectName)${reset}..."
 
-  if [ -d "$projectName" ]; then
+  if [ -d "$project" ]; then
     echo " ❌"
-    echo "[!] ${bold}${red}error: ${reset}destination path '$projectName' already exists and is not an empty directory."
+    echo "[!] ${bold}${red}error: ${reset}destination path '$projectName' already exists."
     exit 1
   fi
 
-  makeStructure "$projectFolder"
-  installPlaygroundTemplate "$projectFolder" "$projectName"
+  installPlaygroundTemplate "$project" "$projectFolder" "$projectName"
 }
 
 ##
-#   installPlaygroundTemplate(String projectFolder, String projecName)
+#   installPlaygroundTemplate(String parent, String projecFolder, String projecName)
+#   - Parameter `parent`: path to the root project.
 #   - Parameter `projectFolder`: path to the project.
 #   - Parameter `projecName`: playground name.
 ##
 installPlaygroundTemplate() {
-  local projectFolder="$1" # parameter `parent`
-  local projectName="$2"   # parameter `projecName`
-  local log="$projectFolder/nef/playground/init-playground.log"
-  local tempFolder="template-master"
+  local project="$1"       # parameter `parent`
+  local projectFolder="$2" # parameter `projectFolder`
+  local projectName="$3"   # parameter `projecName`
 
-  cd "$projectFolder"
+  local projectPlayground="$projectName.app"
+  local projectTemplate="$project.1"
+  local log="$projectTemplate/nef/playground/init-playground.log"
+  local tempFolderName="template-master"
+
+  makeStructure "$projectTemplate"
+  cd "$projectTemplate"
 
   # download project
   echo ">----------------------------------------- download GitHub project" >> "$log"
   curl -LkSs $NEF_ZIP -o master.zip 1>> "$log" 2>&1
   echo ">----------------------------------------- unzip GitHub project" >> "$log"
-  unzip master.zip -d $tempFolder 1>> "$log" 2>&1
+  unzip master.zip -d $tempFolderName 1>> "$log" 2>&1
   rm *.zip 1>> "$log" 2>&1
-  echo ">----------------------------------------- move files to parent :: $projectFolder" >> "$log"
-  mv $tempFolder/*/* . 1>> "$log" 2>&1
-  rm -rf $tempFolder 1>> "$log" 2>&1
+  echo ">----------------------------------------- move files to parent :: $projectTemplate" >> "$log"
+  mv $tempFolderName/*/* . 1>> "$log" 2>&1
+  rm -rf $tempFolderName 1>> "$log" 2>&1
 
   # install template
   echo ">----------------------------------------- installing playground template" >> "$log"
@@ -284,7 +304,11 @@ installPlaygroundTemplate() {
     echo " ❌"
     echo "[!] ${bold}${red}error: ${reset}review '$log' for more information."
     exit 1
-  else
+  else # create nef-playground
+    mv "nef" "$projectPlayground"
+    mv "$projectTemplate/$projectPlayground" ../
+    mv $projectTemplate/* "$projectFolder"/
+    clean "$projectTemplate"
     echo " ✅"
   fi
 }
@@ -295,24 +319,17 @@ installPlaygroundTemplate() {
 ##
 makeStructure() {
   set +e
-  local projectFolder="$1"  # parameter `folder`
+  local project="$1"  # parameter `folder`
 
-  cleanStructure "$projectFolder"
-  mkdir -p "$projectFolder/nef/playground"
+  rm -rf "$project/nef/playground" 1>/dev/null 2>/dev/null
+  mkdir -p "$project/nef/playground"
 }
 
-cleanStructure() {
+clean() {
   set +e
-  local projectFolder="$1"  # parameter `folder`
-
-  rm -rf "$projectFolder/nef/playground" 1>/dev/null 2>/dev/null
+  local project="$1"  # parameter `folder`
+  rm -rf "$project" 1>/dev/null 2>/dev/null
 }
-
-cleanProject() {
-  local projectFolder="$1"  # parameter `folder`
-  rm -rf "$projectFolder"
-}
-
 
 #: - MAIN
 set -e
@@ -342,7 +359,11 @@ while [ "$1" != "" ]; do
     shift
 done
 
-projectFolder="$root/$projectName"
+projectName="$projectName"
+project="$root/$projectName.app"
+projectFolder="$project/Contents/MacOS"
+cartfilePath="$root/$cartfile"
+podfilePath="$root/$podfile"
 
-playground "$root" "$projectName"
-setDependency "$projectFolder" "$projectName" "$platform" "$version" "$branch" "$cartfile" "$podfile"
+playground "$project" "$projectFolder" "$projectName"
+setDependency "$projectFolder" "$projectName" "$platform" "$version" "$branch" "$cartfilePath" "$podfilePath"

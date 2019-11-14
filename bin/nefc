@@ -5,7 +5,6 @@ COMPILE="compile"
 CLEAN="clean"
 DEPENDENCIES="install"
 COMPILE_CACHED_DEPENDENCIES="--use-cache"
-
 DERIVED_DATA_DIR="nef/DerivedData"
 
 #: terminal setup
@@ -111,12 +110,9 @@ isPathFromDependencies() {
 #   - parameter `flag`: configuration for building.
 ##
 buildDependencies() {
-    local path="$1" # parameter `folder`
-    local flag="$2" # parameter `flag`
-
-    buildPODS "$path" "$flag"
-    buildCarthage "$path" "$flag"
-    addPlaygroundReference "$path"
+    buildPODS "$1" "$2"
+    buildCarthage "$1" "$2"
+    addPlaygroundReference "$1"
 }
 
 ##
@@ -126,36 +122,34 @@ buildDependencies() {
 ##
 buildPODS() {
     cd "$1"
-
     local flag="$2"
     local podfile="Podfile"
     local log="`pwd`/nef/log/pod-install.log"
+    local path=""
 
-    [ -f $podfile ] || return
+    podfilePath=""
+    while read -r -d $'\0' path; do
+        podfilePath="${path::${#path}-${#podfile}-1}"
+    done < <(find . -name $podfile -print0)
+
+    [ "$podfilePath" = "" ] && return
     echo -ne "${normal}Installing ${green}Pods ${reset}..."
+    cd "$podfilePath"
 
-    find . -name $podfile -print0 | while IFS= read -r -d $'\0' podfilePath; do
-        path="${podfilePath::${#podfilePath}-${#podfile}-1}"
-        cd "$path"
+    if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
+        pod install 1> "$log" 2>&1
+    else
+        pod install --repo-update 1> "$log" 2>&1
+    fi
 
-        set +e
-        if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
-            pod install 1> "$log" 2>&1
-        else
-            pod install --repo-update 1> "$log" 2>&1
-        fi
-
-        installed=`grep "Pod installation complete" "$log"`
-        set -e
-
-        if [ "${#installed}" -gt 0 ]; then
-            echo " ✅"
-        else
-            echo " ❌"
-            echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
-            exit 1
-        fi
-    done
+    installed=`grep "Pod installation complete" "$log"`
+    if [ "${#installed}" -gt 0 ]; then
+        echo " ✅"
+    else
+        echo " ❌"
+        echo "${bold}${red}error: ${reset}${bold}pod install${normal} review 'nef/log/pod-install.log' for more information."
+        exit 1
+    fi
 }
 
 ##
@@ -170,8 +164,14 @@ buildCarthage() {
     local cartfile="Cartfile"
     local log="`pwd`/nef/log/carthage-install.log"
 
-    [ -f $cartfile ] || return
+    cartfilePath=""
+    while read -r -d $'\0' path; do
+        cartfilePath="${path::${#path}-${#cartfile}-1}"
+    done < <(find . -name $cartfile -print0)
+
+    [ "$cartfilePath" = "" ] && return
     echo -ne "${normal}Installing ${green}Carthage ${reset}..."
+    cartfilePath="$project/$cartfilePath"
 
     # build
     playgroundPagesForProjectPath "$project"
@@ -179,6 +179,7 @@ buildCarthage() {
     platformIOS=$(isPlatformIOSPlaygroundPage "$playgroundPage")
     [ $platformIOS -eq 1 ] && platform="iOS" || platform="osx"
 
+    cd "$cartfilePath"
     if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
         carthage bootstrap --cache-builds --platform $platform 1> "$log" 2>&1
     else
@@ -191,7 +192,7 @@ buildCarthage() {
     failed=`grep "failed with exit code" "$log"`
 
     if [ "${#installed}" -eq 0 ] && [ "${#errors}" -eq 0 ] && [ "${#failed}" -eq 0 ]; then
-        createEmptyWorkspace "$project"
+        createEmptyWorkspace "$cartfilePath"
         echo " ✅"
     else
         echo " ❌"
@@ -211,7 +212,7 @@ createEmptyWorkspace() {
         workspacePath=$(workspaceForProjectPath "$1" "$project")
         workspaceExtension=$(echo "$workspacePath" | rev | cut -d'.' -f1 | rev)
         workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
-        workspace="$workspaceName.xcworkspace"
+        workspace="nef.xcworkspace"
         isDependency=$(isPathFromDependencies "$workspacePath")
 
         ([ "$workspaceExtension" = "xcworkspace" ] || [ $isDependency -eq 1 ]) && continue
@@ -260,18 +261,19 @@ buildProject() {
         [ $isDependency -eq 1 ] && continue
 
         # build
-        workspace=$(workspaceForProjectPath "$1" "$project")
+        projectPath=$(echo "$1/$project" | rev | cut -d'/' -f3- | rev)
+        workspace=$(workspaceForProjectPath "$projectPath" "$project")
         workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
         schemeName=$(schemeNameFromProject "$project")
-        sdk=$(sdkForWorkspaceAndScheme "$workspace" "$schemeName")
+        sdk=$(sdkForWorkspaceAndScheme "$projectPath/$workspace" "$schemeName")
         log="$logPath/$workspaceName.log"
-
+        
         echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
 
         needBuildProject=$(shouldBuildWorkspace "$workspace" "$flag")
         if [ "$needBuildProject" = "1" ]; then
             set +e
-            xcodebuild -workspace "$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
+            xcodebuild -workspace "$projectPath/$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
             installed=`grep "BUILD SUCCEEDED" "$log"`
             set -e
         else
@@ -300,8 +302,9 @@ schemeNameFromProject() {
     targetNative="sed -n '/Begin PBXNativeTarget section/, /End PBXNativeTarget section/p'"
     targetAggregate="sed -n '/Begin PBXAggregateTarget section/, /End PBXAggregateTarget section/p'"
     targetName="grep 'name = ' | awk -F' = ' '{print \$2}' | awk -F';' '{print \$1}'"
-    schemeName1=$(eval cat "\"$project\" | $targetNative | $targetName")
-    schemeName2=$(eval cat "\"$project\" | $targetAggregate | $targetName")
+    removeQuotes="tr -d '\"'"
+    schemeName1=$(eval cat "\"$project\" | $targetNative | $targetName | $removeQuotes")
+    schemeName2=$(eval cat "\"$project\" | $targetAggregate | $targetName | $removeQuotes")
 
     [ -z "$schemeName1" ] && echo "$schemeName2" || echo "$schemeName1"
 }
@@ -313,15 +316,16 @@ schemeNameFromProject() {
 #   - Return `workspace` path
 ##
 workspaceForProjectPath() {
+    cd "$1"
     local path="$1"         # parameter `folder`
     local projectPath="$2"  # parameter `projectPath`
-
-    cd "$path"
 
     local xcprojectPath=$(echo "$projectPath" | rev | cut -d'/' -f 2- | rev)
     local xcprojectNoExtension=$(echo "$xcprojectPath" | rev | cut -d'.' -f 2- | rev)
 
-    if [ -d "$xcprojectNoExtension.xcworkspace" ]; then
+    if [ -d "nef.xcworkspace" ]; then
+        echo "nef.xcworkspace"
+    elif [ -d "$xcprojectNoExtension.xcworkspace" ]; then
         echo "$xcprojectNoExtension.xcworkspace"
     else
         echo "$xcprojectNoExtension.xcodeproj"
@@ -338,7 +342,7 @@ sdkForWorkspaceAndScheme() {
   local workspace="$1"   # parameter `workspace`
   local schemeName="$2"  # parameter `schemeName`
 
-  isIPHONE=$(eval xcodebuild -workspace "$workspace" -scheme "$schemeName" -quiet -showBuildSettings 2>&1 | grep 'SDKROOT' | grep 'iPhone' | awk '{ print length; }')
+  isIPHONE=$(eval xcodebuild -workspace "$workspace" -scheme "$schemeName" -quiet -showBuildSettings 2>/dev/null | grep 'SDKROOT' | grep 'iPhone' | awk '{ print length; }')
   sdk="iphoneos"
   if [ "$isIPHONE" = "" ]; then
     sdk="macosx"
@@ -386,28 +390,30 @@ shouldBuildWorkspace() {
 #   - Parameter `folder`: path to the project folder.
 ##
 addPlaygroundReference() {
-    projectPath="$1"
-    cd "$projectPath"
-    playgroundsForProjectPath "$projectPath"
-
-    local logPath="nef/log"
+    cd "$1"
+    local folder="$1"
+    local logPath="`pwd`/nef/log"
     local pattern="<FileRef"
 
+    playgroundsForProjectPath "$folder"
+
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        workspace=$(workspaceForProjectPath "$1" "$project")
+        parentProjectPath=$(echo "$folder/$project" | rev | cut -d'/' -f3- | rev)
+        workspace=$(workspaceForProjectPath "$parentProjectPath" "$project")
         workspaceExtension=$(echo "$workspace" | rev | cut -d'.' -f1 | rev)
         workspaceName=$(echo "$workspace" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
         workspaceContent="$workspace/contents.xcworkspacedata"
 
+        cd "$parentProjectPath"
         ! [ "$workspaceExtension" = "xcworkspace" ] && continue
-        grep -q ".playground\"" "$workspaceContent"; [ $? -eq 0 ] && continue
+        grep -q "\.playground\"" "$workspaceContent"; [ $? -eq 0 ] && continue
 
         for playground in "${playgroundsForProjectPath[@]}"; do
             playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
             sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
         done
 
-        tmp="$logPath/$workspaceName.tmp.xcworkspace"
+        tmp="$logPath/$workspaceName.tmp.workspace"
         awk '{ gsub("FileRef><FileRef", "FileRef>\n<FileRef") }1' "$workspaceContent" 1> "$tmp"
         mv "$tmp" "$workspaceContent"
     done

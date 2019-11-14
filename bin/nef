@@ -362,7 +362,7 @@ playground() {
       nef-playground --name "$projectName" --platform "$platform" --bow-branch "$branch" --podfile "$podfile" --carfile "$carfile"
     fi
 
-    nefc install  "$projectName"
+    nefc install  "$projectName.app"
 }
 
 #: - Compile
