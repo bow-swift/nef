@@ -2,6 +2,7 @@
 
 import Foundation
 import CLIKit
+import NefMarkdown
 
 let scriptName = "nef-markdown-page"
 let console = MarkdownConsole()

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1100"
+   LastUpgradeVersion = "1110"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-               BuildableName = "Carbon"
-               BlueprintName = "Carbon"
+               BuildableName = "CarbonPage"
+               BlueprintName = "CarbonPage"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,8 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -47,31 +45,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-            BuildableName = "Carbon"
-            BlueprintName = "Carbon"
+            BuildableName = "CarbonPage"
+            BlueprintName = "CarbonPage"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "--from &quot;/Users/miguelangel/Desktop/BowShots/1. DataTypes.playground/Pages/1. Option.xcplaygroundpage&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--to &quot;/Users/miguelangel/Desktop&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--size 3"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--background #6ef0a7"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -79,15 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-            BuildableName = "Carbon"
-            BlueprintName = "Carbon"
+            BuildableName = "CarbonPage"
+            BlueprintName = "CarbonPage"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

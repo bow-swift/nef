@@ -7,19 +7,21 @@ let package = Package(
         .macOS(.v10_14),
     ],
     products: [
-        .library(name: "nef", targets: ["nef", "NefModels"]),
+        .library(name: "nef", targets: ["nef"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/bow-swift/bow", from: "0.6.0")
+        .package(url: "https://github.com/bow-swift/bow", from: "0.6.0"),
+        .package(path: "project"),
     ],
     targets: [
-        .target(name: "NefModels", path: "project/Component/NefModels", publicHeadersPath: "Support Files"),
-        .target(name: "NefCore", dependencies: ["NefModels"], path: "project/Core", publicHeadersPath: "Support Files"),
-        .target(name: "NefMarkdown", dependencies: ["NefCore"], path: "project/Component/NefMarkdown", publicHeadersPath: "Support Files"),
-        .target(name: "NefJekyll", dependencies: ["NefCore"], path: "project/Component/NefJekyll", publicHeadersPath: "Support Files"),
-        .target(name: "NefCarbon", dependencies: ["NefModels", "NefCore"], path: "project/Component/NefCarbon", publicHeadersPath: "Support Files"),
-
-
-        .target(name: "nef", dependencies: ["NefCore", "NefModels", "NefMarkdown", "NefJekyll", "NefCarbon", "Bow", "BowEffects"], path: "project/Component/nef", publicHeadersPath: "Support Files"),
+        .target(name: "nef",
+                dependencies: ["Bow", "BowEffects",
+                               "NefCore",
+                               "NefModels",
+                               "NefMarkdown",
+                               "NefJekyll",
+                               "NefCarbon"],
+                path: "project/Component/nef",
+                publicHeadersPath: "Support Files"),
     ]
 )

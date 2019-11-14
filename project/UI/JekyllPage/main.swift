@@ -2,6 +2,7 @@
 
 import Foundation
 import CLIKit
+import NefJekyll
 
 let scriptName = "nef-jekyll-page"
 let console = JekyllConsole()

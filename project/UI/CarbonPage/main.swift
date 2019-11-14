@@ -3,6 +3,10 @@
 import Foundation
 import CLIKit
 
+import NefModels
+import NefCore
+import NefCarbon
+
 let scriptName = "nef-carbon-page"
 let console = CarbonOutput()
 
