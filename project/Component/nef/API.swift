@@ -1,16 +1,14 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefModels
+@_exported import NefModels
 
 import Bow
 import BowEffects
 
 
-public enum Render: RenderAPI, RenderFP {
-    case api
-    public enum Page: PageAPI, PageFP {
-        case api
+public enum Render: RenderAPI, RenderFP { case build
+    public enum Page: PageAPI, PageFP {   case build
     }
 }
 

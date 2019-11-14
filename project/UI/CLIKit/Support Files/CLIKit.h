@@ -7,5 +7,3 @@ FOUNDATION_EXPORT double CLIVersionNumber;
 
 //! Project version string for CLI.
 FOUNDATION_EXPORT const unsigned char CLIVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <CLI/PublicHeader.h>

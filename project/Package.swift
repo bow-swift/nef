@@ -7,12 +7,6 @@ let package = Package(
         .macOS(.v10_14),
     ],
     products: [
-        .library(name: "NefModels", targets: ["NefModels"]),
-        .library(name: "NefCore", targets: ["NefCore"]),
-        .library(name: "NefMarkdown", targets: ["NefMarkdown"]),
-        .library(name: "NefJekyll", targets: ["NefJekyll"]),
-        .library(name: "NefCarbon", targets: ["NefCarbon"]),
-
         .executable(name: "nef-markdown-page", targets: ["MarkdownPage"]),
         .executable(name: "nef-jekyll-page", targets: ["JekyllPage"]),
         .executable(name: "nef-carbon-page", targets: ["CarbonPage"]),

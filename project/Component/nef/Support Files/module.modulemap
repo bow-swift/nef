@@ -3,24 +3,24 @@ framework module nef {
     export *
     
     explicit module Core {
-        header "Core.h"
+        header "_Core.h"
         export *
     }
     
     explicit module Markdown {
-        header "Markdown.h"
+        header "_Markdown.h"
         export Core
         export *
     }
 
     explicit module Jekyll {
-        header "Jekyll.h"
+        header "_Jekyll.h"
         export Core
         export *
     }
   
     explicit module Carbon {
-        header "Carbon.h"
+        header "_Carbon.h"
         export Core
         export *
     }
