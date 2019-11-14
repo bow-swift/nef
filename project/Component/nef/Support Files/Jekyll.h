@@ -9,3 +9,4 @@ FOUNDATION_EXPORT double NefJekyllVersionNumber;
 FOUNDATION_EXPORT const unsigned char NefJekyllVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <NefJekyll/PublicHeader.h>
+#import "NefJekyll.h"

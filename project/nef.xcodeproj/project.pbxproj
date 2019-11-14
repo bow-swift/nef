@@ -18,6 +18,10 @@
 		8B0FB5A9237C1DD000221548 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A5237C1D3700221548 /* BowEffects */; };
 		8B0FB5AA237C1DD000221548 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A6237C1D3700221548 /* Bow */; };
 		8B0FB5B8237C61C000221548 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB5B7237C61C000221548 /* Models.swift */; };
+		8B0FB5BA237D5B7A00221548 /* Carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5B9237D5B7A00221548 /* Carbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B0FB5BC237D5B9800221548 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5BB237D5B9400221548 /* Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B0FB5BE237D5BAD00221548 /* Jekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5BD237D5BA900221548 /* Jekyll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B0FB5C0237D5BBF00221548 /* Markdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5BF237D5BBA00221548 /* Markdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D79F22D6235200D05A70 /* NefJekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12D79D22D6235200D05A70 /* NefJekyll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
 		8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */; };
@@ -87,6 +91,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B0FB583237C0A5600221548;
 			remoteInfo = CLI;
+		};
+		8B0FB5C1237D5D6300221548 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
+			remoteInfo = NefModels;
 		};
 		8B12D7A522D624D900D05A70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -170,6 +181,10 @@
 		8B0FB59D237C0EF000221548 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8B0FB5A1237C1AC700221548 /* PageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageAPI.swift; sourceTree = "<group>"; };
 		8B0FB5B7237C61C000221548 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		8B0FB5B9237D5B7A00221548 /* Carbon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Carbon.h; sourceTree = "<group>"; };
+		8B0FB5BB237D5B9400221548 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		8B0FB5BD237D5BA900221548 /* Jekyll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Jekyll.h; sourceTree = "<group>"; };
+		8B0FB5BF237D5BBA00221548 /* Markdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Markdown.h; sourceTree = "<group>"; };
 		8B12D79B22D6235200D05A70 /* NefJekyll.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefJekyll.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12D79D22D6235200D05A70 /* NefJekyll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefJekyll.h; sourceTree = "<group>"; };
 		8B12D79E22D6235200D05A70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -340,6 +355,10 @@
 			children = (
 				8B0FB557237B0E6200221548 /* module.modulemap */,
 				8B603E9F237A3CFE0059C9C7 /* nef.h */,
+				8B0FB5BF237D5BBA00221548 /* Markdown.h */,
+				8B0FB5BD237D5BA900221548 /* Jekyll.h */,
+				8B0FB5B9237D5B7A00221548 /* Carbon.h */,
+				8B0FB5BB237D5B9400221548 /* Core.h */,
 				8B3CB83D22D3929B00919F36 /* Info.plist */,
 			);
 			path = "Support Files";
@@ -607,6 +626,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */,
+				8B0FB5BC237D5B9800221548 /* Core.h in Headers */,
+				8B0FB5C0237D5BBF00221548 /* Markdown.h in Headers */,
+				8B0FB5BE237D5BAD00221548 /* Jekyll.h in Headers */,
+				8B0FB5BA237D5B7A00221548 /* Carbon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,8 +805,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
 				8B89CD73237B084E007E9152 /* PBXTargetDependency */,
+				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
 				8B8AA94022D62266006BE290 /* PBXTargetDependency */,
 				8B12D7A622D624D900D05A70 /* PBXTargetDependency */,
 				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
@@ -809,6 +832,7 @@
 			);
 			dependencies = (
 				8B6B11BB22CBA1710060177F /* PBXTargetDependency */,
+				8B0FB5C2237D5D6300221548 /* PBXTargetDependency */,
 			);
 			name = NefCarbon;
 			productName = NefCarbon;
@@ -1044,6 +1068,11 @@
 			isa = PBXTargetDependency;
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
 			targetProxy = 8B0FB597237C0B7100221548 /* PBXContainerItemProxy */;
+		};
+		8B0FB5C2237D5D6300221548 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
+			targetProxy = 8B0FB5C1237D5D6300221548 /* PBXContainerItemProxy */;
 		};
 		8B12D7A622D624D900D05A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1632,6 +1661,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = "${SRCROOT}/Component/nef/Support Files/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Nef;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1660,6 +1690,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = "${SRCROOT}/Component/nef/Support Files/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.47deg.Nef;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

@@ -1,6 +1,9 @@
 //  Copyright © 2019 The nef Authors.
 
 import AppKit
+import NefModels
+import NefCarbon
+
 import Bow
 import BowEffects
 

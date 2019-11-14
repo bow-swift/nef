@@ -9,3 +9,4 @@ FOUNDATION_EXPORT double NefMarkdownVersionNumber;
 FOUNDATION_EXPORT const unsigned char NefMarkdownVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <NefMarkdown/PublicHeader.h>
+#import "NefMarkdown.h"
