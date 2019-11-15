@@ -64,7 +64,7 @@ buildMarkdown() {
 
         for pagePath in "${pagesInPlayground[@]}"; do
             pageName=`echo "$pagePath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-            log="$projectPath/$LOG_PATH/$playgroundName-$pageName.log"
+            log="$1/$LOG_PATH/$playgroundName-$pageName.log"
 
             nef-markdown-page --from "$pagePath" --to "$output" --filename "$pageName" 1> "$log" 2>&1
 

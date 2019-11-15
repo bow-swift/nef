@@ -97,7 +97,7 @@ buildCarbon() {
 
         for pagePath in "${pagesInPlayground[@]}"; do
             pageName=`echo "$pagePath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-            log="$projectPath/$LOG_PATH/$playgroundName-$pageName.log"
+            log="$1/$LOG_PATH/$playgroundName-$pageName.log"
 
             echo -ne "    ${normal}| code snippets for ${green}$pageName${reset}..."
             nef-carbon-page --from "$pagePath" --to "$output" --background "$background" --theme "$theme" --size "$size" --font "$font" --show-lines "$lines" --show-watermark "$watermark" 1> "$log" 2>&1
@@ -105,7 +105,7 @@ buildCarbon() {
             installed=`grep "RENDER SUCCEEDED" "$log"`
             if [ "${#installed}" -lt 7 ]; then
               echo " ❌"
-              echo "${bold}${red}error: ${reset}donwloading carbon snippets from page ${bold}$pageName${normal} in playground ${bold}$playgroundName${normal}, review '$log' for more information."
+              echo "${bold}${red}error: ${reset}downloading carbon snippets from page ${bold}$pageName${normal} in playground ${bold}$playgroundName${normal}, review '$log' for more information."
               exit 1
             else
               echo " ✅"
