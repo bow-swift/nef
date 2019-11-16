@@ -65,11 +65,15 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     
     // MARK: javascript <helpers>
     private func resetPosition(completionHandler: @escaping () -> Void) {
-        let javaScript = "var main = document.getElementsByClassName('main')[0];" +
+        let javaScript = "var html = document.getElementsByTagName('html')[0];" +
+                         "var body = document.getElementsByTagName('body')[0];" +
+                         "var main = document.getElementsByClassName('main')[0];" +
                          "var container = document.getElementsByClassName('export-container')[0];" +
                          "main.replaceWith(container);" +
                          "container.className = 'export-container';" +
-                         "container.setAttribute('style', 'position: absolute; width: 100%; height: 200px; top: 0px');"
+                         "container.setAttribute('style', 'position: absolute; height: 0px; width: 100%; float: left; top: 0px;');" +
+                         "html.setAttribute('style', 'min-height: 0px; margin: 0px; background: #\(state.background.hex);');" +
+                         "body.setAttribute('style', 'min-height: 0px; margin: 0px; background: transparent;');"
         
         evaluateJavaScript(javaScript) { (_, _) in
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(500), execute: completionHandler)

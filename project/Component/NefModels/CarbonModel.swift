@@ -168,6 +168,15 @@ extension CarbonStyle.Color {
         guard let value = CarbonStyle.Color.all[string.lowercased()] else { return nil }
         self = value
     }
+    
+    public var hex: String {
+        let opacity = UInt8(255 * a)
+        return "\(r.hex)\(g.hex)\(b.hex)\(opacity.hex)"
+    }
+}
+
+private extension UInt8 {
+    var hex: String { String(format: "%02X", self) }
 }
 
 // MARK: Helpers
