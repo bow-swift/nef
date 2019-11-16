@@ -31,6 +31,14 @@ public protocol RenderAPI {
     /// - Parameter carbon: configuration
     /// - Returns: URL request to carbon.now.sh
     func carbonURLRequest(withConfiguration carbon: Carbon) -> URLRequest
+    
+    /// Get an URL Request given a carbon configuration
+    ///
+    /// - Parameters:
+    ///   - code: content to render in the view .
+    ///   - state: style to apply to code.
+    /// - Returns: View
+    func carbonView(code: String, state: CarbonStyle) -> CarbonView
 }
 
 public protocol RenderFP: RenderAPI {

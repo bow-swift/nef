@@ -29,6 +29,8 @@ public extension RenderAPI {
     }
 
     func carbonURLRequest(withConfiguration carbon: Carbon) -> URLRequest { CarbonViewer.urlRequest(from: carbon) }
+    
+    func carbonView(code: String, state: CarbonStyle) -> CarbonView { CarbonWebView(code: code, state: state) }
 }
 
 
