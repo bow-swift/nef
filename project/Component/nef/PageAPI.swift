@@ -37,8 +37,9 @@ public extension PageAPI {
 
 public extension PageFP where Self: PageAPI {
     
-    func markdownIO(content: String, to output: URL) -> IO<nef.Error, URL> {
+    func markdownIO(content: String, toFile file: URL) -> IO<nef.Error, URL> {
         IO.async { callback in
+            let output = URL(fileURLWithPath: "\(file.path).md")
             self.markdown(content: content,
                           to: output.path,
                           success: {
@@ -51,8 +52,9 @@ public extension PageFP where Self: PageAPI {
         }^
     }
     
-    func jekyllIO(content: String, to output: URL, permalink: String) -> IO<nef.Error, URL> {
+    func jekyllIO(content: String, toFile file: URL, permalink: String) -> IO<nef.Error, URL> {
         IO.async { callback in
+            let output = URL(fileURLWithPath: "\(file.path).md")
             self.jekyll(content: content,
                         to: output.path,
                         permalink: permalink,

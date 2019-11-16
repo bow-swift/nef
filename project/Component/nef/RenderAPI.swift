@@ -36,7 +36,7 @@ public extension RenderAPI {
 
 public extension RenderFP where Self: RenderAPI {
     
-    func carbonIO(_ carbon: Carbon, output: URL) -> IO<nef.Error, URL> {
+    func carbonIO(carbon: Carbon, toFile output: URL) -> IO<nef.Error, URL>{
         func runAsync(carbon: Carbon, outputURL: URL) -> IO<nef.Error, URL> {
             IO.async { callback in
                 self.carbon(code: carbon.code,
