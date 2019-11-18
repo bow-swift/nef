@@ -20,33 +20,7 @@
 
 `nef` is inspired by [ΛNK](https://github.com/arrow-kt/ank) for Kotlin and [tut](https://github.com/tpolecat/tut) for Scala.
 
-### 💻 Installation
-
-**Using** [**Homebrew**](https://github.com/bow-swift/homebrew-nef)
-
-> It will warn you if there is a missing dependency and will provide guidance to install it.
-
-<p align="center">
-<img src="assets/nef-installation.gif">
-</p>
-
-**Using** [**Swift Package Manager**](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
-
-`nef` can be consumed as a library in your **macOS project**.
-
-```swift
-.package(url: "https://github.com/bow-swift/nef.git", from: "{version}")
-```
-
-**Using** [**Xcode Editor Extension**](https://github.com/bow-swift/nef-plugin)
-
-Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8).
-
-&nbsp;
-
-## 🌟 Features
-
-`nef` highlights the following features:
+### Features
 
 💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-xcode-playground).
 
@@ -60,6 +34,36 @@ Some of the `nef` features can be used directly in Xcode as an Extension. You ca
 
 &nbsp;
 
+## 💻 Installation
+
+📟 **Using** [**Homebrew**](https://github.com/bow-swift/homebrew-nef) (preferred)
+
+> It will warn you if there is a missing dependency and will provide guidance to install it.
+
+<p align="center">
+<img src="assets/nef-installation.gif">
+</p>
+
+📦 **Using** [**Swift Package Manager**](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
+
+`nef` can be consumed as a library in your **macOS project**.
+
+```swift
+.package(url: "https://github.com/bow-swift/nef.git", from: "{version}")
+```
+
+> You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/tutorials/how-to-use-nef-library-/).
+
+&nbsp;
+
+🔌 **Using** [**Xcode Editor Extension**](https://github.com/bow-swift/nef-plugin)
+
+Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8).
+
+&nbsp;
+
+## Usage
+
 ### 📃 Creating an Xcode Playground
 
 Xcode Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make the creation of an Xcode Playground easier with support for one or more libraries.
@@ -69,6 +73,10 @@ By default, `nef` can create an Xcode Playground with support for [Bow](http://b
 ```bash
 ➜ nef playground
 ```
+
+<p align="center">
+<img src="assets/nef-playground.png" height="100">
+</p>
 
 And you can use the following option to specify the name for the Xcode project that you are creating:
 

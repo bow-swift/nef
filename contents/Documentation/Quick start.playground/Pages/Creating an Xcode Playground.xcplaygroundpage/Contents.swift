@@ -18,20 +18,24 @@ Nef.Playground.needsIndefiniteExecution(false)
  ```bash
  ➜ nef playground
  ```
-  &nbsp;
- */
-
-/*:
- ### Commands for creating a Xcode Playground
- You can use the following option to specify the name for the Xcode project that you are creating.
  
+  ![](/assets/nef-playground.png)
+
+ And you can use the following option to specify the name for the Xcode project that you are creating:
+
  ```bash
  ➜ nef playground --name LatestBowProject
  ```
+
+ It will create an Xcode project with support for the latest available version of Bow, named `LatestBowProject`. If you open this `nef playground`, you will have an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
+
+ By default, `nef playground` will be created for iOS platform. If you need to change it, you can use the `--platform` option.
+
+ ```bash
+ ➜ nef playground --platform osx
+ ```
  
- It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have a Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
- 
- &nbsp;
+  &nbsp;
  
  Besides this, you can select any different `Bow` version or branch, even a third-party dependency.
  
@@ -43,7 +47,7 @@ Nef.Playground.needsIndefiniteExecution(false)
  ➜ nef playground --name OldBowProject --bow-version 0.3.0
  ```
  
- ___
+ &nbsp;
  
  - `--bow-branch <branch-name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
  
@@ -51,7 +55,8 @@ Nef.Playground.needsIndefiniteExecution(false)
  ➜ nef playground --name BranchBowProject --bow-branch master
  ```
  
- ___
+ &nbsp;
+ 
  
  - `--podfile <Podfile>`: Specify a Podfile with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
  
@@ -69,5 +74,20 @@ Nef.Playground.needsIndefiniteExecution(false)
  ```bash
  ➜ nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
  ```
-  &nbsp;
+ 
+ &nbsp;
+ 
+ 
+ - `--cartfile <Cartfile>`: Specify a **Cartfile** with your dependencies. Create a `Cartfile` listing your dependencies and pass it to `nef`. Example:
+
+ Your `Cartfile`, located in `./folder/dependencies`:
+
+ ```ruby
+ github "bow-swift/Bow"
+ ```
+
+ ```bash
+ ➜ nef playground --name MyCarthageProject --cartfile ./folder/dependencies/Cartfile
+ ```
+ 
  */
