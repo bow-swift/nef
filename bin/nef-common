@@ -9,9 +9,9 @@ playgrounds() {
     local root="$1"   # parameter `folder`
 
     workspacesForProjectPath "$1"
-    checkIsWorkspaceValid "$workspaces"
-    local workspacePath=$(echo "$workspaces" | rev | cut -d'/' -f 2- | rev)
-    local content="$workspaces/contents.xcworkspacedata"
+    checkIsWorkspaceValid "$workspacesForProjectPath"
+    local workspacePath=$(echo "$workspacesForProjectPath" | rev | cut -d'/' -f 2- | rev)
+    local content="$workspacesForProjectPath/contents.xcworkspacedata"
 
     local dependencies="awk -F'location = \"group:' '{print \$2}'"
     local cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
@@ -191,7 +191,7 @@ workspacesForProjectPath() {
     local log="$1/$LOG_PATH/workspace.log"
     cd "$path"
 
-    workspaces=()
+    workspacesForProjectPath=()
     while read -r -d $'\0' project; do
         projectPath=$(echo "$path/$project" | rev | cut -d'/' -f3- | rev)
         projectName=$(echo "$project" | rev | cut -d'/' -f 2 | rev)
@@ -200,10 +200,10 @@ workspacesForProjectPath() {
         workspaceContent="$workspacePath/contents.xcworkspacedata"
         (! [ "$workspaceExtension" = "xcworkspace" ] || ! [ -f "$workspaceContent" ]) && continue
 
-        workspaces+=("$workspacePath")
+        workspacesForProjectPath+=("$workspacePath")
     done < <(find . -name '*.pbxproj' -print0)
 
-    declare -p workspaces 1>/dev/null 2>/dev/null
+    declare -p workspacesForProjectPath 1>/dev/null 2>/dev/null
 }
 
 checkIsWorkspaceValid() {
@@ -211,10 +211,10 @@ checkIsWorkspaceValid() {
     local numberOfWorkspaces=${#workspacesPaths[@]}
 
     if [ "$numberOfWorkspaces" -gt 1 ]; then
-        echo "[!] error: found more than 1 workspace (total:$numberOfWorkspaces): '$workspaces'" > "$log"
+        echo "[!] error: found more than 1 workspace (total:$numberOfWorkspaces): '$workspacesPaths'" > "$log"
         exit 1
-    elif [ "$numberOfWorkspaces" -eq 0 ] || ! [ -d $workspaces ]; then
-        echo "[!] error: not found any workspace in root project '$path'" > "$log"
+    elif [ "$numberOfWorkspaces" -eq 0 ] || ! [ -d $workspacesPaths ]; then
+        echo "[!] error: not found any workspace in root project '$workspacesPaths'" > "$log"
         exit 1
     fi
 }
