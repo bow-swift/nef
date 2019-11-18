@@ -79,7 +79,7 @@ buildMicrosite() {
             permalink=`echo "$permalink" | tr -s ' ' '-' | awk '{print tolower($0)}'`
 
             logFile="$LOG_PATH/$playgroundName-$pageName.log"
-            log="$projectPath/$logFile"
+            log="$1/$logFile"
 
             checkOutputNotSameInput "$output" "$projectPath"
             cleanStructure "$output"
