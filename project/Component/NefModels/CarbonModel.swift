@@ -2,7 +2,7 @@
 
 import Foundation
 
-public struct Carbon: Codable, Equatable {
+public struct CarbonModel: Codable, Equatable {
     public let code: String
     public let style: CarbonStyle
     
@@ -121,16 +121,16 @@ extension CarbonStyle.Color {
 public struct CarbonError: Error {
     public let filename: String
     public let snippet: String
-    public let error: CarbonError.Option
+    public let cause: CarbonError.Cause
     
-    public init(filename: String, snippet: String, error: CarbonError.Option) {
+    public init(filename: String, snippet: String, cause: CarbonError.Cause) {
         self.filename = filename
         self.snippet = snippet
-        self.error = error
+        self.cause = cause
     }
     
     // MARK: Error options
-    public enum Option: Error, CustomStringConvertible {
+    public enum Cause: Error, CustomStringConvertible {
         case notFound
         case invalidSnapshot
         

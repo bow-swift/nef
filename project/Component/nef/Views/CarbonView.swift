@@ -49,8 +49,8 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
     private func loadCarbonWebView() {
         loadingView?.show()
         
-        let carbon = Carbon(code: code, style: state)
-        let request = nef.Render.build.carbonURLRequest(withConfiguration: carbon)
+        let carbon = CarbonModel(code: code, style: state)
+        let request = nef.Carbon.request(with: carbon)
         load(request)
     }
     

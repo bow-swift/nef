@@ -6,17 +6,17 @@ public protocol CoreRender {
     func render(content: String) -> String?
 }
 
-protocol Jekyll {
+protocol CoreJekyll {
     func jekyll(permalink: String) -> String
 }
 
-protocol Markdown {
+protocol CoreMarkdown {
     func markdown() -> String
 }
 
 // Dependencies
-extension Node: Jekyll {}
-extension Node: Markdown {}
+extension Node: CoreJekyll {}
+extension Node: CoreMarkdown {}
 
 // MARK: - default Render :: render(content:)
 protocol InternalRender: CoreRender {

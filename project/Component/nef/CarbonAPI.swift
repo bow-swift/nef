@@ -7,37 +7,10 @@ import NefCarbon
 import Bow
 import BowEffects
 
-
-public extension RenderAPI {
+public extension CarbonAPI {
     
-    func carbon(code: String, style: CarbonStyle, outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
-        guard Thread.isMainThread else {
-            fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
-        }
-        
-        let assembler = CarbonAssembler()
-        let window = assembler.resolveWindow()
-        let view = window.contentView!
-        let retainSuccess = { success(); _ = view }
-        let retainFailure = { (output: String) in failure(output); _ = view }
-        
-        carbon(parentView: view,
-               code: code,
-               style: style,
-               outputPath: outputPath,
-               success: retainSuccess, failure: retainFailure)
-    }
-
-    func carbonURLRequest(withConfiguration carbon: Carbon) -> URLRequest { CarbonViewer.urlRequest(from: carbon) }
-    
-    func carbonView(code: String, state: CarbonStyle) -> CarbonView { CarbonWebView(code: code, state: state) }
-}
-
-
-public extension RenderFP where Self: RenderAPI {
-    
-    func carbonIO(carbon: Carbon, toFile output: URL) -> IO<nef.Error, URL>{
-        func runAsync(carbon: Carbon, outputURL: URL) -> IO<nef.Error, URL> {
+    static func render(carbon: CarbonModel, toFile output: URL) -> IO<nef.Error, URL> {
+        func runAsync(carbon: CarbonModel, outputURL: URL) -> IO<nef.Error, URL> {
             IO.async { callback in
                 self.carbon(code: carbon.code,
                             style: carbon.style,
@@ -63,11 +36,43 @@ public extension RenderFP where Self: RenderAPI {
             file <- runAsync(carbon: carbon, outputURL: output),
         yield: file.get)^
     }
+    
+    static func request(with configuration: CarbonModel) -> URLRequest { CarbonViewer.urlRequest(from: configuration) }
+    
+    static func view(with configuration: CarbonModel) -> CarbonView { CarbonWebView(code: configuration.code, state: configuration.style) }
 }
 
 
 // MARK: - Helpers
-internal extension RenderAPI {
+fileprivate extension CarbonAPI {
+    
+    /// Renders a code selection into multiple Carbon images.
+    ///
+    /// - Precondition: this method must be invoked from main thread.
+    ///
+    /// - Parameters:
+    ///   - code: content to generate the snippet.
+    ///   - style: style to apply to exported code snippet.
+    ///   - outputPath: output where to render the snippets.
+    ///   - success: callback to notify if everything goes well.
+    ///   - failure: callback with information to notify if something goes wrong.
+    static func carbon(code: String, style: CarbonStyle, outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+        guard Thread.isMainThread else {
+            fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
+        }
+        
+        let assembler = CarbonAssembler()
+        let window = assembler.resolveWindow()
+        let view = window.contentView!
+        let retainSuccess = { success(); _ = view }
+        let retainFailure = { (output: String) in failure(output); _ = view }
+        
+        carbon(parentView: view,
+               code: code,
+               style: style,
+               outputPath: outputPath,
+               success: retainSuccess, failure: retainFailure)
+    }
     
     /// Renders a code selection into multiple Carbon images.
     ///
@@ -80,11 +85,11 @@ internal extension RenderAPI {
     ///   - outputPath: output where to render the snippets.
     ///   - success: callback to notify if everything goes well.
     ///   - failure: callback with information to notify if something goes wrong.
-    func carbon(parentView: NSView,
-                        code: String,
-                        style: CarbonStyle,
-                        outputPath: String,
-                        success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    static func carbon(parentView: NSView,
+                code: String,
+                style: CarbonStyle,
+                outputPath: String,
+                success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         guard Thread.isMainThread else {
             fatalError("carbon(parentView:code:style:outputPath:success:failure:) should be invoked in main thread")
         }

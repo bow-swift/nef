@@ -4,7 +4,7 @@ import Foundation
 import NefModels
 
 public protocol CarbonDownloader: class {
-    func carbon(withConfiguration configuration: Carbon, filename: String) -> Result<String, CarbonError>
+    func carbon(withConfiguration configuration: CarbonModel, filename: String) -> Result<String, CarbonError>
 }
 
 public struct CarbonGenerator: InternalRender {
@@ -34,7 +34,7 @@ protocol CarbonCodeDownloader {
 
 extension CarbonGenerator: CarbonCodeDownloader {
     func carbon(code: String) -> String {
-        let configuration = Carbon(code: code, style: style)
+        let configuration = CarbonModel(code: code, style: style)
         let result = downloader.carbon(withConfiguration: configuration, filename: output)
         
         switch result {
@@ -44,7 +44,7 @@ extension CarbonGenerator: CarbonCodeDownloader {
         case let .failure(carbonError):
             return """
                     Downloading Carbon snippet for '\(carbonError.filename)' ☓
-                        error: \(carbonError.error)
+                        error: \(carbonError.cause)
                         code snippet:
                             \(carbonError.snippet)
                    """

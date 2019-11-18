@@ -25,6 +25,6 @@ public func renderCarbon(downloader: CarbonDownloader, code content: String, sty
 ///
 /// - Parameter carbon: configuration
 /// - Returns: URL request to carbon.now.sh
-public func carbonURLRequest(from carbon: Carbon) -> URLRequest {
+public func carbonURLRequest(from carbon: CarbonModel) -> URLRequest {
     return CarbonViewer.urlRequest(from: carbon)
 }
