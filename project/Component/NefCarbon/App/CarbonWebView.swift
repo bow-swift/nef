@@ -7,7 +7,7 @@ import NefModels
 /// Carbon view definition
 public protocol CarbonView: NSView {
     var carbonDelegate: CarbonViewDelegate? { get set }
-    func load(carbon: Carbon, filename: String)
+    func load(carbon: CarbonModel, filename: String)
 }
 
 public protocol CarbonViewDelegate: class {
@@ -20,7 +20,7 @@ public protocol CarbonViewDelegate: class {
 class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
 
     private var filename: String?
-    private var carbon: Carbon?
+    private var carbon: CarbonModel?
     private var isCached: Bool = false
     weak var carbonDelegate: CarbonViewDelegate?
     
@@ -33,7 +33,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func load(carbon: Carbon, filename: String) {
+    func load(carbon: CarbonModel, filename: String) {
         self.filename = filename
         self.carbon = carbon
         isCached ? launchCachedRequest() : buildCache()
@@ -42,7 +42,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     // MARK: private methods
     private func buildCache() {
         let style  = CarbonStyle(background: .bow, theme: .dracula, size: .x5, fontType: .firaCode, lineNumbers: true, watermark: true)
-        let carbon = Carbon(code: "", style: style)
+        let carbon = CarbonModel(code: "", style: style)
         let request = CarbonViewer.urlRequest(from: carbon)
         launch(carbonRequest: request)
     }
@@ -62,7 +62,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     
     private func screenshot() {
         guard let filename = filename, let code = carbon?.code else { didFailLoadingCarbonWebView(); return }
-        let screenshotError = CarbonError(filename: filename, snippet: code, error: .invalidSnapshot)
+        let screenshotError = CarbonError(filename: filename, snippet: code, cause: .invalidSnapshot)
         let scale = CGFloat(carbon?.style.size.rawValue ?? 1)
         
         setZoom(in: self, scale: scale)
@@ -100,7 +100,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     }
     
     private func didFailLoadingCarbonWebView() {
-        let error = CarbonError(filename: filename ?? "", snippet: carbon?.code ?? "", error: .notFound)
+        let error = CarbonError(filename: filename ?? "", snippet: carbon?.code ?? "", cause: .notFound)
         carbonDelegate?.didFailLoadCarbon(error: error)
     }
     

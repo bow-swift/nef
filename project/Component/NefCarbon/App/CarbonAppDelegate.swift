@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import AppKit
-import Core
+import NefCore
 
 class CarbonAppDelegate: NSObject, NSApplicationDelegate {
     private let main: (CarbonDownloader) -> Void

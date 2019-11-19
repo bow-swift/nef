@@ -5,7 +5,7 @@ import NefModels
 
 public enum CarbonViewer {
     
-    public static func urlRequest(from carbon: Carbon) -> URLRequest {
+    public static func urlRequest(from carbon: CarbonModel) -> URLRequest {
         let backgroundColorItem = URLQueryItem(name: "bg", value: "\(carbon.style.background)")
         let themeItem = URLQueryItem(name: "t", value: carbon.style.theme.rawValue)
         let windowsThemeItem = URLQueryItem(name: "wt", value: "none")

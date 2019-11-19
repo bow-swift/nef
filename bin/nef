@@ -317,7 +317,7 @@ playground() {
     version=""
     branch=""
     podfile=""
-    carfile=""
+    cartfile=""
 
     while [ "$1" != "" ]; do
         case $2 in
@@ -334,7 +334,7 @@ playground() {
             --bow-version )  shift; version=$1 ;;
             --bow-branch )   shift; branch=$1 ;;
             --podfile )      shift; podfile=$1 ;;
-            --carfile )      shift; carfile=$1 ;;
+            --cartfile )     shift; cartfile=$1 ;;
 
             --use-cache)     printHelpCompile; exit 1 ;;
 
@@ -359,7 +359,7 @@ playground() {
     if [ "${#version}" -gt 0 ]; then
       nef-playground --name "$projectName" --platform "$platform" --bow-version "$version"
     else
-      nef-playground --name "$projectName" --platform "$platform" --bow-branch "$branch" --podfile "$podfile" --carfile "$carfile"
+      nef-playground --name "$projectName" --platform "$platform" --bow-branch "$branch" --podfile "$podfile" --cartfile "$cartfile"
     fi
 
     nefc install  "$projectName.app"

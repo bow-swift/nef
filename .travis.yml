@@ -14,7 +14,7 @@ env:
     - PROJECT="./project/nef.xcodeproj"
     - JOB="XCODE"
     - DEST="arch=x86_64"
-    - SCHEME="Core"
+    - SCHEME="CoreTests"
     - SDK="macosx"
     - ACTION="test"
 

@@ -4,24 +4,35 @@ import PackageDescription
 let package = Package(
     name: "nef",
     platforms: [
-        .macOS(.v10_13),
+        .macOS(.v10_14),
     ],
     products: [
-        .library(name: "nef", targets: ["nef"]),
+        .library(name: "nef",
+                 targets: ["nef",
+                           "NefCore",
+                           "NefModels",
+                           "NefMarkdown",
+                           "NefJekyll",
+                           "NefCarbon"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/bow-swift/bow", from: "0.6.0"),
     ],
     targets: [
-        .testTarget(name: "CoreTests", dependencies: ["Core"], path: "project/Tests/CoreTests"),
-        .target(name: "Core", dependencies: ["NefModels"], path: "project/Core"),
-
-        .target(name: "NefModels", path: "project/Component/NefModels"),
-        .target(name: "NefCarbon", dependencies: ["Core"], path: "project/Component/NefCarbon"),
-        .target(name: "NefJekyll", dependencies: ["Core"], path: "project/Component/NefJekyll"),
-        .target(name: "NefMarkdown", dependencies: ["Core"], path: "project/Component/NefMarkdown"),
-        .target(name: "nef", dependencies: ["NefMarkdown", "NefJekyll", "NefCarbon", "NefModels"], path: "project/Component/nef"),
-
-        .target(name: "Common", path: "project/UI/Common"),
-        .target(name: "Markdown", dependencies: ["Core", "Common", "NefMarkdown"], path: "project/UI/Markdown"),
-        .target(name: "Jekyll", dependencies: ["Core", "Common", "NefJekyll"], path: "project/UI/Jekyll"),
-        .target(name: "Carbon", dependencies: ["Core", "Common", "NefCarbon"], path: "project/UI/Carbon"),
+        .target(name: "NefModels", path: "project/Component/NefModels", publicHeadersPath: "Support Files"),
+        .target(name: "NefCore", dependencies: ["NefModels"], path: "project/Core", publicHeadersPath: "Support Files"),
+        .target(name: "NefMarkdown", dependencies: ["NefCore"], path: "project/Component/NefMarkdown", publicHeadersPath: "Support Files"),
+        .target(name: "NefJekyll", dependencies: ["NefCore"], path: "project/Component/NefJekyll", publicHeadersPath: "Support Files"),
+        .target(name: "NefCarbon", dependencies: ["NefModels", "NefCore"], path: "project/Component/NefCarbon", publicHeadersPath: "Support Files"),
+        
+        .target(name: "nef",
+                dependencies: ["Bow", "BowEffects",
+                               "NefCore",
+                               "NefModels",
+                               "NefMarkdown",
+                               "NefJekyll",
+                               "NefCarbon"],
+                path: "project/Component/nef",
+                publicHeadersPath: "Support Files"),
     ]
 )

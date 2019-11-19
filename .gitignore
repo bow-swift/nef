@@ -2,8 +2,13 @@
 **/.DS_Store
 **/xcuserdata/
 BowPlayground
-/.build
+
+## SPM
+.build
+Package.resolved
 .swiftpm
+bin-cli
+swiftpm
 
 ## Jekyll
 _site

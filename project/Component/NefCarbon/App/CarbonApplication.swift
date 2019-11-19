@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import AppKit
-import Core
+import NefCore
 
 public class CarbonApplication {
     private static let app = NSApplication.shared

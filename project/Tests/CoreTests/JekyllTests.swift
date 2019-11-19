@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import XCTest
-@testable import Core
+@testable import NefCore
 
 class JekyllTests: XCTestCase {
 
@@ -13,7 +13,7 @@ class JekyllTests: XCTestCase {
 
                     """
         let expected = "\n### This is a markup\n"
-        let result = Core.JekyllGenerator(permalink: "").render(content: input)
+        let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -30,7 +30,7 @@ class JekyllTests: XCTestCase {
 
                     """
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
-        let result = Core.JekyllGenerator(permalink: "").render(content: input)
+        let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -41,7 +41,7 @@ class JekyllTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(input)```\n"
-        let result = Core.JekyllGenerator(permalink: "").render(content: input)
+        let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -67,7 +67,7 @@ class JekyllTests: XCTestCase {
 
                        """
 
-        let result = Core.JekyllGenerator(permalink: "permalink").render(content: input)
+        let result = NefCore.JekyllGenerator(permalink: "permalink").render(content: input)
 
         XCTAssertEqual(result, expected)
     }
@@ -93,7 +93,7 @@ class JekyllTests: XCTestCase {
 
                        """
 
-        let result = Core.JekyllGenerator(permalink: "permalink").render(content: input)
+        let result = NefCore.JekyllGenerator(permalink: "permalink").render(content: input)
 
         XCTAssertEqual(result, expected)
     }
