@@ -19,3 +19,8 @@ podfile.lock
 
 ## Carthage
 **Carthage**
+
+## SPM
+.build
+.swiftpm
+swiftpm

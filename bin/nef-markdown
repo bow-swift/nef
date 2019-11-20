@@ -58,7 +58,7 @@ buildMarkdown() {
         echo -ne "${normal}Rendering Markdown files for ${green}$playgroundName${reset}..."
 
         checkOutputNotSameInput "$output" "$projectPath"
-        cleanStructure "$output"
+        resetStructure "$output"
         mkdir -p "$output"
         pagesInPlayground "$playgroundPath"
 
@@ -91,7 +91,7 @@ makeStructure() {
     local logPath="$1/$LOG_PATH"  # parameter `project`
     local outputPath="$2"         # parameter `outputPath`
 
-    cleanStructure "$outputPath/*/*.md"
+    resetStructure "$outputPath/*/*.md"
     mkdir -p "$logPath"
     mkdir -p "$outputPath"
 }

@@ -87,24 +87,6 @@ dependencies() {
 }
 
 ##
-#   isPathFromDependencies(String path): Bool
-#   - Parameter `path`: path to check if it is in dependencies folder
-#   - Return `isDependency` 1 - is a dependency; 0 - another case
-##
-isPathFromDependencies() {
-    local path="$1"  # parameter `path`
-
-    podProject=$(eval echo "\"$path\" | grep '/Pods/' | awk '{ print length; }'")
-    carthageProject=$(eval echo "\"$path\" | grep '/Carthage/' | awk '{ print length; }'")
-
-    if [ "$podProject" != "" ] || [ "$carthageProject" != "" ]; then
-      echo 1
-    else
-      echo 0
-    fi
-}
-
-##
 #   buildDependencies(String folder, String flag)
 #   - Parameter `folder`: path to the project folder.
 #   - parameter `flag`: configuration for building.
@@ -181,7 +163,7 @@ buildCarthage() {
 
     cd "$cartfilePath"
     rm "Cartfile.resolved" 1>/dev/null 2>/dev/null
-    
+
     if [ "$flag" = "$COMPILE_CACHED_DEPENDENCIES" ]; then
         carthage bootstrap --cache-builds --platform $platform 1> "$log" 2>&1
     else
@@ -211,18 +193,18 @@ createEmptyWorkspace() {
     cd "$1"
 
     find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        workspacePath=$(workspaceForProjectPath "$1" "$project")
-        workspaceExtension=$(echo "$workspacePath" | rev | cut -d'.' -f1 | rev)
-        workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
-        workspace="nef.xcworkspace"
-        isDependency=$(isPathFromDependencies "$workspacePath")
+        workspaceWithoutExtension=$(echo "$1/$project" | rev | cut -d'/' -f 2- | cut -d'.' -f 2- | rev)
+        workspaceProj="$workspaceWithoutExtension.xcodeproj"
+        workspace="$workspaceWithoutExtension.xcworkspace"
+        projReference=$(echo "$workspaceProj" | rev | cut -d'/' -f 1 | rev)
+        isDependency=$(isPathFromDependencies "$workspaceWithoutExtension")
 
-        ([ "$workspaceExtension" = "xcworkspace" ] || [ $isDependency -eq 1 ]) && continue
+        ([ $isDependency -eq 1 ] || [ -d "$workspace" ] || ! [ -d "$workspaceProj" ]) && continue
 
         content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
          <Workspace
             version = \"1.0\">
-            <FileRef location = \"container:$workspaceName.xcodeproj\"></FileRef>
+            <FileRef location = \"container:$projReference\"></FileRef>
          </Workspace>"
 
         mkdir "$workspace"
@@ -254,43 +236,37 @@ compile() {
 #   - parameter `flag`: configuration for building.
 ##
 buildProject() {
+    set -e
     cd "$1"          # parameter `folder`
     local flag="$2"  # parameter `flag`
-    local logPath="nef/log"
+    local installed=""
 
-    find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        isDependency=$(isPathFromDependencies "$project")
-        [ $isDependency -eq 1 ] && continue
+    workspacePath=$(getWorkspace "$1")
+    workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | cut -d'.' -f2- | rev)
+    workspaceFolder=$(echo "$workspacePath" | rev | cut -d'/' -f2- | rev)
+    project="$workspaceFolder/$workspaceName.xcodeproj/project.pbxproj"
+    schemeName=$(schemeNameFromProject "$project")
+    sdk=$(sdkForWorkspaceAndScheme "$workspacePath" "$schemeName")
+    log="nef/log/$workspaceName.log"
 
-        # build
-        projectPath=$(echo "$1/$project" | rev | cut -d'/' -f3- | rev)
-        workspace=$(workspaceForProjectPath "$projectPath" "$project")
-        workspaceName=$(echo "$workspace" | cut -d'/' -f 2)
-        schemeName=$(schemeNameFromProject "$project")
-        sdk=$(sdkForWorkspaceAndScheme "$projectPath/$workspace" "$schemeName")
-        log="$logPath/$workspaceName.log"
+    echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
 
-        echo -ne "${reset}Building ${green}$workspaceName${normal} ($schemeName) ..."
+    needBuildProject=$(shouldBuildWorkspace "$workspacePath" "$flag")
+    if [ "$needBuildProject" = "1" ]; then
+        xcodebuild -workspace "$workspacePath" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
+        installed=`grep "BUILD SUCCEEDED" "$log"`
+    else
+        installed="OK!"
+    fi
 
-        needBuildProject=$(shouldBuildWorkspace "$workspace" "$flag")
-        if [ "$needBuildProject" = "1" ]; then
-            set +e
-            xcodebuild -workspace "$projectPath/$workspace" -sdk "$sdk" -scheme "$schemeName" -derivedDataPath "$DERIVED_DATA_DIR" -configuration Debug 1> "$log" 2>&1
-            installed=`grep "BUILD SUCCEEDED" "$log"`
-            set -e
-        else
-            installed="OK!"
-        fi
-
-        if [ "${#installed}" -gt 0 ]; then
-            echo " ✅"
-        else
-            echo " ❌"
-            echo "${bold}${red}error: ${reset}${bold}building $workspaceName${normal}"
-            cat "$log"
-            exit 1
-        fi
-    done
+    if [ "${#installed}" -gt 0 ]; then
+        echo " ✅"
+    else
+        echo " ❌"
+        echo "${bold}${red}error: ${reset}${bold}building $workspaceName${normal}"
+        cat "$log"
+        exit 1
+    fi
 }
 
 ##
@@ -309,29 +285,6 @@ schemeNameFromProject() {
     schemeName2=$(eval cat "\"$project\" | $targetAggregate | $targetName | $removeQuotes")
 
     [ -z "$schemeName1" ] && echo "$schemeName2" || echo "$schemeName1"
-}
-
-##
-#   workspaceForProjectPath(String folder, String projectPath): String
-#   - Parameter `folder`: path to the project folder.
-#   - Parameter `projectPath`: path to the *.pbxproj file.
-#   - Return `workspace` path
-##
-workspaceForProjectPath() {
-    cd "$1"
-    local path="$1"         # parameter `folder`
-    local projectPath="$2"  # parameter `projectPath`
-
-    local xcprojectPath=$(echo "$projectPath" | rev | cut -d'/' -f 2- | rev)
-    local xcprojectNoExtension=$(echo "$xcprojectPath" | rev | cut -d'.' -f 2- | rev)
-
-    if [ -d "nef.xcworkspace" ]; then
-        echo "nef.xcworkspace"
-    elif [ -d "$xcprojectNoExtension.xcworkspace" ]; then
-        echo "$xcprojectNoExtension.xcworkspace"
-    else
-        echo "$xcprojectNoExtension.xcodeproj"
-    fi
 }
 
 ##
@@ -392,33 +345,25 @@ shouldBuildWorkspace() {
 #   - Parameter `folder`: path to the project folder.
 ##
 addPlaygroundReference() {
+    set -e
     cd "$1"
-    local folder="$1"
-    local logPath="`pwd`/nef/log"
-    local pattern="<FileRef"
+    
+    local workspacePath=$(getWorkspace "$1")
+    local workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | cut -d'.' -f2- | rev)
+    local workspaceContent="$workspacePath/contents.xcworkspacedata"
+    local tmp="`pwd`/nef/log/$workspaceName.tmp.workspace"
 
-    playgroundsForProjectPath "$folder"
+    hasPlaygrounds=$(cat "$workspaceContent" | grep '\.playground\"' | wc -c)
+    [ $hasPlaygrounds -ne 0 ] && return
 
-    find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        parentProjectPath=$(echo "$folder/$project" | rev | cut -d'/' -f3- | rev)
-        workspace=$(workspaceForProjectPath "$parentProjectPath" "$project")
-        workspaceExtension=$(echo "$workspace" | rev | cut -d'.' -f1 | rev)
-        workspaceName=$(echo "$workspace" | rev | cut -d'/' -f 1 | rev | cut -d'.' -f 1)
-        workspaceContent="$workspace/contents.xcworkspacedata"
-
-        cd "$parentProjectPath"
-        ! [ "$workspaceExtension" = "xcworkspace" ] && continue
-        grep -q "\.playground\"" "$workspaceContent"; [ $? -eq 0 ] && continue
-
-        for playground in "${playgroundsForProjectPath[@]}"; do
-            playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
-            sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
-        done
-
-        tmp="$logPath/$workspaceName.tmp.workspace"
-        awk '{ gsub("FileRef><FileRef", "FileRef>\n<FileRef") }1' "$workspaceContent" 1> "$tmp"
-        mv "$tmp" "$workspaceContent"
+    playgroundsForProjectPath "$1"
+    for playground in "${playgroundsForProjectPath[@]}"; do
+        playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
+        sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
     done
+
+    awk '{ gsub("FileRef><FileRef", "FileRef>\n<FileRef") }1' "$workspaceContent" 1> "$tmp"
+    mv "$tmp" "$workspaceContent"
 }
 
 ##
@@ -489,6 +434,7 @@ makeHeaders() {
 
     echo "$output"
 }
+
 
 ##
 #   compilePlaygroundPages(String folder)
@@ -666,6 +612,13 @@ cleanCarthage() {
 
 #: MAIN
 set -e
+
+# Load common nef library
+commonNefLibName="nef-common"
+commonNefLibPath=$(which "$commonNefLibName")
+source "$commonNefLibPath"
+
+# Menu
 checkArguments $@
 
 root=`pwd`
@@ -673,6 +626,12 @@ if [ -d "$root/$2" ]; then
   projectPath="$root/$2"
 else
   projectPath="$2"
+fi
+
+# MAIN
+if ! [ -d "$projectPath" ]; then
+    echo "${bold}${red}error: ${normal} project '$projectPath' is not a valid nef playground. Please, review the path.${reset}"
+    exit 1
 fi
 
 if [ $1 = "$COMPILE" ]; then
