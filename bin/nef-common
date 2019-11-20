@@ -8,10 +8,8 @@
 playgrounds() {
     local root="$1"   # parameter `folder`
 
-    workspacesForProjectPath "$1"
-    checkIsWorkspaceValid "$workspacesForProjectPath"
-    local workspacePath=$(echo "$workspacesForProjectPath" | rev | cut -d'/' -f 2- | rev)
-    local content="$workspacesForProjectPath/contents.xcworkspacedata"
+    local workspacePath=$(getWorkspace "$1")
+    local content="$workspacePath/contents.xcworkspacedata"
 
     local dependencies="awk -F'location = \"group:' '{print \$2}'"
     local cleanUp="rev | cut -d'\"' -f 2- | rev | grep playground"
@@ -23,9 +21,9 @@ playgrounds() {
     # build playground path
     playgroundsPaths=()
     for playground in "${playgrounds[@]}"; do
-        if [ -d "$workspacePath/$playground" ]; then # is it relative path?
-            playgroundsPaths+=("$workspacePath/$playground")
-        elif [ -d "$playground" ]; then     # is it a absolute path?
+        if [ -d "$workspacePath/../$playground" ]; then # is it relative path?
+            playgroundsPaths+=("$workspacePath/../$playground")
+        elif [ -d "$playground" ]; then                 # is it a absolute path?
             playgroundsPaths+=("$playground")
         else
             echo " ❌"
@@ -83,10 +81,10 @@ pagesInPlayground() {
 }
 
 ##
-#   cleanStructure(String folder)
+#   resetStructure(String folder)
 #   - Parameter `folder`: path to the folder to clean up.
 ##
-cleanStructure() {
+resetStructure() {
   set +e
   local folder="$1"  # parameter `folder`
   rm -rf $folder 1>/dev/null 2>/dev/null
@@ -178,15 +176,50 @@ checkOutputNotSameInput() {
   fi
 }
 
+##
+#   getWorkspace(String folder, String projectPath) throws : String
+#   - Parameter `folder`: path to the project folder.
+#   - Return an valid `workspace` path given a project path
+##
+getWorkspace() {
+    _workspacesForProjectPath "$1"
+    for workspacePath in "${workspacesForProjectPath[@]}"; do
+        isDependency=$(isPathFromDependencies "$workspacePath")
+        [ $isDependency -eq 1 ] && continue
+        echo "$workspacePath"
+        return
+    done
+
+    echo "[!] error: not found any valid workspace in root project '$1'"
+    exit 1
+}
+
+##
+#   _isPathFromDependencies(String path): Bool
+#   - Parameter `path`: path to check if it is in dependencies folder
+#   - Return `isDependency` 1 - is a dependency; 0 - another case
+##
+isPathFromDependencies() {
+    podProject=$(eval echo "\"$1\" | grep '/Pods/' | awk '{ print length; }'")
+    carthageProject=$(eval echo "\"$1\" | grep '/Carthage/' | awk '{ print length; }'")
+
+    if [ "$podProject" != "" ] || [ "$carthageProject" != "" ]; then
+      echo 1
+    else
+      echo 0
+    fi
+}
+
+
 ###: - Internal methods
 
 ##
-#   workspacesForProjectPath(String folder, String projectPath): String
+#   workspacesForProjectPath(String folder): String
 #   - Parameter `folder`: path to the project folder.
 #   - Parameter `projectPath`: path to the *.pbxproj file.
 #   - Return `workspaces` path given a project path
 ##
-workspacesForProjectPath() {
+_workspacesForProjectPath() {
     local path="$1"         # parameter `folder`
     local log="$1/$LOG_PATH/workspace.log"
     cd "$path"
@@ -195,7 +228,7 @@ workspacesForProjectPath() {
     while read -r -d $'\0' project; do
         projectPath=$(echo "$path/$project" | rev | cut -d'/' -f3- | rev)
         projectName=$(echo "$project" | rev | cut -d'/' -f 2 | rev)
-        workspacePath=$(workspaceForProjectPath "$projectPath" "$projectName")
+        workspacePath=$(_workspaceForProjectPath "$projectPath" "$projectName")
         workspaceExtension=$(echo "$workspacePath" | rev | cut -d'.' -f1 | rev)
         workspaceContent="$workspacePath/contents.xcworkspacedata"
         (! [ "$workspaceExtension" = "xcworkspace" ] || ! [ -f "$workspaceContent" ]) && continue
@@ -206,35 +239,19 @@ workspacesForProjectPath() {
     declare -p workspacesForProjectPath 1>/dev/null 2>/dev/null
 }
 
-checkIsWorkspaceValid() {
-    local workspacesPaths="$1"
-    local numberOfWorkspaces=${#workspacesPaths[@]}
-
-    if [ "$numberOfWorkspaces" -gt 1 ]; then
-        echo "[!] error: found more than 1 workspace (total:$numberOfWorkspaces): '$workspacesPaths'" > "$log"
-        exit 1
-    elif [ "$numberOfWorkspaces" -eq 0 ] || ! [ -d $workspacesPaths ]; then
-        echo "[!] error: not found any workspace in root project '$workspacesPaths'" > "$log"
-        exit 1
-    fi
-}
-
 ##
-#   workspacePathForProjectPath(String projectPath, String projectName): String
+#   _workspaceForProjectPath(String projectPath, String projectName): String
 #   - Parameter `projectPath`: path to the project folder.
 #   - Parameter `projectName`: *.pbxproj filename.
 #   - Return `workspaceName`
 ##
-workspaceForProjectPath() {
+_workspaceForProjectPath() {
     cd "$1"
     local xcprojectNoExtension=$(echo "$2" | rev | cut -d'.' -f 2- | rev )
-    local nefWorkspace="`pwd`/nef.xcworkspace"
     local xcprojectWorkspace="`pwd`/$xcprojectNoExtension.xcworkspace"
     local xcproject="`pwd`/$xcprojectNoExtension.xcodeproj"
 
-    if [ -d "$nefWorkspace" ]; then
-        echo "$nefWorkspace"
-    elif [ -d "$xcprojectWorkspace" ]; then
+    if [ -d "$xcprojectWorkspace" ]; then
         echo "$xcprojectWorkspace"
     else
         echo "$xcproject"

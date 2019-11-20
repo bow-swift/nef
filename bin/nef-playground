@@ -61,7 +61,6 @@ setDependency() {
       checkCocoaPods
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setCocoaPodsDependency "$projectFolder" "$projectName" "$platform" "$podfile"
-      setDefaultWorkspace "$projectFolder"
   elif [ "$cartfile" != "" ] && [ -f "$cartfile" ]; then
       checkCarthage
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "carthage"
@@ -70,13 +69,13 @@ setDependency() {
       checkCocoaPods
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setBowBranchDependency "$projectFolder" "$projectName" "$platform" "$branch"
-      setDefaultWorkspace "$projectFolder"
   else # version
       checkCocoaPods
       setPlaygroundPlatform "$projectFolder" "$projectName" "$platform" "cocoapods"
       setBowVersionDependency "$projectFolder" "$projectName" "$platform" "$version"
-      setDefaultWorkspace "$projectFolder"
   fi
+
+  configureLauncher "$projectFolder" "$projectName"
 }
 
 setCarthageDependency() {
@@ -157,15 +156,19 @@ setBowVersionDependency() {
     fi
 }
 
-setDefaultWorkspace() {
-    local projectFolder="$1" # parameter `projectFolder`
-    podfilePath="$projectFolder/Podfile"
+configureLauncher() {
+    cd "$1"
+    local projectName="$2"   # parameter `projectName`
 
-    ! [ -f "$podfilePath" ] && continue
+    launcherName="launcher"
+    launcher=""
 
-    echo -ne "${normal}Updating podfile with ${green}default workspace${reset}..."
-    echo "workspace 'nef'" >> $podfilePath
-    echo " ✅"
+    while read -r -d $'\0' path; do
+      launcher="`pwd`/$path"
+    done < <(find . -name $launcherName -print0)
+
+    [ "$launcher" = "" ] && return
+    sed -i '' "1,/{{nef}}/s/{{nef}}/$projectName/" "$launcher"
 }
 
 ##
@@ -334,6 +337,12 @@ clean() {
 #: - MAIN
 set -e
 
+# Load common nef library
+commonNefLibName="nef-common"
+commonNefLibPath=$(which "$commonNefLibName")
+source "$commonNefLibPath"
+
+# Menu
 root=`pwd`
 projectName="$DEFAULT_PLAYGROUND"
 version=$(lastestBowVersion)
@@ -359,11 +368,13 @@ while [ "$1" != "" ]; do
     shift
 done
 
+# Fixes paths
 projectName="$projectName"
 project="$root/$projectName.app"
 projectFolder="$project/Contents/MacOS"
-cartfilePath="$root/$cartfile"
-podfilePath="$root/$podfile"
+cartfilePath=$(absoluteFilePath "$root" "$cartfile")
+podfilePath=$(absoluteFilePath "$root" "$podfile")
 
+# MAIN
 playground "$project" "$projectFolder" "$projectName"
 setDependency "$projectFolder" "$projectName" "$platform" "$version" "$branch" "$cartfilePath" "$podfilePath"

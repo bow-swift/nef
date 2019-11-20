@@ -91,7 +91,7 @@ buildCarbon() {
         echo "${normal}Downloading Carbon's snippets for ${green}$playgroundName${reset}"
 
         checkOutputNotSameInput "$output" "$projectPath"
-        cleanStructure "$output"
+        resetStructure "$output"
         mkdir -pv "$output"
         pagesInPlayground "$playgroundPath"
 
@@ -125,7 +125,7 @@ makeStructure() {
     local logPath="$1/$LOG_PATH"  # parameter `project`
     local outputPath="$2"         # parameter `outputPath`
 
-    cleanStructure "$outputPath/*/*.png"
+    resetStructure "$outputPath/*/*.png"
     mkdir -p "$logPath"
     mkdir -p "$outputPath"
 }
