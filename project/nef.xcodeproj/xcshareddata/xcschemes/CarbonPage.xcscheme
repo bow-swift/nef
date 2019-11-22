@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-               BuildableName = "CarbonPage"
+               BuildableName = "nef-carbon-page"
                BlueprintName = "CarbonPage"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-            BuildableName = "CarbonPage"
+            BuildableName = "nef-carbon-page"
             BlueprintName = "CarbonPage"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B0CA51522AE669600181BC0"
-            BuildableName = "CarbonPage"
+            BuildableName = "nef-carbon-page"
             BlueprintName = "CarbonPage"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>

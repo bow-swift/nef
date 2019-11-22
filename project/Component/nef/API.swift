@@ -10,6 +10,7 @@ import BowEffects
 public enum Markdown: MarkdownAPI {}
 public enum Jekyll: JekyllAPI {}
 public enum Carbon: CarbonAPI {}
+public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
 
 public protocol MarkdownAPI {
@@ -20,7 +21,7 @@ public protocol MarkdownAPI {
     /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - file: output where to write the Markdown render (path to the file without extension).
-    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `PageError` and values with the file generated of type `URL`.
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `nef.Error` and values with the file generated of type `URL`.
     static func render(content: String, toFile file: URL) -> IO<nef.Error, URL>
 }
 
@@ -33,7 +34,7 @@ public protocol JekyllAPI {
     ///   - content: content page in Xcode playground.
     ///   - file: output where to write the Markdown render (path to the file without extension).
     ///   - permalink: website relative url where locate the page.
-    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `PageError` and values with the file generated of type `URL`.
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `nef.Error` and values with the file generated of type `URL`.
     static func render(content: String, toFile file: URL, permalink: String) -> IO<nef.Error, URL>
 }
 
@@ -45,7 +46,7 @@ public protocol CarbonAPI {
     /// - Parameters:
     ///   - carbon: content+style to generate code snippet.
     ///   - file: output where to render the snippets (path to the file without extension).
-    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `CarbonError.Cause` and values with the file generated of type `URL`.
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `nef.Error` and values with the file generated of type `URL`.
     static func render(carbon: CarbonModel, toFile file: URL) -> IO<nef.Error, URL>
     
     /// Get an URL Request given a carbon configuration
@@ -59,4 +60,15 @@ public protocol CarbonAPI {
     /// - Parameter carbon: configuration
     /// - Returns: NSView
     static func view(with configuration: CarbonModel) -> CarbonView
+}
+
+public protocol SwiftPlaygroundAPI {
+    /// Renders a Swift Package content into Swift Playground compatible to iPad.
+    ///
+    /// - Parameters:
+    ///   - package: content to Swift Package
+    ///   - name: name for the output Swift Playground
+    ///   - output: folder where to write the Swift Playground
+    /// - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the Swift Playground output of type `URL`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, URL>`.
+    static func render(package: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL>
 }

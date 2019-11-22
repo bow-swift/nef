@@ -7,4 +7,5 @@ public enum Error: Swift.Error {
     case jekyll
     case carbon
     case invalidSnapshot
+    case swiftPlaygrond
 }
