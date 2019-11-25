@@ -16,7 +16,7 @@ public struct SwiftPlayground {
         self.resolvePath = ResolvePath(projectName: name, outputPath: output.path)
     }
     
-    public func build(cached: Bool) -> EnvIO<Console, SwiftPlaygroundError, Void> {
+    public func build(cached: Bool) -> EnvIO<iPadApp, SwiftPlaygroundError, Void> {
         fatalError()
     }
 }

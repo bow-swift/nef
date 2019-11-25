@@ -12,6 +12,7 @@ extension SwiftPlaygroundAPI {
     public static func render(package: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
         NefSwiftPlayground.SwiftPlayground(packageContent: package, name: name, output: output)
                           .build(cached: true)
+                          .contramap { console in iPadApp(console: console, storage: MacFileSystem()) }^
                           .map { _ in output }^
                           .mapError { _ in .swiftPlaygrond }^
     }

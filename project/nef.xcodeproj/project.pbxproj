@@ -75,6 +75,11 @@
 		8BD4E363238837C6002DECDB /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E362238837C6002DECDB /* Bow */; };
 		8BD4E365238837C6002DECDB /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E364238837C6002DECDB /* BowEffects */; };
 		8BD4E367238837C6002DECDB /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E366238837C6002DECDB /* Swiftline */; };
+		8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
+		8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
+		8BD6F707238C268E00DD93C4 /* iPadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* iPadApp.swift */; };
+		8BD6F70A238C278D00DD93C4 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F709238C278D00DD93C4 /* String+Path.swift */; };
+		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -311,6 +316,11 @@
 		8BD4E33623881F9F002DECDB /* ResolvePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolvePath.swift; sourceTree = "<group>"; };
 		8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPlaygroundError.swift; sourceTree = "<group>"; };
 		8BD4E33A2388233D002DECDB /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
+		8BD6F6FF238C253700DD93C4 /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
+		8BD6F702238C256700DD93C4 /* FileSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemError.swift; sourceTree = "<group>"; };
+		8BD6F704238C259100DD93C4 /* MacFileSytem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacFileSytem.swift; sourceTree = "<group>"; };
+		8BD6F706238C268E00DD93C4 /* iPadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadApp.swift; sourceTree = "<group>"; };
+		8BD6F709238C278D00DD93C4 /* String+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
 		8BF75F8522CA71E700EC53A1 /* nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCarbon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -425,6 +435,7 @@
 				8B89BA0C238300A80025BC04 /* JekyllAPI.swift */,
 				8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */,
 				8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */,
+				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
 				8B75AF9523805B3400388B1C /* Models */,
 				8B75AF9223805B1900388B1C /* Views */,
 				8B3CB83B22D3929B00919F36 /* Support Files */,
@@ -694,7 +705,10 @@
 			isa = PBXGroup;
 			children = (
 				8BD4E33023881946002DECDB /* SwiftPlayground.swift */,
+				8BD6F6FE238C252F00DD93C4 /* Algrebras */,
 				8BD4E33523881F88002DECDB /* Models */,
+				8BD6F701238C255200DD93C4 /* Errors */,
+				8BD6F708238C278200DD93C4 /* Utils */,
 				8BD4E325238817D3002DECDB /* Support Files */,
 			);
 			path = NefSwiftPlayground;
@@ -713,9 +727,34 @@
 			isa = PBXGroup;
 			children = (
 				8BD4E33623881F9F002DECDB /* ResolvePath.swift */,
-				8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */,
+				8BD6F706238C268E00DD93C4 /* iPadApp.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		8BD6F6FE238C252F00DD93C4 /* Algrebras */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6F6FF238C253700DD93C4 /* FileSystem.swift */,
+			);
+			path = Algrebras;
+			sourceTree = "<group>";
+		};
+		8BD6F701238C255200DD93C4 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */,
+				8BD6F702238C256700DD93C4 /* FileSystemError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		8BD6F708238C278200DD93C4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6F709238C278D00DD93C4 /* String+Path.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1044,7 +1083,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "47 Degrees";
 				TargetAttributes = {
 					8B0CA51522AE669600181BC0 = {
@@ -1240,7 +1279,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD6F707238C268E00DD93C4 /* iPadApp.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
+				8BD6F70A238C278D00DD93C4 /* String+Path.swift in Sources */,
+				8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */,
+				8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */,
 				8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */,
 				8BD4E33723881F9F002DECDB /* ResolvePath.swift in Sources */,
 			);
@@ -1250,6 +1293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
 				8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */,
@@ -1899,6 +1943,7 @@
 		8BD4E30F238814B1002DECDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
@@ -1910,6 +1955,7 @@
 		8BD4E310238814B1002DECDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
