@@ -36,7 +36,7 @@
 
 ## 💻 Installation
 
-📟 **Using** [**Homebrew**](https://github.com/bow-swift/homebrew-nef) (preferred)
+#### 📟 Using [Homebrew](https://github.com/bow-swift/homebrew-nef) (preferred)
 
 > It will warn you if there is a missing dependency and will provide guidance to install it.
 
@@ -44,7 +44,7 @@
 <img src="assets/nef-installation.gif">
 </p>
 
-📦 **Using** [**Swift Package Manager**](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
+#### 📦 Using [Swift Package Manager](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
 
 `nef` can be consumed as a library in your **macOS project**.
 
@@ -56,7 +56,7 @@
 
 &nbsp;
 
-🔌 **Using** [**Xcode Editor Extension**](https://github.com/bow-swift/nef-plugin)
+#### 🔌 Using [Xcode Editor Extension](https://github.com/bow-swift/nef-plugin)
 
 Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8).
 
