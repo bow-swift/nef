@@ -45,6 +45,9 @@ options:
 
     nested_options:
 
+        - title: How to use nef library?
+          url: /docs/tutorials/how-to-use-nef-library-/
+
         - title: First Steps with Carbon
           url: /docs/tutorials/first-steps-with-carbon/
 

@@ -3,7 +3,7 @@ layout: docs
 permalink: /docs/integration/jekyll/
 ---
 
-## 🖥 Generating Markdown files for Jekyll
+## 🌐 Generating Markdown files for Jekyll
  As you can write comments in [Markdown](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html) in Xcode Playgrounds, this makes very suitable to write documentation with compilable examples.
  Leveraging this, `nef` can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:
  
