@@ -6,6 +6,11 @@ import BowEffects
 public struct Step {
     public let total: Int
     public let partial: Int
+    
+    public init(total: Int, partial: Int) {
+        self.total = total
+        self.partial = partial
+    }
 }
 
 public protocol Console {

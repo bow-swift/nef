@@ -12,6 +12,10 @@ extension ResolvePath {
     private var buildFolder: String { "\(nefFolder)/build"}
     
     var projectPath: String { "\(outputPath)/\(projectName)" }
+    
+    var packagePath: String { "\(projectPath)/Package.swift" }
+    var packageResolvedPath: String { "\(projectPath)/Package.resolved" }
+    
     var nefPath: String { "\(projectPath)/\(nefFolder)"}
     var buildPath: String { "\(projectPath)/\(buildFolder)"}
     var checkoutPath: String { "\(projectPath)/nef/build/checkouts" }

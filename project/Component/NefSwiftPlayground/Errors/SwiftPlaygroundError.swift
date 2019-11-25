@@ -3,6 +3,7 @@
 import Foundation
 
 public enum SwiftPlaygroundError: Error {
+    case clean(item: String)
     case structure
     case package(packagePath: String)
     case checkout
@@ -11,6 +12,8 @@ public enum SwiftPlaygroundError: Error {
     
     public var information: String {
         switch self {
+        case .clean(let item):
+            return "could not clean item at '\(item)'"
         case .structure:
             return "could not create project structure"
         case .package(let path):
