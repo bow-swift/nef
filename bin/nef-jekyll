@@ -75,8 +75,8 @@ buildMicrosite() {
             permalink="/$BASE_JEKYLL/$playgroundName/$pageName/"
 
             #clean up - jekyll folders without any whitespace
-            output=`echo "$output" | tr -s ' ' '-' | awk '{print tolower($0)}'`
-            permalink=`echo "$permalink" | tr -s ' ' '-' | awk '{print tolower($0)}'`
+            output=`echo "$output" | tr -s '?' '-' | tr -s ' ' '-' | awk '{print tolower($0)}'`
+            permalink=`echo "$permalink" | tr -s '?' '-' | tr -s ' ' '-' | awk '{print tolower($0)}'`
 
             logFile="$LOG_PATH/$playgroundName-$pageName.log"
             log="$1/$logFile"

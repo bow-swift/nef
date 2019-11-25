@@ -5,7 +5,10 @@
 <img src="https://travis-ci.org/bow-swift/nef.svg?branch=develop">
 </a>
 <a href="https://github.com/bow-swift/nef">
-<img src="https://img.shields.io/badge/platform-iOS%20%7C%20macOS-orange.svg" alt="Platforms">
+<img src="https://img.shields.io/badge/platform-macOS-orange" alt="Platforms">
+</a>
+<a href="https://github.com/bow-swift/nef">
+<img src="https://img.shields.io/badge/dependency%20manager-CocoaPods%20%7C%20Carthage-orange" alt="CocoaPods+Carthage compatible">
 </a>
 <a href="https://gitter.im/bowswift/bow">
 <img src="https://img.shields.io/badge/gitter-nef-blueviolet.svg" alt="Gitter">
@@ -13,21 +16,11 @@
 
 </p>
 
-`nef`, short for [Nefertiti](https://en.wikipedia.org/wiki/Nefertiti), mother of Ankhesenamun, is a command line tool to ease the creation of documentation in the form of Xcode Playgrounds. It provides compile-time verification of documentation, exports it in Markdown format that can be consumed by [Jekyll](https://jekyllrb.com/) to generate websites, and export [Carbon](https://carbon.now.sh/) snippets for given Xcode Playground.
+`nef`, short for [Nefertiti](https://en.wikipedia.org/wiki/Nefertiti), mother of Ankhesenamun, is a toolset to ease the **creation of documentation** in the form of Xcode Playgrounds. It provides compile-time **verification** of documentation, exports it in **Markdown** format that can be consumed by [Jekyll](https://jekyllrb.com/) to generate websites, and export [Carbon](https://carbon.now.sh/) snippets for a given Xcode Playground.
 
 `nef` is inspired by [ΛNK](https://github.com/arrow-kt/ank) for Kotlin and [tut](https://github.com/tpolecat/tut) for Scala.
 
-## 📥 Installation
-
-`nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. It will warn you if there is a missing dependency and will provide guidance to install it.
-
-<p align="center">
-<img src="assets/nef-installation.gif">
-</p>
-
-## 🌟 Features
-
-`nef` highlights the following features:
+### Features
 
 💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-xcode-playground).
 
@@ -41,6 +34,36 @@
 
 &nbsp;
 
+## 💻 Installation
+
+#### 📟 Using [Homebrew](https://github.com/bow-swift/homebrew-nef) (preferred)
+
+> It will warn you if there is a missing dependency and will provide guidance to install it.
+
+<p align="center">
+<img src="assets/nef-installation.gif">
+</p>
+
+#### 📦 Using [Swift Package Manager](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
+
+`nef` can be consumed as a library in your **macOS project**.
+
+```swift
+.package(url: "https://github.com/bow-swift/nef.git", from: "{version}")
+```
+
+> You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/tutorials/how-to-use-nef-library-/).
+
+&nbsp;
+
+#### 🔌 Using [Xcode Editor Extension](https://github.com/bow-swift/nef-plugin)
+
+Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8).
+
+&nbsp;
+
+## Usage
+
 ### 📃 Creating an Xcode Playground
 
 Xcode Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make the creation of an Xcode Playground easier with support for one or more libraries.
@@ -51,18 +74,28 @@ By default, `nef` can create an Xcode Playground with support for [Bow](http://b
 ➜ nef playground
 ```
 
+<p align="center">
+<img src="assets/nef-playground.png" height="100">
+</p>
+
 And you can use the following option to specify the name for the Xcode project that you are creating:
 
 ```bash
 ➜ nef playground --name LatestBowProject
 ```
 
-It will create an Xcode project with support for the latest available version of Bow, named `BowPlayground`. If you open this Xcode project, you will have an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
+It will create an Xcode project with support for the latest available version of Bow, named `LatestBowProject`. If you open this `nef playground`, you will have an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
+
+By default, `nef playground` will be created for iOS platform. If you need to change it, you can use the `--platform` option.
+
+```bash
+➜ nef playground --platform osx
+```
 
 ###
 
 <details>
-<summary>You can select any different Bow version or branch, even a third-party dependency</summary>
+<summary>📣 You can select any different Bow version or branch, even a third-party dependency</summary>
 
 ###
 
@@ -86,7 +119,7 @@ It will create an Xcode project with support for the latest available version of
 
 ##
 
-- `--podfile <Podfile>`: Specify a Podfile with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
+- `--podfile <Podfile>`: Specify a **Podfile** with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
 
 Your `Podfile`, located in `./folder/dependencies`:
 
@@ -101,6 +134,20 @@ end
 
 ```bash
 ➜ nef playground --name MyPodsProject --podfile ./folder/dependencies/Podfile
+```
+
+##
+
+- `--cartfile <Cartfile>`: Specify a **Cartfile** with your dependencies. Create a `Cartfile` listing your dependencies and pass it to `nef`. Example:
+
+Your `Cartfile`, located in `./folder/dependencies`:
+
+```ruby
+github "bow-swift/Bow"
+```
+
+```bash
+➜ nef playground --name MyCarthageProject --cartfile ./folder/dependencies/Cartfile
 ```
 
 </details>
@@ -159,7 +206,7 @@ Options:
 
 &nbsp;
 
-### 🖥 Generating Markdown files for Jekyll
+### 🌐 Generating Markdown files for Jekyll
 
 As you can write comments in [Markdown](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html) in Xcode Playgrounds, this makes it very suitable to write documentation with compilable examples.
 Leveraging this, `nef` can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:
@@ -177,7 +224,7 @@ Options:
 ###
 
 <details>
-<summary>How to setup an Xcode Playgroud for Jekyll?</summary>
+<summary>📣 How to setup an Xcode Playgroud for Jekyll?</summary>
 
 ###
 
@@ -224,7 +271,7 @@ Options:
 ###
 
 <details>
-<summary>You can customize the output with the next commands</summary>
+<summary>📣 You can customize the output with the next commands</summary>
 
 ###
 <table>

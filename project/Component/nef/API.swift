@@ -12,30 +12,6 @@ public enum Jekyll: JekyllAPI {}
 public enum Carbon: CarbonAPI {}
 
 
-public protocol CarbonAPI {
-    /// Renders a code selection into Carbon image.
-    ///
-    /// - Precondition: this method must be invoked from background thread.
-    ///
-    /// - Parameters:
-    ///   - carbon: content+style to generate code snippet.
-    ///   - file: output where to render the snippets (path to the file without extension).
-    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `CarbonError.Cause` and values with the file generated of type `URL`.
-    static func render(carbon: CarbonModel, toFile file: URL) -> IO<nef.Error, URL>
-    
-    /// Get an URL Request given a carbon configuration
-    ///
-    /// - Parameter carbon: configuration
-    /// - Returns: URL request to carbon.now.sh
-    static func request(with configuration: CarbonModel) -> URLRequest
-    
-    /// Get a NSView given a carbon configuration
-    ///
-    /// - Parameter carbon: configuration
-    /// - Returns: NSView
-    static func view(with configuration: CarbonModel) -> CarbonView
-}
-
 public protocol MarkdownAPI {
     /// Renders content into Markdown file.
     ///
@@ -59,4 +35,28 @@ public protocol JekyllAPI {
     ///   - permalink: website relative url where locate the page.
     /// - Returns: An `IO` to perform IO operations that produce carbon error of type `PageError` and values with the file generated of type `URL`.
     static func render(content: String, toFile file: URL, permalink: String) -> IO<nef.Error, URL>
+}
+
+public protocol CarbonAPI {
+    /// Renders a code selection into Carbon image.
+    ///
+    /// - Precondition: this method must be invoked from background thread.
+    ///
+    /// - Parameters:
+    ///   - carbon: content+style to generate code snippet.
+    ///   - file: output where to render the snippets (path to the file without extension).
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `CarbonError.Cause` and values with the file generated of type `URL`.
+    static func render(carbon: CarbonModel, toFile file: URL) -> IO<nef.Error, URL>
+    
+    /// Get an URL Request given a carbon configuration
+    ///
+    /// - Parameter carbon: configuration
+    /// - Returns: URL request to carbon.now.sh
+    static func request(with configuration: CarbonModel) -> URLRequest
+    
+    /// Get a NSView given a carbon configuration
+    ///
+    /// - Parameter carbon: configuration
+    /// - Returns: NSView
+    static func view(with configuration: CarbonModel) -> CarbonView
 }

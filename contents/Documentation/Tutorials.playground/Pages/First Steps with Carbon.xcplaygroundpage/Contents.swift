@@ -22,13 +22,15 @@ In this tutorial, we assume you do not have any project, and we will follow up f
  ```bash
  ➜ nef playground --name TutorialCarbon
  ```
+ 
+  ![](/assets/nef-playground.png)
  */
 
 /*:
  &nbsp;
  ### 2. Add content to Xcode Playground
  
- Great! Go to `TutorialCarbon` and open its `xcworkspace`. It is an easy view where to see the future Playgrounds you will be creating and their pages.
+ Great! Open `TutorialCarbon.app` playground. It is an easy view where to see the future Playgrounds you will be creating and their pages.
  
  ![](/assets/nef-playground-view.png)
  
