@@ -12,7 +12,7 @@ Nef.Playground.needsIndefiniteExecution(false)
 /*:
  ## How to use `nef` library?
  
- As you know, from Xcode 11, you can integrate package dependencies using SPM to share code between projects or even use third-party libraries. You can read more about it in Apple's article [Adding package dependencies to your app](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
+ As you know, from Xcode 11, you can integrate package dependencies using Swift Package Manager (SPM) to share code between projects or even use third-party libraries. You can read more about it in Apple's article [Adding package dependencies to your app](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
 
  In `nef` [version 0.4](https://github.com/bow-swift/nef/releases/tag/0.4.0), we have modularized the core so that you can use nef as in CLI as in your macOS projects. Taking advantage of the integration of SPM in Xcode, you can easily import `nef` in your project.
  
@@ -42,7 +42,7 @@ If you need to render the content of a Playground page, or anything else that co
  
  ### Jekyll
  
- When you need to render a content that combine Markdown, code, and [**nef commands**](https://github.com/bow-swift/nef#-generating-markdown-files-for-jekyll) with the Jekyll style.
+ When you need to render content that combines Markdown, code, and [**nef commands**](https://github.com/bow-swift/nef#-generating-markdown-files-for-jekyll) with the Jekyll style.
  
  ```swift
  nef.Jekyll.render(content: String, toFile file: URL, permalink: String) -> IO<nef.Error, URL>
@@ -57,7 +57,7 @@ If you need to render the content of a Playground page, or anything else that co
  ```
  
  
- You can find anothers helpers for drawing `Views` with a Carbon style.
+ You can find other helpers for drawing `Views` with a Carbon style.
  
  ```swift
  nef.Carbon.view(with configuration: CarbonModel) -> CarbonView
@@ -69,7 +69,7 @@ If you need to render the content of a Playground page, or anything else that co
 /*:
  ## Usage
  
- In this section, we will see how we can use the nef's API. As an example, we will take advantage of the `Carbon API`.
+ In this section, we will see how we can use the nef API. As an example, we will take advantage of the `Carbon API`.
 
  Firstly, we need to create a model with Carbon configuration and the style.
  ```swift
