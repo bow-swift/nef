@@ -55,6 +55,8 @@
 		8B3CB8C822D3987500919F36 /* CoreCarbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* CoreCarbon.swift */; };
 		8B46C406238D453F00437659 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C405238D453F00437659 /* Bow */; settings = {ATTRIBUTES = (Required, ); }; };
 		8B46C408238D453F00437659 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C407238D453F00437659 /* BowEffects */; settings = {ATTRIBUTES = (Required, ); }; };
+		8B46C40B238D689F00437659 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C409238D689800437659 /* Module.swift */; };
+		8B46C40E238D75A400437659 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C40C238D71C900437659 /* Package.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonView.swift */; };
@@ -291,6 +293,8 @@
 		8B3CB8B122D394E600919F36 /* MarkdownTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownTests.swift; sourceTree = "<group>"; };
 		8B3CB8C722D3987500919F36 /* CoreCarbon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreCarbon.swift; sourceTree = "<group>"; };
 		8B424B1F224E28FC00AF9010 /* nef-markdown-page */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-markdown-page"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B46C409238D689800437659 /* Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		8B46C40C238D71C900437659 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B646F94237D71C50009AB43 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
@@ -722,8 +726,10 @@
 		8BD4E33523881F88002DECDB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8BD4E33623881F9F002DECDB /* ResolvePath.swift */,
 				8BD6F706238C268E00DD93C4 /* iPadApp.swift */,
+				8B46C409238D689800437659 /* Module.swift */,
+				8B46C40C238D71C900437659 /* Package.swift */,
+				8BD4E33623881F9F002DECDB /* ResolvePath.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -748,8 +754,8 @@
 		8BD6F708238C278200DD93C4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				8BD6F709238C278D00DD93C4 /* String+Path.swift */,
 				8BD6F70C238C495600DD93C4 /* IO+Console.swift */,
+				8BD6F709238C278D00DD93C4 /* String+Path.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1275,9 +1281,11 @@
 			files = (
 				8BD6F707238C268E00DD93C4 /* iPadApp.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
+				8B46C40B238D689F00437659 /* Module.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
 				8BD6F70A238C278D00DD93C4 /* String+Path.swift in Sources */,
 				8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */,
+				8B46C40E238D75A400437659 /* Package.swift in Sources */,
 				8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */,
 				8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */,
 				8BD4E33723881F9F002DECDB /* ResolvePath.swift in Sources */,

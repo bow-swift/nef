@@ -8,14 +8,23 @@ import BowEffects
 
 
 extension IO where E == SwiftPlaygroundError {
-    func reportStatus(step: Step, in console: Console) -> IO<SwiftPlaygroundError, A> {
+    func reportStatus(step: Step, in console: Console, verbose: Bool) -> IO<SwiftPlaygroundError, A> {
         handleErrorWith { error in
             let print = console.printStatus(step: step, information: error.information, success: false) as IO<E, Void>
             let raise = IO<SwiftPlaygroundError, A>.raiseError(error)
             return print.followedBy(raise)
         }.flatMap { (value: A) in
             let io = console.printStatus(step: step, success: true) as IO<E, Void>
-            return io.as(value)^
+            
+            let substepIO: IO<E, Void>
+            if verbose, let string = (value as? CustomStringConvertible)?.description, !string.isEmpty {
+                let information = string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").components(separatedBy: ", ").map { $0.filename }
+                substepIO = console.printSubstep(step: step, information: information) as IO<E, Void>
+            } else {
+                substepIO = IO<E, Void>.pure(())^
+            }
+            
+            return io.followedBy(substepIO).as(value)^
         }^
     }
 }

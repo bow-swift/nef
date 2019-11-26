@@ -24,6 +24,10 @@ extension String {
         removeLastComponent(separatedBy: "/")
     }
     
+    var trimmingEmptyCharacters: String {
+        return trimmingCharacters(in: ["\n", " " ])
+    }
+    
     private func removeLastComponent(separatedBy separator: String) -> String {
         var pathComponents = components(separatedBy: separator)
         pathComponents.removeLast()

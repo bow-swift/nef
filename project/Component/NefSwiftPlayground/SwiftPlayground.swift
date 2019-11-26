@@ -20,16 +20,14 @@ public struct SwiftPlayground {
     
     public func build(cached: Bool) -> EnvIO<iPadApp, SwiftPlaygroundError, Void> {
         let modulesRaw = EnvIOPartial<iPadApp, SwiftPlaygroundError>.var([String].self)
-//        let modules = EnvIOPartial<iPadApp, SwiftPlaygroundError>.var([Module].self)
+        let modules = EnvIOPartial<iPadApp, SwiftPlaygroundError>.var([Module].self)
         
         return binding(
                     |<-self.cleanUp(step: self.step(1), deintegrate: !cached, resolvePath: self.resolvePath),
                     |<-self.structure(step: self.step(2), resolvePath: self.resolvePath),
          modulesRaw <- self.checkout(step: self.step(3), content: self.packageContent, resolvePath: self.resolvePath),
-         |<-self.modules(step: self.step(4), repos: modulesRaw.get),
-//            modules    <- self.stepGetModules(fromRepositories: modulesRaw.get).contramap(\IPadApp.console),
+            modules <- self.modules(step: self.step(4), repos: modulesRaw.get).contramap(\iPadApp.console),
 //                       |<-self.stepPlayground(modules: modules.get, resolvePath: resolvePath),
-//                       |<-self.stepCleanUp(deintegrate: false, resolvePath: resolvePath),
         yield: ())^
     }
     
@@ -43,7 +41,7 @@ public struct SwiftPlayground {
                 |<-self.removePackageFile(at: resolvePath.packageResolvedPath).provide(app.storage),
                 |<-self.removePackageFile(at: resolvePath.packageFilePath).provide(app.storage),
                 |<-self.removeBuildFolder(at: resolvePath.buildPath, shouldDeintegrate: deintegrate).provide(app.storage),
-            yield: ())^.reportStatus(step: step, in: app.console)
+            yield: ())^.reportStatus(step: step, in: app.console, verbose: false)
         }
     }
     
@@ -52,7 +50,7 @@ public struct SwiftPlayground {
             binding(
                 |<-app.console.printStep(step: step, information: "Creating swift playground structure (\(resolvePath.projectName))"),
                 |<-self.makeStructure(buildPath: resolvePath.buildPath).provide(app.storage),
-            yield: ())^.reportStatus(step: step, in: app.console)
+            yield: ())^.reportStatus(step: step, in: app.console, verbose: false)
         }
     }
     
@@ -64,12 +62,19 @@ public struct SwiftPlayground {
                       |<-app.console.printStep(step: step, information: "Downloading dependencies..."),
                       |<-self.buildPackage(content: content, packageFilePath: resolvePath.packageFilePath, packagePath: resolvePath.packagePath, buildPath: resolvePath.buildPath).provide(app.storage),
                 repos <- self.repositories(checkoutPath: resolvePath.checkoutPath),
-            yield: repos.get)^.reportStatus(step: step, in: app.console)
+            yield: repos.get)^.reportStatus(step: step, in: app.console, verbose: true)
         }
     }
     
-    private func modules(step: Step, repos: [String]) -> EnvIO<iPadApp, SwiftPlaygroundError, [String]> {
-        fatalError()
+    private func modules(step: Step, repos: [String]) -> EnvIO<Console, SwiftPlaygroundError, [Module]> {
+        let modules = IOPartial<SwiftPlaygroundError>.var([Module].self)
+        
+        return EnvIO { console in
+            binding(
+                       |<-console.printStep(step: step, information: "Get modules from repositories..."),
+               modules <- self.swiftLibraryModules(in: repos),
+            yield: modules.get)^.reportStatus(step: step, in: console, verbose: true)
+        }
     }
     
     // MARK: steps <helpers>
@@ -115,5 +120,21 @@ public struct SwiftPlayground {
         let repositoriesPath = result.stdout.components(separatedBy: "\n").map { "\(checkoutPath)/\($0)" }
         let repos = repositoriesPath.filter { !$0.contains("swift-") }
         return IO.pure(repos)^
+    }
+    
+    private func swiftLibraryModules(in repos: [String]) -> IO<SwiftPlaygroundError, [Module]> {
+        let modules = repos.flatMap { repositoryPath -> [Module] in
+            let result = run("swift package --package-path \(repositoryPath) describe --type json")
+            guard result.exitStatus == 0,
+                  !result.stdout.isEmpty,
+                  let data = result.stdout.data(using: .utf8),
+                  let package = try? JSONDecoder().decode(Package.self, from: data) else { return [] }
+            
+            return package.targets.filter { module in module.type == .library &&
+                                                      module.moduleType == .swift }
+        }
+        
+        return modules.count > 0 ? IO.pure(modules)^
+                                 : IO.raiseError(.modules(repos))^
     }
 }

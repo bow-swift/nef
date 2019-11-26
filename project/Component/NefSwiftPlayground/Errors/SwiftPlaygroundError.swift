@@ -7,6 +7,7 @@ public enum SwiftPlaygroundError: Error {
     case structure
     case package(packagePath: String)
     case checkout
+    case modules(_ paths: [String])
     case playgroundBook
     case ioError
     
@@ -20,6 +21,9 @@ public enum SwiftPlaygroundError: Error {
             return "could not build project 'Package.swift' :: \(path)"
         case .checkout:
             return "command 'swift package describe' failed"
+        case .modules(let paths):
+            let packages = paths.map { $0.filename }.joined(separator: ", ")
+            return "could not extract any module from packages: \(packages)"
         case .playgroundBook:
             return "could not create Swift Playground"
         case .ioError:

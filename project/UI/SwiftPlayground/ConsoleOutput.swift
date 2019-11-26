@@ -9,8 +9,8 @@ class iPadConsole: NefModels.Console {
         IO.invoke { print(information, separator: " ", terminator: "") }
     }
     
-    func printSubstep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void> {
-        IO.invoke { print("\t\(information)", separator: " ", terminator: "\n") }
+    func printSubstep<E: Swift.Error>(step: Step, information: [String]) -> IO<E, Void> {
+        IO.invoke { information.forEach { item in print("\t• \(item)", separator: " ", terminator: "\n") } }
     }
     
     func printStatus<E: Swift.Error>(step: Step, success: Bool) -> IO<E, Void> {
