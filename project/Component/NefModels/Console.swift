@@ -17,4 +17,5 @@ public protocol Console {
     func printStep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void>
     func printSubstep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void>
     func printStatus<E: Swift.Error>(step: Step, success: Bool) -> IO<E, Void>
+    func printStatus<E: Swift.Error>(step: Step, information: String, success: Bool) -> IO<E, Void>
 }

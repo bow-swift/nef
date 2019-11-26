@@ -2,7 +2,7 @@
 
 import Foundation
 
-public extension String {
+extension String {
     
     var filename: String {
         components(separatedBy: "/").last ?? ""
@@ -31,6 +31,6 @@ public extension String {
     }
 }
 
-public extension StaticString {
+extension StaticString {
     var `string`: String { "\(self)" }
 }

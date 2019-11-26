@@ -10,6 +10,7 @@ public enum FileSystemError: Error {
     case get(from: String)
     case read(file: String)
     case write(file: String)
+    case exist(itemPath: String)
 }
 
 extension FileSystemError: CustomStringConvertible {
@@ -29,6 +30,8 @@ extension FileSystemError: CustomStringConvertible {
             return "cannot read content of file '\(file)'"
         case .write(let file):
             return "cannot write in file '\(file)'"
+        case .exist(let itemPath):
+            return "not found item at '\(itemPath)'"
         }
     }
 }

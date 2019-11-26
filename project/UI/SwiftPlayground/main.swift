@@ -2,34 +2,30 @@
 
 import Foundation
 import CLIKit
-import NefSwiftPlayground
+import nef
 
 let scriptName = "nef-swift-playground"
 let console = iPadConsole()
 
 func main() {
     let args = arguments(keys: "package", "to", "name")
-    guard let packagePath = args["package"],
-          let outputPath = args["to"],
+    guard let packagePath = args["package"]?.expandingTildeInPath,
+          let outputPath = args["to"]?.expandingTildeInPath,
           let projectName = args["name"] else {
             Console.help.show(output: console)
             exit(-1)
     }
     
-    guard let package = try? String(contentsOfFile: packagePath), !package.isEmpty else {
+    guard let content = try? String(contentsOfFile: packagePath), !content.isEmpty else {
         Console.error(information: "received an invalid Swift Package - '\(packagePath)'").show(output: console)
         exit(-1)
     }
     
-    SwiftPlayground(packageContent: package, name: projectName, output: URL(fileURLWithPath: outputPath))
-                .build(cached: true)
-                .provide(console)
-                .unsafeRunSyncEither()
-                .fold({ error in
-                    console.printError(information: error.information); exit(-1)
-                 }, {
-                    console.printSuccess(); exit(0)
-                 })
+    nef.SwiftPlayground.render(packageContent: content, name: projectName, output: URL(fileURLWithPath: outputPath))
+                       .provide(console)
+                       .unsafeRunSyncEither()
+                       .fold({ error in console.printError(information: ""); exit(-1) },
+                             { _ in console.printSuccess(); exit(0) })
 }
 
 // #: - MAIN <launcher>

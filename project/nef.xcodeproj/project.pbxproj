@@ -13,8 +13,6 @@
 		8B0FB59B237C0B9A00221548 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86622D392C000919F36 /* Array+Slice.swift */; };
 		8B0FB59C237C0B9A00221548 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85F22D392C000919F36 /* String+Path.swift */; };
 		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
-		8B0FB5A9237C1DD000221548 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A5237C1D3700221548 /* BowEffects */; };
-		8B0FB5AA237C1DD000221548 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0FB5A6237C1D3700221548 /* Bow */; };
 		8B0FB5B8237C61C000221548 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB5B7237C61C000221548 /* Error.swift */; };
 		8B0FB5BA237D5B7A00221548 /* _Carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5B9237D5B7A00221548 /* _Carbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB5BC237D5B9800221548 /* _Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5BB237D5B9400221548 /* _Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -55,6 +53,8 @@
 		8B3CB8C122D3963B00919F36 /* NefModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB84022D3929B00919F36 /* NefModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */; };
 		8B3CB8C822D3987500919F36 /* CoreCarbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* CoreCarbon.swift */; };
+		8B46C406238D453F00437659 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C405238D453F00437659 /* Bow */; settings = {ATTRIBUTES = (Required, ); }; };
+		8B46C408238D453F00437659 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C407238D453F00437659 /* BowEffects */; settings = {ATTRIBUTES = (Required, ); }; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonView.swift */; };
@@ -71,9 +71,6 @@
 		8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */; };
 		8BD4E33C238824D9002DECDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33A2388233D002DECDB /* Console.swift */; };
 		8BD4E34B238834F2002DECDB /* _SwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E32623881850002DECDB /* _SwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8BD4E3602388378D002DECDB /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E35F2388378D002DECDB /* Swiftline */; };
-		8BD4E363238837C6002DECDB /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E362238837C6002DECDB /* Bow */; };
-		8BD4E365238837C6002DECDB /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E364238837C6002DECDB /* BowEffects */; };
 		8BD4E367238837C6002DECDB /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E366238837C6002DECDB /* Swiftline */; };
 		8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
 		8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
@@ -332,9 +329,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B0FB5AA237C1DD000221548 /* Bow in Frameworks */,
-				8B0FB5A9237C1DD000221548 /* BowEffects in Frameworks */,
-				8BD4E3602388378D002DECDB /* Swiftline in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,9 +344,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BD4E365238837C6002DECDB /* BowEffects in Frameworks */,
-				8BD4E363238837C6002DECDB /* Bow in Frameworks */,
 				8BD4E367238837C6002DECDB /* Swiftline in Frameworks */,
+				8B46C406238D453F00437659 /* Bow in Frameworks */,
+				8B46C408238D453F00437659 /* BowEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1025,9 +1019,9 @@
 			);
 			name = NefSwiftPlayground;
 			packageProductDependencies = (
-				8BD4E362238837C6002DECDB /* Bow */,
-				8BD4E364238837C6002DECDB /* BowEffects */,
 				8BD4E366238837C6002DECDB /* Swiftline */,
+				8B46C405238D453F00437659 /* Bow */,
+				8B46C407238D453F00437659 /* BowEffects */,
 			);
 			productName = NefSwiftPlayground;
 			productReference = 8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */;
@@ -1053,9 +1047,6 @@
 			);
 			name = nef;
 			packageProductDependencies = (
-				8B0FB5A5237C1D3700221548 /* BowEffects */,
-				8B0FB5A6237C1D3700221548 /* Bow */,
-				8BD4E35F2388378D002DECDB /* Swiftline */,
 			);
 			productName = Nef;
 			productReference = 8BF75F8522CA71E700EC53A1 /* nef.framework */;
@@ -2287,15 +2278,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8B0FB5A5237C1D3700221548 /* BowEffects */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
-			productName = BowEffects;
-		};
-		8B0FB5A6237C1D3700221548 /* Bow */ = {
+		8B46C405238D453F00437659 /* Bow */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
 			productName = Bow;
+		};
+		8B46C407238D453F00437659 /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
 		};
 		8BD4E35423883654002DECDB /* BowEffects */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2303,21 +2294,6 @@
 			productName = BowEffects;
 		};
 		8BD4E3572388369C002DECDB /* BowEffects */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
-			productName = BowEffects;
-		};
-		8BD4E35F2388378D002DECDB /* Swiftline */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8BD4E3322388197B002DECDB /* XCRemoteSwiftPackageReference "Swiftline" */;
-			productName = Swiftline;
-		};
-		8BD4E362238837C6002DECDB /* Bow */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
-			productName = Bow;
-		};
-		8BD4E364238837C6002DECDB /* BowEffects */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
 			productName = BowEffects;

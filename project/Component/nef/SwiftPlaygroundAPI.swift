@@ -9,8 +9,8 @@ import BowEffects
 
 extension SwiftPlaygroundAPI {
     
-    public static func render(package: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
-        NefSwiftPlayground.SwiftPlayground(packageContent: package, name: name, output: output)
+    public static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
+        NefSwiftPlayground.SwiftPlayground(packageContent: packageContent, name: name, output: output)
                           .build(cached: true)
                           .contramap { console in iPadApp(console: console, storage: MacFileSystem()) }^
                           .map { _ in output }^

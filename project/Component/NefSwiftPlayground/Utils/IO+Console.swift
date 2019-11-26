@@ -7,14 +7,15 @@ import Bow
 import BowEffects
 
 
-extension IO where E == SwiftPlaygroundError, A == Void {
-    func reportStatus(step: Step, in console: Console) -> IO<SwiftPlaygroundError, Void> {
-        mapLeft { error in
-            _ = console.printStatus(step: step, success: false) as IO<SwiftPlaygroundError, Void>
-            return error
-        }.map { void in
-            _ = console.printStatus(step: step, success: true) as IO<SwiftPlaygroundError, Void>
-            return void
+extension IO where E == SwiftPlaygroundError {
+    func reportStatus(step: Step, in console: Console) -> IO<SwiftPlaygroundError, A> {
+        handleErrorWith { error in
+            let print = console.printStatus(step: step, information: error.information, success: false) as IO<E, Void>
+            let raise = IO<SwiftPlaygroundError, A>.raiseError(error)
+            return print.followedBy(raise)
+        }.flatMap { (value: A) in
+            let io = console.printStatus(step: step, success: true) as IO<E, Void>
+            return io.as(value)^
         }^
     }
 }

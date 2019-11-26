@@ -9,16 +9,13 @@ struct ResolvePath {
 
 extension ResolvePath {
     private var nefFolder: String { "nef" }
-    private var buildFolder: String { "\(nefFolder)/build"}
-    
+    var playgroundPath: String { "\(projectPath)/\(projectName).playgroundbook" }
     var projectPath: String { "\(outputPath)/\(projectName)" }
     
-    var packagePath: String { "\(projectPath)/Package.swift" }
-    var packageResolvedPath: String { "\(projectPath)/Package.resolved" }
+    var packagePath: String { "\(projectPath)/\(nefFolder)" }
+    var packageFilePath: String { "\(packagePath)/Package.swift" }
+    var packageResolvedPath: String { "\(packagePath)/Package.resolved" }
     
-    var nefPath: String { "\(projectPath)/\(nefFolder)"}
-    var buildPath: String { "\(projectPath)/\(buildFolder)"}
-    var checkoutPath: String { "\(projectPath)/nef/build/checkouts" }
-    
-    var playgroundPath: String { "\(projectPath)/\(projectName).playgroundbook" }
+    var buildPath: String { "\(packagePath)/build"}
+    var checkoutPath: String { "\(packagePath)/build/checkouts" }
 }

@@ -16,6 +16,10 @@ class iPadConsole: NefModels.Console {
     func printStatus<E: Swift.Error>(step: Step, success: Bool) -> IO<E, Void> {
         IO.invoke { print(" \(success ? "✅" : "❌")", separator: "", terminator: "\n") }
     }
+    
+    func printStatus<E>(step: Step, information: String, success: Bool) -> IO<E, Void> where E : Error {
+        IO.invoke { print(" \(success ? "(\(information)) ✅" : "(\(information)) ❌")", separator: "", terminator: "\n") }
+    }
 }
 
 extension iPadConsole: ConsoleOutput {
