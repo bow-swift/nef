@@ -2,12 +2,12 @@
 
 import Foundation
 
-struct ResolvePath {
+struct PlaygroundResolvePath {
     let projectName: String
     let outputPath: String
 }
 
-extension ResolvePath {
+extension PlaygroundResolvePath {
     private var nefFolder: String { "nef" }
     var playgroundPath: String { "\(projectPath)/\(projectName).playgroundbook" }
     var projectPath: String { "\(outputPath)/\(projectName)" }

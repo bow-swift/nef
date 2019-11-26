@@ -3,7 +3,7 @@
 import Foundation
 import NefModels
 
-public struct iPadApp {
+public struct PlaygroundEnvironment {
     public let console: Console
     public let storage: FileSystem
     

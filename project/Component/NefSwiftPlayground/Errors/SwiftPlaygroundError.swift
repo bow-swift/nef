@@ -8,7 +8,7 @@ public enum SwiftPlaygroundError: Error {
     case package(packagePath: String)
     case checkout
     case modules(_ paths: [String])
-    case playgroundBook
+    case playgroundBook(info: String)
     case ioError
     
     public var information: String {
@@ -24,8 +24,8 @@ public enum SwiftPlaygroundError: Error {
         case .modules(let paths):
             let packages = paths.map { $0.filename }.joined(separator: ", ")
             return "could not extract any module from packages: \(packages)"
-        case .playgroundBook:
-            return "could not create Swift Playground"
+        case .playgroundBook(let info):
+            return "could not create Playground Book (\(info))"
         case .ioError:
             return "failure running IO"
         }

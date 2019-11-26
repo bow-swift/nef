@@ -10,42 +10,42 @@ import BowEffects
 
 
 public struct SwiftPlayground {
-    private let resolvePath: ResolvePath
+    private let resolvePath: PlaygroundResolvePath
     private let packageContent: String
     
     public init(packageContent: String, name: String, output: URL) {
         self.packageContent = packageContent
-        self.resolvePath = ResolvePath(projectName: name, outputPath: output.path)
+        self.resolvePath = PlaygroundResolvePath(projectName: name, outputPath: output.path)
     }
     
-    public func build(cached: Bool) -> EnvIO<iPadApp, SwiftPlaygroundError, Void> {
-        let modulesRaw = EnvIOPartial<iPadApp, SwiftPlaygroundError>.var([String].self)
-        let modules = EnvIOPartial<iPadApp, SwiftPlaygroundError>.var([Module].self)
+    public func build(cached: Bool) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
+        let modulesRaw = EnvIOPartial<PlaygroundEnvironment, SwiftPlaygroundError>.var([String].self)
+        let modules = EnvIOPartial<PlaygroundEnvironment, SwiftPlaygroundError>.var([Module].self)
         
         return binding(
                     |<-self.cleanUp(step: self.step(1), deintegrate: !cached, resolvePath: self.resolvePath),
                     |<-self.structure(step: self.step(2), resolvePath: self.resolvePath),
          modulesRaw <- self.checkout(step: self.step(3), content: self.packageContent, resolvePath: self.resolvePath),
-            modules <- self.modules(step: self.step(4), repos: modulesRaw.get).contramap(\iPadApp.console),
-//                       |<-self.stepPlayground(modules: modules.get, resolvePath: resolvePath),
+            modules <- self.modules(step: self.step(4), repos: modulesRaw.get).contramap(\PlaygroundEnvironment.console),
+                    |<-self.swiftPlayground(step: self.step(5), modules: modules.get, resolvePath: self.resolvePath),
         yield: ())^
     }
     
     // MARK: steps
-    private func step(_ number: Int) -> Step { Step(total: 6, partial: number) }
+    private func step(_ number: Int) -> Step { Step(total: 5, partial: number) }
     
-    private func cleanUp(step: Step, deintegrate: Bool, resolvePath: ResolvePath) -> EnvIO<iPadApp, SwiftPlaygroundError, Void> {
-        EnvIO { app in
+    private func cleanUp(step: Step, deintegrate: Bool, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
+        EnvIO { env in
             binding(
-                |<-app.console.printStep(step: step, information: "Clean up generated files for building"),
-                |<-self.removePackageFile(at: resolvePath.packageResolvedPath).provide(app.storage),
-                |<-self.removePackageFile(at: resolvePath.packageFilePath).provide(app.storage),
-                |<-self.removeBuildFolder(at: resolvePath.buildPath, shouldDeintegrate: deintegrate).provide(app.storage),
-            yield: ())^.reportStatus(step: step, in: app.console, verbose: false)
+                |<-env.console.printStep(step: step, information: "Clean up generated files for building"),
+                |<-self.removePackageFile(at: resolvePath.packageResolvedPath).provide(env.storage),
+                |<-self.removePackageFile(at: resolvePath.packageFilePath).provide(env.storage),
+                |<-self.removeBuildFolder(at: resolvePath.buildPath, shouldDeintegrate: deintegrate).provide(env.storage),
+            yield: ())^.reportStatus(step: step, in: env.console, verbose: false)
         }
     }
     
-    private func structure(step: Step, resolvePath: ResolvePath) -> EnvIO<iPadApp, SwiftPlaygroundError, Void> {
+    private func structure(step: Step, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
         EnvIO { app in
             binding(
                 |<-app.console.printStep(step: step, information: "Creating swift playground structure (\(resolvePath.projectName))"),
@@ -54,15 +54,15 @@ public struct SwiftPlayground {
         }
     }
     
-    private func checkout(step: Step, content: String, resolvePath: ResolvePath) -> EnvIO<iPadApp, SwiftPlaygroundError, [String]> {
+    private func checkout(step: Step, content: String, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [String]> {
         let repos = IOPartial<SwiftPlaygroundError>.var([String].self)
         
-        return EnvIO { app in
+        return EnvIO { env in
             binding(
-                      |<-app.console.printStep(step: step, information: "Downloading dependencies..."),
-                      |<-self.buildPackage(content: content, packageFilePath: resolvePath.packageFilePath, packagePath: resolvePath.packagePath, buildPath: resolvePath.buildPath).provide(app.storage),
+                      |<-env.console.printStep(step: step, information: "Downloading dependencies..."),
+                      |<-self.buildPackage(content: content, packageFilePath: resolvePath.packageFilePath, packagePath: resolvePath.packagePath, buildPath: resolvePath.buildPath).provide(env.storage),
                 repos <- self.repositories(checkoutPath: resolvePath.checkoutPath),
-            yield: repos.get)^.reportStatus(step: step, in: app.console, verbose: true)
+            yield: repos.get)^.reportStatus(step: step, in: env.console, verbose: true)
         }
     }
     
@@ -74,6 +74,15 @@ public struct SwiftPlayground {
                        |<-console.printStep(step: step, information: "Get modules from repositories..."),
                modules <- self.swiftLibraryModules(in: repos),
             yield: modules.get)^.reportStatus(step: step, in: console, verbose: true)
+        }
+    }
+    
+    private func swiftPlayground(step: Step, modules: [Module], resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
+        EnvIO { env in
+            binding(
+                |<-env.console.printStep(step: step, information: "Building Swift Playground..."),
+                |<-self.buildPlaygroundBook(modules: modules, playgroundPath: resolvePath.playgroundPath).provide(env.storage),
+            yield: ())^.reportStatus(step: step, in: env.console, verbose: false)
         }
     }
     
@@ -136,5 +145,14 @@ public struct SwiftPlayground {
         
         return modules.count > 0 ? IO.pure(modules)^
                                  : IO.raiseError(.modules(repos))^
+    }
+    
+    private func buildPlaygroundBook(modules: [Module], playgroundPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
+        EnvIO { storage in
+            PlaygroundBook(name: "nef", path: playgroundPath)
+                .build(modules: modules)
+                .provide(storage)
+                .mapLeft { e in .playgroundBook(info: e.description) }
+        }
     }
 }
