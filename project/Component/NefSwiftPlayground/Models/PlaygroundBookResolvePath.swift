@@ -14,9 +14,7 @@ extension PlaygroundBookResolvePath {
     
     var contentsPath: String { "\(path)/Contents" }
     var chapterPath: String { "\(contentsPath)/Chapters/\(chapterName).playgroundchapter" }
-    
-    
-    var resourcesPath: String { "\(contentsPath)/PrivateResources" }
     var pagePath: String { "\(chapterPath)/Pages/\(pageName).playgroundpage" }
     var templatePagePath: String { "\(chapterPath)/Pages/Template.playgroundpage" }
+    var resourcesPath: String { "\(contentsPath)/PrivateResources" }
 }

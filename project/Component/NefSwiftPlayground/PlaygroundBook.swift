@@ -23,11 +23,9 @@ public struct PlaygroundBook {
             |<-self.writeManifest(chapterManifiest, toFolder: self.resolvePath.chapterPath),
             |<-self.createPage(inPath: self.resolvePath.pagePath),
             |<-self.createPage(inPath: self.resolvePath.templatePagePath),
+            |<-self.addResource(base64: AssetsBase64.imageReference, name: self.resolvePath.imageReferenceName, toPath: self.resolvePath.resourcesPath),
         yield: ())^
     }
-    
-    // MARK: steps
-    
     
     // MARK: steps <helpers>
     private func writeManifest(_ manifest: String, toFolder folderPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
@@ -49,6 +47,15 @@ public struct PlaygroundBook {
             let writeManifiestIO = storage.write(content: manifest, toFile: "\(pagePath)/Manifest.plist")
             
             return createDirectoryIO.followedBy(writePageIO).followedBy(writeManifiestIO)^.mapLeft { _ in .page(path: pagePath) }
+        }
+    }
+    
+    private func addResource(base64: String, name resourceName: String, toPath resourcesPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
+        EnvIO { storage in
+            let createDirectoryIO = storage.createDirectory(atPath: resourcesPath)
+            let writeResourceIO = storage.write(content: base64, toFile: "\(resourcesPath)/\(resourceName)")
+            
+            return createDirectoryIO.followedBy(writeResourceIO)^.mapLeft { _ in .resource(name: resourceName) }
         }
     }
 }
