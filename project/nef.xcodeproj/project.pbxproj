@@ -62,6 +62,7 @@
 		8B46C417238D889700437659 /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C416238D889700437659 /* PlaygroundBook.swift */; };
 		8B46C419238D88B800437659 /* PlaygroundBookError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C418238D88B800437659 /* PlaygroundBookError.swift */; };
 		8B46C41B238D8A0000437659 /* PlaygroundBookResolvePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41A238D8A0000437659 /* PlaygroundBookResolvePath.swift */; };
+		8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonView.swift */; };
@@ -305,6 +306,7 @@
 		8B46C416238D889700437659 /* PlaygroundBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBook.swift; sourceTree = "<group>"; };
 		8B46C418238D88B800437659 /* PlaygroundBookError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookError.swift; sourceTree = "<group>"; };
 		8B46C41A238D8A0000437659 /* PlaygroundBookResolvePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookResolvePath.swift; sourceTree = "<group>"; };
+		8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookTemplate.swift; sourceTree = "<group>"; };
 		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B646F94237D71C50009AB43 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
@@ -752,6 +754,7 @@
 				8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */,
 				8BD4E33623881F9F002DECDB /* PlaygroundResolvePath.swift */,
 				8B46C41A238D8A0000437659 /* PlaygroundBookResolvePath.swift */,
+				8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1305,6 +1308,7 @@
 				8B46C417238D889700437659 /* PlaygroundBook.swift in Sources */,
 				8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */,
 				8B46C412238D87F200437659 /* Assets.swift in Sources */,
+				8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
