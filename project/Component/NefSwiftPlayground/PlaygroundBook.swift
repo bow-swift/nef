@@ -21,6 +21,8 @@ public struct PlaygroundBook {
         return binding(
             |<-self.writeManifest(generalManifiest, toFolder: self.resolvePath.contentsPath),
             |<-self.writeManifest(chapterManifiest, toFolder: self.resolvePath.chapterPath),
+            |<-self.createPage(inPath: self.resolvePath.pagePath),
+            |<-self.createPage(inPath: self.resolvePath.templatePagePath),
         yield: ())^
     }
     
@@ -34,6 +36,19 @@ public struct PlaygroundBook {
             let writeManifiestIO = storage.write(content: manifest, toFile: "\(folderPath)/Manifest.plist")
             
             return createDirectoryIO.followedBy(writeManifiestIO)^.mapLeft { _ in .manifest(path: folderPath) }
+        }
+    }
+    
+    private func createPage(inPath pagePath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
+        EnvIO { storage in
+            let pageHeader = PlaygroundBookTemplate.Code.header
+            let manifest   = PlaygroundBookTemplate.Manifiest.page(name: pagePath.filename.removeExtension)
+            
+            let createDirectoryIO = storage.createDirectory(atPath: pagePath)
+            let writePageIO = storage.write(content: pageHeader, toFile: "\(pagePath)/main.swift")
+            let writeManifiestIO = storage.write(content: manifest, toFile: "\(pagePath)/Manifest.plist")
+            
+            return createDirectoryIO.followedBy(writePageIO).followedBy(writeManifiestIO)^.mapLeft { _ in .page(path: pagePath) }
         }
     }
 }
