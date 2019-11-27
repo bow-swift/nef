@@ -18,7 +18,7 @@ public struct SwiftPlayground {
         self.resolvePath = PlaygroundResolvePath(projectName: name, outputPath: output.path)
     }
     
-    public func build(cached: Bool) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
+    public func build(cached: Bool, excludeModules: [String]) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
         let modulesRaw = EnvIOPartial<PlaygroundEnvironment, SwiftPlaygroundError>.var([String].self)
         let modules = EnvIOPartial<PlaygroundEnvironment, SwiftPlaygroundError>.var([Module].self)
         
@@ -38,9 +38,10 @@ public struct SwiftPlayground {
         EnvIO { env in
             binding(
                 |<-env.console.printStep(step: step, information: "Clean up generated files for building"),
-                |<-self.removePackageFile(at: resolvePath.packageResolvedPath).provide(env.storage),
-                |<-self.removePackageFile(at: resolvePath.packageFilePath).provide(env.storage),
-                |<-self.removeBuildFolder(at: resolvePath.buildPath, shouldDeintegrate: deintegrate).provide(env.storage),
+                |<-self.removeItem(at: resolvePath.playgroundPath).provide(env.storage),
+                |<-self.removeItem(at: resolvePath.packageResolvedPath).provide(env.storage),
+                |<-self.removeItem(at: resolvePath.packageFilePath).provide(env.storage),
+                |<-self.removeItem(at: resolvePath.buildPath, shouldDeintegrate: deintegrate).provide(env.storage),
             yield: ())^.reportStatus(step: step, in: env.console, verbose: false)
         }
     }
@@ -87,19 +88,12 @@ public struct SwiftPlayground {
     }
     
     // MARK: steps <helpers>
-    private func removePackageFile(at filePath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
-        EnvIO { storage in
-            let removeFileIO = storage.remove(itemPath: filePath).mapLeft { _ in SwiftPlaygroundError.clean(item: filePath) }^
-            return storage.exist(itemPath: filePath) ? removeFileIO : IO.pure(())
-        }
-    }
-    
-    private func removeBuildFolder(at path: String, shouldDeintegrate deintegrate: Bool) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
+    private func removeItem(at itemPath: String, shouldDeintegrate deintegrate: Bool = true) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
         guard deintegrate else { return EnvIO.pure(())^ }
         
         return EnvIO { storage in
-            storage.remove(itemPath: path)^
-                   .mapLeft { _ in .clean(item: path) }
+            let removeFileIO = storage.remove(itemPath: itemPath).mapLeft { _ in SwiftPlaygroundError.clean(item: itemPath) }^
+            return storage.exist(itemPath: itemPath) ? removeFileIO : IO.pure(())
         }
     }
     

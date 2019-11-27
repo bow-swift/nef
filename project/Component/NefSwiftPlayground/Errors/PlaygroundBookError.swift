@@ -12,15 +12,15 @@ enum PlaygroundBookError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .manifest(let path):
-            return "could not create manifiest in '\(path)'"
+            return "manifiest in '\(path)'"
         case .page(let path):
-            return "could not create page at '\(path)'"
+            return "page at '\(path)'"
         case .resource(let name):
-            return "could not create resource '\(name)'"
+            return "resource '\(name)'"
         case .invalidModule(let name):
-            return "could not create module '\(name)'"
+            return "module '\(name)'"
         case .sources(let module):
-            return "could not copy sources to module '\(module)'"
+            return "copy sources to module '\(module)'"
         }
     }
 }
