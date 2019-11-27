@@ -1,6 +1,7 @@
 //  Copyright © 2019 The Bow Authors.
 
 import Foundation
+import Swiftline
 
 extension String {
     
@@ -26,6 +27,15 @@ extension String {
     
     var trimmingEmptyCharacters: String {
         return trimmingCharacters(in: ["\n", " " ])
+    }
+    
+    var linkPath: String {
+        let result = run("readlink file \(self)")
+        guard result.stdout.isEmpty else {
+            return "\(parentPath)/\(result.stdout)".linkPath
+        }
+        
+        return replacingOccurrences(of: "//", with: "/")
     }
     
     private func removeLastComponent(separatedBy separator: String) -> String {

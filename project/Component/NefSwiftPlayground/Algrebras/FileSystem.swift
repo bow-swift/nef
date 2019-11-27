@@ -11,6 +11,7 @@ public protocol FileSystem {
     func items(atPath path: String) -> IO<FileSystemError, [String]>
     func readFile(atPath path: String) -> IO<FileSystemError, String>
     func write(content: String, toFile path: String) -> IO<FileSystemError, ()>
+    func write(content: Data, toFile path: String) -> IO<FileSystemError, ()>
     func exist(itemPath: String) -> Bool
 }
 
@@ -20,8 +21,14 @@ public extension FileSystem {
     }
     
     func copy(items: [String], from input: String, to output: String) -> IO<FileSystemError, ()> {
-        items.traverse { (itemPath: String) in
+        items.traverse { itemPath in
             self.copy(item: itemPath.filename, from: input, to: output)
+        }.void()^
+    }
+    
+    func copy(itemPaths items: [String], to output: String) -> IO<FileSystemError, ()> {
+        items.traverse { path in
+            self.copy(itemPath: path, toPath: "\(output)/\(path.filename)")
         }.void()^
     }
     

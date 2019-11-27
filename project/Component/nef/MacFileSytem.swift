@@ -47,6 +47,16 @@ class MacFileSystem: FileSystem {
         }
     }
     
+    func write(content: Data, toFile path: String) -> IO<FileSystemError, ()> {
+        IO.invoke {
+            do {
+                try content.write(to: URL(fileURLWithPath: path), options: .atomic)
+            } catch {
+                throw FileSystemError.write(file: path)
+            }
+        }
+    }
+    
     func exist(itemPath: String) -> Bool {
         FileManager.default.fileExists(atPath: itemPath)
     }

@@ -6,8 +6,8 @@ enum PlaygroundBookError: Error, CustomStringConvertible {
     case manifest(path: String)
     case page(path: String)
     case resource(name: String)
-    
-    case invalidModule
+    case invalidModule(name: String)
+    case sources(module: String)
     
     var description: String {
         switch self {
@@ -17,11 +17,10 @@ enum PlaygroundBookError: Error, CustomStringConvertible {
             return "could not create page at '\(path)'"
         case .resource(let name):
             return "could not create resource '\(name)'"
-            
-            
-            
-        case .invalidModule:
-            return "invalid module"
+        case .invalidModule(let name):
+            return "could not create module '\(name)'"
+        case .sources(let module):
+            return "could not copy sources to module '\(module)'"
         }
     }
 }
