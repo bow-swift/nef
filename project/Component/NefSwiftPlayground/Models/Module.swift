@@ -1,13 +1,14 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import BowOptics
 
-struct Module: Codable {
-    let name: String
+struct Module: Codable, AutoLens {
+    var name: String
     let path: String
     let type: Type
     let moduleType: ModuleType
-    let sources: [String]
+    var sources: [String]
     
     enum ModuleType: String, Codable {
         case swift = "SwiftTarget"
@@ -31,4 +32,8 @@ struct Module: Codable {
 
 extension Module: CustomStringConvertible {
     var description: String { name }
+}
+
+extension Module {
+    static let sourcesTraversal = [Module].traversal + Module.lens(for: \.name).merge(Module.lens(for: \.sources))
 }

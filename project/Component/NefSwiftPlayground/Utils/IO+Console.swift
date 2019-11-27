@@ -18,7 +18,10 @@ extension IO where E == SwiftPlaygroundError {
             
             let substepIO: IO<E, Void>
             if verbose, let string = (value as? CustomStringConvertible)?.description, !string.isEmpty {
-                let information = string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").components(separatedBy: ", ").map { $0.filename }
+                let information = string.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "\"", with: "")
+                                        .components(separatedBy: ", ")
+                                        .map { $0.filename }
+                                        .sorted(by: { $0.lowercased() < $1.lowercased() })
                 substepIO = console.printSubstep(step: step, information: information) as IO<E, Void>
             } else {
                 substepIO = IO<E, Void>.pure(())^

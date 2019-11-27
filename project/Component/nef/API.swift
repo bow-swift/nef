@@ -78,7 +78,7 @@ public protocol SwiftPlaygroundAPI {
     ///   - packageContent: Swift Package content
     ///   - name: name for the output Swift Playground
     ///   - output: folder where to write the Swift Playground
-    ///   - excludeModules: list of modules to exclude for Swift Playground
+    ///   - excludes: list of items to exclude for building the Swift Playground
     /// - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the Swift Playground output of type `URL`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, URL>`.
-    static func render(packageContent: String, name: String, output: URL, excludeModules: [String]) -> EnvIO<Console, nef.Error, URL>
+    static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL>
 }

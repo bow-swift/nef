@@ -15,12 +15,12 @@ public struct PlaygroundBook {
     }
     
     func build(modules: [Module]) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-        let generalManifiest = PlaygroundBookTemplate.Manifiest.general(chapterName: resolvePath.chapterPath.filename.removeExtension, imageName: resolvePath.imageReferenceName)
-        let chapterManifiest = PlaygroundBookTemplate.Manifiest.chapter(pageName: resolvePath.pageName)
+        let generalManifest = PlaygroundBookTemplate.Manifest.general(chapterName: resolvePath.chapterPath.filename.removeExtension, imageName: resolvePath.imageReferenceName)
+        let chapterManifest = PlaygroundBookTemplate.Manifest.chapter(pageName: resolvePath.pageName)
         
         return binding(
-            |<-self.writeManifest(generalManifiest, toFolder: self.resolvePath.contentsPath),
-            |<-self.writeManifest(chapterManifiest, toFolder: self.resolvePath.chapterPath),
+            |<-self.writeManifest(generalManifest, toFolder: self.resolvePath.contentsPath),
+            |<-self.writeManifest(chapterManifest, toFolder: self.resolvePath.chapterPath),
             |<-self.createPage(inPath: self.resolvePath.pagePath),
             |<-self.createPage(inPath: self.resolvePath.templatePagePath),
             |<-self.addResource(base64: AssetsBase64.imageReference, name: self.resolvePath.imageReferenceName, toPath: self.resolvePath.resourcesPath),
@@ -41,7 +41,7 @@ public struct PlaygroundBook {
     private func createPage(inPath pagePath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
         EnvIO { storage in
             let pageHeader = PlaygroundBookTemplate.Code.header
-            let manifest   = PlaygroundBookTemplate.Manifiest.page(name: pagePath.filename.removeExtension)
+            let manifest   = PlaygroundBookTemplate.Manifest.page(name: pagePath.filename.removeExtension)
             
             let createDirectoryIO = storage.createDirectory(atPath: pagePath)
             let writePageIO = storage.write(content: pageHeader, toFile: "\(pagePath)/main.swift")
