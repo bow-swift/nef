@@ -26,14 +26,44 @@ enum PlaygroundBookTemplate {
                                 static let blue = UIColor(red: 66/255.0, green: 197/255.0, blue: 1, alpha: 1)
                                 static let orange = UIColor(red: 1, green: 159/255.0, blue: 70/255.0, alpha: 1)
                             }
+
+                            enum PlaygroundLog {
+                                static var log: String {
+                                    guard let assessmentStatus = PlaygroundPage.current.assessmentStatus else { return "" }
+
+                                    switch assessmentStatus {
+                                    case let .pass(message): return message ?? ""
+                                    default: return ""
+                                    }
+                                }
+
+                                static func print(_ message: String, clearAfter seconds: Int = 0) {
+                                    let newMessage = "◦ \\(message)"
+                                    let assessmentStatus = log.isEmpty ? newMessage : "\\(log)\\n\\n\\(newMessage)"
+                                    PlaygroundPage.current.assessmentStatus = .pass(message: assessmentStatus)
+                                    if (seconds > 0) { PlaygroundLog.clear(after: seconds) }
+                                }
+
+                                static func clear(after seconds: Int = 0) {
+                                    guard seconds > 0 else {
+                                        PlaygroundPage.current.assessmentStatus = nil; return
+                                    }
+
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(seconds)) {
+                                        PlaygroundPage.current.assessmentStatus = nil
+                                    }
+                                }
+                            }
+
+                            PlaygroundLog.clear()
                             //#-end-hidden-code
                             liveView.backgroundColor = PlaygroundColor.nef
-
+                            PlaygroundLog.print("Welcome to nef Playground!")
                             """
     }
     
-    // MARK: - Manifiest
-    enum Manifiest {
+    // MARK: - Manifest
+    enum Manifest {
         static let header = """
                             <?xml version="1.0" encoding="UTF-8"?>
                              <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -42,7 +72,7 @@ enum PlaygroundBookTemplate {
         
         static func page(name: String) -> String {
             """
-            \(Manifiest.header)
+            \(Manifest.header)
             <dict>
                 <key>Name</key>
                 <string>\(name)</string>
@@ -57,7 +87,7 @@ enum PlaygroundBookTemplate {
         
         static func chapter(pageName: String) -> String {
             """
-            \(Manifiest.header)
+            \(Manifest.header)
             <dict>
                 <key>Name</key>
                 <string>\(pageName)</string>
@@ -74,7 +104,7 @@ enum PlaygroundBookTemplate {
         
         static func general(chapterName: String, imageName: String) -> String {
             """
-            \(Manifiest.header)
+            \(Manifest.header)
             <dict>
                 <key>Chapters</key>
                 <array>
@@ -85,17 +115,15 @@ enum PlaygroundBookTemplate {
                 <key>ContentVersion</key>
                 <string>1.0</string>
                 <key>DeploymentTarget</key>
-                <string>ios11.0</string>
+                <string>ios-current</string>
                 <key>DevelopmentRegion</key>
                 <string>en</string>
                 <key>ImageReference</key>
                 <string>\(imageName)</string>
-                <key>Name</key>
-                <string>Blank</string>
                 <key>SwiftVersion</key>
-                <string>5.0</string>
+                <string>5.1</string>
                 <key>Version</key>
-                <string>6.0</string>
+                <string>7.0</string>
                 <key>UserAutoImportedAuxiliaryModules</key>
                 <array/>
                 <key>UserModuleMode</key>

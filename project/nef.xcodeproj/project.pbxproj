@@ -66,6 +66,7 @@
 		8B46C422238EBD9300437659 /* PlaygroundExcludeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */; };
 		8B46C426238EC0A100437659 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C425238EC0A100437659 /* BowOptics */; };
 		8B46C428238ED11000437659 /* Optics+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C427238ED11000437659 /* Optics+Utils.swift */; };
+		8B46C42A238EE4C400437659 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C429238EE4C400437659 /* String+Utils.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonView.swift */; };
@@ -312,6 +313,7 @@
 		8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookTemplate.swift; sourceTree = "<group>"; };
 		8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundExcludeItem.swift; sourceTree = "<group>"; };
 		8B46C427238ED11000437659 /* Optics+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optics+Utils.swift"; sourceTree = "<group>"; };
+		8B46C429238EE4C400437659 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B646F94237D71C50009AB43 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
@@ -790,6 +792,7 @@
 				8BD6F70C238C495600DD93C4 /* IO+Console.swift */,
 				8BD6F709238C278D00DD93C4 /* String+Path.swift */,
 				8B46C427238ED11000437659 /* Optics+Utils.swift */,
+				8B46C429238EE4C400437659 /* String+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1329,6 +1332,7 @@
 				8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */,
 				8B46C40E238D75A400437659 /* Package.swift in Sources */,
 				8B46C41B238D8A0000437659 /* PlaygroundBookResolvePath.swift in Sources */,
+				8B46C42A238EE4C400437659 /* String+Utils.swift in Sources */,
 				8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */,
 				8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */,
 				8BD4E33723881F9F002DECDB /* PlaygroundResolvePath.swift in Sources */,
