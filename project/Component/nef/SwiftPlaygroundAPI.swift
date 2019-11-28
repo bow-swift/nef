@@ -22,7 +22,7 @@ extension SwiftPlaygroundAPI {
         
         return NefSwiftPlayground.SwiftPlayground(packageContent: packageContent, name: name, output: output)
                                  .build(cached: true, excludes: excludes + invalidModules + invalidFiles)
-                                 .contramap { console in PlaygroundEnvironment(console: console, storage: MacFileSystem()) }^
+                                 .contramap { console in PlaygroundEnvironment(console: console, shell: MacPlaygroundShell(), storage: MacFileSystem()) }^
                                  .map { _ in output }^
                                  .mapError { _ in .swiftPlaygrond }^
     }

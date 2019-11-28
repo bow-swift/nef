@@ -67,6 +67,10 @@
 		8B46C426238EC0A100437659 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C425238EC0A100437659 /* BowOptics */; };
 		8B46C428238ED11000437659 /* Optics+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C427238ED11000437659 /* Optics+Utils.swift */; };
 		8B46C42A238EE4C400437659 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C429238EE4C400437659 /* String+Utils.swift */; };
+		8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */; };
+		8B46C42F238FD52900437659 /* PlaygroundShellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C42E238FD52900437659 /* PlaygroundShellError.swift */; };
+		8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C430238FD70700437659 /* MacPlaygroundShell.swift */; };
+		8B46C435238FDA3300437659 /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C434238FDA3300437659 /* Swiftline */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonView.swift */; };
@@ -83,7 +87,6 @@
 		8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */; };
 		8BD4E33C238824D9002DECDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33A2388233D002DECDB /* Console.swift */; };
 		8BD4E34B238834F2002DECDB /* _SwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E32623881850002DECDB /* _SwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8BD4E367238837C6002DECDB /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD4E366238837C6002DECDB /* Swiftline */; };
 		8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
 		8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
@@ -314,6 +317,9 @@
 		8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundExcludeItem.swift; sourceTree = "<group>"; };
 		8B46C427238ED11000437659 /* Optics+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optics+Utils.swift"; sourceTree = "<group>"; };
 		8B46C429238EE4C400437659 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
+		8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShell.swift; sourceTree = "<group>"; };
+		8B46C42E238FD52900437659 /* PlaygroundShellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShellError.swift; sourceTree = "<group>"; };
+		8B46C430238FD70700437659 /* MacPlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundShell.swift; sourceTree = "<group>"; };
 		8B4F45A522CF9AF400E6F471 /* NefModels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefModels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B646F94237D71C50009AB43 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
@@ -352,6 +358,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B46C435238FDA3300437659 /* Swiftline in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +374,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BD4E367238837C6002DECDB /* Swiftline in Frameworks */,
 				8B46C406238D453F00437659 /* Bow in Frameworks */,
 				8B46C408238D453F00437659 /* BowEffects in Frameworks */,
 				8B46C426238EC0A100437659 /* BowOptics in Frameworks */,
@@ -455,7 +461,7 @@
 				8B89BA0C238300A80025BC04 /* JekyllAPI.swift */,
 				8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */,
 				8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */,
-				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
+				8B46C436238FDA3A00437659 /* Instances */,
 				8B75AF9523805B3400388B1C /* Models */,
 				8B75AF9223805B1900388B1C /* Views */,
 				8B3CB83B22D3929B00919F36 /* Support Files */,
@@ -667,6 +673,15 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		8B46C436238FDA3A00437659 /* Instances */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
+				8B46C430238FD70700437659 /* MacPlaygroundShell.swift */,
+			);
+			path = Instances;
+			sourceTree = "<group>";
+		};
 		8B6FC57C221ECE6A008F7694 = {
 			isa = PBXGroup;
 			children = (
@@ -772,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				8BD6F6FF238C253700DD93C4 /* FileSystem.swift */,
+				8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */,
 			);
 			path = Algrebras;
 			sourceTree = "<group>";
@@ -780,6 +796,7 @@
 			isa = PBXGroup;
 			children = (
 				8BD6F702238C256700DD93C4 /* FileSystemError.swift */,
+				8B46C42E238FD52900437659 /* PlaygroundShellError.swift */,
 				8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */,
 				8B46C418238D88B800437659 /* PlaygroundBookError.swift */,
 			);
@@ -1062,7 +1079,6 @@
 			);
 			name = NefSwiftPlayground;
 			packageProductDependencies = (
-				8BD4E366238837C6002DECDB /* Swiftline */,
 				8B46C405238D453F00437659 /* Bow */,
 				8B46C407238D453F00437659 /* BowEffects */,
 				8B46C425238EC0A100437659 /* BowOptics */,
@@ -1091,6 +1107,7 @@
 			);
 			name = nef;
 			packageProductDependencies = (
+				8B46C434238FDA3300437659 /* Swiftline */,
 			);
 			productName = Nef;
 			productReference = 8BF75F8522CA71E700EC53A1 /* nef.framework */;
@@ -1181,7 +1198,7 @@
 			mainGroup = 8B6FC57C221ECE6A008F7694;
 			packageReferences = (
 				8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */,
-				8BD4E3322388197B002DECDB /* XCRemoteSwiftPackageReference "Swiftline" */,
+				8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */,
 			);
 			productRefGroup = 8B6FC586221ECE6A008F7694 /* Products */;
 			projectDirPath = "";
@@ -1325,6 +1342,8 @@
 				8B46C428238ED11000437659 /* Optics+Utils.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
+				8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */,
+				8B46C42F238FD52900437659 /* PlaygroundShellError.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
 				8B46C415238D883300437659 /* ImageReference.swift in Sources */,
 				8BD6F70A238C278D00DD93C4 /* String+Path.swift in Sources */,
@@ -1345,6 +1364,7 @@
 			files = (
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
+				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
 				8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */,
 				8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */,
@@ -2322,9 +2342,9 @@
 				minimumVersion = 0.6.0;
 			};
 		};
-		8BD4E3322388197B002DECDB /* XCRemoteSwiftPackageReference "Swiftline" */ = {
+		8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bow-swift/Swiftline.git";
+			repositoryURL = "https://github.com/bow-swift/SwiftLine.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.5.3;
@@ -2348,6 +2368,11 @@
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
 			productName = BowOptics;
 		};
+		8B46C434238FDA3300437659 /* Swiftline */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */;
+			productName = Swiftline;
+		};
 		8BD4E35423883654002DECDB /* BowEffects */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
@@ -2357,11 +2382,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
 			productName = BowEffects;
-		};
-		8BD4E366238837C6002DECDB /* Swiftline */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8BD4E3322388197B002DECDB /* XCRemoteSwiftPackageReference "Swiftline" */;
-			productName = Swiftline;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

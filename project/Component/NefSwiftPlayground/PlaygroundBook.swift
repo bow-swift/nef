@@ -62,12 +62,15 @@ public struct PlaygroundBook {
     }
     
     private func addModules(_ modules: [Module], toPath modulesPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
+        
         func copy(module: Module, to modulesPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-            let destinationPath = EnvIOPartial<FileSystem, PlaygroundBookError>.var(String.self)
-            return binding(
-                destinationPath <- createModuleDirectory(atPath: modulesPath, andName: module.name),
-                                |<-copy(sources: module.sources, atPath: module.path, toModulePath: destinationPath.get),
+            let dest = IOPartial<PlaygroundBookError>.var(String.self)
+            return EnvIO { storage in
+                return binding(
+                    dest <- createModuleDirectory(atPath: modulesPath, andName: module.name).provide(storage),
+                         |<-storage.copy(itemPaths: module.sources, to: dest.get).mapLeft { _ in .sources(module: module.name) },
                 yield: ())^
+            }
         }
         
         func createModuleDirectory(atPath path: String, andName name: String) -> EnvIO<FileSystem, PlaygroundBookError, String> {
@@ -78,14 +81,6 @@ public struct PlaygroundBook {
                 return storage.createDirectory(atPath: sourcesPath)^
                               .mapLeft { _ in .invalidModule(name: name) }
                               .map { _ in sourcesPath }
-            }
-        }
-        
-        func copy(sources: [String], atPath: String, toModulePath modulePath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-            EnvIO { storage in
-                let sourcesPaths = sources.map { source in "\(atPath)/\(source)".linkPath }
-                return storage.copy(itemPaths: sourcesPaths, to: modulePath)^
-                              .mapLeft { _ in .sources(module: modulePath.filename) }
             }
         }
         

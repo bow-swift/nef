@@ -9,7 +9,7 @@ public enum SwiftPlaygroundError: Error {
     case checkout
     case modules(_ paths: [String])
     case playgroundBook(info: String)
-    case ioError
+    case ioError(info: String = "")
     
     public var information: String {
         switch self {
@@ -26,8 +26,8 @@ public enum SwiftPlaygroundError: Error {
             return "could not extract any module from packages: \(packages)"
         case .playgroundBook(let info):
             return "could not create Playground Book (\(info))"
-        case .ioError:
-            return "failure running IO"
+        case .ioError(let info):
+            return "failure running IO \(info.isEmpty ? "" : "(\(info))")"
         }
     }
 }

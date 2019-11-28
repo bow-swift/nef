@@ -5,7 +5,7 @@ import BowOptics
 
 struct Module: Codable, AutoLens {
     var name: String
-    let path: String
+    var path: String
     let type: Type
     let moduleType: ModuleType
     var sources: [String]
@@ -35,5 +35,7 @@ extension Module: CustomStringConvertible {
 }
 
 extension Module {
-    static let sourcesTraversal = [Module].traversal + Module.lens(for: \.name).merge(Module.lens(for: \.sources))
+    static let sourcesTraversal = [Module].traversal + Module.lens(for: \.sources)
+    static let moduleNameAndSourcesTraversal = [Module].traversal + Module.lens(for: \.name).merge(Module.lens(for: \.sources))
+    static let modulePathAndSourcesTraversal = [Module].traversal + Module.lens(for: \.path).merge(Module.lens(for: \.sources))
 }
