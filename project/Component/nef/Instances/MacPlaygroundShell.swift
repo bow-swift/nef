@@ -9,14 +9,15 @@ class MacPlaygroundShell: PlaygroundShell {
     
     func resolve(packagePath: String, buildPath: String) -> IO<PlaygroundShellError, Void> {
         IO.invoke {
-            let result = run("swift package --package-path \(packagePath) --build-path \(buildPath) resolve")
+            let result = run("swift", args: ["package", "--package-path", "\(packagePath)", "--build-path", "\(buildPath)", "resolve"])
             guard result.exitStatus == 0 else { throw PlaygroundShellError.dependencies(package: packagePath) }
+            return ()
         }
     }
     
     func describe(repositoryPath: String) -> IO<PlaygroundShellError, Data> {
         IO.invoke {
-            let result = run("swift package --package-path \(repositoryPath) describe --type json")
+            let result = run("swift", args: ["package", "--package-path", "\(repositoryPath)", "describe", "--type", "json"])
             guard result.exitStatus == 0,
                   !result.stdout.isEmpty,
                   let data = result.stdout.data(using: .utf8) else { throw PlaygroundShellError.describe(repository: repositoryPath) }
@@ -27,7 +28,7 @@ class MacPlaygroundShell: PlaygroundShell {
     
     func linkPath(itemPath: String, parentPath: String) -> IO<PlaygroundShellError, String> {
         func linkPath(item: String) throws -> String {
-            let result = run("readlink file \(item)")
+            let result = run("readlink", args: ["file", "\(item)"])
             guard result.stderr.isEmpty else { throw PlaygroundShellError.linkPath(item: item) }
             guard result.stdout.isEmpty else  { return try linkPath(item: "\(item.parentPath)/\(result.stdout)") }
             return item

@@ -47,19 +47,19 @@ public struct SwiftPlayground {
     }
     
     private func structure(step: Step, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
-        EnvIO { app in
+        EnvIO { env in
             binding(
-                |<-app.shell.out.printStep(step: step, information: "Creating swift playground structure (\(resolvePath.projectName))"),
-                |<-self.makeStructure(buildPath: resolvePath.buildPath).provide(app.system),
-                yield: ())^.reportStatus(step: step, in: app.shell.out, verbose: false)
+                |<-env.shell.out.printStep(step: step, information: "Creating swift playground structure (\(resolvePath.projectName))"),
+                |<-self.makeStructure(buildPath: resolvePath.buildPath).provide(env.system),
+            yield: ())^.reportStatus(step: step, in: env.shell.out, verbose: false)
         }
     }
     
     private func checkout(step: Step, content: String, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [String]> {
-        let repos = IOPartial<SwiftPlaygroundError>.var([String].self)
-        
-        return EnvIO { env in
-            binding(
+        EnvIO { env in
+            let repos = IOPartial<SwiftPlaygroundError>.var([String].self)
+            
+            return binding(
                       |<-env.shell.out.printStep(step: step, information: "Downloading dependencies..."),
                       |<-self.buildPackage(content: content, packageFilePath: resolvePath.packageFilePath, packagePath: resolvePath.packagePath, buildPath: resolvePath.buildPath).provide((env.system, env.shell.run)),
                 repos <- self.repositories(checkoutPath: resolvePath.checkoutPath).provide(env.system),
@@ -68,10 +68,10 @@ public struct SwiftPlayground {
     }
     
     private func modules(step: Step, repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<Shell, SwiftPlaygroundError, [Module]> {
-        let modules = IOPartial<SwiftPlaygroundError>.var([Module].self)
-        
-        return EnvIO { (out, shell) in
-            binding(
+        EnvIO { (out, shell) in
+            let modules = IOPartial<SwiftPlaygroundError>.var([Module].self)
+            
+            return binding(
                        |<-out.printStep(step: step, information: "Get modules from repositories..."),
                modules <- self.swiftLibraryModules(in: repos, excludes: excludes).provide(shell),
             yield: modules.get)^.reportStatus(step: step, in: out, verbose: true)
@@ -89,9 +89,9 @@ public struct SwiftPlayground {
     
     // MARK: steps <helpers>
     private func removeItem(at itemPath: String, useCache: Bool = false) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
-        guard !useCache else { return EnvIO.pure(())^ }
-        
-        return EnvIO { system in
+        EnvIO { system in
+            guard !useCache else { return IO.pure(()) }
+            
             let removeFileIO = system.remove(itemPath: itemPath).mapLeft { _ in SwiftPlaygroundError.clean(item: itemPath) }^
             return system.exist(itemPath: itemPath) ? removeFileIO : IO.pure(())
         }
@@ -100,7 +100,7 @@ public struct SwiftPlayground {
     private func makeStructure(buildPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
         EnvIO { system in
             system.createDirectory(atPath: buildPath)^
-                   .mapLeft { _ in .structure }
+                  .mapLeft { _ in .structure }
         }
     }
     
@@ -115,9 +115,9 @@ public struct SwiftPlayground {
     
     private func repositories(checkoutPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, [String]> {
         EnvIO { fileSystem in
-            fileSystem.items(atPath: checkoutPath).mapLeft { _ in SwiftPlaygroundError.ioError(info: "repositories(checkoutPath:)") }
-                      .map { repos in repos.filter { !$0.contains("swift-") } }
-                      .handleErrorWith { _ in IO.pure([])^ }
+            fileSystem.items(atPath: checkoutPath)
+                      .mapLeft { _ in .checkout }
+                      .map { repos in repos.filter { repo in !repo.filename.contains("swift-") } }
         }
     }
     
@@ -126,8 +126,8 @@ public struct SwiftPlayground {
             guard let package = try? JSONDecoder().decode(Package.self, from: data) else { return [] }
             
             let modules = package.targets.filter { module in module.type == .library &&
-                module.moduleType == .swift &&
-                !excludes.contains(.module(name: module.name)) }
+                                                             module.moduleType == .swift &&
+                                                            !excludes.contains(.module(name: module.name)) }
             
             return Module.moduleNameAndSourcesTraversal.modify(modules) { (name, sources) in
                 (name, sources.filter { file in !excludes.contains(.file(name: file.filename, module: name)) })
