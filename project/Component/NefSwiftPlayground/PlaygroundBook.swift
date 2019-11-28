@@ -2,6 +2,7 @@
 
 import Foundation
 import NefModels
+import NefCommon
 
 import Bow
 import BowEffects

@@ -1,6 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import NefCommon
 import NefModels
 
 import Bow
@@ -137,7 +138,7 @@ public struct SwiftPlayground {
             EnvIO { shell in
                 let modules = Module.modulePathAndSourcesTraversal.modify(modules) { (parentPath, sources) in
                     let linkedSources: [String] = sources.map { source in
-                        shell.linkPath(itemPath: source, parentPath: parentPath).unsafeRunSyncEither().getOrElse(source)
+                        shell.linkPath(itemPath: source, parentPath: parentPath).unsafeRunSyncEither().getOrElse("\(parentPath)/\(source)")
                     }
                     
                     return (parentPath, linkedSources)

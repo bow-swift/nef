@@ -2,7 +2,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
 
     func clean(_ ocurrences: String...) -> String {
         return ocurrences.reduce(self) { (output, ocurrence) in

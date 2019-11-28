@@ -1,8 +1,11 @@
 //  Copyright © 2019 The Bow Authors.
 
 import Foundation
+import NefCommon
+
 import Bow
 import BowEffects
+
 
 public protocol FileSystem {
     func createDirectory(atPath: String) -> IO<FileSystemError, ()>

@@ -3,6 +3,7 @@
 import Foundation
 import CLIKit
 
+import NefCommon
 import NefModels
 import NefCore
 import NefCarbon
