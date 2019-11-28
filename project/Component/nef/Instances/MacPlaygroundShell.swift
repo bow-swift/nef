@@ -7,15 +7,6 @@ import Swiftline
 
 class MacPlaygroundShell: PlaygroundShell {
     
-    func itemPaths(in directory: String) -> IO<PlaygroundShellError, [String]> {
-        IO.invoke {
-            let result = run("ls \(directory)")
-            guard result.exitStatus == 0 else { throw PlaygroundShellError.empty(directory: directory) }
-            
-            return result.stdout.components(separatedBy: "\n").map { "\(directory)/\($0)" }
-        }
-    }
-    
     func resolve(packagePath: String, buildPath: String) -> IO<PlaygroundShellError, Void> {
         IO.invoke {
             let result = run("swift package --package-path \(packagePath) --build-path \(buildPath) resolve")

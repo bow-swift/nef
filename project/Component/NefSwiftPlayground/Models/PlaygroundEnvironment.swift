@@ -7,10 +7,10 @@ public typealias Shell = (out: Console, run: PlaygroundShell)
 
 public struct PlaygroundEnvironment {
     public let shell: Shell
-    public let storage: FileSystem
+    public let system: FileSystem
     
-    public init(console: Console, shell: PlaygroundShell, storage: FileSystem) {
+    public init(console: Console, shell: PlaygroundShell, system: FileSystem) {
         self.shell = (out: console, run: shell)
-        self.storage = storage
+        self.system = system
     }
 }

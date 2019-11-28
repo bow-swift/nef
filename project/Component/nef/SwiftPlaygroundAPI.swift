@@ -15,14 +15,14 @@ extension SwiftPlaygroundAPI {
     }
     
     public static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL> {
-        let invalidModules: [PlaygroundExcludeItem] = [//.module(name: "RxSwift"), .module(name: "RxRelay"), .module(name: "RxTest"), .module(name: "RxBlocking"), .module(name: "RxCocoa"),
+        let invalidModules: [PlaygroundExcludeItem] = [.module(name: "RxSwift"), .module(name: "RxRelay"), .module(name: "RxTest"), .module(name: "RxBlocking"), .module(name: "RxCocoa"),
                                                        .module(name: "SwiftCheck"),
                                                        .module(name: "BowRx"), .module(name: "BowGenerators"), .module(name: "BowEffectsGenerators"), .module(name: "BowRxGenerators"), .module(name: "BowFreeGenerators"), .module(name: "BowLaws"), .module(name: "BowEffectsLaws"), .module(name: "BowOpticsLaws")]
         let invalidFiles: [PlaygroundExcludeItem]   = [.file(name: "NetworkReachabilityManager.swift", module: "Alamofire")]
         
         return NefSwiftPlayground.SwiftPlayground(packageContent: packageContent, name: name, output: output)
                                  .build(cached: true, excludes: excludes + invalidModules + invalidFiles)
-                                 .contramap { console in PlaygroundEnvironment(console: console, shell: MacPlaygroundShell(), storage: MacFileSystem()) }^
+                                 .contramap { console in PlaygroundEnvironment(console: console, shell: MacPlaygroundShell(), system: MacFileSystem()) }^
                                  .map { _ in output }^
                                  .mapError { _ in .swiftPlaygrond }^
     }

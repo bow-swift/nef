@@ -1,7 +1,8 @@
 //  Copyright © 2019 The nef Authors.
 
+import Foundation
 import CLIKit
-import NefModels
+import nef
 import BowEffects
 
 class iPadConsole: NefModels.Console {
@@ -17,7 +18,7 @@ class iPadConsole: NefModels.Console {
         IO.invoke { print(" \(success ? "✅" : "❌")", separator: "", terminator: "\n") }
     }
     
-    func printStatus<E>(step: Step, information: String, success: Bool) -> IO<E, Void> where E : Error {
+    func printStatus<E: Swift.Error>(step: Step, information: String, success: Bool) -> IO<E, Void> {
         IO.invoke { print(" \(success ? "(\(information)) ✅" : "(\(information)) ❌")", separator: "", terminator: "\n") }
     }
 }

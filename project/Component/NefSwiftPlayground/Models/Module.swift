@@ -35,7 +35,6 @@ extension Module: CustomStringConvertible {
 }
 
 extension Module {
-    static let sourcesTraversal = [Module].traversal + Module.lens(for: \.sources)
     static let moduleNameAndSourcesTraversal = [Module].traversal + Module.lens(for: \.name).merge(Module.lens(for: \.sources))
     static let modulePathAndSourcesTraversal = [Module].traversal + Module.lens(for: \.path).merge(Module.lens(for: \.sources))
 }

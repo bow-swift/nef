@@ -31,32 +31,32 @@ public struct PlaygroundBook {
     
     // MARK: steps <helpers>
     private func writeManifest(_ manifest: String, toFolder folderPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-        EnvIO { storage in
-            let createDirectoryIO = storage.createDirectory(atPath: folderPath)
-            let writeManifiestIO = storage.write(content: manifest, toFile: "\(folderPath)/Manifest.plist")
+        EnvIO { system in
+            let createDirectoryIO = system.createDirectory(atPath: folderPath)
+            let writeManifiestIO = system.write(content: manifest, toFile: "\(folderPath)/Manifest.plist")
             
             return createDirectoryIO.followedBy(writeManifiestIO)^.mapLeft { _ in .manifest(path: folderPath) }
         }
     }
     
     private func createPage(inPath pagePath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-        EnvIO { storage in
+        EnvIO { system in
             let pageHeader = PlaygroundBookTemplate.Code.header
             let manifest   = PlaygroundBookTemplate.Manifest.page(name: pagePath.filename.removeExtension)
             
-            let createDirectoryIO = storage.createDirectory(atPath: pagePath)
-            let writePageIO = storage.write(content: pageHeader, toFile: "\(pagePath)/main.swift")
-            let writeManifiestIO = storage.write(content: manifest, toFile: "\(pagePath)/Manifest.plist")
+            let createDirectoryIO = system.createDirectory(atPath: pagePath)
+            let writePageIO = system.write(content: pageHeader, toFile: "\(pagePath)/main.swift")
+            let writeManifiestIO = system.write(content: manifest, toFile: "\(pagePath)/Manifest.plist")
             
             return createDirectoryIO.followedBy(writePageIO).followedBy(writeManifiestIO)^.mapLeft { _ in .page(path: pagePath) }
         }
     }
     
     private func addResource(base64: String, name resourceName: String, toPath resourcesPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-        EnvIO { storage in
+        EnvIO { system in
             guard let data = Data(base64Encoded: base64) else { return IO.raiseError(.resource(name: resourceName))^ }
-            let createDirectoryIO = storage.createDirectory(atPath: resourcesPath)
-            let writeResourceIO = storage.write(content: data, toFile: "\(resourcesPath)/\(resourceName)")
+            let createDirectoryIO = system.createDirectory(atPath: resourcesPath)
+            let writeResourceIO = system.write(content: data, toFile: "\(resourcesPath)/\(resourceName)")
             
             return createDirectoryIO.followedBy(writeResourceIO)^.mapLeft { _ in .resource(name: resourceName) }
         }
@@ -66,29 +66,29 @@ public struct PlaygroundBook {
         
         func copy(module: Module, to modulesPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
             let dest = IOPartial<PlaygroundBookError>.var(String.self)
-            return EnvIO { storage in
+            return EnvIO { system in
                 return binding(
-                    dest <- createModuleDirectory(atPath: modulesPath, andName: module.name).provide(storage),
-                         |<-storage.copy(itemPaths: module.sources, to: dest.get).mapLeft { _ in .sources(module: module.name) },
+                    dest <- createModuleDirectory(atPath: modulesPath, andName: module.name).provide(system),
+                         |<-system.copy(itemPaths: module.sources, to: dest.get).mapLeft { _ in .sources(module: module.name) },
                 yield: ())^
             }
         }
         
         func createModuleDirectory(atPath path: String, andName name: String) -> EnvIO<FileSystem, PlaygroundBookError, String> {
-            EnvIO { storage in
+            EnvIO { system in
                 let modulePath = "\(path)/\(name).playgroundmodule"
                 let sourcesPath = "\(modulePath)/Sources"
                 
-                return storage.createDirectory(atPath: sourcesPath)^
-                              .mapLeft { _ in .invalidModule(name: name) }
-                              .map { _ in sourcesPath }
+                return system.createDirectory(atPath: sourcesPath)^
+                             .mapLeft { _ in .invalidModule(name: name) }
+                             .map { _ in sourcesPath }
             }
         }
         
         
-        return EnvIO { storage in
+        return EnvIO { system in
             modules.k().foldLeft(IO<PlaygroundBookError, ()>.lazy()) { partial, module in
-                partial.forEffect(copy(module: module, to: modulesPath).invoke(storage))
+                partial.forEffect(copy(module: module, to: modulesPath).invoke(system))
             }^
         }
     }

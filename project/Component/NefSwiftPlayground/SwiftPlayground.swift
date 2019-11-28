@@ -38,10 +38,10 @@ public struct SwiftPlayground {
         EnvIO { env in
             binding(
                 |<-env.shell.out.printStep(step: step, information: "Clean up generated files for building"),
-                |<-self.removeItem(at: resolvePath.playgroundPath).provide(env.storage),
-                |<-self.removeItem(at: resolvePath.packageResolvedPath).provide(env.storage),
-                |<-self.removeItem(at: resolvePath.packageFilePath).provide(env.storage),
-                |<-self.removeItem(at: resolvePath.buildPath, useCache: !deintegrate).provide(env.storage),
+                |<-self.removeItem(at: resolvePath.playgroundPath).provide(env.system),
+                |<-self.removeItem(at: resolvePath.packageResolvedPath).provide(env.system),
+                |<-self.removeItem(at: resolvePath.packageFilePath).provide(env.system),
+                |<-self.removeItem(at: resolvePath.buildPath, useCache: !deintegrate).provide(env.system),
             yield: ())^.reportStatus(step: step, in: env.shell.out, verbose: false)
         }
     }
@@ -50,7 +50,7 @@ public struct SwiftPlayground {
         EnvIO { app in
             binding(
                 |<-app.shell.out.printStep(step: step, information: "Creating swift playground structure (\(resolvePath.projectName))"),
-                |<-self.makeStructure(buildPath: resolvePath.buildPath).provide(app.storage),
+                |<-self.makeStructure(buildPath: resolvePath.buildPath).provide(app.system),
                 yield: ())^.reportStatus(step: step, in: app.shell.out, verbose: false)
         }
     }
@@ -61,8 +61,8 @@ public struct SwiftPlayground {
         return EnvIO { env in
             binding(
                       |<-env.shell.out.printStep(step: step, information: "Downloading dependencies..."),
-                      |<-self.buildPackage(content: content, packageFilePath: resolvePath.packageFilePath, packagePath: resolvePath.packagePath, buildPath: resolvePath.buildPath).provide((env.storage, env.shell.run)),
-                repos <- self.repositories(checkoutPath: resolvePath.checkoutPath).provide(env.shell.run),
+                      |<-self.buildPackage(content: content, packageFilePath: resolvePath.packageFilePath, packagePath: resolvePath.packagePath, buildPath: resolvePath.buildPath).provide((env.system, env.shell.run)),
+                repos <- self.repositories(checkoutPath: resolvePath.checkoutPath).provide(env.system),
             yield: repos.get)^.reportStatus(step: step, in: env.shell.out, verbose: true)
         }
     }
@@ -70,11 +70,11 @@ public struct SwiftPlayground {
     private func modules(step: Step, repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<Shell, SwiftPlaygroundError, [Module]> {
         let modules = IOPartial<SwiftPlaygroundError>.var([Module].self)
         
-        return EnvIO { (console, shell) in
+        return EnvIO { (out, shell) in
             binding(
-                       |<-console.printStep(step: step, information: "Get modules from repositories..."),
+                       |<-out.printStep(step: step, information: "Get modules from repositories..."),
                modules <- self.swiftLibraryModules(in: repos, excludes: excludes).provide(shell),
-            yield: modules.get)^.reportStatus(step: step, in: console, verbose: true)
+            yield: modules.get)^.reportStatus(step: step, in: out, verbose: true)
         }
     }
     
@@ -82,7 +82,7 @@ public struct SwiftPlayground {
         EnvIO { env in
             binding(
                 |<-env.shell.out.printStep(step: step, information: "Building Swift Playground..."),
-                |<-self.buildPlaygroundBook(modules: modules, playgroundPath: resolvePath.playgroundPath).provide(env.storage),
+                |<-self.buildPlaygroundBook(modules: modules, playgroundPath: resolvePath.playgroundPath).provide(env.system),
             yield: ())^.reportStatus(step: step, in: env.shell.out, verbose: false)
         }
     }
@@ -91,33 +91,33 @@ public struct SwiftPlayground {
     private func removeItem(at itemPath: String, useCache: Bool = false) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
         guard !useCache else { return EnvIO.pure(())^ }
         
-        return EnvIO { storage in
-            let removeFileIO = storage.remove(itemPath: itemPath).mapLeft { _ in SwiftPlaygroundError.clean(item: itemPath) }^
-            return storage.exist(itemPath: itemPath) ? removeFileIO : IO.pure(())
+        return EnvIO { system in
+            let removeFileIO = system.remove(itemPath: itemPath).mapLeft { _ in SwiftPlaygroundError.clean(item: itemPath) }^
+            return system.exist(itemPath: itemPath) ? removeFileIO : IO.pure(())
         }
     }
     
     private func makeStructure(buildPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
-        EnvIO { storage in
-            storage.createDirectory(atPath: buildPath)^
+        EnvIO { system in
+            system.createDirectory(atPath: buildPath)^
                    .mapLeft { _ in .structure }
         }
     }
     
     private func buildPackage(content: String, packageFilePath: String, packagePath: String, buildPath: String) -> EnvIO<(FileSystem, PlaygroundShell), SwiftPlaygroundError, Void> {
-        EnvIO { (storage, shell) in
-            let writePackageIO = storage.write(content: content, toFile: packageFilePath).mapLeft { _ in SwiftPlaygroundError.checkout }
+        EnvIO { (system, shell) in
+            let writePackageIO = system.write(content: content, toFile: packageFilePath).mapLeft { _ in SwiftPlaygroundError.checkout }
             let resolvePackageIO = shell.resolve(packagePath: packagePath, buildPath: buildPath).mapLeft { _ in SwiftPlaygroundError.checkout }
 
             return writePackageIO.followedBy(resolvePackageIO)
         }
     }
     
-    private func repositories(checkoutPath: String) -> EnvIO<PlaygroundShell, SwiftPlaygroundError, [String]> {
-        EnvIO { shell in
-            shell.itemPaths(in: checkoutPath).mapLeft { _ in SwiftPlaygroundError.ioError(info: "repositories(checkoutPath:)") }
-                 .map { repos in repos.filter { !$0.contains("swift-") } }
-                 .handleErrorWith { _ in IO.pure([])^ }
+    private func repositories(checkoutPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, [String]> {
+        EnvIO { fileSystem in
+            fileSystem.items(atPath: checkoutPath).mapLeft { _ in SwiftPlaygroundError.ioError(info: "repositories(checkoutPath:)") }
+                      .map { repos in repos.filter { !$0.contains("swift-") } }
+                      .handleErrorWith { _ in IO.pure([])^ }
         }
     }
     
@@ -162,10 +162,10 @@ public struct SwiftPlayground {
     }
     
     private func buildPlaygroundBook(modules: [Module], playgroundPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
-        EnvIO { storage in
+        EnvIO { system in
             PlaygroundBook(name: "nef", path: playgroundPath)
                 .build(modules: modules)
-                .provide(storage)
+                .provide(system)
                 .mapLeft { e in .playgroundBook(info: e.description) }
         }
     }

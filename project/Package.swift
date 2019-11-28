@@ -17,18 +17,28 @@ let package = Package(
         .package(url: "https://github.com/bow-swift/Swiftline", from: "0.5.3"),
     ],
     targets: [
+        .target(name: "NefCommon", path: "Component/NefCommon", publicHeadersPath: "Support Files"),
         .target(name: "NefModels", dependencies: ["BowEffects"], path: "Component/NefModels", publicHeadersPath: "Support Files"),
         .target(name: "NefCore", dependencies: ["NefModels"], path: "Core", publicHeadersPath: "Support Files"),
         .target(name: "NefMarkdown", dependencies: ["NefCore"], path: "Component/NefMarkdown", publicHeadersPath: "Support Files"),
         .target(name: "NefJekyll", dependencies: ["NefCore"], path: "Component/NefJekyll", publicHeadersPath: "Support Files"),
         .target(name: "NefCarbon", dependencies: ["NefModels", "NefCore"], path: "Component/NefCarbon", publicHeadersPath: "Support Files"),
-        .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "Swiftline", "NefModels"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
+        .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "BowOptics", "Swiftline", "NefModels", "NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
+
 
         .target(name: "CLIKit", path: "UI/CLIKit", publicHeadersPath: "Support Files"),
+        .target(name: "nef", dependencies: ["Bow", "BowEffects",
+                                            "NefCommon",
+                                            "NefModels",
+                                            "NefCore",
+                                            "NefMarkdown",
+                                            "NefJekyll",
+                                            "NefCarbon",
+                                            "NefSwiftPlayground"], path: "Component/nef", publicHeadersPath: "Support Files"),
 
         .target(name: "MarkdownPage", dependencies: ["CLIKit", "NefMarkdown"], path: "UI/MarkdownPage"),
         .target(name: "JekyllPage", dependencies: ["CLIKit", "NefJekyll"], path: "UI/JekyllPage"),
-        .target(name: "CarbonPage", dependencies: ["CLIKit", "NefModels", "NefCore", "NefCarbon"], path: "UI/CarbonPage"),
-        .target(name: "SwiftPlayground", dependencies: ["BowEffects", "CLIKit", "NefModels", "NefSwiftPlayground"], path: "UI/SwiftPlayground"),
+        .target(name: "CarbonPage", dependencies: ["CLIKit", "NefCommon", "NefModels", "NefCore", "NefCarbon"], path: "UI/CarbonPage"),
+        .target(name: "SwiftPlayground", dependencies: ["BowEffects", "CLIKit", "nef"], path: "UI/SwiftPlayground"),
     ]
 )

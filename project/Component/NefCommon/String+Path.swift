@@ -25,7 +25,7 @@ public extension String {
     }
     
     var trimmingEmptyCharacters: String {
-        return trimmingCharacters(in: ["\n", " " ])
+        trimmingCharacters(in: ["\n", " " ])
     }
     
     private func removeLastComponent(separatedBy separator: String) -> String {
