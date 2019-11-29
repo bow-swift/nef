@@ -13,7 +13,7 @@ let package = Package(
         .executable(name: "nef-swift-playground", targets: ["SwiftPlayground"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/bow-swift/bow", from: "0.6.0"),
+        .package(url: "https://github.com/bow-swift/bow", .branch("master")),
         .package(url: "https://github.com/bow-swift/Swiftline", from: "0.5.3"),
     ],
     targets: [

@@ -135,20 +135,19 @@ public struct SwiftPlayground {
         
         func linkPathForSources(in modules: [Module]) -> EnvIO<PlaygroundShell, PlaygroundShellError, [Module]> {
             EnvIO { shell in
-                let modules = Module.modulePathAndSourcesTraversal.modify(modules) { (parentPath, sources) in
-                    let linkedSources: [String] = sources.map { source in
-                        shell.linkPath(itemPath: source, parentPath: parentPath).unsafeRunSyncEither().getOrElse("\(parentPath)/\(source)")
-                    }
+                modules.traverse { (module: Module) in
+                    let sourcesIO = module.sources.map { ($0, module.path) }.traverse(shell.linkPath)^
+                    let moduleIO  = sourcesIO.map { sources in
+                        Module.sourcesLens.modify(module, { _ in sources})
+                    }^
                     
-                    return (parentPath, linkedSources)
+                    return moduleIO
                 }
-                
-                return IO.pure(modules)^
             }
         }
         
         return EnvIO { shell in
-            repos.flatTraverse { repositoryPath in
+            repos.parFlatTraverse { repositoryPath in
                 shell.describe(repositoryPath: repositoryPath)
                      .map(modules)^
                      .flatMap { modules in linkPathForSources(in: modules).provide(shell) }^
@@ -167,5 +166,11 @@ public struct SwiftPlayground {
                 .provide(system)
                 .mapLeft { e in .playgroundBook(info: e.description) }
         }
+    }
+}
+
+extension Array {
+    func parFlatTraverse<G: Concurrent, B>(_ f: @escaping (Element) -> Kind<G, [B]>) -> Kind<G, [B]> {
+        self.k().parFlatTraverse { a in f(a).map { aa in aa.k() } }.map { x in x^.asArray }
     }
 }

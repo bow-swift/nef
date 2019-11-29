@@ -64,8 +64,9 @@ public struct PlaygroundBook {
     private func addModules(_ modules: [Module], toPath modulesPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
         
         func copy(module: Module, to modulesPath: String) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-            let dest = IOPartial<PlaygroundBookError>.var(String.self)
-            return EnvIO { system in
+            EnvIO { system in
+                let dest = IOPartial<PlaygroundBookError>.var(String.self)
+
                 return binding(
                     dest <- createModuleDirectory(atPath: modulesPath, andName: module.name).provide(system),
                          |<-system.copy(itemPaths: module.sources, to: dest.get).mapLeft { _ in .sources(module: module.name) },
@@ -85,10 +86,6 @@ public struct PlaygroundBook {
         }
         
         
-        return EnvIO { system in
-            modules.k().foldLeft(IO<PlaygroundBookError, ()>.lazy()) { partial, module in
-                partial.forEffect(copy(module: module, to: modulesPath).invoke(system))
-            }^
-        }
+        return modules.traverse { module in copy(module: module, to: modulesPath) }.void()^
     }
 }
