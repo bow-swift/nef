@@ -8,14 +8,13 @@ import Bow
 import BowEffects
 import BowOptics
 
-
 public struct SwiftPlayground {
-    private let resolvePath: PlaygroundResolvePath
+    private let path: PlaygroundPath
     private let packageContent: String
     
     public init(packageContent: String, name: String, output: URL) {
         self.packageContent = packageContent
-        self.resolvePath = PlaygroundResolvePath(projectName: name, outputPath: output.path)
+        self.path = PlaygroundPath(projectName: name, outputPath: output.path)
     }
     
     public func build(cached: Bool, excludes: [PlaygroundExcludeItem]) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
@@ -23,46 +22,46 @@ public struct SwiftPlayground {
         let modules = EnvIOPartial<PlaygroundEnvironment, SwiftPlaygroundError>.var([Module].self)
         
         return binding(
-                    |<-self.cleanUp(step: self.step(1), deintegrate: !cached, resolvePath: self.resolvePath),
-                    |<-self.structure(step: self.step(2), resolvePath: self.resolvePath),
-         modulesRaw <- self.checkout(step: self.step(3), content: self.packageContent, resolvePath: self.resolvePath),
+                    |<-self.cleanUp(step: self.step(1), deintegrate: !cached, path: self.path),
+                    |<-self.structure(step: self.step(2), path: self.path),
+         modulesRaw <- self.checkout(step: self.step(3), content: self.packageContent, path: self.path),
             modules <- self.modules(step: self.step(4), repos: modulesRaw.get, excludes: excludes).contramap(\PlaygroundEnvironment.shell),
-                    |<-self.swiftPlayground(step: self.step(5), modules: modules.get, resolvePath: self.resolvePath),
+                    |<-self.swiftPlayground(step: self.step(5), modules: modules.get, path: self.path),
         yield: ())^
     }
     
     // MARK: steps
     private func step(_ number: Int) -> Step { Step(total: 5, partial: number) }
     
-    private func cleanUp(step: Step, deintegrate: Bool, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
+    private func cleanUp(step: Step, deintegrate: Bool, path: PlaygroundPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
         EnvIO { env in
             binding(
                 |<-env.shell.out.printStep(step: step, information: "Clean up generated files for building"),
-                |<-self.removeItem(at: resolvePath.playgroundPath).provide(env.system),
-                |<-self.removeItem(at: resolvePath.packageResolvedPath).provide(env.system),
-                |<-self.removeItem(at: resolvePath.packageFilePath).provide(env.system),
-                |<-self.removeItem(at: resolvePath.buildPath, useCache: !deintegrate).provide(env.system),
+                |<-self.removeItem(at: path.playgroundPath).provide(env.system),
+                |<-self.removeItem(at: path.packageResolvedPath).provide(env.system),
+                |<-self.removeItem(at: path.packageFilePath).provide(env.system),
+                |<-self.removeItem(at: path.buildPath, useCache: !deintegrate).provide(env.system),
             yield: ())^.reportStatus(step: step, in: env.shell.out, verbose: false)
         }
     }
     
-    private func structure(step: Step, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
+    private func structure(step: Step, path: PlaygroundPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
         EnvIO { env in
             binding(
-                |<-env.shell.out.printStep(step: step, information: "Creating swift playground structure (\(resolvePath.projectName))"),
-                |<-self.makeStructure(buildPath: resolvePath.buildPath).provide(env.system),
+                |<-env.shell.out.printStep(step: step, information: "Creating swift playground structure (\(path.projectName))"),
+                |<-self.makeStructure(buildPath: path.buildPath).provide(env.system),
             yield: ())^.reportStatus(step: step, in: env.shell.out, verbose: false)
         }
     }
     
-    private func checkout(step: Step, content: String, resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [String]> {
+    private func checkout(step: Step, content: String, path: PlaygroundPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [String]> {
         EnvIO { env in
             let repos = IOPartial<SwiftPlaygroundError>.var([String].self)
             
             return binding(
                       |<-env.shell.out.printStep(step: step, information: "Downloading dependencies..."),
-                      |<-self.buildPackage(content: content, packageFilePath: resolvePath.packageFilePath, packagePath: resolvePath.packagePath, buildPath: resolvePath.buildPath).provide((env.system, env.shell.run)),
-                repos <- self.repositories(checkoutPath: resolvePath.checkoutPath).provide(env.system),
+                      |<-self.buildPackage(content: content, packageFilePath: path.packageFilePath, packagePath: path.packagePath, buildPath: path.buildPath).provide((env.system, env.shell.run)),
+                repos <- self.repositories(checkoutPath: path.checkoutPath).provide(env.system),
             yield: repos.get)^.reportStatus(step: step, in: env.shell.out, verbose: true)
         }
     }
@@ -78,11 +77,11 @@ public struct SwiftPlayground {
         }
     }
     
-    private func swiftPlayground(step: Step, modules: [Module], resolvePath: PlaygroundResolvePath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
+    private func swiftPlayground(step: Step, modules: [Module], path: PlaygroundPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
         EnvIO { env in
             binding(
                 |<-env.shell.out.printStep(step: step, information: "Building Swift Playground..."),
-                |<-self.buildPlaygroundBook(modules: modules, playgroundPath: resolvePath.playgroundPath).provide(env.system),
+                |<-self.buildPlaygroundBook(modules: modules, playgroundPath: path.playgroundPath).provide(env.system),
             yield: ())^.reportStatus(step: step, in: env.shell.out, verbose: false)
         }
     }

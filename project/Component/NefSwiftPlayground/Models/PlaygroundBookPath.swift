@@ -2,12 +2,12 @@
 
 import Foundation
 
-struct PlaygroundBookResolvePath {
+struct PlaygroundBookPath {
     let name: String
     let path: String
 }
 
-extension PlaygroundBookResolvePath {
+extension PlaygroundBookPath {
     var chapterName: String { "Chapter \(name)" }
     var pageName: String { name }
     var imageReferenceName: String { "nef-playground.png" }

@@ -9,23 +9,23 @@ import BowEffects
 
 
 public struct PlaygroundBook {
-    private let resolvePath: PlaygroundBookResolvePath
+    private let bookPath: PlaygroundBookPath
     
     init(name: String, path: String) {
-        self.resolvePath = PlaygroundBookResolvePath(name: name, path: path)
+        self.bookPath = PlaygroundBookPath(name: name, path: path)
     }
     
     func build(modules: [Module]) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-        let generalManifest = PlaygroundBookTemplate.Manifest.general(chapterName: resolvePath.chapterPath.filename.removeExtension, imageName: resolvePath.imageReferenceName)
-        let chapterManifest = PlaygroundBookTemplate.Manifest.chapter(pageName: resolvePath.pageName)
+        let generalManifest = PlaygroundBookTemplate.Manifest.general(chapterName: bookPath.chapterPath.filename.removeExtension, imageName: bookPath.imageReferenceName)
+        let chapterManifest = PlaygroundBookTemplate.Manifest.chapter(pageName: bookPath.pageName)
         
         return binding(
-            |<-self.writeManifest(generalManifest, toFolder: self.resolvePath.contentsPath),
-            |<-self.writeManifest(chapterManifest, toFolder: self.resolvePath.chapterPath),
-            |<-self.createPage(inPath: self.resolvePath.pagePath),
-            |<-self.createPage(inPath: self.resolvePath.templatePagePath),
-            |<-self.addResource(base64: AssetsBase64.imageReference, name: self.resolvePath.imageReferenceName, toPath: self.resolvePath.resourcesPath),
-            |<-self.addModules(modules, toPath: self.resolvePath.modulesPath),
+            |<-self.writeManifest(generalManifest, toFolder: self.bookPath.contentsPath),
+            |<-self.writeManifest(chapterManifest, toFolder: self.bookPath.chapterPath),
+            |<-self.createPage(inPath: self.bookPath.pagePath),
+            |<-self.createPage(inPath: self.bookPath.templatePagePath),
+            |<-self.addResource(base64: AssetsBase64.imageReference, name: self.bookPath.imageReferenceName, toPath: self.bookPath.resourcesPath),
+            |<-self.addModules(modules, toPath: self.bookPath.modulesPath),
         yield: ())^
     }
     

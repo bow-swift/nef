@@ -59,7 +59,7 @@
 		8B46C415238D883300437659 /* ImageReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C414238D883300437659 /* ImageReference.swift */; };
 		8B46C417238D889700437659 /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C416238D889700437659 /* PlaygroundBook.swift */; };
 		8B46C419238D88B800437659 /* PlaygroundBookError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C418238D88B800437659 /* PlaygroundBookError.swift */; };
-		8B46C41B238D8A0000437659 /* PlaygroundBookResolvePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41A238D8A0000437659 /* PlaygroundBookResolvePath.swift */; };
+		8B46C41B238D8A0000437659 /* PlaygroundBookPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41A238D8A0000437659 /* PlaygroundBookPath.swift */; };
 		8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */; };
 		8B46C422238EBD9300437659 /* PlaygroundExcludeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */; };
 		8B46C426238EC0A100437659 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C425238EC0A100437659 /* BowOptics */; };
@@ -84,7 +84,7 @@
 		8BD4E321238817BB002DECDB /* NefSwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E31F238817BB002DECDB /* NefSwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */; };
 		8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33023881946002DECDB /* SwiftPlayground.swift */; };
-		8BD4E33723881F9F002DECDB /* PlaygroundResolvePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33623881F9F002DECDB /* PlaygroundResolvePath.swift */; };
+		8BD4E33723881F9F002DECDB /* PlaygroundPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33623881F9F002DECDB /* PlaygroundPath.swift */; };
 		8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */; };
 		8BD4E33C238824D9002DECDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33A2388233D002DECDB /* Console.swift */; };
 		8BD4E34B238834F2002DECDB /* _SwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E32623881850002DECDB /* _SwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -325,7 +325,7 @@
 		8B46C414238D883300437659 /* ImageReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReference.swift; sourceTree = "<group>"; };
 		8B46C416238D889700437659 /* PlaygroundBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBook.swift; sourceTree = "<group>"; };
 		8B46C418238D88B800437659 /* PlaygroundBookError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookError.swift; sourceTree = "<group>"; };
-		8B46C41A238D8A0000437659 /* PlaygroundBookResolvePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookResolvePath.swift; sourceTree = "<group>"; };
+		8B46C41A238D8A0000437659 /* PlaygroundBookPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookPath.swift; sourceTree = "<group>"; };
 		8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookTemplate.swift; sourceTree = "<group>"; };
 		8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundExcludeItem.swift; sourceTree = "<group>"; };
 		8B46C427238ED11000437659 /* Optics+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optics+Utils.swift"; sourceTree = "<group>"; };
@@ -356,7 +356,7 @@
 		8BD4E32623881850002DECDB /* _SwiftPlayground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _SwiftPlayground.h; sourceTree = "<group>"; };
 		8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPlaygroundAPI.swift; sourceTree = "<group>"; };
 		8BD4E33023881946002DECDB /* SwiftPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPlayground.swift; sourceTree = "<group>"; };
-		8BD4E33623881F9F002DECDB /* PlaygroundResolvePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundResolvePath.swift; sourceTree = "<group>"; };
+		8BD4E33623881F9F002DECDB /* PlaygroundPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundPath.swift; sourceTree = "<group>"; };
 		8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPlaygroundError.swift; sourceTree = "<group>"; };
 		8BD4E33A2388233D002DECDB /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8BD6F6FF238C253700DD93C4 /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
@@ -821,8 +821,8 @@
 				8B46C409238D689800437659 /* Module.swift */,
 				8B46C40C238D71C900437659 /* Package.swift */,
 				8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */,
-				8BD4E33623881F9F002DECDB /* PlaygroundResolvePath.swift */,
-				8B46C41A238D8A0000437659 /* PlaygroundBookResolvePath.swift */,
+				8BD4E33623881F9F002DECDB /* PlaygroundPath.swift */,
+				8B46C41A238D8A0000437659 /* PlaygroundBookPath.swift */,
 				8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */,
 			);
 			path = Models;
@@ -1421,10 +1421,10 @@
 				8B46C419238D88B800437659 /* PlaygroundBookError.swift in Sources */,
 				8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */,
 				8B46C40E238D75A400437659 /* Package.swift in Sources */,
-				8B46C41B238D8A0000437659 /* PlaygroundBookResolvePath.swift in Sources */,
+				8B46C41B238D8A0000437659 /* PlaygroundBookPath.swift in Sources */,
 				8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */,
 				8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */,
-				8BD4E33723881F9F002DECDB /* PlaygroundResolvePath.swift in Sources */,
+				8BD4E33723881F9F002DECDB /* PlaygroundPath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
