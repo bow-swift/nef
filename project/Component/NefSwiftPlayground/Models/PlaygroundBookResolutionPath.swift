@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct PlaygroundBookPath {
+struct PlaygroundBookResolutionPath {
     let name: String
     let path: String
     

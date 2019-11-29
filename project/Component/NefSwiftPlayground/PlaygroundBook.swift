@@ -7,25 +7,24 @@ import NefCommon
 import Bow
 import BowEffects
 
-
 public struct PlaygroundBook {
-    private let bookPath: PlaygroundBookPath
+    private let resolutionPath: PlaygroundBookResolutionPath
     
     init(name: String, path: String) {
-        self.bookPath = PlaygroundBookPath(name: name, path: path)
+        self.resolutionPath = PlaygroundBookResolutionPath(name: name, path: path)
     }
     
     func build(modules: [Module]) -> EnvIO<FileSystem, PlaygroundBookError, Void> {
-        let generalManifest = PlaygroundBookTemplate.Manifest.general(chapterName: bookPath.chapterPath.filename.removeExtension, imageName: bookPath.imageReferenceName)
-        let chapterManifest = PlaygroundBookTemplate.Manifest.chapter(pageName: bookPath.pageName)
+        let generalManifest = PlaygroundBookTemplate.Manifest.general(chapterName: resolutionPath.chapterPath.filename.removeExtension, imageName: resolutionPath.imageReferenceName)
+        let chapterManifest = PlaygroundBookTemplate.Manifest.chapter(pageName: resolutionPath.pageName)
         
         return binding(
-            |<-self.writeManifest(generalManifest, toFolder: self.bookPath.contentsPath),
-            |<-self.writeManifest(chapterManifest, toFolder: self.bookPath.chapterPath),
-            |<-self.createPage(inPath: self.bookPath.pagePath),
-            |<-self.createPage(inPath: self.bookPath.templatePagePath),
-            |<-self.addResource(base64: AssetsBase64.imageReference, name: self.bookPath.imageReferenceName, toPath: self.bookPath.resourcesPath),
-            |<-self.addModules(modules, toPath: self.bookPath.modulesPath),
+            |<-self.writeManifest(generalManifest, toFolder: self.resolutionPath.contentsPath),
+            |<-self.writeManifest(chapterManifest, toFolder: self.resolutionPath.chapterPath),
+            |<-self.createPage(inPath: self.resolutionPath.pagePath),
+            |<-self.createPage(inPath: self.resolutionPath.templatePagePath),
+            |<-self.addResource(base64: AssetsBase64.imageReference, name: self.resolutionPath.imageReferenceName, toPath: self.resolutionPath.resourcesPath),
+            |<-self.addModules(modules, toPath: self.resolutionPath.modulesPath),
         yield: ())^
     }
     

@@ -6,7 +6,7 @@ private enum Constants {
     static let nefFolder = "nef"
 }
 
-struct PlaygroundPath {
+struct PlaygroundResolutionPath {
     let projectName: String
     let outputPath: String
     
