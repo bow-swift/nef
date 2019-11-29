@@ -2,20 +2,32 @@
 
 import Foundation
 
+private enum Constants {
+    static let nefFolder = "nef"
+}
+
 struct PlaygroundPath {
     let projectName: String
     let outputPath: String
-}
-
-extension PlaygroundPath {
-    private var nefFolder: String { "nef" }
-    var playgroundPath: String { "\(projectPath)/\(projectName).playgroundbook" }
-    var projectPath: String { "\(outputPath)/\(projectName)" }
     
-    var packagePath: String { "\(projectPath)/\(nefFolder)" }
-    var packageFilePath: String { "\(packagePath)/Package.swift" }
-    var packageResolvedPath: String { "\(packagePath)/Package.resolved" }
+    private let projectPath: String
+    let playgroundPath: String
+    let packagePath: String
+    let packageFilePath: String
+    let packageResolvedPath: String
+    let buildPath: String
+    let checkoutPath: String
     
-    var buildPath: String { "\(packagePath)/build"}
-    var checkoutPath: String { "\(packagePath)/build/checkouts" }
+    init(projectName: String, outputPath: String) {
+        self.projectName = projectName
+        self.outputPath = outputPath
+        
+        projectPath = "\(outputPath)/\(projectName)"
+        playgroundPath = "\(projectPath)/\(projectName).playgroundbook"
+        packagePath = "\(projectPath)/\(Constants.nefFolder)"
+        packageFilePath = "\(packagePath)/Package.swift"
+        packageResolvedPath = "\(packagePath)/Package.resolved"
+        buildPath = "\(packagePath)/build"
+        checkoutPath = "\(packagePath)/build/checkouts"
+    }
 }
