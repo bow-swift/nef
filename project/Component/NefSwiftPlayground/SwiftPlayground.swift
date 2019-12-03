@@ -168,9 +168,3 @@ public struct SwiftPlayground {
         }
     }
 }
-
-extension Array {
-    func parFlatTraverse<G: Concurrent, B>(_ f: @escaping (Element) -> Kind<G, [B]>) -> Kind<G, [B]> {
-        self.k().parFlatTraverse { a in f(a).map { aa in aa.k() } }.map { x in x^.asArray }
-    }
-}
