@@ -23,11 +23,10 @@ let package = Package(
         .target(name: "NefMarkdown", dependencies: ["NefCore"], path: "Component/NefMarkdown", publicHeadersPath: "Support Files"),
         .target(name: "NefJekyll", dependencies: ["NefCore"], path: "Component/NefJekyll", publicHeadersPath: "Support Files"),
         .target(name: "NefCarbon", dependencies: ["NefModels", "NefCore"], path: "Component/NefCarbon", publicHeadersPath: "Support Files"),
-        .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "BowOptics", "Swiftline", "NefModels", "NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
+        .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "BowOptics", "NefModels", "NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
 
 
-        .target(name: "CLIKit", path: "UI/CLIKit", publicHeadersPath: "Support Files"),
-        .target(name: "nef", dependencies: ["Bow", "BowEffects",
+        .target(name: "nef", dependencies: ["Bow", "BowEffects", "Swiftline",
                                             "NefCommon",
                                             "NefModels",
                                             "NefCore",
@@ -35,6 +34,7 @@ let package = Package(
                                             "NefJekyll",
                                             "NefCarbon",
                                             "NefSwiftPlayground"], path: "Component/nef", publicHeadersPath: "Support Files"),
+        .target(name: "CLIKit", dependencies: ["Bow", "BowEffects", "nef"], path: "UI/CLIKit", publicHeadersPath: "Support Files"),
 
         .target(name: "MarkdownPage", dependencies: ["CLIKit", "NefMarkdown"], path: "UI/MarkdownPage"),
         .target(name: "JekyllPage", dependencies: ["CLIKit", "NefJekyll"], path: "UI/JekyllPage"),

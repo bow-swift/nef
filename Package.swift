@@ -20,10 +20,10 @@ let package = Package(
         .target(name: "NefMarkdown", dependencies: ["NefCore"], path: "project/Component/NefMarkdown", publicHeadersPath: "Support Files"),
         .target(name: "NefJekyll", dependencies: ["NefCore"], path: "project/Component/NefJekyll", publicHeadersPath: "Support Files"),
         .target(name: "NefCarbon", dependencies: ["NefModels", "NefCore"], path: "project/Component/NefCarbon", publicHeadersPath: "Support Files"),
-        .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "BowOptics", "Swiftline", "NefModels", "NefCommon"], path: "project/Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
+        .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "BowOptics", "NefModels", "NefCommon"], path: "project/Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
 
         .target(name: "nef",
-                dependencies: ["Bow", "BowEffects",
+                dependencies: ["Bow", "BowEffects", "Swiftline",
                                "NefCore",
                                "NefCommon",
                                "NefModels",
