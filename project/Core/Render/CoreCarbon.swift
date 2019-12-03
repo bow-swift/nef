@@ -22,7 +22,7 @@ public struct CarbonGenerator: InternalRender {
         return !trace.contains("☓")
     }
     
-    func render(node: Node) -> String {
+    internal func render(node: Node) -> String {
         return node.carbon(downloader: self)
     }
 }

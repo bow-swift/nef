@@ -9,7 +9,7 @@ public struct JekyllGenerator: InternalRender {
         self.permalink = permalink
     }
 
-    func render(node: Node) -> String {
+    internal func render(node: Node) -> String {
         return node.jekyll(permalink: permalink)
     }
 }

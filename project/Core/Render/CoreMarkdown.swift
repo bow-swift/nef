@@ -5,7 +5,7 @@ import Foundation
 public struct MarkdownGenerator: InternalRender {
     public init() { }
     
-    func render(node: Node) -> String {
+    internal func render(node: Node) -> String {
         return node.markdown()
     }
 }
