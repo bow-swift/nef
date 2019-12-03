@@ -24,4 +24,10 @@ framework module nef {
         export Core
         export *
     }
+    
+    explicit module SwiftPlayground {
+        header "_SwiftPlayground.h"
+        export Core
+        export *
+    }
 }
