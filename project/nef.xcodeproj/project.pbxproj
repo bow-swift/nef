@@ -51,8 +51,6 @@
 		8B3CB8C122D3963B00919F36 /* NefModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB84022D3929B00919F36 /* NefModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */; };
 		8B3CB8C822D3987500919F36 /* CoreCarbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* CoreCarbon.swift */; };
-		8B46C406238D453F00437659 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C405238D453F00437659 /* Bow */; settings = {ATTRIBUTES = (Required, ); }; };
-		8B46C408238D453F00437659 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C407238D453F00437659 /* BowEffects */; settings = {ATTRIBUTES = (Required, ); }; };
 		8B46C40B238D689F00437659 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C409238D689800437659 /* Module.swift */; };
 		8B46C40E238D75A400437659 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C40C238D71C900437659 /* Package.swift */; };
 		8B46C412238D87F200437659 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C411238D87F200437659 /* Assets.swift */; };
@@ -62,7 +60,6 @@
 		8B46C41B238D8A0000437659 /* PlaygroundBookResolutionPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41A238D8A0000437659 /* PlaygroundBookResolutionPath.swift */; };
 		8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */; };
 		8B46C422238EBD9300437659 /* PlaygroundExcludeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */; };
-		8B46C426238EC0A100437659 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C425238EC0A100437659 /* BowOptics */; };
 		8B46C428238ED11000437659 /* Optics+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C427238ED11000437659 /* Optics+Utils.swift */; };
 		8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */; };
 		8B46C42F238FD52900437659 /* PlaygroundShellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C42E238FD52900437659 /* PlaygroundShellError.swift */; };
@@ -74,12 +71,16 @@
 		8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0C238300A80025BC04 /* JekyllAPI.swift */; };
 		8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */; };
 		8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BBCA655239683D400BE058B /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
+		8BBCA6962396A59600BE058B /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6952396A59600BE058B /* Bow */; };
+		8BBCA6982396A59600BE058B /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6972396A59600BE058B /* BowEffects */; };
+		8BBCA69A2396A59600BE058B /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6992396A59600BE058B /* BowOptics */; };
+		8BBCA69D2396A6A400BE058B /* nef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF75F8522CA71E700EC53A1 /* nef.framework */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BBD14BC2390192C0002970C /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F709238C278D00DD93C4 /* String+Path.swift */; };
 		8BBD14BD2390192C0002970C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C429238EE4C400437659 /* String+Utils.swift */; };
 		8BBD14BE2390192C0002970C /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86622D392C000919F36 /* Array+Slice.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
-		8BD4E311238814B7002DECDB /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E2F62388141E002DECDB /* ConsoleOutput.swift */; };
 		8BD4E312238814B7002DECDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E2F52388141E002DECDB /* main.swift */; };
 		8BD4E321238817BB002DECDB /* NefSwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E31F238817BB002DECDB /* NefSwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */; };
@@ -96,13 +97,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8B0FB593237C0B6C00221548 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B0FB583237C0A5600221548;
-			remoteInfo = CLI;
-		};
 		8B0FB595237C0B6F00221548 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -180,27 +174,6 @@
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
 			remoteInfo = Markup;
 		};
-		8B848357237D676F0024EA4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BF75F8422CA71E700EC53A1;
-			remoteInfo = nef;
-		};
-		8B848359237D67740024EA4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BF75F8422CA71E700EC53A1;
-			remoteInfo = nef;
-		};
-		8B84835B237D67780024EA4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BF75F8422CA71E700EC53A1;
-			remoteInfo = nef;
-		};
 		8B89CD72237B084E007E9152 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -214,6 +187,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B22248222D5EAD500C85856;
 			remoteInfo = NefMarkdown;
+		};
+		8BBCA69B2396A68900BE058B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B0FB583237C0A5600221548;
+			remoteInfo = CLIKit;
 		};
 		8BBD14BA2390187D0002970C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -235,13 +215,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B0FB583237C0A5600221548;
 			remoteInfo = CLIKit;
-		};
-		8BD4E31523881506002DECDB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BF75F8422CA71E700EC53A1;
-			remoteInfo = nef;
 		};
 		8BD4E32823881876002DECDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -342,13 +315,13 @@
 		8B75AF9023805A5200388B1C /* CarbonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbonView.swift; sourceTree = "<group>"; };
 		8B89BA0C238300A80025BC04 /* JekyllAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JekyllAPI.swift; sourceTree = "<group>"; };
 		8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownAPI.swift; sourceTree = "<group>"; };
+		8BBCA654239683D400BE058B /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8BBD14AF2390179B0002970C /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD14B12390179B0002970C /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
 		8BBD14B22390179B0002970C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BD4E2F52388141E002DECDB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		8BD4E2F62388141E002DECDB /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8BD4E30A238814B1002DECDB /* nef-swift-playground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-swift-playground"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefSwiftPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD4E31F238817BB002DECDB /* NefSwiftPlayground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefSwiftPlayground.h; sourceTree = "<group>"; };
@@ -386,13 +359,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BBCA6732396910900BE058B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BBCA69D2396A6A400BE058B /* nef.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BBCA6B62396A7FA00BE058B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BD4E361238837BB002DECDB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B46C406238D453F00437659 /* Bow in Frameworks */,
-				8B46C408238D453F00437659 /* BowEffects in Frameworks */,
-				8B46C426238EC0A100437659 /* BowOptics in Frameworks */,
+				8BBCA69A2396A59600BE058B /* BowOptics in Frameworks */,
+				8BBCA6982396A59600BE058B /* BowEffects in Frameworks */,
+				8BBCA6962396A59600BE058B /* Bow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB86322D392C000919F36 /* ConsoleReader.swift */,
+				8BBCA654239683D400BE058B /* Console.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
 				8B0FB58E237C0A8F00221548 /* Support Files */,
 			);
@@ -786,7 +775,6 @@
 			isa = PBXGroup;
 			children = (
 				8BD4E2F52388141E002DECDB /* main.swift */,
-				8BD4E2F62388141E002DECDB /* ConsoleOutput.swift */,
 			);
 			path = SwiftPlayground;
 			sourceTree = "<group>";
@@ -796,7 +784,7 @@
 			children = (
 				8BD4E33023881946002DECDB /* SwiftPlayground.swift */,
 				8B46C416238D889700437659 /* PlaygroundBook.swift */,
-				8BD6F6FE238C252F00DD93C4 /* Algrebras */,
+				8BD6F6FE238C252F00DD93C4 /* Algebras */,
 				8BD6F701238C255200DD93C4 /* Errors */,
 				8BD4E33523881F88002DECDB /* Models */,
 				8B46C413238D880300437659 /* Assets */,
@@ -828,13 +816,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		8BD6F6FE238C252F00DD93C4 /* Algrebras */ = {
+		8BD6F6FE238C252F00DD93C4 /* Algebras */ = {
 			isa = PBXGroup;
 			children = (
 				8BD6F6FF238C253700DD93C4 /* FileSystem.swift */,
 				8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */,
 			);
-			path = Algrebras;
+			path = Algebras;
 			sourceTree = "<group>";
 		};
 		8BD6F701238C255200DD93C4 /* Errors */ = {
@@ -940,7 +928,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				8B848358237D676F0024EA4A /* PBXTargetDependency */,
 				8B0FB598237C0B7100221548 /* PBXTargetDependency */,
 			);
 			name = CarbonPage;
@@ -954,12 +941,15 @@
 			buildPhases = (
 				8B0FB57F237C0A5600221548 /* Headers */,
 				8B0FB580237C0A5600221548 /* Sources */,
+				8BBCA6732396910900BE058B /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = CLIKit;
+			packageProductDependencies = (
+			);
 			productName = CLI;
 			productReference = 8B0FB584237C0A5600221548 /* CLIKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1007,8 +997,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8B84835C237D67780024EA4A /* PBXTargetDependency */,
-				8B0FB594237C0B6C00221548 /* PBXTargetDependency */,
+				8BBCA69C2396A68900BE058B /* PBXTargetDependency */,
 			);
 			name = MarkdownPage;
 			productName = Markdown;
@@ -1021,11 +1010,12 @@
 			buildPhases = (
 				8B4F45A022CF9AF400E6F471 /* Headers */,
 				8B4F45A122CF9AF400E6F471 /* Sources */,
+				8BBCA6B62396A7FA00BE058B /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8BD4E35523883654002DECDB /* PBXTargetDependency */,
+				8BBCA6BA2396A86600BE058B /* PBXTargetDependency */,
 			);
 			name = NefModels;
 			packageProductDependencies = (
@@ -1078,7 +1068,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				8B84835A237D67740024EA4A /* PBXTargetDependency */,
 				8B0FB596237C0B6F00221548 /* PBXTargetDependency */,
 			);
 			name = JekyllPage;
@@ -1111,7 +1100,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				8BD4E31623881506002DECDB /* PBXTargetDependency */,
 				8BD4E31423881506002DECDB /* PBXTargetDependency */,
 			);
 			name = SwiftPlayground;
@@ -1138,9 +1126,9 @@
 			);
 			name = NefSwiftPlayground;
 			packageProductDependencies = (
-				8B46C405238D453F00437659 /* Bow */,
-				8B46C407238D453F00437659 /* BowEffects */,
-				8B46C425238EC0A100437659 /* BowOptics */,
+				8BBCA6952396A59600BE058B /* Bow */,
+				8BBCA6972396A59600BE058B /* BowEffects */,
+				8BBCA6992396A59600BE058B /* BowOptics */,
 			);
 			productName = NefSwiftPlayground;
 			productReference = 8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */;
@@ -1311,6 +1299,7 @@
 			files = (
 				8B0FB59A237C0B9A00221548 /* ConsoleReader.swift in Sources */,
 				8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */,
+				8BBCA655239683D400BE058B /* Console.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1399,7 +1388,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD4E312238814B7002DECDB /* main.swift in Sources */,
-				8BD4E311238814B7002DECDB /* ConsoleOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1464,11 +1452,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8B0FB594237C0B6C00221548 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B0FB583237C0A5600221548 /* CLIKit */;
-			targetProxy = 8B0FB593237C0B6C00221548 /* PBXContainerItemProxy */;
-		};
 		8B0FB596237C0B6F00221548 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
@@ -1524,21 +1507,6 @@
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11BC22CBA1770060177F /* PBXContainerItemProxy */;
 		};
-		8B848358237D676F0024EA4A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BF75F8422CA71E700EC53A1 /* nef */;
-			targetProxy = 8B848357237D676F0024EA4A /* PBXContainerItemProxy */;
-		};
-		8B84835A237D67740024EA4A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BF75F8422CA71E700EC53A1 /* nef */;
-			targetProxy = 8B848359237D67740024EA4A /* PBXContainerItemProxy */;
-		};
-		8B84835C237D67780024EA4A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BF75F8422CA71E700EC53A1 /* nef */;
-			targetProxy = 8B84835B237D67780024EA4A /* PBXContainerItemProxy */;
-		};
 		8B89CD73237B084E007E9152 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
@@ -1548,6 +1516,15 @@
 			isa = PBXTargetDependency;
 			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
 			targetProxy = 8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */;
+		};
+		8BBCA69C2396A68900BE058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B0FB583237C0A5600221548 /* CLIKit */;
+			targetProxy = 8BBCA69B2396A68900BE058B /* PBXContainerItemProxy */;
+		};
+		8BBCA6BA2396A86600BE058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 8BBCA6B92396A86600BE058B /* BowEffects */;
 		};
 		8BBD14BB2390187D0002970C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1564,11 +1541,6 @@
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
 			targetProxy = 8BD4E31323881506002DECDB /* PBXContainerItemProxy */;
 		};
-		8BD4E31623881506002DECDB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BF75F8422CA71E700EC53A1 /* nef */;
-			targetProxy = 8BD4E31523881506002DECDB /* PBXContainerItemProxy */;
-		};
 		8BD4E32923881876002DECDB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8BD4E31C238817BB002DECDB /* NefSwiftPlayground */;
@@ -1578,10 +1550,6 @@
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
 			targetProxy = 8BD4E33D238824F3002DECDB /* PBXContainerItemProxy */;
-		};
-		8BD4E35523883654002DECDB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 8BD4E35423883654002DECDB /* BowEffects */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2496,27 +2464,27 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8B46C405238D453F00437659 /* Bow */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
-			productName = Bow;
-		};
-		8B46C407238D453F00437659 /* BowEffects */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
-			productName = BowEffects;
-		};
-		8B46C425238EC0A100437659 /* BowOptics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
-			productName = BowOptics;
-		};
 		8B46C434238FDA3300437659 /* Swiftline */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */;
 			productName = Swiftline;
 		};
-		8BD4E35423883654002DECDB /* BowEffects */ = {
+		8BBCA6952396A59600BE058B /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+		8BBCA6972396A59600BE058B /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
+		8BBCA6992396A59600BE058B /* BowOptics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowOptics;
+		};
+		8BBCA6B92396A86600BE058B /* BowEffects */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
 			productName = BowEffects;

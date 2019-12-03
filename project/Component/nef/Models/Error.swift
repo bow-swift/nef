@@ -2,7 +2,7 @@
 
 import Foundation
 
-public enum Error: Swift.Error {
+public enum Error: String, Swift.Error {
     case markdown
     case jekyll
     case carbon

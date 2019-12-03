@@ -138,7 +138,7 @@ public struct SwiftPlayground {
                 modules.traverse { (module: Module) in
                     let sourcesIO = module.sources.map { ($0, module.path) }.traverse(shell.linkPath)^
                     let moduleIO  = sourcesIO.map { sources in
-                        Module.sourcesLens.modify(module, { _ in sources})
+                        Module.sourcesLens.set(module, sources)
                     }^
                     
                     return moduleIO
@@ -160,11 +160,8 @@ public struct SwiftPlayground {
     }
     
     private func buildPlaygroundBook(modules: [Module], playgroundPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
-        EnvIO { system in
-            PlaygroundBook(name: "nef", path: playgroundPath)
-                .build(modules: modules)
-                .provide(system)
-                .mapLeft { e in .playgroundBook(info: e.description) }
-        }
+        PlaygroundBook(name: "nef", path: playgroundPath)
+            .build(modules: modules)
+            .mapError { e in .playgroundBook(info: e.description) }
     }
 }

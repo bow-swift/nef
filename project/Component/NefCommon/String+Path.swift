@@ -1,11 +1,15 @@
-//  Copyright © 2019 The Bow Authors.
+//  Copyright © 2019 The nef Authors.
 
 import Foundation
 
 public extension String {
     
+    var pathComponents: [String] {
+        (self as NSString).pathComponents
+    }
+    
     var filename: String {
-        components(separatedBy: "/").last ?? ""
+        pathComponents.last ?? ""
     }
     
     var removeExtension: String {

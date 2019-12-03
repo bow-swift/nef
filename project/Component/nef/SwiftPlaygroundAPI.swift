@@ -24,7 +24,7 @@ extension SwiftPlaygroundAPI {
         return NefSwiftPlayground.SwiftPlayground(packageContent: packageContent, name: name, output: output)
                                  .build(cached: true, excludes: excludes + invalidModules + invalidFiles)
                                  .contramap { console in PlaygroundEnvironment(console: console, shell: MacPlaygroundShell(), system: MacFileSystem()) }^
-                                 .map { _ in output }^
+                                 .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
                                  .mapError { _ in .swiftPlaygrond }^
     }
 }

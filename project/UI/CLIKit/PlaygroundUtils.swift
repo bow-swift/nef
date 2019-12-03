@@ -1,6 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import nef
 
 public struct PlaygroundUtils {
 
@@ -13,8 +14,9 @@ public struct PlaygroundUtils {
     public static func playgroundName(fromPage page: String) -> String {
         guard !page.isEmpty else { return PlaygroundUtils.defaultName }
 
-        let filenameComponentes = page.components(separatedBy: "/")
-        let filenameWithExtension = filenameComponentes.first(where: { $0.contains("xcplaygroundpage") })
-        return filenameWithExtension?.replacingOccurrences(of: ".xcplaygroundpage", with: "") ?? PlaygroundUtils.defaultName
+        return page.pathComponents
+                   .first(where: { $0.contains(".xcplaygroundpage") })?
+                   .removeExtension
+               ?? PlaygroundUtils.defaultName
     }
 }
