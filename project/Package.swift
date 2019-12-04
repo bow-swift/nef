@@ -10,7 +10,7 @@ let package = Package(
         .executable(name: "nef-markdown-page", targets: ["MarkdownPage"]),
         .executable(name: "nef-jekyll-page", targets: ["JekyllPage"]),
         .executable(name: "nef-carbon-page", targets: ["CarbonPage"]),
-        .executable(name: "nef-swift-playground", targets: ["SwiftPlayground"]),
+        .executable(name: "nef-playground-book", targets: ["PlaygroundBook"]),
     ],
     dependencies: [
         .package(url: "https://github.com/bow-swift/bow", .branch("master")),
@@ -39,6 +39,6 @@ let package = Package(
         .target(name: "MarkdownPage", dependencies: ["CLIKit", "NefMarkdown"], path: "UI/MarkdownPage"),
         .target(name: "JekyllPage", dependencies: ["CLIKit", "NefJekyll"], path: "UI/JekyllPage"),
         .target(name: "CarbonPage", dependencies: ["CLIKit", "NefCommon", "NefModels", "NefCore", "NefCarbon"], path: "UI/CarbonPage"),
-        .target(name: "SwiftPlayground", dependencies: ["BowEffects", "CLIKit", "nef"], path: "UI/SwiftPlayground"),
+        .target(name: "PlaygroundBook", dependencies: ["BowEffects", "CLIKit", "nef"], path: "UI/PlaygroundBook"),
     ]
 )

@@ -14,9 +14,14 @@ protocol CoreMarkdown {
     func markdown() -> String
 }
 
+protocol CoreCarbon {
+    func carbon(downloader: CarbonCodeDownloader) -> String
+}
+
 // Dependencies
 extension Node: CoreJekyll {}
 extension Node: CoreMarkdown {}
+extension Node: CoreCarbon {}
 
 // MARK: - default Render :: render(content:)
 protocol InternalRender: CoreRender {
