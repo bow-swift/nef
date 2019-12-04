@@ -322,7 +322,7 @@
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BD4E2F52388141E002DECDB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		8BD4E30A238814B1002DECDB /* nef-swift-playground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-swift-playground"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BD4E30A238814B1002DECDB /* nef-playground-book */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-playground-book"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefSwiftPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD4E31F238817BB002DECDB /* NefSwiftPlayground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefSwiftPlayground.h; sourceTree = "<group>"; };
 		8BD4E320238817BB002DECDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -557,7 +557,7 @@
 				8B3CB85A22D392C000919F36 /* MarkdownPage */,
 				8B3CB85422D392C000919F36 /* JekyllPage */,
 				8B3CB85822D392C000919F36 /* CarbonPage */,
-				8BD4E2F4238802C2002DECDB /* SwiftPlayground */,
+				8BD4E2F4238802C2002DECDB /* PlaygroundBook */,
 				8B0FB585237C0A5600221548 /* CLIKit */,
 			);
 			path = UI;
@@ -712,7 +712,7 @@
 				8B22248322D5EAD500C85856 /* NefMarkdown.framework */,
 				8B12D79B22D6235200D05A70 /* NefJekyll.framework */,
 				8B0FB584237C0A5600221548 /* CLIKit.framework */,
-				8BD4E30A238814B1002DECDB /* nef-swift-playground */,
+				8BD4E30A238814B1002DECDB /* nef-playground-book */,
 				8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */,
 				8BBD14AF2390179B0002970C /* NefCommon.framework */,
 			);
@@ -771,12 +771,12 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		8BD4E2F4238802C2002DECDB /* SwiftPlayground */ = {
+		8BD4E2F4238802C2002DECDB /* PlaygroundBook */ = {
 			isa = PBXGroup;
 			children = (
 				8BD4E2F52388141E002DECDB /* main.swift */,
 			);
-			path = SwiftPlayground;
+			path = PlaygroundBook;
 			sourceTree = "<group>";
 		};
 		8BD4E31E238817BB002DECDB /* NefSwiftPlayground */ = {
@@ -1091,9 +1091,9 @@
 			productReference = 8BBD14AF2390179B0002970C /* NefCommon.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8BD4E309238814B1002DECDB /* SwiftPlayground */ = {
+		8BD4E309238814B1002DECDB /* PlaygroundBook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8BD4E30E238814B1002DECDB /* Build configuration list for PBXNativeTarget "SwiftPlayground" */;
+			buildConfigurationList = 8BD4E30E238814B1002DECDB /* Build configuration list for PBXNativeTarget "PlaygroundBook" */;
 			buildPhases = (
 				8BD4E306238814B1002DECDB /* Sources */,
 			);
@@ -1102,12 +1102,12 @@
 			dependencies = (
 				8BD4E31423881506002DECDB /* PBXTargetDependency */,
 			);
-			name = SwiftPlayground;
+			name = PlaygroundBook;
 			packageProductDependencies = (
 				8BD4E3572388369C002DECDB /* BowEffects */,
 			);
 			productName = SwiftPlayground;
-			productReference = 8BD4E30A238814B1002DECDB /* nef-swift-playground */;
+			productReference = 8BD4E30A238814B1002DECDB /* nef-playground-book */;
 			productType = "com.apple.product-type.tool";
 		};
 		8BD4E31C238817BB002DECDB /* NefSwiftPlayground */ = {
@@ -1258,7 +1258,7 @@
 				8B424B1E224E28FC00AF9010 /* MarkdownPage */,
 				8B6FC584221ECE6A008F7694 /* JekyllPage */,
 				8B0CA51522AE669600181BC0 /* CarbonPage */,
-				8BD4E309238814B1002DECDB /* SwiftPlayground */,
+				8BD4E309238814B1002DECDB /* PlaygroundBook */,
 				8B0FB583237C0A5600221548 /* CLIKit */,
 				8BF75F8422CA71E700EC53A1 /* nef */,
 				8B22248222D5EAD500C85856 /* NefMarkdown */,
@@ -2119,7 +2119,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
-				PRODUCT_NAME = "nef-swift-playground";
+				PRODUCT_NAME = "nef-playground-book";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -2131,7 +2131,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
-				PRODUCT_NAME = "nef-swift-playground";
+				PRODUCT_NAME = "nef-playground-book";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -2406,7 +2406,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BD4E30E238814B1002DECDB /* Build configuration list for PBXNativeTarget "SwiftPlayground" */ = {
+		8BD4E30E238814B1002DECDB /* Build configuration list for PBXNativeTarget "PlaygroundBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BD4E30F238814B1002DECDB /* Debug */,

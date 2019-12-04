@@ -105,8 +105,8 @@ public struct SwiftPlayground {
     
     private func buildPackage(content: String, packageFilePath: String, packagePath: String, buildPath: String) -> EnvIO<(FileSystem, PlaygroundShell), SwiftPlaygroundError, Void> {
         EnvIO { (system, shell) in
-            let writePackageIO = system.write(content: content, toFile: packageFilePath).mapLeft { _ in SwiftPlaygroundError.checkout }
-            let resolvePackageIO = shell.resolve(packagePath: packagePath, buildPath: buildPath).mapLeft { _ in SwiftPlaygroundError.checkout }
+            let writePackageIO = system.write(content: content, toFile: packageFilePath).mapLeft { e in SwiftPlaygroundError.checkout(info: e.description) }
+            let resolvePackageIO = shell.resolve(packagePath: packagePath, buildPath: buildPath).mapLeft { e in SwiftPlaygroundError.checkout(info: e.description) }
 
             return writePackageIO.followedBy(resolvePackageIO)
         }
@@ -115,7 +115,7 @@ public struct SwiftPlayground {
     private func repositories(checkoutPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, [String]> {
         EnvIO { fileSystem in
             fileSystem.items(atPath: checkoutPath)
-                      .mapLeft { _ in .checkout }
+                      .mapLeft { e in .checkout(info: e.description) }
                       .map { repos in repos.filter { repo in !repo.filename.contains("swift-") } }
         }
     }

@@ -5,15 +5,15 @@ import CLIKit
 import nef
 import BowEffects
 
-let SCRIPT_NAME = "nef-swift-playground"
+let SCRIPT_NAME = "nef-playground-book"
 
 func main() {
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (packageContent: String, projectName: String, output: URL)> {
-        console.arguments(keys: ["package", "to", "name"])
+        console.arguments(keys: ["name", "package", "output"])
                .flatMap { args in
-                    guard let packagePath = args["package"]?.expandingTildeInPath,
-                          let outputPath = args["to"]?.expandingTildeInPath,
-                          let projectName = args["name"],
+                    guard let projectName = args["name"],
+                          let packagePath = args["package"]?.expandingTildeInPath,
+                          let outputPath = args["output"]?.expandingTildeInPath,
                           let content = try? String(contentsOfFile: packagePath), !content.isEmpty
                     else { return console.exit(failure: "received an invalid Swift Package") }
                         
@@ -26,11 +26,11 @@ func main() {
     
     let console = Console(script: SCRIPT_NAME,
                           help:   """
-                                  \(SCRIPT_NAME) --package <package path> --to <output path> --name <swift-playground name>")
+                                  \(SCRIPT_NAME) --name <swift-playground name> --package <package path> --output <output path>
 
-                                      package: path to Package.swift file. ex. `/home/Package.swift`
-                                      to: path where Playground is saved to. ex. `/home`
                                       name: name for the Swift Playground. ex. `nef`
+                                      package: path to Package.swift file. ex. `/home/Package.swift`
+                                      output: path where Playground is saved to. ex. `/home`
 
                                   """)
     
@@ -39,8 +39,8 @@ func main() {
                 nef.SwiftPlayground.render(packageContent: packageContent, name: projectName, output: output)
                                    .provide(console)^
                                    .mapLeft { _ in .render }
-                                   .foldM({ _   in console.exit(failure: "render Playground Book")                  },
-                                          { url in console.exit(success: "render Playground Book in '\(url.path)'") }) }^
+                                   .foldM({ _   in console.exit(failure: "rendering Playground Book")                  },
+                                          { url in console.exit(success: "rendered Playground Book in '\(url.path)'")  }) }^
             .unsafeRunSyncEither()
 }
 

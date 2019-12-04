@@ -5,6 +5,7 @@ MARKDOWN="markdown"
 JEKYLL="jekyll"
 CARBON="carbon"
 PLAYGROUND="playground"
+PLAYGROUND_BOOK="ipad"
 COMPILE="compile"
 CLEAN="clean"
 
@@ -33,10 +34,11 @@ printHelp() {
     echo "${bold}Commands${reset}"
     echo "   ${green}${bold}$COMPILE${normal}${reset}     Compile Xcode Playgrounds given a <path>"
     echo "   ${green}${bold}$CLEAN${normal}${reset}       Clean a generated nef project from a <path>"
-    echo "   ${green}${bold}$PLAYGROUND${normal}${reset}  Build a playground compatible with external frameworks"
-    echo "   ${green}${bold}$MARKDOWN${normal}${reset}    Render Markdown files for given Xcode Playgrounds"
-    echo "   ${green}${bold}$JEKYLL${normal}${reset}      Render Markdown files that can be consumed from Jekyll to generate a microsite"
-    echo "   ${green}${bold}$CARBON${normal}${reset}      Export Carbon code snippets for given Xcode Playgrounds"
+    echo "   ${green}${bold}$PLAYGROUND${normal}${reset}  Build a ${bold}playground${reset} compatible with external frameworks"
+    echo "   ${green}${bold}$PLAYGROUND_BOOK${normal}${reset}        Build a playground compatible with ${bold}iPad${reset} and 3rd-party libraries"
+    echo "   ${green}${bold}$MARKDOWN${normal}${reset}    Render ${bold}Markdown${reset} files for given Xcode Playgrounds"
+    echo "   ${green}${bold}$JEKYLL${normal}${reset}      Render Markdown files that can be consumed from ${bold}Jekyll${reset} to generate a microsite"
+    echo "   ${green}${bold}$CARBON${normal}${reset}      Export ${bold}Carbon${reset} code snippets for given Xcode Playgrounds"
     echo ""
 }
 
@@ -113,6 +115,21 @@ printHelpPlayground() {
 }
 
 ##
+#   printHelpPlaygroundBook()
+##
+printHelpPlaygroundBook() {
+    echo ""
+    echo "${normal}nef ${green}${bold}$PLAYGROUND_BOOK${normal} ${required}${bold}--name${normal}${reset} <playground> ${required}${bold}--package${normal}${reset} <package.swift> ${required}${bold}--output${normal}${reset} <path-to-output>"
+    echo ""
+    echo "    Build a Playground Book with 3r-party libraries defined in a Swift Package"
+    echo ""
+    echo "    ${required}${bold}--name${reset}${normal} specify the name for the Playground Book that you are creating${reset}"
+    echo "    ${required}${bold}--package${reset}${normal} path to the Swift Package with the dependencies${reset}"
+    echo "    ${required}${bold}--output${reset}${normal} folder path where Playground Book will be created${reset}"
+    echo ""
+}
+
+##
 #   printHelpCompileClean()
 ##
 printHelpCompile() {
@@ -168,6 +185,8 @@ markdown() {
           --podfile )      printHelpPlayground; exit 1 ;;
           --cartfile )     printHelpPlayground; exit 1 ;;
 
+          --package )      printHelpPlaygroundBook; exit 1;;
+
           --use-cache)     printHelpCompile; exit 1 ;;
 
           --background)    printHelpCarbon; exit 1 ;;
@@ -181,6 +200,7 @@ markdown() {
           $JEKYLL )        printHelpJekyll; exit 1 ;;
           $CARBON )        printHelpCarbon; exit 1 ;;
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+          $PLAYGROUND_BOOK) printHelpPlaygroundBook; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
           $CLEAN )         printHelpClean; exit 1 ;;
           * )              printHelpMarkdown; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
@@ -221,6 +241,8 @@ jekyll() {
           --podfile )      printHelpPlayground; exit 1 ;;
           --cartfile )     printHelpPlayground; exit 1 ;;
 
+          --package )      printHelpPlaygroundBook; exit 1;;
+
           --use-cache)     printHelpCompile; exit 1 ;;
 
           --background)    printHelpCarbon; exit 1 ;;
@@ -234,6 +256,7 @@ jekyll() {
           $JEKYLL )        ;;
           $CARBON )        printHelpCarbon; exit 1 ;;
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+          $PLAYGROUND_BOOK) printHelpPlaygroundBook; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
           $CLEAN )         printHelpClean; exit 1 ;;
           * )              printHelpJekyll; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
@@ -280,6 +303,8 @@ carbon() {
           --podfile )      printHelpPlayground; exit 1 ;;
           --cartfile )     printHelpPlayground; exit 1 ;;
 
+          --package )      printHelpPlaygroundBook; exit 1;;
+
           --use-cache)     printHelpCompile; exit 1 ;;
 
           --background)    shift; background=$1 ;;
@@ -293,6 +318,7 @@ carbon() {
           $JEKYLL )        printHelpJekyll; exit 1;;
           $CARBON )        ;;
           $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+          $PLAYGROUND_BOOK) printHelpPlaygroundBook; exit 1 ;;
           $COMPILE )       printHelpCompile; exit 1 ;;
           $CLEAN )         printHelpClean; exit 1 ;;
           * )              printHelpCarbon; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
@@ -336,6 +362,8 @@ playground() {
             --podfile )      shift; podfile=$1 ;;
             --cartfile )     shift; cartfile=$1 ;;
 
+            --package )      printHelpPlaygroundBook; exit 1;;
+
             --use-cache)     printHelpCompile; exit 1 ;;
 
             --background)    printHelpCarbon; exit 1 ;;
@@ -349,6 +377,7 @@ playground() {
             $JEKYLL )        printHelpJekyll; exit 1 ;;
             $CARBON )        printHelpCarbon; exit 1 ;;
             $PLAYGROUND )    ;;
+            $PLAYGROUND_BOOK) printHelpPlaygroundBook; exit 1 ;;
             $COMPILE )       printHelpCompile; exit 1 ;;
             $CLEAN )         printHelpClean; exit 1 ;;
             * )              printHelpPlayground $@; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
@@ -363,6 +392,62 @@ playground() {
     fi
 
     nefc install  "$projectName.app"
+}
+
+##
+#   playgroundBook(List<String> args)
+#   - Parameter `args`: list of command line arguments
+##
+playgroundBook() {
+  projectName=""
+  packagePath=""
+  outputPath=""
+
+  while [ "$1" != "" ]; do
+      case $2 in
+          -h | --help | help )  printHelpJekyll; exit 0 ;;
+      esac
+
+      case $1 in
+          --project )      printHelpJekyll; exit 1 ;;
+          --output )       shift; outputPath=$1 ;;
+          --main-page )    printHelpJekyll; exit 1 ;;
+
+          --name )         shift; projectName=$1 ;;
+          --platform )     printHelpPlayground; exit 1 ;;
+          --bow-version )  printHelpPlayground; exit 1 ;;
+          --bow-branch )   printHelpPlayground; exit 1 ;;
+          --podfile )      printHelpPlayground; exit 1 ;;
+          --cartfile )     printHelpPlayground; exit 1 ;;
+
+          --package )      shift; packagePath=$1 ;;
+
+          --use-cache)     printHelpCompile; exit 1 ;;
+
+          --background)    printHelpCarbon; exit 1 ;;
+          --theme)         printHelpCarbon; exit 1 ;;
+          --size)          printHelpCarbon; exit 1 ;;
+          --font)          printHelpCarbon; exit 1 ;;
+          --lines)         printHelpCarbon; exit 1 ;;
+          --watermark)     printHelpCarbon; exit 1 ;;
+
+          $MARKDOWN )      printHelpMarkdown; exit 1 ;;
+          $JEKYLL )        printHelpJekyll; exit 1 ;;
+          $CARBON )        printHelpCarbon; exit 1 ;;
+          $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+          $PLAYGROUND_BOOK) ;;
+          $COMPILE )       printHelpCompile; exit 1 ;;
+          $CLEAN )         printHelpClean; exit 1 ;;
+          * )              printHelpPlaygroundBook; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
+      esac
+      shift
+  done
+
+  if [ "$projectName" == "" ] || [ "$packagePath" == "" ] || [ "$outputPath" == "" ]; then
+      printHelpPlaygroundBook; exit 1
+  else
+      nef-playground-book --name "$projectName" --package "$packagePath" --output "$outputPath"
+  fi
 }
 
 #: - Compile
@@ -392,6 +477,8 @@ compile() {
             --podfile )      printHelpPlayground; exit 1 ;;
             --cartfile )     printHelpPlayground; exit 1 ;;
 
+            --package )      printHelpPlaygroundBook; exit 1;;
+
             --use-cache)     flag="--use-cache" ;;
 
             --background)    printHelpCarbon; exit 1 ;;
@@ -405,6 +492,7 @@ compile() {
             $JEKYLL )        printHelpJekyll; exit 1 ;;
             $CARBON )        printHelpCarbon; exit 1 ;;
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+            $PLAYGROUND_BOOK) printHelpPlaygroundBook; exit 1 ;;
             $COMPILE )       shift; projectFolder=$1 ;;
             $CLEAN )         printHelpClean; exit 1 ;;
             * )              printHelpCompile; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
@@ -445,6 +533,8 @@ clean() {
             --podfile )      printHelpPlayground; exit 1 ;;
             --cartfile )     printHelpPlayground; exit 1 ;;
 
+            --package )      printHelpPlaygroundBook; exit 1;;
+
             --use-cache)     ;;
 
             --background)    printHelpCarbon; exit 1 ;;
@@ -458,6 +548,7 @@ clean() {
             $JEKYLL )        printHelpJekyll; exit 1 ;;
             $CARBON )        printHelpCarbon; exit 1 ;;
             $PLAYGROUND )    printHelpPlayground; exit 1 ;;
+            $PLAYGROUND_BOOK) printHelpPlaygroundBook; exit 1 ;;
             $COMPILE )       printHelpCompile; exit 1 ;;
             $CLEAN )         shift; projectFolder=$1 ;;
             * )              printHelpClean; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1 ;;
@@ -477,12 +568,13 @@ set -e
 
 while [ "$1" != "" ]; do
     case $1 in
-        $MARKDOWN )   markdown $@; exit 0 ;;
-        $JEKYLL )     jekyll $@; exit 0 ;;
-        $CARBON )     carbon $@; exit 0 ;;
-        $PLAYGROUND ) playground $@; exit 0 ;;
-        $COMPILE )    compile $@; exit 0 ;;
-        $CLEAN )      clean $@; exit 0 ;;
+        $MARKDOWN )        markdown $@; exit 0 ;;
+        $JEKYLL )          jekyll $@; exit 0 ;;
+        $CARBON )          carbon $@; exit 0 ;;
+        $PLAYGROUND )      playground $@; exit 0 ;;
+        $PLAYGROUND_BOOK ) playgroundBook $@; exit 0;;
+        $COMPILE )         compile $@; exit 0 ;;
+        $CLEAN )           clean $@; exit 0 ;;
         -h | --help | help )        printHelp; exit 0 ;;
         -v | --version | version )  printVersion; exit 0 ;;
         * )                         printHelp; echo "${bold}[!] ${normal}${red}error:${reset} invalid argument: ${red}$1${reset}"; exit 1
