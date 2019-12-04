@@ -4,10 +4,10 @@ import Foundation
 import BowEffects
 
 public struct Step {
-    public let total: Int
-    public let partial: Int
+    public let total: UInt
+    public let partial: UInt
     
-    public init(total: Int, partial: Int) {
+    public init(total: UInt, partial: UInt) {
         self.total = total
         self.partial = partial
     }

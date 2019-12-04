@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/bow-swift/bow", .branch("master")),
-        .package(url: "https://github.com/bow-swift/Swiftline", from: "0.5.3"),
+        .package(url: "https://github.com/bow-swift/Swiftline", from: "0.5.4"),
     ],
     targets: [
         .target(name: "NefCommon", path: "Component/NefCommon", publicHeadersPath: "Support Files"),

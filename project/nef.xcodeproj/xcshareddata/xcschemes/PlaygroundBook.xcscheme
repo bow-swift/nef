@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8BD4E309238814B1002DECDB"
-               BuildableName = "nef-swift-playground"
+               BuildableName = "nef-playground-book"
                BlueprintName = "PlaygroundBook"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BD4E309238814B1002DECDB"
-            BuildableName = "nef-swift-playground"
+            BuildableName = "nef-playground-book"
             BlueprintName = "PlaygroundBook"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BD4E309238814B1002DECDB"
-            BuildableName = "nef-swift-playground"
+            BuildableName = "nef-playground-book"
             BlueprintName = "PlaygroundBook"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>

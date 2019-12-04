@@ -7,11 +7,11 @@ let package = Package(
         .macOS(.v10_14),
     ],
     products: [
-        .library(name: "nef", targets: ["nef"]),
+        .library(name: "nef", targets: ["nef", "NefModels"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/bow-swift/bow", .branch("master")),
-        .package(url: "https://github.com/bow-swift/Swiftline", from: "0.5.3"),
+        .package(url: "https://github.com/bow-swift/bow", from: "0.6.1"),
+        .package(url: "https://github.com/bow-swift/Swiftline", from: "0.5.4"),
     ],
     targets: [
         .target(name: "NefCommon", path: "project/Component/NefCommon", publicHeadersPath: "Support Files"),

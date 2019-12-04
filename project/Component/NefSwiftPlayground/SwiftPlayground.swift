@@ -31,7 +31,7 @@ public struct SwiftPlayground {
     }
     
     // MARK: steps
-    private func step(_ number: Int) -> Step { Step(total: 5, partial: number) }
+    private func step(_ number: UInt) -> Step { Step(total: 5, partial: number) }
     
     private func cleanUp(step: Step, deintegrate: Bool, path: PlaygroundResolutionPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
         EnvIO { env in
