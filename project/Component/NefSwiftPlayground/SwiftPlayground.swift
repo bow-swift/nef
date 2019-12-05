@@ -24,14 +24,14 @@ public struct SwiftPlayground {
         return binding(
                     |<-self.cleanUp(step: self.step(1), deintegrate: !cached, path: self.resolutionPath),
                     |<-self.structure(step: self.step(2), path: self.resolutionPath),
-         modulesRaw <- self.checkout(step: self.step(3), content: self.packageContent, path: self.resolutionPath),
-            modules <- self.modules(step: self.step(4), repos: modulesRaw.get, excludes: excludes).contramap(\PlaygroundEnvironment.shell),
+         modulesRaw <- self.checkout(step: self.step(3, duration: .seconds(15)), content: self.packageContent, path: self.resolutionPath),
+            modules <- self.modules(step: self.step(4, duration: .seconds(5)), repos: modulesRaw.get, excludes: excludes).contramap(\PlaygroundEnvironment.shell),
                     |<-self.swiftPlayground(step: self.step(5), modules: modules.get, path: self.resolutionPath),
         yield: ())^
     }
     
     // MARK: steps
-    private func step(_ number: UInt) -> Step { Step(total: 5, partial: number) }
+    private func step(_ number: UInt, duration: DispatchTimeInterval = .seconds(3)) -> Step { Step(total: 5, partial: number, duration: duration) }
     
     private func cleanUp(step: Step, deintegrate: Bool, path: PlaygroundResolutionPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, Void> {
         EnvIO { env in

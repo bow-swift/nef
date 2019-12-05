@@ -6,10 +6,12 @@ import BowEffects
 public struct Step {
     public let total: UInt
     public let partial: UInt
+    public let estimatedDuration: DispatchTimeInterval
     
-    public init(total: UInt, partial: UInt) {
+    public init(total: UInt, partial: UInt, duration: DispatchTimeInterval) {
         self.total = total
         self.partial = partial
+        self.estimatedDuration = duration
     }
 }
 
