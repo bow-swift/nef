@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "nef", targets: ["nef", "NefModels"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/bow-swift/bow", from: "0.6.1"),
+        .package(url: "https://github.com/bow-swift/bow", from: "0.7.0"),
         .package(url: "https://github.com/bow-swift/Swiftline", from: "0.5.4"),
     ],
     targets: [

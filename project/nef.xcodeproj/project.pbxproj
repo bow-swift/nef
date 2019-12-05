@@ -60,7 +60,6 @@
 		8B46C41B238D8A0000437659 /* PlaygroundBookResolutionPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41A238D8A0000437659 /* PlaygroundBookResolutionPath.swift */; };
 		8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */; };
 		8B46C422238EBD9300437659 /* PlaygroundExcludeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */; };
-		8B46C428238ED11000437659 /* Optics+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C427238ED11000437659 /* Optics+Utils.swift */; };
 		8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */; };
 		8B46C42F238FD52900437659 /* PlaygroundShellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C42E238FD52900437659 /* PlaygroundShellError.swift */; };
 		8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C430238FD70700437659 /* MacPlaygroundShell.swift */; };
@@ -301,7 +300,6 @@
 		8B46C41A238D8A0000437659 /* PlaygroundBookResolutionPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookResolutionPath.swift; sourceTree = "<group>"; };
 		8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookTemplate.swift; sourceTree = "<group>"; };
 		8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundExcludeItem.swift; sourceTree = "<group>"; };
-		8B46C427238ED11000437659 /* Optics+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optics+Utils.swift"; sourceTree = "<group>"; };
 		8B46C429238EE4C400437659 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShell.swift; sourceTree = "<group>"; };
 		8B46C42E238FD52900437659 /* PlaygroundShellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShellError.swift; sourceTree = "<group>"; };
@@ -766,7 +764,6 @@
 			isa = PBXGroup;
 			children = (
 				8BD6F70C238C495600DD93C4 /* IO+Console.swift */,
-				8B46C427238ED11000437659 /* Optics+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1399,7 +1396,6 @@
 				8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */,
 				8B46C412238D87F200437659 /* Assets.swift in Sources */,
 				8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */,
-				8B46C428238ED11000437659 /* Optics+Utils.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
 				8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */,
@@ -2449,8 +2445,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bow-swift/bow.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
 			};
 		};
 		8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */ = {
