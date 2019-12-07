@@ -37,7 +37,7 @@ enum PlaygroundBookTemplate {
                                     }
                                 }
 
-                                static func print(_ message: String, clearAfter seconds: Int = 0) {
+                                static func print(_ message: Any, clearAfter seconds: Int = 0) {
                                     let newMessage = "◦ \\(message)"
                                     let assessmentStatus = log.isEmpty ? newMessage : "\\(log)\\n\\n\\(newMessage)"
                                     PlaygroundPage.current.assessmentStatus = .pass(message: assessmentStatus)
