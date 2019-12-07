@@ -10,7 +10,11 @@ class MacPlaygroundShell: PlaygroundShell {
     func resolve(packagePath: String, buildPath: String) -> IO<PlaygroundShellError, Void> {
         IO.invoke {
             let result = run("swift", args: ["package", "--package-path", "\(packagePath)", "--build-path", "\(buildPath)", "resolve"])
-            guard result.exitStatus == 0 else { throw PlaygroundShellError.dependencies(package: packagePath) }
+            guard result.exitStatus == 0 else {
+                let error = result.stderr.components(separatedBy: "error:").last?
+                                  .trimmingEmptyCharacters.clean("\n   ").clean("\n") ?? ""
+                throw PlaygroundShellError.dependencies(package: packagePath, information: error.firstCapitalized)
+            }
             return ()
         }
     }

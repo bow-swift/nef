@@ -9,4 +9,8 @@ public extension String {
             output.replacingOccurrences(of: ocurrence, with: "")
         }
     }
+    
+    var firstCapitalized: String {
+        (first?.uppercased() ?? "") + dropFirst()
+    }
 }
