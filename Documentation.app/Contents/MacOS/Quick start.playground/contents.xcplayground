@@ -3,7 +3,7 @@
     <pages>
         <page name='Installation'/>
         <page name='Creating an Xcode Playground'/>
-        <page name='Creating a Playground Book'/>
+        <page name='Creating a Playground Book for iPad'/>
         <page name='Resources'/>
     </pages>
 </playground>

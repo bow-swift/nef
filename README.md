@@ -186,11 +186,27 @@ Swift Playgrounds is a revolutionary app that makes possible to write Swift code
 
 nef takes advantage of these new possibilities and advancements in Swift Package Manager to build a Playground Book with external dependencies from a Swift Package specification.
 
+Given a `Package.swift` like the next one:
+```swift
+// swift-tools-version:5.0
+
+import PackageDescription
+
+let package = Package(
+    name: "BowTestProject",
+    dependencies: [
+        .package(url: "https://github.com/bow-swift/bow.git", from: "0.7.0"),
+    ]
+)
+```
+
+you can run the following command:
+
 ```bash
 ➜ nef ipad --name PlaygroundName --package Package.swift --output ~/Desktop
 ```
 
-It will create a Playground Book (`PlaygroundName`) with support for the external dependencies defined in `Package.swift` and save it in `~/Desktop`
+It will create a Playground Book (`PlaygroundName`) with support for the external dependencies and save it in `~/Desktop`
 
 Options:
 - `--name`: the name for the Playground Book to build.
