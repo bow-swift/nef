@@ -21,3 +21,8 @@ vendor/
 /lib/bundler/man/
 docs/docs/*
 /docs/_data/sidebar.yml
+
+## nef
+/Documentation.app/nef
+/Documentation.app/Contents/MacOS/Pods
+/Documentation.app/Contents/MacOS/Podfile.lock
