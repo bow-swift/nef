@@ -34,11 +34,11 @@ jobs:
         - gem update --system
         - gem install cocoapods
       script:
-        - nef compile contents/Documentation
+        - nef compile Documentation.app
     - stage: deploy microsite
       if: branch = master AND type != pull_request
       script:
-        - nef jekyll --project contents/Documentation --output docs --main-page contents/Home.md
+        - nef jekyll --project Documentation.app --output docs --main-page Documentation.app/jekyll/Home.md
       deploy:
         provider: pages
         skip-cleanup: true
