@@ -24,7 +24,9 @@
 
 💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-xcode-playground).
 
-💡 [__Compiles Xcode Playgrounds__](#-compiling-a-xcode-playground) with support for third party libraries from the command line.
+💡 [__Compiles Xcode Playgrounds__](#-compiling-a-xcode-playground) with support for 3rd-party libraries from the command line.
+
+💡 Builds a [__Playground Book__](#-creating-a-playground-book) for iPad with external dependencies defined in a Swift Package.
 
 💡 Generates [__Markdown__](#-generating-a-markdown-project) project from Xcode Playground.
 
@@ -175,6 +177,41 @@ You can also clean the result of the compilation:
 ```bash
 ➜ nef clean <path>
 ```
+
+&nbsp;
+
+### 📲 Creating a Playground Book
+
+Swift Playgrounds is a revolutionary app that makes possible to write Swift code on an iPad. In the latest updates, Swift Playgrounds 3.x has added a new feature: [UserModules](https://developer.apple.com/documentation/swift_playgrounds/structuring_content_for_swift_playgrounds/using_modules_to_share_code_in_a_playground_book); it lets you include swift code and make it available across multiple chapters like modules.
+
+nef takes advantage of these new possibilities and advancements in Swift Package Manager to build a Playground Book with external dependencies from a Swift Package specification.
+
+Given a `Package.swift` like the next one:
+```swift
+// swift-tools-version:5.0
+
+import PackageDescription
+
+let package = Package(
+    name: "BowTestProject",
+    dependencies: [
+        .package(url: "https://github.com/bow-swift/bow.git", from: "0.7.0"),
+    ]
+)
+```
+
+you can run the following command:
+
+```bash
+➜ nef ipad --name PlaygroundName --package Package.swift --output ~/Desktop
+```
+
+It will create a Playground Book (`PlaygroundName`) with support for the external dependencies and save it in `~/Desktop`
+
+Options:
+- `--name`: the name for the Playground Book to build.
+- `--package`: path to the Swift Package specification.
+- `--output`: path where the resulting Playground Book will be generated.
 
 &nbsp;
 
