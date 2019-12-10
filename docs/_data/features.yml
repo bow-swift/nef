@@ -8,7 +8,7 @@ content:
       icon: img/main-image-secondary.svg
 
     - title: Generation
-      description: Generates Playground Books from Swift package and Markdown files from Xcode Playground.
+      description: Generates Playground Books from Swift packages and Markdown files from Xcode Playground.
       icon: img/main-image-tertiary.svg
 
     - title: Integration
