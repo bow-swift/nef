@@ -10,6 +10,9 @@ options:
         - title: Creating an Xcode Playground
           url: /docs/quick-start/creating-an-xcode-playground/
 
+        - title: Creating a Playground Book for iPad
+          url: /docs/quick-start/creating-a-playground-book-for-ipad/
+
         - title: Resources
           url: /docs/quick-start/resources/
 

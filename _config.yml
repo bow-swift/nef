@@ -2,7 +2,7 @@ title: nef
 #-------------------------
 name: nef
 #-------------------------
-description: A set of command line tools that let you have compile time verification of your documentation written as Xcode Playground
+description: 💊 steroids for Xcode Playgrounds
 #-------------------------
 author: 47 Degrees
 keywords: functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory

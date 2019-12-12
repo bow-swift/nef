@@ -18,6 +18,7 @@ permalink: /docs/quick-start/resources/
 ## Presentations
  
  - [Hard drugs for Playgrounds: `nef`](https://altconf.miguelangel.me) by Miguel Ángel Díaz-López at AltConf Madrid. June 2019.
+ - [Swift Playgrounds: to infinity... and beyond!](https://nscoder.miguelangel.me) by Miguel Ángel Díaz-López at NSCoder Night Madrid. December 2019.
  
 ## Blog posts
  
