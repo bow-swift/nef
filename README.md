@@ -96,6 +96,11 @@ By default, `nef playground` will be created for iOS platform. If you need to ch
 
 ###
 
+#### Known Issues
+if you run `nef playground` without specify any Podfile or Cartfile, it will use a not available Bow version in CocoaPods. Just set Bow version to 0.6.0 `nef playground --bow-version 0.6.0` or especify your dependency with the option `--podfile` or `--cartfile`. Thanks @twof for alert us about it.
+
+###
+
 <details>
 <summary>📣 You can select any different Bow version or branch, even a third-party dependency</summary>
 

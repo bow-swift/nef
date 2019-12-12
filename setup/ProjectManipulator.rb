@@ -17,7 +17,8 @@ module Nef
         "PROJECT_OWNER" => @configurator.user_name,
         "TODAYS_DATE" => @configurator.date,
         "TODAYS_YEAR" => @configurator.year,
-        "PROJECT" => @configurator.project_name
+        "PROJECT" => @configurator.project_name,
+        "${POD_NAME}" => @configurator.project_name
       }
     end
 

@@ -19,21 +19,22 @@ module Nef
 
     # private methods
     def replace_variables_in_files
-      file_names = [podfile_path, license_path]
+      file_names = ['LICENSE']
       file_names.each do |file_name|
-        text = File.read(file_name)
-        text.gsub!("${POD_NAME}", @project_name)
-        text.gsub!("${REPO_NAME}", @project_name.gsub('+', '-'))
-        text.gsub!("${USER_NAME}", user_name)
-        text.gsub!("${USER_EMAIL}", user_email)
-        text.gsub!("${YEAR}", year)
-        text.gsub!("${DATE}", date)
-        File.open(file_name, "w") { |file| file.puts text }
+        if File.exist?(file_name)
+            text = File.read(file_name)
+            text.gsub!("${REPO_NAME}", @project_name.gsub('+', '-'))
+            text.gsub!("${USER_NAME}", user_name)
+            text.gsub!("${USER_EMAIL}", user_email)
+            text.gsub!("${YEAR}", year)
+            text.gsub!("${DATE}", date)
+            File.open(file_name, "w") { |file| file.puts text }
+        end
       end
     end
 
     def clean_unuseful_files
-      [".git", ".gitignore", ".travis.yml", ".mailmap", "LICENSE", "README.md", "Package.swift", "assets", "bin", "configure", "contents", "docs", "project", "setup"].each do |asset|
+      [".git", ".gitignore", ".travis.yml", ".mailmap", "LICENSE", "README.md", "Package.swift", "assets", "bin", "configure", "contents", "docs", "project", "setup", "Documentation.app"].each do |asset|
         `rm -rf #{asset}`
       end
     end
@@ -69,14 +70,6 @@ module Nef
 
     def date
       Time.now.strftime "%m/%d/%Y"
-    end
-
-    def podfile_path
-      'Podfile'
-    end
-
-    def license_path
-      'LICENSE'
     end
 
   end
