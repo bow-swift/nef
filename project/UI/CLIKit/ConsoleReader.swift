@@ -35,5 +35,6 @@ public enum ConsoleLegacy {
 }
 
 public func arguments(keys: String...) -> [String: String] {
-    Console(script: "", help: "").arguments(keys: keys).unsafeRunSyncEither().getOrElse([:])
+    let arguments = keys.map { key in Console.Argument(name: key, placeholder: "", description: "", required: true) }
+    return Console(script: "", arguments: arguments).input().unsafeRunSyncEither().getOrElse([:])
 }
