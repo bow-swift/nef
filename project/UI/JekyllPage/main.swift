@@ -14,7 +14,7 @@ private let console = Console(script: "nef-jekyll-page",
                               arguments: .init(name: "page", placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
                                          .init(name: "output", placeholder: "output Jekyll's markdown", description: "path where Jekyll markdown are saved to. ex. `/home`"),
                                          .init(name: "permalink", placeholder: "relative URL", description: "is the relative path where Jekyll will render the documentation. ex. `/about/`"),
-                                         .init(name: "verbose", placeholder: "", description: "run jekyll page in verbose mode [true | false].", default: "'false'"))
+                                         .init(name: "verbose", placeholder: "", description: "run carbon page in verbose mode.", isFlag: true, default: "disabled"))
 
 
 func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, output: URL, permalink: String, verbose: Bool)> {

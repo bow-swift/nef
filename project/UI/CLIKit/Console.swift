@@ -58,47 +58,39 @@ public struct Console {
     /// - Returns: the parameters to configure the script: path to parser file and output path for render.
     public func input() -> IO<Console.Error, [String: String]> {
         IO.invoke {
-            let required  = self.arguments.filter { arg in arg.default.isEmpty }.map { $0.name }
-            let optionals = self.arguments.filter { arg in !arg.default.isEmpty }.map { $0.name }
-            let helps = ["help", "h"]
-            let keys = required + optionals + helps
-            guard keys.containsAll(Array(Set(keys))) else { throw Console.Error.duplicated }
+            let args = self.arguments + [.init(name: "help", placeholder: "", description: "", isFlag: true, default: "true"),
+                                         .init(name: "h", placeholder: "", description: "", isFlag: true, default: "true")]
+            let keys = args.map { $0.name }
+            let requireds = args.filter { arg in arg.isRequired }.map { $0.name }
+            guard Array(Set(keys)).count == keys.count else { throw Console.Error.duplicated }
             
             var result: [String: String] = [:]
             
             var longopts: [option] {
-                let lopts: [option] = keys.enumerated().map { (offset, element) -> option in
-                    return option(name: strdup(element),
-                                  has_arg: required_argument,
+                let lopts: [option] = args.enumerated().map { (offset, element) -> option in
+                    return option(name: strdup(element.name),
+                                  has_arg: element.isFlag ? no_argument : element.isRequired ? required_argument : optional_argument,
                                   flag: nil,
                                   val: Int32(offset))
                 }
                 return lopts + [option()]
             }
 
-            let optLongKey = keys.map { key in String(key[key.startIndex]) }.joined(separator: "")
+            let optLongKey = args.map { arg in String(arg.name[arg.name.startIndex]) }.joined(separator: "")
             
             while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
-                let match = keys.enumerated().first { (index, _) in opt == Int32(index) }
-                guard let key = match?.element else { throw Console.Error.arguments }
+                let match = args.enumerated().first { (index, _) in opt == Int32(index) }
+                guard let key = match?.element.name else { throw Console.Error.arguments }
 
-                result[key] = String(cString: optarg)
+                result[key] = optarg == nil ? "\(key)" : String(cString: optarg)
             }
             
-            if result.keys.containsAll(required) {
+            if result.keys.containsAny(["help", "h"]) {
+                throw Console.Error.help
+            } else if result.keys.containsAll(requireds) {
                 return result
-            } else if result.keys.containsAny(helps) {
-                throw Console.Error.help(message: self.helpMessage)
             } else {
                 throw Console.Error.arguments
-            }
-        }
-        .handleErrorWith { error in
-            switch error {
-            case .help(let message):
-                return self.print(message: message).map { _ in Darwin.exit(-1) }
-            default:
-                return self.exit(failure: "\(error)")
             }
         }^
     }
@@ -109,11 +101,17 @@ public struct Console {
         let placeholder: String
         let description: String
         let `default`: String
+        let isFlag: Bool
         
-        public init(name: String, placeholder: String, description: String, default: String = "") {
+        var isRequired: Bool {
+            self.default.isEmpty
+        }
+            
+        public init(name: String, placeholder: String, description: String, isFlag: Bool = false, default: String = "") {
             self.name = name
             self.placeholder = placeholder
             self.description = description
+            self.isFlag = isFlag
             self.default = `default`
         }
     }
@@ -122,13 +120,13 @@ public struct Console {
     public enum Error: Swift.Error, CustomStringConvertible {
         case duplicated
         case arguments
-        case help(message: String)
+        case help
         case render(information: String = "")
         
         public var description: String {
             switch self {
-            case let .help(message):
-                return message
+            case .help:
+                return ""
             case .duplicated:
                 return "the script has declared duplicated keys."
             case .arguments:
@@ -155,16 +153,17 @@ extension Console: NefModels.Console {
                         terminator: "\n")
     }
     
-    public func printStatus<E: Swift.Error>(step: Step, success: Bool) -> IO<E, Void> {
+    public func printStatus<E: Swift.Error>(success: Bool) -> IO<E, Void> {
         ConsoleIO.print(" \(success ? "✅" : "❌")",
                         separator: "",
                         terminator: "\n")
     }
     
-    public func printStatus<E: Swift.Error>(step: Step, information: String, success: Bool) -> IO<E, Void> {
+    public func printStatus<E: Swift.Error>(information: String, success: Bool) -> IO<E, Void> {
         ConsoleIO.print(success ? !information.isEmpty ? "(\(information)) ✅" : " ✅"
                                 : !information.isEmpty ? "(\(information)) ❌" : " ❌",
                         separator: "",
                         terminator: "\n")
     }
 }
+

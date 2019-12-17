@@ -21,7 +21,7 @@ private let console = Console(script: "nef-carbon-page",
                                          .init(name: "font", placeholder: "", description: "carbon's font type.", default: "'firaCode'"),
                                          .init(name: "show-lines", placeholder: "", description: "shows/hides lines of code [true | false].", default: "'true'"),
                                          .init(name: "show-watermark", placeholder: "", description: "shows/hides the watermark [true | false].", default: "'true'"),
-                                         .init(name: "verbose", placeholder: "", description: "run carbon page in verbose mode [true | false].", default: "'false'"))
+                                         .init(name: "verbose", placeholder: "", description: "run carbon page in verbose mode.", isFlag: true, default: "disabled"))
 
 
 func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, output: URL, style: CarbonStyle, verbose: Bool)> {
@@ -80,7 +80,7 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
     return binding(
            args <- arguments(console: console),
                 |<-console.printStep(step: step(partial: 1), information: "Reading arguments"),
-                |<-console.printStatus(step: step(partial: 1), success: true),
+                |<-console.printStatus(success: true),
                 |<-console.printSubstep(step: step(partial: 1), information: ["style\n\(args.get.style)",
                                                                               "output: \(args.get.output.path)",
                                                                               "verbose: \(args.get.verbose)"]),
