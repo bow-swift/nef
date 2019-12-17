@@ -2,10 +2,8 @@
 
 import Foundation
 import CLIKit
-
 import NefModels
 import NefJekyll
-
 import Bow
 import BowEffects
 

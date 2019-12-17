@@ -16,19 +16,6 @@ public struct Console {
         self.arguments = arguments
     }
     
-    // MARK: internal attributes
-    private var helpMessage: String {
-        let listArguments = arguments.map { arg in "--\(arg.name) <\(arg.placeholder)>" }.joined(separator: " ")
-        let information = arguments.map { arg in "\(arg.name): \(arg.description)" }.joined(separator: "\n")
-        
-        return  """
-                \(scriptName) \(listArguments)
-                
-                \(information)
-                
-                """
-    }
-    
     // MARK: -public methods
     public func print(message: @escaping @autoclosure () -> String) -> IO<Console.Error, Void> {
         ConsoleIO.print(message(), separator: " ", terminator: "\n")
@@ -95,6 +82,37 @@ public struct Console {
         }^
     }
     
+    // MARK: internal attributes <helpers>
+    private var helpMessage: String {
+        let listArguments = arguments.map { arg in arg.displayParameter }.joined(separator: " ")
+        let requireds = arguments.filter { $0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
+        let optionals = arguments.filter { !$0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
+        
+        if optionals.isEmpty {
+            return  """
+                    \(scriptName) \(listArguments)
+                    
+                    \t\(description)
+                    
+                    \(requireds)
+                    
+                    """
+        } else {
+            return  """
+                    \(scriptName) \(listArguments)
+                    
+                    \t\(description)
+                    
+                    \(requireds)
+                    
+                    \tOptions:
+                    
+                    \(optionals)
+                    
+                    """
+        }
+    }
+    
     /// Definition of an argument for Console
     public struct Argument: Equatable {
         let name: String
@@ -138,6 +156,28 @@ public struct Console {
     }
 }
 
+
+/// Argument representation
+extension Console.Argument {
+    var displayParameter: String {
+        guard isRequired else { return "" }
+        
+        if isFlag || placeholder.isEmpty {
+            return "--\(name)"
+        } else {
+            return "--\(name) <\(placeholder)>"
+        }
+    }
+    
+    var displayDescription: String {
+        let defaultValue = self.default.trimmingEmptyCharacters
+        if defaultValue.isEmpty {
+            return "\t--\(name): \(description)"
+        } else {
+            return "\t--\(name): \(description) [default: \(defaultValue)]"
+        }
+    }
+}
 
 /// Defined `NefModel.Console` into `ConsoleIO`
 extension Console: NefModels.Console {
