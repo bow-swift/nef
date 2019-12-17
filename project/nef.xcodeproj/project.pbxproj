@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8B0FB588237C0A5600221548 /* CLIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB586237C0A5600221548 /* CLIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */; };
-		8B0FB59A237C0B9A00221548 /* ConsoleReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86322D392C000919F36 /* ConsoleReader.swift */; };
 		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
 		8B0FB5B8237C61C000221548 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB5B7237C61C000221548 /* Error.swift */; };
 		8B0FB5BA237D5B7A00221548 /* _Carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5B9237D5B7A00221548 /* _Carbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -18,7 +17,6 @@
 		8B0FB5C0237D5BBF00221548 /* _Markdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5BF237D5BBA00221548 /* _Markdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D79F22D6235200D05A70 /* NefJekyll.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12D79D22D6235200D05A70 /* NefJekyll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
-		8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
 		8B3CB87F22D3931D00919F36 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85622D392C000919F36 /* ConsoleOutput.swift */; };
@@ -272,7 +270,6 @@
 		8B3CB84D22D3929B00919F36 /* NefCarbon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCarbon.h; sourceTree = "<group>"; };
 		8B3CB84E22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB85022D3929B00919F36 /* URLQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLQuery.swift; sourceTree = "<group>"; };
-		8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B3CB85522D392C000919F36 /* NefJekyll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefJekyll.swift; sourceTree = "<group>"; };
 		8B3CB85622D392C000919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B3CB85722D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -280,7 +277,6 @@
 		8B3CB85B22D392C000919F36 /* NefMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefMarkdown.swift; sourceTree = "<group>"; };
 		8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B3CB85D22D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		8B3CB86322D392C000919F36 /* ConsoleReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleReader.swift; sourceTree = "<group>"; };
 		8B3CB86422D392C000919F36 /* NSImage+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Store.swift"; sourceTree = "<group>"; };
 		8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundUtils.swift; sourceTree = "<group>"; };
 		8B3CB86622D392C000919F36 /* Array+Slice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Slice.swift"; sourceTree = "<group>"; };
@@ -402,7 +398,6 @@
 			children = (
 				8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */,
 				8BBCA654239683D400BE058B /* Console.swift */,
-				8B3CB86322D392C000919F36 /* ConsoleReader.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
 				8B0FB58E237C0A8F00221548 /* Support Files */,
 			);
@@ -588,7 +583,6 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85922D392C000919F36 /* main.swift */,
-				8B3CB85122D3929B00919F36 /* ConsoleOutput.swift */,
 			);
 			path = CarbonPage;
 			sourceTree = "<group>";
@@ -1222,7 +1216,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "47 Degrees";
 				TargetAttributes = {
 					8B0CA51522AE669600181BC0 = {
@@ -1329,7 +1323,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88122D3932000919F36 /* main.swift in Sources */,
-				8B22247B22D4C7B400C85856 /* ConsoleOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1337,7 +1330,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B0FB59A237C0B9A00221548 /* ConsoleReader.swift in Sources */,
 				8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */,
 				8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */,
 				8BBCA655239683D400BE058B /* Console.swift in Sources */,
@@ -2168,6 +2160,7 @@
 		8BD1390523A7D3FF00C24BFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P548S5LU96;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2180,6 +2173,7 @@
 		8BD1390623A7D3FF00C24BFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P548S5LU96;
 				ENABLE_HARDENED_RUNTIME = YES;
