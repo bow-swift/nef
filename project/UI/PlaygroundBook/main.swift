@@ -12,6 +12,7 @@ let console = Console(script: "nef-playground-book",
                                  .init(name: "package", placeholder: "package path", description: "path to Package.swift file. ex. `/home/Package.swift`"),
                                  .init(name: "output", placeholder: "output path", description: "path where Playground is saved to. ex. `/home`"))
 
+
 func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (packageContent: String, projectName: String, output: URL)> {
     console.input().flatMap { args in
         guard let projectName = args["name"]?.trimmingEmptyCharacters,

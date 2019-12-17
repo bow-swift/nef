@@ -56,7 +56,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func page(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle, verbose: Bool) -> IO<CLIKit.Console.Error, URL> {
+func render(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle, verbose: Bool) -> IO<CLIKit.Console.Error, URL> {
     IO.async { callback in
         renderCarbon(downloader: downloader,
                      code: content,
@@ -78,16 +78,16 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
     let output = IOPartial<CLIKit.Console.Error>.var(URL.self)
     
     return binding(
-                |<-console.printStep(step: step(partial: 1), information: "Reading arguments"),
            args <- arguments(console: console),
+                |<-console.printStep(step: step(partial: 1), information: "Reading arguments"),
                 |<-console.printStatus(step: step(partial: 1), success: true),
                 |<-console.printSubstep(step: step(partial: 1), information: ["style\n\(args.get.style)",
                                                                               "output: \(args.get.output.path)",
                                                                               "verbose: \(args.get.verbose)"]),
                 |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Render carbon image"),
-         output <- page(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style, verbose: args.get.verbose),
-                |<-console.printStatus(step: step(partial: 2), success: true),
+         output <- render(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style, verbose: args.get.verbose),
     yield: output.get)^
+        .reportStatus(in: console)
         .foldM({ e   in console.exit(failure: "\(e)")                                  },
                { url in console.exit(success: "rendered carbon page in '\(url.path)'") })
         .unsafeRunSyncEither(on: .global())
