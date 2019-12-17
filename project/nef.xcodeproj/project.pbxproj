@@ -93,6 +93,7 @@
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
+		8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -344,6 +345,7 @@
 		8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEnvironment.swift; sourceTree = "<group>"; };
 		8BD6F709238C278D00DD93C4 /* String+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
 		8BD6F70C238C495600DD93C4 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
+		8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchTimeInterval+Utils.swift"; sourceTree = "<group>"; };
 		8BF75F8522CA71E700EC53A1 /* nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCarbon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -398,6 +400,7 @@
 			children = (
 				8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */,
 				8BBCA654239683D400BE058B /* Console.swift */,
+				8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
 				8B0FB58E237C0A8F00221548 /* Support Files */,
 			);
@@ -1332,6 +1335,7 @@
 			files = (
 				8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */,
 				8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */,
+				8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */,
 				8BBCA655239683D400BE058B /* Console.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -70,12 +70,23 @@ func page(downloader: CarbonDownloader, content: String, output: URL, style: Car
 
 @discardableResult
 func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> {
+    func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
+        Step(total: 3, partial: partial, duration: duration)
+    }
+    
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, style: CarbonStyle, verbose: Bool).self)
     let output = IOPartial<CLIKit.Console.Error>.var(URL.self)
     
     return binding(
+                |<-console.printStep(step: step(partial: 1), information: "Reading arguments"),
            args <- arguments(console: console),
+                |<-console.printStatus(step: step(partial: 1), success: true),
+                |<-console.printSubstep(step: step(partial: 1), information: ["style\n\(args.get.style)",
+                                                                              "output: \(args.get.output.path)",
+                                                                              "verbose: \(args.get.verbose)"]),
+                |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Render carbon image"),
          output <- page(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style, verbose: args.get.verbose),
+                |<-console.printStatus(step: step(partial: 2), success: true),
     yield: output.get)^
         .foldM({ e   in console.exit(failure: "\(e)")                                  },
                { url in console.exit(success: "rendered carbon page in '\(url.path)'") })

@@ -98,6 +98,19 @@ public struct CarbonStyle: Codable, Equatable {
     }
 }
 
+extension CarbonStyle: CustomStringConvertible {
+    public var description: String {
+        """
+                background: \(background)
+                size: \(size)
+                theme: \(theme)
+                fontType: \(fontType)
+                lineNumbers: \(lineNumbers)
+                watermark: \(watermark)
+        """
+    }
+}
+
 // MARK: Default colors
 extension CarbonStyle.Color {
     public static let all: [String: CarbonStyle.Color] = ["nef": nef,

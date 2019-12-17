@@ -10,14 +10,10 @@ public struct Console {
     private let description: String
     private let arguments: [Argument]
     
-    internal init(script: String, description: String, arguments: [Argument]) {
+    public init(script: String, description: String, arguments: Argument...) {
         self.scriptName  = script
         self.description = description
         self.arguments = arguments
-    }
-    
-    public init(script: String, description: String, arguments: Argument...) {
-        self.init(script: script, description: description, arguments: arguments)
     }
     
     // MARK: internal attributes
@@ -148,7 +144,7 @@ public struct Console {
 /// Defined `NefModel.Console` into `ConsoleIO`
 extension Console: NefModels.Console {
     public func printStep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void> {
-        ConsoleIO.print(information,
+        ConsoleIO.print(step.estimatedDuration > .seconds(3) ? "\(information)..." : information,
                         separator: " ",
                         terminator: " ")
     }

@@ -50,6 +50,16 @@
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--page &quot;~/Desktop/BowPlayground.app/Contents/MacOS/BowPlayground.playground/Pages/page.xcplaygroundpage &quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--output &quot;~/Desktop&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
