@@ -15,6 +15,7 @@ public extension JekyllAPI {
             self.jekyll(content: content,
                         to: output.path,
                         permalink: permalink,
+                        verbose: false,
                         success: {
                             let fileExist = FileManager.default.fileExists(atPath: output.path)
                             fileExist ? callback(.right(output)) : callback(.left(.markdown))
@@ -37,9 +38,10 @@ fileprivate extension JekyllAPI {
     ///   - content: content page in Xcode playground.
     ///   - outputPath: output where to write the Markdown render.
     ///   - permalink: website relative url where locate the page.
+    ///   - verbose: run in verbose mode.
     ///   - success: callback to notify if everything goes well.
     ///   - failure: callback with information to notify if something goes wrong.
-    static func jekyll(content: String, to outputPath: String, permalink: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    static func jekyll(content: String, to outputPath: String, permalink: String, verbose: Bool, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         guard Thread.isMainThread else {
             fatalError("jekyll(content:outputPath:permalink:success:failure:) should be invoked in main thread")
         }
@@ -47,6 +49,7 @@ fileprivate extension JekyllAPI {
         renderJekyll(content: content,
                      to: outputPath,
                      permalink: permalink,
+                     verbose: verbose,
                      success: success,
                      failure: failure)
     }
