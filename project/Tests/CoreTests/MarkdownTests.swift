@@ -15,7 +15,7 @@ class MarkdownTests: XCTestCase {
         let expected = "\n### This is a markup\n"
         let result = NefCore.MarkdownGenerator().render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithMultiMarkupAndWhiteSpaces_render_returnsTrimMarkupNode() {
@@ -32,7 +32,7 @@ class MarkdownTests: XCTestCase {
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
         let result = NefCore.MarkdownGenerator().render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithCode_render_returnsSwiftBlock() {
@@ -43,7 +43,7 @@ class MarkdownTests: XCTestCase {
         let expected = "\n```swift\n\(input)```\n"
         let result = NefCore.MarkdownGenerator().render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithNefHeader_render_returnsEmptyNode() {
@@ -61,7 +61,7 @@ class MarkdownTests: XCTestCase {
         
         let result = NefCore.MarkdownGenerator().render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithCodeAndNefHiddenBlock_render_returnsSwiftBlock() {
@@ -79,6 +79,6 @@ class MarkdownTests: XCTestCase {
         let expected = "\n```swift\n\(code)\n```\n"
         let result = NefCore.MarkdownGenerator().render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 }

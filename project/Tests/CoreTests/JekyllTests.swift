@@ -15,7 +15,7 @@ class JekyllTests: XCTestCase {
         let expected = "\n### This is a markup\n"
         let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithMultiMarkupAndWhiteSpaces_render_returnsTrimMarkupNode() {
@@ -32,7 +32,7 @@ class JekyllTests: XCTestCase {
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
         let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithCode_render_returnsSwiftBlock() {
@@ -43,7 +43,7 @@ class JekyllTests: XCTestCase {
         let expected = "\n```swift\n\(input)```\n"
         let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithNefHeader_render_returnsHeaderBlock() {
@@ -69,7 +69,7 @@ class JekyllTests: XCTestCase {
 
         let result = NefCore.JekyllGenerator(permalink: "permalink").render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
 
     func testPlainPlaygroundWithNefHeaderAndWhitespaces_render_returnsHeaderBlockTrimmed() {
@@ -95,7 +95,7 @@ class JekyllTests: XCTestCase {
 
         let result = NefCore.JekyllGenerator(permalink: "permalink").render(content: input)
 
-        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result?.output, expected)
     }
     
 }
