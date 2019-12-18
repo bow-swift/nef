@@ -330,7 +330,7 @@ Options:
     <td align="center"><code>--theme</code></td>
     <td>Carbon's theme to be applied</td>
     <td align="center">String</td>
-    <td><code>cobalt</code> <code>blackboard</code> <code>dracula</code> <code>duotone</code> <code>hopscotch</code> <code>lucario</code> <code>material</code> <code>monokai</code> <code>nord</code> <code>oceanicNext</code> <code>oneDark</code> <code>panda</code> <code>paraiso</code> <code>seti</code> <code>purple</code> <code>solarized </code> <code>tomorrow</code> <code>twilight</code> <code>verminal</code> <code>vscode</code> <code>zenburn</code></td>
+    <td><code>base16-dark</code> <code>blackboard</code> <code>cobalt</code> <code>duotone-dark</code> <code>dracula</code> <code>hopscotch</code> <code>lucario</code> <code>material</code> <code>monokai</code> <code>night-owl</code> <code>nord</code> <code>oceanic-next</code> <code>one-dark</code> <code>panda-syntax</code> <code>paraiso-dark</code> <code>seti</code> <code>shades-of-purple</code> <code>synthwave-84</code> <code>tomorrow-night-bright</code> <code>twilight</code> <code>verminal</code> <code>vscode</code> <code>zenburn</code></td>
     <td align="center"><code>dracula</code></td>
   </tr>
   <tr>
@@ -344,7 +344,7 @@ Options:
     <td align="center"><code>--font</code></td>
     <td>Font type</td>
     <td align="center">String</td>
-    <td><code>firaCode</code> <code>hack</code> <code>inconsolata</code> <code>iosevka</code> <code>monoid</code> <code>anonymous</code> <code>sourceCodePro</code> <code>darkMono</code> <code>droidMono</code> <code>fantasqueMono</code> <code>ibmPlexMono</code> <code>spaceMono</code> <code>ubuntuMono</code></td>
+    <td><code>fira-code</code> <code>hack</code> <code>inconsolata</code> <code>iosevka</code> <code>monoid</code> <code>anonymous-pro</code> <code>source-code-pro</code> <code>dm</code> <code>droid-sans-mono</code> <code>fantasque-sans-mono</code> <code>ibm-plex-mono</code> <code>space-mono</code> <code>ubuntu-mono</code></td>
     <td align="center"><code>firaCode</code></td>
   </tr>
   <tr>
