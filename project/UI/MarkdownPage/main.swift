@@ -3,41 +3,70 @@
 import Foundation
 import CLIKit
 import NefMarkdown
+import NefModels
+import Bow
+import BowEffects
 
-let scriptName = "nef-markdown-page"
-let console = MarkdownConsole()
 
-func main() {
-    let result = arguments(keys: "from", "to", "filename")
-    guard let fromPage = result["from"],
-          let output = result["to"],
-          let filename = result["filename"] else {
-            ConsoleLegacy.help.show(output: console);
-            exit(-1)
-    }
+private let console = Console(script: "nef-markdown-page",
+                              description: "Render a markdown file from a Playground page",
+                              arguments: .init(name: "page", placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
+                                         .init(name: "output", placeholder: "output path", description: "path where markdown are saved to. ex. `/home`"),
+                                         .init(name: "filename", placeholder: "name", description: "name for the rendered Markdown file (without any extension). ex. `Readme`"),
+                                         .init(name: "verbose", placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
 
-    let from = "\(fromPage)/Contents.swift"
-    let to = "\(output)/\(filename).md"
 
-    renderMarkdown(from: from, to: to)
+func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, output: URL, verbose: Bool)> {
+    console.input().flatMap { args in
+        guard let pagePath = args["page"]?.trimmingEmptyCharacters.expandingTildeInPath,
+              let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath,
+              let filename = args["filename"],
+              let verbose = Bool(args["verbose"] ?? "") else {
+                return IO.raiseError(CLIKit.Console.Error.arguments)
+        }
+        
+        let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"
+        let output = URL(fileURLWithPath: outputPath).appendingPathComponent("\(filename).md")
+        
+        guard let pageContent = try? String(contentsOfFile: page), !pageContent.isEmpty else {
+            return IO.raiseError(CLIKit.Console.Error.render(information: "could not read page content"))
+        }
+
+        return IO.pure((content: pageContent, output: output, verbose: verbose))
+    }^
 }
 
-/// Renders a page into Markdown format.
-///
-/// - Parameters:
-///   - filePath: input page in Xcode playground format.
-///   - outputPath: output where to write the Markdown render.
-private func renderMarkdown(from filePath: String, to outputPath: String) {
-    let fileURL = URL(fileURLWithPath: filePath)
-    guard let content = try? String(contentsOf: fileURL, encoding: .utf8) else {
-        ConsoleLegacy.error(information: "invalid input file '\(filePath)'").show(output: console)
-        return
+func render(content: String, output: URL, verbose: Bool) -> IO<CLIKit.Console.Error, URL> {
+    IO.async { callback in
+        renderMarkdown(content: content,
+                       to: output.path,
+                       verbose: verbose,
+                       success: { callback(.right(output)) },
+                       failure: { e in callback(.left(.render(information: e))) })
+    }^
+}
+
+@discardableResult
+func main() -> Either<CLIKit.Console.Error, Void> {
+    func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
+        Step(total: 3, partial: partial, duration: duration)
     }
     
-    renderMarkdown(content: content,
-                   to: outputPath,
-                   success: { ConsoleLegacy.success.show(output: console) },
-                   failure: { ConsoleLegacy.error(information: $0).show(output: console) })
+    let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, verbose: Bool).self)
+    let output = IOPartial<CLIKit.Console.Error>.var(URL.self)
+    
+    return binding(
+           args <- arguments(console: console),
+                |<-console.printStep(step: step(partial: 1), information: "Reading arguments"),
+                |<-console.printStatus(success: true),
+                |<-console.printSubstep(step: step(partial: 1), information: ["output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
+                |<-console.printStep(step: step(partial: 2), information: "Render markdown page"),
+         output <- render(content: args.get.content, output: args.get.output, verbose: args.get.verbose),
+    yield: output.get)^
+        .reportStatus(in: console)
+        .foldM({ e   in console.exit(failure: "\(e)")                                    },
+               { url in console.exit(success: "rendered markdown page in '\(url.path)'") })
+        .unsafeRunSyncEither()
 }
 
 // #: - MAIN <launcher>

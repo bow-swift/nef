@@ -21,7 +21,6 @@
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
-		8B3CB88322D3932400919F36 /* ConsoleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */; };
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
 		8B3CB8A122D393F100919F36 /* CoreRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB89322D393C300919F36 /* CoreRender.swift */; };
 		8B3CB8A222D393F100919F36 /* CoreMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB89422D393C300919F36 /* CoreMarkdown.swift */; };
@@ -275,7 +274,6 @@
 		8B3CB85722D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB85922D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB85B22D392C000919F36 /* NefMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefMarkdown.swift; sourceTree = "<group>"; };
-		8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleOutput.swift; sourceTree = "<group>"; };
 		8B3CB85D22D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB86422D392C000919F36 /* NSImage+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Store.swift"; sourceTree = "<group>"; };
 		8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundUtils.swift; sourceTree = "<group>"; };
@@ -594,7 +592,6 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85D22D392C000919F36 /* main.swift */,
-				8B3CB85C22D392C000919F36 /* ConsoleOutput.swift */,
 			);
 			path = MarkdownPage;
 			sourceTree = "<group>";
@@ -1362,7 +1359,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88422D3932400919F36 /* main.swift in Sources */,
-				8B3CB88322D3932400919F36 /* ConsoleOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
