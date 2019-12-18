@@ -44,13 +44,18 @@ public struct Console {
     ///
     /// - Returns: the parameters to configure the script: path to parser file and output path for render.
     public func input() -> IO<Console.Error, [String: String]> {
-        IO.invoke {
-            let args = self.arguments + [.init(name: "help", placeholder: "", description: "", isFlag: true, default: "true"),
-                                         .init(name: "h", placeholder: "", description: "", isFlag: true, default: "true")]
-            let keys = args.map { $0.name }
-            let requireds = args.filter { arg in arg.isRequired }.map { $0.name }
-            guard Array(Set(keys)).count == keys.count else { throw Console.Error.duplicated }
-            
+        func getArgumentList() -> IO<Console.Error, [Argument]> {
+            IO.invoke {
+                let args = self.arguments + [.init(name: "help", placeholder: "", description: "", isFlag: true, default: "false"),
+                                             .init(name: "h", placeholder: "", description: "", isFlag: true, default: "false")]
+                let keys = args.map { $0.name }
+                
+                guard Array(Set(keys)).count == keys.count else { throw Console.Error.duplicated }
+                return args
+            }
+        }
+        
+        func arguments(_ args: [Argument]) -> IO<Console.Error, [String: String]> {
             var result: [String: String] = [:]
             
             var longopts: [option] {
@@ -67,19 +72,41 @@ public struct Console {
             
             while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
                 let match = args.enumerated().first { (index, _) in opt == Int32(index) }
-                guard let key = match?.element.name else { throw Console.Error.arguments }
+                guard let key = match?.element.name else { return IO.raiseError(Console.Error.arguments)^ }
 
                 result[key] = optarg == nil ? "\(key)" : String(cString: optarg)
             }
             
-            if result.keys.containsAny(["help", "h"]) {
-                throw Console.Error.help
-            } else if result.keys.containsAll(requireds) {
-                return result
-            } else {
-                throw Console.Error.arguments
+            let optionals = args.compactMap { $0.default.isEmpty ? nil : ($0.name, $0.default) }
+            optionals.forEach { (key, value) in
+                guard result[key] == nil else { return }
+                result[key] = value
             }
-        }^
+            
+            return IO.pure(result)^
+        }
+        
+        func validate(arguments: [String: String], keys: [String]) -> IO<Console.Error, [String: String]> {
+            IO.invoke {
+                if let help = Bool(arguments["help"] ?? arguments["h"] ?? ""), help {
+                    throw Console.Error.help
+                } else if arguments.keys.containsAll(keys) {
+                    return arguments
+                } else {
+                    throw Console.Error.arguments
+                }
+            }
+        }
+        
+        let options = IOPartial<Console.Error>.var([Argument].self)
+        let args = IOPartial<Console.Error>.var([String: String].self)
+        let validated = IOPartial<Console.Error>.var([String: String].self)
+        
+        return binding(
+             options <- getArgumentList(),
+                args <- arguments(options.get),
+           validated <- validate(arguments: args.get, keys: options.get.map { $0.name }),
+        yield: validated.get)^
     }
     
     // MARK: internal attributes <helpers>
@@ -148,7 +175,7 @@ public struct Console {
             case .duplicated:
                 return "the script has declared duplicated keys."
             case .arguments:
-                return "do not received the whole required arguments. For more information, use --help, --h"
+                return "do not received the whole required arguments. Use --help, --h"
             case let .render(info):
                 return "fail the render \(info.isEmpty ? "" : "(\(info))")."
             }

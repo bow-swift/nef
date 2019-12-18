@@ -8,29 +8,28 @@ import Bow
 import BowEffects
 
 private let console = Console(script: "nef-jekyll-page",
-                              description: "Render a markdown files from Playground page that can be consumed from Jekyll",
+                              description: "Render a markdown file from a Playground page that can be consumed from Jekyll",
                               arguments: .init(name: "page", placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
                                          .init(name: "output", placeholder: "output Jekyll's markdown", description: "path where Jekyll markdown are saved to. ex. `/home`"),
                                          .init(name: "permalink", placeholder: "relative URL", description: "is the relative path where Jekyll will render the documentation. ex. `/about/`"),
-                                         .init(name: "verbose", placeholder: "", description: "run carbon page in verbose mode.", isFlag: true, default: "disabled"))
+                                         .init(name: "verbose", placeholder: "", description: "run jekyll page in verbose mode.", isFlag: true, default: "false"))
 
 
 func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, output: URL, permalink: String, verbose: Bool)> {
     console.input().flatMap { args in
         guard let pagePath = args["page"]?.trimmingEmptyCharacters.expandingTildeInPath,
               let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let permalink = args["permalink"] else {
+              let permalink = args["permalink"],
+              let verbose = Bool(args["verbose"] ?? "") else {
                 return IO.raiseError(CLIKit.Console.Error.arguments)
         }
         
         let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"
-        let output = URL(fileURLWithPath: "\(outputPath)/README.md")
+        let output = URL(fileURLWithPath: outputPath).appendingPathComponent("README.md")
+        
         guard let pageContent = try? String(contentsOfFile: page), !pageContent.isEmpty else {
             return IO.raiseError(CLIKit.Console.Error.render(information: "could not read page content"))
         }
-        
-        
-        let verbose = args["verbose"] == "true" ? true : false
         
         return IO.pure((content: pageContent, output: output, permalink: permalink, verbose: verbose))
     }^
