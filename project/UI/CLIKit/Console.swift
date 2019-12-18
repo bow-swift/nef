@@ -74,7 +74,7 @@ public struct Console {
                 let match = args.enumerated().first { (index, _) in opt == Int32(index) }
                 guard let key = match?.element.name else { return IO.raiseError(Console.Error.arguments)^ }
 
-                result[key] = optarg == nil ? "\(key)" : String(cString: optarg)
+                result[key] = optarg == nil ? "true" : String(cString: optarg)
             }
             
             let optionals = args.compactMap { $0.default.isEmpty ? nil : ($0.name, $0.default) }
@@ -88,7 +88,7 @@ public struct Console {
         
         func validate(arguments: [String: String], keys: [String]) -> IO<Console.Error, [String: String]> {
             IO.invoke {
-                if let help = Bool(arguments["help"] ?? arguments["h"] ?? ""), help {
+                if Bool(arguments["help"] ?? "") ?? false || Bool(arguments["h"] ?? "") ?? false {
                     throw Console.Error.help
                 } else if arguments.keys.containsAll(keys) {
                     return arguments

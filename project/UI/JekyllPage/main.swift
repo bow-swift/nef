@@ -3,6 +3,7 @@
 import Foundation
 import CLIKit
 import NefModels
+import NefCore
 import NefJekyll
 import Bow
 import BowEffects
@@ -35,13 +36,12 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func render(content: String, output: URL, permalink: String, verbose: Bool) -> IO<CLIKit.Console.Error, URL> {
+func render(content: String, output: URL, permalink: String) -> IO<CLIKit.Console.Error, RenderOutput> {
     IO.async { callback in
         renderJekyll(content: content,
                      to: output.path,
                      permalink: permalink,
-                     verbose: verbose,
-                     success: { callback(.right(output)) },
+                     success: { output in callback(.right(output)) },
                      failure: { e in callback(.left(.render(information: e))) })
     }^
 }
@@ -53,7 +53,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, permalink: String, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(URL.self)
+    let output = IOPartial<CLIKit.Console.Error>.var(RenderOutput.self)
     
     return binding(
            args <- arguments(console: console),
@@ -61,11 +61,14 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                 |<-console.printStatus(success: true),
                 |<-console.printSubstep(step: step(partial: 1), information: ["output: \(args.get.output.path)", "permalink: \(args.get.permalink)", "verbose: \(args.get.verbose)"]),
                 |<-console.printStep(step: step(partial: 2), information: "Render Jekyll page"),
-         output <- render(content: args.get.content, output: args.get.output, permalink: args.get.permalink, verbose: args.get.verbose),
-    yield: output.get)^
+         output <- render(content: args.get.content, output: args.get.output, permalink: args.get.permalink),
+    yield: args.get.verbose ? output.get : nil)^
         .reportStatus(in: console)
-        .foldM({ e   in console.exit(failure: "\(e)")                                  },
-               { url in console.exit(success: "rendered jekyll page in '\(url.path)'") })
+        .foldM({ e   in console.exit(failure: "\(e)") },
+               { rendered in
+                    guard let rendered = rendered else { return console.exit(success: "rendered jekyll page.") }
+                    return console.exit(success: "rendered jekyll page.\n\n• AST \n\t\(rendered.tree)\n\n• Trace \n\t\(rendered.output)")
+               })
         .unsafeRunSyncEither()
 }
 

@@ -15,7 +15,6 @@ public extension CarbonAPI {
                 self.carbon(code: carbon.code,
                             style: carbon.style,
                             outputPath: outputURL.path,
-                            verbose: false,
                             success: {
                                 let file = URL(fileURLWithPath: "\(outputURL.path).png")
                                 let fileExist = FileManager.default.fileExists(atPath: file.path)
@@ -55,10 +54,9 @@ fileprivate extension CarbonAPI {
     ///   - code: content to generate the snippet.
     ///   - style: style to apply to exported code snippet.
     ///   - outputPath: output where to render the snippets.
-    ///   - verbose: run in verbose mode.
     ///   - success: callback to notify if everything goes well.
     ///   - failure: callback with information to notify if something goes wrong.
-    static func carbon(code: String, style: CarbonStyle, outputPath: String, verbose: Bool, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    static func carbon(code: String, style: CarbonStyle, outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         guard Thread.isMainThread else {
             fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
         }
@@ -73,7 +71,6 @@ fileprivate extension CarbonAPI {
                code: code,
                style: style,
                outputPath: outputPath,
-               verbose: verbose,
                success: retainSuccess, failure: retainFailure)
     }
     
@@ -86,14 +83,12 @@ fileprivate extension CarbonAPI {
     ///   - code: content to generate the snippet.
     ///   - style: style to apply to exported code snippet.
     ///   - outputPath: output where to render the snippets.
-    ///   - verbose: run in verbose mode.
     ///   - success: callback to notify if everything goes well.
     ///   - failure: callback with information to notify if something goes wrong.
     static func carbon(parentView: NSView,
                 code: String,
                 style: CarbonStyle,
                 outputPath: String,
-                verbose: Bool,
                 success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         guard Thread.isMainThread else {
             fatalError("carbon(parentView:code:style:outputPath:success:failure:) should be invoked in main thread")
@@ -110,8 +105,7 @@ fileprivate extension CarbonAPI {
                          code: "\(code)\n",
                          style: style,
                          outputPath: outputPath,
-                         verbose: verbose,
-                         success: success,
+                         success: { _ in success() },
                          failure: failure)
         }
     }

@@ -2,12 +2,10 @@
 
 import Foundation
 import CLIKit
-
 import NefCommon
 import NefModels
 import NefCore
 import NefCarbon
-
 import Bow
 import BowEffects
 
@@ -59,14 +57,13 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func render(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle, verbose: Bool) -> IO<CLIKit.Console.Error, URL> {
+func render(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle) -> IO<CLIKit.Console.Error, RenderOutput> {
     IO.async { callback in
         renderCarbon(downloader: downloader,
                      code: content,
                      style: style,
                      outputPath: output.path,
-                     verbose: verbose,
-                     success: { callback(.right(output.deletingLastPathComponent())) },
+                     success: { output in callback(.right(output)) },
                      failure: { e in callback(.left(.render(information: e))) })
     }^
 }
@@ -78,7 +75,7 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, style: CarbonStyle, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(URL.self)
+    let output = IOPartial<CLIKit.Console.Error>.var(RenderOutput.self)
     
     return binding(
            args <- arguments(console: console),
@@ -88,11 +85,14 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
                                                                               "output: \(args.get.output.path)",
                                                                               "verbose: \(args.get.verbose)"]),
                 |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Render carbon image"),
-         output <- render(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style, verbose: args.get.verbose),
-    yield: output.get)^
+         output <- render(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style),
+    yield: args.get.verbose ? output.get : nil)^
         .reportStatus(in: console)
-        .foldM({ e   in console.exit(failure: "\(e)")                                  },
-               { url in console.exit(success: "rendered carbon images in '\(url.path)'") })
+        .foldM({ e   in console.exit(failure: "\(e)") },
+               { rendered in
+                    guard let rendered = rendered else { return console.exit(success: "rendered carbon images.") }
+                    return console.exit(success: "rendered carbon images.\n\n• AST \n\t\(rendered.tree)\n\n• Trace \n\t\(rendered.output)")
+               })
         .unsafeRunSyncEither(on: .global())
 }
 

@@ -14,7 +14,6 @@ public extension MarkdownAPI {
             let output = URL(fileURLWithPath: "\(file.path).md")
             self.markdown(content: content,
                           to: output.path,
-                          verbose: false,
                           success: {
                             let fileExist = FileManager.default.fileExists(atPath: output.path)
                             fileExist ? callback(.right(output)) : callback(.left(.markdown))
@@ -36,18 +35,16 @@ fileprivate extension MarkdownAPI {
     /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - outputPath: output where to write the Markdown render.
-    ///   - verbose: run in verbose mode.
     ///   - success: callback to notify if everything goes well.
     ///   - failure: callback with information to notify if something goes wrong.
-    static func markdown(content: String, to outputPath: String, verbose: Bool, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
+    static func markdown(content: String, to outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
         guard Thread.isMainThread else {
             fatalError("markdown(content:outputPath:success:failure:) should be invoked in main thread")
         }
         
         renderMarkdown(content: content,
                        to: outputPath,
-                       verbose: verbose,
-                       success: success,
+                       success: { _ in success() },
                        failure: failure)
     }
 }

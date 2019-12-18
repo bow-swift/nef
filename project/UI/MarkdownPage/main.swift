@@ -2,11 +2,11 @@
 
 import Foundation
 import CLIKit
+import NefCore
 import NefMarkdown
 import NefModels
 import Bow
 import BowEffects
-
 
 private let console = Console(script: "nef-markdown-page",
                               description: "Render a markdown file from a Playground page",
@@ -36,12 +36,11 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func render(content: String, output: URL, verbose: Bool) -> IO<CLIKit.Console.Error, URL> {
+func render(content: String, output: URL, verbose: Bool) -> IO<CLIKit.Console.Error, RenderOutput> {
     IO.async { callback in
         renderMarkdown(content: content,
                        to: output.path,
-                       verbose: verbose,
-                       success: { callback(.right(output)) },
+                       success: { output in callback(.right(output)) },
                        failure: { e in callback(.left(.render(information: e))) })
     }^
 }
@@ -53,7 +52,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(URL.self)
+    let output = IOPartial<CLIKit.Console.Error>.var(RenderOutput.self)
     
     return binding(
            args <- arguments(console: console),
@@ -62,10 +61,13 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                 |<-console.printSubstep(step: step(partial: 1), information: ["output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
                 |<-console.printStep(step: step(partial: 2), information: "Render markdown page"),
          output <- render(content: args.get.content, output: args.get.output, verbose: args.get.verbose),
-    yield: output.get)^
+    yield: args.get.verbose ? output.get : nil)^
         .reportStatus(in: console)
-        .foldM({ e   in console.exit(failure: "\(e)")                                    },
-               { url in console.exit(success: "rendered markdown page in '\(url.path)'") })
+        .foldM({ e   in console.exit(failure: "\(e)") },
+               { rendered in
+                    guard let rendered = rendered else { return console.exit(success: "rendered markdown page.") }
+                    return console.exit(success: "rendered markdown page.\n\n• AST \n\t\(rendered.tree)\n\n• Trace \n\t\(rendered.output)")
+               })
         .unsafeRunSyncEither()
 }
 
