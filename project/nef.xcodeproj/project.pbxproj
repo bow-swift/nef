@@ -19,7 +19,7 @@
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
-		8B304D6023ABA954001E9303 /* String+Coloring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Coloring.swift */; };
+		8B304D6023ABA954001E9303 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
@@ -249,7 +249,7 @@
 		8B22248322D5EAD500C85856 /* NefMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B22248522D5EAD600C85856 /* NefMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefMarkdown.h; sourceTree = "<group>"; };
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B304D5F23ABA954001E9303 /* String+Coloring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Coloring.swift"; sourceTree = "<group>"; };
+		8B304D5F23ABA954001E9303 /* String+Colorize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Colorize.swift"; sourceTree = "<group>"; };
 		8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAPI.swift; sourceTree = "<group>"; };
 		8B3CB83D22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB84022D3929B00919F36 /* NefModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefModels.h; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 				8BED79BA23A9357D00115479 /* Console+Utils.swift */,
 				8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
-				8B304D5F23ABA954001E9303 /* String+Coloring.swift */,
+				8B304D5F23ABA954001E9303 /* String+Colorize.swift */,
 				8B0FB58E237C0A8F00221548 /* Support Files */,
 			);
 			path = CLIKit;
@@ -1309,7 +1309,7 @@
 				8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */,
 				8BED79BB23A9357D00115479 /* Console+Utils.swift in Sources */,
 				8BBCA655239683D400BE058B /* Console.swift in Sources */,
-				8B304D6023ABA954001E9303 /* String+Coloring.swift in Sources */,
+				8B304D6023ABA954001E9303 /* String+Colorize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

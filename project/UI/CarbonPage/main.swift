@@ -79,19 +79,19 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
     
     return binding(
            args <- arguments(console: console),
-                |<-console.printStep(step: step(partial: 1), information: "Reading arguments"),
+                |<-console.printStep(step: step(partial: 1), information: "Reading "+"arguments".bold),
                 |<-console.printStatus(success: true),
                 |<-console.printSubstep(step: step(partial: 1), information: ["style\n\(args.get.style)",
                                                                               "output: \(args.get.output.path)",
                                                                               "verbose: \(args.get.verbose)"]),
-                |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Render carbon image"),
+                |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Rendering "+"carbon".bold+" images"),
          output <- render(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style),
     yield: args.get.verbose ? output.get : nil)^
         .reportStatus(in: console)
         .foldM({ e   in console.exit(failure: "\(e)") },
                { rendered in
                     guard let rendered = rendered else { return console.exit(success: "rendered carbon images.") }
-                    return console.exit(success: "rendered carbon images.\n\n• AST \n\t\(rendered.tree)\n\n• Trace \n\t\(rendered.output)")
+                    return console.exit(success: "rendered carbon images.\n\n"+"• AST ".bold.cyan+"\n\t\(rendered.tree)\n\n"+"• Trace ".bold.cyan+"\n\t\(rendered.output)")
                })
         .unsafeRunSyncEither(on: .global())
 }

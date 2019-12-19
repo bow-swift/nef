@@ -27,13 +27,13 @@ public struct Console {
     }
     
     public func exit<A>(failure: String) -> IO<Console.Error, A> {
-        print(message: "☠️ error:\(scriptName.lowercased()): \(failure)")
+        print(message: "☠️  error:\(scriptName.lowercased()) ".bold.red + "\(failure)")
             .map { _ in Darwin.exit(-1) }^
         
     }
     
     public func exit<A>(success: String) -> IO<Console.Error, A> {
-        print(message: "🙌 success:\(scriptName.lowercased()): \(success)")
+        print(message: "🙌 success:\(scriptName.lowercased()) ".bold.green + "\(success)")
             .map { _ in Darwin.exit(0) }^
     }
     
@@ -117,7 +117,7 @@ public struct Console {
         
         if optionals.isEmpty {
             return  """
-                    \(scriptName) \(listArguments)
+                    \(scriptName.bold) \(listArguments)
                     
                     \t\(description)
                     
@@ -126,13 +126,13 @@ public struct Console {
                     """
         } else {
             return  """
-                    \(scriptName) \(listArguments)
+                    \(scriptName.bold) \(listArguments)
                     
                     \t\(description)
                     
                     \(requireds)
                     
-                    \tOptions:
+                    \t\("Options".bold)
                     
                     \(optionals)
                     
@@ -175,9 +175,9 @@ public struct Console {
             case .duplicated:
                 return "the script has declared duplicated keys."
             case .arguments:
-                return "do not received the whole required arguments. Use --help, --h"
+                return "do not received the whole required arguments."+" Use".bold+" --help, --h".cyan
             case let .render(info):
-                return "fail the render \(info.isEmpty ? "" : "(\(info))")."
+                return "fail the render\(info.isEmpty ? "" : " (".lightGray+" \(info)".lightRed+")".lightGray)."
             }
         }
     }
@@ -190,18 +190,18 @@ extension Console.Argument {
         guard isRequired else { return "" }
         
         if isFlag || placeholder.isEmpty {
-            return "--\(name)"
+            return "--\(name)".bold.lightCyan
         } else {
-            return "--\(name) <\(placeholder)>"
+            return "--\(name)".bold.lightCyan+" <\(placeholder)>"
         }
     }
     
     var displayDescription: String {
         let defaultValue = self.default.trimmingEmptyCharacters
         if defaultValue.isEmpty {
-            return "\t--\(name): \(description)"
+            return "\t--\(name)".lightCyan+" \(description)"
         } else {
-            return "\t--\(name): \(description) [default: \(defaultValue)]"
+            return "\t--\(name)".lightCyan+" \(description)"+" [default: ".dim.lightMagenta+defaultValue.lightMagenta+"]".dim.lightMagenta
         }
     }
 }
@@ -209,26 +209,26 @@ extension Console.Argument {
 /// Defined `NefModel.Console` into `ConsoleIO`
 extension Console: NefModels.Console {
     public func printStep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void> {
-        ConsoleIO.print(step.estimatedDuration > .seconds(3) ? "\(information)..." : information,
+        ConsoleIO.print(step.estimatedDuration > .seconds(3) ? "\(information)"+"...".lightGray : information,
                         separator: " ",
                         terminator: " ")
     }
     
     public func printSubstep<E: Swift.Error>(step: Step, information: [String]) -> IO<E, Void> {
-        ConsoleIO.print(information.map { item in "\t• \(item)" }.joined(separator: "\n"),
+        ConsoleIO.print(information.map { item in "\t• ".lightGray + "\(item)".cyan }.joined(separator: "\n"),
                         separator: " ",
                         terminator: "\n")
     }
     
     public func printStatus<E: Swift.Error>(success: Bool) -> IO<E, Void> {
-        ConsoleIO.print(" \(success ? "✅" : "❌")",
+        ConsoleIO.print(success ? "✓".bold.green : "✗".bold.red,
                         separator: "",
                         terminator: "\n")
     }
     
     public func printStatus<E: Swift.Error>(information: String, success: Bool) -> IO<E, Void> {
-        ConsoleIO.print(success ? !information.isEmpty ? "(\(information)) ✅" : " ✅"
-                                : !information.isEmpty ? "(\(information)) ❌" : " ❌",
+        ConsoleIO.print(success ? !information.isEmpty ? "(\(information))"+"✓".bold.green : "✓".bold.green
+                                : !information.isEmpty ? "(\(information))"+"✗".bold.red   : "✗".bold.red,
                         separator: "",
                         terminator: "\n")
     }

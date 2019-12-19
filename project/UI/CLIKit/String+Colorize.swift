@@ -63,10 +63,11 @@ extension String {
 }
 
 
-/// Defined codes for color + styles
+// MARK: - Colors and Styles definition
 
 typealias ColorizeType = (open: String, close: String)
 
+// https://github.com/mtynior/ColorizeSwift
 enum Colorize {
     static let bold: ColorizeType            = ("\u{001B}[1m", "\u{001B}[22m")
     static let dim: ColorizeType             = ("\u{001B}[2m", "\u{001B}[22m")
@@ -111,4 +112,7 @@ enum Colorize {
     static let onLightMagenta: ColorizeType  = ("\u{001B}[105m", "\u{001B}[0m")
     static let onLightCyan: ColorizeType     = ("\u{001B}[106m", "\u{001B}[0m")
     static let onWhite: ColorizeType         = ("\u{001B}[107m", "\u{001B}[0m")
+    
+    static let required: ColorizeType = lightCyan
+    static let optional: ColorizeType = lightMagenta
 }

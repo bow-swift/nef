@@ -16,7 +16,7 @@ private let console = Console(script: "nef-jekyll-page",
                                          .init(name: "verbose", placeholder: "", description: "run jekyll page in verbose mode.", isFlag: true, default: "false"))
 
 
-func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, output: URL, permalink: String, verbose: Bool)> {
+func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, filename: String, output: URL, permalink: String, verbose: Bool)> {
     console.input().flatMap { args in
         guard let pagePath = args["page"]?.trimmingEmptyCharacters.expandingTildeInPath,
               let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath,
@@ -32,7 +32,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
             return IO.raiseError(CLIKit.Console.Error.render(information: "could not read page content"))
         }
         
-        return IO.pure((content: pageContent, output: output, permalink: permalink, verbose: verbose))
+        return IO.pure((content: pageContent, filename: pagePath.filename.removeExtension, output: output, permalink: permalink, verbose: verbose))
     }^
 }
 
@@ -52,15 +52,15 @@ func main() -> Either<CLIKit.Console.Error, Void> {
         Step(total: 3, partial: partial, duration: duration)
     }
     
-    let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, permalink: String, verbose: Bool).self)
+    let args = IOPartial<CLIKit.Console.Error>.var((content: String, filename: String, output: URL, permalink: String, verbose: Bool).self)
     let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
     
     return binding(
            args <- arguments(console: console),
-                |<-console.printStep(step: step(partial: 1), information: "Reading arguments"),
+                |<-console.printStep(step: step(partial: 1), information: "Reading "+"arguments".bold),
                 |<-console.printStatus(success: true),
-                |<-console.printSubstep(step: step(partial: 1), information: ["output: \(args.get.output.path)", "permalink: \(args.get.permalink)", "verbose: \(args.get.verbose)"]),
-                |<-console.printStep(step: step(partial: 2), information: "Render Jekyll page"),
+                |<-console.printSubstep(step: step(partial: 1), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "permalink: \(args.get.permalink)", "verbose: \(args.get.verbose)"]),
+                |<-console.printStep(step: step(partial: 2), information: "Render "+"Jekyll".bold+" (\(args.get.filename))".lightGreen),
          output <- render(content: args.get.content, output: args.get.output, permalink: args.get.permalink),
     yield: args.get.verbose ? output.get : nil)^
         .reportStatus(in: console)
