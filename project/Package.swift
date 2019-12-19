@@ -39,6 +39,6 @@ let package = Package(
         .target(name: "MarkdownPage",   dependencies: ["Bow", "BowEffects", "CLIKit", "NefMarkdown"], path: "UI/MarkdownPage"),
         .target(name: "JekyllPage",     dependencies: ["Bow", "BowEffects", "CLIKit", "NefJekyll"], path: "UI/JekyllPage"),
         .target(name: "CarbonPage",     dependencies: ["Bow", "BowEffects", "CLIKit", "NefCarbon"], path: "UI/CarbonPage"),
-        .target(name: "PlaygroundBook", dependencies: ["Bow", "BowEffects", "CLIKit", "nef"], path: "UI/PlaygroundBook"),
+        .target(name: "PlaygroundBook", dependencies: ["CLIKit", "nef"], path: "UI/PlaygroundBook"),
     ]
 )
