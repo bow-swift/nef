@@ -3,8 +3,8 @@
 import Foundation
 import CLIKit
 import NefCore
-import NefMarkdown
 import NefModels
+import NefMarkdown
 import Bow
 import BowEffects
 
@@ -36,7 +36,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func render(content: String, output: URL, verbose: Bool) -> IO<CLIKit.Console.Error, RenderOutput> {
+func render(content: String, output: URL, verbose: Bool) -> IO<CLIKit.Console.Error, RendererOutput> {
     IO.async { callback in
         renderMarkdown(content: content,
                        to: output.path,
@@ -52,7 +52,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(RenderOutput.self)
+    let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
     
     return binding(
            args <- arguments(console: console),

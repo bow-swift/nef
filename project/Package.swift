@@ -22,7 +22,7 @@ let package = Package(
         .target(name: "NefCore", dependencies: ["NefModels"], path: "Core", publicHeadersPath: "Support Files"),
         .target(name: "NefMarkdown", dependencies: ["NefCore"], path: "Component/NefMarkdown", publicHeadersPath: "Support Files"),
         .target(name: "NefJekyll", dependencies: ["NefCore"], path: "Component/NefJekyll", publicHeadersPath: "Support Files"),
-        .target(name: "NefCarbon", dependencies: ["NefModels", "NefCore"], path: "Component/NefCarbon", publicHeadersPath: "Support Files"),
+        .target(name: "NefCarbon", dependencies: ["NefCore", "NefCommon"], path: "Component/NefCarbon", publicHeadersPath: "Support Files"),
         .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "BowOptics", "NefModels", "NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
 
 
@@ -36,9 +36,9 @@ let package = Package(
                                             "NefSwiftPlayground"], path: "Component/nef", publicHeadersPath: "Support Files"),
         .target(name: "CLIKit", dependencies: ["Bow", "BowEffects", "nef"], path: "UI/CLIKit", publicHeadersPath: "Support Files"),
 
-        .target(name: "MarkdownPage", dependencies: ["CLIKit", "NefMarkdown"], path: "UI/MarkdownPage"),
-        .target(name: "JekyllPage", dependencies: ["CLIKit", "NefJekyll"], path: "UI/JekyllPage"),
-        .target(name: "CarbonPage", dependencies: ["CLIKit", "NefCommon", "NefModels", "NefCore", "NefCarbon"], path: "UI/CarbonPage"),
-        .target(name: "PlaygroundBook", dependencies: ["BowEffects", "CLIKit", "nef"], path: "UI/PlaygroundBook"),
+        .target(name: "MarkdownPage",   dependencies: ["Bow", "BowEffects", "CLIKit", "NefMarkdown"], path: "UI/MarkdownPage"),
+        .target(name: "JekyllPage",     dependencies: ["Bow", "BowEffects", "CLIKit", "NefJekyll"], path: "UI/JekyllPage"),
+        .target(name: "CarbonPage",     dependencies: ["Bow", "BowEffects", "CLIKit", "NefCarbon"], path: "UI/CarbonPage"),
+        .target(name: "PlaygroundBook", dependencies: ["Bow", "BowEffects", "CLIKit", "nef"], path: "UI/PlaygroundBook"),
     ]
 )

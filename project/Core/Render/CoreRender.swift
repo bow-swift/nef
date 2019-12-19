@@ -3,7 +3,7 @@
 import Foundation
 
 public protocol CoreRender {
-    func render(content: String) -> RenderOutput?
+    func render(content: String) -> RendererOutput?
 }
 
 protocol CoreJekyll {
@@ -29,13 +29,13 @@ protocol InternalRender: CoreRender {
 }
 
 extension InternalRender {
-    public func render(content: String) -> RenderOutput? {
+    public func render(content: String) -> RendererOutput? {
         let syntaxTree = SyntaxAnalyzer.parse(content: content)
         guard syntaxTree.count > 0 else { return nil }
 
         let filteredSyntaxTree = syntaxTree.filter { !$0.isHidden }.reduce()
         let tree = filteredSyntaxTree.map { "\($0)" }.joined(separator: "\n")
         let output = filteredSyntaxTree.reduce("") { (acc, node) in acc + self.render(node: node) }
-        return RenderOutput(tree: tree, output: output)
+        return RendererOutput(tree: tree, output: output)
     }
 }

@@ -2,9 +2,9 @@
 
 import Foundation
 import CLIKit
-import NefCommon
-import NefModels
 import NefCore
+import NefModels
+import NefCommon
 import NefCarbon
 import Bow
 import BowEffects
@@ -57,7 +57,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func render(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle) -> IO<CLIKit.Console.Error, RenderOutput> {
+func render(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle) -> IO<CLIKit.Console.Error, RendererOutput> {
     IO.async { callback in
         renderCarbon(downloader: downloader,
                      code: content,
@@ -75,7 +75,7 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, style: CarbonStyle, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(RenderOutput.self)
+    let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
     
     return binding(
            args <- arguments(console: console),

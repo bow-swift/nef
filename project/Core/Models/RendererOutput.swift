@@ -2,7 +2,7 @@
 
 import Foundation
 
-public struct RenderOutput {
+public struct RendererOutput {
     public let tree: String
     public let output: String
 }

@@ -16,7 +16,7 @@ public func renderCarbon(downloader: CarbonDownloader,
                          code content: String,
                          style: CarbonStyle,
                          outputPath: String,
-                         success: @escaping (RenderOutput) -> Void, failure: @escaping (String) -> Void) {
+                         success: @escaping (RendererOutput) -> Void, failure: @escaping (String) -> Void) {
     
     let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
     guard let rendered = carbonGenerator.render(content: content) else { failure("could not render carbon page '\(outputPath)'"); return }

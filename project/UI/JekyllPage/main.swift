@@ -36,7 +36,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func render(content: String, output: URL, permalink: String) -> IO<CLIKit.Console.Error, RenderOutput> {
+func render(content: String, output: URL, permalink: String) -> IO<CLIKit.Console.Error, RendererOutput> {
     IO.async { callback in
         renderJekyll(content: content,
                      to: output.path,
@@ -53,7 +53,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, permalink: String, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(RenderOutput.self)
+    let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
     
     return binding(
            args <- arguments(console: console),

@@ -14,7 +14,7 @@ import NefCore
 public func renderJekyll(content: String,
                          to outputPath: String,
                          permalink: String,
-                         success: @escaping (RenderOutput) -> Void,
+                         success: @escaping (RendererOutput) -> Void,
                          failure: @escaping (String) -> Void) {
     
     let url = URL(fileURLWithPath: outputPath)

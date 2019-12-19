@@ -19,6 +19,7 @@
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
+		8B304D6023ABA954001E9303 /* String+Coloring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Coloring.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
@@ -77,7 +78,7 @@
 		8BBD14BE2390192C0002970C /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86622D392C000919F36 /* Array+Slice.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 		8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */; };
-		8BD1F22323AA92EF001157DA /* RenderOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1F22223AA92EF001157DA /* RenderOutput.swift */; };
+		8BD1F22323AA92EF001157DA /* RendererOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1F22223AA92EF001157DA /* RendererOutput.swift */; };
 		8BD4E312238814B7002DECDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E2F52388141E002DECDB /* main.swift */; };
 		8BD4E321238817BB002DECDB /* NefSwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E31F238817BB002DECDB /* NefSwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */; };
@@ -248,6 +249,7 @@
 		8B22248322D5EAD500C85856 /* NefMarkdown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefMarkdown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B22248522D5EAD600C85856 /* NefMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefMarkdown.h; sourceTree = "<group>"; };
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B304D5F23ABA954001E9303 /* String+Coloring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Coloring.swift"; sourceTree = "<group>"; };
 		8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAPI.swift; sourceTree = "<group>"; };
 		8B3CB83D22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB84022D3929B00919F36 /* NefModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefModels.h; sourceTree = "<group>"; };
@@ -316,7 +318,7 @@
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Utils.swift"; sourceTree = "<group>"; };
-		8BD1F22223AA92EF001157DA /* RenderOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderOutput.swift; sourceTree = "<group>"; };
+		8BD1F22223AA92EF001157DA /* RendererOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererOutput.swift; sourceTree = "<group>"; };
 		8BD4E2F52388141E002DECDB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8BD4E30A238814B1002DECDB /* nef-playground-book */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-playground-book"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefSwiftPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +395,7 @@
 				8BED79BA23A9357D00115479 /* Console+Utils.swift */,
 				8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
+				8B304D5F23ABA954001E9303 /* String+Coloring.swift */,
 				8B0FB58E237C0A8F00221548 /* Support Files */,
 			);
 			path = CLIKit;
@@ -771,7 +774,7 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB89F22D393C300919F36 /* MarkupNode.swift */,
-				8BD1F22223AA92EF001157DA /* RenderOutput.swift */,
+				8BD1F22223AA92EF001157DA /* RendererOutput.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1306,6 +1309,7 @@
 				8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */,
 				8BED79BB23A9357D00115479 /* Console+Utils.swift in Sources */,
 				8BBCA655239683D400BE058B /* Console.swift in Sources */,
+				8B304D6023ABA954001E9303 /* String+Coloring.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1353,7 +1357,7 @@
 				8B3CB8A422D393F100919F36 /* CoreJekyll.swift in Sources */,
 				8B3CB8A322D393F100919F36 /* Node+Render.swift in Sources */,
 				8B3CB8A622D393F100919F36 /* String+Format.swift in Sources */,
-				8BD1F22323AA92EF001157DA /* RenderOutput.swift in Sources */,
+				8BD1F22323AA92EF001157DA /* RendererOutput.swift in Sources */,
 				8B3CB8A222D393F100919F36 /* CoreMarkdown.swift in Sources */,
 				8B3CB8A122D393F100919F36 /* CoreRender.swift in Sources */,
 				8B3CB8C822D3987500919F36 /* CoreCarbon.swift in Sources */,

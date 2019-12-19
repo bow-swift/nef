@@ -12,7 +12,7 @@ import NefCore
 ///   - failure: callback with information to notify if something goes wrong.
 public func renderMarkdown(content: String,
                            to outputPath: String,
-                           success: @escaping (RenderOutput) -> Void,
+                           success: @escaping (RendererOutput) -> Void,
                            failure: @escaping (String) -> Void) {
     
     let url = URL(fileURLWithPath: outputPath)
