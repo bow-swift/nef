@@ -50,12 +50,14 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                 |<-console.printSubstep(step: step(partial: 1), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
                 |<-console.printStep(step: step(partial: 2), information: "Render "+"markdown".bold+" (\(args.get.filename))".lightGreen),
          output <- nef.Markdown.renderVerbose(content: args.get.content, toFile: args.get.output).mapLeft { e in .render(information: "\(e)") }^,
-    yield: output.get)^
+    yield: args.get.verbose ? Either<(tree: String, trace: String), URL>.left((tree: output.get.tree, trace: output.get.trace))
+                            : Either<(tree: String, trace: String), URL>.right(output.get.url)
+    )^
         .reportStatus(in: console)
         .foldM({ e   in console.exit(failure: "\(e)") },
                { rendered in
-                    guard args.get.verbose else { return console.exit(success: "rendered markdown page '\(output.get.url)'") }
-                    return console.exit(success: "rendered markdown page.\n\n• AST \n\t\(rendered.tree)\n\n• Trace \n\t\(rendered.trace)")
+                 rendered.fold({ (tree, trace) in console.exit(success: "rendered markdown page.\n\n• AST \n\t\(tree)\n\n• Trace \n\t\(trace)") },
+                               { (page)        in console.exit(success: "rendered markdown page '\(page)'")                                     })
                })
         .unsafeRunSyncEither()
 }
