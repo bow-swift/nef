@@ -1,11 +1,11 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import NefMarkdown
 import NefSwiftPlayground
 import BowEffects
 
 class MacFileSystem: FileSystem {
-    
     func createDirectory(atPath path: String) -> IO<FileSystemError, ()> {
         FileManager.default.createDirectoryIO(atPath: path, withIntermediateDirectories: true)
                            .mapLeft { _ in .create(item: path) }
@@ -59,5 +59,18 @@ class MacFileSystem: FileSystem {
     
     func exist(itemPath: String) -> Bool {
         FileManager.default.fileExists(atPath: itemPath)
+    }
+}
+
+
+extension MacFileSystem: MarkdownSystem {
+    func write(content: String, toFile file: URL) -> IO<MarkdownSystemError, ()> {
+        IO.invoke {
+            do {
+                try content.write(toFile: file.path, atomically: true, encoding: .utf8)
+            } catch {
+                throw MarkdownSystemError.write(file: file.path)
+            }
+        }
     }
 }

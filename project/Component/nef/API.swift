@@ -23,6 +23,16 @@ public protocol MarkdownAPI {
     ///   - file: output where to write the Markdown render (path to the file without extension).
     /// - Returns: An `IO` to perform IO operations that produce carbon error of type `nef.Error` and values with the file generated of type `URL`.
     static func render(content: String, toFile file: URL) -> IO<nef.Error, URL>
+    
+    /// Renders content into Markdown file.
+    ///
+    /// - Precondition: this method must be invoked from main thread.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - file: output where to write the Markdown render (path to the file without extension).
+    /// - Returns: An `IO` to perform IO operations that produce carbon error of type `nef.Error` and values with the render information.
+    static func renderVerbose(content: String, toFile file: URL) -> IO<nef.Error, (url: URL, tree: String, trace: String)>
 }
 
 public protocol JekyllAPI {

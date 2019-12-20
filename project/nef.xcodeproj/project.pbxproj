@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B0A905C23ACD3A400091C39 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A905B23ACD3A400091C39 /* main.swift */; };
+		8B0A907223ACE2F700091C39 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
+		8B0A907323ACE2F900091C39 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
+		8B0A907F23ACE36100091C39 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907B23ACE36100091C39 /* MarkdownError.swift */; };
+		8B0A908023ACE36100091C39 /* MarkdownSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */; };
+		8B0A908223ACE39600091C39 /* MarkdownSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A908123ACE39600091C39 /* MarkdownSystemError.swift */; };
+		8B0A908523ACE65600091C39 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0A908423ACE65600091C39 /* Bow */; };
+		8B0A908723ACE65600091C39 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0A908623ACE65600091C39 /* BowEffects */; };
 		8B0FB588237C0A5600221548 /* CLIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB586237C0A5600221548 /* CLIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */; };
 		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
@@ -87,8 +95,6 @@
 		8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */; };
 		8BD4E33C238824D9002DECDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33A2388233D002DECDB /* Console.swift */; };
 		8BD4E34B238834F2002DECDB /* _SwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E32623881850002DECDB /* _SwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
-		8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -97,6 +103,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8B0A906223ACD3F700091C39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B0FB583237C0A5600221548;
+			remoteInfo = CLIKit;
+		};
 		8B0FB595237C0B6F00221548 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -233,6 +246,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B0A905923ACD3A400091C39 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B0A905B23ACD3A400091C39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8B0A907B23ACE36100091C39 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
+		8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownSystem.swift; sourceTree = "<group>"; };
+		8B0A908123ACE39600091C39 /* MarkdownSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownSystemError.swift; sourceTree = "<group>"; };
 		8B0CA51622AE669600181BC0 /* nef-carbon-page */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-carbon-page"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB584237C0A5600221548 /* CLIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CLIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB586237C0A5600221548 /* CLIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLIKit.h; sourceTree = "<group>"; };
@@ -343,6 +361,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8B0A908323ACE65100091C39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B0A908723ACE65600091C39 /* BowEffects in Frameworks */,
+				8B0A908523ACE65600091C39 /* Bow in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B0FB5A7237C1D6B00221548 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -387,6 +414,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B0A905A23ACD3A400091C39 /* Markdown */ = {
+			isa = PBXGroup;
+			children = (
+				8B0A905B23ACD3A400091C39 /* main.swift */,
+			);
+			path = Markdown;
+			sourceTree = "<group>";
+		};
+		8B0A907923ACE36100091C39 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8B0A907B23ACE36100091C39 /* MarkdownError.swift */,
+				8B0A908123ACE39600091C39 /* MarkdownSystemError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		8B0A907C23ACE36100091C39 /* Algebras */ = {
+			isa = PBXGroup;
+			children = (
+				8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */,
+			);
+			path = Algebras;
+			sourceTree = "<group>";
+		};
 		8B0FB585237C0A5600221548 /* CLIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,6 +484,8 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85B22D392C000919F36 /* NefMarkdown.swift */,
+				8B0A907C23ACE36100091C39 /* Algebras */,
+				8B0A907923ACE36100091C39 /* Errors */,
 				8B22249A22D5EAEF00C85856 /* Support Files */,
 			);
 			path = NefMarkdown;
@@ -557,6 +611,7 @@
 		8B3CB85322D392C000919F36 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8B0A905A23ACD3A400091C39 /* Markdown */,
 				8B3CB85A22D392C000919F36 /* MarkdownPage */,
 				8B3CB85422D392C000919F36 /* JekyllPage */,
 				8B3CB85822D392C000919F36 /* CarbonPage */,
@@ -715,6 +770,7 @@
 				8BD4E30A238814B1002DECDB /* nef-playground-book */,
 				8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */,
 				8BBD14AF2390179B0002970C /* NefCommon.framework */,
+				8B0A905923ACD3A400091C39 /* Markdown */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -927,6 +983,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		8B0A905823ACD3A400091C39 /* Markdown */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B0A905D23ACD3A400091C39 /* Build configuration list for PBXNativeTarget "Markdown" */;
+			buildPhases = (
+				8B0A905523ACD3A400091C39 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B0A906323ACD3F700091C39 /* PBXTargetDependency */,
+			);
+			name = Markdown;
+			productName = Markdown;
+			productReference = 8B0A905923ACD3A400091C39 /* Markdown */;
+			productType = "com.apple.product-type.tool";
+		};
 		8B0CA51522AE669600181BC0 /* CarbonPage */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B0CA51A22AE669600181BC0 /* Build configuration list for PBXNativeTarget "CarbonPage" */;
@@ -985,6 +1057,7 @@
 			buildPhases = (
 				8B22247E22D5EAD500C85856 /* Headers */,
 				8B22247F22D5EAD500C85856 /* Sources */,
+				8B0A908323ACE65100091C39 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -992,6 +1065,10 @@
 				8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */,
 			);
 			name = NefMarkdown;
+			packageProductDependencies = (
+				8B0A908423ACE65600091C39 /* Bow */,
+				8B0A908623ACE65600091C39 /* BowEffects */,
+			);
 			productName = NefMarkdown;
 			productReference = 8B22248322D5EAD500C85856 /* NefMarkdown.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1197,6 +1274,9 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "47 Degrees";
 				TargetAttributes = {
+					8B0A905823ACD3A400091C39 = {
+						CreatedOnToolsVersion = 11.3;
+					};
 					8B0CA51522AE669600181BC0 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -1263,6 +1343,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				8B0A905823ACD3A400091C39 /* Markdown */,
 				8B424B1E224E28FC00AF9010 /* MarkdownPage */,
 				8B6FC584221ECE6A008F7694 /* JekyllPage */,
 				8B0CA51522AE669600181BC0 /* CarbonPage */,
@@ -1292,6 +1373,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8B0A905523ACD3A400091C39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B0A905C23ACD3A400091C39 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B0CA51222AE669600181BC0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1326,6 +1415,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */,
+				8B0A907F23ACE36100091C39 /* MarkdownError.swift in Sources */,
+				8B0A908223ACE39600091C39 /* MarkdownSystemError.swift in Sources */,
+				8B0A908023ACE36100091C39 /* MarkdownSystem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1404,21 +1496,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B0A907223ACE2F700091C39 /* FileSystem.swift in Sources */,
 				8B46C417238D889700437659 /* PlaygroundBook.swift in Sources */,
 				8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */,
 				8B46C412238D87F200437659 /* Assets.swift in Sources */,
 				8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
+				8B0A907323ACE2F900091C39 /* FileSystemError.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
 				8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */,
 				8B46C42F238FD52900437659 /* PlaygroundShellError.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
 				8B46C415238D883300437659 /* ImageReference.swift in Sources */,
 				8B46C419238D88B800437659 /* PlaygroundBookError.swift in Sources */,
-				8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */,
 				8B46C40E238D75A400437659 /* Package.swift in Sources */,
 				8B46C41B238D8A0000437659 /* PlaygroundBookResolutionPath.swift in Sources */,
-				8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */,
 				8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */,
 				8BD4E33723881F9F002DECDB /* PlaygroundResolutionPath.swift in Sources */,
 			);
@@ -1460,6 +1552,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8B0A906323ACD3F700091C39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B0FB583237C0A5600221548 /* CLIKit */;
+			targetProxy = 8B0A906223ACD3F700091C39 /* PBXContainerItemProxy */;
+		};
 		8B0FB596237C0B6F00221548 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
@@ -1562,12 +1659,34 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		8B0A905E23ACD3A400091C39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8B0A905F23ACD3A400091C39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		8B0CA51B22AE669600181BC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Carbon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1578,7 +1697,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Carbon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1754,9 +1873,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1767,9 +1884,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2045,7 +2160,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
 				PRODUCT_NAME = "nef-jekyll-page";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2059,7 +2174,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
 				PRODUCT_NAME = "nef-jekyll-page";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2315,6 +2430,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8B0A905D23ACD3A400091C39 /* Build configuration list for PBXNativeTarget "Markdown" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B0A905E23ACD3A400091C39 /* Debug */,
+				8B0A905F23ACD3A400091C39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8B0CA51A22AE669600181BC0 /* Build configuration list for PBXNativeTarget "CarbonPage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2472,6 +2596,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8B0A908423ACE65600091C39 /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+		8B0A908623ACE65600091C39 /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
 		8B46C434238FDA3300437659 /* Swiftline */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */;
