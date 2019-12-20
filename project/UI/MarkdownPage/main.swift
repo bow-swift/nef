@@ -10,7 +10,7 @@ private let console = Console(script: "nef-markdown-page",
                               description: "Render a markdown file from a Playground page",
                               arguments: .init(name: "page", placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
                                          .init(name: "output", placeholder: "output path", description: "path where markdown are saved to. ex. `/home`"),
-                                         .init(name: "filename", placeholder: "name", description: "name for the rendered Markdown file (without any extension). ex. `Readme`"),
+                                         .init(name: "filename", placeholder: "name", description: "name for the rendered Markdown file (without any extension).", default: "README"),
                                          .init(name: "verbose", placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
 
 
@@ -57,7 +57,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
         .foldM({ e   in console.exit(failure: "\(e)") },
                { rendered in
                  rendered.fold({ (tree, trace) in console.exit(success: "rendered markdown page.\n\n• AST \n\t\(tree)\n\n• Trace \n\t\(trace)") },
-                               { (page)        in console.exit(success: "rendered markdown page '\(page)'")                                     })
+                               { (page)        in console.exit(success: "rendered markdown page '\(page.path)'")                                })
                })
         .unsafeRunSyncEither()
 }
