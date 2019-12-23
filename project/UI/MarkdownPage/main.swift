@@ -54,7 +54,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                             : Either<(tree: String, trace: String), URL>.right(output.get.url)
     )^
         .reportStatus(in: console)
-        .foldM({ e   in console.exit(failure: "\(e)") },
+        .foldM({ e in console.exit(failure: "\(e)") },
                { rendered in
                  rendered.fold({ (tree, trace) in console.exit(success: "rendered markdown page.\n\n• AST \n\t\(tree)\n\n• Trace \n\t\(trace)") },
                                { (page)        in console.exit(success: "rendered markdown page '\(page.path)'")                                })

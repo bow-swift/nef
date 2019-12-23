@@ -13,8 +13,6 @@
 		8B0A907F23ACE36100091C39 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907B23ACE36100091C39 /* MarkdownError.swift */; };
 		8B0A908023ACE36100091C39 /* MarkdownSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */; };
 		8B0A908223ACE39600091C39 /* MarkdownSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A908123ACE39600091C39 /* MarkdownSystemError.swift */; };
-		8B0A908523ACE65600091C39 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0A908423ACE65600091C39 /* Bow */; };
-		8B0A908723ACE65600091C39 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B0A908623ACE65600091C39 /* BowEffects */; };
 		8B0FB588237C0A5600221548 /* CLIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB586237C0A5600221548 /* CLIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */; };
 		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
@@ -75,11 +73,10 @@
 		8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0C238300A80025BC04 /* JekyllAPI.swift */; };
 		8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */; };
 		8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
+		8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17923B0C2AF000DB61F /* BowEffects */; };
+		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
 		8BBCA655239683D400BE058B /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
-		8BBCA6962396A59600BE058B /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6952396A59600BE058B /* Bow */; };
-		8BBCA6982396A59600BE058B /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6972396A59600BE058B /* BowEffects */; };
-		8BBCA69A2396A59600BE058B /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6992396A59600BE058B /* BowOptics */; };
-		8BBCA69D2396A6A400BE058B /* nef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF75F8522CA71E700EC53A1 /* nef.framework */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BBD14BC2390192C0002970C /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F709238C278D00DD93C4 /* String+Path.swift */; };
 		8BBD14BD2390192C0002970C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C429238EE4C400437659 /* String+Utils.swift */; };
@@ -131,13 +128,6 @@
 			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
 			remoteInfo = NefModels;
 		};
-		8B12D7A522D624D900D05A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B12D79A22D6235200D05A70;
-			remoteInfo = NefJekyll;
-		};
 		8B12D7C622D6498900D05A70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -145,12 +135,33 @@
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
 			remoteInfo = Core;
 		};
-		8B12D7CA22D6498F00D05A70 /* PBXContainerItemProxy */ = {
+		8B18E65123B0C56F001F9C19 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
-			remoteInfo = Core;
+			remoteGlobalIDString = 8BF75FC522CA7DA500EC53A1;
+			remoteInfo = NefCarbon;
+		};
+		8B18E65723B0C56F001F9C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B12D79A22D6235200D05A70;
+			remoteInfo = NefJekyll;
+		};
+		8B18E65923B0C56F001F9C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B22248222D5EAD500C85856;
+			remoteInfo = NefMarkdown;
+		};
+		8B18E65D23B0C56F001F9C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BD4E31C238817BB002DECDB;
+			remoteInfo = NefSwiftPlayground;
 		};
 		8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -158,13 +169,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
 			remoteInfo = NefModels;
-		};
-		8B6B118B22CB9EA20060177F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BF75FC522CA7DA500EC53A1;
-			remoteInfo = NefCarbon;
 		};
 		8B6B119E22CB9FDE0060177F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -180,26 +184,26 @@
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
 			remoteInfo = Markup;
 		};
-		8B6B11BC22CBA1770060177F /* PBXContainerItemProxy */ = {
+		8BB7D11023B0C70D00C8E6F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BBD14AE2390179B0002970C;
+			remoteInfo = NefCommon;
+		};
+		8BB7D11223B0C70D00C8E6F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
-			remoteInfo = Markup;
+			remoteInfo = NefCore;
 		};
-		8B89CD72237B084E007E9152 /* PBXContainerItemProxy */ = {
+		8BB7D11423B0C7AB00C8E6F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
-			remoteInfo = NefModels;
-		};
-		8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B22248222D5EAD500C85856;
-			remoteInfo = NefMarkdown;
+			remoteGlobalIDString = 8BF75F8422CA71E700EC53A1;
+			remoteInfo = nef;
 		};
 		8BBCA69B2396A68900BE058B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -207,13 +211,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B0FB583237C0A5600221548;
 			remoteInfo = CLIKit;
-		};
-		8BBD14BA2390187D0002970C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BBD14AE2390179B0002970C;
-			remoteInfo = NefCommon;
 		};
 		8BBD14BF239019570002970C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -228,13 +225,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B0FB583237C0A5600221548;
 			remoteInfo = CLIKit;
-		};
-		8BD4E32823881876002DECDB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BD4E31C238817BB002DECDB;
-			remoteInfo = NefSwiftPlayground;
 		};
 		8BD4E33D238824F3002DECDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -361,15 +351,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8B0A908323ACE65100091C39 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B0A908723ACE65600091C39 /* BowEffects in Frameworks */,
-				8B0A908523ACE65600091C39 /* Bow in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8B0FB5A7237C1D6B00221548 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -378,36 +359,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B300D4A23B0C69B00D0AB25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */,
+				8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */,
+				8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B6B119922CB9FDE0060177F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BBCA6732396910900BE058B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8BBCA69D2396A6A400BE058B /* nef.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BBCA6B62396A7FA00BE058B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BD4E361238837BB002DECDB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8BBCA69A2396A59600BE058B /* BowOptics in Frameworks */,
-				8BBCA6982396A59600BE058B /* BowEffects in Frameworks */,
-				8BBCA6962396A59600BE058B /* Bow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,11 +987,11 @@
 			buildPhases = (
 				8B0FB57F237C0A5600221548 /* Headers */,
 				8B0FB580237C0A5600221548 /* Sources */,
-				8BBCA6732396910900BE058B /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8BB7D11523B0C7AB00C8E6F8 /* PBXTargetDependency */,
 			);
 			name = CLIKit;
 			packageProductDependencies = (
@@ -1057,12 +1023,12 @@
 			buildPhases = (
 				8B22247E22D5EAD500C85856 /* Headers */,
 				8B22247F22D5EAD500C85856 /* Sources */,
-				8B0A908323ACE65100091C39 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */,
+				8BB7D11123B0C70D00C8E6F8 /* PBXTargetDependency */,
+				8BB7D11323B0C70D00C8E6F8 /* PBXTargetDependency */,
 			);
 			name = NefMarkdown;
 			packageProductDependencies = (
@@ -1095,7 +1061,6 @@
 			buildPhases = (
 				8B4F45A022CF9AF400E6F471 /* Headers */,
 				8B4F45A122CF9AF400E6F471 /* Sources */,
-				8BBCA6B62396A7FA00BE058B /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1166,12 +1131,18 @@
 			buildPhases = (
 				8BBD14AA2390179B0002970C /* Headers */,
 				8BBD14AB2390179B0002970C /* Sources */,
+				8B300D4A23B0C69B00D0AB25 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = NefCommon;
+			packageProductDependencies = (
+				8B12C17723B0C2AF000DB61F /* Bow */,
+				8B12C17923B0C2AF000DB61F /* BowEffects */,
+				8B12C17B23B0C2AF000DB61F /* BowOptics */,
+			);
 			productName = NefCommon;
 			productReference = 8BBD14AF2390179B0002970C /* NefCommon.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1201,7 +1172,6 @@
 			buildPhases = (
 				8BD4E318238817BB002DECDB /* Headers */,
 				8BD4E319238817BB002DECDB /* Sources */,
-				8BD4E361238837BB002DECDB /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1230,13 +1200,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				8BBD14BB2390187D0002970C /* PBXTargetDependency */,
-				8B89CD73237B084E007E9152 /* PBXTargetDependency */,
-				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
-				8B8AA94022D62266006BE290 /* PBXTargetDependency */,
-				8B12D7A622D624D900D05A70 /* PBXTargetDependency */,
-				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
-				8BD4E32923881876002DECDB /* PBXTargetDependency */,
+				8B18E65A23B0C56F001F9C19 /* PBXTargetDependency */,
+				8B18E65823B0C56F001F9C19 /* PBXTargetDependency */,
+				8B18E65223B0C56F001F9C19 /* PBXTargetDependency */,
+				8B18E65E23B0C56F001F9C19 /* PBXTargetDependency */,
 			);
 			name = nef;
 			packageProductDependencies = (
@@ -1572,30 +1539,35 @@
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
 			targetProxy = 8B0FB5C1237D5D6300221548 /* PBXContainerItemProxy */;
 		};
-		8B12D7A622D624D900D05A70 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B12D79A22D6235200D05A70 /* NefJekyll */;
-			targetProxy = 8B12D7A522D624D900D05A70 /* PBXContainerItemProxy */;
-		};
 		8B12D7C722D6498900D05A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B12D7C622D6498900D05A70 /* PBXContainerItemProxy */;
 		};
-		8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */ = {
+		8B18E65223B0C56F001F9C19 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* NefCore */;
-			targetProxy = 8B12D7CA22D6498F00D05A70 /* PBXContainerItemProxy */;
+			target = 8BF75FC522CA7DA500EC53A1 /* NefCarbon */;
+			targetProxy = 8B18E65123B0C56F001F9C19 /* PBXContainerItemProxy */;
+		};
+		8B18E65823B0C56F001F9C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B12D79A22D6235200D05A70 /* NefJekyll */;
+			targetProxy = 8B18E65723B0C56F001F9C19 /* PBXContainerItemProxy */;
+		};
+		8B18E65A23B0C56F001F9C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
+			targetProxy = 8B18E65923B0C56F001F9C19 /* PBXContainerItemProxy */;
+		};
+		8B18E65E23B0C56F001F9C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BD4E31C238817BB002DECDB /* NefSwiftPlayground */;
+			targetProxy = 8B18E65D23B0C56F001F9C19 /* PBXContainerItemProxy */;
 		};
 		8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
 			targetProxy = 8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */;
-		};
-		8B6B118C22CB9EA20060177F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BF75FC522CA7DA500EC53A1 /* NefCarbon */;
-			targetProxy = 8B6B118B22CB9EA20060177F /* PBXContainerItemProxy */;
 		};
 		8B6B119F22CB9FDE0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1607,20 +1579,20 @@
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11BA22CBA1710060177F /* PBXContainerItemProxy */;
 		};
-		8B6B11BD22CBA1770060177F /* PBXTargetDependency */ = {
+		8BB7D11123B0C70D00C8E6F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BBD14AE2390179B0002970C /* NefCommon */;
+			targetProxy = 8BB7D11023B0C70D00C8E6F8 /* PBXContainerItemProxy */;
+		};
+		8BB7D11323B0C70D00C8E6F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
-			targetProxy = 8B6B11BC22CBA1770060177F /* PBXContainerItemProxy */;
+			targetProxy = 8BB7D11223B0C70D00C8E6F8 /* PBXContainerItemProxy */;
 		};
-		8B89CD73237B084E007E9152 /* PBXTargetDependency */ = {
+		8BB7D11523B0C7AB00C8E6F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
-			targetProxy = 8B89CD72237B084E007E9152 /* PBXContainerItemProxy */;
-		};
-		8B8AA94022D62266006BE290 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
-			targetProxy = 8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */;
+			target = 8BF75F8422CA71E700EC53A1 /* nef */;
+			targetProxy = 8BB7D11423B0C7AB00C8E6F8 /* PBXContainerItemProxy */;
 		};
 		8BBCA69C2396A68900BE058B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1631,11 +1603,6 @@
 			isa = PBXTargetDependency;
 			productRef = 8BBCA6B92396A86600BE058B /* BowEffects */;
 		};
-		8BBD14BB2390187D0002970C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BBD14AE2390179B0002970C /* NefCommon */;
-			targetProxy = 8BBD14BA2390187D0002970C /* PBXContainerItemProxy */;
-		};
 		8BBD14C0239019570002970C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8BBD14AE2390179B0002970C /* NefCommon */;
@@ -1645,11 +1612,6 @@
 			isa = PBXTargetDependency;
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
 			targetProxy = 8BD4E31323881506002DECDB /* PBXContainerItemProxy */;
-		};
-		8BD4E32923881876002DECDB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BD4E31C238817BB002DECDB /* NefSwiftPlayground */;
-			targetProxy = 8BD4E32823881876002DECDB /* PBXContainerItemProxy */;
 		};
 		8BD4E33E238824F3002DECDB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2605,6 +2567,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
 			productName = BowEffects;
+		};
+		8B12C17723B0C2AF000DB61F /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+		8B12C17923B0C2AF000DB61F /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
+		8B12C17B23B0C2AF000DB61F /* BowOptics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowOptics;
 		};
 		8B46C434238FDA3300437659 /* Swiftline */ = {
 			isa = XCSwiftPackageProductDependency;
