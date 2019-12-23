@@ -5,6 +5,7 @@ import Foundation
 public enum MarkdownError: Error {
     case renderPage
     case create(file: URL)
+    case structure
 }
 
 extension MarkdownError {
@@ -14,6 +15,8 @@ extension MarkdownError {
             return "can not render input page into markdown file"
         case .create(let file):
             return "can not create the file '\(file.path)'"
+        case .structure:
+            return "could not create project structure"
         }
     }
 }
