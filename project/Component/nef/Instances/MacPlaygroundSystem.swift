@@ -19,15 +19,31 @@ class MacPlaygroundSystem: PlaygroundSystem {
         yield: playgrounds.get)^
     }
     
+    func pages(in playground: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+        let xcplayground = playground.appendingPathComponent("contents.xcplayground")
+        
+        return IO<PlaygroundSystemError, String>.invoke { try String(contentsOf: xcplayground) }
+                .map { content in
+                    content.matches(pattern: "(?<=name=').*(?=')")
+                        .map { page in playground.appendingPathComponent("Pages")
+                                                 .appendingPathComponent(page)
+                                                 .appendingPathExtension("xcplaygroundpage") }
+                }.flatMap { pages in
+                    pages.map { $0.path }.allSatisfy(self.fileManager.fileExists)
+                        ? IO.pure(pages)
+                        : IO.raiseError(.pages(information: "some pages are not linked properly in '\(playground.path)'"))
+                }.flatMap { array in
+                    NEA<URL>.fromArray(array).fold({ IO.raiseError(.playgrounds(information: "can not find any page in '\(playground.path)'")) },
+                                                   { nea in IO.pure(nea) })
+                }^
+    }
+    
+    
     func name(_ playground: URL) -> IO<PlaygroundSystemError, String> {
         fatalError()
     }
     
     func unique(playground: URL, in path: URL) -> IO<PlaygroundSystemError, URL> {
-        fatalError()
-    }
-    
-    func pages(in playground: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
         fatalError()
     }
     
@@ -72,14 +88,5 @@ class MacPlaygroundSystem: PlaygroundSystem {
                 NEA<URL>.fromArray(array).fold({ IO.raiseError(.playgrounds(information: "can not find any playground in the workspace")) },
                                                { nea in IO.pure(nea) })
             }^
-    }
-}
-
-
-extension String {
-    func matches(pattern: String) -> [String] {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return [] }
-        return regex.matches(in: self, range: NSRange(location: 0, length: self.count))
-                    .map { match in NSString(string: "\(self)").substring(with: match.range) as String }
     }
 }

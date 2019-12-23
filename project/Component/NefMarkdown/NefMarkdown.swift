@@ -15,9 +15,10 @@ public struct Markdown {
         self.output = output
     }
     
-    public func buildPage(content: String, filename: String, step: Step = .init(total: 2, partial: 0, duration: .seconds(1))) -> EnvIO<MarkdownEnvironment, MarkdownError, (url: URL, tree: String, trace: String)> {
+    public func buildPage(content: String, filename: String) -> EnvIO<MarkdownEnvironment, MarkdownError, (url: URL, tree: String, trace: String)> {
         let renderer = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var((tree: String, out: String).self)
         let file = self.output.appendingPathComponent(filename)
+        let step: Step = .init(total: 2, partial: 0, duration: .seconds(1))
         
         return binding(
             renderer <- self.renderPage(step: step.increment(1), generator: self.generator, filename: filename, content: content).contramap(\MarkdownEnvironment.console),
@@ -25,16 +26,24 @@ public struct Markdown {
         yield: (url: file, tree: renderer.get.tree, trace: renderer.get.out))^
     }
     
-    public func build(playground: URL, step: Step = .init(total: 2, partial: 0, duration: .seconds(1))) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
-        fatalError()
+    public func build(playground: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
+        let step: Step = .init(total: 2, partial: 0, duration: .seconds(1))
+        let pages = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var(NEA<URL>.self)
+        
+        return binding(
+            pages <- self.getPages(step: step.increment(1), playground: playground),
+                  |<-self.buildPages(step: step.increment(2), pages: pages.get),
+        yield: pages.get.all())^
     }
     
     public func buildPlaygrounds(at folder: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
+        let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
         let playgrounds = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var(NEA<URL>.self)
         
         return binding(
-                        |<-self.structure(step: Step(total: 2, partial: 1, duration: .seconds(1)), output: self.output),
-            playgrounds <- self.getPlaygrounds(step: Step(total: 2, partial: 1, duration: .seconds(1)), at: folder),
+                        |<-self.structure(step: step.increment(1), output: self.output),
+            playgrounds <- self.getPlaygrounds(step: step.increment(2), at: folder),
+                        |<-self.buildPlaygrounds(step: step.increment(3), playgrounds: playgrounds.get),
         yield: playgrounds.get.all())^
     }
     
@@ -89,43 +98,23 @@ public struct Markdown {
         }
     }
     
+    private func getPages(step: Step, playground: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, NEA<URL>> {
+        EnvIO { env in
+            let pages = IOPartial<MarkdownError>.var(NEA<URL>.self)
+            
+            return binding(
+                      |<-env.console.printStep(step: step, information: "Listing pages in '\(playground.path.filename)'"),
+                pages <- env.playgroundSystem.pages(in: playground).mapLeft { _ in .renderPage },
+            yield: pages.get)^.reportStatus(step: step, in: env.console)
+        }
+    }
+    
     // MARK: steps <helpers>
+    private func buildPlaygrounds(step: Step, playgrounds: NEA<URL>) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
+        playgrounds.all().parFlatTraverse(build)^
+    }
+    
+    private func buildPages(step: Step, pages: NEA<URL>) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
+        fatalError()
+    }
 }
-
-
-//buildMarkdown() {
-//    local projectPath="$1" # parameter 'projectPath'
-//    local outputPath="$2"  # parameter 'outputPath'
-//
-//    playgrounds "$projectPath"
-//
-//    for playgroundPath in "${playgroundsPaths[@]}"; do
-//        playgroundName=`echo "$playgroundPath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-//        output="$outputPath/$playgroundName"
-//
-//        echo -ne "${normal}Rendering Markdown files for ${green}$playgroundName${reset}..."
-//
-//        checkOutputNotSameInput "$output" "$projectPath"
-//        resetStructure "$output"
-//        mkdir -p "$output"
-//        pagesInPlayground "$playgroundPath"
-//
-//        for pagePath in "${pagesInPlayground[@]}"; do
-//            pageName=`echo "$pagePath" | rev | cut -d'/' -f -1 | cut -d'.' -f 2- | rev`
-//            log="$1/$LOG_PATH/$playgroundName-$pageName.log"
-//
-//            nef-markdown-page --from "$pagePath" --to "$output" --filename "$pageName" 1> "$log" 2>&1
-//
-//            installed=`grep "RENDER SUCCEEDED" "$log"`
-//            if [ "${#installed}" -lt 7 ]; then
-//              echo " ❌"
-//              echo "${bold}${red}error: ${reset}render page ${bold}$pageName${normal} in playground ${bold}$playgroundName${normal}, review '$log' for more information."
-//              exit 1
-//
-//            fi
-//        done
-//
-//        echo " ✅"
-//    done
-//}
-//

@@ -32,6 +32,8 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (folder: URL
 @discardableResult
 func main() -> Either<CLIKit.Console.Error, Void> {
     arguments(console: console)
+
+//        |<-env.console.printStep(step: step.increment(1), information: "Rendering markdown files for '\(playground.path.filename)'"),
         .flatMap { (folder, output, verbose) in
             nef.Markdown.render(playgroundsAt: folder, in: output)
                .provide(console)^

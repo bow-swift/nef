@@ -84,6 +84,7 @@
 		8BB7D13723B0D39800C8E6F8 /* MarkdownEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */; };
 		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
+		8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */; };
 		8BBCA655239683D400BE058B /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BBD14BC2390192C0002970C /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F709238C278D00DD93C4 /* String+Path.swift */; };
@@ -335,6 +336,7 @@
 		8BB7D13023B0D34600C8E6F8 /* MarkdownShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownShell.swift; sourceTree = "<group>"; };
 		8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEnvironment.swift; sourceTree = "<group>"; };
 		8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundSystem.swift; sourceTree = "<group>"; };
+		8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8BBCA654239683D400BE058B /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8BBD14AF2390179B0002970C /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD14B12390179B0002970C /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 				8B46C436238FDA3A00437659 /* Instances */,
 				8B75AF9523805B3400388B1C /* Models */,
 				8B75AF9223805B1900388B1C /* Views */,
+				8BB7D13D23B1349000C8E6F8 /* Utils */,
 				8B3CB83B22D3929B00919F36 /* Support Files */,
 			);
 			path = nef;
@@ -826,6 +829,14 @@
 				8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		8BB7D13D23B1349000C8E6F8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		8BBD14B02390179B0002970C /* NefCommon */ = {
@@ -1559,6 +1570,7 @@
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
+				8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
 				8BB7D12723B0D05100C8E6F8 /* MacFileSytem+Markdown.swift in Sources */,
