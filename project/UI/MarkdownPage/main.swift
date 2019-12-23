@@ -23,10 +23,10 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
         }
         
         let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"
-        let output = URL(fileURLWithPath: outputPath).appendingPathComponent("\(filename).md")
+        let output = URL(fileURLWithPath: outputPath).appendingPathComponent(filename)
         
         guard let pageContent = try? String(contentsOfFile: page), !pageContent.isEmpty else {
-            return IO.raiseError(CLIKit.Console.Error.render(information: "could not read page content"))
+            return IO.raiseError(CLIKit.Console.Error.render(information: "could not read playground's page content (\(pagePath.filename))"))
         }
 
         return IO.pure((content: pageContent, filename: pagePath.filename.removeExtension, output: output, verbose: verbose))
@@ -44,11 +44,12 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     
     return binding(
            args <- arguments(console: console),
-                |<-console.printStep(step: step(partial: 1), information: "Reading "+"arguments".bold),
+                |<-console.printStep(step: step(partial: 0), information: "Reading "+"arguments".bold),
                 |<-console.printStatus(success: true),
-                |<-console.printSubstep(step: step(partial: 1), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
-                |<-console.printStep(step: step(partial: 2), information: "Render "+"markdown".bold+" (\(args.get.filename))".lightGreen),
-         output <- nef.Markdown.renderVerbose(content: args.get.content, toFile: args.get.output).mapLeft { e in .render(information: "\(e)") }^,
+                |<-console.printSubstep(step: step(partial: 0), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
+         output <- nef.Markdown.renderVerbose(content: args.get.content, toFile: args.get.output)
+                               .provide(console)
+                               .mapLeft { e in .render() }^,
     yield: args.get.verbose ? Either<(tree: String, trace: String), URL>.left((tree: output.get.tree, trace: output.get.trace))
                             : Either<(tree: String, trace: String), URL>.right(output.get.url)
     )^

@@ -7,7 +7,7 @@ import Bow
 import BowEffects
 
 extension IO where E == MarkdownError {
-    func reportStatus(step: Step, in console: Console, verbose: Bool) -> IO<MarkdownError, A> {
+    func reportStatus(step: Step, in console: Console) -> IO<MarkdownError, A> {
         handleErrorWith { error in
             let print = console.printStatus(information: error.information, success: false) as IO<E, Void>
             let raise = IO<MarkdownError, A>.raiseError(error)

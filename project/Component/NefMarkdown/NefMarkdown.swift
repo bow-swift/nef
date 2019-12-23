@@ -15,7 +15,28 @@ public struct Markdown {
         self.output = output
     }
     
-    public func buildPage(content: String, filename: String) -> EnvIO<MarkdownSystem, MarkdownError, RendererOutput> {
+    public func buildPage(content: String, filename: String) -> EnvIO<MarkdownEnvironment, MarkdownError, (url: URL, tree: String, trace: String)> {
+        let renderer = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var((tree: String, out: String).self)
+        let file = self.output.appendingPathComponent(filename)
+        
+        return binding(
+            renderer <- self.renderPage(step: Step(total: 2, partial: 1, duration: .seconds(1)),
+                                        generator: self.generator,
+                                        filename: filename, content: content).contramap(\MarkdownEnvironment.console),
+                     |<-self.persistContent(step: Step(total: 2, partial: 2, duration: .seconds(1)), content: renderer.get.out, atFile: file),
+        yield: (url: file, tree: renderer.get.tree, trace: renderer.get.out))^
+    }
+    
+    public func build(playground: URL) -> EnvIO<MarkdownFullEnvironment, MarkdownError, [URL]> {
+        fatalError()
+    }
+    
+    public func buildPlaygrounds(at folder: URL) -> EnvIO<MarkdownFullEnvironment, MarkdownError, [URL]> {
+        fatalError()
+    }
+    
+    // MARK: steps
+    private func renderPage(step: Step, generator: MarkdownGenerator, filename: String, content: String) -> EnvIO<Console, MarkdownError, (tree: String, out: String)> {
         func renderPage(generator: MarkdownGenerator, content: String) -> IO<MarkdownError, RendererOutput> {
             IO.async { callback in
                 if let rendered = self.generator.render(content: content) {
@@ -26,35 +47,31 @@ public struct Markdown {
             }^
         }
         
-        return EnvIO { fileSystem in
+        return EnvIO { console in
             let renderer = IOPartial<MarkdownError>.var(RendererOutput.self)
-            let file = self.output.appendingPathComponent(filename)
             
             return binding(
-              renderer <- renderPage(generator: self.generator, content: content),
-                       |<-fileSystem.write(content: renderer.get.output, toFile: file)
-                                    .mapLeft { _ in MarkdownError.create(file: file) },
-            yield: renderer.get)
+                       |<-console.printStep(step: step, information: "Render markdown (\(filename))"),
+              renderer <- renderPage(generator: generator, content: content),
+            yield: (tree: renderer.get.tree, out: renderer.get.output))^.reportStatus(step: step, in: console)
         }^
     }
     
-    public func build(playground: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
-        fatalError()
+    private func persistContent(step: Step, content: String, atFile file: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, Void> {
+        EnvIO { env in
+            binding(
+                |<-env.console.printStep(step: step, information: "Writting content in file '\(file.path.filename)'"),
+                |<-env.system.write(content: content, toFile: file).mapLeft { _ in MarkdownError.create(file: file) },
+            yield: ())^.reportStatus(step: step, in: env.console)
+        }^
     }
-    
-    public func buildPlaygrounds(at folder: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
-        fatalError()
-    }
-    
-    // MARK: steps
-    private func step(_ number: UInt, duration: DispatchTimeInterval = .seconds(3)) -> Step { Step(total: 5, partial: number, duration: duration) }
     
     private func structure(step: Step, output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, Void> {
         EnvIO { env in
             binding(
-                |<-env.shell.out.printStep(step: step, information: "Creating folder structure (\(output.path))"),
+                |<-env.console.printStep(step: step, information: "Creating folder structure (\(output.path))"),
                 |<-env.system.createDirectory(at: output).mapLeft { _ in .structure },
-            yield: ())^.reportStatus(step: step, in: env.shell.out, verbose: false)
+            yield: ())^.reportStatus(step: step, in: env.console)
         }
     }
     
