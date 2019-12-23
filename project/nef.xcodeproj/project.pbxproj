@@ -83,7 +83,7 @@
 		8BB7D12F23B0D28100C8E6F8 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */; };
 		8BB7D13323B0D34C00C8E6F8 /* MarkdownShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13023B0D34600C8E6F8 /* MarkdownShell.swift */; };
 		8BB7D13723B0D39800C8E6F8 /* MarkdownEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */; };
-		8BB7D13A23B0E10800C8E6F8 /* MacMarkdownShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacMarkdownShell.swift */; };
+		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8BBCA655239683D400BE058B /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -336,7 +336,7 @@
 		8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
 		8BB7D13023B0D34600C8E6F8 /* MarkdownShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownShell.swift; sourceTree = "<group>"; };
 		8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEnvironment.swift; sourceTree = "<group>"; };
-		8BB7D13823B0E10300C8E6F8 /* MacMarkdownShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMarkdownShell.swift; sourceTree = "<group>"; };
+		8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BBCA654239683D400BE058B /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8BBD14AF2390179B0002970C /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD14B12390179B0002970C /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
@@ -723,10 +723,10 @@
 			isa = PBXGroup;
 			children = (
 				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
-				8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */,
 				8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */,
+				8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */,
 				8B46C430238FD70700437659 /* MacPlaygroundShell.swift */,
-				8BB7D13823B0E10300C8E6F8 /* MacMarkdownShell.swift */,
+				8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */,
 			);
 			path = Instances;
 			sourceTree = "<group>";
@@ -1569,7 +1569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
-				8BB7D13A23B0E10800C8E6F8 /* MacMarkdownShell.swift in Sources */,
+				8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,

@@ -19,21 +19,21 @@ public extension MarkdownAPI {
         
         return NefMarkdown.Markdown(output: output)
                    .buildPage(content: content, filename: filename)
-                   .contramap { console in MarkdownEnvironment(console: console, system: MacFileSystem()) }
+                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                    .mapError { e in nef.Error.markdown }^
     }
     
     static func render(playground: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
         NefMarkdown.Markdown(output: output)
                    .build(playground: playground)
-                   .contramap { console in MarkdownFullEnvironment(console: console, shell: MacMarkdownShell(), system: MacFileSystem()) }
+                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                    .mapError { _ in nef.Error.markdown }^
     }
     
     static func render(playgroundsAt folder: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
         NefMarkdown.Markdown(output: output)
                    .buildPlaygrounds(at: folder)
-                   .contramap { console in MarkdownFullEnvironment(console: console, shell: MacMarkdownShell(), system: MacFileSystem()) }
+                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                    .mapError { _ in nef.Error.markdown }^
     }
 }

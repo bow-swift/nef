@@ -15,6 +15,12 @@ public struct Step {
     }
 }
 
+extension Step {
+    public func increment(_ partial: UInt) -> Step {
+        .init(total: total, partial: self.partial + partial, duration: estimatedDuration)
+    }
+}
+
 public protocol Console {
     func printStep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void>
     func printSubstep<E: Swift.Error>(step: Step, information: [String]) -> IO<E, Void>

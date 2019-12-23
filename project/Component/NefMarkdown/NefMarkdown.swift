@@ -15,24 +15,27 @@ public struct Markdown {
         self.output = output
     }
     
-    public func buildPage(content: String, filename: String) -> EnvIO<MarkdownEnvironment, MarkdownError, (url: URL, tree: String, trace: String)> {
+    public func buildPage(content: String, filename: String, step: Step = .init(total: 2, partial: 0, duration: .seconds(1))) -> EnvIO<MarkdownEnvironment, MarkdownError, (url: URL, tree: String, trace: String)> {
         let renderer = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var((tree: String, out: String).self)
         let file = self.output.appendingPathComponent(filename)
         
         return binding(
-            renderer <- self.renderPage(step: Step(total: 2, partial: 1, duration: .seconds(1)),
-                                        generator: self.generator,
-                                        filename: filename, content: content).contramap(\MarkdownEnvironment.console),
-                     |<-self.persistContent(step: Step(total: 2, partial: 2, duration: .seconds(1)), content: renderer.get.out, atFile: file),
+            renderer <- self.renderPage(step: step.increment(1), generator: self.generator, filename: filename, content: content).contramap(\MarkdownEnvironment.console),
+                     |<-self.persistContent(step: step.increment(2), content: renderer.get.out, atFile: file),
         yield: (url: file, tree: renderer.get.tree, trace: renderer.get.out))^
     }
     
-    public func build(playground: URL) -> EnvIO<MarkdownFullEnvironment, MarkdownError, [URL]> {
+    public func build(playground: URL, step: Step = .init(total: 2, partial: 0, duration: .seconds(1))) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
         fatalError()
     }
     
-    public func buildPlaygrounds(at folder: URL) -> EnvIO<MarkdownFullEnvironment, MarkdownError, [URL]> {
-        fatalError()
+    public func buildPlaygrounds(at folder: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
+        let playgrounds = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var(NEA<URL>.self)
+        
+        return binding(
+                        |<-self.structure(step: Step(total: 2, partial: 1, duration: .seconds(1)), output: self.output),
+            playgrounds <- self.getPlaygrounds(step: Step(total: 2, partial: 1, duration: .seconds(1)), at: folder),
+        yield: playgrounds.get.all())^
     }
     
     // MARK: steps
@@ -61,7 +64,7 @@ public struct Markdown {
         EnvIO { env in
             binding(
                 |<-env.console.printStep(step: step, information: "Writting content in file '\(file.path.filename)'"),
-                |<-env.system.write(content: content, toFile: file).mapLeft { _ in MarkdownError.create(file: file) },
+                |<-env.fileSystem.write(content: content, toFile: file).mapLeft { _ in MarkdownError.create(file: file) },
             yield: ())^.reportStatus(step: step, in: env.console)
         }^
     }
@@ -69,9 +72,20 @@ public struct Markdown {
     private func structure(step: Step, output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, Void> {
         EnvIO { env in
             binding(
-                |<-env.console.printStep(step: step, information: "Creating folder structure (\(output.path))"),
-                |<-env.system.createDirectory(at: output).mapLeft { _ in .structure },
+                |<-env.console.printStep(step: step, information: "Creating folder structure (\(output.path.filename))"),
+                |<-env.fileSystem.createDirectory(at: output).mapLeft { _ in .structure },
             yield: ())^.reportStatus(step: step, in: env.console)
+        }
+    }
+    
+    private func getPlaygrounds(step: Step, at folder: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, NEA<URL>> {
+        EnvIO { env in
+            let playgrounds = IOPartial<MarkdownError>.var(NEA<URL>.self)
+            
+            return binding(
+                            |<-env.console.printStep(step: step, information: "Listing playgrounds at (\(folder.path.filename))"),
+                playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapLeft { _ in .renderPage },
+            yield: playgrounds.get)^.reportStatus(step: step, in: env.console)
         }
     }
     
