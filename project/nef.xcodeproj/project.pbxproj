@@ -77,7 +77,6 @@
 		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
 		8BB7D11923B0CB3900C8E6F8 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */; };
 		8BB7D11C23B0CB8000C8E6F8 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */; };
-		8BB7D11F23B0CD4B00C8E6F8 /* PlaygroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11E23B0CD4B00C8E6F8 /* PlaygroundType.swift */; };
 		8BB7D12623B0D05100C8E6F8 /* MacFileSytem+SwiftPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */; };
 		8BB7D12723B0D05100C8E6F8 /* MacFileSytem+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */; };
 		8BB7D12F23B0D28100C8E6F8 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */; };
@@ -330,7 +329,6 @@
 		8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownAPI.swift; sourceTree = "<group>"; };
 		8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystemError.swift; sourceTree = "<group>"; };
-		8BB7D11E23B0CD4B00C8E6F8 /* PlaygroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundType.swift; sourceTree = "<group>"; };
 		8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+SwiftPlayground.swift"; sourceTree = "<group>"; };
 		8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+Markdown.swift"; sourceTree = "<group>"; };
 		8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
@@ -814,14 +812,6 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
-		8BB7D11D23B0CD3300C8E6F8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				8BB7D11E23B0CD4B00C8E6F8 /* PlaygroundType.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		8BB7D12823B0D24000C8E6F8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -842,7 +832,6 @@
 			isa = PBXGroup;
 			children = (
 				8BB7D11623B0CB0D00C8E6F8 /* Algrebras */,
-				8BB7D11D23B0CD3300C8E6F8 /* Models */,
 				8BB7D11A23B0CB7100C8E6F8 /* Errors */,
 				8BB7D11723B0CB1900C8E6F8 /* Utils */,
 				8BBD14B7239017B20002970C /* Support Files */,
@@ -1525,7 +1514,6 @@
 			files = (
 				8BBD14BE2390192C0002970C /* Array+Slice.swift in Sources */,
 				8BB7D11C23B0CB8000C8E6F8 /* PlaygroundSystemError.swift in Sources */,
-				8BB7D11F23B0CD4B00C8E6F8 /* PlaygroundType.swift in Sources */,
 				8BBD14BD2390192C0002970C /* String+Utils.swift in Sources */,
 				8BBD14BC2390192C0002970C /* String+Path.swift in Sources */,
 				8BB7D11923B0CB3900C8E6F8 /* PlaygroundSystem.swift in Sources */,
