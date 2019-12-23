@@ -56,11 +56,13 @@ class MacPlaygroundSystem: PlaygroundSystem {
     private func readPlaygrounds(in xcworkspaces: NEA<URL>) -> IO<PlaygroundSystemError, NEA<URL>> {
         func readPlaygrounds(xcworkspace: URL) -> IO<PlaygroundSystemError, [URL]> {
             IO<PlaygroundSystemError, String>.invoke { try String(contentsOf: xcworkspace.appendingPathComponent("contents.xcworkspacedata")) }
-                .mapLeft { _ in .playgrounds() }
                 .map { content in
                     content.matches(pattern: "(?<=group:).*.playground(?=\")")
                            .map { playground in xcworkspace.deletingLastPathComponent().appendingPathComponent(playground) }
-                           .filter { url in self.fileManager.fileExists(atPath: url.path) }
+                }.flatMap { playgrounds in
+                    playgrounds.map { $0.path }.allSatisfy(self.fileManager.fileExists)
+                        ? IO.pure(playgrounds)
+                        : IO.raiseError(.playgrounds(information: "some playgrounds are not linked properly"))
                 }^
         }
         

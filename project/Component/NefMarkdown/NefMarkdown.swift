@@ -83,7 +83,7 @@ public struct Markdown {
             let playgrounds = IOPartial<MarkdownError>.var(NEA<URL>.self)
             
             return binding(
-                            |<-env.console.printStep(step: step, information: "Listing playgrounds at (\(folder.path.filename))"),
+                            |<-env.console.printStep(step: step, information: "Listing playgrounds in '\(folder.path.filename)'"),
                 playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapLeft { _ in .renderPage },
             yield: playgrounds.get)^.reportStatus(step: step, in: env.console)
         }
