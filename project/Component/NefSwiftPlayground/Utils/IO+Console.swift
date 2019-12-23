@@ -1,12 +1,10 @@
 //  Copyright © 2019 The nef Authors.
 
-import Foundation
 import NefCommon
 import NefModels
 
 import Bow
 import BowEffects
-
 
 extension IO where E == SwiftPlaygroundError {
     func reportStatus(step: Step, in console: Console, verbose: Bool) -> IO<SwiftPlaygroundError, A> {

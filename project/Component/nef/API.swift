@@ -16,8 +16,6 @@ public enum SwiftPlayground: SwiftPlaygroundAPI {}
 public protocol MarkdownAPI {
     /// Renders content into Markdown file.
     ///
-    /// - Precondition: this method must be invoked from main thread.
-    ///
     /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - file: output where to write the Markdown render (path to the file without extension).
@@ -26,13 +24,27 @@ public protocol MarkdownAPI {
     
     /// Renders content into Markdown file.
     ///
-    /// - Precondition: this method must be invoked from main thread.
-    ///
     /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - file: output where to write the Markdown render (path to the file without extension).
     /// - Returns: An `IO` to perform IO operations that produce carbon error of type `nef.Error` and values with the render information.
     static func renderVerbose(content: String, toFile file: URL) -> IO<nef.Error, (url: URL, tree: String, trace: String)>
+    
+    /// Renders playground pages into markdown files.
+    ///
+    /// - Parameters:
+    ///   - playground: path to Xcode playground.
+    ///   - output: folder where to write the markdown files.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the markdown files generated of type `[URL]`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, [URL]>`.
+    static func render(playground: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]>
+    
+    /// Renders playground pages into markdown files.
+    ///
+    /// - Parameters:
+    ///   - playgroundsAt: folder contains Xcode Playgrounds to render.
+    ///   - output: folder where to write the markdown files for each Xcode Playground.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the playground paths rendered `[URL]`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, [URL]>`.
+    static func render(playgroundsAt: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]>
 }
 
 public protocol JekyllAPI {

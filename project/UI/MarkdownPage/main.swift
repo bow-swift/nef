@@ -1,6 +1,5 @@
 //  Copyright © 2019 The nef Authors.
 
-import Foundation
 import CLIKit
 import nef
 import Bow
@@ -8,8 +7,8 @@ import BowEffects
 
 private let console = Console(script: "nef-markdown-page",
                               description: "Render a markdown file from a Playground page",
-                              arguments: .init(name: "page", placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
-                                         .init(name: "output", placeholder: "output path", description: "path where markdown are saved to. ex. `/home`"),
+                              arguments: .init(name: "page", placeholder: "path-to-playground-page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
+                                         .init(name: "output", placeholder: "path-to-output", description: "path where markdown are saved to. ex. `/home`"),
                                          .init(name: "filename", placeholder: "name", description: "name for the rendered Markdown file (without any extension).", default: "README"),
                                          .init(name: "verbose", placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
 

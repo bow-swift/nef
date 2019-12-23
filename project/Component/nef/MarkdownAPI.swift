@@ -14,10 +14,6 @@ public extension MarkdownAPI {
     }
     
     static func renderVerbose(content: String, toFile file: URL) -> IO<nef.Error, (url: URL, tree: String, trace: String)> {
-        guard Thread.isMainThread else {
-            fatalError("MarkdownAPI.render(content: String, toFile file: URL) should be invoked in main thread")
-        }
-        
         let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
         let filename = file.path.filename.contains(".md") ? file.path.filename : "\(file.path.filename).md"
         
@@ -28,5 +24,19 @@ public extension MarkdownAPI {
                    .map { renderer in (url: output.appendingPathComponent(filename),
                                        tree: renderer.tree,
                                        trace: renderer.output) }^
+    }
+    
+    static func render(playground: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        NefMarkdown.Markdown(output: output)
+                   .build(playground: playground)
+                   .contramap { console in MarkdownEnvironment(console: console, shell: MacMarkdownShell(), system: MacFileSystem()) }
+                   .mapError { _ in nef.Error.markdown }^
+    }
+    
+    static func render(playgroundsAt folder: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        NefMarkdown.Markdown(output: output)
+                   .buildPlaygrounds(at: folder)
+                   .contramap { console in MarkdownEnvironment(console: console, shell: MacMarkdownShell(), system: MacFileSystem()) }
+                   .mapError { _ in nef.Error.markdown }^
     }
 }
