@@ -3,9 +3,17 @@
 import Foundation
 
 public enum PlaygroundSystemError: Error {
-    case name
     case playgrounds(information: String = "")
     case pages(information: String = "")
-    case duplicated
-    case unknown
+}
+
+extension PlaygroundSystemError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .playgrounds(let information):
+            return "playgrounds operation \(information.isEmpty ? "" : "(\(information))")"
+        case .pages(let information):
+            return "pages operation \(information.isEmpty ? "" : "(\(information))")"
+        }
+    }
 }

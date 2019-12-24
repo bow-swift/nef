@@ -80,7 +80,6 @@
 		8BB7D12623B0D05100C8E6F8 /* MacFileSytem+SwiftPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */; };
 		8BB7D12723B0D05100C8E6F8 /* MacFileSytem+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */; };
 		8BB7D12F23B0D28100C8E6F8 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */; };
-		8BB7D13323B0D34C00C8E6F8 /* MarkdownShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13023B0D34600C8E6F8 /* MarkdownShell.swift */; };
 		8BB7D13723B0D39800C8E6F8 /* MarkdownEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */; };
 		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
@@ -333,7 +332,6 @@
 		8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+SwiftPlayground.swift"; sourceTree = "<group>"; };
 		8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+Markdown.swift"; sourceTree = "<group>"; };
 		8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
-		8BB7D13023B0D34600C8E6F8 /* MarkdownShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownShell.swift; sourceTree = "<group>"; };
 		8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEnvironment.swift; sourceTree = "<group>"; };
 		8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
@@ -419,7 +417,6 @@
 			isa = PBXGroup;
 			children = (
 				8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */,
-				8BB7D13023B0D34600C8E6F8 /* MarkdownShell.swift */,
 			);
 			path = Algebras;
 			sourceTree = "<group>";
@@ -1461,7 +1458,6 @@
 				8B0A908223ACE39600091C39 /* MarkdownSystemError.swift in Sources */,
 				8BB7D12F23B0D28100C8E6F8 /* IO+Console.swift in Sources */,
 				8B0A908023ACE36100091C39 /* MarkdownSystem.swift in Sources */,
-				8BB7D13323B0D34C00C8E6F8 /* MarkdownShell.swift in Sources */,
 				8BB7D13723B0D39800C8E6F8 /* MarkdownEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
