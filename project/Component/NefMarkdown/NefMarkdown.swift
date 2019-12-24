@@ -54,12 +54,12 @@ public struct Markdown {
     // MARK: steps
     private func renderPage(step: Step, generator: MarkdownGenerator, filename: String, content: String, atFile file: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, (tree: String, trace: String)> {
 
-        func renderPage(generator: MarkdownGenerator, content: String) -> IO<MarkdownError, RendererOutput> {
+        func renderPage(generator: MarkdownGenerator, content: String, page: URL) -> IO<MarkdownError, RendererOutput> {
             IO.async { callback in
                 if let rendered = self.generator.render(content: content) {
                     callback(.right(rendered))
                 } else {
-                    callback(.left(.renderPage))
+                    callback(.left(.render(page: page)))
                 }
             }^
         }
@@ -75,7 +75,7 @@ public struct Markdown {
             
             return binding(
                        |<-env.console.printStep(step: step, information: "\t• Rendering markdown '\(filename)'"),
-              renderer <- renderPage(generator: generator, content: content),
+              renderer <- renderPage(generator: generator, content: content, page: file),
                        |<-persistContent(renderer.get.output, atFile: file).provide(env),
             yield: (tree: renderer.get.tree, trace: renderer.get.output))^.reportStatus(step: step, in: env.console)
         }^
@@ -96,7 +96,7 @@ public struct Markdown {
             
             return binding(
                             |<-env.console.printStep(step: step, information: "Listing playgrounds in '\(folder.path.filename)'"),
-                playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapLeft { _ in .renderPage },
+                playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapLeft { _ in .getPlaygrounds(folder: folder) },
             yield: playgrounds.get)^.reportStatus(step: step, in: env.console)
         }
     }
@@ -107,7 +107,7 @@ public struct Markdown {
             
             return binding(
                       |<-env.console.printStep(step: step, information: "Listing pages for '\(playground.path.filename)'"),
-                pages <- env.playgroundSystem.pages(in: playground).mapLeft { _ in .renderPage },
+                pages <- env.playgroundSystem.pages(in: playground).mapLeft { _ in .getPages(folder: playground) },
             yield: pages.get)^.reportStatus(step: step, in: env.console)
         }
     }
@@ -119,7 +119,7 @@ public struct Markdown {
             let filename = "\(page.path.filename.removeExtension).md"
             let file = output.appendingPathComponent(filename)
             let page = page.appendingPathComponent("Contents.swift")
-            guard let content = try? String(contentsOf: page) else { return EnvIO.raiseError(MarkdownError.renderPage)^ }
+            guard let content = try? String(contentsOf: page) else { return EnvIO.raiseError(.render(page: page))^ }
             
             return renderPage(step: step, generator: generator, filename: filename, content: content, atFile: file)
                     .foldM({ e in EnvIO.raiseError(e)^ },

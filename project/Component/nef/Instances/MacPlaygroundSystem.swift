@@ -31,29 +31,34 @@ class MacPlaygroundSystem: PlaygroundSystem {
             }^
         }
         
-        func validatePages(_ pages: [URL]) -> IO<PlaygroundSystemError, [URL]> {
-            pages.map { $0.path }.allSatisfy(self.fileManager.fileExists)
-                ? IO.pure(pages)^
-                : IO.raiseError(.pages(information: "some pages are not linked properly in '\(playground.path)'"))^
+        func checkNumberOfPages(_ pages: [URL], playground: URL) -> IO<PlaygroundSystemError, [URL]> {
+            IO.invoke {
+                guard pages.count == 0 else { return pages }
+                throw PlaygroundSystemError.pages()
+            }.handleErrorWith { e in
+                self.fileManager.contentsOfDirectoryIO(atPath: playground.appendingPathComponent("Pages").path)
+                    .mapLeft { _ in e }
+                    .foldM({ e in IO.raiseError(e)^  },
+                           { files in files.count == 1 ? IO.pure([playground.appendingPathComponent("Pages").appendingPathComponent(files.first!)])^
+                                                       : IO.raiseError(.pages(information: "not found pages in '\(playground.path)'"))^ })
+            }^
         }
         
-        func buildNEA(pages: [URL]) -> IO<PlaygroundSystemError, NEA<URL>> {
-            NEA<URL>.fromArray(pages).fold({ IO.raiseError(.playgrounds(information: "can not find any page in the playground")) },
+        func validatePages(_ pages: [URL], playground: URL) -> IO<PlaygroundSystemError, [URL]> {
+            pages.map { $0.path }.allSatisfy(self.fileManager.fileExists)
+                ? IO.pure(pages)^
+                : IO.raiseError(.pages(information: "some pages are not linked properly to '\(playground.path)'"))^
+        }
+        
+        func buildNEA(pages: [URL], playground: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+            NEA<URL>.fromArray(pages).fold({ IO.raiseError(.pages(information: "not found pages in '\(playground.path)'")) },
                                            { nea in IO.pure(nea) })^
         }
         
         return extractPages(in: playground)
-                .flatMap(validatePages)
-                .flatMap(buildNEA)^
-    }
-    
-    
-    func name(_ playground: URL) -> IO<PlaygroundSystemError, String> {
-        fatalError()
-    }
-    
-    func unique(playground: URL, in path: URL) -> IO<PlaygroundSystemError, URL> {
-        fatalError()
+                .flatMap { pages in checkNumberOfPages(pages, playground: playground) }
+                .flatMap { pages in validatePages(pages, playground: playground)   }
+                .flatMap { pages in buildNEA(pages: pages, playground: playground) }^
     }
     
     // MARK: - helpers

@@ -38,7 +38,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
             nef.Markdown.render(playgroundsAt: folder, in: output)
                .provide(console)^
                .mapLeft { _ in .render() }
-               .foldM({ _ in console.exit(failure: "rendering Xcode Playgrounds at '\(folder.path)'") },
+               .foldM({ _ in console.exit(failure: "rendering Xcode Playgrounds from '\(folder.path)'") },
                       { _ in console.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")  }) }^
         .reportStatus(in: console)
         .foldM({ e in console.exit(failure: "\(e)")        },
