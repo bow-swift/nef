@@ -6,7 +6,6 @@ import Bow
 import BowEffects
 
 class MacPlaygroundSystem: PlaygroundSystem {
-    
     private let fileManager = FileManager.default
     
     func playgrounds(at folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
@@ -15,27 +14,37 @@ class MacPlaygroundSystem: PlaygroundSystem {
         
         return binding(
             xcworkspaces <- self.xcworkspaces(at: folder),
-             playgrounds <- self.readPlaygrounds(in: xcworkspaces.get),
+             playgrounds <- self.getPlaygrounds(in: xcworkspaces.get),
         yield: playgrounds.get)^
     }
     
     func pages(in playground: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
-        let xcplayground = playground.appendingPathComponent("contents.xcplayground")
+        func extractPages(in playground: URL) -> IO<PlaygroundSystemError, [URL]> {
+            IO<PlaygroundSystemError, String>.invoke {
+                let xcplayground = playground.appendingPathComponent("contents.xcplayground")
+                return try String(contentsOf: xcplayground)
+            }.map { content in
+                content.matches(pattern: "(?<=name=').*(?=')")
+                       .map { page in playground.appendingPathComponent("Pages")
+                                                .appendingPathComponent(page)
+                                                .appendingPathExtension("xcplaygroundpage") }
+            }^
+        }
         
-        return IO<PlaygroundSystemError, String>.invoke { try String(contentsOf: xcplayground) }
-                .map { content in
-                    content.matches(pattern: "(?<=name=').*(?=')")
-                        .map { page in playground.appendingPathComponent("Pages")
-                                                 .appendingPathComponent(page)
-                                                 .appendingPathExtension("xcplaygroundpage") }
-                }.flatMap { pages in
-                    pages.map { $0.path }.allSatisfy(self.fileManager.fileExists)
-                        ? IO.pure(pages)
-                        : IO.raiseError(.pages(information: "some pages are not linked properly in '\(playground.path)'"))
-                }.flatMap { array in
-                    NEA<URL>.fromArray(array).fold({ IO.raiseError(.playgrounds(information: "can not find any page in '\(playground.path)'")) },
-                                                   { nea in IO.pure(nea) })
-                }^
+        func validatePages(_ pages: [URL]) -> IO<PlaygroundSystemError, [URL]> {
+            pages.map { $0.path }.allSatisfy(self.fileManager.fileExists)
+                ? IO.pure(pages)^
+                : IO.raiseError(.pages(information: "some pages are not linked properly in '\(playground.path)'"))^
+        }
+        
+        func buildNEA(pages: [URL]) -> IO<PlaygroundSystemError, NEA<URL>> {
+            NEA<URL>.fromArray(pages).fold({ IO.raiseError(.playgrounds(information: "can not find any page in the playground")) },
+                                           { nea in IO.pure(nea) })^
+        }
+        
+        return extractPages(in: playground)
+                .flatMap(validatePages)
+                .flatMap(buildNEA)^
     }
     
     
@@ -69,24 +78,30 @@ class MacPlaygroundSystem: PlaygroundSystem {
                              { nea in IO.pure(nea) })^
     }
     
-    private func readPlaygrounds(in xcworkspaces: NEA<URL>) -> IO<PlaygroundSystemError, NEA<URL>> {
-        func readPlaygrounds(xcworkspace: URL) -> IO<PlaygroundSystemError, [URL]> {
-            IO<PlaygroundSystemError, String>.invoke { try String(contentsOf: xcworkspace.appendingPathComponent("contents.xcworkspacedata")) }
-                .map { content in
-                    content.matches(pattern: "(?<=group:).*.playground(?=\")")
-                           .map { playground in xcworkspace.deletingLastPathComponent().appendingPathComponent(playground) }
-                }.flatMap { playgrounds in
-                    playgrounds.map { $0.path }.allSatisfy(self.fileManager.fileExists)
-                        ? IO.pure(playgrounds)
-                        : IO.raiseError(.playgrounds(information: "some playgrounds are not linked properly"))
-                }^
+    private func getPlaygrounds(in xcworkspaces: NEA<URL>) -> IO<PlaygroundSystemError, NEA<URL>> {
+        func extractPlaygrounds(from xcworkspace: URL) -> IO<PlaygroundSystemError, [URL]> {
+            IO<PlaygroundSystemError, String>.invoke {
+                try String(contentsOf: xcworkspace.appendingPathComponent("contents.xcworkspacedata"))
+            }.map { content in
+                content.matches(pattern: "(?<=group:).*.playground(?=\")")
+                       .map { playground in xcworkspace.deletingLastPathComponent().appendingPathComponent(playground) }
+            }^
+        }
+        
+        func validatePlaygrounds(_ playgrounds: [URL]) -> IO<PlaygroundSystemError, [URL]> {
+            playgrounds.map { $0.path }.allSatisfy(self.fileManager.fileExists)
+                ? IO.pure(playgrounds)^
+                : IO.raiseError(.playgrounds(information: "some playgrounds are not linked properly"))^
+        }
+        
+        func buildNEA(playgrounds: [URL]) -> IO<PlaygroundSystemError, NEA<URL>> {
+            NEA<URL>.fromArray(playgrounds).fold({ IO.raiseError(.playgrounds(information: "can not find any playground in the workspace")) },
+                                                 { nea in IO.pure(nea) })^
         }
         
         return xcworkspaces.all()
-            .parFlatTraverse(readPlaygrounds)^
-            .flatMap { array in
-                NEA<URL>.fromArray(array).fold({ IO.raiseError(.playgrounds(information: "can not find any playground in the workspace")) },
-                                               { nea in IO.pure(nea) })
-            }^
+            .parFlatTraverse(extractPlaygrounds)
+            .flatMap(validatePlaygrounds)
+            .flatMap(buildNEA)^
     }
 }

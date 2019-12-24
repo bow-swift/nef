@@ -25,7 +25,7 @@ public extension MarkdownAPI {
     
     static func render(playground: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
         NefMarkdown.Markdown(output: output)
-                   .build(playground: playground)
+                   .buildPlayground(playground)
                    .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                    .mapError { _ in nef.Error.markdown }^
     }

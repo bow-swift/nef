@@ -41,8 +41,8 @@ public protocol MarkdownAPI {
     /// Renders playground pages into markdown files.
     ///
     /// - Parameters:
-    ///   - playgroundsAt: folder contains Xcode Playgrounds to render.
-    ///   - output: folder where to write the markdown files for each Xcode Playground.
+    ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
+    ///   - output: folder where to write the markdown files for each Xcode Playground page.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the playground paths rendered `[URL]`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, [URL]>`.
     static func render(playgroundsAt: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]>
 }
