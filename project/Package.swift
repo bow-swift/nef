@@ -26,6 +26,7 @@ let package = Package(
         .target(name: "NefCarbon", dependencies: ["NefCore", "NefCommon"], path: "Component/NefCarbon", publicHeadersPath: "Support Files"),
         .target(name: "NefSwiftPlayground", dependencies: ["NefModels", "NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
 
+        .testTarget(name: "CoreTests", dependencies: ["NefCore"], path: "Tests/CoreTests"),
 
         .target(name: "nef", dependencies: ["Swiftline",
                                             "NefCommon",
