@@ -10,6 +10,32 @@ import BowEffects
 
 public extension JekyllAPI {
     
+    static func render(content: String, permalink: String) -> EnvIO<Console, nef.Error, String> {
+        fatalError()
+    }
+    
+    static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (rendered: String, ast: String)> {
+        fatalError()
+    }
+    
+    static func render(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
+        fatalError()
+    }
+    
+    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, trace: String)> {
+        fatalError()
+    }
+    
+    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        fatalError()
+    }
+    
+    static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        fatalError()
+    }
+    
+    
+    
     static func render(content: String, toFile file: URL, permalink: String) -> IO<nef.Error, URL> {
         IO.async { callback in
             let output = URL(fileURLWithPath: "\(file.path).md")
