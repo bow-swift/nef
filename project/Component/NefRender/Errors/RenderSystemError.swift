@@ -2,13 +2,13 @@
 
 import Foundation
 
-public enum MarkdownSystemError: Error {
+public enum RenderSystemError: Error {
     case write(file: String)
     case create(item: URL)
     case remove(item: URL)
 }
 
-extension MarkdownSystemError: CustomStringConvertible {
+extension RenderSystemError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .write(let file):

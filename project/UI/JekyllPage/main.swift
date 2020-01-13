@@ -67,7 +67,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
         .foldM({ e   in console.exit(failure: "\(e)") },
                { rendered in
                     guard let rendered = rendered else { return console.exit(success: "rendered jekyll page.") }
-                    return console.exit(success: "rendered jekyll page.\n\n• AST \n\t\(rendered.tree)\n\n• Trace \n\t\(rendered.output)")
+                    return console.exit(success: "rendered jekyll page.\n\n• AST \n\t\(rendered.ast)\n\n• Trace \n\t\(rendered.output)")
                })
         .unsafeRunSyncEither()
 }

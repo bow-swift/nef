@@ -2,6 +2,7 @@
 
 import Foundation
 import NefModels
+import NefRender
 import NefMarkdown
 
 import Bow
@@ -16,7 +17,7 @@ public extension MarkdownAPI {
     static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (rendered: String, ast: String)> {
         NefMarkdown.Markdown()
                    .renderPage(content: content)
-                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                    .mapError { _ in nef.Error.markdown }
     }
     
@@ -30,21 +31,21 @@ public extension MarkdownAPI {
         
         return NefMarkdown.Markdown()
                           .renderPage(content: content, filename: filename, into: output)
-                          .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                          .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                           .mapError { e in nef.Error.markdown }^
     }
     
-    static func render(playground: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
         NefMarkdown.Markdown()
                    .renderPlayground(playground, into: output)
-                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                    .mapError { _ in nef.Error.markdown }^
     }
     
-    static func render(playgroundsAt folder: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+    static func render(playgroundsAt folder: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
         NefMarkdown.Markdown()
                    .renderPlaygrounds(at: folder, into: output)
-                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
                    .mapError { _ in nef.Error.markdown }^
     }
 }

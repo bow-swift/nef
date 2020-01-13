@@ -30,7 +30,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (folder: URL
 func main() -> Either<CLIKit.Console.Error, Void> {
     arguments(console: console)
         .flatMap { (folder, output) in
-            nef.Markdown.render(playgroundsAt: folder, in: output)
+            nef.Markdown.render(playgroundsAt: folder, into: output)
                .provide(console)^
                .mapLeft { _ in .render() }
                .foldM({ _ in console.exit(failure: "rendering Xcode Playgrounds from '\(folder.path)'") },
