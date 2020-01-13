@@ -39,22 +39,25 @@ public struct CarbonStyle: Codable, Equatable {
     }
     
     public enum Theme: String, Codable, Equatable, CaseIterable {
-        case cobalt
+        case base16 = "base16-dark"
         case blackboard
-        case dracula
+        case cobalt
         case duotone = "duotone-dark"
+        case dracula
         case hopscotch
         case lucario
         case material
         case monokai
+        case nightOwl = "night-owl"
         case nord
         case oceanicNext = "oceanic-next"
         case oneDark = "one-dark"
         case panda = "panda-syntax"
         case paraiso = "paraiso-dark"
-        case seti
         case purple = "shades-of-purple"
+        case seti
         case solarized = "solarized dark"
+        case synthwave84 = "synthwave-84"
         case tomorrow = "tomorrow-night-bright"
         case twilight
         case verminal
@@ -95,6 +98,19 @@ public struct CarbonStyle: Codable, Equatable {
             guard a >= 0, a <= 1 else { return "rgba(\(r),\(g),\(b),\(1))" }
             return "rgba(\(r),\(g),\(b),\(a))"
         }
+    }
+}
+
+extension CarbonStyle: CustomStringConvertible {
+    public var description: String {
+        """
+                background: \(background)
+                size: \(size)
+                theme: \(theme.rawValue)
+                fontType: \(fontType.rawValue)
+                lineNumbers: \(lineNumbers)
+                watermark: \(watermark)
+        """
     }
 }
 

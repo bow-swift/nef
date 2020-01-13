@@ -14,12 +14,12 @@ import NefCore
 public func renderJekyll(content: String,
                          to outputPath: String,
                          permalink: String,
-                         success: @escaping () -> Void,
+                         success: @escaping (RendererOutput) -> Void,
                          failure: @escaping (String) -> Void) {
     
-    let outputURL = URL(fileURLWithPath: outputPath)
+    let url = URL(fileURLWithPath: outputPath)
     guard let rendered = JekyllGenerator(permalink: permalink).render(content: content) else { failure("can not render page into Jekyll format"); return }
-    guard let _ = try? rendered.write(to: outputURL, atomically: true, encoding: .utf8) else { failure("invalid output path"); return }
+    guard let _ = try? rendered.output.write(to: url, atomically: true, encoding: .utf8) else { failure("invalid output path '\(url.path)'"); return }
     
-    success()
+    success(rendered)
 }

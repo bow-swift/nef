@@ -105,7 +105,7 @@ fileprivate extension CarbonAPI {
                          code: "\(code)\n",
                          style: style,
                          outputPath: outputPath,
-                         success: success,
+                         success: { _ in success() },
                          failure: failure)
         }
     }

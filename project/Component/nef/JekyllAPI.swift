@@ -47,7 +47,7 @@ fileprivate extension JekyllAPI {
         renderJekyll(content: content,
                      to: outputPath,
                      permalink: permalink,
-                     success: success,
+                     success: { _ in success() },
                      failure: failure)
     }
 }

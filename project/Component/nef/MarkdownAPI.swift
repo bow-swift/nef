@@ -44,7 +44,7 @@ fileprivate extension MarkdownAPI {
         
         renderMarkdown(content: content,
                        to: outputPath,
-                       success: success,
+                       success: { _ in success() },
                        failure: failure)
     }
 }
