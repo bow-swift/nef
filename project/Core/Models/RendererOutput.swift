@@ -3,6 +3,6 @@
 import Foundation
 
 public struct RendererOutput {
-    public let tree: String
+    public let ast: String
     public let output: String
 }

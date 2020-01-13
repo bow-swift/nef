@@ -41,7 +41,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, filename: String, output: URL, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var((url: URL, tree: String, trace: String).self)
+    let output = IOPartial<CLIKit.Console.Error>.var((url: URL, ast: String, trace: String).self)
     
     return binding(
            args <- arguments(console: console),
@@ -51,7 +51,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
          output <- nef.Markdown.renderVerbose(content: args.get.content, toFile: args.get.output)
                                .provide(console)
                                .mapLeft { e in .render() }^,
-    yield: args.get.verbose ? Either<(tree: String, trace: String), URL>.left((tree: output.get.tree, trace: output.get.trace))
+    yield: args.get.verbose ? Either<(tree: String, trace: String), URL>.left((tree: output.get.ast, trace: output.get.trace))
                             : Either<(tree: String, trace: String), URL>.right(output.get.url)
     )^
         .reportStatus(in: console)

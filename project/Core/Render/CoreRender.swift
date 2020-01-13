@@ -34,8 +34,8 @@ extension InternalRender {
         guard syntaxTree.count > 0 else { return nil }
 
         let filteredSyntaxTree = syntaxTree.filter { !$0.isHidden }.reduce()
-        let tree = filteredSyntaxTree.map { "\($0)" }.joined(separator: "\n")
+        let ast = filteredSyntaxTree.map { "\($0)" }.joined(separator: "\n")
         let output = filteredSyntaxTree.reduce("") { (acc, node) in acc + self.render(node: node) }
-        return RendererOutput(tree: tree, output: output)
+        return RendererOutput(ast: ast, output: output)
     }
 }
