@@ -70,6 +70,7 @@
 		8B51C7A523CCCA16003EE485 /* RenderSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A908123ACE39600091C39 /* RenderSystemError.swift */; };
 		8B51C7A623CCCA16003EE485 /* RenderEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13523B0D38700C8E6F8 /* RenderEnvironment.swift */; };
 		8B51C7A723CCCB16003EE485 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */; };
+		8B51C7AF23CDCE99003EE485 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7AE23CDCE99003EE485 /* main.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonView.swift */; };
@@ -194,6 +195,13 @@
 			remoteGlobalIDString = 8B51C79223CCC8A4003EE485;
 			remoteInfo = NefRender;
 		};
+		8B51C7B323CDCEC4003EE485 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B0FB583237C0A5600221548;
+			remoteInfo = CLIKit;
+		};
 		8B6B119E22CB9FDE0060177F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -260,7 +268,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8B0A905923ACD3A400091C39 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B0A905923ACD3A400091C39 /* nef-markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-markdown"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0A905B23ACD3A400091C39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B0A907B23ACE36100091C39 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
 		8B0A907D23ACE36100091C39 /* RenderSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystem.swift; sourceTree = "<group>"; };
@@ -339,6 +347,8 @@
 		8B51C79523CCC8A4003EE485 /* NefRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefRender.h; sourceTree = "<group>"; };
 		8B51C79623CCC8A4003EE485 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B51C7A023CCC9CD003EE485 /* NefRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefRender.swift; sourceTree = "<group>"; };
+		8B51C7AC23CDCE99003EE485 /* nef-jekyll */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-jekyll"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B51C7AE23CDCE99003EE485 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B646F94237D71C50009AB43 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		8B6B119422CB9FDE0060177F /* NefCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -622,6 +632,7 @@
 			children = (
 				8B0A905A23ACD3A400091C39 /* Markdown */,
 				8B3CB85A22D392C000919F36 /* MarkdownPage */,
+				8B51C7AD23CDCE99003EE485 /* Jekyll */,
 				8B3CB85422D392C000919F36 /* JekyllPage */,
 				8B3CB85822D392C000919F36 /* CarbonPage */,
 				8BD4E2F4238802C2002DECDB /* PlaygroundBook */,
@@ -775,6 +786,14 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
+		8B51C7AD23CDCE99003EE485 /* Jekyll */ = {
+			isa = PBXGroup;
+			children = (
+				8B51C7AE23CDCE99003EE485 /* main.swift */,
+			);
+			path = Jekyll;
+			sourceTree = "<group>";
+		};
 		8B6FC57C221ECE6A008F7694 = {
 			isa = PBXGroup;
 			children = (
@@ -804,8 +823,9 @@
 				8BD4E30A238814B1002DECDB /* nef-playground-book */,
 				8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */,
 				8BBD14AF2390179B0002970C /* NefCommon.framework */,
-				8B0A905923ACD3A400091C39 /* Markdown */,
+				8B0A905923ACD3A400091C39 /* nef-markdown */,
 				8B51C79323CCC8A4003EE485 /* NefRender.framework */,
+				8B51C7AC23CDCE99003EE485 /* nef-jekyll */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1089,7 +1109,7 @@
 			);
 			name = Markdown;
 			productName = Markdown;
-			productReference = 8B0A905923ACD3A400091C39 /* Markdown */;
+			productReference = 8B0A905923ACD3A400091C39 /* nef-markdown */;
 			productType = "com.apple.product-type.tool";
 		};
 		8B0CA51522AE669600181BC0 /* CarbonPage */ = {
@@ -1220,6 +1240,22 @@
 			productName = NefRender;
 			productReference = 8B51C79323CCC8A4003EE485 /* NefRender.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		8B51C7AB23CDCE99003EE485 /* Jekyll */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B51C7B023CDCE99003EE485 /* Build configuration list for PBXNativeTarget "Jekyll" */;
+			buildPhases = (
+				8B51C7A823CDCE99003EE485 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B51C7B423CDCEC4003EE485 /* PBXTargetDependency */,
+			);
+			name = Jekyll;
+			productName = Jekyll;
+			productReference = 8B51C7AC23CDCE99003EE485 /* nef-jekyll */;
+			productType = "com.apple.product-type.tool";
 		};
 		8B6B119322CB9FDE0060177F /* NefCore */ = {
 			isa = PBXNativeTarget;
@@ -1416,6 +1452,9 @@
 						CreatedOnToolsVersion = 11.3;
 						LastSwiftMigration = 1130;
 					};
+					8B51C7AB23CDCE99003EE485 = {
+						CreatedOnToolsVersion = 11.3;
+					};
 					8B6B119322CB9FDE0060177F = {
 						CreatedOnToolsVersion = 11.0;
 					};
@@ -1463,6 +1502,7 @@
 			targets = (
 				8B0A905823ACD3A400091C39 /* Markdown */,
 				8B424B1E224E28FC00AF9010 /* MarkdownPage */,
+				8B51C7AB23CDCE99003EE485 /* Jekyll */,
 				8B6FC584221ECE6A008F7694 /* JekyllPage */,
 				8B0CA51522AE669600181BC0 /* CarbonPage */,
 				8BD4E309238814B1002DECDB /* PlaygroundBook */,
@@ -1572,6 +1612,14 @@
 				8B51C7A723CCCB16003EE485 /* IO+Console.swift in Sources */,
 				8B51C7A123CCC9CD003EE485 /* NefRender.swift in Sources */,
 				8B51C7A423CCCA16003EE485 /* MarkdownError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B51C7A823CDCE99003EE485 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B51C7AF23CDCE99003EE485 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1754,6 +1802,11 @@
 			target = 8B51C79223CCC8A4003EE485 /* NefRender */;
 			targetProxy = 8B51C79E23CCC9AB003EE485 /* PBXContainerItemProxy */;
 		};
+		8B51C7B423CDCEC4003EE485 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B0FB583237C0A5600221548 /* CLIKit */;
+			targetProxy = 8B51C7B323CDCEC4003EE485 /* PBXContainerItemProxy */;
+		};
 		8B6B119F22CB9FDE0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
@@ -1809,44 +1862,32 @@
 		8B0A905E23ACD3A400091C39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				PRODUCT_NAME = "nef-markdown";
 			};
 			name = Debug;
 		};
 		8B0A905F23ACD3A400091C39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				PRODUCT_NAME = "nef-markdown";
 			};
 			name = Release;
 		};
 		8B0CA51B22AE669600181BC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		8B0CA51C22AE669600181BC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -2018,22 +2059,16 @@
 		8B424B24224E28FC00AF9010 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		8B424B25224E28FC00AF9010 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -2145,6 +2180,22 @@
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8B51C7B123CDCE99003EE485 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
+				PRODUCT_NAME = "nef-jekyll";
+			};
+			name = Debug;
+		};
+		8B51C7B223CDCE99003EE485 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
+				PRODUCT_NAME = "nef-jekyll";
 			};
 			name = Release;
 		};
@@ -2360,28 +2411,22 @@
 		8B6FC58D221ECE6A008F7694 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
 				PRODUCT_NAME = "nef-jekyll-page";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		8B6FC58E221ECE6A008F7694 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
 				PRODUCT_NAME = "nef-jekyll-page";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -2442,24 +2487,16 @@
 		8BD4E30F238814B1002DECDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
 				PRODUCT_NAME = "nef-playground-book";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		8BD4E310238814B1002DECDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
 				PRODUCT_NAME = "nef-playground-book";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -2702,6 +2739,15 @@
 			buildConfigurations = (
 				8B51C79923CCC8A4003EE485 /* Debug */,
 				8B51C79A23CCC8A4003EE485 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B51C7B023CDCE99003EE485 /* Build configuration list for PBXNativeTarget "Jekyll" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B51C7B123CDCE99003EE485 /* Debug */,
+				8B51C7B223CDCE99003EE485 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
