@@ -23,4 +23,8 @@ extension MacFileSystem: RenderSystem {
     func removeFile(at url: URL) -> IO<RenderSystemError, ()> {
         FileManager.default.removeItemIO(at: url).mapLeft { _ in .remove(item: url) }
     }
+    
+    func exist(directory: URL) -> Bool {
+        FileManager.default.fileExists(atPath: directory.path)
+    }
 }

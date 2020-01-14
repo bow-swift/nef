@@ -7,5 +7,6 @@ import BowEffects
 public protocol RenderSystem {
     func write(content: String, toFile: URL) -> IO<RenderSystemError, Void>
     func createDirectory(at url: URL) -> IO<RenderSystemError, Void>
+    func exist(directory: URL) -> Bool
     func removeFile(at url: URL) -> IO<RenderSystemError, Void>
 }

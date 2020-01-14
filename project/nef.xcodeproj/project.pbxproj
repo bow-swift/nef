@@ -83,7 +83,7 @@
 		8BB7D11923B0CB3900C8E6F8 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */; };
 		8BB7D11C23B0CB8000C8E6F8 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */; };
 		8BB7D12623B0D05100C8E6F8 /* MacFileSytem+SwiftPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */; };
-		8BB7D12723B0D05100C8E6F8 /* MacFileSytem+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */; };
+		8BB7D12723B0D05100C8E6F8 /* MacFileSytem+RenderSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+RenderSystem.swift */; };
 		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */; };
@@ -360,7 +360,7 @@
 		8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystemError.swift; sourceTree = "<group>"; };
 		8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+SwiftPlayground.swift"; sourceTree = "<group>"; };
-		8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+Markdown.swift"; sourceTree = "<group>"; };
+		8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+RenderSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+RenderSystem.swift"; sourceTree = "<group>"; };
 		8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
 		8BB7D13523B0D38700C8E6F8 /* RenderEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEnvironment.swift; sourceTree = "<group>"; };
 		8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundSystem.swift; sourceTree = "<group>"; };
@@ -756,7 +756,7 @@
 			isa = PBXGroup;
 			children = (
 				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
-				8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */,
+				8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+RenderSystem.swift */,
 				8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */,
 				8B46C430238FD70700437659 /* MacPlaygroundShell.swift */,
 				8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */,
@@ -1712,7 +1712,7 @@
 				8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
-				8BB7D12723B0D05100C8E6F8 /* MacFileSytem+Markdown.swift in Sources */,
+				8BB7D12723B0D05100C8E6F8 /* MacFileSytem+RenderSystem.swift in Sources */,
 				8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */,
 				8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */,
 				8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */,

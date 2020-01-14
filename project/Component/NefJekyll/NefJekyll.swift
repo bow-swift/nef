@@ -15,52 +15,39 @@ public struct Jekyll {
     public init() {}
     
     public func renderPage(content: String, permalink: String) -> EnvIO<RenderEnvironment, RenderError, (rendered: String, ast: String)> {
-        let step: Step = .init(total: 1, partial: 1, duration: .seconds(2))
-        let rendered = IO<RenderError, RendererOutput>.var()
-        
-        return EnvIO { env in
-            binding(
-                         |<-env.console.printStep(step: step, information: "\t• Rendering jekyll content"),
-                rendered <- self.render.renderPage(content: content, generator: self.generator(permalink: permalink)).provide(env),
-            yield:(rendered: rendered.get.output, ast: rendered.get.ast))^.reportStatus(step: step, in: env.console)
-        }
+        render.renderPage(content: content, generator: generator(permalink: permalink)).map { rendered in
+            (rendered: rendered.output, ast: rendered.ast)
+        }^
     }
     
     public func renderPage(content: String, permalink: String, filename: String, into output: URL) -> EnvIO<RenderEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
         let file = output.appendingPathComponent(filename)
-        let step: Step = .init(total: 1, partial: 1, duration: .seconds(2))
-        let rendered = IO<RenderError, (url: URL, ast: String, trace: String)>.var()
-        
-        return EnvIO { env in
-            binding(
-                         |<-env.console.printStep(step: step, information: "\t• Rendering jekyll '\(filename)'"),
-                rendered <- self.render.renderPage(content: content, atFile: file, generator: self.generator(permalink: permalink)).provide(env),
-            yield: rendered.get)^.reportStatus(step: step, in: env.console)
-        }
+        return render.renderPage(content: content, atFile: file, generator: generator(permalink: permalink))
     }
     
     public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        render.renderPlayground(playground, into: output, generator: generator)
+        render.renderPlayground(playground, into: output, filename: filename, generator: generator)
     }
     
     public func renderPlaygrounds(at folder: URL, mainPage: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        let rendered = IO<RenderError, [URL]>.var()
+        let rendered = EnvIO<RenderEnvironment, RenderError, [URL]>.var()
         
-        return EnvIO { env in
-            binding(
-                rendered <- self.render.renderPlaygrounds(at: folder, into: output, generator: self.generator).provide(env),
-            yield: rendered.get)^
-        }
+        return binding(
+            rendered <- self.render.renderPlaygrounds(at: folder, into: output, filename: self.filename, generator: self.generator),
+        yield: rendered.get)^
     }
     
     // MARK: - generator <helpers>
-    private func generator(playground: URL, page: URL) -> CoreRender {
-        let permalink = "/docs/\(playground.lastPathComponent)/\(page.lastPathComponent)"
-        return generator(permalink: permalink)
+    private func generator(playground: String, page: String) -> CoreRender {
+        generator(permalink: "/docs/\(playground)/\(page)")
     }
     
     private func generator(permalink: String) -> CoreRender {
         JekyllGenerator(permalink: permalink)
+    }
+    
+    private func filename(page: String) -> String {
+        "\(page)/README.md"
     }
     
     // MARK: - private <helpers>

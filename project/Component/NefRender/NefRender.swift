@@ -23,61 +23,76 @@ public struct NefRender {
     }
     
     public func renderPage(content: String, atFile file: URL, generator: CoreRender) -> EnvIO<RenderEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
+        let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
         let rendered = EnvIO<RenderEnvironment, RenderError, RendererOutput>.var()
         
         return binding(
-            rendered <- self.renderPage(content: content, generator: generator),
-                     |<-self.persistContent(rendered.get.output, atFile: file),
+           rendered <- self.renderPage(content: content, generator: generator),
+                    |<-self.structure(step: step.increment(2), output: file.deletingLastPathComponent()),
+                    |<-self.persistContent(step: step.increment(3), content: rendered.get.output, atFile: file),
         yield: (url: file, ast: rendered.get.ast, trace: rendered.get.output))^
     }
     
-    public func renderPlayground(_ playground: URL, into output: URL, generator: @escaping (_ playground: URL, _ page: URL) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
-        let playgroundName = playground.path.filename.removeExtension
-        let output = output.appendingPathComponent(playgroundName)
+    public func renderPlayground(_ playground: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
+        let step: Step = .init(total: 2, partial: 0, duration: .seconds(1))
+        let output = output.appendingPathComponent(playgroundName(playground))
         
         let pages = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
         let rendered = EnvIOPartial<RenderEnvironment, RenderError>.var([URL].self)
         
         return binding(
               pages <- self.getPages(step: step.increment(1), playground: playground),
-                    |<-self.structure(step: step.increment(2), output: output),
-           rendered <- self.renderPages(pages: pages.get, inPlayground: playground, output: output, generator: generator),
+           rendered <- self.renderPages(pages: pages.get, inPlayground: playground, output: output, filename: filename, generator: generator),
         yield: rendered.get)^
     }
     
-    public func renderPlaygrounds(at folder: URL, into output: URL, generator: @escaping (_ playground: URL, _ page: URL) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
+    public func renderPlaygrounds(at folder: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
+        let step: Step = .init(total: 2, partial: 0, duration: .seconds(1))
         let playgrounds = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
         let pages = EnvIOPartial<RenderEnvironment, RenderError>.var([URL].self)
         
         return binding(
-                        |<-self.structure(step: step.increment(1), output: output),
-            playgrounds <- self.getPlaygrounds(step: step.increment(2), at: folder),
-                  pages <- playgrounds.get.all().flatTraverse { playground in self.renderPlayground(playground, into: output, generator: generator) }^,
+            playgrounds <- self.getPlaygrounds(step: step.increment(1), at: folder),
+                  pages <- playgrounds.get.all().flatTraverse { playground in self.renderPlayground(playground, into: output, filename: filename, generator: generator) }^,
         yield: playgrounds.get.all())^
     }
     
     // MARK: - render <helpers>
-    private func renderPage(page: URL, output: URL, generator: CoreRender) -> EnvIO<RenderEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
-        let filename = "\(page.path.filename.removeExtension).md"
+    private func renderPage(page: URL, output: URL, filename: String, generator: CoreRender) -> EnvIO<RenderEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
         let file = output.appendingPathComponent(filename)
         let page = page.appendingPathComponent("Contents.swift")
-        
         guard let content = try? String(contentsOf: page) else { return EnvIO.raiseError(.render(page: page))^ }
+        
         return renderPage(content: content, atFile: file, generator: generator)
     }
     
-    private func renderPages(pages: NEA<URL>, inPlayground: URL, output: URL, generator: @escaping (_ playground: URL, _ page: URL) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
+    private func renderPages(pages: NEA<URL>, inPlayground: URL, output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
         pages.all().traverse { (page: URL) in
-            self.renderPage(page: page, output: output, generator: generator(inPlayground, page)).map { $0.url }
+            let playgroundName = self.playgroundName(inPlayground)
+            let pageName = self.playgroundPageName(page)
+            let filename = "\(filename(pageName).removeExtension).md"
+            let generator = generator(playgroundName, pageName)
+            
+            return self.renderPage(page: page, output: output, filename: filename, generator: generator).map { $0.url }
         }^
     }
     
     // MARK: - private <helpers>
+    private func playgroundName(_ playground: URL) -> String {
+        playground.lastPathComponent.removeExtension.lowercased().replacingOccurrences(of: "?", with: "-")
+                                                                 .replacingOccurrences(of: " ", with: "-")
+    }
+    
+    private func playgroundPageName(_ page: URL) -> String {
+        page.lastPathComponent.removeExtension.lowercased().replacingOccurrences(of: "?", with: "-")
+                                                           .replacingOccurrences(of: " ", with: "-")
+    }
+    
     private func structure(step: Step, output: URL) -> EnvIO<RenderEnvironment, RenderError, Void> {
         EnvIO { env in
-            binding(
+            guard !env.fileSystem.exist(directory: output) else { return IO.pure(())^ }
+            
+            return binding(
                 |<-env.console.printStep(step: step, information: "Creating folder structure (\(output.path.filename))"),
                 |<-env.fileSystem.createDirectory(at: output).mapLeft { _ in .structure },
             yield: ())^.reportStatus(step: step, in: env.console)
@@ -106,9 +121,12 @@ public struct NefRender {
         }
     }
     
-    private func persistContent(_ content: String, atFile file: URL) -> EnvIO<RenderEnvironment, RenderError, Void> {
+    private func persistContent(step: Step, content: String, atFile file: URL) -> EnvIO<RenderEnvironment, RenderError, Void> {
         EnvIO { env in
-            env.fileSystem.write(content: content, toFile: file).mapLeft { _ in .create(file: file) }
-        }^
+            binding(
+                |<-env.console.printStep(step: step, information: "Rendering file '\(file.path.parentPath.filename)/\(file.path.filename)'"),
+                |<-env.fileSystem.write(content: content, toFile: file).mapLeft { _ in .create(file: file) },
+            yield: ())^.reportStatus(step: step, in: env.console)
+        }
     }
 }
