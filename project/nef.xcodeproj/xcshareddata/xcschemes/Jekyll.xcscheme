@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B51C7AB23CDCE99003EE485"
-               BuildableName = "Jekyll"
+               BuildableName = "nef-jekyll"
                BlueprintName = "Jekyll"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B51C7AB23CDCE99003EE485"
-            BuildableName = "Jekyll"
+            BuildableName = "nef-jekyll"
             BlueprintName = "Jekyll"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B51C7AB23CDCE99003EE485"
-            BuildableName = "Jekyll"
+            BuildableName = "nef-jekyll"
             BlueprintName = "Jekyll"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B0A905823ACD3A400091C39"
-               BuildableName = "Markdown"
+               BuildableName = "nef-markdown"
                BlueprintName = "Markdown"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B0A905823ACD3A400091C39"
-            BuildableName = "Markdown"
+            BuildableName = "nef-markdown"
             BlueprintName = "Markdown"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B0A905823ACD3A400091C39"
-            BuildableName = "Markdown"
+            BuildableName = "nef-markdown"
             BlueprintName = "Markdown"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
