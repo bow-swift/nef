@@ -10,7 +10,6 @@ import Bow
 import BowEffects
 
 public struct Markdown {
-    private let generator = MarkdownGenerator()
     private let render = NefRender()
     
     public init() {}
@@ -41,29 +40,19 @@ public struct Markdown {
     }
     
     public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
-        let playgroundName = playground.path.filename.removeExtension
-        let output = output.appendingPathComponent(playgroundName)
-        
-        let pages = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
-        let rendered = EnvIOPartial<RenderEnvironment, RenderError>.var([URL].self)
-        
-        return binding(
-              pages <- self.render.getPages(step: step.increment(1), playground: playground),
-                    |<-self.render.structure(step: step.increment(2), output: output),
-           rendered <- self.render.renderPages(pages: pages.get, output: output, generator: self.generator),
-        yield: rendered.get)^
+        render.renderPlayground(playground, into: output, generator: generator)
     }
     
     public func renderPlaygrounds(at folder: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
-        let playgrounds = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
-        let pages = EnvIOPartial<RenderEnvironment, RenderError>.var([URL].self)
-        
-        return binding(
-                        |<-self.render.structure(step: step.increment(1), output: output),
-            playgrounds <- self.render.getPlaygrounds(step: step.increment(2), at: folder),
-                  pages <- playgrounds.get.all().flatTraverse { playground in self.renderPlayground(playground, into: output) }^,
-        yield: playgrounds.get.all())^
+        render.renderPlaygrounds(at: folder, into: output, generator: generator)
+    }
+    
+    // MARK: private <helper>
+    private var generator: CoreRender {
+        MarkdownGenerator()
+    }
+    
+    private func generator(playground: URL, page: URL) -> CoreRender {
+        generator
     }
 }

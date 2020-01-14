@@ -15,56 +15,60 @@ public struct Jekyll {
     public init() {}
     
     public func renderPage(content: String, permalink: String) -> EnvIO<RenderEnvironment, RenderError, (rendered: String, ast: String)> {
-        fatalError()
+        let step: Step = .init(total: 1, partial: 1, duration: .seconds(2))
+        let rendered = IO<RenderError, RendererOutput>.var()
+        
+        return EnvIO { env in
+            binding(
+                         |<-env.console.printStep(step: step, information: "\t• Rendering jekyll content"),
+                rendered <- self.render.renderPage(content: content, generator: self.generator(permalink: permalink)).provide(env),
+            yield:(rendered: rendered.get.output, ast: rendered.get.ast))^.reportStatus(step: step, in: env.console)
+        }
     }
     
     public func renderPage(content: String, permalink: String, filename: String, into output: URL) -> EnvIO<RenderEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
-        fatalError()
+        let file = output.appendingPathComponent(filename)
+        let step: Step = .init(total: 1, partial: 1, duration: .seconds(2))
+        let rendered = IO<RenderError, (url: URL, ast: String, trace: String)>.var()
+        
+        return EnvIO { env in
+            binding(
+                         |<-env.console.printStep(step: step, information: "\t• Rendering jekyll '\(filename)'"),
+                rendered <- self.render.renderPage(content: content, atFile: file, generator: self.generator(permalink: permalink)).provide(env),
+            yield: rendered.get)^.reportStatus(step: step, in: env.console)
+        }
     }
     
     public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        fatalError()
+        render.renderPlayground(playground, into: output, generator: generator)
     }
     
     public func renderPlaygrounds(at folder: URL, mainPage: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        fatalError()
+        let rendered = IO<RenderError, [URL]>.var()
+        
+        return EnvIO { env in
+            binding(
+                rendered <- self.render.renderPlaygrounds(at: folder, into: output, generator: self.generator).provide(env),
+            yield: rendered.get)^
+        }
     }
     
-    // MARK: - helpers
+    // MARK: - generator <helpers>
+    private func generator(playground: URL, page: URL) -> CoreRender {
+        let permalink = "/docs/\(playground.lastPathComponent)/\(page.lastPathComponent)"
+        return generator(permalink: permalink)
+    }
+    
     private func generator(permalink: String) -> CoreRender {
         JekyllGenerator(permalink: permalink)
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/// Renders a page into Jekyll format.
-///
-/// - Parameters:
-///   - content: content page in Xcode playground.
-///   - outputPath: output where to write the Jekyll render.
-///   - permalink: website relative url where locate the page.
-///   - success: callback to notify if everything goes well.
-///   - failure: callback with information to notify if something goes wrong.
-public func renderJekyll(content: String,
-                         to outputPath: String,
-                         permalink: String,
-                         success: @escaping (RendererOutput) -> Void,
-                         failure: @escaping (String) -> Void) {
     
-    let url = URL(fileURLWithPath: outputPath)
-    guard let rendered = JekyllGenerator(permalink: permalink).render(content: content) else { failure("can not render page into Jekyll format"); return }
-    guard let _ = try? rendered.output.write(to: url, atomically: true, encoding: .utf8) else { failure("invalid output path '\(url.path)'"); return }
+    // MARK: - private <helpers>
+    private func buildMainPage(_ mainPage: URL) {
+        fatalError()
+    }
     
-    success(rendered)
+    private func buildSideBar(_ playgrounds: [URL]) {
+        fatalError()
+    }
 }
