@@ -14,6 +14,22 @@ public struct Jekyll {
     
     public init() {}
     
+    public func renderPage(content: String, permalink: String) -> EnvIO<RenderEnvironment, RenderError, (rendered: String, ast: String)> {
+        fatalError()
+    }
+    
+    public func renderPage(content: String, permalink: String, filename: String, into output: URL) -> EnvIO<RenderEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
+        fatalError()
+    }
+    
+    public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
+        fatalError()
+    }
+    
+    public func renderPlaygrounds(at folder: URL, mainPage: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
+        fatalError()
+    }
+    
     // MARK: - helpers
     private func generator(permalink: String) -> CoreRender {
         JekyllGenerator(permalink: permalink)

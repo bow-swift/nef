@@ -176,8 +176,8 @@ public struct Console {
                 return "the script has declared duplicated keys."
             case .arguments:
                 return "do not received the whole required arguments."+" Use".bold+" --help, --h".cyan
-            case let .render(info):
-                return "fail the render\(info.isEmpty ? "" : " (".lightGray+" \(info)".lightRed+")".lightGray)."
+            case .render(let info):
+                return "fail the render\(info.isEmpty ? "" : " (".lightGray+"\(info)".lightRed+")".lightGray)."
             }
         }
     }
