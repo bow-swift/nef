@@ -73,8 +73,10 @@ public struct Console {
             while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
                 let match = args.enumerated().first { (index, _) in opt == Int32(index) }
                 guard let key = match?.element.name else { return IO.raiseError(Console.Error.arguments)^ }
-
-                result[key] = optarg == nil ? "true" : String(cString: optarg)
+                
+                if optarg != nil {
+                    result[key] = String(cString: optarg)
+                }
             }
             
             let optionals = args.compactMap { $0.default.isEmpty ? nil : ($0.name, $0.default) }
