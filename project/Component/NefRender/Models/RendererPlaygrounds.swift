@@ -14,5 +14,10 @@ public struct RendererPlayground {
 
 public struct RendererURL {
     public let url: URL
-    public let description: String
+    public let title: String
+    public let escapedTitle: String
+}
+
+extension RendererURL: CustomStringConvertible {
+    public var description: String { title }
 }

@@ -26,11 +26,15 @@ public struct Markdown {
     }
     
     public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        render.renderPlayground(playground, into: output, filename: filename, generator: generator)
+        render.renderPlayground(playground, into: output, filename: filename, generator: generator).map { rendered in
+            rendered.pages.all().map { page in page.url }
+        }^
     }
     
     public func renderPlaygrounds(at folder: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        render.renderPlaygrounds(at: folder, into: output, filename: filename, generator: generator)
+        render.renderPlaygrounds(at: folder, into: output, filename: filename, generator: generator).map { rendered in
+            rendered.playgrounds.all().map { info in info.playground.url }
+        }^
     }
     
     // MARK: private <helper>

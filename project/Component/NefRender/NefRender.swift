@@ -34,16 +34,17 @@ public struct NefRender {
     
     public func renderPlayground(_ playground: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, RendererPlayground> {
         let step: Step = .init(total: 2, partial: 0, duration: .seconds(1))
-        let output = output.appendingPathComponent(playgroundName(playground))
+        let playgroundName = self.playgroundName(playground)
+        let escapedPlaygroundTitle = escaped(filename: playgroundName)
+        let output = output.appendingPathComponent(escapedPlaygroundTitle)
 
         let pages = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
-        let rendered = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
+        let rendered = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<RendererURL>.self)
 
         return binding(
               pages <- self.getPages(step: step.increment(1), playground: playground),
            rendered <- self.renderPages(pages: pages.get, inPlayground: playground, output: output, filename: filename, generator: generator),
-        yield: RendererPlayground(playground: RendererURL(url: playground, description: self.playgroundName(playground)),
-                                  pages: rendered.get.map { page in RendererURL(url: page, description: self.playgroundPageName(page)) }^))^
+        yield: RendererPlayground(playground: RendererURL(url: playground, title: playgroundName, escapedTitle: escapedPlaygroundTitle), pages: rendered.get))^
     }
     
     public func renderPlaygrounds(at folder: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, RendererPlaygrounds> {
@@ -66,28 +67,39 @@ public struct NefRender {
         return renderPage(content: content, atFile: file, generator: generator)
     }
     
-    private func renderPages(pages: NEA<URL>, inPlayground: URL, output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, NEA<URL>> {
+    private func renderPages(pages: NEA<URL>, inPlayground: URL, output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, NEA<RendererURL>> {
         pages.traverse { (page: URL) in
             let playgroundName = self.playgroundName(inPlayground)
             let pageName = self.playgroundPageName(page)
-            let filename = "\(filename(pageName).removeExtension).md"
-            let generator = generator(playgroundName, pageName)
+            let escapedPlaygroundTitle = self.escaped(filename: playgroundName)
+            let escapedPageTitle = self.escaped(filename: pageName)
+            let filename = "\(filename(escapedPageTitle).removeExtension).md"
+            let generator = generator(escapedPlaygroundTitle, escapedPageTitle)
             
-            return self.renderPage(page: page, output: output, filename: filename, generator: generator).map { $0.url }
+            return self.renderPage(page: page, output: output, filename: filename, generator: generator).map { RendererURL(url: $0.url, title: pageName, escapedTitle: escapedPageTitle) }
         }^
     }
     
-    // MARK: - private <helpers>
+    // MARK: - format file <helpers>
     private func playgroundName(_ playground: URL) -> String {
-        playground.lastPathComponent.removeExtension.lowercased().replacingOccurrences(of: "?", with: "-")
-                                                                 .replacingOccurrences(of: " ", with: "-")
+        playground.lastPathComponent.removeExtension
     }
     
     private func playgroundPageName(_ page: URL) -> String {
-        page.lastPathComponent.removeExtension.lowercased().replacingOccurrences(of: "?", with: "-")
-                                                           .replacingOccurrences(of: " ", with: "-")
+        var filename = page.lastPathComponent.removeExtension
+        if filename == "README" {
+            filename = page.deletingLastPathComponent().lastPathComponent.removeExtension
+        }
+        
+        return filename
     }
     
+    private func escaped(filename: String) -> String {
+        filename.lowercased().replacingOccurrences(of: "?", with: "-")
+                             .replacingOccurrences(of: " ", with: "-")
+    }
+    
+    // MARK: - private <helpers>
     private func structure(step: Step, output: URL) -> EnvIO<RenderEnvironment, RenderError, Void> {
         EnvIO { env in
             guard !env.fileSystem.exist(directory: output) else { return IO.pure(())^ }
