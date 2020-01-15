@@ -1,7 +1,6 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
-import NefCommon
 import NefModels
 import NefCore
 
@@ -33,28 +32,29 @@ public struct NefRender {
         yield: (url: file, ast: rendered.get.ast, trace: rendered.get.output))^
     }
     
-    public func renderPlayground(_ playground: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
+    public func renderPlayground(_ playground: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, RendererPlayground> {
         let step: Step = .init(total: 2, partial: 0, duration: .seconds(1))
         let output = output.appendingPathComponent(playgroundName(playground))
-        
+
         let pages = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
-        let rendered = EnvIOPartial<RenderEnvironment, RenderError>.var([URL].self)
-        
+        let rendered = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
+
         return binding(
               pages <- self.getPages(step: step.increment(1), playground: playground),
            rendered <- self.renderPages(pages: pages.get, inPlayground: playground, output: output, filename: filename, generator: generator),
-        yield: rendered.get)^
+        yield: RendererPlayground(playground: RendererURL(url: playground, description: self.playgroundName(playground)),
+                                  pages: rendered.get.map { page in RendererURL(url: page, description: self.playgroundPageName(page)) }^))^
     }
     
-    public func renderPlaygrounds(at folder: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
+    public func renderPlaygrounds(at folder: URL, into output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, RendererPlaygrounds> {
         let step: Step = .init(total: 2, partial: 0, duration: .seconds(1))
         let playgrounds = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<URL>.self)
-        let pages = EnvIOPartial<RenderEnvironment, RenderError>.var([URL].self)
+        let rendered = EnvIOPartial<RenderEnvironment, RenderError>.var(NEA<RendererPlayground>.self)
         
         return binding(
             playgrounds <- self.getPlaygrounds(step: step.increment(1), at: folder),
-                  pages <- playgrounds.get.all().flatTraverse { playground in self.renderPlayground(playground, into: output, filename: filename, generator: generator) }^,
-        yield: playgrounds.get.all())^
+               rendered <- playgrounds.get.traverse { playground in self.renderPlayground(playground, into: output, filename: filename, generator: generator) }^,
+        yield: RendererPlaygrounds(playgrounds: rendered.get))^
     }
     
     // MARK: - render <helpers>
@@ -66,8 +66,8 @@ public struct NefRender {
         return renderPage(content: content, atFile: file, generator: generator)
     }
     
-    private func renderPages(pages: NEA<URL>, inPlayground: URL, output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        pages.all().traverse { (page: URL) in
+    private func renderPages(pages: NEA<URL>, inPlayground: URL, output: URL, filename: @escaping (_ page: String) -> String, generator: @escaping (_ playground: String, _ page: String) -> CoreRender) -> EnvIO<RenderEnvironment, RenderError, NEA<URL>> {
+        pages.traverse { (page: URL) in
             let playgroundName = self.playgroundName(inPlayground)
             let pageName = self.playgroundPageName(page)
             let filename = "\(filename(pageName).removeExtension).md"
