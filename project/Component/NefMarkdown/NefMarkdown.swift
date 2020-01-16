@@ -10,43 +10,35 @@ import Bow
 import BowEffects
 
 public struct Markdown {
-    private let render = NefRender()
+    private let render = Render()
     
     public init() {}
     
-    public func renderPage(content: String) -> EnvIO<RenderEnvironment, RenderError, (rendered: String, ast: String)> {
-        render.renderPage(content: content, generator: generator).map { rendered in
+    public func renderPage(content: String) -> EnvIO<RenderMarkdownEnvironment, RenderError, (rendered: String, ast: String)> {
+        render.renderPage(content: content).contramap(\RenderMarkdownEnvironment.renderEnvironment).map { rendered in
             (rendered: rendered.output, ast: rendered.ast)
         }^
     }
     
-    public func renderPage(content: String, filename: String, into output: URL) -> EnvIO<RenderEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
+    public func renderPage(content: String, filename: String, into output: URL) -> EnvIO<RenderMarkdownEnvironment, RenderError, (url: URL, ast: String, trace: String)> {
         let file = output.appendingPathComponent(filename)
-        return render.renderPage(content: content, atFile: file, generator: generator)
+        return render.renderPage(content: content, atFile: file).contramap(\RenderMarkdownEnvironment.renderEnvironment)
     }
     
-    public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        render.renderPlayground(playground, into: output, filename: filename, generator: generator).map { rendered in
+    public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<RenderMarkdownEnvironment, RenderError, [URL]> {
+        render.renderPlayground(playground, into: output, filename: filename).contramap(\RenderMarkdownEnvironment.renderEnvironment).map { rendered in
             rendered.pages.all().map { page in page.url }
         }^
     }
     
-    public func renderPlaygrounds(at folder: URL, into output: URL) -> EnvIO<RenderEnvironment, RenderError, [URL]> {
-        render.renderPlaygrounds(at: folder, into: output, filename: filename, generator: generator).map { rendered in
+    public func renderPlaygrounds(at folder: URL, into output: URL) -> EnvIO<RenderMarkdownEnvironment, RenderError, [URL]> {
+        render.renderPlaygrounds(at: folder, into: output, filename: filename).contramap(\RenderMarkdownEnvironment.renderEnvironment).map { rendered in
             rendered.playgrounds.all().map { info in info.playground.url }
         }^
     }
     
     // MARK: private <helper>
-    private var generator: CoreRender {
-        MarkdownGenerator()
-    }
-    
-    private func generator(playground: String, page: String) -> CoreRender {
-        generator
-    }
-    
-    private func filename(page: String) -> String {
-        "\(page).md"
+    private func filename(_ info: RendererPage) -> String {
+        "\(info.page.escapedTitle).md"
     }
 }
