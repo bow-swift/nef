@@ -9,5 +9,3 @@ FOUNDATION_EXPORT double NefCommonVersionNumber;
 FOUNDATION_EXPORT const unsigned char NefCommonVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <NefCommon/PublicHeader.h>
-
-

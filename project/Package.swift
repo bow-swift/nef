@@ -7,6 +7,7 @@ let package = Package(
         .macOS(.v10_14),
     ],
     products: [
+        .executable(name: "nef-markdown", targets: ["Markdown"]),
         .executable(name: "nef-markdown-page", targets: ["MarkdownPage"]),
         .executable(name: "nef-jekyll-page", targets: ["JekyllPage"]),
         .executable(name: "nef-carbon-page", targets: ["CarbonPage"]),
@@ -17,17 +18,17 @@ let package = Package(
         .package(url: "https://github.com/bow-swift/Swiftline", .exact("0.5.4")),
     ],
     targets: [
-        .target(name: "NefCommon", path: "Component/NefCommon", publicHeadersPath: "Support Files"),
+        .target(name: "NefCommon", dependencies: ["Bow", "BowEffects", "BowOptics"], path: "Component/NefCommon", publicHeadersPath: "Support Files"),
         .target(name: "NefModels", dependencies: ["BowEffects"], path: "Component/NefModels", publicHeadersPath: "Support Files"),
         .target(name: "NefCore", dependencies: ["NefModels"], path: "Core", publicHeadersPath: "Support Files"),
-        .target(name: "NefMarkdown", dependencies: ["NefCore"], path: "Component/NefMarkdown", publicHeadersPath: "Support Files"),
+        .target(name: "NefMarkdown", dependencies: ["NefCore", "NefCommon"], path: "Component/NefMarkdown", publicHeadersPath: "Support Files"),
         .target(name: "NefJekyll", dependencies: ["NefCore"], path: "Component/NefJekyll", publicHeadersPath: "Support Files"),
         .target(name: "NefCarbon", dependencies: ["NefCore", "NefCommon"], path: "Component/NefCarbon", publicHeadersPath: "Support Files"),
-        .target(name: "NefSwiftPlayground", dependencies: ["Bow", "BowEffects", "BowOptics", "NefModels", "NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
+        .target(name: "NefSwiftPlayground", dependencies: ["NefModels", "NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
 
         .testTarget(name: "CoreTests", dependencies: ["NefCore"], path: "Tests/CoreTests"),
 
-        .target(name: "nef", dependencies: ["Bow", "BowEffects", "Swiftline",
+        .target(name: "nef", dependencies: ["Swiftline",
                                             "NefCommon",
                                             "NefModels",
                                             "NefCore",
@@ -37,7 +38,8 @@ let package = Package(
                                             "NefSwiftPlayground"], path: "Component/nef", publicHeadersPath: "Support Files"),
         .target(name: "CLIKit", dependencies: ["Bow", "BowEffects", "nef"], path: "UI/CLIKit", publicHeadersPath: "Support Files"),
 
-        .target(name: "MarkdownPage",   dependencies: ["Bow", "BowEffects", "CLIKit", "NefMarkdown"], path: "UI/MarkdownPage"),
+        .target(name: "Markdown",       dependencies: ["CLIKit", "nef"], path: "UI/Markdown"),
+        .target(name: "MarkdownPage",   dependencies: ["CLIKit", "nef"], path: "UI/MarkdownPage"),
         .target(name: "JekyllPage",     dependencies: ["Bow", "BowEffects", "CLIKit", "NefJekyll"], path: "UI/JekyllPage"),
         .target(name: "CarbonPage",     dependencies: ["Bow", "BowEffects", "CLIKit", "NefCarbon"], path: "UI/CarbonPage"),
         .target(name: "PlaygroundBook", dependencies: ["CLIKit", "nef"], path: "UI/PlaygroundBook"),

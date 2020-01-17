@@ -17,9 +17,12 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (packageCont
     console.input().flatMap { args in
         guard let projectName = args["name"]?.trimmingEmptyCharacters,
               let packagePath = args["package"]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let outputPath  = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let content = try? String(contentsOfFile: packagePath), !content.isEmpty else {
-                  return console.exit(failure: "received an invalid Swift Package")
+              let outputPath  = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath else {
+                return IO.raiseError(CLIKit.Console.Error.arguments)
+        }
+        
+        guard let content = try? String(contentsOfFile: packagePath), !content.isEmpty else {
+            return IO.raiseError(CLIKit.Console.Error.render(information: "invalid Swift Package"))
         }
         
         return IO.pure((packageContent: content,
@@ -38,6 +41,9 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                 .mapLeft { _ in .render() }
                 .foldM({ _   in console.exit(failure: "rendering Playground Book")                  },
                        { url in console.exit(success: "rendered Playground Book in '\(url.path)'")  }) }^
+        .reportStatus(in: console)
+        .foldM({ e in console.exit(failure: "\(e)")        },
+               { success in console.exit(success: success) })
         .unsafeRunSyncEither()
 }
 

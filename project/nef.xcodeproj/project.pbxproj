@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B0A905C23ACD3A400091C39 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A905B23ACD3A400091C39 /* main.swift */; };
+		8B0A907223ACE2F700091C39 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
+		8B0A907323ACE2F900091C39 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
+		8B0A907F23ACE36100091C39 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907B23ACE36100091C39 /* MarkdownError.swift */; };
+		8B0A908023ACE36100091C39 /* MarkdownSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */; };
+		8B0A908223ACE39600091C39 /* MarkdownSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A908123ACE39600091C39 /* MarkdownSystemError.swift */; };
 		8B0FB588237C0A5600221548 /* CLIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB586237C0A5600221548 /* CLIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */; };
 		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
@@ -19,7 +25,6 @@
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
-		8B304D6023ABA954001E9303 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
@@ -67,11 +72,19 @@
 		8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0C238300A80025BC04 /* JekyllAPI.swift */; };
 		8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */; };
 		8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
+		8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17923B0C2AF000DB61F /* BowEffects */; };
+		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
+		8BB7D11923B0CB3900C8E6F8 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */; };
+		8BB7D11C23B0CB8000C8E6F8 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */; };
+		8BB7D12623B0D05100C8E6F8 /* MacFileSytem+SwiftPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */; };
+		8BB7D12723B0D05100C8E6F8 /* MacFileSytem+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */; };
+		8BB7D12F23B0D28100C8E6F8 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */; };
+		8BB7D13723B0D39800C8E6F8 /* MarkdownEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */; };
+		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
+		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
+		8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */; };
 		8BBCA655239683D400BE058B /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
-		8BBCA6962396A59600BE058B /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6952396A59600BE058B /* Bow */; };
-		8BBCA6982396A59600BE058B /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6972396A59600BE058B /* BowEffects */; };
-		8BBCA69A2396A59600BE058B /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8BBCA6992396A59600BE058B /* BowOptics */; };
-		8BBCA69D2396A6A400BE058B /* nef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF75F8522CA71E700EC53A1 /* nef.framework */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BBD14BC2390192C0002970C /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F709238C278D00DD93C4 /* String+Path.swift */; };
 		8BBD14BD2390192C0002970C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C429238EE4C400437659 /* String+Utils.swift */; };
@@ -87,8 +100,6 @@
 		8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */; };
 		8BD4E33C238824D9002DECDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33A2388233D002DECDB /* Console.swift */; };
 		8BD4E34B238834F2002DECDB /* _SwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E32623881850002DECDB /* _SwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
-		8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -97,6 +108,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8B0A906223ACD3F700091C39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B0FB583237C0A5600221548;
+			remoteInfo = CLIKit;
+		};
 		8B0FB595237C0B6F00221548 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -118,13 +136,6 @@
 			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
 			remoteInfo = NefModels;
 		};
-		8B12D7A522D624D900D05A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B12D79A22D6235200D05A70;
-			remoteInfo = NefJekyll;
-		};
 		8B12D7C622D6498900D05A70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -132,12 +143,33 @@
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
 			remoteInfo = Core;
 		};
-		8B12D7CA22D6498F00D05A70 /* PBXContainerItemProxy */ = {
+		8B18E65123B0C56F001F9C19 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
-			remoteInfo = Core;
+			remoteGlobalIDString = 8BF75FC522CA7DA500EC53A1;
+			remoteInfo = NefCarbon;
+		};
+		8B18E65723B0C56F001F9C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B12D79A22D6235200D05A70;
+			remoteInfo = NefJekyll;
+		};
+		8B18E65923B0C56F001F9C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B22248222D5EAD500C85856;
+			remoteInfo = NefMarkdown;
+		};
+		8B18E65D23B0C56F001F9C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BD4E31C238817BB002DECDB;
+			remoteInfo = NefSwiftPlayground;
 		};
 		8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -145,13 +177,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
 			remoteInfo = NefModels;
-		};
-		8B6B118B22CB9EA20060177F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BF75FC522CA7DA500EC53A1;
-			remoteInfo = NefCarbon;
 		};
 		8B6B119E22CB9FDE0060177F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -167,26 +192,26 @@
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
 			remoteInfo = Markup;
 		};
-		8B6B11BC22CBA1770060177F /* PBXContainerItemProxy */ = {
+		8BB7D11023B0C70D00C8E6F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BBD14AE2390179B0002970C;
+			remoteInfo = NefCommon;
+		};
+		8BB7D11223B0C70D00C8E6F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
-			remoteInfo = Markup;
+			remoteInfo = NefCore;
 		};
-		8B89CD72237B084E007E9152 /* PBXContainerItemProxy */ = {
+		8BB7D11423B0C7AB00C8E6F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
-			remoteInfo = NefModels;
-		};
-		8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B22248222D5EAD500C85856;
-			remoteInfo = NefMarkdown;
+			remoteGlobalIDString = 8BF75F8422CA71E700EC53A1;
+			remoteInfo = nef;
 		};
 		8BBCA69B2396A68900BE058B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -194,13 +219,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8B0FB583237C0A5600221548;
 			remoteInfo = CLIKit;
-		};
-		8BBD14BA2390187D0002970C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BBD14AE2390179B0002970C;
-			remoteInfo = NefCommon;
 		};
 		8BBD14BF239019570002970C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -216,13 +234,6 @@
 			remoteGlobalIDString = 8B0FB583237C0A5600221548;
 			remoteInfo = CLIKit;
 		};
-		8BD4E32823881876002DECDB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8BD4E31C238817BB002DECDB;
-			remoteInfo = NefSwiftPlayground;
-		};
 		8BD4E33D238824F3002DECDB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -233,6 +244,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B0A905923ACD3A400091C39 /* Markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Markdown; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B0A905B23ACD3A400091C39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8B0A907B23ACE36100091C39 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
+		8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownSystem.swift; sourceTree = "<group>"; };
+		8B0A908123ACE39600091C39 /* MarkdownSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownSystemError.swift; sourceTree = "<group>"; };
 		8B0CA51622AE669600181BC0 /* nef-carbon-page */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-carbon-page"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB584237C0A5600221548 /* CLIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CLIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB586237C0A5600221548 /* CLIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLIKit.h; sourceTree = "<group>"; };
@@ -311,6 +327,14 @@
 		8B75AF9023805A5200388B1C /* CarbonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbonView.swift; sourceTree = "<group>"; };
 		8B89BA0C238300A80025BC04 /* JekyllAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JekyllAPI.swift; sourceTree = "<group>"; };
 		8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownAPI.swift; sourceTree = "<group>"; };
+		8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystem.swift; sourceTree = "<group>"; };
+		8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystemError.swift; sourceTree = "<group>"; };
+		8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+SwiftPlayground.swift"; sourceTree = "<group>"; };
+		8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+Markdown.swift"; sourceTree = "<group>"; };
+		8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
+		8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownEnvironment.swift; sourceTree = "<group>"; };
+		8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundSystem.swift; sourceTree = "<group>"; };
+		8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8BBCA654239683D400BE058B /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8BBD14AF2390179B0002970C /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD14B12390179B0002970C /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
@@ -351,6 +375,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B300D4A23B0C69B00D0AB25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */,
+				8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */,
+				8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B6B119922CB9FDE0060177F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -359,34 +393,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8BBCA6732396910900BE058B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8BBCA69D2396A6A400BE058B /* nef.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BBCA6B62396A7FA00BE058B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BD4E361238837BB002DECDB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8BBCA69A2396A59600BE058B /* BowOptics in Frameworks */,
-				8BBCA6982396A59600BE058B /* BowEffects in Frameworks */,
-				8BBCA6962396A59600BE058B /* Bow in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B0A905A23ACD3A400091C39 /* Markdown */ = {
+			isa = PBXGroup;
+			children = (
+				8B0A905B23ACD3A400091C39 /* main.swift */,
+			);
+			path = Markdown;
+			sourceTree = "<group>";
+		};
+		8B0A907923ACE36100091C39 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8B0A907B23ACE36100091C39 /* MarkdownError.swift */,
+				8B0A908123ACE39600091C39 /* MarkdownSystemError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		8B0A907C23ACE36100091C39 /* Algebras */ = {
+			isa = PBXGroup;
+			children = (
+				8B0A907D23ACE36100091C39 /* MarkdownSystem.swift */,
+			);
+			path = Algebras;
+			sourceTree = "<group>";
+		};
 		8B0FB585237C0A5600221548 /* CLIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,6 +466,10 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB85B22D392C000919F36 /* NefMarkdown.swift */,
+				8B0A907C23ACE36100091C39 /* Algebras */,
+				8B0A907923ACE36100091C39 /* Errors */,
+				8BB7D13423B0D37400C8E6F8 /* Models */,
+				8BB7D12823B0D24000C8E6F8 /* Utils */,
 				8B22249A22D5EAEF00C85856 /* Support Files */,
 			);
 			path = NefMarkdown;
@@ -471,6 +509,7 @@
 				8B46C436238FDA3A00437659 /* Instances */,
 				8B75AF9523805B3400388B1C /* Models */,
 				8B75AF9223805B1900388B1C /* Views */,
+				8BB7D13D23B1349000C8E6F8 /* Utils */,
 				8B3CB83B22D3929B00919F36 /* Support Files */,
 			);
 			path = nef;
@@ -557,6 +596,7 @@
 		8B3CB85322D392C000919F36 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8B0A905A23ACD3A400091C39 /* Markdown */,
 				8B3CB85A22D392C000919F36 /* MarkdownPage */,
 				8B3CB85422D392C000919F36 /* JekyllPage */,
 				8B3CB85822D392C000919F36 /* CarbonPage */,
@@ -681,7 +721,10 @@
 			isa = PBXGroup;
 			children = (
 				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
+				8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+Markdown.swift */,
+				8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */,
 				8B46C430238FD70700437659 /* MacPlaygroundShell.swift */,
+				8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */,
 			);
 			path = Instances;
 			sourceTree = "<group>";
@@ -715,6 +758,7 @@
 				8BD4E30A238814B1002DECDB /* nef-playground-book */,
 				8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */,
 				8BBD14AF2390179B0002970C /* NefCommon.framework */,
+				8B0A905923ACD3A400091C39 /* Markdown */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -742,12 +786,62 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		8BBD14B02390179B0002970C /* NefCommon */ = {
+		8BB7D11623B0CB0D00C8E6F8 /* Algrebras */ = {
+			isa = PBXGroup;
+			children = (
+				8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */,
+			);
+			path = Algrebras;
+			sourceTree = "<group>";
+		};
+		8BB7D11723B0CB1900C8E6F8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				8BD6F709238C278D00DD93C4 /* String+Path.swift */,
 				8B46C429238EE4C400437659 /* String+Utils.swift */,
 				8B3CB86622D392C000919F36 /* Array+Slice.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8BB7D11A23B0CB7100C8E6F8 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		8BB7D12823B0D24000C8E6F8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8BB7D13423B0D37400C8E6F8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8BB7D13523B0D38700C8E6F8 /* MarkdownEnvironment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8BB7D13D23B1349000C8E6F8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8BBD14B02390179B0002970C /* NefCommon */ = {
+			isa = PBXGroup;
+			children = (
+				8BB7D11623B0CB0D00C8E6F8 /* Algrebras */,
+				8BB7D11A23B0CB7100C8E6F8 /* Errors */,
+				8BB7D11723B0CB1900C8E6F8 /* Utils */,
 				8BBD14B7239017B20002970C /* Support Files */,
 			);
 			path = NefCommon;
@@ -927,6 +1021,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		8B0A905823ACD3A400091C39 /* Markdown */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B0A905D23ACD3A400091C39 /* Build configuration list for PBXNativeTarget "Markdown" */;
+			buildPhases = (
+				8B0A905523ACD3A400091C39 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B0A906323ACD3F700091C39 /* PBXTargetDependency */,
+			);
+			name = Markdown;
+			productName = Markdown;
+			productReference = 8B0A905923ACD3A400091C39 /* Markdown */;
+			productType = "com.apple.product-type.tool";
+		};
 		8B0CA51522AE669600181BC0 /* CarbonPage */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B0CA51A22AE669600181BC0 /* Build configuration list for PBXNativeTarget "CarbonPage" */;
@@ -949,11 +1059,11 @@
 			buildPhases = (
 				8B0FB57F237C0A5600221548 /* Headers */,
 				8B0FB580237C0A5600221548 /* Sources */,
-				8BBCA6732396910900BE058B /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8BB7D11523B0C7AB00C8E6F8 /* PBXTargetDependency */,
 			);
 			name = CLIKit;
 			packageProductDependencies = (
@@ -989,9 +1099,14 @@
 			buildRules = (
 			);
 			dependencies = (
-				8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */,
+				8BB7D11123B0C70D00C8E6F8 /* PBXTargetDependency */,
+				8BB7D11323B0C70D00C8E6F8 /* PBXTargetDependency */,
 			);
 			name = NefMarkdown;
+			packageProductDependencies = (
+				8B0A908423ACE65600091C39 /* Bow */,
+				8B0A908623ACE65600091C39 /* BowEffects */,
+			);
 			productName = NefMarkdown;
 			productReference = 8B22248322D5EAD500C85856 /* NefMarkdown.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1018,7 +1133,6 @@
 			buildPhases = (
 				8B4F45A022CF9AF400E6F471 /* Headers */,
 				8B4F45A122CF9AF400E6F471 /* Sources */,
-				8BBCA6B62396A7FA00BE058B /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1089,12 +1203,18 @@
 			buildPhases = (
 				8BBD14AA2390179B0002970C /* Headers */,
 				8BBD14AB2390179B0002970C /* Sources */,
+				8B300D4A23B0C69B00D0AB25 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = NefCommon;
+			packageProductDependencies = (
+				8B12C17723B0C2AF000DB61F /* Bow */,
+				8B12C17923B0C2AF000DB61F /* BowEffects */,
+				8B12C17B23B0C2AF000DB61F /* BowOptics */,
+			);
 			productName = NefCommon;
 			productReference = 8BBD14AF2390179B0002970C /* NefCommon.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1124,7 +1244,6 @@
 			buildPhases = (
 				8BD4E318238817BB002DECDB /* Headers */,
 				8BD4E319238817BB002DECDB /* Sources */,
-				8BD4E361238837BB002DECDB /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1153,13 +1272,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				8BBD14BB2390187D0002970C /* PBXTargetDependency */,
-				8B89CD73237B084E007E9152 /* PBXTargetDependency */,
-				8B6B11BD22CBA1770060177F /* PBXTargetDependency */,
-				8B8AA94022D62266006BE290 /* PBXTargetDependency */,
-				8B12D7A622D624D900D05A70 /* PBXTargetDependency */,
-				8B6B118C22CB9EA20060177F /* PBXTargetDependency */,
-				8BD4E32923881876002DECDB /* PBXTargetDependency */,
+				8B18E65A23B0C56F001F9C19 /* PBXTargetDependency */,
+				8B18E65823B0C56F001F9C19 /* PBXTargetDependency */,
+				8B18E65223B0C56F001F9C19 /* PBXTargetDependency */,
+				8B18E65E23B0C56F001F9C19 /* PBXTargetDependency */,
 			);
 			name = nef;
 			packageProductDependencies = (
@@ -1197,6 +1313,9 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "47 Degrees";
 				TargetAttributes = {
+					8B0A905823ACD3A400091C39 = {
+						CreatedOnToolsVersion = 11.3;
+					};
 					8B0CA51522AE669600181BC0 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -1263,6 +1382,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				8B0A905823ACD3A400091C39 /* Markdown */,
 				8B424B1E224E28FC00AF9010 /* MarkdownPage */,
 				8B6FC584221ECE6A008F7694 /* JekyllPage */,
 				8B0CA51522AE669600181BC0 /* CarbonPage */,
@@ -1292,6 +1412,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8B0A905523ACD3A400091C39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B0A905C23ACD3A400091C39 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B0CA51222AE669600181BC0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1307,9 +1435,9 @@
 				8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */,
 				8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */,
 				8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */,
+				8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */,
 				8BED79BB23A9357D00115479 /* Console+Utils.swift in Sources */,
 				8BBCA655239683D400BE058B /* Console.swift in Sources */,
-				8B304D6023ABA954001E9303 /* String+Colorize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1326,6 +1454,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */,
+				8B0A907F23ACE36100091C39 /* MarkdownError.swift in Sources */,
+				8B0A908223ACE39600091C39 /* MarkdownSystemError.swift in Sources */,
+				8BB7D12F23B0D28100C8E6F8 /* IO+Console.swift in Sources */,
+				8B0A908023ACE36100091C39 /* MarkdownSystem.swift in Sources */,
+				8BB7D13723B0D39800C8E6F8 /* MarkdownEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1387,8 +1520,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BBD14BE2390192C0002970C /* Array+Slice.swift in Sources */,
+				8BB7D11C23B0CB8000C8E6F8 /* PlaygroundSystemError.swift in Sources */,
 				8BBD14BD2390192C0002970C /* String+Utils.swift in Sources */,
 				8BBD14BC2390192C0002970C /* String+Path.swift in Sources */,
+				8BB7D11923B0CB3900C8E6F8 /* PlaygroundSystem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1404,21 +1539,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B0A907223ACE2F700091C39 /* FileSystem.swift in Sources */,
 				8B46C417238D889700437659 /* PlaygroundBook.swift in Sources */,
 				8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */,
 				8B46C412238D87F200437659 /* Assets.swift in Sources */,
 				8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
+				8B0A907323ACE2F900091C39 /* FileSystemError.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
 				8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */,
 				8B46C42F238FD52900437659 /* PlaygroundShellError.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
 				8B46C415238D883300437659 /* ImageReference.swift in Sources */,
 				8B46C419238D88B800437659 /* PlaygroundBookError.swift in Sources */,
-				8BD6F703238C256700DD93C4 /* FileSystemError.swift in Sources */,
 				8B46C40E238D75A400437659 /* Package.swift in Sources */,
 				8B46C41B238D8A0000437659 /* PlaygroundBookResolutionPath.swift in Sources */,
-				8BD6F700238C253700DD93C4 /* FileSystem.swift in Sources */,
 				8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */,
 				8BD4E33723881F9F002DECDB /* PlaygroundResolutionPath.swift in Sources */,
 			);
@@ -1429,14 +1564,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
+				8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
+				8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
+				8BB7D12723B0D05100C8E6F8 /* MacFileSytem+Markdown.swift in Sources */,
 				8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */,
 				8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */,
 				8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */,
 				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
 				8B0FB5B8237C61C000221548 /* Error.swift in Sources */,
+				8BB7D12623B0D05100C8E6F8 /* MacFileSytem+SwiftPlayground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,6 +1599,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8B0A906323ACD3F700091C39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B0FB583237C0A5600221548 /* CLIKit */;
+			targetProxy = 8B0A906223ACD3F700091C39 /* PBXContainerItemProxy */;
+		};
 		8B0FB596237C0B6F00221548 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
@@ -1475,30 +1619,35 @@
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
 			targetProxy = 8B0FB5C1237D5D6300221548 /* PBXContainerItemProxy */;
 		};
-		8B12D7A622D624D900D05A70 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B12D79A22D6235200D05A70 /* NefJekyll */;
-			targetProxy = 8B12D7A522D624D900D05A70 /* PBXContainerItemProxy */;
-		};
 		8B12D7C722D6498900D05A70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B12D7C622D6498900D05A70 /* PBXContainerItemProxy */;
 		};
-		8B12D7CB22D6498F00D05A70 /* PBXTargetDependency */ = {
+		8B18E65223B0C56F001F9C19 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B6B119322CB9FDE0060177F /* NefCore */;
-			targetProxy = 8B12D7CA22D6498F00D05A70 /* PBXContainerItemProxy */;
+			target = 8BF75FC522CA7DA500EC53A1 /* NefCarbon */;
+			targetProxy = 8B18E65123B0C56F001F9C19 /* PBXContainerItemProxy */;
+		};
+		8B18E65823B0C56F001F9C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B12D79A22D6235200D05A70 /* NefJekyll */;
+			targetProxy = 8B18E65723B0C56F001F9C19 /* PBXContainerItemProxy */;
+		};
+		8B18E65A23B0C56F001F9C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
+			targetProxy = 8B18E65923B0C56F001F9C19 /* PBXContainerItemProxy */;
+		};
+		8B18E65E23B0C56F001F9C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BD4E31C238817BB002DECDB /* NefSwiftPlayground */;
+			targetProxy = 8B18E65D23B0C56F001F9C19 /* PBXContainerItemProxy */;
 		};
 		8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
 			targetProxy = 8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */;
-		};
-		8B6B118C22CB9EA20060177F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BF75FC522CA7DA500EC53A1 /* NefCarbon */;
-			targetProxy = 8B6B118B22CB9EA20060177F /* PBXContainerItemProxy */;
 		};
 		8B6B119F22CB9FDE0060177F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1510,20 +1659,20 @@
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11BA22CBA1710060177F /* PBXContainerItemProxy */;
 		};
-		8B6B11BD22CBA1770060177F /* PBXTargetDependency */ = {
+		8BB7D11123B0C70D00C8E6F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BBD14AE2390179B0002970C /* NefCommon */;
+			targetProxy = 8BB7D11023B0C70D00C8E6F8 /* PBXContainerItemProxy */;
+		};
+		8BB7D11323B0C70D00C8E6F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
-			targetProxy = 8B6B11BC22CBA1770060177F /* PBXContainerItemProxy */;
+			targetProxy = 8BB7D11223B0C70D00C8E6F8 /* PBXContainerItemProxy */;
 		};
-		8B89CD73237B084E007E9152 /* PBXTargetDependency */ = {
+		8BB7D11523B0C7AB00C8E6F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
-			targetProxy = 8B89CD72237B084E007E9152 /* PBXContainerItemProxy */;
-		};
-		8B8AA94022D62266006BE290 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B22248222D5EAD500C85856 /* NefMarkdown */;
-			targetProxy = 8B8AA93F22D62266006BE290 /* PBXContainerItemProxy */;
+			target = 8BF75F8422CA71E700EC53A1 /* nef */;
+			targetProxy = 8BB7D11423B0C7AB00C8E6F8 /* PBXContainerItemProxy */;
 		};
 		8BBCA69C2396A68900BE058B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1533,11 +1682,6 @@
 		8BBCA6BA2396A86600BE058B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 8BBCA6B92396A86600BE058B /* BowEffects */;
-		};
-		8BBD14BB2390187D0002970C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BBD14AE2390179B0002970C /* NefCommon */;
-			targetProxy = 8BBD14BA2390187D0002970C /* PBXContainerItemProxy */;
 		};
 		8BBD14C0239019570002970C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1549,11 +1693,6 @@
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
 			targetProxy = 8BD4E31323881506002DECDB /* PBXContainerItemProxy */;
 		};
-		8BD4E32923881876002DECDB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8BD4E31C238817BB002DECDB /* NefSwiftPlayground */;
-			targetProxy = 8BD4E32823881876002DECDB /* PBXContainerItemProxy */;
-		};
 		8BD4E33E238824F3002DECDB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
@@ -1562,12 +1701,34 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		8B0A905E23ACD3A400091C39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8B0A905F23ACD3A400091C39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		8B0CA51B22AE669600181BC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Carbon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1578,7 +1739,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Carbon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1754,9 +1915,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1767,9 +1926,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2045,7 +2202,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
 				PRODUCT_NAME = "nef-jekyll-page";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2059,7 +2216,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
 				PRODUCT_NAME = "nef-jekyll-page";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2315,6 +2472,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8B0A905D23ACD3A400091C39 /* Build configuration list for PBXNativeTarget "Markdown" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B0A905E23ACD3A400091C39 /* Debug */,
+				8B0A905F23ACD3A400091C39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8B0CA51A22AE669600181BC0 /* Build configuration list for PBXNativeTarget "CarbonPage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2472,6 +2638,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8B0A908423ACE65600091C39 /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+		8B0A908623ACE65600091C39 /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
+		8B12C17723B0C2AF000DB61F /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+		8B12C17923B0C2AF000DB61F /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
+		8B12C17B23B0C2AF000DB61F /* BowOptics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowOptics;
+		};
 		8B46C434238FDA3300437659 /* Swiftline */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */;

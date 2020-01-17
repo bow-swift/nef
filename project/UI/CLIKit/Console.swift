@@ -227,8 +227,8 @@ extension Console: NefModels.Console {
     }
     
     public func printStatus<E: Swift.Error>(information: String, success: Bool) -> IO<E, Void> {
-        ConsoleIO.print(success ? !information.isEmpty ? "(\(information))"+"✓".bold.green : "✓".bold.green
-                                : !information.isEmpty ? "(\(information))"+"✗".bold.red   : "✗".bold.red,
+        ConsoleIO.print(success ? !information.isEmpty ? "(\(information)) "+"✓".bold.green : "✓".bold.green
+                                : !information.isEmpty ? "(\(information)) "+"✗".bold.red   : "✗".bold.red,
                         separator: "",
                         terminator: "\n")
     }

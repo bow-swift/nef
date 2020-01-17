@@ -2,17 +2,15 @@
 
 import Foundation
 import CLIKit
-import NefCore
-import NefModels
-import NefMarkdown
+import nef
 import Bow
 import BowEffects
 
 private let console = Console(script: "nef-markdown-page",
                               description: "Render a markdown file from a Playground page",
-                              arguments: .init(name: "page", placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
-                                         .init(name: "output", placeholder: "output path", description: "path where markdown are saved to. ex. `/home`"),
-                                         .init(name: "filename", placeholder: "name", description: "name for the rendered Markdown file (without any extension). ex. `Readme`"),
+                              arguments: .init(name: "page", placeholder: "path-to-playground-page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
+                                         .init(name: "output", placeholder: "path-to-output", description: "path where markdown are saved to. ex. `/home`"),
+                                         .init(name: "filename", placeholder: "name", description: "name for the rendered Markdown file (without any extension).", default: "README"),
                                          .init(name: "verbose", placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
 
 
@@ -26,22 +24,13 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
         }
         
         let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"
-        let output = URL(fileURLWithPath: outputPath).appendingPathComponent("\(filename).md")
+        let output = URL(fileURLWithPath: outputPath).appendingPathComponent(filename)
         
         guard let pageContent = try? String(contentsOfFile: page), !pageContent.isEmpty else {
-            return IO.raiseError(CLIKit.Console.Error.render(information: "could not read page content"))
+            return IO.raiseError(CLIKit.Console.Error.render(information: "could not read playground's page content (\(pagePath.filename))"))
         }
 
         return IO.pure((content: pageContent, filename: pagePath.filename.removeExtension, output: output, verbose: verbose))
-    }^
-}
-
-func render(content: String, output: URL, verbose: Bool) -> IO<CLIKit.Console.Error, RendererOutput> {
-    IO.async { callback in
-        renderMarkdown(content: content,
-                       to: output.path,
-                       success: { output in callback(.right(output)) },
-                       failure: { e in callback(.left(.render(information: e))) })
     }^
 }
 
@@ -52,21 +41,24 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, filename: String, output: URL, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
+    let output = IOPartial<CLIKit.Console.Error>.var((url: URL, tree: String, trace: String).self)
     
     return binding(
            args <- arguments(console: console),
-                |<-console.printStep(step: step(partial: 1), information: "Reading "+"arguments".bold),
+                |<-console.printStep(step: step(partial: 0), information: "Reading "+"arguments".bold),
                 |<-console.printStatus(success: true),
-                |<-console.printSubstep(step: step(partial: 1), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
-                |<-console.printStep(step: step(partial: 2), information: "Render "+"markdown".bold+" (\(args.get.filename))".lightGreen),
-         output <- render(content: args.get.content, output: args.get.output, verbose: args.get.verbose),
-    yield: args.get.verbose ? output.get : nil)^
+                |<-console.printSubstep(step: step(partial: 0), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
+         output <- nef.Markdown.renderVerbose(content: args.get.content, toFile: args.get.output)
+                               .provide(console)
+                               .mapLeft { e in .render() }^,
+    yield: args.get.verbose ? Either<(tree: String, trace: String), URL>.left((tree: output.get.tree, trace: output.get.trace))
+                            : Either<(tree: String, trace: String), URL>.right(output.get.url)
+    )^
         .reportStatus(in: console)
-        .foldM({ e   in console.exit(failure: "\(e)") },
+        .foldM({ e in console.exit(failure: "\(e)") },
                { rendered in
-                    guard let rendered = rendered else { return console.exit(success: "rendered markdown page.") }
-                    return console.exit(success: "rendered markdown page.\n\n• AST \n\t\(rendered.tree)\n\n• Trace \n\t\(rendered.output)")
+                 rendered.fold({ (tree, trace) in console.exit(success: "rendered markdown page.\n\n• AST \n\t\(tree)\n\n• Trace \n\t\(trace)") },
+                               { (page)        in console.exit(success: "rendered markdown page '\(page.path)'")                                })
                })
         .unsafeRunSyncEither()
 }

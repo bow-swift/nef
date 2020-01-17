@@ -9,42 +9,31 @@ import BowEffects
 
 public extension MarkdownAPI {
     
-    static func render(content: String, toFile file: URL) -> IO<nef.Error, URL> {
-        IO.async { callback in
-            let output = URL(fileURLWithPath: "\(file.path).md")
-            self.markdown(content: content,
-                          to: output.path,
-                          success: {
-                            let fileExist = FileManager.default.fileExists(atPath: output.path)
-                            fileExist ? callback(.right(output)) : callback(.left(.markdown))
-                          },
-                          failure: { error in
-                            callback(.left(.markdown))
-                          })
-        }^
+    static func render(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
+        renderVerbose(content: content, toFile: file).map { info in info.url }^
     }
-}
-
-// MARK: - Helpers
-fileprivate extension MarkdownAPI {
     
-    /// Renders content into Markdown file.
-    ///
-    /// - Precondition: this method must be invoked from main thread.
-    ///
-    /// - Parameters:
-    ///   - content: content page in Xcode playground.
-    ///   - outputPath: output where to write the Markdown render.
-    ///   - success: callback to notify if everything goes well.
-    ///   - failure: callback with information to notify if something goes wrong.
-    static func markdown(content: String, to outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
-        guard Thread.isMainThread else {
-            fatalError("markdown(content:outputPath:success:failure:) should be invoked in main thread")
-        }
+    static func renderVerbose(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, tree: String, trace: String)> {
+        let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
+        let filename = file.pathExtension == "md" ? file.lastPathComponent : file.appendingPathExtension("md").lastPathComponent
         
-        renderMarkdown(content: content,
-                       to: outputPath,
-                       success: { _ in success() },
-                       failure: failure)
+        return NefMarkdown.Markdown(output: output)
+                   .buildPage(content: content, filename: filename)
+                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .mapError { e in nef.Error.markdown }^
+    }
+    
+    static func render(playground: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        NefMarkdown.Markdown(output: output)
+                   .buildPlayground(playground)
+                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .mapError { _ in nef.Error.markdown }^
+    }
+    
+    static func render(playgroundsAt folder: URL, in output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        NefMarkdown.Markdown(output: output)
+                   .buildPlaygrounds(at: folder)
+                   .contramap { console in MarkdownEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .mapError { _ in nef.Error.markdown }^
     }
 }
