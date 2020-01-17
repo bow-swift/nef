@@ -9,26 +9,40 @@ import Bow
 import BowEffects
 
 public struct Markdown {
-    private let output: URL
     private let generator = MarkdownGenerator()
     
-    public init(output: URL) {
-        self.output = output
+    public init() {}
+    
+    public func renderPage(content: String) -> EnvIO<MarkdownEnvironment, MarkdownError, (rendered: String, ast: String)> {
+        let step: Step = .init(total: 1, partial: 1, duration: .seconds(2))
+        let rendered = IO<MarkdownError, RendererOutput>.var()
+        
+        return EnvIO { env in
+            binding(
+                         |<-env.console.printStep(step: step, information: "\t• Rendering markdown content"),
+                rendered <- self.renderPage(step: step, generator: self.generator, content: content).provide(env),
+            yield:(rendered: rendered.get.output, ast: rendered.get.ast))^.reportStatus(step: step, in: env.console)
+        }
     }
     
-    public func buildPage(content: String, filename: String) -> EnvIO<MarkdownEnvironment, MarkdownError, (url: URL, tree: String, trace: String)> {
+    public func renderPage(content: String, filename: String, into output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, (url: URL, ast: String, trace: String)> {
         let file = output.appendingPathComponent(filename)
         let step: Step = .init(total: 1, partial: 1, duration: .seconds(2))
+        let rendered = IO<MarkdownError, RendererOutput>.var()
         
-        return renderPage(step: step, generator: self.generator, filename: filename, content: content, atFile: file)
-                .foldM({ e in EnvIO.raiseError(e)^ },
-                       { (tree, trace) in EnvIO.pure((url: file, tree: tree, trace: trace))^ })
+        return EnvIO { env in
+            binding(
+                         |<-env.console.printStep(step: step, information: "\t• Rendering markdown '\(filename)'"),
+                rendered <- self.renderPage(step: step, generator: self.generator, content: content).provide(env),
+                         |<-self.persistContent(rendered.get.output, atFile: file).provide(env),
+            yield:(url: file, ast: rendered.get.ast, trace: rendered.get.output))^.reportStatus(step: step, in: env.console)
+        }
     }
     
-    public func buildPlayground(_ playground: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
+    public func renderPlayground(_ playground: URL, into output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
         let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
         let playgroundName = playground.path.filename.removeExtension
-        let output = self.output.appendingPathComponent(playgroundName)
+        let output = output.appendingPathComponent(playgroundName)
         
         let pages = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var(NEA<URL>.self)
         let rendered = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var([URL].self)
@@ -40,48 +54,19 @@ public struct Markdown {
         yield: rendered.get)^
     }
     
-    public func buildPlaygrounds(at folder: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
+    public func renderPlaygrounds(at folder: URL, into output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
         let step: Step = .init(total: 3, partial: 0, duration: .seconds(1))
         let playgrounds = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var(NEA<URL>.self)
         let pages = EnvIOPartial<MarkdownEnvironment, MarkdownError>.var([URL].self)
         
         return binding(
-                        |<-self.structure(step: step.increment(1), output: self.output),
+                        |<-self.structure(step: step.increment(1), output: output),
             playgrounds <- self.getPlaygrounds(step: step.increment(2), at: folder),
-                  pages <- playgrounds.get.all().flatTraverse(self.buildPlayground)^,
+                  pages <- playgrounds.get.all().flatTraverse { playground in self.renderPlayground(playground, into: output) }^,
         yield: playgrounds.get.all())^
     }
     
     // MARK: steps
-    private func renderPage(step: Step, generator: MarkdownGenerator, filename: String, content: String, atFile file: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, (tree: String, trace: String)> {
-
-        func renderPage(generator: MarkdownGenerator, content: String, page: URL) -> IO<MarkdownError, RendererOutput> {
-            IO.async { callback in
-                if let rendered = self.generator.render(content: content) {
-                    callback(.right(rendered))
-                } else {
-                    callback(.left(.render(page: page)))
-                }
-            }^
-        }
-
-        func persistContent(_ content: String, atFile file: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, Void> {
-            EnvIO { env in
-                env.fileSystem.write(content: content, toFile: file).mapLeft { _ in MarkdownError.create(file: file) }
-            }^
-        }
-        
-        return EnvIO { env in
-            let renderer = IOPartial<MarkdownError>.var(RendererOutput.self)
-            
-            return binding(
-                       |<-env.console.printStep(step: step, information: "\t• Rendering markdown '\(filename)'"),
-              renderer <- renderPage(generator: generator, content: content, page: file),
-                       |<-persistContent(renderer.get.output, atFile: file).provide(env),
-            yield: (tree: renderer.get.tree, trace: renderer.get.output))^.reportStatus(step: step, in: env.console)
-        }^
-    }
-    
     private func structure(step: Step, output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, Void> {
         EnvIO { env in
             binding(
@@ -114,6 +99,22 @@ public struct Markdown {
     }
     
     // MARK: steps <helpers>
+    private func renderPage(step: Step, generator: MarkdownGenerator, content: String) -> EnvIO<MarkdownEnvironment, MarkdownError, RendererOutput> {
+        EnvIO.async { callback in
+            if let rendered = generator.render(content: content) {
+                callback(.right(rendered))
+            } else {
+                callback(.left(.renderContent))
+            }
+        }^
+    }
+    
+    private func persistContent(_ content: String, atFile file: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, Void> {
+        EnvIO { env in
+            env.fileSystem.write(content: content, toFile: file).mapLeft { _ in MarkdownError.create(file: file) }
+        }^
+    }
+    
     private func buildPages(step: Step, pages: NEA<URL>, output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
         
         func buildPage(step: Step, page: URL, generator: MarkdownGenerator, output: URL) -> EnvIO<MarkdownEnvironment, MarkdownError, [URL]> {
@@ -122,9 +123,12 @@ public struct Markdown {
             let page = page.appendingPathComponent("Contents.swift")
             guard let content = try? String(contentsOf: page) else { return EnvIO.raiseError(.render(page: page))^ }
             
-            return renderPage(step: step, generator: generator, filename: filename, content: content, atFile: file)
-                    .foldM({ e in EnvIO.raiseError(e)^ },
-                           { _ in EnvIO.pure([file])^  })
+            let rendered = EnvIO<MarkdownEnvironment, MarkdownError, RendererOutput>.var()
+            
+            return binding(
+                rendered <- self.renderPage(step: step, generator: self.generator, content: content),
+                         |<-self.persistContent(rendered.get.output, atFile: file),
+            yield: [file])^
         }
         
         return pages.all()

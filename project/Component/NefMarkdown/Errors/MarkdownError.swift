@@ -3,6 +3,7 @@
 import Foundation
 
 public enum MarkdownError: Error {
+    case renderContent
     case render(page: URL)
     case create(file: URL)
     case getPlaygrounds(folder: URL)
@@ -13,6 +14,8 @@ public enum MarkdownError: Error {
 extension MarkdownError {
     var information: String {
         switch self {
+        case .renderContent:
+            return "can not render content"
         case .render(let page):
             return "can not render page '\(page.path)'"
         case .create(let file):
