@@ -66,7 +66,7 @@
 		8B46C435238FDA3300437659 /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C434238FDA3300437659 /* Swiftline */; };
 		8B51C79723CCC8A4003EE485 /* NefRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B51C79523CCC8A4003EE485 /* NefRender.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B51C7A123CCC9CD003EE485 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7A023CCC9CD003EE485 /* Render.swift */; };
-		8B51C7A323CCCA16003EE485 /* RenderSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907D23ACE36100091C39 /* RenderSystem.swift */; };
+		8B51C7A323CCCA16003EE485 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907D23ACE36100091C39 /* FileSystem.swift */; };
 		8B51C7A423CCCA16003EE485 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907B23ACE36100091C39 /* MarkdownError.swift */; };
 		8B51C7A523CCCA16003EE485 /* RenderSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A908123ACE39600091C39 /* RenderSystemError.swift */; };
 		8B51C7A623CCCA16003EE485 /* RenderEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13523B0D38700C8E6F8 /* RenderEnvironment.swift */; };
@@ -268,7 +268,7 @@
 		8B0A905923ACD3A400091C39 /* nef-markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-markdown"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0A905B23ACD3A400091C39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B0A907B23ACE36100091C39 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
-		8B0A907D23ACE36100091C39 /* RenderSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystem.swift; sourceTree = "<group>"; };
+		8B0A907D23ACE36100091C39 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		8B0A908123ACE39600091C39 /* RenderSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystemError.swift; sourceTree = "<group>"; };
 		8B0CA51622AE669600181BC0 /* nef-carbon-page */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-carbon-page"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB584237C0A5600221548 /* CLIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CLIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -447,7 +447,7 @@
 		8B0A907C23ACE36100091C39 /* Algebras */ = {
 			isa = PBXGroup;
 			children = (
-				8B0A907D23ACE36100091C39 /* RenderSystem.swift */,
+				8B0A907D23ACE36100091C39 /* FileSystem.swift */,
 			);
 			path = Algebras;
 			sourceTree = "<group>";
@@ -1612,7 +1612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B51C7A323CCCA16003EE485 /* RenderSystem.swift in Sources */,
+				8B51C7A323CCCA16003EE485 /* FileSystem.swift in Sources */,
 				8B51C7A623CCCA16003EE485 /* RenderEnvironment.swift in Sources */,
 				8B51C7A523CCCA16003EE485 /* RenderSystemError.swift in Sources */,
 				8B36930223CE3EE9004DB042 /* RendererPlaygrounds.swift in Sources */,
@@ -2843,8 +2843,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bow-swift/bow.git";
 			requirement = {
-				kind = exactVersion;
-				version = 0.7.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 		8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */ = {

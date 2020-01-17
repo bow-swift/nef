@@ -8,10 +8,10 @@ import BowOptics
 public struct RenderEnvironment: AutoOptics {
     public var console: Console
     public var playgroundSystem: PlaygroundSystem
-    public var fileSystem: RenderSystem
+    public var fileSystem: FileSystem
     public var nodePrinter: (RendererPage) -> CoreRender
     
-    public init(console: Console, playgroundSystem: PlaygroundSystem, fileSystem: RenderSystem, nodePrinter: @escaping (RendererPage) -> CoreRender) {
+    public init(console: Console, playgroundSystem: PlaygroundSystem, fileSystem: FileSystem, nodePrinter: @escaping (RendererPage) -> CoreRender) {
         self.console = console
         self.playgroundSystem = playgroundSystem
         self.fileSystem = fileSystem

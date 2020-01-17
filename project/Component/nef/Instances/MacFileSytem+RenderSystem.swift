@@ -4,7 +4,7 @@ import Foundation
 import BowEffects
 import NefRender
 
-extension MacFileSystem: RenderSystem {
+extension MacFileSystem: NefRender.FileSystem {
     func write(content: String, toFile file: URL) -> IO<RenderSystemError, ()> {
         IO.invoke {
             do {

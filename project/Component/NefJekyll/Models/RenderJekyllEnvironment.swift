@@ -13,7 +13,7 @@ public struct RenderJekyllEnvironment {
     
     public init(console: Console,
                 playgroundSystem: PlaygroundSystem,
-                fileSystem: RenderSystem,
+                fileSystem: FileSystem,
                 nodePrinter: @escaping (RendererPage) -> CoreRender,
                 jekyllPrinter: @escaping (_ permalink: String) -> CoreRender,
                 permalink: @escaping (RendererPage) -> String) {

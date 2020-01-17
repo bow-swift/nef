@@ -12,7 +12,7 @@ public struct RenderMarkdownEnvironment {
     
     public init(console: Console,
                 playgroundSystem: PlaygroundSystem,
-                fileSystem: RenderSystem,
+                fileSystem: FileSystem,
                 nodePrinter: @escaping (RendererPage) -> CoreRender) {
         
         self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: nodePrinter)

@@ -99,13 +99,15 @@ public struct Render {
     }
     
     private func renderPage(content: String, nodePrinter: CoreRender) -> EnvIO<RenderEnvironment, RenderError, RendererOutput> {
-        EnvIO.async { callback in
-            if let rendered = nodePrinter.render(content: content) {
-                callback(.right(rendered))
-            } else {
-                callback(.left(.renderContent))
+        EnvIO { _ in
+            IO.invokeEither {
+                if let rendered = nodePrinter.render(content: content) {
+                    return .right(rendered)
+                } else {
+                    return .left(.renderContent)
+                }
             }
-        }^
+        }
     }
     
     // MARK: - format file <helpers>
