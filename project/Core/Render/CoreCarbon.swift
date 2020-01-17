@@ -1,68 +1,45 @@
 //  Copyright © 2019 The nef Authors.
 
-import Foundation
+import AppKit
 import NefModels
+import Bow
+import BowEffects
 
-public protocol CarbonDownloader: class {
-    func carbon(withConfiguration configuration: CarbonModel, filename: String) -> Result<String, CarbonError>
+public protocol CarbonDownloader {
+    func carbon(configuration: CarbonModel) -> IO<CarbonError, NSImage>
 }
 
-public struct CarbonGenerator: InternalRender {
-    private let downloader: CarbonDownloader
-    private let style: CarbonStyle
-    private let output: String
-
-    public init(downloader: CarbonDownloader, style: CarbonStyle, output: String) {
-        self.downloader = downloader
-        self.style = style
-        self.output = output
-    }
-    
-    public func isValid(trace: String) -> Bool {
-        return !trace.contains("☓")
-    }
-    
-    internal func render(node: Node) -> String {
-        return node.carbon(downloader: self)
-    }
-}
-
-// MARK: - Node Downloader
-protocol CarbonCodeDownloader {
-    func carbon(code: String) -> String
-}
-
-extension CarbonGenerator: CarbonCodeDownloader {
-    func carbon(code: String) -> String {
-        let configuration = CarbonModel(code: code, style: style)
-        let result = downloader.carbon(withConfiguration: configuration, filename: output)
-        
-        switch result {
-        case let .success(filename):
-            return "Downloading Carbon snippet for '\(filename)' ✓"
-            
-        case let .failure(carbonError):
-            return """
-                    Downloading Carbon snippet for '\(carbonError.filename)' ☓
-                        error: \(carbonError.cause)
-                        code snippet:
-                            \(carbonError.snippet)
-                   """
+extension NodeProcessor where D == CoreCarbonEnvironment, A == NSImage {
+    static var carbon: NodeProcessor {
+        func render(node: Node) -> EnvIO<D, CoreRenderError, A> {
+            EnvIO { env in
+                node.carbon(downloader: env.downloader, style: env.style)
+            }
         }
+
+        func merge(nodes: [A]) -> EnvIO<D, CoreRenderError, NEA<A>> {
+            let nodes = nodes.filter { image in !image.isEmpty }
+            guard !nodes.isEmpty else { return EnvIO.raiseError(.emptyNode)^ }
+            return EnvIO.pure(NEA(head: nodes[0], tail: Array(nodes[1...])))^
+        }
+
+        return .init(render: render, merge: merge)
     }
 }
 
-// MARK: - Carbon definition for each node
+
+// MARK: - node definition <carbon>
 extension Node {
-    func carbon(downloader: CarbonCodeDownloader) -> String {
+    func carbon(downloader: CarbonDownloader, style: CarbonStyle) -> IO<CoreRenderError, NSImage> {
         switch self {
         case let .block(nodes):
             let code = nodes.map { $0.carbon() }.joined()
-            guard !code.isEmpty else { return "" }
-            return downloader.carbon(code: code.trimmingNewLines)
+            guard !code.isEmpty else { return IO.raiseError(.emptyNode)^ }
+            let configuration = CarbonModel(code: code, style: style)
+            return downloader.carbon(configuration: configuration).mapLeft { _ in .renderNode }
             
         default:
-            return ""
+            return IO.pure(NSImage.empty)^
         }
     }
 }
@@ -78,4 +55,10 @@ extension Node.Code {
             return text
         }
     }
+}
+
+// MARK: private utils
+extension NSImage {
+    static var empty: NSImage { NSImage(size: .zero) }
+    var isEmpty: Bool { size == .zero }
 }

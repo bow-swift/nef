@@ -13,9 +13,9 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n### This is a markup\n"
-        let result = NefCore.MarkdownGenerator().render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(markdown(content: input),
+               succeeds: expected)
     }
 
     func testPlainPlaygroundWithMultiMarkupAndWhiteSpaces_render_returnsTrimMarkupNode() {
@@ -30,9 +30,9 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
-        let result = NefCore.MarkdownGenerator().render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(markdown(content: input),
+               succeeds: expected)
     }
 
     func testPlainPlaygroundWithCode_render_returnsSwiftBlock() {
@@ -41,9 +41,9 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(input)```\n"
-        let result = NefCore.MarkdownGenerator().render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(markdown(content: input),
+               succeeds: expected)
     }
 
     func testPlainPlaygroundWithNefHeader_render_returnsEmptyNode() {
@@ -57,11 +57,9 @@ class MarkdownTests: XCTestCase {
                     // nef:end
 
                     """
-        let expected = ""
         
-        let result = NefCore.MarkdownGenerator().render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        assert(markdown(content: input),
+               fails: .emptyNode)
     }
 
     func testPlainPlaygroundWithCodeAndNefHiddenBlock_render_returnsSwiftBlock() {
@@ -77,8 +75,8 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(code)\n```\n"
-        let result = NefCore.MarkdownGenerator().render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(markdown(content: input),
+               succeeds: expected)
     }
 }

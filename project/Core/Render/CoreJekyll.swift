@@ -1,22 +1,30 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import Bow
+import BowEffects
 
-public struct JekyllGenerator: InternalRender {
-    let permalink: String
-    
-    public init(permalink: String) {
-        self.permalink = permalink
-    }
-
-    internal func render(node: Node) -> String {
-        return node.jekyll(permalink: permalink)
+extension NodeProcessor where D == CoreJekyllEnvironment, A == String {
+    static var jekyll: NodeProcessor {
+        func render(node: Node) -> EnvIO<D, CoreRenderError, A> {
+            EnvIO { env in
+                IO.pure(node.jekyll(permalink: env.permalink))^
+            }
+        }
+        
+        func merge(nodes: [A]) -> EnvIO<D, CoreRenderError, NEA<A>> {
+            let data = nodes.combineAll()
+            guard !data.isEmpty else { return EnvIO.raiseError(.emptyNode)^ }
+            return EnvIO.pure(NEA.of(data))^
+        }
+        
+        return .init(render: render, merge: merge)
     }
 }
 
-// MARK: - Jekyll definition for each node
-extension Node {
 
+// MARK: - node definition <jekyll>
+extension Node {
     func jekyll(permalink: String) -> String {
         switch self {
         case let .nef(command, nodes):
