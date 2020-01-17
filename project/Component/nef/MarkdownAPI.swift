@@ -1,6 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import NefCore
 import NefModels
 import NefRender
 import NefMarkdown
@@ -17,7 +18,7 @@ public extension MarkdownAPI {
     static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (rendered: String, ast: String)> {
         NefMarkdown.Markdown()
                    .renderPage(content: content)
-                   .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .contramap(environment)
                    .mapError { _ in nef.Error.markdown }
     }
     
@@ -31,21 +32,29 @@ public extension MarkdownAPI {
         
         return NefMarkdown.Markdown()
                           .renderPage(content: content, filename: filename, into: output)
-                          .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                          .contramap(environment)
                           .mapError { e in nef.Error.markdown }^
     }
     
     static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
         NefMarkdown.Markdown()
                    .renderPlayground(playground, into: output)
-                   .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .contramap(environment)
                    .mapError { _ in nef.Error.markdown }^
     }
     
     static func render(playgroundsAt folder: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
         NefMarkdown.Markdown()
                    .renderPlaygrounds(at: folder, into: output)
-                   .contramap { console in RenderEnvironment(console: console, playgroundSystem: MacPlaygroundSystem(), fileSystem: MacFileSystem()) }
+                   .contramap(environment)
                    .mapError { _ in nef.Error.markdown }^
+    }
+    
+    // MARK: - private <helpers>
+    private static func environment(console: Console) -> RenderMarkdownEnvironment {
+        .init(console: console,
+              playgroundSystem: MacPlaygroundSystem(),
+              fileSystem: MacFileSystem(),
+              nodePrinter: { _ in MarkdownGenerator() })
     }
 }

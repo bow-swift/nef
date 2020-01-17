@@ -2,9 +2,7 @@
 
 import Foundation
 import CLIKit
-import NefModels
-import NefCore
-import NefJekyll
+import nef
 import Bow
 import BowEffects
 
@@ -26,23 +24,14 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
         }
         
         let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"
-        let output = URL(fileURLWithPath: outputPath).appendingPathComponent("README.md")
+        let filename = "README.md"
+        let output = URL(fileURLWithPath: outputPath).appendingPathComponent(filename)
         
         guard let pageContent = try? String(contentsOfFile: page), !pageContent.isEmpty else {
             return IO.raiseError(CLIKit.Console.Error.render(information: "could not read page content"))
         }
         
-        return IO.pure((content: pageContent, filename: pagePath.filename.removeExtension, output: output, permalink: permalink, verbose: verbose))
-    }^
-}
-
-func render(content: String, output: URL, permalink: String) -> IO<CLIKit.Console.Error, RendererOutput> {
-    IO.async { callback in
-        renderJekyll(content: content,
-                     to: output.path,
-                     permalink: permalink,
-                     success: { output in callback(.right(output)) },
-                     failure: { e in callback(.left(.render(information: e))) })
+        return IO.pure((content: pageContent, filename: filename, output: output, permalink: permalink, verbose: verbose))
     }^
 }
 
@@ -53,25 +42,27 @@ func main() -> Either<CLIKit.Console.Error, Void> {
     }
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, filename: String, output: URL, permalink: String, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
+    let output = IOPartial<CLIKit.Console.Error>.var((url: URL, ast: String, trace: String).self)
     
     return binding(
-           args <- arguments(console: console),
                 |<-console.printStep(step: step(partial: 1), information: "Reading "+"arguments".bold),
+           args <- arguments(console: console),
                 |<-console.printStatus(success: true),
                 |<-console.printSubstep(step: step(partial: 1), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "permalink: \(args.get.permalink)", "verbose: \(args.get.verbose)"]),
                 |<-console.printStep(step: step(partial: 2), information: "Render "+"Jekyll".bold+" (\(args.get.filename))".lightGreen),
-         output <- render(content: args.get.content, output: args.get.output, permalink: args.get.permalink),
-    yield: args.get.verbose ? output.get : nil)^
+         output <- nef.Jekyll.renderVerbose(content: args.get.content, permalink: args.get.permalink, toFile: args.get.output)
+                             .provide(console)
+                             .mapLeft { e in .render() }^,
+    yield: args.get.verbose ? Either<(ast: String, trace: String), URL>.left((ast: output.get.ast, trace: output.get.trace))
+                            : Either<(ast: String, trace: String), URL>.right(output.get.url))^
         .reportStatus(in: console)
-        .foldM({ e   in console.exit(failure: "\(e)") },
+        .foldM({ e in console.exit(failure: "\(e)") },
                { rendered in
-                    guard let rendered = rendered else { return console.exit(success: "rendered jekyll page.") }
-                    return console.exit(success: "rendered jekyll page.\n\n• AST \n\t\(rendered.ast)\n\n• Trace \n\t\(rendered.output)")
+                 rendered.fold({ (ast, trace) in console.exit(success: "rendered jekyll page.\n\n• AST \n\t\(ast)\n\n• Trace \n\t\(trace)") },
+                               { (page)       in console.exit(success: "rendered jekyll page '\(page.path)'")                                })
                })
         .unsafeRunSyncEither()
 }
-
 
 // #: - MAIN <launcher>
 main()

@@ -4,7 +4,7 @@ import Foundation
 import BowEffects
 import NefSwiftPlayground
 
-extension MacFileSystem: FileSystem {
+extension MacFileSystem: NefSwiftPlayground.FileSystem {
     func createDirectory(atPath path: String) -> IO<FileSystemError, ()> {
         FileManager.default.createDirectoryIO(atPath: path, withIntermediateDirectories: true)
                            .mapLeft { _ in .create(item: path) }

@@ -4,7 +4,7 @@ import Foundation
 import BowEffects
 import NefRender
 
-extension MacFileSystem: RenderSystem {
+extension MacFileSystem: NefRender.FileSystem {
     func write(content: String, toFile file: URL) -> IO<RenderSystemError, ()> {
         IO.invoke {
             do {
@@ -22,5 +22,9 @@ extension MacFileSystem: RenderSystem {
     
     func removeFile(at url: URL) -> IO<RenderSystemError, ()> {
         FileManager.default.removeItemIO(at: url).mapLeft { _ in .remove(item: url) }
+    }
+    
+    func exist(directory: URL) -> Bool {
+        FileManager.default.fileExists(atPath: directory.path)
     }
 }

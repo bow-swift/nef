@@ -35,6 +35,6 @@ public extension String {
     private func removeLastComponent(separatedBy separator: String) -> String {
         var pathComponents = components(separatedBy: separator)
         pathComponents.removeLast()
-        return pathComponents.joined(separator: separator)
+        return pathComponents.count > 0 ? pathComponents.joined(separator: separator) : self
     }
 }
