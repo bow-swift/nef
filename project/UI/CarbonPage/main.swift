@@ -91,7 +91,7 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
         .foldM({ e   in console.exit(failure: "\(e)") },
                { rendered in
                     guard let rendered = rendered else { return console.exit(success: "rendered carbon images.") }
-                    return console.exit(success: "rendered carbon images.\n\n"+"• AST ".bold.cyan+"\n\t\(rendered.tree)\n\n"+"• Trace ".bold.cyan+"\n\t\(rendered.output)")
+                    return console.exit(success: "rendered carbon images.\n\n"+"• AST ".bold.cyan+"\n\t\(rendered.ast)\n\n"+"• Trace ".bold.cyan+"\n\t\(rendered.output)")
                })
         .unsafeRunSyncEither(on: .global())
 }

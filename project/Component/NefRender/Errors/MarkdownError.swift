@@ -2,7 +2,7 @@
 
 import Foundation
 
-public enum MarkdownError: Error {
+public enum RenderError: Error {
     case renderContent
     case render(page: URL)
     case create(file: URL)
@@ -11,7 +11,7 @@ public enum MarkdownError: Error {
     case structure
 }
 
-extension MarkdownError {
+extension RenderError {
     var information: String {
         switch self {
         case .renderContent:

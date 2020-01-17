@@ -2,6 +2,7 @@
 
 import Foundation
 import NefModels
+import NefRender
 import NefJekyll
 
 import Bow

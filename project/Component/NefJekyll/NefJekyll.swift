@@ -1,7 +1,36 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import NefCommon
+import NefModels
 import NefCore
+import NefRender
+
+import Bow
+import BowEffects
+
+public struct Jekyll {
+    private let render = NefRender()
+    
+    public init() {}
+    
+    // MARK: - helpers
+    private func generator(permalink: String) -> CoreRender {
+        JekyllGenerator(permalink: permalink)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /// Renders a page into Jekyll format.
 ///

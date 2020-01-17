@@ -3,12 +3,12 @@
 import NefModels
 import NefCommon
 
-public struct MarkdownEnvironment {
+public struct RenderEnvironment {
     public let console: Console
     public let playgroundSystem: PlaygroundSystem
-    public let fileSystem: MarkdownSystem
+    public let fileSystem: RenderSystem
     
-    public init(console: Console, playgroundSystem: PlaygroundSystem, fileSystem: MarkdownSystem) {
+    public init(console: Console, playgroundSystem: PlaygroundSystem, fileSystem: RenderSystem) {
         self.console = console
         self.playgroundSystem = playgroundSystem
         self.fileSystem = fileSystem
