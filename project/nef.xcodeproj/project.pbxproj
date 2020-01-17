@@ -216,6 +216,13 @@
 			remoteGlobalIDString = 8B6B119322CB9FDE0060177F;
 			remoteInfo = Markup;
 		};
+		8BAF222323D2258A00786F2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BBD14AE2390179B0002970C;
+			remoteInfo = NefCommon;
+		};
 		8BB7D11423B0C7AB00C8E6F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -1295,6 +1302,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8BAF222423D2258A00786F2F /* PBXTargetDependency */,
 				8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */,
 			);
 			name = NefCore;
@@ -1839,6 +1847,11 @@
 			isa = PBXTargetDependency;
 			target = 8B6B119322CB9FDE0060177F /* NefCore */;
 			targetProxy = 8B6B11BA22CBA1710060177F /* PBXContainerItemProxy */;
+		};
+		8BAF222423D2258A00786F2F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BBD14AE2390179B0002970C /* NefCommon */;
+			targetProxy = 8BAF222323D2258A00786F2F /* PBXContainerItemProxy */;
 		};
 		8BB7D11523B0C7AB00C8E6F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
