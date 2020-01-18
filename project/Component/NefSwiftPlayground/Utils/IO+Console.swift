@@ -1,6 +1,6 @@
 //  Copyright © 2019 The nef Authors.
 
-import NefCommon
+import NefUtils
 import NefModels
 
 import Bow

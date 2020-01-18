@@ -1,20 +1,16 @@
 //  Copyright © 2019 The nef Authors.
 
-import NefModels
-import NefCommon
+import NefUtils
 import NefCore
+import BowEffects
 import BowOptics
 
-public struct RenderEnvironment: AutoOptics {
-    public var console: Console
+public struct RenderEnvironment<A>: AutoOptics {
     public var playgroundSystem: PlaygroundSystem
-    public var fileSystem: FileSystem
-    public var nodePrinter: (RendererPage) -> CoreRender
+    public var nodePrinter: (_ content: String) -> IO<CoreRenderError, RendererOutput<A>>
     
-    public init(console: Console, playgroundSystem: PlaygroundSystem, fileSystem: FileSystem, nodePrinter: @escaping (RendererPage) -> CoreRender) {
-        self.console = console
+    public init(playgroundSystem: PlaygroundSystem, nodePrinter: @escaping (_ content: String) -> IO<CoreRenderError, RendererOutput<A>>) {
         self.playgroundSystem = playgroundSystem
-        self.fileSystem = fileSystem
         self.nodePrinter = nodePrinter
     }
 }

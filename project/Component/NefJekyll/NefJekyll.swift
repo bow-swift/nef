@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefCommon
+import NefUtils
 import NefModels
 import NefCore
 import NefRender

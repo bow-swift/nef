@@ -2,7 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "NefModels.h"
-#import "NefCommon.h"
+#import "NefUtils.h"
 
 //! Project version number for Nef.
 FOUNDATION_EXPORT double NefVersionNumber;
