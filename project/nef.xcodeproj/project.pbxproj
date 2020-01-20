@@ -22,6 +22,7 @@
 		8B12D7A422D6238300D05A70 /* NefJekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85522D392C000919F36 /* NefJekyll.swift */; };
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
+		8B3345DE23D5C89F007156B2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3345DD23D5C89F007156B2 /* Image.swift */; };
 		8B36930223CE3EE9004DB042 /* RendererPlaygrounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3692FF23CE3812004DB042 /* RendererPlaygrounds.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
@@ -297,6 +298,7 @@
 		8B22248522D5EAD600C85856 /* NefMarkdown.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefMarkdown.h; sourceTree = "<group>"; };
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B304D5F23ABA954001E9303 /* String+Colorize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Colorize.swift"; sourceTree = "<group>"; };
+		8B3345DD23D5C89F007156B2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		8B3692FF23CE3812004DB042 /* RendererPlaygrounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPlaygrounds.swift; sourceTree = "<group>"; };
 		8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAPI.swift; sourceTree = "<group>"; };
 		8B3CB83D22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -958,6 +960,7 @@
 				8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */,
 				8BD1F22223AA92EF001157DA /* RendererOutput.swift */,
 				8B3CB89F22D393C300919F36 /* MarkupNode.swift */,
+				8B3345DD23D5C89F007156B2 /* Image.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1667,6 +1670,7 @@
 				8B3CB8A422D393F100919F36 /* CoreJekyll.swift in Sources */,
 				8B3CB8A322D393F100919F36 /* Node+Render.swift in Sources */,
 				8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */,
+				8B3345DE23D5C89F007156B2 /* Image.swift in Sources */,
 				8B3CB8A622D393F100919F36 /* String+Format.swift in Sources */,
 				8BAF222223D223A400786F2F /* CoreRender+Test.swift in Sources */,
 				8BD1F22323AA92EF001157DA /* RendererOutput.swift in Sources */,

@@ -1,6 +1,5 @@
 //  Copyright © 2019 The nef Authors.
 
-import AppKit
 import NefCommon
 import Bow
 import BowEffects
@@ -41,6 +40,6 @@ public extension CoreRender where D == CoreMarkdownEnvironment, A == String {
     static var markdown: CoreRender { .init(.markdown) }
 }
 
-public extension CoreRender where D == CoreCarbonEnvironment, A == NSImage {
+public extension CoreRender where D == CoreCarbonEnvironment, A == Image {
     static var carbon: CoreRender { .init(.carbon) }
 }

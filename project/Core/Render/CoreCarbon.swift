@@ -1,15 +1,15 @@
 //  Copyright © 2019 The nef Authors.
 
-import AppKit
 import NefModels
 import Bow
 import BowEffects
 
 public protocol CarbonDownloader {
-    func carbon(configuration: CarbonModel) -> IO<CarbonError, NSImage>
+    func carbon(configuration: CarbonModel) -> IO<CarbonError, Image>
 }
 
-extension NodeProcessor where D == CoreCarbonEnvironment, A == NSImage {
+
+extension NodeProcessor where D == CoreCarbonEnvironment, A == Image {
     static var carbon: NodeProcessor {
         func render(node: Node) -> EnvIO<D, CoreRenderError, A> {
             EnvIO { env in
@@ -30,7 +30,7 @@ extension NodeProcessor where D == CoreCarbonEnvironment, A == NSImage {
 
 // MARK: - node definition <carbon>
 extension Node {
-    func carbon(downloader: CarbonDownloader, style: CarbonStyle) -> IO<CoreRenderError, NSImage> {
+    func carbon(downloader: CarbonDownloader, style: CarbonStyle) -> IO<CoreRenderError, Image> {
         switch self {
         case let .block(nodes):
             let code = nodes.map { $0.carbon() }.joined()
@@ -39,7 +39,7 @@ extension Node {
             return downloader.carbon(configuration: configuration).mapLeft { _ in .renderNode }
             
         default:
-            return IO.pure(NSImage.empty)^
+            return IO.pure(Image.empty)^
         }
     }
 }
@@ -55,10 +55,4 @@ extension Node.Code {
             return text
         }
     }
-}
-
-// MARK: private utils
-extension NSImage {
-    static var empty: NSImage { NSImage(size: .zero) }
-    var isEmpty: Bool { size == .zero }
 }

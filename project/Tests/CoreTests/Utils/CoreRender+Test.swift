@@ -1,7 +1,6 @@
 //  Copyright © 2020 The nef Authors.
 
 import XCTest
-import AppKit
 import NefModels
 import Bow
 import BowEffects
@@ -18,9 +17,9 @@ extension XCTestCase {
                          .provide(CoreJekyllEnvironment(permalink: permalink))
     }
     
-    func carbon(content: String, downloader: CarbonDownloader, style: CarbonStyle) -> IO<CoreRenderError, RendererOutput<NSImage>> {
+    func carbon(content: String, downloader: CarbonDownloader, style: CarbonStyle) -> IO<CoreRenderError, RendererOutput<Image>> {
         CoreRender.carbon.render(content: content)
-                         .provide(CoreCarbonEnvironment.init(downloader: downloader, style: style))
+                         .provide(CoreCarbonEnvironment(downloader: downloader, style: style))
     }
 }
 

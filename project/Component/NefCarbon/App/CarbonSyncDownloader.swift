@@ -3,9 +3,9 @@
 import Foundation
 import NefCore
 import NefModels
+import BowEffects
 
 class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
-    
     private weak var view: CarbonView?
 
     private let multiFiles: Bool
@@ -30,6 +30,10 @@ class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
         }
 
         return syncResult
+    }
+    
+    func carbon(configuration: CarbonModel) -> IO<CarbonError, Image> {
+        fatalError()
     }
     
     // MARK: delegate <CarbonViewDelegate>
