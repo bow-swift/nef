@@ -4,11 +4,15 @@ import Foundation
 
 public struct Image {
     public let data: Data
+    public let isEmpty: Bool
     
-    public init(data: Data) {
-        self.data = data
+    public static var empty: Image { self.init(data: .init(capacity: 0), isEmpty: true) }
+    public init(data: Data) { self.init(data: data, isEmpty: false) }
+}
+
+fileprivate extension Image {
+    init(data: Data, isEmpty: Bool) {
+        self.data = .init(capacity: 0)
+        self.isEmpty = true
     }
-    
-    public static var empty: Image { Image(data: .init(capacity: 0)) }
-    public var isEmpty: Bool { data.count == 0 }
 }
