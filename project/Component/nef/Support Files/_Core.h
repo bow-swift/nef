@@ -4,7 +4,7 @@
 #import "NefCore.h"
 
 //! Project version number for Markup.
-FOUNDATION_EXPORT double NefCoreVersionNumber;
+FOUNDATION_EXPORT double CoreVersionNumber;
 
 //! Project version string for Markup.
-FOUNDATION_EXPORT const unsigned char NefCoreVersionString[];
+FOUNDATION_EXPORT const unsigned char CoreVersionString[];

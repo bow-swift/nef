@@ -3,6 +3,6 @@
 import Foundation
 
 public enum RenderSystemError: Error {
-    case persist
-    case structure
+    case persist(item: URL)
+    case structure(folder: URL)
 }

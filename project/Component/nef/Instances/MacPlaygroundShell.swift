@@ -6,7 +6,7 @@ import BowEffects
 import Swiftline
 
 class MacPlaygroundShell: PlaygroundShell {
-    
+
     func resolve(packagePath: String, buildPath: String) -> IO<PlaygroundShellError, Void> {
         IO.invoke {
             let result = run("swift", args: ["package", "--package-path", "\(packagePath)", "--build-path", "\(buildPath)", "resolve"])

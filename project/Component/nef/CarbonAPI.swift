@@ -100,13 +100,14 @@ fileprivate extension CarbonAPI {
         
         parentView.addSubview(carbonView)
         
-        DispatchQueue(label: "nef-framework", qos: .userInitiated).async {
-            renderCarbon(downloader: downloader,
-                         code: "\(code)\n",
-                         style: style,
-                         outputPath: outputPath,
-                         success: { _ in success() },
-                         failure: failure)
-        }
+        fatalError()
+//        DispatchQueue(label: "nef-framework", qos: .userInitiated).async {
+//            renderCarbon(downloader: downloader,
+//                         code: "\(code)\n",
+//                         style: style,
+//                         outputPath: outputPath,
+//                         success: { _ in success() },
+//                         failure: failure)
+//        }
     }
 }

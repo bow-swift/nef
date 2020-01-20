@@ -16,10 +16,11 @@ public extension MarkdownAPI {
     }
     
     static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (rendered: String, ast: String)> {
-        NefMarkdown.Markdown()
-                   .renderPage(content: content)
-                   .contramap(environment)
-                   .mapError { _ in nef.Error.markdown }
+        fatalError()
+//        NefMarkdown.Markdown()
+//                   .renderPage(content: content)
+//                   .contramap(environment)
+//                   .mapError { _ in nef.Error.markdown }
     }
     
     static func render(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
@@ -30,31 +31,34 @@ public extension MarkdownAPI {
         let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
         let filename = file.pathExtension == "md" ? file.lastPathComponent : file.appendingPathExtension("md").lastPathComponent
         
-        return NefMarkdown.Markdown()
-                          .renderPage(content: content, filename: filename, into: output)
-                          .contramap(environment)
-                          .mapError { e in nef.Error.markdown }^
+        fatalError()
+//        return NefMarkdown.Markdown()
+//                          .renderPage(content: content, filename: filename, into: output)
+//                          .contramap(environment)
+//                          .mapError { e in nef.Error.markdown }^
     }
     
-    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
-        NefMarkdown.Markdown()
-                   .renderPlayground(playground, into: output)
-                   .contramap(environment)
-                   .mapError { _ in nef.Error.markdown }^
+    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+        fatalError()
+//        NefMarkdown.Markdown()
+//                   .renderPlayground(playground, into: output)
+//                   .contramap(environment)
+//                   .mapError { _ in nef.Error.markdown }^
     }
     
-    static func render(playgroundsAt folder: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+    static func render(playgroundsAt folder: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
         NefMarkdown.Markdown()
-                   .renderPlaygrounds(at: folder, into: output)
+                   .playgrounds(atFolder: folder, into: output)
                    .contramap(environment)
                    .mapError { _ in nef.Error.markdown }^
     }
     
     // MARK: - private <helpers>
-    private static func environment(console: Console) -> RenderMarkdownEnvironment {
+    private static func environment(console: Console) -> RenderMarkdownEnvironment<String> {
         .init(console: console,
-              playgroundSystem: MacPlaygroundSystem(),
               fileSystem: MacFileSystem(),
-              nodePrinter: { _ in MarkdownGenerator() })
+              renderSystem: RenderSystem<String>(),
+              playgroundSystem: MacPlaygroundSystem(),
+              nodePrinter: { content in CoreRender.markdown.render(content: content).provide(CoreMarkdownEnvironment()) })
     }
 }

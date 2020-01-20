@@ -50,7 +50,7 @@ public struct Markdown {
         return binding(
                   env <- ask(),
              rendered <- env.get.render.renderPlayground(playground).contramap(\MarkdownEnvironment.renderEnvironment),
-              written <- rendered.get.traverse(self.writtenPage),
+              written <- rendered.get.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) },
         yield: written.get)^
     }
     
@@ -62,20 +62,21 @@ public struct Markdown {
         return binding(
                   env <- ask(),
              rendered <- env.get.render.renderPlaygrounds(at: folder).contramap(\MarkdownEnvironment.renderEnvironment),
-              written <- rendered.get.traverse(self.writtenPlayground),
+              written <- rendered.get.traverse { info in self.writtenPlayground(playground: info.playground, content: info.output, output: output) },
         yield: written.get)^
     }
     
     // MARK: private <helper>
-    private func writtenPage(page: RenderingURL, output: PageOutput) -> EnvIO<MarkdownEnvironment, RenderError, URL> {
+    private func writtenPage(page: RenderingURL, content: PageOutput, output: URL) -> EnvIO<MarkdownEnvironment, RenderError, URL> {
         EnvIO { env in
-            let file = page.url.appendingPathExtension("md")
-            return env.renderSystem.writePage(output, file).provide(env.fileSystem)
+            let file = output.appendingPathComponent(page.escapedTitle).appendingPathExtension("md")
+            return env.renderSystem.writePage(content, file).provide(env.fileSystem)
                                    .map { _ in file }^.mapLeft { _ in .renderPage(file) }
         }^
     }
     
-    private func writtenPlayground(playground: RenderingURL, output: PlaygroundOutput) -> EnvIO<MarkdownEnvironment, RenderError, URL> {
-        output.traverse(self.writtenPage).map { _ in playground.url }^
+    private func writtenPlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<MarkdownEnvironment, RenderError, URL> {
+        content.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) }
+               .map { _ in playground.url }^
     }
 }

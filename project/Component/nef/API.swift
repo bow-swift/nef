@@ -50,7 +50,7 @@ public protocol MarkdownAPI {
     ///   - playground: path to Xcode playground.
     ///   - into: folder where to write the markdown files.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the markdown files generated of type `[URL]`, having access to an immutable environment of type `Console`.
-    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]>
+    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>>
     
     /// Renders playground pages into markdown files.
     ///
@@ -58,7 +58,7 @@ public protocol MarkdownAPI {
     ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
     ///   - into: folder where to write the markdown files for each Xcode Playground page.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the playground paths rendered `[URL]`, having access to an immutable environment of type `Console`.
-    static func render(playgroundsAt: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]>
+    static func render(playgroundsAt: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>>
 }
 
 public protocol JekyllAPI {

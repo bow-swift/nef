@@ -26,5 +26,3 @@ extension RenderingURL {
         IO.pure(self)^
     }
 }
-
-
