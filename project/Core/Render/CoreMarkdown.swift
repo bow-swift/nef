@@ -12,7 +12,7 @@ extension NodeProcessor where D == CoreMarkdownEnvironment, A == String {
         
         func merge(nodes: [A]) -> EnvIO<D, CoreRenderError, NEA<A>> {
             let data = nodes.combineAll()
-            guard !data.isEmpty else { return EnvIO.raiseError(.emptyNode)^ }
+            guard !data.isEmpty else { return EnvIO.raiseError(.renderEmpty)^ }
             return EnvIO.pure(NEA.of(data))^
         }
         

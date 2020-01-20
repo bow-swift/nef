@@ -1,7 +1,7 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
-import NefUtils
+import NefCommon
 import NefCore
 import NefModels
 
@@ -10,9 +10,9 @@ import BowEffects
 
 public struct Render<A> {
     public typealias Environment = RenderEnvironment<A>
-    public typealias PageOutput  = RendererOutput<A>
-    public typealias PlaygroundOutput  = NEA<(page: RendererURL, output: PageOutput)>
-    public typealias PlaygroundsOutput = NEA<(playground: RendererURL, output: PlaygroundOutput)>
+    public typealias PageOutput  = RenderingOutput<A>.PageOutput
+    public typealias PlaygroundOutput  = RenderingOutput<A>.PlaygroundOutput
+    public typealias PlaygroundsOutput = RenderingOutput<A>.PlaygroundsOutput
     
     public init() {}
     
@@ -27,22 +27,22 @@ public struct Render<A> {
     }
     
     public func renderPlayground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
-        let playgroundURL = RendererURL(url: playground,
-                                        title: playgroundName(playground),
-                                        escapedTitle: escaped(filename: playgroundName(playground)))
+        let playgroundURL = RenderingURL(url: playground,
+                                         title: playgroundName(playground),
+                                         escapedTitle: escaped(filename: playgroundName(playground)))
         
         return renderPlayground(playgroundURL)
     }
     
     public func renderPlaygrounds(at folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
-        func playgroundsOutputFrom(playgrounds: NEA<RendererURL>, outputs: NEA<PlaygroundOutput>) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
+        func playgroundsOutputFrom(playgrounds: NEA<RenderingURL>, outputs: NEA<PlaygroundOutput>) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
             guard playgrounds.count == outputs.count, !playgrounds.all().isEmpty else { return EnvIO.raiseError(.renderPlaygrounds)^ }
             
             let tuples = zip(playgrounds.all(), outputs.all()).map { playground, output in (playground: playground, output: output) }
             return EnvIO.pure(NEA.fromArrayUnsafe(tuples))^
         }
         
-        let playgrounds = EnvIO<Environment, RenderError, NEA<RendererURL>>.var()
+        let playgrounds = EnvIO<Environment, RenderError, NEA<RenderingURL>>.var()
         let rendered = EnvIO<Environment, RenderError, NEA<PlaygroundOutput>>.var()
         let output = EnvIO<Environment, RenderError, PlaygroundsOutput>.var()
 
@@ -54,8 +54,8 @@ public struct Render<A> {
     }
     
     // MARK: - render <helpers>
-    private func renderPlayground(_ playground: RendererURL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
-        let pages = EnvIO<Environment, RenderError, NEA<RendererURL>>.var()
+    private func renderPlayground(_ playground: RenderingURL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
+        let pages = EnvIO<Environment, RenderError, NEA<RenderingURL>>.var()
         let rendered = EnvIO<Environment, RenderError, PlaygroundOutput>.var()
         
         return binding(
@@ -64,10 +64,10 @@ public struct Render<A> {
         yield: rendered.get)^
     }
     
-    private func renderPages(_ pages: NEA<RendererURL>) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
-        pages.traverse { (page: RendererURL) in
+    private func renderPages(_ pages: NEA<RenderingURL>) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
+        pages.traverse { (page: RenderingURL) in
             let url = page.url.appendingPathComponent("Contents.swift")
-            guard let content = try? String(contentsOf: url) else { return EnvIO.raiseError(.render(page: url))^ }
+            guard let content = try? String(contentsOf: url) else { return EnvIO.raiseError(.renderPage(url))^ }
             return self.renderPage(content: content).map { output in (page: page, output: output) }^
         }^
     }
@@ -92,30 +92,30 @@ public struct Render<A> {
     }
     
     // MARK: - private <helpers>
-    private func getPages(playground: RendererURL) -> EnvIO<Environment, RenderError, NEA<RendererURL>> {
+    private func getPages(playground: RenderingURL) -> EnvIO<Environment, RenderError, NEA<RenderingURL>> {
         EnvIO { env in
             let pages = IO<RenderError, NEA<URL>>.var()
-            let rendererPages = IO<RenderError, NEA<RendererURL>>.var()
+            let rendererPages = IO<RenderError, NEA<RenderingURL>>.var()
             
             return binding(
                         pages <- env.playgroundSystem.pages(in: playground.url).mapLeft { _ in .getPages(playground: playground.url) },
-                rendererPages <- pages.get.traverse { url in RendererURL(url: url,
-                                                                         title: self.pageName(url),
-                                                                         escapedTitle: self.escaped(filename: self.pageName(url))).io() },
+                rendererPages <- pages.get.traverse { url in RenderingURL(url: url,
+                                                                          title: self.pageName(url),
+                                                                          escapedTitle: self.escaped(filename: self.pageName(url))).io() },
             yield: rendererPages.get)
         }
     }
     
-    private func getPlaygrounds(at folder: URL) -> EnvIO<Environment, RenderError, NEA<RendererURL>> {
+    private func getPlaygrounds(at folder: URL) -> EnvIO<Environment, RenderError, NEA<RenderingURL>> {
         EnvIO { env in
             let playgrounds = IO<RenderError, NEA<URL>>.var()
-            let rendered = IO<RenderError, NEA<RendererURL>>.var()
+            let rendered = IO<RenderError, NEA<RenderingURL>>.var()
             
             return binding(
                playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapLeft { _ in .getPlaygrounds(folder: folder) },
-                  rendered <- playgrounds.get.traverse { url in RendererURL(url: url,
-                                                                            title: self.playgroundName(url),
-                                                                            escapedTitle: self.escaped(filename: self.playgroundName(url))).io() },
+                  rendered <- playgrounds.get.traverse { url in RenderingURL(url: url,
+                                                                             title: self.playgroundName(url),
+                                                                             escapedTitle: self.escaped(filename: self.playgroundName(url))).io() },
             yield: rendered.get)
         }
     }

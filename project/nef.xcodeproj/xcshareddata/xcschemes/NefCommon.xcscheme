@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8BBD14AE2390179B0002970C"
-               BuildableName = "NefUtils.framework"
-               BlueprintName = "NefUtils"
+               BuildableName = "NefCommon.framework"
+               BlueprintName = "NefCommon"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BBD14AE2390179B0002970C"
-            BuildableName = "NefUtils.framework"
-            BlueprintName = "NefUtils"
+            BuildableName = "NefCommon.framework"
+            BlueprintName = "NefCommon"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

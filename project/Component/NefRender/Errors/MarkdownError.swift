@@ -4,7 +4,8 @@ import Foundation
 
 public enum RenderError: Error {
     case renderContent
-    case render(page: URL)
+    case renderPage(_ page: URL)
+    case renderPlayground(_ playground: URL)
     case renderPlaygrounds
     case getPlaygrounds(folder: URL)
     case getPages(playground: URL)
@@ -15,8 +16,10 @@ extension RenderError {
         switch self {
         case .renderContent:
             return "can not render content"
-        case .render(let page):
+        case .renderPage(let page):
             return "can not render page '\(page.path)'"
+        case .renderPlayground(let playground):
+            return "can not render playground '\(playground.path)'"
         case .renderPlaygrounds:
             return "can not render playgrounds"
         case .getPlaygrounds(let folder):

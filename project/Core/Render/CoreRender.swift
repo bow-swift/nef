@@ -11,7 +11,7 @@ public struct CoreRender<D, A> {
         self.nodeProcessor = nodeProcessor
     }
     
-    public func render(content: String) -> EnvIO<D, CoreRenderError, RendererOutput<A>> {
+    public func render(content: String) -> EnvIO<D, CoreRenderError, RenderingOutput<A>> {
         let syntaxAST = SyntaxAnalyzer.parse(content: content)
         guard syntaxAST.count > 0 else { return EnvIO.raiseError(.ast)^ }
 
@@ -20,7 +20,7 @@ public struct CoreRender<D, A> {
         
         return filteredAST.traverse(nodeProcessor.render)
                           .flatMap(nodeProcessor.merge)
-                          .map { output in RendererOutput(ast: ast, output: output) }^
+                          .map { output in .init(ast: ast, output: output) }^
     }
 }
 

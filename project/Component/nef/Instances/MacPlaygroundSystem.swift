@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefUtils
+import NefCommon
 import Bow
 import BowEffects
 
