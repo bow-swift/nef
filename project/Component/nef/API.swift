@@ -26,7 +26,7 @@ public protocol MarkdownAPI {
     /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
-    static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (rendered: String, ast: String)>
+    static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)>
     
     /// Renders content into markdown file.
     ///
@@ -42,7 +42,7 @@ public protocol MarkdownAPI {
     ///   - content: content page in Xcode playground.
     ///   - toFile: output where to write the Markdown render.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
-    static func renderVerbose(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, trace: String)>
+    static func renderVerbose(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)>
     
     /// Renders playground pages into markdown files.
     ///

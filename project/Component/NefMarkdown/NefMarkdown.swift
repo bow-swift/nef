@@ -24,7 +24,7 @@ public struct Markdown {
         return binding(
                  env <- ask(),
             rendered <- env.get.render.renderPage(content: content).contramap(\MarkdownEnvironment.renderEnvironment),
-        yield: (rendered: rendered.get.output.all().joined(), ast: rendered.get.ast))^
+        yield: (rendered: self.contentFrom(page: rendered.get), ast: rendered.get.ast))^
     }
 
     public func page(content: String, filename: String, into output: URL) -> EnvIO<MarkdownEnvironment, RenderError, (url: URL, ast: String, rendered: String)> {
@@ -39,7 +39,7 @@ public struct Markdown {
              content <- env.get.fileSystem.readFile(atPath: file.path).mapLeft { _ in .renderPage(file) }.env(),
             rendered <- env.get.render.renderPage(content: content.get).contramap(\MarkdownEnvironment.renderEnvironment),
                      |<-env.get.renderSystem.writePage(rendered.get, file).contramap(\MarkdownEnvironment.fileSystem).mapError { _ in .renderPage(file) },
-        yield: (url: file, ast: rendered.get.ast, rendered: rendered.get.output.all().joined()))^
+        yield: (url: file, ast: rendered.get.ast, rendered: self.contentFrom(page: rendered.get)))^
     }
     
     public func playground(_ playground: URL, into output: URL) -> EnvIO<MarkdownEnvironment, RenderError, NEA<URL>> {
@@ -78,5 +78,9 @@ public struct Markdown {
     private func writtenPlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<MarkdownEnvironment, RenderError, URL> {
         content.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) }
                .map { _ in playground.url }^
+    }
+    
+    private func contentFrom(page: PageOutput) -> String {
+        page.output.all().joined()
     }
 }
