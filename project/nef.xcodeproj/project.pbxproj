@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8B0A905C23ACD3A400091C39 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A905B23ACD3A400091C39 /* main.swift */; };
-		8B0A907223ACE2F700091C39 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F6FF238C253700DD93C4 /* FileSystem.swift */; };
-		8B0A907323ACE2F900091C39 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F702238C256700DD93C4 /* FileSystemError.swift */; };
 		8B0FB588237C0A5600221548 /* CLIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB586237C0A5600221548 /* CLIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */; };
 		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
@@ -23,7 +21,6 @@
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
 		8B3345DE23D5C89F007156B2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3345DD23D5C89F007156B2 /* Image.swift */; };
-		8B36930223CE3EE9004DB042 /* RendererPlaygrounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3692FF23CE3812004DB042 /* RendererPlaygrounds.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
@@ -67,11 +64,6 @@
 		8B46C435238FDA3300437659 /* Swiftline in Frameworks */ = {isa = PBXBuildFile; productRef = 8B46C434238FDA3300437659 /* Swiftline */; };
 		8B51C79723CCC8A4003EE485 /* NefRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B51C79523CCC8A4003EE485 /* NefRender.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B51C7A123CCC9CD003EE485 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7A023CCC9CD003EE485 /* Render.swift */; };
-		8B51C7A323CCCA16003EE485 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907D23ACE36100091C39 /* FileSystem.swift */; };
-		8B51C7A423CCCA16003EE485 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A907B23ACE36100091C39 /* MarkdownError.swift */; };
-		8B51C7A523CCCA16003EE485 /* RenderSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A908123ACE39600091C39 /* RenderSystemError.swift */; };
-		8B51C7A623CCCA16003EE485 /* RenderEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13523B0D38700C8E6F8 /* RenderEnvironment.swift */; };
-		8B51C7A723CCCB16003EE485 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */; };
 		8B51C7AF23CDCE99003EE485 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7AE23CDCE99003EE485 /* main.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
@@ -79,27 +71,37 @@
 		8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0C238300A80025BC04 /* JekyllAPI.swift */; };
 		8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */; };
 		8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */; };
+		8BA1EF4223D62BBA00B33CD0 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */; };
+		8BA1EF4323D62BBA00B33CD0 /* RenderingOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */; };
+		8BA1EF4423D62BBA00B33CD0 /* RenderSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3E23D62BBA00B33CD0 /* RenderSystemError.swift */; };
+		8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */; };
+		8BA1EF4623D62BBA00B33CD0 /* RenderSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4123D62BBA00B33CD0 /* RenderSystem.swift */; };
+		8BA1EF5523D62BFA00B33CD0 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */; };
+		8BA1EF5623D62BFA00B33CD0 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */; };
+		8BA1EF5723D62BFA00B33CD0 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */; };
+		8BA1EF5823D62BFA00B33CD0 /* RenderEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4F23D62BF200B33CD0 /* RenderEnvironment.swift */; };
+		8BA1EF5923D62BFA00B33CD0 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */; };
+		8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */; };
+		8BA1EF6B23D62D1F00B33CD0 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */; };
+		8BA1EF6C23D62D1F00B33CD0 /* Bow+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6123D62CF700B33CD0 /* Bow+IO.swift */; };
+		8BA1EF6D23D62D1F00B33CD0 /* Bow+NEA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF5F23D62CF700B33CD0 /* Bow+NEA.swift */; };
+		8BA1EF6E23D62D1F00B33CD0 /* EnumeratedSequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */; };
+		8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6023D62CF700B33CD0 /* String+Path.swift */; };
+		8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */; };
+		8BA1EF7423D62D5000B33CD0 /* CoreRender+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF222123D223A400786F2F /* CoreRender+Test.swift */; };
 		8BAF221D23D20A8F00786F2F /* CoreRenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */; };
 		8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */; };
-		8BAF222223D223A400786F2F /* CoreRender+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF222123D223A400786F2F /* CoreRender+Test.swift */; };
 		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
 		8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17923B0C2AF000DB61F /* BowEffects */; };
 		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
-		8BB7D11923B0CB3900C8E6F8 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */; };
-		8BB7D11C23B0CB8000C8E6F8 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */; };
-		8BB7D12623B0D05100C8E6F8 /* MacFileSytem+SwiftPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */; };
-		8BB7D12723B0D05100C8E6F8 /* MacFileSytem+RenderSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+RenderSystem.swift */; };
 		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */; };
 		8BBCA655239683D400BE058B /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8BBD14BC2390192C0002970C /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F709238C278D00DD93C4 /* String+Path.swift */; };
-		8BBD14BD2390192C0002970C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C429238EE4C400437659 /* String+Utils.swift */; };
-		8BBD14BE2390192C0002970C /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86622D392C000919F36 /* Array+Slice.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 		8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */; };
-		8BD1F22323AA92EF001157DA /* RendererOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1F22223AA92EF001157DA /* RendererOutput.swift */; };
 		8BD4E312238814B7002DECDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E2F52388141E002DECDB /* main.swift */; };
 		8BD4E321238817BB002DECDB /* NefSwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E31F238817BB002DECDB /* NefSwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */; };
@@ -111,7 +113,6 @@
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
-		8BE9D5AD23CF2D9700332D75 /* Bow+NEA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9D5AC23CF2D9700332D75 /* Bow+NEA.swift */; };
 		8BE9D5C923D0857600332D75 /* RenderJekyllEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9D5C723D0857200332D75 /* RenderJekyllEnvironment.swift */; };
 		8BE9D5CD23D09BDA00332D75 /* RenderMarkdownEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9D5CB23D09BD600332D75 /* RenderMarkdownEnvironment.swift */; };
 		8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */; };
@@ -278,9 +279,6 @@
 /* Begin PBXFileReference section */
 		8B0A905923ACD3A400091C39 /* nef-markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-markdown"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0A905B23ACD3A400091C39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		8B0A907B23ACE36100091C39 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
-		8B0A907D23ACE36100091C39 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
-		8B0A908123ACE39600091C39 /* RenderSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystemError.swift; sourceTree = "<group>"; };
 		8B0CA51622AE669600181BC0 /* nef-carbon-page */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-carbon-page"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB584237C0A5600221548 /* CLIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CLIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB586237C0A5600221548 /* CLIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLIKit.h; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B304D5F23ABA954001E9303 /* String+Colorize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Colorize.swift"; sourceTree = "<group>"; };
 		8B3345DD23D5C89F007156B2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		8B3692FF23CE3812004DB042 /* RendererPlaygrounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPlaygrounds.swift; sourceTree = "<group>"; };
 		8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAPI.swift; sourceTree = "<group>"; };
 		8B3CB83D22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB84022D3929B00919F36 /* NefModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefModels.h; sourceTree = "<group>"; };
@@ -322,7 +319,6 @@
 		8B3CB85D22D392C000919F36 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B3CB86422D392C000919F36 /* NSImage+Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Store.swift"; sourceTree = "<group>"; };
 		8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundUtils.swift; sourceTree = "<group>"; };
-		8B3CB86622D392C000919F36 /* Array+Slice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Slice.swift"; sourceTree = "<group>"; };
 		8B3CB89322D393C300919F36 /* CoreRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRender.swift; sourceTree = "<group>"; };
 		8B3CB89422D393C300919F36 /* CoreMarkdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMarkdown.swift; sourceTree = "<group>"; };
 		8B3CB89522D393C300919F36 /* Node+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Render.swift"; sourceTree = "<group>"; };
@@ -348,7 +344,6 @@
 		8B46C41A238D8A0000437659 /* PlaygroundBookResolutionPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookResolutionPath.swift; sourceTree = "<group>"; };
 		8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookTemplate.swift; sourceTree = "<group>"; };
 		8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundExcludeItem.swift; sourceTree = "<group>"; };
-		8B46C429238EE4C400437659 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShell.swift; sourceTree = "<group>"; };
 		8B46C42E238FD52900437659 /* PlaygroundShellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShellError.swift; sourceTree = "<group>"; };
 		8B46C430238FD70700437659 /* MacPlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundShell.swift; sourceTree = "<group>"; };
@@ -367,15 +362,27 @@
 		8B75AF9023805A5200388B1C /* CarbonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbonView.swift; sourceTree = "<group>"; };
 		8B89BA0C238300A80025BC04 /* JekyllAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JekyllAPI.swift; sourceTree = "<group>"; };
 		8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownAPI.swift; sourceTree = "<group>"; };
+		8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacRenderSystem.swift; sourceTree = "<group>"; };
+		8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemError.swift; sourceTree = "<group>"; };
+		8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingOutput.swift; sourceTree = "<group>"; };
+		8BA1EF3E23D62BBA00B33CD0 /* RenderSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystemError.swift; sourceTree = "<group>"; };
+		8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
+		8BA1EF4123D62BBA00B33CD0 /* RenderSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystem.swift; sourceTree = "<group>"; };
+		8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
+		8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundSystemError.swift; sourceTree = "<group>"; };
+		8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundSystem.swift; sourceTree = "<group>"; };
+		8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
+		8BA1EF4F23D62BF200B33CD0 /* RenderEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderEnvironment.swift; sourceTree = "<group>"; };
+		8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingURL.swift; sourceTree = "<group>"; };
+		8BA1EF5F23D62CF700B33CD0 /* Bow+NEA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bow+NEA.swift"; sourceTree = "<group>"; };
+		8BA1EF6023D62CF700B33CD0 /* String+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
+		8BA1EF6123D62CF700B33CD0 /* Bow+IO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bow+IO.swift"; sourceTree = "<group>"; };
+		8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnumeratedSequence+Extension.swift"; sourceTree = "<group>"; };
+		8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Slice.swift"; sourceTree = "<group>"; };
+		8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRenderError.swift; sourceTree = "<group>"; };
 		8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreEnvironments.swift; sourceTree = "<group>"; };
 		8BAF222123D223A400786F2F /* CoreRender+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreRender+Test.swift"; sourceTree = "<group>"; };
-		8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystem.swift; sourceTree = "<group>"; };
-		8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundSystemError.swift; sourceTree = "<group>"; };
-		8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+SwiftPlayground.swift"; sourceTree = "<group>"; };
-		8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+RenderSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacFileSytem+RenderSystem.swift"; sourceTree = "<group>"; };
-		8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
-		8BB7D13523B0D38700C8E6F8 /* RenderEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEnvironment.swift; sourceTree = "<group>"; };
 		8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BB7D13E23B134A300C8E6F8 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8BBCA654239683D400BE058B /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
@@ -385,7 +392,6 @@
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Utils.swift"; sourceTree = "<group>"; };
-		8BD1F22223AA92EF001157DA /* RendererOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererOutput.swift; sourceTree = "<group>"; };
 		8BD4E2F52388141E002DECDB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8BD4E30A238814B1002DECDB /* nef-playground-book */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-playground-book"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefSwiftPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,13 +403,9 @@
 		8BD4E33623881F9F002DECDB /* PlaygroundResolutionPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundResolutionPath.swift; sourceTree = "<group>"; };
 		8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPlaygroundError.swift; sourceTree = "<group>"; };
 		8BD4E33A2388233D002DECDB /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
-		8BD6F6FF238C253700DD93C4 /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
-		8BD6F702238C256700DD93C4 /* FileSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemError.swift; sourceTree = "<group>"; };
 		8BD6F704238C259100DD93C4 /* MacFileSytem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacFileSytem.swift; sourceTree = "<group>"; };
 		8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEnvironment.swift; sourceTree = "<group>"; };
-		8BD6F709238C278D00DD93C4 /* String+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
 		8BD6F70C238C495600DD93C4 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
-		8BE9D5AC23CF2D9700332D75 /* Bow+NEA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bow+NEA.swift"; sourceTree = "<group>"; };
 		8BE9D5C723D0857200332D75 /* RenderJekyllEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderJekyllEnvironment.swift; sourceTree = "<group>"; };
 		8BE9D5CB23D09BD600332D75 /* RenderMarkdownEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderMarkdownEnvironment.swift; sourceTree = "<group>"; };
 		8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchTimeInterval+Utils.swift"; sourceTree = "<group>"; };
@@ -448,23 +450,6 @@
 				8B0A905B23ACD3A400091C39 /* main.swift */,
 			);
 			path = Markdown;
-			sourceTree = "<group>";
-		};
-		8B0A907923ACE36100091C39 /* Errors */ = {
-			isa = PBXGroup;
-			children = (
-				8B0A907B23ACE36100091C39 /* MarkdownError.swift */,
-				8B0A908123ACE39600091C39 /* RenderSystemError.swift */,
-			);
-			path = Errors;
-			sourceTree = "<group>";
-		};
-		8B0A907C23ACE36100091C39 /* Algebras */ = {
-			isa = PBXGroup;
-			children = (
-				8B0A907D23ACE36100091C39 /* FileSystem.swift */,
-			);
-			path = Algebras;
 			sourceTree = "<group>";
 		};
 		8B0FB585237C0A5600221548 /* CLIKit */ = {
@@ -768,10 +753,9 @@
 			isa = PBXGroup;
 			children = (
 				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
-				8BB7D12223B0D00F00C8E6F8 /* MacFileSytem+RenderSystem.swift */,
-				8BB7D12023B0CFFF00C8E6F8 /* MacFileSytem+SwiftPlayground.swift */,
 				8B46C430238FD70700437659 /* MacPlaygroundShell.swift */,
 				8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */,
+				8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */,
 			);
 			path = Instances;
 			sourceTree = "<group>";
@@ -780,10 +764,10 @@
 			isa = PBXGroup;
 			children = (
 				8B51C7A023CCC9CD003EE485 /* Render.swift */,
-				8B0A907C23ACE36100091C39 /* Algebras */,
-				8B0A907923ACE36100091C39 /* Errors */,
-				8BB7D13423B0D37400C8E6F8 /* Models */,
-				8BB7D12823B0D24000C8E6F8 /* Utils */,
+				8BA1EF4A23D62BF200B33CD0 /* Algrebras */,
+				8BA1EF4723D62BF200B33CD0 /* Errors */,
+				8BA1EF4E23D62BF200B33CD0 /* Models */,
+				8BA1EF4C23D62BF200B33CD0 /* Utils */,
 				8B51C79B23CCC8C9003EE485 /* Support Files */,
 			);
 			path = NefRender;
@@ -865,56 +849,85 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		8BA1EF3B23D62BBA00B33CD0 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */,
+				8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */,
+				8BA1EF3E23D62BBA00B33CD0 /* RenderSystemError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		8BA1EF3F23D62BBA00B33CD0 /* Algebras */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */,
+				8BA1EF4123D62BBA00B33CD0 /* RenderSystem.swift */,
+			);
+			path = Algebras;
+			sourceTree = "<group>";
+		};
+		8BA1EF4723D62BF200B33CD0 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */,
+				8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		8BA1EF4A23D62BF200B33CD0 /* Algrebras */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */,
+			);
+			path = Algrebras;
+			sourceTree = "<group>";
+		};
+		8BA1EF4C23D62BF200B33CD0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8BA1EF4E23D62BF200B33CD0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF4F23D62BF200B33CD0 /* RenderEnvironment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8BA1EF5A23D62C6700B33CD0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8BA1EF5E23D62CF700B33CD0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */,
+				8BA1EF6123D62CF700B33CD0 /* Bow+IO.swift */,
+				8BA1EF5F23D62CF700B33CD0 /* Bow+NEA.swift */,
+				8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */,
+				8BA1EF6023D62CF700B33CD0 /* String+Path.swift */,
+				8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		8BAF222023D2238D00786F2F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				8BAF222123D223A400786F2F /* CoreRender+Test.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		8BB7D11623B0CB0D00C8E6F8 /* Algrebras */ = {
-			isa = PBXGroup;
-			children = (
-				8BB7D11823B0CB3900C8E6F8 /* PlaygroundSystem.swift */,
-			);
-			path = Algrebras;
-			sourceTree = "<group>";
-		};
-		8BB7D11723B0CB1900C8E6F8 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				8BD6F709238C278D00DD93C4 /* String+Path.swift */,
-				8B46C429238EE4C400437659 /* String+Utils.swift */,
-				8B3CB86622D392C000919F36 /* Array+Slice.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		8BB7D11A23B0CB7100C8E6F8 /* Errors */ = {
-			isa = PBXGroup;
-			children = (
-				8BB7D11B23B0CB8000C8E6F8 /* PlaygroundSystemError.swift */,
-			);
-			path = Errors;
-			sourceTree = "<group>";
-		};
-		8BB7D12823B0D24000C8E6F8 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				8BB7D12923B0D27500C8E6F8 /* IO+Console.swift */,
-				8BE9D5AC23CF2D9700332D75 /* Bow+NEA.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		8BB7D13423B0D37400C8E6F8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				8BB7D13523B0D38700C8E6F8 /* RenderEnvironment.swift */,
-				8B3692FF23CE3812004DB042 /* RendererPlaygrounds.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		8BB7D13D23B1349000C8E6F8 /* Utils */ = {
@@ -928,9 +941,10 @@
 		8BBD14B02390179B0002970C /* NefCommon */ = {
 			isa = PBXGroup;
 			children = (
-				8BB7D11623B0CB0D00C8E6F8 /* Algrebras */,
-				8BB7D11A23B0CB7100C8E6F8 /* Errors */,
-				8BB7D11723B0CB1900C8E6F8 /* Utils */,
+				8BA1EF3F23D62BBA00B33CD0 /* Algebras */,
+				8BA1EF3B23D62BBA00B33CD0 /* Errors */,
+				8BA1EF5A23D62C6700B33CD0 /* Models */,
+				8BA1EF5E23D62CF700B33CD0 /* Utils */,
 				8BBD14B7239017B20002970C /* Support Files */,
 			);
 			path = NefCommon;
@@ -958,9 +972,8 @@
 			children = (
 				8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */,
 				8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */,
-				8BD1F22223AA92EF001157DA /* RendererOutput.swift */,
-				8B3CB89F22D393C300919F36 /* MarkupNode.swift */,
 				8B3345DD23D5C89F007156B2 /* Image.swift */,
+				8B3CB89F22D393C300919F36 /* MarkupNode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1013,7 +1026,6 @@
 		8BD6F6FE238C252F00DD93C4 /* Algebras */ = {
 			isa = PBXGroup;
 			children = (
-				8BD6F6FF238C253700DD93C4 /* FileSystem.swift */,
 				8B46C42B238FD4AB00437659 /* PlaygroundShell.swift */,
 			);
 			path = Algebras;
@@ -1022,7 +1034,6 @@
 		8BD6F701238C255200DD93C4 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				8BD6F702238C256700DD93C4 /* FileSystemError.swift */,
 				8B46C42E238FD52900437659 /* PlaygroundShellError.swift */,
 				8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */,
 				8B46C418238D88B800437659 /* PlaygroundBookError.swift */,
@@ -1640,14 +1651,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B51C7A323CCCA16003EE485 /* FileSystem.swift in Sources */,
-				8B51C7A623CCCA16003EE485 /* RenderEnvironment.swift in Sources */,
-				8B51C7A523CCCA16003EE485 /* RenderSystemError.swift in Sources */,
-				8B36930223CE3EE9004DB042 /* RendererPlaygrounds.swift in Sources */,
-				8B51C7A723CCCB16003EE485 /* IO+Console.swift in Sources */,
 				8B51C7A123CCC9CD003EE485 /* Render.swift in Sources */,
-				8B51C7A423CCCA16003EE485 /* MarkdownError.swift in Sources */,
-				8BE9D5AD23CF2D9700332D75 /* Bow+NEA.swift in Sources */,
+				8BA1EF5823D62BFA00B33CD0 /* RenderEnvironment.swift in Sources */,
+				8BA1EF5523D62BFA00B33CD0 /* PlaygroundSystem.swift in Sources */,
+				8BA1EF5923D62BFA00B33CD0 /* IO+Console.swift in Sources */,
+				8BA1EF5723D62BFA00B33CD0 /* PlaygroundSystemError.swift in Sources */,
+				8BA1EF5623D62BFA00B33CD0 /* MarkdownError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1672,8 +1681,6 @@
 				8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */,
 				8B3345DE23D5C89F007156B2 /* Image.swift in Sources */,
 				8B3CB8A622D393F100919F36 /* String+Format.swift in Sources */,
-				8BAF222223D223A400786F2F /* CoreRender+Test.swift in Sources */,
-				8BD1F22323AA92EF001157DA /* RendererOutput.swift in Sources */,
 				8B3CB8A222D393F100919F36 /* CoreMarkdown.swift in Sources */,
 				8B3CB8A122D393F100919F36 /* CoreRender.swift in Sources */,
 				8B3CB8C822D3987500919F36 /* CoreCarbon.swift in Sources */,
@@ -1684,6 +1691,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BA1EF7423D62D5000B33CD0 /* CoreRender+Test.swift in Sources */,
 				8B3CB8B322D394E600919F36 /* JekyllTests.swift in Sources */,
 				8B3CB8B222D394E600919F36 /* SyntaxTests.swift in Sources */,
 				8B3CB8B522D394E600919F36 /* MarkdownTests.swift in Sources */,
@@ -1702,11 +1710,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BBD14BE2390192C0002970C /* Array+Slice.swift in Sources */,
-				8BB7D11C23B0CB8000C8E6F8 /* PlaygroundSystemError.swift in Sources */,
-				8BBD14BD2390192C0002970C /* String+Utils.swift in Sources */,
-				8BBD14BC2390192C0002970C /* String+Path.swift in Sources */,
-				8BB7D11923B0CB3900C8E6F8 /* PlaygroundSystem.swift in Sources */,
+				8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */,
+				8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */,
+				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
+				8BA1EF6C23D62D1F00B33CD0 /* Bow+IO.swift in Sources */,
+				8BA1EF6B23D62D1F00B33CD0 /* Array+Slice.swift in Sources */,
+				8BA1EF4623D62BBA00B33CD0 /* RenderSystem.swift in Sources */,
+				8BA1EF4423D62BBA00B33CD0 /* RenderSystemError.swift in Sources */,
+				8BA1EF4323D62BBA00B33CD0 /* RenderingOutput.swift in Sources */,
+				8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */,
+				8BA1EF6D23D62D1F00B33CD0 /* Bow+NEA.swift in Sources */,
+				8BA1EF6E23D62D1F00B33CD0 /* EnumeratedSequence+Extension.swift in Sources */,
+				8BA1EF4223D62BBA00B33CD0 /* FileSystemError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1722,13 +1737,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B0A907223ACE2F700091C39 /* FileSystem.swift in Sources */,
 				8B46C417238D889700437659 /* PlaygroundBook.swift in Sources */,
 				8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */,
 				8B46C412238D87F200437659 /* Assets.swift in Sources */,
 				8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
-				8B0A907323ACE2F900091C39 /* FileSystemError.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
 				8B46C42D238FD4AF00437659 /* PlaygroundShell.swift in Sources */,
 				8B46C42F238FD52900437659 /* PlaygroundShellError.swift in Sources */,
@@ -1748,17 +1761,16 @@
 			files = (
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */,
+				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
 				8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
-				8BB7D12723B0D05100C8E6F8 /* MacFileSytem+RenderSystem.swift in Sources */,
 				8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */,
 				8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */,
 				8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */,
 				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
 				8B0FB5B8237C61C000221548 /* Error.swift in Sources */,
-				8BB7D12623B0D05100C8E6F8 /* MacFileSytem+SwiftPlayground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
