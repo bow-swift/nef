@@ -1,8 +1,10 @@
 //  Copyright © 2020 The nef Authors.
 
 import XCTest
+import NefCore
 import NefCommon
 import NefModels
+
 import Bow
 import BowEffects
 

@@ -16,25 +16,24 @@ public struct Render<A> {
     
     public init() {}
     
-    public func renderPage(content: String) -> EnvIO<Environment, RenderError, PageOutput> {
-        let env = EnvIO<Environment, RenderError, Environment>.var()
-        let rendered = EnvIO<Environment, RenderError, PageOutput>.var()
-        
-        return binding(
-                 env <- ask(),
-            rendered <- env.get.nodePrinter(content).mapLeft { _ in RenderError.renderContent }.env(),
-        yield: rendered.get)^
+    public func page(content: String, pageName: String = "") -> EnvIO<Environment, RenderError, PageOutput> {
+        EnvIO { env in
+            let rendered = IO<RenderError, PageOutput>.var()
+            
+            return binding(
+                         |<-env.console.print(information: "\t• Rendering page \(pageName.isEmpty ? "content" : "'\(pageName)'")"),
+                rendered <- env.nodePrinter(content).mapLeft { _ in RenderError.renderContent },
+            yield: rendered.get)^.reportStatus(console: env.console)
+        }
     }
     
-    public func renderPlayground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
-        let playgroundURL = RenderingURL(url: playground,
-                                         title: playgroundName(playground),
-                                         escapedTitle: escaped(filename: playgroundName(playground)))
-        
-        return renderPlayground(playgroundURL)
+    public func playground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
+        self.renderPlayground(RenderingURL(url: playground,
+                                           title: playgroundName(playground),
+                                           escapedTitle: escaped(filename: playgroundName(playground))))
     }
     
-    public func renderPlaygrounds(at folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
+    public func playgrounds(at folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
         func playgroundsOutputFrom(playgrounds: NEA<RenderingURL>, outputs: NEA<PlaygroundOutput>) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
             guard playgrounds.count == outputs.count, !playgrounds.all().isEmpty else { return EnvIO.raiseError(.renderPlaygrounds)^ }
             
@@ -68,7 +67,8 @@ public struct Render<A> {
         pages.traverse { (page: RenderingURL) in
             let url = page.url.appendingPathComponent("Contents.swift")
             guard let content = try? String(contentsOf: url) else { return EnvIO.raiseError(.renderPage(url))^ }
-            return self.renderPage(content: content).map { output in (page: page, output: output) }^
+            let filename = url.path.parentPath.filename.removeExtension
+            return self.page(content: content, pageName: filename).map { output in (page: page, output: output) }^
         }^
     }
     
@@ -98,11 +98,12 @@ public struct Render<A> {
             let rendererPages = IO<RenderError, NEA<RenderingURL>>.var()
             
             return binding(
+                              |<-env.console.print(information: "Get pages in playground '\(playground)'"),
                         pages <- env.playgroundSystem.pages(in: playground.url).mapLeft { _ in .getPages(playground: playground.url) },
                 rendererPages <- pages.get.traverse { url in RenderingURL(url: url,
                                                                           title: self.pageName(url),
                                                                           escapedTitle: self.escaped(filename: self.pageName(url))).io() },
-            yield: rendererPages.get)
+            yield: rendererPages.get)^.reportStatus(console: env.console)
         }
     }
     
@@ -112,11 +113,12 @@ public struct Render<A> {
             let rendered = IO<RenderError, NEA<RenderingURL>>.var()
             
             return binding(
+                           |<-env.console.print(information: "Get playgrounds in '\(folder.lastPathComponent.removeExtension)'"),
                playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapLeft { _ in .getPlaygrounds(folder: folder) },
                   rendered <- playgrounds.get.traverse { url in RenderingURL(url: url,
                                                                              title: self.playgroundName(url),
                                                                              escapedTitle: self.escaped(filename: self.playgroundName(url))).io() },
-            yield: rendered.get)
+            yield: rendered.get)^.reportStatus(console: env.console)
         }
     }
 }

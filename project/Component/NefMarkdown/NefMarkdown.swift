@@ -23,7 +23,7 @@ public struct Markdown {
         
         return binding(
                  env <- ask(),
-            rendered <- env.get.render.renderPage(content: content).contramap(\MarkdownEnvironment.renderEnvironment),
+            rendered <- env.get.render.page(content: content).contramap(\MarkdownEnvironment.renderEnvironment),
         yield: (rendered: self.contentFrom(page: rendered.get), ast: rendered.get.ast))^
     }
 
@@ -37,7 +37,7 @@ public struct Markdown {
         return binding(
                  env <- ask(),
              content <- env.get.fileSystem.readFile(atPath: file.path).mapLeft { _ in .renderPage(file) }.env(),
-            rendered <- env.get.render.renderPage(content: content.get).contramap(\MarkdownEnvironment.renderEnvironment),
+            rendered <- env.get.render.page(content: content.get).contramap(\MarkdownEnvironment.renderEnvironment),
                      |<-env.get.renderSystem.writePage(rendered.get, file).contramap(\MarkdownEnvironment.fileSystem).mapError { _ in .renderPage(file) },
         yield: (url: file, ast: rendered.get.ast, rendered: self.contentFrom(page: rendered.get)))^
     }
@@ -49,7 +49,7 @@ public struct Markdown {
         
         return binding(
                   env <- ask(),
-             rendered <- env.get.render.renderPlayground(playground).contramap(\MarkdownEnvironment.renderEnvironment),
+             rendered <- env.get.render.playground(playground).contramap(\MarkdownEnvironment.renderEnvironment),
               written <- rendered.get.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) },
         yield: written.get)^
     }
@@ -61,7 +61,7 @@ public struct Markdown {
         
         return binding(
                   env <- ask(),
-             rendered <- env.get.render.renderPlaygrounds(at: folder).contramap(\MarkdownEnvironment.renderEnvironment),
+             rendered <- env.get.render.playgrounds(at: folder).contramap(\MarkdownEnvironment.renderEnvironment),
               written <- rendered.get.traverse { info in self.writtenPlayground(playground: info.playground, content: info.output, output: output) },
         yield: written.get)^
     }
