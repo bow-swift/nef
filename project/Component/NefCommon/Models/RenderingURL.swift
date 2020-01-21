@@ -7,12 +7,15 @@ import BowEffects
 public struct RenderingURL {
     public let url: URL
     public let title: String
-    public let escapedTitle: String
+
+    public var escapedTitle: String {
+        title.lowercased().replacingOccurrences(of: "?", with: "-")
+                          .replacingOccurrences(of: " ", with: "-")
+    }
     
-    public init(url: URL, title: String, escapedTitle: String) {
+    public init(url: URL, title: String) {
         self.url = url
         self.title = title
-        self.escapedTitle = escapedTitle
     }
 }
 

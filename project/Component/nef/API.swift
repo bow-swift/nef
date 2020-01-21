@@ -76,7 +76,7 @@ public protocol JekyllAPI {
     ///   - content: content page in Xcode playground.
     ///   - permalink: relative url where locate the page.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
-    static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (rendered: String, ast: String)>
+    static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)>
     
     /// Renders content into jekyll file.
     ///
@@ -94,7 +94,7 @@ public protocol JekyllAPI {
     ///   - permalink: relative url where locate the page.
     ///   - toFile: output where to write the Markdown render.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
-    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, trace: String)>
+    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)>
     
     /// Renders playground pages into jekyll files.
     ///

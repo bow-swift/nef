@@ -74,9 +74,9 @@
 		8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */; };
 		8BA1EF4223D62BBA00B33CD0 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */; };
 		8BA1EF4323D62BBA00B33CD0 /* RenderingOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */; };
-		8BA1EF4423D62BBA00B33CD0 /* RenderSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3E23D62BBA00B33CD0 /* RenderSystemError.swift */; };
+		8BA1EF4423D62BBA00B33CD0 /* RenderingPersistenceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */; };
 		8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */; };
-		8BA1EF4623D62BBA00B33CD0 /* RenderSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4123D62BBA00B33CD0 /* RenderSystem.swift */; };
+		8BA1EF4623D62BBA00B33CD0 /* RenderingPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */; };
 		8BA1EF5523D62BFA00B33CD0 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */; };
 		8BA1EF5623D62BFA00B33CD0 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */; };
 		8BA1EF5723D62BFA00B33CD0 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */; };
@@ -365,9 +365,9 @@
 		8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacRenderSystem.swift; sourceTree = "<group>"; };
 		8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemError.swift; sourceTree = "<group>"; };
 		8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingOutput.swift; sourceTree = "<group>"; };
-		8BA1EF3E23D62BBA00B33CD0 /* RenderSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystemError.swift; sourceTree = "<group>"; };
+		8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingPersistenceError.swift; sourceTree = "<group>"; };
 		8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
-		8BA1EF4123D62BBA00B33CD0 /* RenderSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderSystem.swift; sourceTree = "<group>"; };
+		8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingPersistence.swift; sourceTree = "<group>"; };
 		8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
 		8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundSystemError.swift; sourceTree = "<group>"; };
 		8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundSystem.swift; sourceTree = "<group>"; };
@@ -854,7 +854,7 @@
 			children = (
 				8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */,
 				8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */,
-				8BA1EF3E23D62BBA00B33CD0 /* RenderSystemError.swift */,
+				8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -863,7 +863,7 @@
 			isa = PBXGroup;
 			children = (
 				8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */,
-				8BA1EF4123D62BBA00B33CD0 /* RenderSystem.swift */,
+				8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */,
 			);
 			path = Algebras;
 			sourceTree = "<group>";
@@ -1715,8 +1715,8 @@
 				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
 				8BA1EF6C23D62D1F00B33CD0 /* Bow+IO.swift in Sources */,
 				8BA1EF6B23D62D1F00B33CD0 /* Array+Slice.swift in Sources */,
-				8BA1EF4623D62BBA00B33CD0 /* RenderSystem.swift in Sources */,
-				8BA1EF4423D62BBA00B33CD0 /* RenderSystemError.swift in Sources */,
+				8BA1EF4623D62BBA00B33CD0 /* RenderingPersistence.swift in Sources */,
+				8BA1EF4423D62BBA00B33CD0 /* RenderingPersistenceError.swift in Sources */,
 				8BA1EF4323D62BBA00B33CD0 /* RenderingOutput.swift in Sources */,
 				8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */,
 				8BA1EF6D23D62D1F00B33CD0 /* Bow+NEA.swift in Sources */,

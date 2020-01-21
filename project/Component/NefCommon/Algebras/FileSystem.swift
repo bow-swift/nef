@@ -13,6 +13,44 @@ public protocol FileSystem {
     func write(content: String, toFile path: String) -> IO<FileSystemError, ()>
     func write(content: Data, toFile path: String) -> IO<FileSystemError, ()>
     func exist(itemPath: String) -> Bool
+    
+    func createDirectory<D>(atPath: String) -> EnvIO<D, FileSystemError, ()>
+    func copy<D>(itemPath: String, toPath: String) -> EnvIO<D, FileSystemError, ()>
+    func remove<D>(itemPath: String) -> EnvIO<D, FileSystemError, ()>
+    func items<D>(atPath path: String) -> EnvIO<D, FileSystemError, [String]>
+    func readFile<D>(atPath path: String) -> EnvIO<D, FileSystemError, String>
+    func write<D>(content: String, toFile path: String) -> EnvIO<D, FileSystemError, ()>
+    func write<D>(content: Data, toFile path: String) -> EnvIO<D, FileSystemError, ()>
+}
+
+public extension FileSystem {
+    func createDirectory<D>(atPath: String) -> EnvIO<D, FileSystemError, ()> {
+        createDirectory(atPath: atPath).env()
+    }
+    
+    func copy<D>(itemPath: String, toPath: String) -> EnvIO<D, FileSystemError, ()> {
+        copy(itemPath: itemPath, toPath: toPath).env()
+    }
+    
+    func remove<D>(itemPath: String) -> EnvIO<D, FileSystemError, ()> {
+        remove(itemPath: itemPath).env()
+    }
+    
+    func items<D>(atPath path: String) -> EnvIO<D, FileSystemError, [String]> {
+        items(atPath: path).env()
+    }
+    
+    func readFile<D>(atPath path: String) -> EnvIO<D, FileSystemError, String> {
+        readFile(atPath: path).env()
+    }
+    
+    func write<D>(content: String, toFile path: String) -> EnvIO<D, FileSystemError, ()> {
+        write(content: content, toFile: path).env()
+    }
+    
+    func write<D>(content: Data, toFile path: String) -> EnvIO<D, FileSystemError, ()> {
+        write(content: content, toFile: path).env()
+    }
 }
 
 public extension FileSystem {

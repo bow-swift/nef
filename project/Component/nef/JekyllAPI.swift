@@ -15,7 +15,8 @@ public extension JekyllAPI {
         renderVerbose(content: content, permalink: permalink).map { info in info.rendered }^
     }
     
-    static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (rendered: String, ast: String)> {
+    static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
+        #warning("It must be completed in NefJekyll module refactor")
         fatalError()
 //        NefJekyll.Jekyll()
 //                 .renderPage(content: content, permalink: permalink)
@@ -27,10 +28,11 @@ public extension JekyllAPI {
         renderVerbose(content: content, permalink: permalink, toFile: file).map { info in info.url }^
     }
     
-    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, trace: String)> {
+    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
         let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
         let filename = file.pathExtension == "md" ? file.lastPathComponent : file.appendingPathExtension("md").lastPathComponent
 
+        #warning("It must be completed in NefJekyll module refactor")
         fatalError()
 //        return NefJekyll.Jekyll()
 //                        .renderPage(content: content, permalink: permalink, filename: filename, into: output)
@@ -39,6 +41,7 @@ public extension JekyllAPI {
     }
     
     static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        #warning("It must be completed in NefJekyll module refactor")
         fatalError()
 //        NefJekyll.Jekyll()
 //                 .renderPlayground(playground, into: output)
@@ -47,6 +50,7 @@ public extension JekyllAPI {
     }
     
     static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]> {
+        #warning("It must be completed in NefJekyll module refactor")
         fatalError()
 //        NefJekyll.Jekyll()
 //                 .renderPlaygrounds(at: playgroundsAt, mainPage: mainPage, into: output)

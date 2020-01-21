@@ -12,7 +12,7 @@ public extension NSImage {
               let fileData = imageRep.representation(using: type, properties: properties) else { return nil }
         
         let nsdata = NSData(data: fileData).updateExif(withText: metadata)
-        return Image(data: Data(referencing: nsdata))
+        return .data(Data(referencing: nsdata))
     }
 }
 

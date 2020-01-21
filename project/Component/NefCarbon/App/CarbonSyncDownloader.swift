@@ -33,6 +33,7 @@ class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
     }
     
     func carbon(configuration: CarbonModel) -> IO<CarbonError, Image> {
+        #warning("Migrate NefCarbon to functional architecture")
         fatalError()
     }
     
