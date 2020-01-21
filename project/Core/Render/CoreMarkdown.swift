@@ -1,16 +1,27 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import Bow
+import BowEffects
 
-public struct MarkdownGenerator: InternalRender {
-    public init() { }
-    
-    internal func render(node: Node) -> String {
-        return node.markdown()
+extension NodeProcessor where D == CoreMarkdownEnvironment, A == String {
+    static var markdown: NodeProcessor {
+        func render(node: Node) -> EnvIO<D, CoreRenderError, A> {
+            EnvIO.pure(node.markdown())^
+        }
+        
+        func merge(nodes: [A]) -> EnvIO<D, CoreRenderError, NEA<A>> {
+            let data = nodes.combineAll()
+            guard !data.isEmpty else { return EnvIO.raiseError(.emptyNode)^ }
+            return EnvIO.pure(NEA.of(data))^
+        }
+        
+        return .init(render: render, merge: merge)
     }
 }
 
-// MARK: - Markdown definition for each node
+
+// MARK: - node definition <markdown>
 extension Node {
     func markdown() -> String {
         switch self {

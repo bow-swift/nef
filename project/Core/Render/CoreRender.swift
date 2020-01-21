@@ -1,41 +1,45 @@
 //  Copyright © 2019 The nef Authors.
 
-import Foundation
+import NefCommon
+import Bow
+import BowEffects
 
-public protocol CoreRender {
-    func render(content: String) -> RendererOutput?
-}
-
-protocol CoreJekyll {
-    func jekyll(permalink: String) -> String
-}
-
-protocol CoreMarkdown {
-    func markdown() -> String
-}
-
-protocol CoreCarbon {
-    func carbon(downloader: CarbonCodeDownloader) -> String
-}
-
-// Dependencies
-extension Node: CoreJekyll {}
-extension Node: CoreMarkdown {}
-extension Node: CoreCarbon {}
-
-// MARK: - default Render :: render(content:)
-protocol InternalRender: CoreRender {
-    func render(node: Node) -> String
-}
-
-extension InternalRender {
-    public func render(content: String) -> RendererOutput? {
-        let syntaxTree = SyntaxAnalyzer.parse(content: content)
-        guard syntaxTree.count > 0 else { return nil }
-
-        let filteredSyntaxTree = syntaxTree.filter { !$0.isHidden }.reduce()
-        let ast = filteredSyntaxTree.map { "\($0)" }.joined(separator: "\n")
-        let output = filteredSyntaxTree.reduce("") { (acc, node) in acc + self.render(node: node) }
-        return RendererOutput(ast: ast, output: output)
+public struct CoreRender<D, A> {
+    let nodeProcessor: NodeProcessor<D, A>
+    
+    internal init(_ nodeProcessor: NodeProcessor<D, A>) {
+        self.nodeProcessor = nodeProcessor
     }
+    
+    public func render(content: String) -> EnvIO<D, CoreRenderError, RendererOutput<A>> {
+        let syntaxAST = SyntaxAnalyzer.parse(content: content)
+        guard syntaxAST.count > 0 else { return EnvIO.raiseError(.ast)^ }
+
+        let filteredAST = syntaxAST.filter { !$0.isHidden }.reduce()
+        let ast = filteredAST.map { "\($0)" }.joined(separator: "\n")
+        
+        return filteredAST.traverse(nodeProcessor.render)
+                          .flatMap(nodeProcessor.merge)
+                          .map { output in RendererOutput(ast: ast, output: output) }^
+    }
+}
+
+struct NodeProcessor<D, A> {
+    let render: (Node) -> EnvIO<D, CoreRenderError, A>
+    let merge: ([A]) -> EnvIO<D, CoreRenderError, NEA<A>>
+}
+
+
+// MARK: - dependencies <CoreRender>
+
+public extension CoreRender where D == CoreJekyllEnvironment, A == String {
+    static var jekyll: CoreRender { .init(.jekyll) }
+}
+
+public extension CoreRender where D == CoreMarkdownEnvironment, A == String {
+    static var markdown: CoreRender { .init(.markdown) }
+}
+
+public extension CoreRender where D == CoreCarbonEnvironment, A == Image {
+    static var carbon: CoreRender { .init(.carbon) }
 }

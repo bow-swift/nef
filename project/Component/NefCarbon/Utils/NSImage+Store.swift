@@ -1,17 +1,18 @@
 //  Copyright © 2019 The nef Authors.
 
 import AppKit
+import NefCore
 
 public extension NSImage {
     
-    func writeToFile(file: String, plainText: String, atomically: Bool, usingType type: NSBitmapImageRep.FileType) -> Bool {
+    func image(usingType type: NSBitmapImageRep.FileType, metadata: String) -> NefCore.Image? {
         let properties = [NSBitmapImageRep.PropertyKey.compressionFactor: 1.0]
         guard let imageData = tiffRepresentation,
               let imageRep = NSBitmapImageRep(data: imageData),
-              let fileData = imageRep.representation(using: type, properties: properties) else { return false }
+              let fileData = imageRep.representation(using: type, properties: properties) else { return nil }
         
-        let data = NSData(data: fileData).updateExif(withText: plainText)
-        return data.write(toFile: file, atomically: atomically)
+        let nsdata = NSData(data: fileData).updateExif(withText: metadata)
+        return Image(data: Data(referencing: nsdata))
     }
 }
 

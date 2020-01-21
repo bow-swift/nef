@@ -4,7 +4,7 @@ import XCTest
 @testable import NefCore
 
 class JekyllTests: XCTestCase {
-
+    
     func testPlainPlaygroundWithMultiMarkup_render_returnsMarkupNodeAndStartWithNewLine() {
         let input = """
                     /*:
@@ -12,10 +12,9 @@ class JekyllTests: XCTestCase {
                      */
 
                     """
-        let expected = "\n### This is a markup\n"
-        let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(jekyll(content: input, permalink: ""),
+               succeeds: "\n### This is a markup\n")
     }
 
     func testPlainPlaygroundWithMultiMarkupAndWhiteSpaces_render_returnsTrimMarkupNode() {
@@ -30,9 +29,9 @@ class JekyllTests: XCTestCase {
 
                     """
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
-        let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(jekyll(content: input, permalink: ""),
+               succeeds: expected)
     }
 
     func testPlainPlaygroundWithCode_render_returnsSwiftBlock() {
@@ -41,9 +40,9 @@ class JekyllTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(input)```\n"
-        let result = NefCore.JekyllGenerator(permalink: "").render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(jekyll(content: input, permalink: ""),
+               succeeds: expected)
     }
 
     func testPlainPlaygroundWithNefHeader_render_returnsHeaderBlock() {
@@ -67,9 +66,8 @@ class JekyllTests: XCTestCase {
 
                        """
 
-        let result = NefCore.JekyllGenerator(permalink: "permalink").render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        assert(jekyll(content: input, permalink: "permalink"),
+               succeeds: expected)
     }
 
     func testPlainPlaygroundWithNefHeaderAndWhitespaces_render_returnsHeaderBlockTrimmed() {
@@ -93,9 +91,9 @@ class JekyllTests: XCTestCase {
 
                        """
 
-        let result = NefCore.JekyllGenerator(permalink: "permalink").render(content: input)
-
-        XCTAssertEqual(result?.output, expected)
+        
+        assert(jekyll(content: input, permalink: "permalink"),
+               succeeds: expected)
     }
     
 }
