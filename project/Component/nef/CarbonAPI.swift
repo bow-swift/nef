@@ -100,6 +100,7 @@ fileprivate extension CarbonAPI {
         
         parentView.addSubview(carbonView)
         
+        #warning("It must be completed in NefCarbon module refactor")
         fatalError()
 //        DispatchQueue(label: "nef-framework", qos: .userInitiated).async {
 //            renderCarbon(downloader: downloader,

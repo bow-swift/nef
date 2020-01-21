@@ -2,7 +2,7 @@
 
 import Foundation
 
-public enum RenderSystemError: Error {
+public enum RenderingPersistenceError: Error {
     case persist(item: URL)
     case structure(folder: URL)
 }

@@ -54,7 +54,7 @@ public extension MarkdownAPI {
     private static func environment(console: Console) -> RenderMarkdownEnvironment<String> {
         .init(console: console,
               fileSystem: MacFileSystem(),
-              renderSystem: .init(),
+              persistence: .init(),
               playgroundSystem: MacPlaygroundSystem(),
               nodePrinter: { content in CoreRender.markdown.render(content: content).provide(CoreMarkdownEnvironment()) })
     }
