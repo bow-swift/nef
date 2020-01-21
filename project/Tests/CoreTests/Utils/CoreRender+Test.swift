@@ -28,13 +28,13 @@ extension XCTestCase {
 
 
 extension XCTestCase {
-    func assert<A: Equatable>(_ io: IO<CoreRenderError, RenderingOutput<A>>, succeeds: A) {
-        _ = io.unsafeRunSyncEither().bimap({ e in XCTFail(e.localizedDescription) },
-                                           { rendered in XCTAssertEqual(rendered.output.all().first!, succeeds) })
+    func assert<A: Equatable>(_ io: IO<CoreRenderError, RenderingOutput<A>>, succeeds: A, message: String = "", file: StaticString = #file, line: UInt = #line) {
+        _ = io.unsafeRunSyncEither().bimap({ e in XCTFail("\(e.localizedDescription)\(message.isEmpty ? "" : ": \(message)")", file: file, line: line) },
+                                           { rendered in XCTAssertEqual(rendered.output.all().first!, succeeds, message, file: file, line: line) })
     }
     
-    func assert<A: Equatable>(_ io: IO<CoreRenderError, RenderingOutput<A>>, fails: CoreRenderError) {
-        _ = io.unsafeRunSyncEither().bimap({ e in XCTAssertEqual(e, fails) },
-                                           { rendered in XCTFail("\(rendered.output)") })
+    func assert<A: Equatable>(_ io: IO<CoreRenderError, RenderingOutput<A>>, fails: CoreRenderError, message: String = "", file: StaticString = #file, line: UInt = #line) {
+        _ = io.unsafeRunSyncEither().bimap({ e in XCTAssertEqual(e, fails, message, file: file, line: line) },
+                                           { rendered in XCTFail("\(rendered.output)\(message.isEmpty ? "" : ": \(message)")", file: file, line: line) })
     }
 }
