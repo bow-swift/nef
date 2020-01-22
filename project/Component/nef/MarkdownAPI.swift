@@ -77,7 +77,7 @@ public extension MarkdownAPI {
     }
     
     // MARK: - private <helpers>
-    private static func environment(console: Console) -> RenderMarkdownEnvironment<String> {
+    private static func environment(console: Console) -> NefMarkdown.Markdown.Environment {
         .init(console: console,
               fileSystem: MacFileSystem(),
               renderSystem: .init(),

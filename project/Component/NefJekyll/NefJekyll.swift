@@ -10,16 +10,16 @@ import Bow
 import BowEffects
 
 public struct Jekyll {
-    public typealias JekyllEnvironment = RenderJekyllEnvironment<String>
+    public typealias Environment = RenderJekyllEnvironment<String>
     typealias PageOutput  = RenderingOutput<String>.PageOutput
     typealias PlaygroundOutput  = RenderingOutput<String>.PlaygroundOutput
     typealias PlaygroundsOutput = RenderingOutput<String>.PlaygroundsOutput
     
     public init() {}
     
-    public func page(content: String, permalink: String) -> EnvIO<JekyllEnvironment, RenderError, (ast: String, rendered: String)> {
-        let env = EnvIO<JekyllEnvironment, RenderError, JekyllEnvironment>.var()
-        let rendered = EnvIO<JekyllEnvironment, RenderError, PageOutput>.var()
+    public func page(content: String, permalink: String) -> EnvIO<Environment, RenderError, (ast: String, rendered: String)> {
+        let env = EnvIO<Environment, RenderError, Environment>.var()
+        let rendered = EnvIO<Environment, RenderError, PageOutput>.var()
         
         return binding(
                  env <- ask(),
@@ -27,44 +27,44 @@ public struct Jekyll {
         yield: (rendered: self.contentFrom(page: rendered.get), ast: rendered.get.ast))^
     }
     
-    public func page(content: String, permalink: String, filename: String, into output: URL) -> EnvIO<JekyllEnvironment, RenderError, (url: URL, ast: String, rendered: String)> {
+    public func page(content: String, permalink: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, (url: URL, ast: String, rendered: String)> {
         let file = output.appendingPathComponent(filename)
         
-        let env = EnvIO<JekyllEnvironment, RenderError, JekyllEnvironment>.var()
-        let content = EnvIO<JekyllEnvironment, RenderError, String>.var()
-        let rendered = EnvIO<JekyllEnvironment, RenderError, PageOutput>.var()
+        let env = EnvIO<Environment, RenderError, Environment>.var()
+        let content = EnvIO<Environment, RenderError, String>.var()
+        let rendered = EnvIO<Environment, RenderError, PageOutput>.var()
         
         return binding(
                  env <- ask(),
              content <- env.get.fileSystem.readFile(atPath: file.path).mapLeft { _ in .renderPage(file) }.env(),
             rendered <- env.get.render.page(content: content.get).contramap { env in env.jekyllEnvironment(permalink) },
-                     |<-env.get.renderSystem.writePage(rendered.get, file).contramap(\JekyllEnvironment.fileSystem).mapError { _ in .renderPage(file) },
+                     |<-env.get.renderSystem.writePage(rendered.get, file).contramap(\Environment.fileSystem).mapError { _ in .renderPage(file) },
         yield: (url: file, ast: rendered.get.ast, rendered: self.contentFrom(page: rendered.get)))^
     }
     
-    public func playground(_ playground: URL, into output: URL) -> EnvIO<JekyllEnvironment, RenderError, NEA<URL>> {
-        let env = EnvIO<JekyllEnvironment, RenderError, JekyllEnvironment>.var()
-        let rendered = EnvIO<JekyllEnvironment, RenderError, PlaygroundOutput>.var()
-        let written = EnvIO<JekyllEnvironment, RenderError, NEA<URL>>.var()
+    public func playground(_ playground: URL, into output: URL) -> EnvIO<Environment, RenderError, NEA<URL>> {
+        let env = EnvIO<Environment, RenderError, Environment>.var()
+        let rendered = EnvIO<Environment, RenderError, PlaygroundOutput>.var()
+        let written = EnvIO<Environment, RenderError, NEA<URL>>.var()
         
         return binding(
                   env <- ask(),
-             rendered <- env.get.render.playground(playground).contramap(\JekyllEnvironment.renderEnvironment),
+             rendered <- env.get.render.playground(playground).contramap(\Environment.renderEnvironment),
               written <- rendered.get.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) },
         yield: written.get)^
     }
     
-    public func playgrounds(at folder: URL, mainPage: URL, into output: URL) -> EnvIO<JekyllEnvironment, RenderError, NEA<URL>> {
-        let docs = output.appendingPathComponent(JekyllEnvironment.docs)
-        let data = output.appendingPathComponent(JekyllEnvironment.data)
+    public func playgrounds(at folder: URL, mainPage: URL, into output: URL) -> EnvIO<Environment, RenderError, NEA<URL>> {
+        let docs = output.appendingPathComponent(Environment.docs)
+        let data = output.appendingPathComponent(Environment.data)
         
-        let env = EnvIO<JekyllEnvironment, RenderError, JekyllEnvironment>.var()
-        let rendered = EnvIO<JekyllEnvironment, RenderError, PlaygroundsOutput>.var()
-        let written = EnvIO<JekyllEnvironment, RenderError, NEA<URL>>.var()
+        let env = EnvIO<Environment, RenderError, Environment>.var()
+        let rendered = EnvIO<Environment, RenderError, PlaygroundsOutput>.var()
+        let written = EnvIO<Environment, RenderError, NEA<URL>>.var()
         
         return binding(
                   env <- ask(),
-             rendered <- env.get.render.playgrounds(at: folder).contramap(\JekyllEnvironment.renderEnvironment),
+             rendered <- env.get.render.playgrounds(at: folder).contramap(\Environment.renderEnvironment),
               written <- rendered.get.traverse { info in self.writtenPlayground(playground: info.playground, content: info.output, output: docs) },
                       |<-self.buildMainPage(mainPage, docs: docs),
                       |<-self.buildSideBar(rendered: rendered.get, data: data),
@@ -76,7 +76,7 @@ public struct Jekyll {
         page.output.all().joined()
     }
     
-    private func writtenPage(page: RenderingURL, content: PageOutput, output: URL) -> EnvIO<JekyllEnvironment, RenderError, URL> {
+    private func writtenPage(page: RenderingURL, content: PageOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         EnvIO { env in
             let file = output.appendingPathComponent(page.escapedTitle).appendingPathComponent("README.md")
             return env.renderSystem.writePage(content, file).provide(env.fileSystem)
@@ -84,13 +84,13 @@ public struct Jekyll {
         }^
     }
     
-    private func writtenPlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<JekyllEnvironment, RenderError, URL> {
+    private func writtenPlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         content.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) }
                .map { _ in playground.url }^
     }
     
     // MARK: private <steps>
-    private func buildMainPage(_ mainPage: URL, docs: URL) -> EnvIO<JekyllEnvironment, RenderError, Void> {
+    private func buildMainPage(_ mainPage: URL, docs: URL) -> EnvIO<Environment, RenderError, Void> {
         let file = docs.appendingPathComponent("README.md")
         let content = (try? String(contentsOf: mainPage)) ?? """
                                                              ---
@@ -108,11 +108,11 @@ public struct Jekyll {
         }
     }
     
-    private func buildSideBar(rendered: PlaygroundsOutput, data: URL) -> EnvIO<JekyllEnvironment, RenderError, Void> {
+    private func buildSideBar(rendered: PlaygroundsOutput, data: URL) -> EnvIO<Environment, RenderError, Void> {
         func sidebarPage(playground: RenderingURL, page: RenderingURL) -> String {
             """
                 - title: \(page)
-                  url: \(JekyllEnvironment.permalink(playground: playground, page: page))
+                  url: \(Environment.permalink(playground: playground, page: page))
             """
         }
 

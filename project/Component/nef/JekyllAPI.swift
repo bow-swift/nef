@@ -77,7 +77,7 @@ public extension JekyllAPI {
     }
     
     // MARK: - private <helpers>
-    private static func environment(console: Console) -> RenderJekyllEnvironment<String> {
+    private static func environment(console: Console) -> NefJekyll.Jekyll.Environment {
         .init(console: console,
               fileSystem: MacFileSystem(),
               renderSystem: .init(),
