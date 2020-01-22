@@ -52,27 +52,27 @@ public extension MarkdownAPI {
     }
     
     // MARK: api <IO>
-    static func render(content: String) -> IO<nef.Error, String> {
+    static func renderIO(content: String) -> IO<nef.Error, String> {
         render(content: content).provide(MacDummyConsole())
     }
     
-    static func renderVerbose(content: String) -> IO<nef.Error, (ast: String, rendered: String)> {
+    static func renderVerboseIO(content: String) -> IO<nef.Error, (ast: String, rendered: String)> {
         renderVerbose(content: content).provide(MacDummyConsole())
     }
     
-    static func render(content: String, toFile file: URL) -> IO<nef.Error, URL> {
+    static func renderIO(content: String, toFile file: URL) -> IO<nef.Error, URL> {
         render(content: content, toFile: file).provide(MacDummyConsole())
     }
     
-    static func renderVerbose(content: String, toFile file: URL) -> IO<nef.Error, (url: URL, ast: String, rendered: String)> {
+    static func renderVerboseIO(content: String, toFile file: URL) -> IO<nef.Error, (url: URL, ast: String, rendered: String)> {
         renderVerbose(content: content, toFile: file).provide(MacDummyConsole())
     }
     
-    static func render(playground: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
+    static func renderIO(playground: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
         render(playground: playground, into: output).provide(MacDummyConsole())
     }
     
-    static func render(playgroundsAt folder: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
+    static func renderIO(playgroundsAt folder: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
         render(playgroundsAt: folder, into: output).provide(MacDummyConsole())
     }
     
@@ -82,6 +82,6 @@ public extension MarkdownAPI {
               fileSystem: MacFileSystem(),
               renderSystem: .init(),
               playgroundSystem: MacPlaygroundSystem(),
-              nodePrinter: { content in CoreRender.markdown.render(content: content).provide(.init()) })
+              markdownPrinter: { content in CoreRender.markdown.render(content: content).provide(.init()) })
     }
 }

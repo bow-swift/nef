@@ -16,21 +16,14 @@ public struct Render<A> {
     
     public init() {}
     
-    public func page(content: String, pageName: String = "") -> EnvIO<Environment, RenderError, PageOutput> {
-        EnvIO { env in
-            let rendered = IO<RenderError, PageOutput>.var()
-            
-            return binding(
-                         |<-env.console.print(information: "\t• Rendering page \(pageName.isEmpty ? "content" : "'\(pageName)'")"),
-                rendered <- env.nodePrinter(content).mapLeft { _ in RenderError.renderContent },
-            yield: rendered.get)^.reportStatus(console: env.console)
-        }
+    public func page(content: String) -> EnvIO<Environment, RenderError, PageOutput> {
+        renderPage(content: content, info: .empty)
     }
     
     public func playground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
-        self.renderPlayground(RenderingURL(url: playground,
-                                           title: playgroundName(playground),
-                                           escapedTitle: escaped(filename: playgroundName(playground))))
+        renderPlayground(RenderingURL(url: playground,
+                                      title: playgroundName(playground),
+                                      escapedTitle: escaped(filename: playgroundName(playground))))
     }
     
     public func playgrounds(at folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
@@ -59,17 +52,27 @@ public struct Render<A> {
         
         return binding(
                 pages <- self.getPages(playground: playground),
-             rendered <- self.renderPages(pages.get),
+             rendered <- self.renderPages(pages.get, inPlayground: playground),
         yield: rendered.get)^
     }
     
-    private func renderPages(_ pages: NEA<RenderingURL>) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
+    private func renderPages(_ pages: NEA<RenderingURL>, inPlayground playground: RenderingURL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
         pages.traverse { (page: RenderingURL) in
             let url = page.url.appendingPathComponent("Contents.swift")
             guard let content = try? String(contentsOf: url) else { return EnvIO.raiseError(.renderPage(url))^ }
-            let filename = url.path.parentPath.filename.removeExtension
-            return self.page(content: content, pageName: filename).map { output in (page: page, output: output) }^
+            return self.renderPage(content: content, info: .init(playground: playground, page: page)).map { output in (page: page, output: output) }^
         }^
+    }
+    
+    private func renderPage(content: String, info: RenderEnvironmentInfo) -> EnvIO<Environment, RenderError, PageOutput> {
+        EnvIO { env in
+            let rendered = IO<RenderError, PageOutput>.var()
+            
+            return binding(
+                             |<-env.console.print(information: "\t• Rendering page \(info.isEmpty ? "content" : "'\(info.page)'")"),
+                    rendered <- env.nodePrinter(content).provide(info).mapLeft { _ in RenderError.renderContent },
+            yield: rendered.get)^.reportStatus(console: env.console)
+        }
     }
     
     // MARK: - format file <helpers>

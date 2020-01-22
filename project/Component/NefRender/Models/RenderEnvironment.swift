@@ -6,7 +6,7 @@ import NefCore
 import BowEffects
 
 public struct RenderEnvironment<A> {
-    public typealias NodePrinter = (_ content: String) -> IO<CoreRenderError, RenderingOutput<A>>
+    public typealias NodePrinter = (_ content: String) -> EnvIO<RenderEnvironmentInfo, CoreRenderError, RenderingOutput<A>>
     
     public let console: Console
     public let playgroundSystem: PlaygroundSystem
@@ -17,4 +17,31 @@ public struct RenderEnvironment<A> {
         self.playgroundSystem = playgroundSystem
         self.nodePrinter = nodePrinter
     }
+}
+
+public struct RenderEnvironmentInfo {
+    public let playground: RenderingURL
+    public let page: RenderingURL
+    public let isEmpty: Bool
+    
+    public init(playground: RenderingURL, page: RenderingURL) {
+        self.init(playground: playground, page: page, isEmpty: false)
+    }
+}
+
+// MARK: - helpers
+extension RenderEnvironmentInfo {
+    internal static var empty: RenderEnvironmentInfo {
+        .init(playground: .empty, page: .empty, isEmpty: true)
+    }
+    
+    fileprivate init(playground: RenderingURL, page: RenderingURL, isEmpty: Bool) {
+        self.playground = playground
+        self.page = page
+        self.isEmpty = isEmpty
+    }
+}
+
+fileprivate extension RenderingURL {
+    static var empty: RenderingURL {  .init(url: .init(fileURLWithPath: ""), title: "", escapedTitle: "") }
 }
