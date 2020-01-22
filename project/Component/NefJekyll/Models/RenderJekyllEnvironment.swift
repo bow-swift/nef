@@ -30,6 +30,7 @@ public struct RenderJekyllEnvironment<A> {
     
     // MARK: - helpers
     static var docs: String { "docs" }
+    static var data: String { "_data" }
     
     static func permalink(playground: RenderingURL, page: RenderingURL) -> String {
         "/\(docs)/\(playground.escapedTitle)/\(page.escapedTitle)/"

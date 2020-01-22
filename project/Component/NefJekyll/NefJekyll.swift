@@ -56,6 +56,7 @@ public struct Jekyll {
     
     public func playgrounds(at folder: URL, mainPage: URL, into output: URL) -> EnvIO<JekyllEnvironment, RenderError, NEA<URL>> {
         let docs = output.appendingPathComponent(JekyllEnvironment.docs)
+        let data = output.appendingPathComponent(JekyllEnvironment.data)
         
         let env = EnvIO<JekyllEnvironment, RenderError, JekyllEnvironment>.var()
         let rendered = EnvIO<JekyllEnvironment, RenderError, PlaygroundsOutput>.var()
@@ -64,9 +65,9 @@ public struct Jekyll {
         return binding(
                   env <- ask(),
              rendered <- env.get.render.playgrounds(at: folder).contramap(\JekyllEnvironment.renderEnvironment),
-              written <- rendered.get.traverse { info in self.writtenPlayground(playground: info.playground, content: info.output, output: output) },
-                      |<-self.buildMainPage(mainPage, docs: docs),//.contramap(\RenderJekyllEnvironment.fileSystem),
-//                      |<-self.buildSideBar(rendered: rendered.get, output: output, permalink: env.get.permalink).contramap(\RenderJekyllEnvironment.renderEnvironment),
+              written <- rendered.get.traverse { info in self.writtenPlayground(playground: info.playground, content: info.output, output: docs) },
+                      |<-self.buildMainPage(mainPage, docs: docs),
+                      |<-self.buildSideBar(rendered: rendered.get, data: data),
         yield: written.get)^
     }
     
@@ -107,44 +108,40 @@ public struct Jekyll {
         }
     }
     
-//        private func buildSideBar(rendered: RendererPlaygrounds, output: URL, permalink: @escaping (RendererPage) -> String) -> EnvIO<RenderEnvironment, RenderError, Void> {
-//            func sidebarPage(_ info: RendererPage, permalink: String) -> String {
-//                """
-//                        - title: \(info.page)
-//                          url: \(permalink)
-//                """
-//            }
-//
-//            func sidebarPlayground(_ info: RendererPlayground, permalink: (RendererPage) -> String) -> String {
-//                """
-//                  - title: \(info.playground)
-//
-//                    nested_options:
-//
-//                \(info.pages.all().map { page in RendererPage(playground: info.playground, page: page) }
-//                                  .map { page in sidebarPage(page, permalink: permalink(page)) }
-//                                  .joined(separator: "\n\n"))
-//                """
-//            }
-//
-//            func sidebar(permalink: (RendererPage) -> String) -> String {
-//                """
-//                options:
-//
-//                \(rendered.playgrounds.all().map { sidebarPlayground($0, permalink: permalink) }
-//                                            .joined(separator: "\n\n"))
-//                """
-//            }
-//
-//            let data = output.appendingPathComponent("_data")
-//            let sidebarFile = data.appendingPathComponent("sidebar.yml")
-//
-//            return EnvIO { env in
-//                binding(
-//                    |<-env.fileSystem.createDirectory(at: data),
-//                    |<-env.fileSystem.write(content: sidebar(permalink: permalink), toFile: sidebarFile),
-//                yield: ())^.mapLeft { _ in .render(page: sidebarFile) }.reportStatus(step: step, in: env.console)
-//            }
-//        }
-    
+    private func buildSideBar(rendered: PlaygroundsOutput, data: URL) -> EnvIO<JekyllEnvironment, RenderError, Void> {
+        func sidebarPage(playground: RenderingURL, page: RenderingURL) -> String {
+            """
+                - title: \(page)
+                  url: \(JekyllEnvironment.permalink(playground: playground, page: page))
+            """
+        }
+
+        func sidebarPlayground(playground: RenderingURL, info: PlaygroundOutput) -> String {
+            """
+            - title: \(playground)
+
+              nested_options:
+
+            \(info.all().map { (page, _) in sidebarPage(playground: playground, page: page) }.joined(separator: "\n\n"))
+            """
+        }
+
+        func sidebar(_ info: PlaygroundsOutput) -> String {
+            """
+            options:
+
+            \(info.all().map(sidebarPlayground).joined(separator: "\n\n"))
+            """
+        }
+
+        let sidebarFile = data.appendingPathComponent("sidebar.yml")
+
+        return EnvIO { env in
+            binding(
+                |<-env.console.print(information: "Building sidebar '\(sidebarFile.path)'"),
+                |<-env.fileSystem.createDirectory(atPath: data.path),
+                |<-env.fileSystem.write(content: sidebar(rendered), toFile: sidebarFile.path),
+            yield: ())^.mapLeft { _ in .renderPage(sidebarFile) }^.reportStatus(console: env.console)
+        }
+    }
 }

@@ -16,11 +16,11 @@ public struct RenderMarkdownEnvironment<A> {
                 fileSystem: FileSystem,
                 renderSystem: RenderSystem<A>,
                 playgroundSystem: PlaygroundSystem,
-                markdownPrinter: @escaping (_ content: String) -> IO<CoreRenderError, RenderingOutput<A>>) {
+                markdownPrinter: @escaping (_ content: String) -> EnvIO<CoreMarkdownEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.fileSystem = fileSystem
         self.renderSystem = renderSystem
         self.render = Render<A>()
-        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, nodePrinter: { content in markdownPrinter(content).env() })
+        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, nodePrinter: { content in markdownPrinter(content).provide(.init()).env() })
     }
 }
