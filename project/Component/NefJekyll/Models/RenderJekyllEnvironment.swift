@@ -1,31 +1,30 @@
 //  Copyright © 2020 The nef Authors.
 
-import Foundation
 import NefCommon
 import NefModels
 import NefCore
 import NefRender
+import BowEffects
 
-//public struct RenderJekyllEnvironment {
-//    public let renderEnvironment: RenderEnvironment
-//    public let jekyllPrinter: (_ permalink: String) -> CoreRender
-//    public let permalink: (RendererPage) -> String
-//    
-//    public init(console: Console,
-//                playgroundSystem: PlaygroundSystem,
-//                fileSystem: FileSystem,
-//                nodePrinter: @escaping (RendererPage) -> CoreRender,
-//                jekyllPrinter: @escaping (_ permalink: String) -> CoreRender,
-//                permalink: @escaping (RendererPage) -> String) {
-//        
-//        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: nodePrinter)
-//        self.jekyllPrinter = jekyllPrinter
-//        self.permalink = permalink
-//    }
-//}
-//
-//extension RenderJekyllEnvironment {
-//    func renderEnvironment(permalink: String) -> RenderEnvironment {
-//        renderEnvironment.copy(with: { _ in self.jekyllPrinter(permalink) }, for: \RenderEnvironment.nodePrinter)
-//    }
-//}
+public struct RenderJekyllEnvironment<A> {
+    public let fileSystem: FileSystem
+    public let renderSystem: RenderSystem<A>
+    public let render: Render<A>
+    public let renderEnvironment: (_ permalink: String) -> RenderEnvironment<A>
+    
+    public init(console: Console,
+                fileSystem: FileSystem,
+                renderSystem: RenderSystem<A>,
+                playgroundSystem: PlaygroundSystem,
+                jekyllPrinter: @escaping (_ permalink: String) -> RenderEnvironment<A>.NodePrinter) {
+        
+        self.fileSystem = fileSystem
+        self.renderSystem = renderSystem
+        self.render = Render<A>()
+        self.renderEnvironment = { permalink in
+            RenderEnvironment(console: console,
+                              playgroundSystem: playgroundSystem,
+                              nodePrinter: jekyllPrinter(permalink))
+        }
+    }
+}

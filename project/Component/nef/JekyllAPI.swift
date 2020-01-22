@@ -11,6 +11,7 @@ import BowEffects
 
 public extension JekyllAPI {
     
+    // MARK: api <EnvIO>
     static func render(content: String, permalink: String) -> EnvIO<Console, nef.Error, String> {
         renderVerbose(content: content, permalink: permalink).map { info in info.rendered }^
     }
@@ -54,17 +55,37 @@ public extension JekyllAPI {
 //                 .mapError { _ in nef.Error.jekyll }^
     }
     
+    // MARK: api <IO>
+    static func render(content: String, permalink: String) -> IO<nef.Error, String> {
+        render(content: content, permalink: permalink).provide(MacDummyConsole())
+    }
+    
+    static func renderVerbose(content: String, permalink: String) -> IO<nef.Error, (rendered: String, ast: String)> {
+        renderVerbose(content: content, permalink: permalink).provide(MacDummyConsole())
+    }
+    
+    static func render(content: String, permalink: String, toFile file: URL) -> IO<nef.Error, URL> {
+        render(content: content, permalink: permalink, toFile: file).provide(MacDummyConsole())
+    }
+    
+    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> IO<nef.Error, (url: URL, ast: String, trace: String)> {
+        renderVerbose(content: content, permalink: permalink, toFile: file).provide(MacDummyConsole())
+    }
+    
+    static func render(playground: URL, into output: URL) -> IO<nef.Error, [URL]> {
+        render(playground: playground, into: output).provide(MacDummyConsole())
+    }
+    
+    static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> IO<nef.Error, [URL]> {
+        render(playgroundsAt: playgroundsAt, mainPage: mainPage, into: output).provide(MacDummyConsole())
+    }
+    
     // MARK: - private <helpers>
-//    private static func environment(console: Console) -> RenderJekyllEnvironment {
-//        .init(console: console,
-//              playgroundSystem: MacPlaygroundSystem(),
-//              fileSystem: MacFileSystem(),
-//              nodePrinter: { info in JekyllGenerator(permalink: permalink(info)) },
-//              jekyllPrinter: { permalink in JekyllGenerator(permalink: permalink) },
-//              permalink: permalink)
-//    }
-//
-//    private static func permalink(_ info: RendererPage) -> String {
-//        "/docs/\(info.playground.escapedTitle)/\(info.page.escapedTitle)/"
-//    }
+    private static func environment(console: Console) -> RenderJekyllEnvironment<String> {
+        .init(console: console,
+              fileSystem: MacFileSystem(),
+              renderSystem: .init(),
+              playgroundSystem: MacPlaygroundSystem(),
+              jekyllPrinter: { permalink in { content in CoreRender.jekyll.render(content: content).provide(.init(permalink: permalink)) }})
+    }
 }

@@ -90,6 +90,7 @@
 		8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6023D62CF700B33CD0 /* String+Path.swift */; };
 		8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */; };
 		8BA1EF7423D62D5000B33CD0 /* CoreRender+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF222123D223A400786F2F /* CoreRender+Test.swift */; };
+		8BA1EF7623D86B2D00B33CD0 /* MacDummyConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF7523D86B2D00B33CD0 /* MacDummyConsole.swift */; };
 		8BAF221D23D20A8F00786F2F /* CoreRenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */; };
 		8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */; };
 		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
@@ -380,6 +381,7 @@
 		8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnumeratedSequence+Extension.swift"; sourceTree = "<group>"; };
 		8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Slice.swift"; sourceTree = "<group>"; };
 		8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
+		8BA1EF7523D86B2D00B33CD0 /* MacDummyConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDummyConsole.swift; sourceTree = "<group>"; };
 		8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRenderError.swift; sourceTree = "<group>"; };
 		8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreEnvironments.swift; sourceTree = "<group>"; };
 		8BAF222123D223A400786F2F /* CoreRender+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreRender+Test.swift"; sourceTree = "<group>"; };
@@ -752,6 +754,7 @@
 		8B46C436238FDA3A00437659 /* Instances */ = {
 			isa = PBXGroup;
 			children = (
+				8BA1EF7523D86B2D00B33CD0 /* MacDummyConsole.swift */,
 				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
 				8B46C430238FD70700437659 /* MacPlaygroundShell.swift */,
 				8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */,
@@ -1763,6 +1766,7 @@
 				8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */,
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
+				8BA1EF7623D86B2D00B33CD0 /* MacDummyConsole.swift in Sources */,
 				8BB7D14023B134AB00C8E6F8 /* String+Utils.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,

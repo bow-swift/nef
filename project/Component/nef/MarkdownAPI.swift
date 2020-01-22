@@ -11,6 +11,7 @@ import BowEffects
 
 public extension MarkdownAPI {
     
+    // MARK: api <EnvIO>
     static func render(content: String) -> EnvIO<Console, nef.Error, String> {
         renderVerbose(content: content).map { info in info.rendered }^
     }
@@ -50,12 +51,37 @@ public extension MarkdownAPI {
                    .mapError { _ in nef.Error.markdown }^
     }
     
+    // MARK: api <IO>
+    static func render(content: String) -> IO<nef.Error, String> {
+        render(content: content).provide(MacDummyConsole())
+    }
+    
+    static func renderVerbose(content: String) -> IO<nef.Error, (ast: String, rendered: String)> {
+        renderVerbose(content: content).provide(MacDummyConsole())
+    }
+    
+    static func render(content: String, toFile file: URL) -> IO<nef.Error, URL> {
+        render(content: content, toFile: file).provide(MacDummyConsole())
+    }
+    
+    static func renderVerbose(content: String, toFile file: URL) -> IO<nef.Error, (url: URL, ast: String, rendered: String)> {
+        renderVerbose(content: content, toFile: file).provide(MacDummyConsole())
+    }
+    
+    static func render(playground: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
+        render(playground: playground, into: output).provide(MacDummyConsole())
+    }
+    
+    static func render(playgroundsAt folder: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
+        render(playgroundsAt: folder, into: output).provide(MacDummyConsole())
+    }
+    
     // MARK: - private <helpers>
     private static func environment(console: Console) -> RenderMarkdownEnvironment<String> {
         .init(console: console,
               fileSystem: MacFileSystem(),
               renderSystem: .init(),
               playgroundSystem: MacPlaygroundSystem(),
-              nodePrinter: { content in CoreRender.markdown.render(content: content).provide(CoreMarkdownEnvironment()) })
+              nodePrinter: { content in CoreRender.markdown.render(content: content).provide(.init()) })
     }
 }

@@ -25,8 +25,22 @@ public protocol MarkdownAPI {
     ///
     /// - Parameters:
     ///   - content: content page in Xcode playground.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the markdown generated of type `String`.
+    static func render(content: String) -> IO<nef.Error, String>
+    
+    /// Renders content into markdown.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
     static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)>
+    
+    /// Renders content into markdown.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the render information.
+    static func renderVerbose(content: String) -> IO<nef.Error, (ast: String, rendered: String)>
     
     /// Renders content into markdown file.
     ///
@@ -41,8 +55,24 @@ public protocol MarkdownAPI {
     /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the file generated of type `URL`.
+    static func render(content: String, toFile file: URL) -> IO<nef.Error, URL>
+    
+    /// Renders content into markdown file.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - toFile: output where to write the Markdown render.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
     static func renderVerbose(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)>
+    
+    /// Renders content into markdown file.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An IO` that produce errors of type `nef.Error` and values with the render information.
+    static func renderVerbose(content: String, toFile file: URL) -> IO<nef.Error, (url: URL, ast: String, rendered: String)>
     
     /// Renders playground pages into markdown files.
     ///
@@ -55,10 +85,26 @@ public protocol MarkdownAPI {
     /// Renders playground pages into markdown files.
     ///
     /// - Parameters:
+    ///   - playground: path to Xcode playground.
+    ///   - into: folder where to write the markdown files.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the markdown files generated of type `[URL]`.
+    static func render(playground: URL, into output: URL) -> IO<nef.Error, NEA<URL>>
+    
+    /// Renders playground pages into markdown files.
+    ///
+    /// - Parameters:
     ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
     ///   - into: folder where to write the markdown files for each Xcode Playground page.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the playground paths rendered `[URL]`, having access to an immutable environment of type `Console`.
     static func render(playgroundsAt: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>>
+    
+    /// Renders playground pages into markdown files.
+    ///
+    /// - Parameters:
+    ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
+    ///   - into: folder where to write the markdown files for each Xcode Playground page.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the playground paths rendered `[URL]`.
+    static func render(playgroundsAt: URL, into output: URL) -> IO<nef.Error, NEA<URL>>
 }
 
 public protocol JekyllAPI {
@@ -112,6 +158,57 @@ public protocol JekyllAPI {
     ///   - into: folder where to render the jekyll site.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the playground paths rendered `[URL]`, having access to an immutable environment of type `Console`.
     static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<Console, nef.Error, [URL]>
+    
+    /// Renders content into jekyll format.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - permalink: relative url where locate the page.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the jekyll generated of type `String`.
+    static func render(content: String, permalink: String) -> IO<nef.Error, String>
+    
+    /// Renders content into jekyll format.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - permalink: relative url where locate the page.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the render information.
+    static func renderVerbose(content: String, permalink: String) -> IO<nef.Error, (rendered: String, ast: String)>
+    
+    /// Renders content into jekyll file.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - permalink: relative url where locate the page.
+    ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the file generated of type `URL`.
+    static func render(content: String, permalink: String, toFile file: URL) -> IO<nef.Error, URL>
+    
+    /// Renders content into jekyll file.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - permalink: relative url where locate the page.
+    ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the render information.
+    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> IO<nef.Error, (url: URL, ast: String, trace: String)>
+    
+    /// Renders playground pages into jekyll files.
+    ///
+    /// - Parameters:
+    ///   - playground: path to Xcode playground.
+    ///   - into: folder where to render the jekyll files (for each playground's page).
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the jekyll files generated of type `[URL]`.
+    static func render(playground: URL, into output: URL) -> IO<nef.Error, [URL]>
+    
+    /// Renders playground pages into jekyll files.
+    ///
+    /// - Parameters:
+    ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
+    ///   - mainPage: the main page path (in jekyll file format).
+    ///   - into: folder where to render the jekyll site.
+    ///   - Returns: An `IO` that produce errors of type `nef.Error` and values with the playground paths rendered `[URL]`.
+    static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> IO<nef.Error, [URL]>
 }
 
 public protocol CarbonAPI {
