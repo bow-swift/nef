@@ -50,7 +50,7 @@ public struct Markdown {
         return binding(
                   env <- ask(),
              rendered <- env.get.render.playground(playground).contramap(\Environment.renderEnvironment),
-              written <- rendered.get.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) },
+              written <- rendered.get.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output.appendingPlaygroundName(playground)) },
         yield: written.get)^
     }
     
@@ -76,11 +76,17 @@ public struct Markdown {
     }
     
     private func writtenPlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        content.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output) }
+        content.traverse { info in self.writtenPage(page: info.page, content: info.output, output: output.appendingPlaygroundName(playground.url)) }
                .map { _ in playground.url }^
     }
     
     private func contentFrom(page: PageOutput) -> String {
         page.output.all().joined()
+    }
+}
+
+private extension URL {
+    func appendingPlaygroundName(_ playground: URL) -> URL {
+        appendingPathComponent(playground.path.filename.removeExtension)
     }
 }
