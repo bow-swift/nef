@@ -14,8 +14,5 @@ public struct RenderingOutput<A> {
 }
 
 
-public extension RenderingOutput {
-    typealias PageOutput  = RenderingOutput<A>
-    typealias PlaygroundOutput  = NEA<(page: RenderingURL, output: PageOutput)>
-    typealias PlaygroundsOutput = NEA<(playground: RenderingURL, output: PlaygroundOutput)>
-}
+public typealias PlaygroundOutput<A>  = NEA<(page: RenderingURL, output: RenderingOutput<A>)>
+public typealias PlaygroundsOutput<A> = NEA<(playground: RenderingURL, output: PlaygroundOutput<A>)>

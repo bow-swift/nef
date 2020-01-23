@@ -80,7 +80,7 @@ public extension MarkdownAPI {
     private static func environment(console: Console) -> NefMarkdown.Markdown.Environment {
         .init(console: console,
               fileSystem: MacFileSystem(),
-              renderSystem: .init(),
+              persistence: .init(),
               playgroundSystem: MacPlaygroundSystem(),
               markdownPrinter: { content in CoreRender.markdown.render(content: content) })
     }

@@ -3,10 +3,10 @@
 import Foundation
 
 public enum RenderError: Error {
-    case renderContent
-    case renderPage(_ page: URL)
-    case renderPlayground(_ playground: URL)
-    case renderPlaygrounds
+    case content
+    case page(_ page: URL)
+    case playground(_ playground: URL)
+    case playgrounds
     case getPlaygrounds(folder: URL)
     case getPages(playground: URL)
 }
@@ -14,13 +14,13 @@ public enum RenderError: Error {
 extension RenderError {
     var information: String {
         switch self {
-        case .renderContent:
+        case .content:
             return "can not render content"
-        case .renderPage(let page):
+        case .page(let page):
             return "can not render page '\(page.path)'"
-        case .renderPlayground(let playground):
+        case .playground(let playground):
             return "can not render playground '\(playground.path)'"
-        case .renderPlaygrounds:
+        case .playgrounds:
             return "can not render playgrounds"
         case .getPlaygrounds(let folder):
             return "could not get playgrounds at '\(folder.path)'"

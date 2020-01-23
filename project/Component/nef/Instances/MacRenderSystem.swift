@@ -4,7 +4,7 @@ import Foundation
 import Bow
 import BowEffects
 
-extension RenderSystem where A == String {
+extension RenderingPersistence where A == String {
     init() { self.init { page, file in
         EnvIO { fileSystem in
             let folder = file.deletingLastPathComponent()

@@ -80,7 +80,7 @@ public extension JekyllAPI {
     private static func environment(console: Console) -> NefJekyll.Jekyll.Environment {
         .init(console: console,
               fileSystem: MacFileSystem(),
-              renderSystem: .init(),
+              persistence: .init(),
               playgroundSystem: MacPlaygroundSystem(),
               jekyllPrinter: { content in CoreRender.jekyll.render(content: content) })
     }

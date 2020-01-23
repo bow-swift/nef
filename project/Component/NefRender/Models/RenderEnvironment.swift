@@ -29,19 +29,22 @@ public struct RenderEnvironmentInfo {
     }
 }
 
-// MARK: - helpers
-extension RenderEnvironmentInfo {
-    internal static var empty: RenderEnvironmentInfo {
+// MARK: - helpers <internal>
+internal extension RenderEnvironmentInfo {
+    static var empty: RenderEnvironmentInfo {
         .init(playground: .empty, page: .empty, isEmpty: true)
     }
-    
-    fileprivate init(playground: RenderingURL, page: RenderingURL, isEmpty: Bool) {
+}
+
+// MARK: - helpers <private>
+private extension RenderEnvironmentInfo {
+    init(playground: RenderingURL, page: RenderingURL, isEmpty: Bool) {
         self.playground = playground
         self.page = page
         self.isEmpty = isEmpty
     }
 }
 
-fileprivate extension RenderingURL {
-    static var empty: RenderingURL {  .init(url: .init(fileURLWithPath: ""), title: "", escapedTitle: "") }
+private extension RenderingURL {
+    static var empty: RenderingURL {  .init(url: .init(fileURLWithPath: ""), title: "") }
 }

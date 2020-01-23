@@ -8,7 +8,7 @@ import BowEffects
 
 public struct RenderJekyllEnvironment<A> {
     public let fileSystem: FileSystem
-    public let renderSystem: RenderSystem<A>
+    public let persistence: RenderingPersistence<A>
     public let render: Render<A>
     public let jekyllEnvironment: (_ permalink: String) -> RenderEnvironment<A>
     public let renderEnvironment: RenderEnvironment<A>
@@ -17,12 +17,12 @@ public struct RenderJekyllEnvironment<A> {
     
     public init(console: Console,
                 fileSystem: FileSystem,
-                renderSystem: RenderSystem<A>,
+                persistence: RenderingPersistence<A>,
                 playgroundSystem: PlaygroundSystem,
                 jekyllPrinter: @escaping (_ content: String) -> EnvIO<CoreJekyllEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.fileSystem = fileSystem
-        self.renderSystem = renderSystem
+        self.persistence = persistence
         self.render = Render<A>()
         self.jekyllEnvironment = { permalink in RenderEnvironment(console: console, playgroundSystem: playgroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter, permalink: permalink)) }
         self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter))
