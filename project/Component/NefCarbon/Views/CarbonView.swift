@@ -2,19 +2,9 @@
 
 import AppKit
 import WebKit
+import NefModels
 
-public protocol CarbonLoadingView: NSView {
-    func show()
-    func hide()
-}
-
-public protocol CarbonView: NSView {
-    var loadingView: CarbonLoadingView? { get set }
-    func update(state: CarbonStyle)
-}
-
-
-class CarbonWebView: WKWebView, WKNavigationDelegate {
+internal class CarbonWebView: WKWebView, WKNavigationDelegate, NefModels.CarbonView {
     private let code: String
     private var state: CarbonStyle
     weak var loadingView: CarbonLoadingView?
@@ -54,6 +44,13 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
         load(request)
     }
     
+    // MARK: delegate <NefModels.CarbonView>
+    public func update(state: CarbonStyle) {
+        guard self.state != state else { return }
+        self.state = state
+        loadCarbonWebView()
+    }
+    
     // MARK: delegate <WKNavigationDelegate>
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         loadingView?.show()
@@ -78,13 +75,5 @@ class CarbonWebView: WKWebView, WKNavigationDelegate {
         evaluateJavaScript(javaScript) { (_, _) in
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + .milliseconds(500), execute: completionHandler)
         }
-    }
-}
-
-extension CarbonWebView: CarbonView {
-    public func update(state: CarbonStyle) {
-        guard self.state != state else { return }
-        self.state = state
-        loadCarbonWebView()
     }
 }

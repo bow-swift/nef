@@ -14,7 +14,7 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
         self.main = main
         self.window = assembler.resolveWindow()
         self.carbonView = assembler.resolveCarbonView(frame: window.frame)
-        self.downloader = provider.resolveCarbonDownloader(view: carbonView, multiFiles: true)
+        self.downloader = provider.resolveCarbonDownloader(view: carbonView)
         self.queue = DispatchQueue(label: String(describing: CarbonAppDelegate.self), qos: .userInitiated)
         super.init()
     }
@@ -30,11 +30,12 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
 }
 
 // MARK: Assembler
-public protocol CarbonAppDelegateAssembler {
+protocol CarbonAppDelegateAssembler {
     func resolveWindow() -> NSWindow
     func resolveCarbonView(frame: NSRect) -> CarbonView
 }
 
-public protocol CarbonProvider {
-    func resolveCarbonDownloader(view: CarbonView, multiFiles: Bool) -> CarbonDownloader
+protocol CarbonProvider {
+    func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader
+    func resolveCarbonDownloader() -> CarbonDownloader
 }

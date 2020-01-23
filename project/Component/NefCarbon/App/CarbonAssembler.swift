@@ -3,28 +3,33 @@
 import AppKit
 import NefCore
 
-public class CarbonAssembler: CarbonProvider, CarbonAppDelegateAssembler {
-    public init() {}
-}
+class CarbonAssembler: CarbonProvider, CarbonAppDelegateAssembler {}
 
 // MARK: dependency injection
 extension CarbonAssembler {
-    public func resolveCarbonDownloader(view: CarbonView, multiFiles: Bool) -> CarbonDownloader {
-        let downloader = CarbonSyncDownloader(view: view, multiFiles: multiFiles)
-        view.carbonDelegate = downloader
-        return downloader
+    
+    func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader {
+        CarbonSyncDownloader(view: view)
     }
     
-    public func resolveCarbonView(frame: NSRect) -> CarbonView {
-        return CarbonWebView(frame: frame)
+    func resolveCarbonView(frame: NSRect) -> CarbonView {
+        CarbonWKWebView(frame: frame)
     }
     
-    public func resolveWindow() -> NSWindow {
-        return NSWindow(contentRect: CarbonScreen.bounds,
-                        styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                        backing: .buffered,
-                        defer: true,
-                        screen: CarbonScreen())
+    func resolveWindow() -> NSWindow {
+        NSWindow(contentRect: CarbonScreen.bounds,
+                styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                backing: .buffered,
+                defer: true,
+                screen: CarbonScreen())
+    }
+    
+    func resolveCarbonDownloader() -> CarbonDownloader {
+        let window = resolveWindow()
+        let view = window.contentView!
+        let carbonView = resolveCarbonView(frame: window.frame)
+        view.addSubview(carbonView) // retain window
+        return resolveCarbonDownloader(view: carbonView)
     }
 }
 

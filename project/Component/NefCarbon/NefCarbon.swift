@@ -1,8 +1,22 @@
 //  Copyright © 2019 The nef Authors.
 
-import Foundation
-import NefCore
+import AppKit
+import NefCommon
 import NefModels
+import NefCore
+import NefRender
+
+import Bow
+import BowEffects
+
+public struct Carbon {
+    public typealias Environment = RenderCarbonEnvironment<Image>
+    typealias RenderingOutput = NefCommon.RenderingOutput<Image>
+    typealias PlaygroundOutput  = NefCommon.PlaygroundOutput<Image>
+    typealias PlaygroundsOutput = NefCommon.PlaygroundsOutput<Image>
+    
+    public init() {}
+}
 
 /// Renders a page into multiple Carbon images.
 ///
@@ -31,3 +45,4 @@ import NefModels
 //public func carbonURLRequest(from carbon: CarbonModel) -> URLRequest {
 //    return CarbonViewer.urlRequest(from: carbon)
 //}
+

@@ -1,13 +1,35 @@
-//  Copyright © 2019 The nef Authors.
+//  Copyright © 2020 The nef Authors.
 
 import AppKit
+import NefCore
 import NefModels
+import NefRender
 import NefCarbon
 
 import Bow
 import BowEffects
 
 public extension CarbonAPI {
+    
+    // MARK: - private <helpers>
+    private static func environment(console: Console, style: CarbonStyle) -> NefCarbon.Carbon.Environment {
+        .init(console: console,
+              fileSystem: MacFileSystem(),
+              persistence: .init(),
+              playgroundSystem: MacPlaygroundSystem(),
+              style: style,
+              carbonPrinter: { content in CoreRender.carbon.render(content: content) })
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     static func render(carbon: CarbonModel, toFile output: URL) -> IO<nef.Error, URL> {
         func runAsync(carbon: CarbonModel, outputURL: URL) -> IO<nef.Error, URL> {
@@ -39,8 +61,19 @@ public extension CarbonAPI {
     
     static func request(with configuration: CarbonModel) -> URLRequest { CarbonViewer.urlRequest(from: configuration) }
     
-    static func view(with configuration: CarbonModel) -> CarbonView { CarbonWebView(code: configuration.code, state: configuration.style) }
+    static func view(with configuration: CarbonModel) -> NefModels.CarbonView { CarbonWebView(code: configuration.code, state: configuration.style) }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 // MARK: - Helpers
@@ -61,17 +94,19 @@ fileprivate extension CarbonAPI {
             fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
         }
         
-        let assembler = CarbonAssembler()
-        let window = assembler.resolveWindow()
-        let view = window.contentView!
-        let retainSuccess = { success(); _ = view }
-        let retainFailure = { (output: String) in failure(output); _ = view }
+        fatalError()
         
-        carbon(parentView: view,
-               code: code,
-               style: style,
-               outputPath: outputPath,
-               success: retainSuccess, failure: retainFailure)
+//        let assembler = CarbonAssembler()
+//        let window = assembler.resolveWindow()
+//        let view = window.contentView!
+//        let retainSuccess = { success(); _ = view }
+//        let retainFailure = { (output: String) in failure(output); _ = view }
+//
+//        carbon(parentView: view,
+//               code: code,
+//               style: style,
+//               outputPath: outputPath,
+//               success: retainSuccess, failure: retainFailure)
     }
     
     /// Renders a code selection into multiple Carbon images.
@@ -93,12 +128,11 @@ fileprivate extension CarbonAPI {
         guard Thread.isMainThread else {
             fatalError("carbon(parentView:code:style:outputPath:success:failure:) should be invoked in main thread")
         }
-        
-        let assembler = CarbonAssembler()
-        let carbonView = assembler.resolveCarbonView(frame: parentView.bounds)
-        let downloader = assembler.resolveCarbonDownloader(view: carbonView, multiFiles: false)
-        
-        parentView.addSubview(carbonView)
+//        let assembler = CarbonAssembler()
+//        let carbonView = assembler.resolveCarbonView(frame: parentView.bounds)
+//        let downloader = assembler.resolveCarbonDownloader(view: carbonView)
+//
+//        parentView.addSubview(carbonView)
         
         #warning("It must be completed in NefCarbon module refactor")
         fatalError()

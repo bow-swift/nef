@@ -57,47 +57,47 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     }^
 }
 
-func render(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle) -> IO<CLIKit.Console.Error, RendererOutput> {
-    IO.async { callback in
-        renderCarbon(downloader: downloader,
-                     code: content,
-                     style: style,
-                     outputPath: output.path,
-                     success: { output in callback(.right(output)) },
-                     failure: { e in callback(.left(.render(information: e))) })
-    }^
-}
-
-@discardableResult
-func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> {
-    func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
-        Step(total: 3, partial: partial, duration: duration)
-    }
-    
-    let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, style: CarbonStyle, verbose: Bool).self)
-    let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
-    
-    return binding(
-           args <- arguments(console: console),
-                |<-console.printStep(step: step(partial: 1), information: "Reading "+"arguments".bold),
-                |<-console.printStatus(success: true),
-                |<-console.printSubstep(step: step(partial: 1), information: ["style\n\(args.get.style)",
-                                                                              "output: \(args.get.output.path)",
-                                                                              "verbose: \(args.get.verbose)"]),
-                |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Rendering "+"carbon".bold+" images"),
-         output <- render(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style),
-    yield: args.get.verbose ? output.get : nil)^
-        .reportStatus(in: console)
-        .foldM({ e   in console.exit(failure: "\(e)") },
-               { rendered in
-                    guard let rendered = rendered else { return console.exit(success: "rendered carbon images.") }
-                    return console.exit(success: "rendered carbon images.\n\n"+"• AST ".bold.cyan+"\n\t\(rendered.ast)\n\n"+"• Trace ".bold.cyan+"\n\t\(rendered.output)")
-               })
-        .unsafeRunSyncEither(on: .global())
-}
+//func render(downloader: CarbonDownloader, content: String, output: URL, style: CarbonStyle) -> IO<CLIKit.Console.Error, RendererOutput> {
+//    IO.async { callback in
+//        renderCarbon(downloader: downloader,
+//                     code: content,
+//                     style: style,
+//                     outputPath: output.path,
+//                     success: { output in callback(.right(output)) },
+//                     failure: { e in callback(.left(.render(information: e))) })
+//    }^
+//}
+//
+//@discardableResult
+//func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> {
+//    func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
+//        Step(total: 3, partial: partial, duration: duration)
+//    }
+//
+//    let args = IOPartial<CLIKit.Console.Error>.var((content: String, output: URL, style: CarbonStyle, verbose: Bool).self)
+//    let output = IOPartial<CLIKit.Console.Error>.var(RendererOutput.self)
+//
+//    return binding(
+//           args <- arguments(console: console),
+//                |<-console.printStep(step: step(partial: 1), information: "Reading "+"arguments".bold),
+//                |<-console.printStatus(success: true),
+//                |<-console.printSubstep(step: step(partial: 1), information: ["style\n\(args.get.style)",
+//                                                                              "output: \(args.get.output.path)",
+//                                                                              "verbose: \(args.get.verbose)"]),
+//                |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Rendering "+"carbon".bold+" images"),
+//         output <- render(downloader: downloader, content: args.get.content, output: args.get.output, style: args.get.style),
+//    yield: args.get.verbose ? output.get : nil)^
+//        .reportStatus(in: console)
+//        .foldM({ e   in console.exit(failure: "\(e)") },
+//               { rendered in
+//                    guard let rendered = rendered else { return console.exit(success: "rendered carbon images.") }
+//                    return console.exit(success: "rendered carbon images.\n\n"+"• AST ".bold.cyan+"\n\t\(rendered.ast)\n\n"+"• Trace ".bold.cyan+"\n\t\(rendered.output)")
+//               })
+//        .unsafeRunSyncEither(on: .global())
+//}
 
 
 // #: - MAIN <launcher - AppKit>
 _ = CarbonApplication { downloader in
-    main(downloader)
+//    main(downloader)
 }
