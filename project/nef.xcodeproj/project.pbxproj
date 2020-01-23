@@ -84,8 +84,6 @@
 		8BA1EF5923D62BFA00B33CD0 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */; };
 		8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */; };
 		8BA1EF6B23D62D1F00B33CD0 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */; };
-		8BA1EF6C23D62D1F00B33CD0 /* Bow+IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6123D62CF700B33CD0 /* Bow+IO.swift */; };
-		8BA1EF6D23D62D1F00B33CD0 /* Bow+NEA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF5F23D62CF700B33CD0 /* Bow+NEA.swift */; };
 		8BA1EF6E23D62D1F00B33CD0 /* EnumeratedSequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */; };
 		8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6023D62CF700B33CD0 /* String+Path.swift */; };
 		8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */; };
@@ -375,9 +373,7 @@
 		8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
 		8BA1EF4F23D62BF200B33CD0 /* RenderEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderEnvironment.swift; sourceTree = "<group>"; };
 		8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingURL.swift; sourceTree = "<group>"; };
-		8BA1EF5F23D62CF700B33CD0 /* Bow+NEA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bow+NEA.swift"; sourceTree = "<group>"; };
 		8BA1EF6023D62CF700B33CD0 /* String+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
-		8BA1EF6123D62CF700B33CD0 /* Bow+IO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bow+IO.swift"; sourceTree = "<group>"; };
 		8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnumeratedSequence+Extension.swift"; sourceTree = "<group>"; };
 		8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Slice.swift"; sourceTree = "<group>"; };
 		8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
@@ -916,8 +912,6 @@
 			isa = PBXGroup;
 			children = (
 				8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */,
-				8BA1EF6123D62CF700B33CD0 /* Bow+IO.swift */,
-				8BA1EF5F23D62CF700B33CD0 /* Bow+NEA.swift */,
 				8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */,
 				8BA1EF6023D62CF700B33CD0 /* String+Path.swift */,
 				8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */,
@@ -1716,13 +1710,11 @@
 				8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */,
 				8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */,
 				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
-				8BA1EF6C23D62D1F00B33CD0 /* Bow+IO.swift in Sources */,
 				8BA1EF6B23D62D1F00B33CD0 /* Array+Slice.swift in Sources */,
 				8BA1EF4623D62BBA00B33CD0 /* RenderingPersistence.swift in Sources */,
 				8BA1EF4423D62BBA00B33CD0 /* RenderingPersistenceError.swift in Sources */,
 				8BA1EF4323D62BBA00B33CD0 /* RenderingOutput.swift in Sources */,
 				8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */,
-				8BA1EF6D23D62D1F00B33CD0 /* Bow+NEA.swift in Sources */,
 				8BA1EF6E23D62D1F00B33CD0 /* EnumeratedSequence+Extension.swift in Sources */,
 				8BA1EF4223D62BBA00B33CD0 /* FileSystemError.swift in Sources */,
 			);
