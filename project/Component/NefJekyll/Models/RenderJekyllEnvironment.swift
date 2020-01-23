@@ -50,12 +50,10 @@ public struct RenderJekyllEnvironment<A> {
     }
     
     private static func nodePrinter(from nodePrinter: @escaping (_ content: String) -> EnvIO<CoreJekyllEnvironment, CoreRenderError, RenderingOutput<A>>) -> RenderEnvironment<A>.NodePrinter {
-        { content in
-            EnvIO<RenderEnvironmentInfo, CoreRenderError, RenderingOutput<A>> { info in
-                permalink(info: info).flatMap { permalink -> IO<CoreRenderError, RenderingOutput<A>> in
-                    nodePrinter(content).provide(.init(permalink: permalink))^
-                }
-            }
-        }
+        { content in EnvIO { info in
+            permalink(info: info)
+                .map(CoreJekyllEnvironment.init)
+                .flatMap(nodePrinter(content).provide)
+        }}
     }
 }
