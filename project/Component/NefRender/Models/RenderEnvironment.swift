@@ -19,32 +19,14 @@ public struct RenderEnvironment<A> {
     }
 }
 
-public struct RenderEnvironmentInfo {
-    public let playground: RenderingURL
-    public let page: RenderingURL
-    public let isEmpty: Bool
+public enum RenderEnvironmentInfo {
+    case info(playground: RenderingURL, page: RenderingURL)
+    case empty
     
-    public init(playground: RenderingURL, page: RenderingURL) {
-        self.init(playground: playground, page: page, isEmpty: false)
+    public var data: (playground: RenderingURL, page: RenderingURL)? {
+        switch self {
+        case let .info(playground, page): return (playground, page)
+        default: return nil
+        }
     }
-}
-
-// MARK: - helpers <internal>
-internal extension RenderEnvironmentInfo {
-    static var empty: RenderEnvironmentInfo {
-        .init(playground: .empty, page: .empty, isEmpty: true)
-    }
-}
-
-// MARK: - helpers <private>
-private extension RenderEnvironmentInfo {
-    init(playground: RenderingURL, page: RenderingURL, isEmpty: Bool) {
-        self.playground = playground
-        self.page = page
-        self.isEmpty = isEmpty
-    }
-}
-
-private extension RenderingURL {
-    static var empty: RenderingURL {  .init(url: .init(fileURLWithPath: ""), title: "") }
 }

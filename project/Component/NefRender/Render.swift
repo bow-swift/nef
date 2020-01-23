@@ -55,7 +55,7 @@ public struct Render<A> {
         pages.traverse { (page: RenderingURL) in
             let url = page.url.appendingPathComponent("Contents.swift")
             guard let content = try? String(contentsOf: url) else { return EnvIO.raiseError(.page(url))^ }
-            return self.renderPage(content: content, info: .init(playground: playground, page: page)).map { output in (page: page, output: output) }^
+            return self.renderPage(content: content, info: .info(playground: playground, page: page)).map { output in (page: page, output: output) }^
         }^
     }
     
@@ -64,7 +64,7 @@ public struct Render<A> {
             let rendered = IO<RenderError, RenderingOutput<A>>.var()
             
             return binding(
-                             |<-env.console.print(information: "\t• Rendering page \(info.isEmpty ? "content" : "'\(info.page)'")"),
+                             |<-env.console.print(information: "\t• Rendering page \(info.data?.page.title ?? "content")"),
                     rendered <- env.nodePrinter(content).provide(info).mapLeft { _ in .content },
             yield: rendered.get)^.reportStatus(console: env.console)
         }

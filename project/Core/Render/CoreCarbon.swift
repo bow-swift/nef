@@ -18,7 +18,7 @@ extension NodeProcessor where D == CoreCarbonEnvironment, A == Image {
         }
 
         func merge(nodes: [A]) -> EnvIO<D, CoreRenderError, NEA<A>> {
-            let nodes = nodes.filter { image in !image.isEmpty }
+            let nodes = nodes.filter { $0.isEmpty }
             guard !nodes.isEmpty else { return EnvIO.raiseError(.renderEmpty)^ }
             return EnvIO.pure(NEA.fromArrayUnsafe(nodes))^
         }

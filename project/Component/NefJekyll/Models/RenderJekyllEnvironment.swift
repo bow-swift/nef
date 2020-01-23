@@ -32,8 +32,13 @@ public struct RenderJekyllEnvironment<A> {
     static var docs: String { "docs" }
     static var data: String { "_data" }
     
-    static func permalink(playground: RenderingURL, page: RenderingURL) -> String {
-        "/\(docs)/\(playground.escapedTitle)/\(page.escapedTitle)/"
+    static func permalink(info: RenderEnvironmentInfo) -> IO<CoreRenderError, String> {
+        switch info {
+        case let .info(playground, page):
+            return IO.pure("/\(docs)/\(playground.escapedTitle)/\(page.escapedTitle)/")^
+        default:
+            return IO.raiseError(.renderEmpty)^
+        }
     }
     
     // MARK: - init <helper>
@@ -46,8 +51,10 @@ public struct RenderJekyllEnvironment<A> {
     
     private static func nodePrinter(from nodePrinter: @escaping (_ content: String) -> EnvIO<CoreJekyllEnvironment, CoreRenderError, RenderingOutput<A>>) -> RenderEnvironment<A>.NodePrinter {
         { content in
-            EnvIO { info in
-                nodePrinter(content).provide(.init(permalink: permalink(playground: info.playground, page: info.page)))
+            EnvIO<RenderEnvironmentInfo, CoreRenderError, RenderingOutput<A>> { info in
+                permalink(info: info).flatMap { permalink -> IO<CoreRenderError, RenderingOutput<A>> in
+                    nodePrinter(content).provide(.init(permalink: permalink))^
+                }
             }
         }
     }
