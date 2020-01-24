@@ -39,7 +39,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
         
         let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"
         let filename = PlaygroundUtils.playgroundName(fromPage: page)
-        let output = URL(fileURLWithPath: outputPath).appendingPathComponent(filename)
+        let output = URL(fileURLWithPath: outputPath)
         
         guard let pageContent = try? String(contentsOfFile: page), !pageContent.isEmpty else {
             return IO.raiseError(CLIKit.Console.Error.render(information: "could not read page content"))
@@ -75,10 +75,10 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
                                                                               "filename: \(args.get.filename)",
                                                                               "output: \(args.get.output.path)",
                                                                               "verbose: \(args.get.verbose)"]),
-                |<-console.printStep(step: step(partial: 2, duration: .seconds(8)), information: "Rendering "+"carbon".bold+" images"),
          output <- nef.Carbon.renderVerbose(content: args.get.content, style: args.get.style, filename: args.get.filename, into: args.get.output)
                              .provide(console)
                              .mapLeft { _ in .render() }^,
+                |<-console.printStep(step: step(partial: 1), information: "Rendering playground page"),
     yield: args.get.verbose ? Either<(ast: String, url: URL), URL>.left(output.get)
                             : Either<(ast: String, url: URL), URL>.right(output.get.url))^
             .reportStatus(in: console)

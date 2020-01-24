@@ -25,12 +25,10 @@ public struct Markdown {
 
     public func page(content: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, (url: URL, ast: String, rendered: String)> {
         let file = output.appendingPathComponent(filename)
-        let content = EnvIO<Environment, RenderError, String>.var()
         let rendered = EnvIO<Environment, RenderError, RenderingOutput>.var()
         
         return binding(
-             content <- self.read(file: file).contramap(\Environment.fileSystem),
-            rendered <- self.renderPage(content: content.get),
+            rendered <- self.renderPage(content: content),
                      |<-self.write(page: rendered.get, into: file),
         yield: (url: file, ast: rendered.get.ast, rendered: self.contentFrom(page: rendered.get)))^
     }
@@ -75,12 +73,6 @@ public struct Markdown {
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         content.traverse { info in self.writePage(page: info.page, content: info.output, output: output) }
                .map { _ in playground.url }^
-    }
-    
-    private func read(file: URL) -> EnvIO<FileSystem, RenderError, String> {
-        EnvIO { fileSystem in
-            fileSystem.readFile(atPath: file.path).mapLeft { _ in .page(file) }
-        }
     }
     
     private func write(page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {

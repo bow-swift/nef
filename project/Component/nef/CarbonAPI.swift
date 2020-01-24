@@ -12,10 +12,10 @@ import BowEffects
 public extension CarbonAPI {
     
     static func render(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>> {
-        renderVerbose(content: content, style: style).map { info in info.rendered }^
+        renderVerbose(content: content, style: style).map { info in info.images }^
     }
     
-    static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, rendered: NEA<Data>)> {
+    static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
         NefCarbon.Carbon()
                  .page(content: content)
                  .contramap { console in environment(console: console, style: style) }
@@ -23,11 +23,11 @@ public extension CarbonAPI {
     }
     
     static func render(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, Data> {
-        renderVerbose(code: code, style: style).map { info in info.rendered }^
+        renderVerbose(code: code, style: style).map { info in info.image }^
     }
     
-    static func renderVerbose(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, rendered: Data)> {
-        renderVerbose(content: code, style: style).map { output in (ast: output.ast, rendered: output.rendered.head) }^
+    static func renderVerbose(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, image: Data)> {
+        renderVerbose(content: code, style: style).map { output in (ast: output.ast, image: output.images.head) }^
     }
     
     static func render(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
@@ -38,7 +38,9 @@ public extension CarbonAPI {
         NefCarbon.Carbon()
                  .page(content: content, filename: filename.removeExtension, into: output)
                  .contramap { console in environment(console: console, style: style) }
-                 .mapError { _ in nef.Error.carbon }
+                 .mapError { e in
+                    nef.Error.carbon
+                }
     }
     
     static func render(playground: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {

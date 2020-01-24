@@ -129,7 +129,7 @@ public protocol CarbonAPI {
     ///   - content: content page in Xcode playground.
     ///   - style: style to apply to the generated snippets.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
-    static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, rendered: NEA<Data>)>
+    static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)>
     
     /// Renders a code selection into Carbon image.
     ///
@@ -145,7 +145,7 @@ public protocol CarbonAPI {
     ///   - code: code to render into Carbon image.
     ///   - style: style to apply to the generated snippet.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
-    static func renderVerbose(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, rendered: Data)>
+    static func renderVerbose(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, image: Data)>
     
     /// Renders a page into Carbon images and persit them.
     ///
