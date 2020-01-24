@@ -37,7 +37,7 @@ public struct Carbon {
         
         return binding(
              rendered <- self.renderPlayground(playground),
-              written <- self.writePages(rendered.get, into: output),
+             written <- self.writePages(rendered.get, into: output),
         yield: written.get)^
     }
     
@@ -76,11 +76,11 @@ public struct Carbon {
     
     // MARK: private <helper>
     private func writePages(_ pages: PlaygroundOutput, into output: URL) -> EnvIO<Environment, RenderError, NEA<URL>> {
-        pages.traverse { info in self.writePage(page: info.page, content: info.output, output: output)^ }^
+        pages.traverse { info in self.writePage(pagePathComponent: info.page.escapedTitle, content: info.output, output: output)^ }^
     }
     
-    private func writePage(page: RenderingURL, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        let file = output.appendingPathComponent(page.escapedTitle)
+    private func writePage(pagePathComponent: String, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
+        let file = output.appendingPathComponent(pagePathComponent)
         return writePage(content, atFile: file).map { _ in file }^
     }
     
@@ -95,7 +95,7 @@ public struct Carbon {
     }
     
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        content.traverse { info in self.writePage(page: info.page, content: info.output, output: output) }
+        content.traverse { info in self.writePage(pagePathComponent: "\(playground.escapedTitle)/\(info.page.escapedTitle)", content: info.output, output: output) }
                .map { _ in playground.url }^
     }
     

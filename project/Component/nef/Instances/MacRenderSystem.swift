@@ -25,7 +25,7 @@ extension RenderingPersistence where A == Image {
         let folder = file.deletingLastPathComponent()
         let filename = file.lastPathComponent.removeExtension
         let fileSystem = EnvIO<FileSystem, RenderingPersistenceError, FileSystem>.var()
-        let images = EnvIO<FileSystem, RenderingPersistenceError, NEA<Data>>.var()
+        let images = EnvIO<FileSystem, RenderingPersistenceError, [Data]>.var()
         
         return binding(
             fileSystem <- ask(),
@@ -35,19 +35,19 @@ extension RenderingPersistence where A == Image {
         yield: ())^
     }}
     
-    private static func data(images: NEA<Image>) -> EnvIO<FileSystem, RenderingPersistenceError, NEA<Data>> {
-        images.traverse { image in
+    private static func data(images: NEA<Image>) -> EnvIO<FileSystem, RenderingPersistenceError, [Data]> {
+        EnvIO.pure(images.all().compactMap { image in
             switch image {
-            case let .data(data): return EnvIO.pure(data)
-            default: return EnvIO.raiseError(.extractValue)
+            case let .data(data): return data
+            default: return nil
             }
-        }^
+        })^
     }
     
-    private static func persist(images: NEA<Data>, folder: URL, filename: String) -> EnvIO<FileSystem, RenderingPersistenceError, ()> {
-        let isMultiFile = images.all().count > 1
+    private static func persist(images: [Data], folder: URL, filename: String) -> EnvIO<FileSystem, RenderingPersistenceError, ()> {
+        let isMultiFile = images.count > 1
         
-        return images.all().enumerated().traverse { index, image in
+        return images.enumerated().traverse { index, image in
             let sufix = isMultiFile ? "-\(index)" : ""
             let file = folder.appendingPathComponent("\(filename)\(sufix).png")
             

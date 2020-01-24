@@ -18,7 +18,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL,
         guard let inputPath = args["project"]?.trimmingEmptyCharacters.expandingTildeInPath,
               let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath,
               let mainPagePath = args["main-page"]?.trimmingEmptyCharacters.expandingTildeInPath else {
-                return IO.raiseError(CLIKit.Console.Error.arguments)
+                return IO.raiseError(.arguments)
         }
         
         let input = URL(fileURLWithPath: inputPath, isDirectory: true)

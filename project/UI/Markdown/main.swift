@@ -16,7 +16,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL,
     console.input().flatMap { args in
         guard let inputPath = args["project"]?.trimmingEmptyCharacters.expandingTildeInPath,
               let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath else {
-                return IO.raiseError(CLIKit.Console.Error.arguments)
+                return IO.raiseError(.arguments)
         }
         
         let folder = URL(fileURLWithPath: inputPath, isDirectory: true)

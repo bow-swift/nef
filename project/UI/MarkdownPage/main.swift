@@ -18,7 +18,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
         guard let pagePath = args["page"]?.trimmingEmptyCharacters.expandingTildeInPath,
               let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath,
               let verbose = Bool(args["verbose"] ?? "") else {
-                return IO.raiseError(CLIKit.Console.Error.arguments)
+                return IO.raiseError(.arguments)
         }
         
         let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"

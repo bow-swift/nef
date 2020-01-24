@@ -3,7 +3,6 @@
 import Foundation
 import CLIKit
 import nef
-import NefCore
 import NefCarbon
 import Bow
 import BowEffects
@@ -34,7 +33,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
               let watermark = Bool(args["show-watermark"] ?? ""),
               let verbose = Bool(args["verbose"] ?? "")
             else {
-                return IO.raiseError(CLIKit.Console.Error.arguments)
+                return IO.raiseError(.arguments)
         }
         
         let page = pagePath.contains("Contents.swift") ? pagePath : "\(pagePath)/Contents.swift"
@@ -59,7 +58,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
 }
 
 @discardableResult
-func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> {
+func main() -> Either<CLIKit.Console.Error, Void> {
     func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
         Step(total: 3, partial: partial, duration: duration)
     }
@@ -92,6 +91,6 @@ func main(_ downloader: CarbonDownloader) -> Either<CLIKit.Console.Error, Void> 
 
 
 // #: - MAIN <launcher - AppKit>
-_ = CarbonApplication { downloader in
-    main(downloader)
+_ = CarbonApplication {
+    main()
 }
