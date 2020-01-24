@@ -2,13 +2,14 @@
 
 import Foundation
 
-public struct Image {
-    public let data: Data
+public enum Image {
+    case data(Data)
+    case empty
     
-    public init(data: Data) {
-        self.data = data
+    var isEmpty: Bool {
+        switch self {
+        case .empty: return true
+        default: return false
+        }
     }
-    
-    public static var empty: Image { Image(data: .init(capacity: 0)) }
-    public var isEmpty: Bool { data.count == 0 }
 }

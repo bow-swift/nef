@@ -18,9 +18,9 @@ extension NodeProcessor where D == CoreCarbonEnvironment, A == Image {
         }
 
         func merge(nodes: [A]) -> EnvIO<D, CoreRenderError, NEA<A>> {
-            let nodes = nodes.filter { image in !image.isEmpty }
-            guard !nodes.isEmpty else { return EnvIO.raiseError(.emptyNode)^ }
-            return EnvIO.pure(NEA(head: nodes[0], tail: Array(nodes[1...])))^
+            let nodes = nodes.filter { $0.isEmpty }
+            guard !nodes.isEmpty else { return EnvIO.raiseError(.renderEmpty)^ }
+            return EnvIO.pure(NEA.fromArrayUnsafe(nodes))^
         }
 
         return .init(render: render, merge: merge)
@@ -34,7 +34,7 @@ extension Node {
         switch self {
         case let .block(nodes):
             let code = nodes.map { $0.carbon() }.joined()
-            guard !code.isEmpty else { return IO.raiseError(.emptyNode)^ }
+            guard !code.isEmpty else { return IO.raiseError(.renderEmpty)^ }
             let configuration = CarbonModel(code: code, style: style)
             return downloader.carbon(configuration: configuration).mapLeft { _ in .renderNode }
             

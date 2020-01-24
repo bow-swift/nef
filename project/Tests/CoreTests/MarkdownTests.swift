@@ -46,7 +46,7 @@ class MarkdownTests: XCTestCase {
                succeeds: expected)
     }
 
-    func testPlainPlaygroundWithNefHeader_render_returnsEmptyNode() {
+    func testPlainPlaygroundWithNefHeader_render_failsEmpty() {
         let input = """
                     // nef:begin:header
                     /*
@@ -59,7 +59,7 @@ class MarkdownTests: XCTestCase {
                     """
         
         assert(markdown(content: input),
-               fails: .emptyNode)
+               fails: .renderEmpty)
     }
 
     func testPlainPlaygroundWithCodeAndNefHiddenBlock_render_returnsSwiftBlock() {

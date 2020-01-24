@@ -78,7 +78,7 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
                     return
                 }
                 
-                _ = image.writeToFile(file: "\(filename).png", plainText: code, atomically: true, usingType: .png)
+//                _ = image.writeToFile(file: "\(filename).png", plainText: code, atomically: true, usingType: .png)
                 self.carbonDelegate?.didLoadCarbon(filename: filename)
             }
         }
