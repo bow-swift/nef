@@ -111,18 +111,19 @@ public struct Jekyll {
     // MARK: private <steps>
     private func buildMainPage(_ mainPage: URL, docs: URL) -> EnvIO<Environment, RenderError, Void> {
         let file = docs.appendingPathComponent("README.md")
-        let content = (try? String(contentsOf: mainPage)) ?? """
-                                                             ---
-                                                             layout: docs
-                                                             permalink: /docs/
-                                                             ---
-                                                             """
+        let content = try? String(contentsOf: mainPage)
+        let defaultContent = """
+                             ---
+                             layout: docs
+                             permalink: /docs/
+                             ---
+                             """
         
         return EnvIO { env in
             binding(
                 |<-env.console.print(information: "Building main page '\(mainPage.path)'"),
                 |<-env.fileSystem.createDirectory(atPath: docs.path),
-                |<-env.fileSystem.write(content: content, toFile: file.path),
+                |<-env.fileSystem.write(content: content ?? defaultContent, toFile: file.path),
             yield: ())^.mapLeft { _ in .page(mainPage) }^.reportStatus(console: env.console)
         }
     }

@@ -11,7 +11,6 @@ import BowEffects
 
 public extension JekyllAPI {
     
-    // MARK: api <EnvIO>
     static func render(content: String, permalink: String) -> EnvIO<Console, nef.Error, String> {
         renderVerbose(content: content, permalink: permalink).map { info in info.rendered }^
     }
@@ -49,31 +48,6 @@ public extension JekyllAPI {
                  .playgrounds(at: playgroundsAt, mainPage: mainPage, into: output)
                  .contramap(environment)
                  .mapError { _ in nef.Error.jekyll }^
-    }
-    
-    // MARK: api <IO>
-    static func renderIO(content: String, permalink: String) -> IO<nef.Error, String> {
-        render(content: content, permalink: permalink).provide(MacDummyConsole())
-    }
-    
-    static func renderVerboseIO(content: String, permalink: String) -> IO<nef.Error, (ast: String, rendered: String)> {
-        renderVerbose(content: content, permalink: permalink).provide(MacDummyConsole())
-    }
-    
-    static func renderIO(content: String, permalink: String, toFile file: URL) -> IO<nef.Error, URL> {
-        render(content: content, permalink: permalink, toFile: file).provide(MacDummyConsole())
-    }
-    
-    static func renderVerboseIO(content: String, permalink: String, toFile file: URL) -> IO<nef.Error, (url: URL, ast: String, rendered: String)> {
-        renderVerbose(content: content, permalink: permalink, toFile: file).provide(MacDummyConsole())
-    }
-    
-    static func renderIO(playground: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
-        render(playground: playground, into: output).provide(MacDummyConsole())
-    }
-    
-    static func renderIO(playgroundsAt: URL, mainPage: URL, into output: URL) -> IO<nef.Error, NEA<URL>> {
-        render(playgroundsAt: playgroundsAt, mainPage: mainPage, into: output).provide(MacDummyConsole())
     }
     
     // MARK: - private <helpers>
