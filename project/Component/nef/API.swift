@@ -152,9 +152,20 @@ public protocol CarbonAPI {
     /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - style: style to apply to the generated snippets.
+    ///   - filename: name to use in the exported carbon images.
     ///   - into: folder where to render carbon images.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `Console`.
-    static func render(content: String, style: CarbonStyle, into output: URL, filename: String) -> EnvIO<Console, nef.Error, URL>
+    static func render(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL>
+    
+    /// Renders a page into Carbon images and persit them.
+    ///
+    /// - Parameters:
+    ///   - content: content page in Xcode playground.
+    ///   - style: style to apply to the generated snippets.
+    ///   - filename: name to use in the exported carbon images.
+    ///   - into: folder where to render carbon images.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.   
+    static func renderVerbose(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)>
     
     /// Renders playground pages into Carbon images and persit them.
     ///

@@ -30,7 +30,11 @@ public extension CarbonAPI {
         renderVerbose(content: code, style: style).map { output in (ast: output.ast, rendered: output.rendered.head) }^
     }
     
-    static func render(content: String, style: CarbonStyle, into output: URL, filename: String) -> EnvIO<Console, nef.Error, URL> {
+    static func render(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
+        renderVerbose(content: content, style: style, filename: filename, into: output).map { output in output.url }^
+    }
+    
+    static func renderVerbose(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
         NefCarbon.Carbon()
                  .page(content: content, filename: filename.removeExtension, into: output)
                  .contramap { console in environment(console: console, style: style) }

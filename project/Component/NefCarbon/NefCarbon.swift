@@ -21,11 +21,7 @@ public struct Carbon {
         fatalError()
     }
     
-    public func code(_ code: String) -> EnvIO<Environment, RenderError, (ast: String, rendered: Data)> {
-        fatalError()
-    }
-    
-    public func page(content: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, URL> {
+    public func page(content: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, (ast: String, url: URL)> {
         fatalError()
     }
     
