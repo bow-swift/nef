@@ -45,15 +45,13 @@ extension RenderingPersistence where A == Image {
     }
     
     private static func persist(images: [Data], folder: URL, filename: String) -> EnvIO<FileSystem, RenderingPersistenceError, ()> {
-        let isMultiFile = images.count > 1
-        
-        return images.enumerated().traverse { index, image in
-            let sufix = isMultiFile ? "-\(index)" : ""
+        images.enumerated().traverse { index, image -> EnvIO<FileSystem, RenderingPersistenceError, ()> in
+            let sufix = images.count > 1 ? "-\(index)" : ""
             let file = folder.appendingPathComponent("\(filename)\(sufix).png")
             
             return EnvIO { fileSystem in
                 fileSystem.write(content: image, toFile: file.path).mapLeft { _ in .persist(item: file) }
             }
-        }.map { (a: [()]) in () }^
+        }.as(())^
     }
 }

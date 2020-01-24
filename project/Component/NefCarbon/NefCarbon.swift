@@ -18,7 +18,7 @@ public struct Carbon {
     public init() {}
         
     public func page(content: String) -> EnvIO<Environment, RenderError, (ast: String, images: NEA<Data>)> {
-        renderPage(content: content).flatMap(flattenImagesData)^
+        renderPage(content: content).flatMap(filterImagesData)^
     }
     
     public func page(content: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, (ast: String, url: URL)> {
@@ -37,7 +37,7 @@ public struct Carbon {
         
         return binding(
              rendered <- self.renderPlayground(playground),
-             written <- self.writePages(rendered.get, into: output),
+              written <- self.writePages(rendered.get, into: output),
         yield: written.get)^
     }
     
@@ -100,14 +100,15 @@ public struct Carbon {
     }
     
     // MARK: private <utils>
-    private func flattenImagesData(_ info: RenderingOutput) -> EnvIO<Environment, RenderError, (ast: String, images: NEA<Data>)> {
-        info.output.traverse { image in
+    private func filterImagesData(_ info: RenderingOutput) -> EnvIO<Environment, RenderError, (ast: String, images: NEA<Data>)> {
+        let images: [Data] = info.output.all().compactMap { image in
             switch image {
-            case let .data(data): return IO.pure(data)
-            default: return IO.raiseError(.content)
+            case let .data(data): return data
+            default: return nil
             }
-        }^.map { images in
-            (ast: info.ast, images: images)
-        }^.env()
+        }
+        
+        return images.count > 0 ? EnvIO.pure((ast: info.ast, images: NEA.fromArrayUnsafe(images)))^
+                                : EnvIO.raiseError(.content)^
     }
 }
