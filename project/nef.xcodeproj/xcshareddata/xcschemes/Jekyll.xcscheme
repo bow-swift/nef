@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--project /Users/miguelangel/Desktop/BowPlayground.app"
+            argument = "--project /Users/miguelangel/Documents/47deg/nef/Documentation.app"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

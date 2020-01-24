@@ -13,26 +13,19 @@ public struct Render<A> {
     
     public init() {}
     
-    public func page(content: String, pageName: String = "") -> EnvIO<Environment, RenderError, RenderingOutput<A>> {
-        EnvIO { env in
-            let rendered = IO<RenderError, RenderingOutput<A>>.var()
-            
-            return binding(
-                         |<-env.console.print(information: "\t• Rendering page \(pageName.isEmpty ? "content" : "'\(pageName)'")"),
-                rendered <- env.nodePrinter(content).mapLeft { _ in .content },
-            yield: rendered.get)^.reportStatus(console: env.console)
-        }
+    public func page(content: String) -> EnvIO<Environment, RenderError, RenderingOutput<A>> {
+        renderPage(content: content, info: .empty)
     }
     
     public func playground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput<A>> {
-        self.renderPlayground(RenderingURL(url: playground, title: playgroundName(playground)))
+        renderPlayground(RenderingURL(url: playground, title: playgroundName(playground)))
     }
     
     public func playgrounds(at folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput<A>> {
-        func playgroundsOutputFrom(playgrounds: NEA<RenderingURL>, outputs: NEA<PlaygroundOutput<A>>) -> EnvIO<Environment, RenderError, PlaygroundsOutput<A>> {
-            guard playgrounds.count == outputs.count, !playgrounds.all().isEmpty else { return EnvIO.raiseError(.playgrounds)^ }
+        func merge(playgrounds: NEA<RenderingURL>, output: NEA<PlaygroundOutput<A>>) -> EnvIO<Environment, RenderError, PlaygroundsOutput<A>> {
+            guard playgrounds.count == output.count, !playgrounds.all().isEmpty else { return EnvIO.raiseError(.playgrounds)^ }
             
-            let tuples = zip(playgrounds.all(), outputs.all()).map { playground, output in (playground: playground, output: output) }
+            let tuples = zip(playgrounds.all(), output.all()).map { playground, output in (playground: playground, output: output) }
             return EnvIO.pure(NEA.fromArrayUnsafe(tuples))^
         }
         
@@ -43,7 +36,7 @@ public struct Render<A> {
         return binding(
             playgrounds <- self.getPlaygrounds(at: folder),
                rendered <- playgrounds.get.traverse(self.renderPlayground),
-                 output <- playgroundsOutputFrom(playgrounds: playgrounds.get, outputs: rendered.get),
+                 output <- merge(playgrounds: playgrounds.get, output: rendered.get),
         yield: output.get)^
     }
     
@@ -54,17 +47,27 @@ public struct Render<A> {
         
         return binding(
                 pages <- self.getPages(playground: playground),
-             rendered <- self.renderPages(pages.get),
+             rendered <- self.renderPages(pages.get, inPlayground: playground),
         yield: rendered.get)^
     }
     
-    private func renderPages(_ pages: NEA<RenderingURL>) -> EnvIO<Environment, RenderError, PlaygroundOutput<A>> {
+    private func renderPages(_ pages: NEA<RenderingURL>, inPlayground playground: RenderingURL) -> EnvIO<Environment, RenderError, PlaygroundOutput<A>> {
         pages.traverse { (page: RenderingURL) in
             let url = page.url.appendingPathComponent("Contents.swift")
             guard let content = try? String(contentsOf: url) else { return EnvIO.raiseError(.page(url))^ }
-            let filename = url.path.parentPath.filename.removeExtension
-            return self.page(content: content, pageName: filename).map { output in (page: page, output: output) }^
+            return self.renderPage(content: content, info: .info(playground: playground, page: page)).map { output in (page: page, output: output) }^
         }^
+    }
+    
+    private func renderPage(content: String, info: RenderEnvironmentInfo) -> EnvIO<Environment, RenderError, RenderingOutput<A>> {
+        EnvIO { env in
+            let rendered = IO<RenderError, RenderingOutput<A>>.var()
+            
+            return binding(
+                             |<-env.console.print(information: "\t• Rendering page \(info.data?.page.title ?? "content")"),
+                    rendered <- env.nodePrinter(content).provide(info).mapLeft { _ in .content },
+            yield: rendered.get)^.reportStatus(console: env.console)
+        }
     }
     
     // MARK: - private <helpers>
