@@ -25,6 +25,7 @@ extension RenderingPersistence where A == Image {
         EnvIO { fileSystem in
             let folder = file.deletingLastPathComponent()
             
+            #warning("must implement persistence for Image")
             fatalError()
             return binding(
                 |<-fileSystem.createDirectory(atPath: folder.path).mapLeft { _ in .structure(folder: folder) },

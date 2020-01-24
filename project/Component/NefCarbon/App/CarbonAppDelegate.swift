@@ -28,14 +28,3 @@ class CarbonAppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 }
-
-// MARK: Assembler
-protocol CarbonAppDelegateAssembler {
-    func resolveWindow() -> NSWindow
-    func resolveCarbonView(frame: NSRect) -> CarbonView
-}
-
-protocol CarbonProvider {
-    func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader
-    func resolveCarbonDownloader() -> CarbonDownloader
-}

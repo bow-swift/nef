@@ -56,6 +56,6 @@ public extension JekyllAPI {
               fileSystem: MacFileSystem(),
               persistence: .init(),
               playgroundSystem: MacPlaygroundSystem(),
-              jekyllPrinter: { content in CoreRender.jekyll.render(content: content) })
+              jekyllPrinter: CoreRender.jekyll.render)
     }
 }

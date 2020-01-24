@@ -5,9 +5,19 @@ import NefCore
 
 class CarbonAssembler: CarbonProvider, CarbonAppDelegateAssembler {}
 
+// MARK: Assembler
+protocol CarbonAppDelegateAssembler {
+    func resolveWindow() -> NSWindow
+    func resolveCarbonView(frame: NSRect) -> CarbonView
+}
+
+protocol CarbonProvider {
+    func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader
+    func resolveCarbonDownloader() -> CarbonDownloader
+}
+
 // MARK: dependency injection
 extension CarbonAssembler {
-    
     func resolveCarbonDownloader(view: CarbonView) -> CarbonDownloader {
         CarbonSyncDownloader(view: view)
     }

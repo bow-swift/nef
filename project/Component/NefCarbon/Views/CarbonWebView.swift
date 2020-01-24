@@ -40,7 +40,7 @@ internal class CarbonWebView: WKWebView, WKNavigationDelegate, NefModels.CarbonV
         loadingView?.show()
         
         let carbon = CarbonModel(code: code, style: state)
-        let request = nef.Carbon.request(with: carbon)
+        let request = CarbonViewer.urlRequest(from: carbon)
         load(request)
     }
     

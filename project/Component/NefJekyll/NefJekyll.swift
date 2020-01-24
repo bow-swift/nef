@@ -83,28 +83,28 @@ public struct Jekyll {
                .map { _ in playground.url }^
     }
     
-    func read(file: URL) -> EnvIO<FileSystem, RenderError, String> {
+    private func read(file: URL) -> EnvIO<FileSystem, RenderError, String> {
         EnvIO { fileSystem in
             fileSystem.readFile(atPath: file.path).mapLeft { _ in .page(file) }
         }
     }
     
-    func writePage(_ page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
+    private func writePage(_ page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
         EnvIO { env in
             env.persistence.writePage(page, file).provide(env.fileSystem).mapLeft { _ in .page(file) }
         }
     }
     
     // MARK: private <renders>
-    func renderPage(content: String, permalink: String) -> EnvIO<Environment, RenderError, RenderingOutput> {
+    private func renderPage(content: String, permalink: String) -> EnvIO<Environment, RenderError, RenderingOutput> {
         EnvIO { env in env.render.page(content: content).provide(env.jekyllEnvironment(permalink)) }
     }
     
-    func renderPlayground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
+    private func renderPlayground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
         EnvIO { env in env.render.playground(playground).provide(env.renderEnvironment) }
     }
     
-    func renderPlaygrounds(atFolder folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
+    private func renderPlaygrounds(atFolder folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
         EnvIO { env in env.render.playgrounds(at: folder).provide(env.renderEnvironment) }
     }
     

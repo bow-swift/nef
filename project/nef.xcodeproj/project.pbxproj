@@ -67,9 +67,9 @@
 		8B51C7AF23CDCE99003EE485 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7AE23CDCE99003EE485 /* main.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
-		8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonView.swift */; };
 		8B7E807923DA13D700D4F6BD /* RenderCarbonEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E807723DA13D200D4F6BD /* RenderCarbonEnvironment.swift */; };
 		8B7E807C23DA1CCF00D4F6BD /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E807A23DA1CCB00D4F6BD /* CarbonView.swift */; };
+		8B7E807D23DB03AE00D4F6BD /* CarbonWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonWebView.swift */; };
 		8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0C238300A80025BC04 /* JekyllAPI.swift */; };
 		8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */; };
 		8B9954EB23798AB300C81A2A /* NefMarkdown.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B22248522D5EAD600C85856 /* NefMarkdown.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -360,7 +360,7 @@
 		8B6B119422CB9FDE0060177F /* NefCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6B119C22CB9FDE0060177F /* CoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6FC585221ECE6A008F7694 /* nef-jekyll-page */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-jekyll-page"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B75AF9023805A5200388B1C /* CarbonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbonView.swift; sourceTree = "<group>"; };
+		8B75AF9023805A5200388B1C /* CarbonWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbonWebView.swift; sourceTree = "<group>"; };
 		8B7E807723DA13D200D4F6BD /* RenderCarbonEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderCarbonEnvironment.swift; sourceTree = "<group>"; };
 		8B7E807A23DA1CCB00D4F6BD /* CarbonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonView.swift; sourceTree = "<group>"; };
 		8B89BA0C238300A80025BC04 /* JekyllAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JekyllAPI.swift; sourceTree = "<group>"; };
@@ -519,11 +519,11 @@
 			isa = PBXGroup;
 			children = (
 				8B3CB83922D3929B00919F36 /* nef */,
-				8B3CB84322D3929B00919F36 /* NefCarbon */,
-				8BBD14B02390179B0002970C /* NefCommon */,
-				8B12D79C22D6235200D05A70 /* NefJekyll */,
 				8B22248422D5EAD500C85856 /* NefMarkdown */,
+				8B12D79C22D6235200D05A70 /* NefJekyll */,
+				8B3CB84322D3929B00919F36 /* NefCarbon */,
 				8B3CB83E22D3929B00919F36 /* NefModels */,
+				8BBD14B02390179B0002970C /* NefCommon */,
 				8B51C79423CCC8A4003EE485 /* NefRender */,
 				8BD4E31E238817BB002DECDB /* NefSwiftPlayground */,
 			);
@@ -601,10 +601,10 @@
 				8B3CB84922D3929B00919F36 /* CarbonApplication.swift */,
 				8B3CB84622D3929B00919F36 /* CarbonAssembler.swift */,
 				8B3CB84822D3929B00919F36 /* CarbonAppDelegate.swift */,
-				8B3CB84522D3929B00919F36 /* Assets.swift */,
 				8B3CB84722D3929B00919F36 /* CarbonSyncDownloader.swift */,
 				8B3CB84A22D3929B00919F36 /* CarbonWKWebView.swift */,
 				8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */,
+				8B3CB84522D3929B00919F36 /* Assets.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -841,7 +841,7 @@
 		8B75AF9223805B1900388B1C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8B75AF9023805A5200388B1C /* CarbonView.swift */,
+				8B75AF9023805A5200388B1C /* CarbonWebView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1779,7 +1779,6 @@
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
 				8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */,
 				8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */,
-				8B75AF9123805A5200388B1C /* CarbonView.swift in Sources */,
 				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
 				8B0FB5B8237C61C000221548 /* Error.swift in Sources */,
 			);
@@ -1792,6 +1791,7 @@
 				8B7E807923DA13D700D4F6BD /* RenderCarbonEnvironment.swift in Sources */,
 				8B3CB8BA22D3963300919F36 /* CarbonSyncDownloader.swift in Sources */,
 				8B3CB8BC22D3963300919F36 /* CarbonApplication.swift in Sources */,
+				8B7E807D23DB03AE00D4F6BD /* CarbonWebView.swift in Sources */,
 				8B3CB8B622D3963300919F36 /* NefCarbon.swift in Sources */,
 				8B3CB8BD22D3963300919F36 /* CarbonWKWebView.swift in Sources */,
 				8B3CB8BB22D3963300919F36 /* CarbonAppDelegate.swift in Sources */,

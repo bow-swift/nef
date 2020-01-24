@@ -7,7 +7,7 @@ import Bow
 import BowEffects
 
 class CarbonSyncDownloader: CarbonDownloader {
-    private weak var view: CarbonView?
+    private let view: CarbonView
     
     init(view: CarbonView) {
         self.view = view
@@ -25,13 +25,8 @@ class CarbonSyncDownloader: CarbonDownloader {
     
     // MARK: private <helpers>
     private func load(carbon: CarbonModel) -> IO<CarbonError, Image> {
-        guard let view = view else {
-            let error = CarbonError(snippet: carbon.code, cause: .notFound)
-            return IO.raiseError(error)^
-        }
-        
-        return IO.async { callback in
-            view.load(carbon: carbon, callback: callback)
+        IO.async { callback in
+            self.view.load(carbon: carbon, callback: callback)
         }^
     }
 }

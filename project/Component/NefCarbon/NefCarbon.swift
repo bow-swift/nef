@@ -16,33 +16,32 @@ public struct Carbon {
     typealias PlaygroundsOutput = NefCommon.PlaygroundsOutput<Image>
     
     public init() {}
+        
+    public func page(content: String) -> EnvIO<Environment, RenderError, (ast: String, rendered: NEA<Data>)> {
+        fatalError()
+    }
+    
+    public func code(_ code: String) -> EnvIO<Environment, RenderError, (ast: String, rendered: Data)> {
+        fatalError()
+    }
+    
+    public func page(content: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, URL> {
+        fatalError()
+    }
+    
+    public func playground(_ playground: URL, into output: URL) -> EnvIO<Environment, RenderError, NEA<URL>> {
+        fatalError()
+    }
+    
+    public func playgrounds(at folder: URL, into output: URL) -> EnvIO<Environment, RenderError, NEA<URL>> {
+        fatalError()
+    }
+    
+    public func request(configuration: CarbonModel) -> URLRequest {
+        CarbonViewer.urlRequest(from: configuration)
+    }
+    
+    public func view(configuration: CarbonModel) -> NefModels.CarbonView {
+        CarbonWebView(code: configuration.code, state: configuration.style)
+    }
 }
-
-/// Renders a page into multiple Carbon images.
-///
-/// - Parameters:
-///   - code: snippet to export.
-///   - style: style to apply to export code snippet.
-///   - outputPath: output where to render the snippets.
-///   - success: callback to notify if everything goes well.
-///   - failure: callback with information to notify if something goes wrong.
-//public func renderCarbon(downloader: CarbonDownloader,
-//                         code content: String,
-//                         style: CarbonStyle,
-//                         outputPath: String,
-//                         success: @escaping (RendererOutput) -> Void, failure: @escaping (String) -> Void) {
-//    
-//    let carbonGenerator = CarbonGenerator(downloader: downloader, style: style, output: outputPath)
-//    guard let rendered = carbonGenerator.render(content: content) else { failure("could not render carbon page '\(outputPath)'"); return }
-//    carbonGenerator.isValid(trace: rendered.output) ? success(rendered) : failure(rendered.output)
-//}
-//
-//
-///// Get an URL Request given a carbon configuration
-/////
-///// - Parameter carbon: configuration
-///// - Returns: URL request to carbon.now.sh
-//public func carbonURLRequest(from carbon: CarbonModel) -> URLRequest {
-//    return CarbonViewer.urlRequest(from: carbon)
-//}
-
