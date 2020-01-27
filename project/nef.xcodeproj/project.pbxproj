@@ -112,6 +112,12 @@
 		8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */; };
 		8BD4E33C238824D9002DECDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E33A2388233D002DECDB /* Console.swift */; };
 		8BD4E34B238834F2002DECDB /* _SwiftPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD4E32623881850002DECDB /* _SwiftPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BD6725E23DF087400631D62 /* CoreCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6725C23DF04B100631D62 /* CoreCode.swift */; };
+		8BD6726B23DF0A7900631D62 /* NefCompiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD6726923DF0A7900631D62 /* NefCompiler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BD6727223DF0AAE00631D62 /* NefCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6727023DF0AA200631D62 /* NefCompiler.swift */; };
+		8BD6727623DF245300631D62 /* RenderCompilerEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6727423DF244E00631D62 /* RenderCompilerEnvironment.swift */; };
+		8BD6727A23DF249900631D62 /* CompilerSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6727823DF249400631D62 /* CompilerSystem.swift */; };
+		8BD6727C23DF381D00631D62 /* CompilerSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6727B23DF381D00631D62 /* CompilerSystemError.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -415,6 +421,14 @@
 		8BD4E33623881F9F002DECDB /* PlaygroundResolutionPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundResolutionPath.swift; sourceTree = "<group>"; };
 		8BD4E33823881FD3002DECDB /* SwiftPlaygroundError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPlaygroundError.swift; sourceTree = "<group>"; };
 		8BD4E33A2388233D002DECDB /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
+		8BD6725C23DF04B100631D62 /* CoreCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCode.swift; sourceTree = "<group>"; };
+		8BD6726723DF0A7900631D62 /* NefCompiler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCompiler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BD6726923DF0A7900631D62 /* NefCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCompiler.h; sourceTree = "<group>"; };
+		8BD6726A23DF0A7900631D62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BD6727023DF0AA200631D62 /* NefCompiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefCompiler.swift; sourceTree = "<group>"; };
+		8BD6727423DF244E00631D62 /* RenderCompilerEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderCompilerEnvironment.swift; sourceTree = "<group>"; };
+		8BD6727823DF249400631D62 /* CompilerSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerSystem.swift; sourceTree = "<group>"; };
+		8BD6727B23DF381D00631D62 /* CompilerSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerSystemError.swift; sourceTree = "<group>"; };
 		8BD6F704238C259100DD93C4 /* MacFileSytem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacFileSytem.swift; sourceTree = "<group>"; };
 		8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEnvironment.swift; sourceTree = "<group>"; };
 		8BD6F70C238C495600DD93C4 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
@@ -450,6 +464,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD6726423DF0A7900631D62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +553,7 @@
 				8B22248422D5EAD500C85856 /* NefMarkdown */,
 				8B12D79C22D6235200D05A70 /* NefJekyll */,
 				8B3CB84322D3929B00919F36 /* NefCarbon */,
+				8BD6726823DF0A7900631D62 /* NefCompiler */,
 				8B3CB83E22D3929B00919F36 /* NefModels */,
 				8BBD14B02390179B0002970C /* NefCommon */,
 				8B51C79423CCC8A4003EE485 /* NefRender */,
@@ -691,6 +713,7 @@
 		8B3CB89222D393C300919F36 /* Render */ = {
 			isa = PBXGroup;
 			children = (
+				8BD6725C23DF04B100631D62 /* CoreCode.swift */,
 				8B3CB8C722D3987500919F36 /* CoreCarbon.swift */,
 				8B3CB89622D393C300919F36 /* CoreJekyll.swift */,
 				8B3CB89422D393C300919F36 /* CoreMarkdown.swift */,
@@ -839,6 +862,7 @@
 				8B51C79323CCC8A4003EE485 /* NefRender.framework */,
 				8B51C7AC23CDCE99003EE485 /* nef-jekyll */,
 				8B7E808223DB4C5700D4F6BD /* nef-carbon */,
+				8BD6726723DF0A7900631D62 /* NefCompiler.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1054,6 +1078,43 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		8BD6726823DF0A7900631D62 /* NefCompiler */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6727023DF0AA200631D62 /* NefCompiler.swift */,
+				8BD6727723DF248B00631D62 /* Algrebras */,
+				8BD6727323DF243300631D62 /* Models */,
+				8BD6726F23DF0A9100631D62 /* Support Files */,
+			);
+			path = NefCompiler;
+			sourceTree = "<group>";
+		};
+		8BD6726F23DF0A9100631D62 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6726923DF0A7900631D62 /* NefCompiler.h */,
+				8BD6726A23DF0A7900631D62 /* Info.plist */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
+		8BD6727323DF243300631D62 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6727423DF244E00631D62 /* RenderCompilerEnvironment.swift */,
+				8BD6727B23DF381D00631D62 /* CompilerSystemError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8BD6727723DF248B00631D62 /* Algrebras */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6727823DF249400631D62 /* CompilerSystem.swift */,
+			);
+			path = Algrebras;
+			sourceTree = "<group>";
+		};
 		8BD6F6FE238C252F00DD93C4 /* Algebras */ = {
 			isa = PBXGroup;
 			children = (
@@ -1152,6 +1213,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD4E321238817BB002DECDB /* NefSwiftPlayground.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD6726223DF0A7900631D62 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BD6726B23DF0A7900631D62 /* NefCompiler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1469,6 +1538,24 @@
 			productReference = 8BD4E31D238817BB002DECDB /* NefSwiftPlayground.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		8BD6726623DF0A7900631D62 /* NefCompiler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BD6726C23DF0A7900631D62 /* Build configuration list for PBXNativeTarget "NefCompiler" */;
+			buildPhases = (
+				8BD6726223DF0A7900631D62 /* Headers */,
+				8BD6726323DF0A7900631D62 /* Sources */,
+				8BD6726423DF0A7900631D62 /* Frameworks */,
+				8BD6726523DF0A7900631D62 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NefCompiler;
+			productName = NefCompiler;
+			productReference = 8BD6726723DF0A7900631D62 /* NefCompiler.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		8BF75F8422CA71E700EC53A1 /* nef */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "nef" */;
@@ -1574,6 +1661,9 @@
 						CreatedOnToolsVersion = 11.2.1;
 						LastSwiftMigration = 1120;
 					};
+					8BD6726623DF0A7900631D62 = {
+						CreatedOnToolsVersion = 11.3;
+					};
 					8BF75F8422CA71E700EC53A1 = {
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
@@ -1612,6 +1702,7 @@
 				8B22248222D5EAD500C85856 /* NefMarkdown */,
 				8B12D79A22D6235200D05A70 /* NefJekyll */,
 				8BF75FC522CA7DA500EC53A1 /* NefCarbon */,
+				8BD6726623DF0A7900631D62 /* NefCompiler */,
 				8BD4E31C238817BB002DECDB /* NefSwiftPlayground */,
 				8B6B119322CB9FDE0060177F /* NefCore */,
 				8B4F45A422CF9AF400E6F471 /* NefModels */,
@@ -1624,6 +1715,13 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		8B6B119A22CB9FDE0060177F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD6726523DF0A7900631D62 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1724,6 +1822,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD6725E23DF087400631D62 /* CoreCode.swift in Sources */,
 				8B3CB8A722D393F100919F36 /* Syntax.swift in Sources */,
 				8B3CB8A922D393F100919F36 /* Lexical.swift in Sources */,
 				8BAF221D23D20A8F00786F2F /* CoreRenderError.swift in Sources */,
@@ -1810,6 +1909,17 @@
 				8B46C41B238D8A0000437659 /* PlaygroundBookResolutionPath.swift in Sources */,
 				8BD4E33123881946002DECDB /* SwiftPlayground.swift in Sources */,
 				8BD4E33723881F9F002DECDB /* PlaygroundResolutionPath.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD6726323DF0A7900631D62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BD6727623DF245300631D62 /* RenderCompilerEnvironment.swift in Sources */,
+				8BD6727223DF0AAE00631D62 /* NefCompiler.swift in Sources */,
+				8BD6727C23DF381D00631D62 /* CompilerSystemError.swift in Sources */,
+				8BD6727A23DF249900631D62 /* CompilerSystem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2690,6 +2800,56 @@
 			};
 			name = Release;
 		};
+		8BD6726D23DF0A7900631D62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Component/NefCompiler/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.NefCompiler;
+				PRODUCT_MODULE_NAME = NefCompiler;
+				PRODUCT_NAME = NefCompiler;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8BD6726E23DF0A7900631D62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Component/NefCompiler/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.NefCompiler;
+				PRODUCT_MODULE_NAME = NefCompiler;
+				PRODUCT_NAME = NefCompiler;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		8BF75F9622CA71E700EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2750,11 +2910,9 @@
 		8BF75FD822CA7DA500EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2769,7 +2927,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.NefCarbon;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2778,11 +2935,9 @@
 		8BF75FD922CA7DA500EC53A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2797,7 +2952,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.NefCarbon;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2955,6 +3109,15 @@
 			buildConfigurations = (
 				8BD4E323238817BB002DECDB /* Debug */,
 				8BD4E324238817BB002DECDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BD6726C23DF0A7900631D62 /* Build configuration list for PBXNativeTarget "NefCompiler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BD6726D23DF0A7900631D62 /* Debug */,
+				8BD6726E23DF0A7900631D62 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

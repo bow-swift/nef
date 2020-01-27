@@ -43,3 +43,7 @@ public extension CoreRender where D == CoreMarkdownEnvironment, A == String {
 public extension CoreRender where D == CoreCarbonEnvironment, A == Image {
     static var carbon: CoreRender { .init(.carbon) }
 }
+
+public extension CoreRender where D == CoreCodeEnvironment, A == String {
+    static var code: CoreRender { .init(.code) }
+}
