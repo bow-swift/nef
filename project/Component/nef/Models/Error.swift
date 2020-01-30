@@ -3,6 +3,7 @@
 import Foundation
 
 public enum Error: String, Swift.Error {
+    case compiler
     case markdown
     case jekyll
     case carbon

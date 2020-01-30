@@ -86,7 +86,7 @@ public extension FileSystem {
     func moveFile(from origin: String, to destination: String) -> IO<FileSystemError, Void> {
         copy(itemPath: origin, toPath: destination)
             .followedBy(removeFiles(origin))^
-            .mapLeft { _ in .move(from: origin, to: destination) }
+            .mapError { _ in .move(from: origin, to: destination) }
     }
     
     func moveFiles(in input: String, to output: String) -> IO<FileSystemError, ()> {
@@ -97,7 +97,7 @@ public extension FileSystem {
                   |<-self.copy(items: items.get, from: input, to: output),
                   |<-self.removeDirectory(input),
             yield: ()
-        )^.mapLeft { _ in .move(from: input, to: output) }
+        )^.mapError { _ in .move(from: input, to: output) }
     }
     
     func rename(_ newName: String, itemAt: String) -> IO<FileSystemError, ()> {

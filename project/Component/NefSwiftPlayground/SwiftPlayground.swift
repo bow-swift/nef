@@ -91,7 +91,7 @@ public struct SwiftPlayground {
         EnvIO { system in
             guard !useCache else { return IO.pure(()) }
             
-            let removeFileIO = system.remove(itemPath: itemPath).mapLeft { _ in SwiftPlaygroundError.clean(item: itemPath) }^
+            let removeFileIO = system.remove(itemPath: itemPath).mapError { _ in SwiftPlaygroundError.clean(item: itemPath) }^
             return system.exist(itemPath: itemPath) ? removeFileIO : IO.pure(())
         }
     }
@@ -99,14 +99,14 @@ public struct SwiftPlayground {
     private func makeStructure(buildPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, Void> {
         EnvIO { system in
             system.createDirectory(atPath: buildPath)^
-                  .mapLeft { _ in .structure }
+                  .mapError { _ in .structure }
         }
     }
     
     private func buildPackage(content: String, packageFilePath: String, packagePath: String, buildPath: String) -> EnvIO<(FileSystem, PlaygroundShell), SwiftPlaygroundError, Void> {
         EnvIO { (system, shell) in
-            let writePackageIO = system.write(content: content, toFile: packageFilePath).mapLeft { e in SwiftPlaygroundError.checkout(info: e.description) }
-            let resolvePackageIO = shell.resolve(packagePath: packagePath, buildPath: buildPath).mapLeft { e in SwiftPlaygroundError.checkout(info: e.description) }
+            let writePackageIO = system.write(content: content, toFile: packageFilePath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) }
+            let resolvePackageIO = shell.resolve(packagePath: packagePath, buildPath: buildPath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) }
 
             return writePackageIO.followedBy(resolvePackageIO)
         }
@@ -115,7 +115,7 @@ public struct SwiftPlayground {
     private func repositories(checkoutPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, [String]> {
         EnvIO { fileSystem in
             fileSystem.items(atPath: checkoutPath)
-                      .mapLeft { e in .checkout(info: e.description) }
+                      .mapError { e in .checkout(info: e.description) }
                       .map { repos in repos.filter { repo in !repo.filename.contains("swift-") } }
         }
     }
@@ -151,7 +151,7 @@ public struct SwiftPlayground {
                 shell.describe(repositoryPath: repositoryPath)
                      .map(modules)^
                      .flatMap { modules in linkPathForSources(in: modules).provide(shell) }^
-                     .mapLeft { _ in .modules(repos) }
+                     .mapError { _ in .modules(repos) }
             }.flatMap { modules in
                 modules.count > 0 ? IO.pure(modules)^
                                   : IO.raiseError(.modules(repos))^

@@ -35,12 +35,15 @@ public struct Compiler {
         yield: ())^
     }
     
-    public func playgrounds(atFolder folder: URL) -> EnvIO<Environment, RenderError, Void> {
+    public func playgrounds(atFolder folder: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+        let xcworkspace = EnvIO<Environment, RenderError, URL>.var()
         let rendered = EnvIO<Environment, RenderError, PlaygroundsOutput>.var()
         
         return binding(
-             rendered <- self.renderPlaygrounds(atFolder: folder),
-                      |<-self.compile(playgrounds: rendered.get),
+               rendered <- self.renderPlaygrounds(atFolder: folder),
+            xcworkspace <- self.xcworkspace(atFolder: folder),
+                        |<-self.compile(workspace: xcworkspace.get, platform: self.platform(in: rendered.get), cached: cached),
+//                        |<-self.compile(playgrounds: rendered.get),
         yield: ())^
     }
     
@@ -63,10 +66,27 @@ public struct Compiler {
         }
     }
     
-    // MARK: private <helper>
+    // MARK: private <compiler>
+    private func xcworkspace(atFolder folder: URL) -> EnvIO<Environment, RenderError, URL> {
+        func getWorkspaces(atFolder folder: URL) -> EnvIO<Environment, PlaygroundSystemError, NEA<URL>> {
+            EnvIO { env in env.playgroundSystem.xcworkspaces(at: folder) }
+        }
+        
+        func assertNumberOf(xcworkspaces: NEA<URL>, equalsTo total: Int) -> EnvIO<Environment, PlaygroundSystemError, Void> {
+            xcworkspaces.all().count == total ? EnvIO.pure(())^ : EnvIO.raiseError(.xcworkspaces())^
+        }
+        
+        let xcworkspaces = EnvIO<Environment, PlaygroundSystemError, NEA<URL>>.var()
+        
+        return binding(
+            xcworkspaces <- getWorkspaces(atFolder: folder),
+                         |<-assertNumberOf(xcworkspaces: xcworkspaces.get, equalsTo: 1),
+        yield: xcworkspaces.get.head)^.mapError { _ in .getWorkspace(folder: folder) }^
+    }
+    
     private func compile(page: RenderingOutput) -> EnvIO<Environment, RenderError, Void> {
-        EnvIO { env in
-            env.compilerSystem.compile(page: page).mapLeft { _ in .content }
+        EnvIO { (env: Environment) in
+            env.compilerSystem.compile(page: page).provide(env.compilerEnvironment).mapError { _ in .content }
         }
     }
     
@@ -75,6 +95,19 @@ public struct Compiler {
     }
     
     private func compile(playgrounds: PlaygroundsOutput) -> EnvIO<Environment, RenderError, Void> {
-        playgrounds.traverse { info in self.compile(pages: info.output) }.map { _ in () }^
+        playgrounds.traverse { playground in
+            self.compile(pages: playground.output)
+        }.map { _ in () }^
+    }
+    
+    private func compile(workspace: URL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+        EnvIO { env in
+            env.compilerSystem.compile(xcworkspace: workspace, platform: platform, cached: cached).provide(env.compilerEnvironment).mapError { _ in .workspace(workspace) }
+        }
+    }
+    
+    // MARK: private <utils>
+    func platform(in playgrounds: PlaygroundsOutput) -> Platform {
+        playgrounds.head.output.head.platform
     }
 }

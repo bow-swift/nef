@@ -49,7 +49,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                 |<-console.printSubstep(step: step(partial: 0), information: ["filename: \(args.get.filename)", "output: \(args.get.output.path)", "verbose: \(args.get.verbose)"]),
          output <- nef.Markdown.renderVerbose(content: args.get.content, toFile: args.get.output)
                                .provide(console)
-                               .mapLeft { e in .render() }^,
+                               .mapError { e in .render() }^,
     yield: args.get.verbose ? Either<(ast: String, trace: String), URL>.left((ast: output.get.ast, trace: output.get.rendered))
                             : Either<(ast: String, trace: String), URL>.right(output.get.url))^
         .reportStatus(in: console)

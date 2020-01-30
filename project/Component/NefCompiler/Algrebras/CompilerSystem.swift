@@ -5,8 +5,6 @@ import NefCommon
 import BowEffects
 
 public protocol CompilerSystem {
-    func compile(page: RenderingOutput<String>) -> IO<CompilerSystemError, Void>
-//    func resolve(packagePath: String, buildPath: String) -> IO<PlaygroundShellError, Void>
-//    func describe(repositoryPath: String) -> IO<PlaygroundShellError, Data>
-//    func linkPath(itemPath: String, parentPath: String) -> IO<PlaygroundShellError, String>
+    func compile(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void>
+    func compile(page: RenderingOutput<String>) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void>
 }

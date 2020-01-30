@@ -36,7 +36,7 @@ extension Node {
             let code = nodes.map { $0.carbon() }.joined()
             guard !code.isEmpty else { return IO.raiseError(.renderEmpty)^ }
             let configuration = CarbonModel(code: code, style: style)
-            return downloader.carbon(configuration: configuration).mapLeft { _ in .renderNode }
+            return downloader.carbon(configuration: configuration).mapError { _ in .renderNode }
             
         default:
             return IO.pure(Image.empty)^

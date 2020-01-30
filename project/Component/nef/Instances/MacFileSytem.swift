@@ -1,6 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import NefCommon
 import Bow
 import BowEffects
 
@@ -8,22 +9,22 @@ class MacFileSystem: NefCommon.FileSystem {
     
     func createDirectory(atPath path: String) -> IO<FileSystemError, ()> {
         FileManager.default.createDirectoryIO(atPath: path, withIntermediateDirectories: true)
-                           .mapLeft { _ in .create(item: path) }
+                           .mapError { _ in .create(item: path) }
     }
     
     func copy(itemPath atPath: String, toPath: String) -> IO<FileSystemError, ()> {
         FileManager.default.copyItemIO(atPath: atPath, toPath: toPath)
-                           .mapLeft { _ in .copy(from: atPath, to: toPath) }
+                           .mapError { _ in .copy(from: atPath, to: toPath) }
     }
     
     func remove(itemPath: String) -> IO<FileSystemError, ()> {
         FileManager.default.removeItemIO(atPath: itemPath)
-                           .mapLeft { _ in .remove(item: itemPath) }
+                           .mapError { _ in .remove(item: itemPath) }
     }
     
     func items(atPath path: String) -> IO<FileSystemError, [String]> {
         FileManager.default.contentsOfDirectoryIO(atPath: path)
-                           .mapLeft { _ in .get(from: path) }
+                           .mapError { _ in .get(from: path) }
                            .map { files in files.map({ file in "\(path)/\(file)"}) }^
     }
     

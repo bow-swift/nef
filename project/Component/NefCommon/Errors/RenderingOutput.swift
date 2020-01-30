@@ -13,6 +13,16 @@ public struct RenderingOutput<A> {
     }
 }
 
+public enum Platform: String {
+    case ios
+    case macos
+    case tvos
+    
+    public init?(platform: String) {
+        guard let platform = Platform(rawValue: platform) else { return nil }
+        self = platform
+    }
+}
 
-public typealias PlaygroundOutput<A>  = NEA<(page: RenderingURL, output: RenderingOutput<A>)>
+public typealias PlaygroundOutput<A>  = NEA<(page: RenderingURL, platform: Platform, output: RenderingOutput<A>)>
 public typealias PlaygroundsOutput<A> = NEA<(playground: RenderingURL, output: PlaygroundOutput<A>)>

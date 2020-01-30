@@ -52,7 +52,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                 |<-console.printStep(step: step(partial: 2), information: "Render "+"Jekyll".bold+" (\(args.get.filename))".lightGreen),
          output <- nef.Jekyll.renderVerbose(content: args.get.content, permalink: args.get.permalink, toFile: args.get.output)
                              .provide(console)
-                             .mapLeft { e in .render() }^,
+                             .mapError { e in .render() }^,
     yield: args.get.verbose ? Either<(ast: String, trace: String), URL>.left((ast: output.get.ast, trace: output.get.rendered))
                             : Either<(ast: String, trace: String), URL>.right(output.get.url))^
         .reportStatus(in: console)

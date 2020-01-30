@@ -86,7 +86,7 @@ public struct Carbon {
     
     private func writePage(_ page: RenderingOutput, atFile file: URL) -> EnvIO<Environment, RenderError, Void> {
         EnvIO { env in
-            env.persistence.writePage(page, file).provide(env.fileSystem).mapLeft { _ in .page(file) }
+            env.persistence.writePage(page, file).provide(env.fileSystem).mapError { _ in .page(file) }
         }
     }
     

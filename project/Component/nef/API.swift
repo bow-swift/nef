@@ -7,11 +7,16 @@ import Bow
 import BowEffects
 
 
+public enum Compiler: CompilerAPI {}
 public enum Markdown: MarkdownAPI {}
 public enum Jekyll: JekyllAPI {}
 public enum Carbon: CarbonAPI {}
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
+
+public protocol CompilerAPI {
+    static func compile(content: String) -> EnvIO<Console, nef.Error, Void>
+}
 
 public protocol MarkdownAPI {
     /// Renders content into markdown.
