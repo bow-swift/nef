@@ -22,6 +22,71 @@ class MacCompilerSystem: CompilerSystem {
 //        return reorganizeHeaders(page: content).map { _ in }^
     }
     
+    // MARK: operations <shell>
+    private func buildPods(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        func resolve(project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+            EnvIO { env in
+                let hasPodfile = env.fileSystem.exist(itemPath: project.appendingPathComponent("Podfile").path)
+                return hasPodfile ? env.shell.podinstall(project: project, platform: platform, cached: cached).mapError { e in .dependencies(project, information: "\(e)") }
+                                  : IO.pure(())^
+            }^
+        }
+        
+        return resolve(project: xcworkspace.deletingLastPathComponent(),
+                       platform: platform,
+                       cached: cached)
+    }
+    
+    private func buildCarthage(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        func resolve(project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+            EnvIO { env in
+                let hasCartfile = env.fileSystem.exist(itemPath: project.appendingPathComponent("Cartfile").path)
+                return hasCartfile ? env.shell.carthage(project: project, platform: platform, cached: cached).mapError { e in .dependencies(project, information: "\(e)") }
+                                   : IO.pure(())^
+            }^
+        }
+        
+        return resolve(project: xcworkspace.deletingLastPathComponent(),
+                       platform: platform,
+                       cached: cached)
+    }
+    
+    private func buildProject(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        func scheme(pbxproj: String, name: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
+            let schemes = pbxproj.matches(pattern: "(?s)(/\\* Begin PBX\(name.capitalized)Target section.*\n).*(End PBX\(name.capitalized)Target section \\*/)").joined()
+                                 .matches(pattern: "(?<=\tname = ).*(?=;)")
+            
+            guard let scheme = schemes.first else { return EnvIO.raiseError(.build(xcworkspace))^ }
+            return EnvIO.pure(scheme)^
+        }
+        
+        func scheme(pbxproj: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
+            let nativeTargetIO    = scheme(pbxproj: pbxproj, name: "native")
+            let aggregateTargetIO = scheme(pbxproj: pbxproj, name: "aggregate")
+            
+            return nativeTargetIO.handleErrorWith(constant(aggregateTargetIO))^
+        }
+        
+        func extractScheme(xcworkspace: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
+            let pbxproj = xcworkspace.deletingPathExtension().appendingPathExtension("xcodeproj").appendingPathComponent("project.pbxproj")
+            let env = EnvIO<CompilerSystemEnvironment, CompilerSystemError, CompilerSystemEnvironment>.var()
+            let content = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
+            let schemeName = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
+            
+            return binding(
+                       env <- ask(),
+                   content <- env.get.fileSystem.readFile(atPath: pbxproj.path).mapError { _ in .build(xcworkspace) }^,
+                schemeName <- scheme(pbxproj: content.get),
+            yield: schemeName.get)^
+        }
+        
+        let schemeName = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
+        
+        return binding(
+            schemeName <- extractScheme(xcworkspace: xcworkspace),
+        yield: { print(schemeName.get); return ()}())^
+    }
+    
     // MARK: helpers
     private func reorganizeHeaders(page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
         func getImports(page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
@@ -58,41 +123,4 @@ class MacCompilerSystem: CompilerSystem {
              output <- insertHeaders(imports.get, toPage: cleaned.get),
         yield: output.get)^
     }
-    
-    // MARK: operations <shell>
-    private func buildPods(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-        func checkPodfile(atFolder folder: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-            EnvIO { env in
-                env.fileSystem.exist(itemPath: folder.appendingPathComponent("Podfile").path)
-                    ? IO.pure(())^
-                    : IO.raiseError(.dependencies(folder))
-            }
-        }
-        
-        func resolve(project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerShell, CompilerSystemError, Void> {
-            EnvIO { shell in
-                shell.podinstall(project: project, platform: platform, cached: cached)
-            }.mapError { e in .dependencies(project, information: "\(e)") }^
-        }
-        
-        let project = xcworkspace.deletingLastPathComponent()
-        return binding(
-                |<-checkPodfile(atFolder: project),
-                |<-resolve(project: project, platform: platform, cached: cached).contramap(\CompilerSystemEnvironment.shell),
-        yield: ())^
-    }
-    
-    private func buildCarthage(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-        let folder = xcworkspace.deletingLastPathComponent()
-        fatalError()
-    }
-    
-    private func buildProject(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-        fatalError()
-    }
-    
-    // MARK: operations <filesystem>
-//    func createEmptyWorkspace(at folder: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-//        fatalError()
-//    }
 }
