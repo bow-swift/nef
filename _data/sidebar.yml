@@ -1,0 +1,56 @@
+options:
+
+  - title: Quick start
+
+    nested_options:
+
+        - title: Installation
+          url: /docs/quick-start/installation/
+
+        - title: Creating an Xcode Playground
+          url: /docs/quick-start/creating-an-xcode-playground/
+
+        - title: Creating a Playground Book for iPad
+          url: /docs/quick-start/creating-a-playground-book-for-ipad/
+
+        - title: Resources
+          url: /docs/quick-start/resources/
+
+
+  - title: Verification and Compilation
+
+    nested_options:
+
+        - title: Compiling an Xcode Playground
+          url: /docs/verification-and-compilation/compiling-an-xcode-playground/
+
+
+  - title: Generation
+
+    nested_options:
+
+        - title: Generating a Markdown document
+          url: /docs/generation/generating-a-markdown-document/
+
+
+  - title: Integration
+
+    nested_options:
+
+        - title: Jekyll
+          url: /docs/integration/jekyll/
+
+        - title: Carbon
+          url: /docs/integration/carbon/
+
+
+  - title: Tutorials
+
+    nested_options:
+
+        - title: How to use nef library?
+          url: /docs/tutorials/how-to-use-nef-library-/
+
+        - title: First Steps with Carbon
+          url: /docs/tutorials/first-steps-with-carbon/
+
