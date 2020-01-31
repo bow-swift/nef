@@ -1,14 +1,21 @@
 <head>
     <meta charset="UTF-8">
-    <title>{{site.name}}</title>
+
+    {% if page.title %}
+    {% assign pageTitle = site.title | append: ': ' | append: page.title %}
+    {% else %}
+    {% assign pageTitle = site.title %}
+    {% endif %}
+
+    <title>{{ pageTitle }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{site.description}}">
     <meta name="keywords" content="{{site.keywords}}">
 
-    <meta property="og:image" content="" />
-    <meta property="og:title" content="{{site.name}}" />
-    <meta property="og:site_name" content="{{site.name}}" />
-    <meta property="og:url" content="https://nef.bow-swift.io/" />
+    <meta property="og:image" content="{{ 'img/poster.png' | relative_url }}" />
+    <meta property="og:title" content="{{ pageTitle }}" />
+    <meta property="og:site_name" content="{{ pageTitle }}" />
+    <meta property="og:url" content="{{ site.url }}" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="{{site.description}}" />
     <meta property="og:keywords" content="{{site.keywords}}" />
@@ -17,13 +24,13 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@bow_swift">
     <meta name="twitter:creator" content="@bow_swift">
-    <meta name="twitter:image" content="" />
+    <meta name="twitter:image" content="{{ 'img/poster.png' | relative_url }}" />
 
     <script defer src="{{ '/js/main.js' | relative_url }}"></script>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ '/img/favicon.png' | relative_url }}">
 
-    <!-- Nef main css -->
+    <!-- Main css -->
     <link rel="stylesheet" type="text/css" href="{{ '/css/styles.css' | relative_url }}">
 </head>
