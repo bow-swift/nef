@@ -1,7 +1,7 @@
-language: swift
+os: osx
+language: objective-c
 osx_image: xcode11
 
-sudo: required
 addons:
   homebrew:
     taps:
@@ -41,10 +41,10 @@ jobs:
         - nef jekyll --project Documentation.app --output docs --main-page Documentation.app/jekyll/Home.md
       deploy:
         provider: pages
-        skip-cleanup: true
-        github-token: $GITHUB_TOKEN
-        keep-history: true
-        local-dir: docs
-        target-branch: gh-pages
+        cleanup: true
+        token: $GITHUB_TOKEN
+        keep_history: true
+        local_dir: docs
+        target_branch: gh-pages
         on:
           all_branches: true
