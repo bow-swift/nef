@@ -3,7 +3,7 @@
         <div class="main-flex">
            {% for item in site.data.features.content %}
             <div class="main-item">
-                <img src="{{ item.icon }}" alt="{{ item.title }}">
+                <img src="{{ item.icon | relative_url }}" title="{{ item.title }}" alt="{{ item.title }}">
                 <h2>{{ item.title }}</h2>
                 <p>{{ item.description }}</p>
             </div>

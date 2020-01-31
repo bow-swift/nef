@@ -1,8 +1,8 @@
 <nav id="site-nav">
     <div class="wrapper">
         <div class="nav-flex">
-            <a class="nav-brand" title="Nef" href="{{ site.baseurl }}/">
-                <img src="../img/nav-brand.svg" title="{{ site.name }}">
+            <a class="nav-brand" title="{{ site.name }}" href="{{ '/' | relative_url }}">
+                <img src="{{ '/img/nav-brand.svg' | relative_url }}" alt="{{ site.name }}" title="{{ site.name }}">
                 <span>{{ site.name }}</span>
             </a>
             <div class="nav-menu">
@@ -10,12 +10,12 @@
                   class="button nav-icon-close"
                   title="Close"
                   onClick="toggleClass('.nav-menu', 'open');">
-                    <img src="../img/nav-icon-close.svg" alt="Close">
+                    <img src="{{ '/img/nav-icon-close.svg' | relative_url }}" title="Close" alt="Close">
                 </button>
                 <ul>
                   {% for item in site.data.menu.nav%}
                   <li class="nav-menu-item">
-                      <a href="{{ item.url }}" title="{{ item.title }}">{{ item.title }}</a>
+                      <a href="{{ item.url | relative_url }}" title="{{ item.title }}">{{ item.title }}</a>
                   </li>
                   {% endfor %}
                 </ul>
@@ -25,7 +25,7 @@
               class="button nav-icon-open"
               title="Open"
               onClick="toggleClass('.nav-menu', 'open');">
-                <img src="../img/nav-icon-open.svg" alt="Open">
+                <img src="{{ '/img/nav-icon-open.svg' | relative_url }}" title="Open" alt="Open">
             </button>
         </div>
     </div>

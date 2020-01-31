@@ -16,6 +16,7 @@ swiftpm
 _site
 .sass-cache
 .jekyll-metadata
+.jekyll-cache
 
 ## Ruby environment normalization:
 .bundle/
