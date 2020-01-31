@@ -2,79 +2,93 @@
 // -----------------------------------------------
 // -----------------------------------------------
 
-#site-sidebar {
-    position: fixed;
-    background: $brand-secondary;
-    width: 250px;
-    height: 100%;
-    left: 0;
-    z-index: 2;
-    transition: left $base-duration $base-timing;
+.site-sidebar {
+  position: fixed;
+  background-image:
+    linear-gradient(
+      to bottom,
+      $brand-secondary 60%,
+      darken($brand-secondary, 3%) 100%
+    );
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  width: 290px;
+  height: 100%;
+  left: 0;
+  z-index: 2;
+  transition: left $base-duration $base-timing;
 
-    &.toggled {
-      left: -100%;
+  &:hover {
+    overflow: hidden auto;
+  }
+
+  &.toggled {
+    left: -100%;
+  }
+
+  .sidebar-brand {
+    padding: $base-point-grid + 4 $base-point-grid * 2;
+    font-family: $header-font-family;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $sidebar-active-color;
+
+    a {
+      display: flex;
+      color: $white;
+      align-items: center;
+      width: 100%;
+      transition: none;
+
+      &:visited,
+      &:hover,
+      &:active {
+        text-decoration: none;
+      }
+
+      .brand-wrapper {
+        width: auto;
+        height: 64px;
+      }
+
+      span {
+        font-size: 2.5rem;
+        z-index: 30;
+        // white-space: nowrap;
+      }
     }
+  }
 
-    .sidebar-brand {
-        height: 88px;
-        padding: ($base-point-grid * 2);
-        background: rgba($brand-primary, 0.30);
-        display: flex;
-        justify-content: space-between;
-
-        a {
-            display: flex;
-            align-items: center;
-            color: $white;
-
-            &:visited,
-            &:hover,
-            &:active {
-                color: $white;
-                text-decoration: none;
-            }
-
-            img {
-              height: 60px;
-            }
-
-            span {
-                font-size: 2.143rem;
-            }
-        }
-    }
-
-    .sidebar-toggle {
-      display: none;
-    }
-
-    .sidebar-menu {
-        margin-top: ($base-point-grid * 2);
-    }
+  .sidebar-toggle {
+    display: none;
+  }
 }
 
 // Responsive
 // -----------------------------------------------
 @include bp(medium) {
+  .site-sidebar {
+    left: -100%;
+    width: 100%;
 
-    #site-sidebar {
-        left: -100%;
-        width: 100%;
-
-        &.toggled {
-          left: 0;
-        }
-
-        .sidebar-toggle {
-          padding: 24px 32px;
-          display: block;
-          opacity: 0.7;
-          transition: opacity 0.3s ease, transform 0.3s ease;
-
-          &:hover {
-            opacity: 1;
-            transform: rotate(-180deg);
-          }
-        }
+    &.toggled {
+      left: 0;
+      overflow-y: auto;
     }
+
+    .sidebar-toggle {
+      position: absolute;
+      right: 16px;
+      padding: 24px 32px;
+      display: block;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        opacity: 1;
+        transform: rotate(-180deg);
+      }
+    }
+  }
 }
