@@ -22,6 +22,14 @@ public enum Platform: String {
         guard let platform = Platform(rawValue: platform) else { return nil }
         self = platform
     }
+    
+    public var sdk: String {
+        switch self {
+        case .ios:   return "iphoneos"
+        case .macos: return "macosx"
+        case .tvos:  return "tvos"
+        }
+    }
 }
 
 public typealias PlaygroundOutput<A>  = NEA<(page: RenderingURL, platform: Platform, output: RenderingOutput<A>)>

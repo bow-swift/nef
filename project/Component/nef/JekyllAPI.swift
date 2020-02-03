@@ -19,7 +19,7 @@ public extension JekyllAPI {
         NefJekyll.Jekyll()
                  .page(content: content, permalink: permalink)
                  .contramap(environment)
-                 .mapError { _ in nef.Error.jekyll }
+                 .mapError { _ in nef.Error.jekyll() }
     }
     
     static func render(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
@@ -33,21 +33,21 @@ public extension JekyllAPI {
         return NefJekyll.Jekyll()
                         .page(content: content, permalink: permalink, filename: filename, into: output)
                         .contramap(environment)
-                        .mapError { _ in nef.Error.jekyll }
+                        .mapError { _ in nef.Error.jekyll() }
     }
     
     static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
         NefJekyll.Jekyll()
                  .playground(playground, into: output)
                  .contramap(environment)
-                 .mapError { _ in nef.Error.markdown }^
+                 .mapError { _ in nef.Error.jekyll() }^
     }
     
     static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
         NefJekyll.Jekyll()
                  .playgrounds(at: playgroundsAt, mainPage: mainPage, into: output)
                  .contramap(environment)
-                 .mapError { _ in nef.Error.jekyll }^
+                 .mapError { _ in nef.Error.jekyll() }^
     }
     
     // MARK: - private <helpers>

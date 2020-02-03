@@ -8,11 +8,11 @@ import BowEffects
 
 
 class MacCompilerSystem: CompilerSystem {
-    func compile(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    func compile(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         binding(
             |<-self.buildPods(xcworkspace: xcworkspace, platform: platform, cached: cached),
             |<-self.buildCarthage(xcworkspace: xcworkspace, platform: platform, cached: cached),
-            |<-self.buildProject(xcworkspace: xcworkspace, platform: platform, cached: cached),
+            |<-self.buildProject(xcworkspace: xcworkspace, inProject: project, platform: platform, cached: cached),
         yield: ())^
     }
     
@@ -27,7 +27,7 @@ class MacCompilerSystem: CompilerSystem {
         func resolve(project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
                 let hasPodfile = env.fileSystem.exist(itemPath: project.appendingPathComponent("Podfile").path)
-                return hasPodfile ? env.shell.podinstall(project: project, platform: platform, cached: cached).mapError { e in .dependencies(project, information: "\(e)") }
+                return hasPodfile ? env.shell.podinstall(project: project, platform: platform, cached: cached).mapError { e in .dependencies(project, info: "\(e)") }
                                   : IO.pure(())^
             }^
         }
@@ -41,7 +41,7 @@ class MacCompilerSystem: CompilerSystem {
         func resolve(project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
                 let hasCartfile = env.fileSystem.exist(itemPath: project.appendingPathComponent("Cartfile").path)
-                return hasCartfile ? env.shell.carthage(project: project, platform: platform, cached: cached).mapError { e in .dependencies(project, information: "\(e)") }
+                return hasCartfile ? env.shell.carthage(project: project, platform: platform, cached: cached).mapError { e in .dependencies(project, info: "\(e)") }
                                    : IO.pure(())^
             }^
         }
@@ -51,7 +51,7 @@ class MacCompilerSystem: CompilerSystem {
                        cached: cached)
     }
     
-    private func buildProject(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    private func buildProject(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
         func scheme(pbxproj: String, name: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
             let schemes = pbxproj.matches(pattern: "(?s)(/\\* Begin PBX\(name.capitalized)Target section.*\n).*(End PBX\(name.capitalized)Target section \\*/)").joined()
                                  .matches(pattern: "(?<=\tname = ).*(?=;)")
@@ -80,11 +80,22 @@ class MacCompilerSystem: CompilerSystem {
             yield: schemeName.get)^
         }
         
+        func build(xcworkspace: URL, inProject project: URL, scheme: String, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+            EnvIO { env in
+                let workspaceFramework = self.framework(xcworkspace: xcworkspace, inProject: project)
+                let isCached = cached && env.fileSystem.exist(itemPath: workspaceFramework.path)
+                guard !isCached else { return IO.pure(()) }
+                
+                return env.shell.build(xcworkspace: xcworkspace, scheme: scheme, platform: platform, derivedData: self.derivedData(project: project))
+            }.mapError { (e: CompilerShellError) in CompilerSystemError.build(xcworkspace, info: "\(e)") }
+        }
+        
         let schemeName = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
         
         return binding(
             schemeName <- extractScheme(xcworkspace: xcworkspace),
-        yield: { print(schemeName.get); return ()}())^
+                       |<-build(xcworkspace: xcworkspace, inProject: project, scheme: schemeName.get, platform: platform, cached: cached),
+        yield: self.frameworks(project: project))^
     }
     
     // MARK: helpers
@@ -122,5 +133,18 @@ class MacCompilerSystem: CompilerSystem {
             cleaned <- removeImports(imports.get, inPage: page),
              output <- insertHeaders(imports.get, toPage: cleaned.get),
         yield: output.get)^
+    }
+    
+    // MARK: helpers <path>
+    func derivedData(project: URL) -> URL {
+        project.appendingPathComponent("nef").appendingPathComponent("DerivedData")
+    }
+    
+    func framework(xcworkspace: URL, inProject project: URL) -> URL {
+        frameworks(project: project).appendingPathComponent(xcworkspace.path.filename).appendingPathExtension("framework")
+    }
+    
+    func frameworks(project: URL) -> URL {
+        project.appendingPathComponent("nef").appendingPathComponent("build").appendingPathComponent("fw")
     }
 }

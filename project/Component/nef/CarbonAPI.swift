@@ -19,7 +19,7 @@ public extension CarbonAPI {
         NefCarbon.Carbon()
                  .page(content: content)
                  .contramap { console in environment(console: console, style: style) }
-                 .mapError { _ in nef.Error.carbon }
+                 .mapError { _ in nef.Error.carbon() }
     }
     
     static func render(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, Data> {
@@ -38,23 +38,21 @@ public extension CarbonAPI {
         NefCarbon.Carbon()
                  .page(content: content, filename: filename.removeExtension, into: output)
                  .contramap { console in environment(console: console, style: style) }
-                 .mapError { e in
-                    nef.Error.carbon
-                }
+                 .mapError { e in nef.Error.carbon(info: "\(e)") }
     }
     
     static func render(playground: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
         NefCarbon.Carbon()
                  .playground(playground, into: output)
                  .contramap { console in environment(console: console, style: style) }
-                 .mapError { _ in nef.Error.carbon }
+                 .mapError { _ in nef.Error.carbon() }
     }
     
     static func render(playgroundsAt: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
         NefCarbon.Carbon()
                  .playgrounds(at: playgroundsAt, into: output)
                  .contramap { console in environment(console: console, style: style) }
-                 .mapError { _ in nef.Error.carbon }
+                 .mapError { _ in nef.Error.carbon() }
     }
     
     static func request(configuration: CarbonModel) -> URLRequest {

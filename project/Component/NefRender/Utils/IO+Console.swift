@@ -10,7 +10,7 @@ public extension IO where E == RenderError {
     
     func reportStatus(console: Console) -> IO<E, A> {
         handleErrorWith { error in
-            let print = console.printStatus(information: error.information, success: false) as IO<E, Void>
+            let print = console.printStatus(information: "\(error)", success: false) as IO<E, Void>
             let raise = IO<E, A>.raiseError(error)
             return print.followedBy(raise)
         }.flatMap { (value: A) in

@@ -42,7 +42,7 @@ public struct Compiler {
         return binding(
                rendered <- self.renderPlaygrounds(atFolder: folder),
             xcworkspace <- self.xcworkspace(atFolder: folder),
-                        |<-self.compile(workspace: xcworkspace.get, platform: self.platform(in: rendered.get), cached: cached),
+                        |<-self.compile(workspace: xcworkspace.get, inProject: folder, platform: self.platform(in: rendered.get), cached: cached),
 //                        |<-self.compile(playgrounds: rendered.get),
         yield: ())^
     }
@@ -100,10 +100,22 @@ public struct Compiler {
         }.map { _ in () }^
     }
     
-    private func compile(workspace: URL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
-        EnvIO { env in
-            env.compilerSystem.compile(xcworkspace: workspace, platform: platform, cached: cached).provide(env.compilerEnvironment).mapError { _ in .workspace(workspace) }
+    private func compile(workspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+        func buildWorkspace(_ workspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+            EnvIO { env in
+                env.compilerSystem.compile(xcworkspace: workspace, inProject: project, platform: platform, cached: cached)
+                    .provide(env.compilerEnvironment)
+                    .mapError { e in .workspace(workspace, info: "\(e)") }
+            }
         }
+        
+        return EnvIO { env in
+            binding(
+                |<-env.console.print(information: "Building workspace '\(workspace.path.filename)'"),
+                   continueOn(.main),
+                |<-buildWorkspace(workspace, inProject: project, platform: platform, cached: cached).provide(env),
+            yield: ())^.reportStatus(console: env.console)
+        }^.mapError { _ in .workspace(workspace) }
     }
     
     // MARK: private <utils>

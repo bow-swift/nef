@@ -14,6 +14,10 @@ public extension String {
         (first?.uppercased() ?? "") + dropFirst()
     }
     
+    var firstLowercased: String {
+        (first?.lowercased() ?? "") + dropFirst()
+    }
+    
     func matches(pattern: String) -> [String] {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return [] }
         return regex.matches(in: self, range: NSRange(location: 0, length: self.count))
