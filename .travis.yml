@@ -5,9 +5,9 @@ osx_image: xcode11
 addons:
   homebrew:
     taps:
-    - bow-swift/nef
+      - bow-swift/nef
     packages:
-    - nef
+      - nef
 
 env:
   global:
@@ -20,12 +20,7 @@ env:
 
 jobs:
   include:
-    # No matrix support in Stages, but this is a matrix hack:
-    # Declare the same stage name multiple times to test multiple versions.
-    # Using a YAML alias to prevent redundancy.
-    # https://github.com/travis-ci/travis-ci/issues/8295#issuecomment-454167006
-    - &test
-      stage: test
+    - stage: test
       script:
         - set -o pipefail
         - xcodebuild "$ACTION" -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" ONLY_ACTIVE_ARCH=NO -destination "$DEST" | xcpretty -c
@@ -36,14 +31,18 @@ jobs:
         - nef compile Documentation.app
     - stage: deploy microsite
       if: branch = master AND type != pull_request
+      install:
+        - gem install bundler --force
+        - bundle install --gemfile docs/Gemfile --path vendor/bundle  
       script:
         - nef jekyll --project Documentation.app --output docs --main-page Documentation.app/jekyll/Home.md
+        - BUNDLE_GEMFILE=./docs/Gemfile bundle exec jekyll build -s docs -d gen-docs
       deploy:
         provider: pages
         cleanup: true
         token: $GITHUB_TOKEN
         keep_history: true
-        local_dir: docs
+        local_dir: gen-docs
         target_branch: gh-pages
         on:
           all_branches: true
