@@ -40,7 +40,8 @@ jobs:
         - BUNDLE_GEMFILE=./docs/Gemfile bundle exec jekyll build -s docs -d gen-docs
       deploy:
         provider: pages
-        cleanup: true
+        edge: true
+        cleanup: false
         token: $GITHUB_TOKEN
         keep_history: true
         local_dir: gen-docs
