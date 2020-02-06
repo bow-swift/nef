@@ -29,7 +29,7 @@ public extension CompilerAPI {
     private static func environment(console: Console) -> NefCompiler.Compiler.Environment {
         .init(console: console,
               fileSystem: MacFileSystem(),
-              compilerShell: MacCompilerShell(),//DummyCompilerShell(),//MacCompilerShell(),
+              compilerShell: DummyCompilerShell(),//MacCompilerShell(),
               compilerSystem: MacCompilerSystem(),
               playgroundSystem: MacPlaygroundSystem(),
               codePrinter: CoreRender.code.render)
@@ -37,12 +37,13 @@ public extension CompilerAPI {
 }
 
 class DummyCompilerShell: CompilerShell {
-    let macShell = MacCompilerShell()
+    let shell = MacCompilerShell()
     
     func podinstall(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void> { IO.pure(())^ }
     func carthage(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void> { IO.pure(())^ }
+    func build(xcworkspace: URL, scheme: String, platform: Platform, derivedData: URL, log: URL) -> IO<CompilerShellError, Void> { IO.pure(())^ }
     
-    func build(xcworkspace: URL, scheme: String, platform: Platform, derivedData: URL, log: URL) -> IO<CompilerShellError, Void> {
-        macShell.build(xcworkspace: xcworkspace, scheme: scheme, platform: platform, derivedData: derivedData, log: URL.init(fileURLWithPath: "/tmp/dummy-build.log"))
+    func dependencies(platform: Platform) -> IO<CompilerShellError, URL> {
+        shell.dependencies(platform: platform)
     }
 }

@@ -9,4 +9,5 @@ public protocol CompilerShell {
     func podinstall(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void>
     func carthage(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void>
     func build(xcworkspace: URL, scheme: String, platform: Platform, derivedData: URL, log: URL) -> IO<CompilerShellError, Void>
+    func dependencies(platform: Platform) -> IO<CompilerShellError, URL>
 }

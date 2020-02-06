@@ -9,26 +9,46 @@ import BowEffects
 
 class MacCompilerSystem: CompilerSystem {
     
-    func compile(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    func compile(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
+        return EnvIO.pure(self.frameworks(project: project))^
+        
+        #warning("enable this code")
         binding(
-            |<-self.createStructure(project: project),
+            |<-self.createStructure(project: project, cached: cached),
             |<-self.buildDependencies(xcworkspace: xcworkspace, platform: platform, cached: cached),
             |<-self.buildProject(xcworkspace: xcworkspace, inProject: project, platform: platform, cached: cached),
             |<-self.copyFrameworks(inProject: project),
+        yield: self.frameworks(project: project))^
+    }
+    
+    func compile(page: String, inPlayground playground: URL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        let content = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
+        let linkers = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
+        let sources = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
+        
+        return binding(
+            content <- self.reorganizeHeaders(page: page),
+            linkers <- self.dependencies(platform: platform),
+            sources <- self.sources(inPlayground: playground),
+                    |<-self.compile(content: content.get, sources: sources.get, platform: platform, frameworks: frameworks, linkers: linkers.get),
         yield: ())^
     }
     
-    // MARK: steps <shell>
-    private func createStructure(project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    // MARK: - steps <shell>
+    private func createStructure(project: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
-            let derivedDataIO = env.fileSystem.createDirectory(atPath: self.derivedData(project: project).path)
-            let fwIO = env.fileSystem.createDirectory(atPath: self.frameworks(project: project).path)
-            let logIO = env.fileSystem.createDirectory(atPath: self.log(project: project).path)
+            let cleanIO = cached ? env.fileSystem.remove(itemPath: self.frameworks(project: project).path).handleError { _ in }
+                                 : env.fileSystem.remove(itemPath: self.nef(project: project).path).handleError { _ in }
             
-            return derivedDataIO
-                    .followedBy(fwIO)
-                    .followedBy(logIO)^
-                    .mapError { _ in CompilerSystemError.build(project, info: "creating the project structure") }
+            let createDerivedDataIO = env.fileSystem.createDirectory(atPath: self.derivedData(project: project).path)
+            let createFrameworksIO = env.fileSystem.createDirectory(atPath: self.frameworks(project: project).path)
+            let createLogIO = env.fileSystem.createDirectory(atPath: self.log(project: project).path)
+            
+            return cleanIO
+                    .followedBy(createDerivedDataIO)
+                    .followedBy(createFrameworksIO)
+                    .followedBy(createLogIO)^
+                    .mapError { _ in .build(project, info: "creating the project structure") }
         }
     }
     
@@ -36,6 +56,7 @@ class MacCompilerSystem: CompilerSystem {
         binding(
             |<-self.buildPods(xcworkspace: xcworkspace, platform: platform, cached: cached),
             |<-self.buildCarthage(xcworkspace: xcworkspace, platform: platform, cached: cached),
+            |<-self.buildSPM(xcworkspace: xcworkspace, platform: platform, cached: cached),
         yield: ())^
     }
     
@@ -51,7 +72,6 @@ class MacCompilerSystem: CompilerSystem {
         func extractFrameworks(paths: [String]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             let frameworks = paths.filter { $0.filename.extension == "framework" }
             guard frameworks.count > 0 else { return EnvIO.raiseError(.build(project, info: "copy frameworks: no frameworks found!"))^ }
-            
             return EnvIO.pure(frameworks)^
         }
         
@@ -122,7 +142,28 @@ class MacCompilerSystem: CompilerSystem {
         yield: self.frameworks(project: project))^
     }
     
-    // MARK: operations <shell>
+    private func compile(content: String, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        fatalError()
+        
+        //        # A. macOS paltform
+        //        if [ "$platformIOS" -eq "0" ]; then
+        //            if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        //              xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            else
+        //              xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            fi
+        //
+        //        # B. iOS platform
+        //        else
+        //            if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        //              xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios13.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            else
+        //              xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios13.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            fi
+        //        fi
+    }
+    
+    // MARK: - dependencies <shell>
     private func buildPods(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         func resolve(project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
@@ -151,7 +192,12 @@ class MacCompilerSystem: CompilerSystem {
                        cached: cached)
     }
     
-    // MARK: helpers
+    private func buildSPM(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        #warning("it must be done when apple fixes the Xcode bug '47668990'")
+        return EnvIO.pure(())^
+    }
+    
+    // MARK: - helpers
     private func reorganizeHeaders(page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
         func getImports(page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             EnvIO.pure(Array(Set(
@@ -188,17 +234,36 @@ class MacCompilerSystem: CompilerSystem {
         yield: output.get)^
     }
     
+    private func dependencies(platform: Platform) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
+        EnvIO { env in
+            env.shell.dependencies(platform: platform)
+                .mapError { _ in .dependencies() }
+                .map { [$0] }^
+        }
+    }
+    
+    private func sources(inPlayground playground: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
+        EnvIO { (env: CompilerSystemEnvironment) in
+            let sources = playground.appendingPathComponent("Sources")
+            return env.fileSystem.exist(itemPath: sources.path) ? IO.pure([sources])^ : IO.pure([])^
+        }
+    }
+    
     // MARK: helpers <path>
+    func nef(project: URL) -> URL {
+        project.appendingPathComponent("nef")
+    }
+    
     func derivedData(project: URL) -> URL {
-        project.appendingPathComponent("nef").appendingPathComponent("DerivedData")
+        nef(project: project).appendingPathComponent("DerivedData")
     }
     
     func log(project: URL) -> URL {
-        project.appendingPathComponent("nef").appendingPathComponent("log")
+        nef(project: project).appendingPathComponent("log")
     }
     
     func frameworks(project: URL) -> URL {
-        project.appendingPathComponent("nef").appendingPathComponent("build").appendingPathComponent("fw")
+        nef(project: project).appendingPathComponent("build").appendingPathComponent("fw")
     }
     
     func framework(xcworkspace: URL, inProject project: URL) -> URL {

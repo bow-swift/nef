@@ -23,7 +23,7 @@ extension RenderError: CustomStringConvertible {
         case .playground(let playground):
             return "Can not render playground '\(playground.path)'"
         case .workspace(let workspace, let info):
-            return "Can not render workspace '\(workspace.path)'.\(info.isEmpty ? "" : " - reason: \(info.description.firstLowercased)")"
+            return "Can not render workspace '\(workspace.path)'\(info.isEmpty ? "" : ". \n  Reason: \(info.description.firstLowercased)")"
         case .playgrounds:
             return "Can not render playgrounds"
         case .getPlaygrounds(let folder):

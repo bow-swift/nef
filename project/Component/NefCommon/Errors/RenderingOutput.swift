@@ -17,6 +17,7 @@ public enum Platform: String {
     case ios
     case macos
     case tvos
+    case watchos
     
     public init?(platform: String) {
         guard let platform = Platform(rawValue: platform) else { return nil }
@@ -28,6 +29,23 @@ public enum Platform: String {
         case .ios:   return "iphoneos"
         case .macos: return "macosx"
         case .tvos:  return "tvos"
+        case .watchos: return "watchos"
+        }
+    }
+    
+    public var framework: String {
+        switch self {
+        case .ios:   return "iPhoneOS"
+        case .macos: return "MacOSX"
+        case .tvos:  return "AppleTVOS"
+        case .watchos: return "WatchOS"
+        }
+    }
+    
+    public var target: String? {
+        switch self {
+        case .ios: return "arm64-apple-ios13.0"
+        default: return nil
         }
     }
 }

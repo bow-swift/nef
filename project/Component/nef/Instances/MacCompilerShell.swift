@@ -50,4 +50,15 @@ class MacCompilerShell: CompilerShell {
             return ()
         }
     }
+    
+    func dependencies(platform: Platform) -> IO<CompilerShellError, URL> {
+        IO.invoke {
+            let result = run("/usr/bin/xcode-select", args: ["-p"])
+            guard result.exitStatus == 0 else {
+                throw CompilerShellError.failed(command: "xcode-select", information: result.stderr)
+            }
+            
+            return URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer/Library/Frameworks")
+        }
+    }
 }
