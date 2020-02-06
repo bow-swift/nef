@@ -3246,8 +3246,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bow-swift/SwiftLine.git";
 			requirement = {
-				kind = exactVersion;
-				version = 0.5.4;
+				branch = environment;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

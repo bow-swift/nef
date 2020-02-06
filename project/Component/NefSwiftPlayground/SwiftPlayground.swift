@@ -114,7 +114,7 @@ public struct SwiftPlayground {
     
     private func repositories(checkoutPath: String) -> EnvIO<FileSystem, SwiftPlaygroundError, [String]> {
         EnvIO { fileSystem in
-            fileSystem.items(atPath: checkoutPath)
+            fileSystem.items(atPath: checkoutPath, recursive: false)
                       .mapError { e in .checkout(info: e.description) }
                       .map { repos in repos.filter { repo in !repo.filename.contains("swift-") } }
         }

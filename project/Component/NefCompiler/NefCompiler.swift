@@ -86,7 +86,9 @@ public struct Compiler {
     
     private func compile(page: RenderingOutput) -> EnvIO<Environment, RenderError, Void> {
         EnvIO { (env: Environment) in
-            env.compilerSystem.compile(page: page).provide(env.compilerEnvironment).mapError { _ in .content }
+            #warning("not implemented")
+            fatalError()
+//            env.compilerSystem.compile(page: page).provide(env.compilerEnvironment).mapError { _ in .content }
         }
     }
     
@@ -111,8 +113,8 @@ public struct Compiler {
         
         return EnvIO { env in
             binding(
-                |<-env.console.print(information: "Building workspace '\(workspace.path.filename)'"),
                    continueOn(.main),
+                |<-env.console.print(information: "Building workspace '\(workspace.lastPathComponent.removeExtension)'"),
                 |<-buildWorkspace(workspace, inProject: project, platform: platform, cached: cached).provide(env),
             yield: ())^.reportStatus(console: env.console)
         }^.mapError { _ in .workspace(workspace) }

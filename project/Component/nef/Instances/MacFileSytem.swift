@@ -22,10 +22,23 @@ class MacFileSystem: NefCommon.FileSystem {
                            .mapError { _ in .remove(item: itemPath) }
     }
     
-    func items(atPath path: String) -> IO<FileSystemError, [String]> {
-        FileManager.default.contentsOfDirectoryIO(atPath: path)
-                           .mapError { _ in .get(from: path) }
-                           .map { files in files.map({ file in "\(path)/\(file)"}) }^
+    func items(atPath path: String, recursive: Bool) -> IO<FileSystemError, [String]> {
+        func items(atPath: String) -> IO<FileSystemError, [String]> {
+            FileManager.default.contentsOfDirectoryIO(atPath: atPath)
+                .mapError { _ in .get(from: atPath) }
+                .map { files in files.map({ file in "\(atPath)/\(file)"}) }^
+        }
+        
+        func itemsRecursive(atPath: String) -> IO<FileSystemError, [String]> {
+            IO.invoke {
+                let items = FileManager.default.enumerator(atPath: atPath)?
+                                .compactMap { $0 as? String }
+                                .map { file in "\(atPath)/\(file)" }
+                return items ?? []
+            }^
+        }
+        
+        return recursive ? itemsRecursive(atPath: path) : items(atPath: path)
     }
     
     func readFile(atPath path: String) -> IO<FileSystemError, String> {

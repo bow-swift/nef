@@ -8,7 +8,7 @@ public protocol FileSystem {
     func createDirectory(atPath: String) -> IO<FileSystemError, ()>
     func copy(itemPath: String, toPath: String) -> IO<FileSystemError, ()>
     func remove(itemPath: String) -> IO<FileSystemError, ()>
-    func items(atPath path: String) -> IO<FileSystemError, [String]>
+    func items(atPath path: String, recursive: Bool) -> IO<FileSystemError, [String]>
     func readFile(atPath path: String) -> IO<FileSystemError, String>
     func write(content: String, toFile path: String) -> IO<FileSystemError, ()>
     func write(content: Data, toFile path: String) -> IO<FileSystemError, ()>
@@ -17,7 +17,7 @@ public protocol FileSystem {
     func createDirectory<D>(atPath: String) -> EnvIO<D, FileSystemError, ()>
     func copy<D>(itemPath: String, toPath: String) -> EnvIO<D, FileSystemError, ()>
     func remove<D>(itemPath: String) -> EnvIO<D, FileSystemError, ()>
-    func items<D>(atPath path: String) -> EnvIO<D, FileSystemError, [String]>
+    func items<D>(atPath path: String, recursive: Bool) -> EnvIO<D, FileSystemError, [String]>
     func readFile<D>(atPath path: String) -> EnvIO<D, FileSystemError, String>
     func write<D>(content: String, toFile path: String) -> EnvIO<D, FileSystemError, ()>
     func write<D>(content: Data, toFile path: String) -> EnvIO<D, FileSystemError, ()>
@@ -36,8 +36,8 @@ public extension FileSystem {
         remove(itemPath: itemPath).env()
     }
     
-    func items<D>(atPath path: String) -> EnvIO<D, FileSystemError, [String]> {
-        items(atPath: path).env()
+    func items<D>(atPath path: String, recursive: Bool) -> EnvIO<D, FileSystemError, [String]> {
+        items(atPath: path, recursive: recursive).env()
     }
     
     func readFile<D>(atPath path: String) -> EnvIO<D, FileSystemError, String> {
@@ -93,7 +93,7 @@ public extension FileSystem {
         let items = IO<FileSystemError, [String]>.var()
         
         return binding(
-            items <- self.items(atPath: input),
+            items <- self.items(atPath: input, recursive: false),
                   |<-self.copy(items: items.get, from: input, to: output),
                   |<-self.removeDirectory(input),
             yield: ()

@@ -42,7 +42,7 @@ class DummyCompilerShell: CompilerShell {
     func podinstall(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void> { IO.pure(())^ }
     func carthage(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void> { IO.pure(())^ }
     
-    func build(xcworkspace: URL, scheme: String, platform: Platform, derivedData: URL) -> IO<CompilerShellError, Void> {
-        macShell.build(xcworkspace: xcworkspace, scheme: scheme, platform: platform, derivedData: derivedData)
+    func build(xcworkspace: URL, scheme: String, platform: Platform, derivedData: URL, log: URL) -> IO<CompilerShellError, Void> {
+        macShell.build(xcworkspace: xcworkspace, scheme: scheme, platform: platform, derivedData: derivedData, log: URL.init(fileURLWithPath: "/tmp/dummy-build.log"))
     }
 }
