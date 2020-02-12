@@ -61,4 +61,27 @@ class MacCompilerShell: CompilerShell {
             return URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer/Library/Frameworks")
         }
     }
+    
+    func compile(file: URL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> IO<CompilerShellError, Void> {
+        fatalError("TODOOO")
+        
+        
+        
+        //        # A. macOS paltform
+        //        if [ "$platformIOS" -eq "0" ]; then
+        //            if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        //              xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            else
+        //              xcrun -k swiftc -D NOT_IN_PLAYGROUND -F "nef/build/fw" -F "$macOSFwPath" -Xlinker -rpath -Xlinker "$macOSFwPath" -lswiftCore "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            fi
+        //
+        //        # B. iOS platform
+        //        else
+        //            if [ "${#hasSourceFolderFiles}" -gt 0 ]; then
+        //              xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios13.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" "$sources"/* -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            else
+        //              xcrun -k -sdk "iphoneos" swiftc -D NOT_IN_PLAYGROUND -target "arm64-apple-ios13.0" -F "nef/build/fw" -F "$iOSFwPath" -Xlinker -rpath -Xlinker "$iOSFwPath" -lswiftXCTest "$file" -o "nef/build/output/$playgroundName" 1> "$log" 2>&1
+        //            fi
+        //        fi
+    }
 }

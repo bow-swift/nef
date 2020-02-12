@@ -74,4 +74,8 @@ class MacFileSystem: NefCommon.FileSystem {
     func exist(itemPath: String) -> Bool {
         FileManager.default.fileExists(atPath: itemPath)
     }
+    
+    func temporalFile(content: String) -> IO<FileSystemError, URL> {
+        fatalError("TODOOO!!!")
+    }
 }

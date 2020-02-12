@@ -17,25 +17,22 @@ public struct Compiler {
     
     public init() {}
     
-    public func playground(_ playground: URL) -> EnvIO<Environment, RenderError, Void> {
+    public func playground(_ playground: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
         let rendered = EnvIO<Environment, RenderError, PlaygroundOutput>.var()
+        let folder = playground.deletingLastPathComponent()
         
         return binding(
              rendered <- self.renderPlayground(playground),
-                      |<-self.compile(pages: rendered.get, inPlayground: playground, frameworks: []),
+                      |<-self.buildPages(rendered.get, inPlayground: playground, atFolder: folder, cached: cached),
         yield: ())^
     }
     
     public func playgrounds(atFolder folder: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
-        let xcworkspace = EnvIO<Environment, RenderError, URL>.var()
         let rendered = EnvIO<Environment, RenderError, PlaygroundsOutput>.var()
-        let frameworks = EnvIO<Environment, RenderError, [URL]>.var()
         
         return binding(
-               rendered <- self.renderPlaygrounds(atFolder: folder),
-            xcworkspace <- self.xcworkspace(atFolder: folder),
-             frameworks <- self.compile(workspace: xcworkspace.get, inProject: folder, platform: self.platform(in: rendered.get), cached: cached),
-                        |<-self.compile(playgrounds: rendered.get, frameworks: frameworks.get),
+            rendered <- self.renderPlaygrounds(atFolder: folder),
+                     |<-self.buildPlaygrounds(rendered.get, atFolder: folder, cached: cached),
         yield: ())^
     }
     
@@ -50,6 +47,24 @@ public struct Compiler {
         EnvIO { env in
             env.render.playgrounds(at: folder).provide(env.codeEnvironment)
         }
+    }
+    
+    // MARK: private <builders>
+    private func buildPlaygrounds(_ playgrounds: PlaygroundsOutput, atFolder folder: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+        playgrounds.traverse { info in
+            self.buildPages(info.output, inPlayground: info.playground.url, atFolder: folder, cached: cached)
+        }.void()^
+    }
+    
+    private func buildPages(_ pages: PlaygroundOutput, inPlayground playground: URL, atFolder folder: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+        let xcworkspace = EnvIO<Environment, RenderError, URL>.var()
+        let frameworks = EnvIO<Environment, RenderError, [URL]>.var()
+        
+        return binding(
+            xcworkspace <- self.xcworkspace(atFolder: folder),
+             frameworks <- self.compile(workspace: xcworkspace.get, inProject: folder, platform: pages.head.platform, cached: cached),
+                        |<-self.compile(pages: pages, inPlayground: playground, frameworks: frameworks.get),
+        yield: ())^
     }
     
     // MARK: private <compiler>
@@ -69,14 +84,6 @@ public struct Compiler {
     private func compile(pages: PlaygroundOutput, inPlayground playground: URL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         pages.traverse { info in
             self.compile(page: info.output, inPlayground: playground, platform: info.platform, frameworks: frameworks)
-        }.void()^
-    }
-    
-    private func compile(playgrounds: PlaygroundsOutput, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
-        playgrounds.traverse { info in
-            self.compile(pages: info.output,
-                         inPlayground: info.playground.url,
-                         frameworks: frameworks)
         }.void()^
     }
     

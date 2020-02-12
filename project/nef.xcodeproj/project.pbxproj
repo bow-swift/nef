@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8B0286DA23E078830033ECBA /* CompilerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286D623E077FA0033ECBA /* CompilerAPI.swift */; };
-		8B0286DC23E078D10033ECBA /* MacCompilerSystem().swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286DB23E078D10033ECBA /* MacCompilerSystem().swift */; };
 		8B0286E423E079650033ECBA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286E323E079650033ECBA /* main.swift */; };
 		8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286F723E1D1E90033ECBA /* MacCompilerShell.swift */; };
 		8B0286FE23E1D4480033ECBA /* CompilerShellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286F923E1D34A0033ECBA /* CompilerShellError.swift */; };
@@ -56,6 +55,7 @@
 		8B3CB8C122D3963B00919F36 /* NefModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B3CB84022D3929B00919F36 /* NefModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */; };
 		8B3CB8C822D3987500919F36 /* CoreCarbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB8C722D3987500919F36 /* CoreCarbon.swift */; };
+		8B43934323F4069C00177B88 /* NefCompilerSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286DB23E078D10033ECBA /* NefCompilerSystem.swift */; };
 		8B46C40B238D689F00437659 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C409238D689800437659 /* Module.swift */; };
 		8B46C40E238D75A400437659 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C40C238D71C900437659 /* Package.swift */; };
 		8B46C412238D87F200437659 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C411238D87F200437659 /* Assets.swift */; };
@@ -314,13 +314,12 @@
 /* Begin PBXFileReference section */
 		8B0286D123E074250033ECBA /* CompilerShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerShell.swift; sourceTree = "<group>"; };
 		8B0286D623E077FA0033ECBA /* CompilerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerAPI.swift; sourceTree = "<group>"; };
-		8B0286DB23E078D10033ECBA /* MacCompilerSystem().swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MacCompilerSystem().swift"; sourceTree = "<group>"; };
+		8B0286DB23E078D10033ECBA /* NefCompilerSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefCompilerSystem.swift; sourceTree = "<group>"; };
 		8B0286E123E079650033ECBA /* nefc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = nefc; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0286E323E079650033ECBA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B0286F723E1D1E90033ECBA /* MacCompilerShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCompilerShell.swift; sourceTree = "<group>"; };
 		8B0286F923E1D34A0033ECBA /* CompilerShellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerShellError.swift; sourceTree = "<group>"; };
 		8B02870023E1D4640033ECBA /* CompilerSystemEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerSystemEnvironment.swift; sourceTree = "<group>"; };
-		8B02870323E1E4910033ECBA /* nefc.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = nefc.entitlements; sourceTree = "<group>"; };
 		8B0A905923ACD3A400091C39 /* nef-markdown */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-markdown"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0A905B23ACD3A400091C39 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B0CA51622AE669600181BC0 /* nef-carbon-page */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-carbon-page"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -808,6 +807,23 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
+		8B43934423F406A400177B88 /* Instances */ = {
+			isa = PBXGroup;
+			children = (
+				8B0286DB23E078D10033ECBA /* NefCompilerSystem.swift */,
+			);
+			path = Instances;
+			sourceTree = "<group>";
+		};
+		8B43934523F4095A00177B88 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8B0286F923E1D34A0033ECBA /* CompilerShellError.swift */,
+				8BD6727B23DF381D00631D62 /* CompilerSystemError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
 		8B46C413238D880300437659 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -825,7 +841,6 @@
 				8B46C430238FD70700437659 /* MacPlaygroundShell.swift */,
 				8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */,
 				8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */,
-				8B0286DB23E078D10033ECBA /* MacCompilerSystem().swift */,
 				8B0286F723E1D1E90033ECBA /* MacCompilerShell.swift */,
 			);
 			path = Instances;
@@ -864,7 +879,6 @@
 		8B6FC57C221ECE6A008F7694 = {
 			isa = PBXGroup;
 			children = (
-				8B02870323E1E4910033ECBA /* nefc.entitlements */,
 				8B3CB85322D392C000919F36 /* UI */,
 				8B3CB83822D3929B00919F36 /* Component */,
 				8B3CB88B22D393C300919F36 /* Core */,
@@ -1109,6 +1123,8 @@
 			children = (
 				8BD6727023DF0AA200631D62 /* NefCompiler.swift */,
 				8BD6727723DF248B00631D62 /* Algrebras */,
+				8B43934523F4095A00177B88 /* Errors */,
+				8B43934423F406A400177B88 /* Instances */,
 				8BD6727323DF243300631D62 /* Models */,
 				8BD6726F23DF0A9100631D62 /* Support Files */,
 			);
@@ -1127,10 +1143,8 @@
 		8BD6727323DF243300631D62 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8BD6727B23DF381D00631D62 /* CompilerSystemError.swift */,
-				8BD6727423DF244E00631D62 /* RenderCompilerEnvironment.swift */,
-				8B0286F923E1D34A0033ECBA /* CompilerShellError.swift */,
 				8B02870023E1D4640033ECBA /* CompilerSystemEnvironment.swift */,
+				8BD6727423DF244E00631D62 /* RenderCompilerEnvironment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1138,8 +1152,8 @@
 		8BD6727723DF248B00631D62 /* Algrebras */ = {
 			isa = PBXGroup;
 			children = (
-				8BD6727823DF249400631D62 /* CompilerSystem.swift */,
 				8B0286D123E074250033ECBA /* CompilerShell.swift */,
+				8BD6727823DF249400631D62 /* CompilerSystem.swift */,
 			);
 			path = Algrebras;
 			sourceTree = "<group>";
@@ -1968,6 +1982,7 @@
 				8B0286FF23E1D44B0033ECBA /* CompilerShell.swift in Sources */,
 				8BD6727623DF245300631D62 /* RenderCompilerEnvironment.swift in Sources */,
 				8BD6727223DF0AAE00631D62 /* NefCompiler.swift in Sources */,
+				8B43934323F4069C00177B88 /* NefCompilerSystem.swift in Sources */,
 				8B02870223E1D4670033ECBA /* CompilerSystemEnvironment.swift in Sources */,
 				8BD6727C23DF381D00631D62 /* CompilerSystemError.swift in Sources */,
 				8BD6727A23DF249900631D62 /* CompilerSystem.swift in Sources */,
@@ -1991,7 +2006,6 @@
 				8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */,
 				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
 				8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */,
-				8B0286DC23E078D10033ECBA /* MacCompilerSystem().swift in Sources */,
 				8B0FB5B8237C61C000221548 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2153,7 +2167,6 @@
 		8B0286E623E079650033ECBA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = nefc.entitlements;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Compiler;
 				PRODUCT_NAME = nefc;
 			};
@@ -2162,7 +2175,6 @@
 		8B0286E723E079650033ECBA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = nefc.entitlements;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Compiler;
 				PRODUCT_NAME = nefc;
 			};
@@ -2204,7 +2216,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2232,7 +2243,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2258,7 +2268,6 @@
 		8B12D7A022D6235200D05A70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2285,7 +2294,6 @@
 		8B12D7A122D6235200D05A70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2312,7 +2320,6 @@
 		8B22249522D5EAD600C85856 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2340,7 +2347,6 @@
 		8B22249622D5EAD600C85856 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2384,7 +2390,6 @@
 		8B4F45B722CF9AF400E6F471 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2411,7 +2416,6 @@
 		8B4F45B822CF9AF400E6F471 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2439,11 +2443,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = P548S5LU96;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2468,11 +2470,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = P548S5LU96;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2511,11 +2511,9 @@
 		8B6B11A622CB9FDE0060177F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2539,11 +2537,9 @@
 		8B6B11A722CB9FDE0060177F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2760,11 +2756,9 @@
 		8BBD14B52390179B0002970C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = P548S5LU96;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2787,11 +2781,9 @@
 		8BBD14B62390179B0002970C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = P548S5LU96;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2831,7 +2823,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2859,7 +2850,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2935,7 +2925,6 @@
 		8BF75F9622CA71E700EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2964,7 +2953,6 @@
 		8BF75F9722CA71E700EC53A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

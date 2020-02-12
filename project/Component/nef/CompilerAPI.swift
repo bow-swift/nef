@@ -11,13 +11,13 @@ import Bow
 import BowEffects
 
 public extension CompilerAPI {
-    static func compile(content: String) -> EnvIO<Console, nef.Error, Void> {
+    static func compile(playground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
         NefCompiler.Compiler()
-            .playgrounds(atFolder: URL(fileURLWithPath: "/Users/miguelangel/Desktop/BowPlayground.app"), cached: false)
-            .contramap(environment)
-            .mapError { e in nef.Error.compiler(info: "\(e)") }
+                   .playground(playground, cached: cached)
+                   .contramap(environment)
+                   .mapError { e in nef.Error.compiler(info: "\(e)") }
     }
-    
+        
     static func compile(playgroundsAt: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
         NefCompiler.Compiler()
                    .playgrounds(atFolder: playgroundsAt, cached: cached)
@@ -30,7 +30,6 @@ public extension CompilerAPI {
         .init(console: console,
               fileSystem: MacFileSystem(),
               compilerShell: DummyCompilerShell(),//MacCompilerShell(),
-              compilerSystem: MacCompilerSystem(),
               playgroundSystem: MacPlaygroundSystem(),
               codePrinter: CoreRender.code.render)
     }
@@ -45,5 +44,9 @@ class DummyCompilerShell: CompilerShell {
     
     func dependencies(platform: Platform) -> IO<CompilerShellError, URL> {
         shell.dependencies(platform: platform)
+    }
+    
+    func compile(file: URL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> IO<CompilerShellError, Void> {
+        shell.compile(file: file, sources: sources, platform: platform, frameworks: frameworks, linkers: linkers)
     }
 }

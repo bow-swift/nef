@@ -7,26 +7,23 @@ import NefRender
 import BowEffects
 
 public struct RenderCompilerEnvironment<A> {
-    let fileSystem: FileSystem
-    let compilerShell: CompilerShell
     let compilerSystem: CompilerSystem
+    let compilerEnvironment: CompilerSystemEnvironment
     let render: Render<A>
     let codeEnvironment: RenderEnvironment<A>
     
     internal var console: Console { codeEnvironment.console }
     internal var playgroundSystem: PlaygroundSystem { codeEnvironment.playgroundSystem }
-    internal var compilerEnvironment: CompilerSystemEnvironment { .init(fileSystem: self.fileSystem, shell: self.compilerShell) }
     
     public init(console: Console,
                 fileSystem: FileSystem,
                 compilerShell: CompilerShell,
-                compilerSystem: CompilerSystem,
                 playgroundSystem: PlaygroundSystem,
                 codePrinter: @escaping (_ content: String) -> EnvIO<CoreCodeEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
-        self.fileSystem = fileSystem
-        self.compilerShell = compilerShell
-        self.compilerSystem = compilerSystem
+        self.compilerSystem = NefCompilerSystem()
+        self.compilerEnvironment = CompilerSystemEnvironment(fileSystem: fileSystem, shell: compilerShell)
+        
         self.render = Render<A>()
         self.codeEnvironment = RenderEnvironment(console: console,
                                                  playgroundSystem: playgroundSystem,

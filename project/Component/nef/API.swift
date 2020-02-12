@@ -15,8 +15,8 @@ public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
 
 public protocol CompilerAPI {
+    static func compile(playground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
     static func compile(playgroundsAt: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
-    static func compile(content: String) -> EnvIO<Console, nef.Error, Void>
 }
 
 public protocol MarkdownAPI {
