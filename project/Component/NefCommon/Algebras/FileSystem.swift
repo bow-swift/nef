@@ -13,7 +13,7 @@ public protocol FileSystem {
     func write(content: String, toFile path: String) -> IO<FileSystemError, ()>
     func write(content: Data, toFile path: String) -> IO<FileSystemError, ()>
     func exist(itemPath: String) -> Bool
-    func temporalFile(content: String) -> IO<FileSystemError, URL>
+    func temporalFile(content: String, filename: String) -> IO<FileSystemError, URL>
     
     func createDirectory<D>(atPath: String) -> EnvIO<D, FileSystemError, ()>
     func copy<D>(itemPath: String, toPath: String) -> EnvIO<D, FileSystemError, ()>
@@ -22,7 +22,7 @@ public protocol FileSystem {
     func readFile<D>(atPath path: String) -> EnvIO<D, FileSystemError, String>
     func write<D>(content: String, toFile path: String) -> EnvIO<D, FileSystemError, ()>
     func write<D>(content: Data, toFile path: String) -> EnvIO<D, FileSystemError, ()>
-    func temporalFile<D>(content: String) -> EnvIO<D, FileSystemError, URL>
+    func temporalFile<D>(content: String, filename: String) -> EnvIO<D, FileSystemError, URL>
 }
 
 public extension FileSystem {
@@ -54,8 +54,8 @@ public extension FileSystem {
         write(content: content, toFile: path).env()
     }
     
-    func temporalFile<D>(content: String) -> EnvIO<D, FileSystemError, URL> {
-        temporalFile(content: content).env()
+    func temporalFile<D>(content: String, filename: String) -> EnvIO<D, FileSystemError, URL> {
+        temporalFile(content: content, filename: filename).env()
     }
 }
 

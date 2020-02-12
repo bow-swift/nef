@@ -146,7 +146,7 @@ class NefCompilerSystem: CompilerSystem {
             let temporal = IO<CompilerSystemError, URL>.var()
             
             return binding(
-                temporal <- env.fileSystem.temporalFile(content: content).mapError { e in .build(info: "\(e)") },
+                temporal <- env.fileSystem.temporalFile(content: content, filename: "content.swift").mapError { e in .build(info: "\(e)") },
                          |<-env.shell.compile(file: temporal.get, sources: sources, platform: platform, frameworks: frameworks, linkers: linkers).mapError { e in .build(temporal.get, info: "\(e)") },
             yield: ())
         }
