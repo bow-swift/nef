@@ -3,7 +3,7 @@
 import Foundation
 
 public enum RenderError: Error {
-    case content
+    case content(info: String = "")
     case page(_ page: URL)
     case playground(_ playground: URL)
     case playgrounds
@@ -16,8 +16,8 @@ public enum RenderError: Error {
 extension RenderError: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .content:
-            return "Can not render content"
+        case .content(let info):
+            return "Can not render content\(info.isEmpty ? "" : ": \(info)")"
         case .page(let page):
             return "Can not render page '\(page.path)'"
         case .playground(let playground):

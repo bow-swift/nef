@@ -77,7 +77,7 @@ public struct Compiler {
                 |<-env.compilerSystem
                       .compile(page: page, filename: filename, inPlayground: inPlayground, andProject: project, platform: platform, frameworks: frameworks)
                       .contramap(\Environment.compilerEnvironment).provide(env)
-                      .mapError { _ in RenderError.content },
+                      .mapError { e in RenderError.content(info: "\(e)") },
             yield: ())^.reportStatus(console: env.console)
         }
     }
@@ -93,7 +93,8 @@ public struct Compiler {
             binding(
                 |<-compilePages(pages, inPlayground: playground, andProject: project, frameworks: frameworks).provide(env),
                 |<-env.console.print(information: "Building playground '\(playground.lastPathComponent.removeExtension)'"),
-            yield: ())^.reportStatus(console: env.console)
+                |<-env.console.printStatus(success: true),
+            yield: ())^
         }
     }
     

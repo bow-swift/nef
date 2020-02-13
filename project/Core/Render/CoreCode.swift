@@ -28,6 +28,14 @@ extension Node {
             let code = nodes.map { $0.code }.joined()
             return IO.pure(code)^
             
+        case let .nef(command, nodes):
+            guard command == .hidden else { return IO.pure("")^ }
+            return nodes.traverse { node in node.code() }
+                        .map { values in values.joined() }^
+            
+        case let .raw(value):
+            return IO.pure(value)^
+            
         default:
             return IO.pure("")^
         }

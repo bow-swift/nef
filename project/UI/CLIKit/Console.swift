@@ -181,7 +181,7 @@ public struct Console {
             case .arguments:
                 return "do not received the whole required arguments."+" Use".bold+" --help, --h".cyan
             case .render(let info):
-                return info.isEmpty ? "Fail the render." : info.lightRed
+                return info.isEmpty ? "" : "Fail the render: \(info.lightRed)"
             }
         }
     }

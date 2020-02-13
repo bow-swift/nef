@@ -109,6 +109,6 @@ public struct Carbon {
         }
         
         return images.count > 0 ? EnvIO.pure((ast: info.ast, images: NEA.fromArrayUnsafe(images)))^
-                                : EnvIO.raiseError(.content)^
+                                : EnvIO.raiseError(.content())^
     }
 }
