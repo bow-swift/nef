@@ -17,15 +17,15 @@ extension RenderError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .content(let info):
-            return "Can not render content\(info.isEmpty ? "" : ": \(info)")"
+            return "Cannot render content\(info.isEmpty ? "" : ": \(info)")"
         case .page(let page):
-            return "Can not render page '\(page.path)'"
+            return "Cannot render page '\(page.path)'"
         case .playground(let playground):
-            return "Can not render playground '\(playground.path)'"
+            return "Cannot render playground '\(playground.path)'"
         case .workspace(let workspace, let info):
-            return "Can not render workspace '\(workspace.path)'\(info.isEmpty ? "" : ". \n  Reason: \(info.description.firstLowercased)")"
+            return "Cannot render workspace '\(workspace.path)'\(info.isEmpty ? "" : ". \n  Reason: \(info.description.firstLowercased)")"
         case .playgrounds:
-            return "Can not render playgrounds"
+            return "Cannot render playgrounds"
         case .getPlaygrounds(let folder):
             return "Could not get playgrounds at '\(folder.path)'"
         case .getPages(let playground):

@@ -15,17 +15,17 @@ extension Error: CustomStringConvertible {
     public var description: String {
         switch self {
         case .compiler(let info):
-            return info.isEmpty ? "Failed the compiler." : info
+            return info.isEmpty ? "Compiler failure." : info
         case .markdown(let info):
-            return info.isEmpty ? "Failed the markdown." : info
+            return info.isEmpty ? "Markdown failure." : info
         case .jekyll(let info):
-            return info.isEmpty ? "Failed the jekyll." : info
+            return info.isEmpty ? "Jekyll failure." : info
         case .carbon(let info):
-            return info.isEmpty ? "Failed the carbon." : info
+            return info.isEmpty ? "Carbon failure." : info
         case .invalidSnapshot(let info):
             return info.isEmpty ? "Invalid snapshot." : info
         case .swiftPlaygrond(let info):
-            return info.isEmpty ? "Failed Swift Playground generator." : info
+            return info.isEmpty ? "Swift Playground generator failure." : info
         }
     }
 }
