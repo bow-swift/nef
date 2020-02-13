@@ -6,16 +6,22 @@ import nef
 import Bow
 import BowEffects
 
+
+enum Shell: String {
+    case project
+    case output
+}
+
 private let console = Console(script: "nef-markdown",
                               description: "Render markdown files from Xcode Playground",
-                              arguments: .init(name: "project", placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
-                                         .init(name: "output", placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"))
+                              arguments: .init(name: Shell.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                                         .init(name: Shell.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"))
 
 
 func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, output: URL)> {
     console.input().flatMap { args in
-        guard let inputPath = args["project"]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath else {
+        guard let inputPath = args[Shell.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
+              let outputPath = args[Shell.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath else {
                 return IO.raiseError(.arguments)
         }
         
