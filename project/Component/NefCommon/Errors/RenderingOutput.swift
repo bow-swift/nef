@@ -26,25 +26,26 @@ public enum Platform: String {
     
     public var sdk: String {
         switch self {
-        case .ios:   return "iphoneos"
-        case .macos: return "macosx"
-        case .tvos:  return "tvos"
+        case .ios:     return "iphoneos"
+        case .macos:   return "macosx"
+        case .tvos:    return "tvos"
         case .watchos: return "watchos"
         }
     }
     
     public var framework: String {
         switch self {
-        case .ios:   return "iPhoneOS"
-        case .macos: return "MacOSX"
-        case .tvos:  return "AppleTVOS"
+        case .ios:     return "iPhoneOS"
+        case .macos:   return "MacOSX"
+        case .tvos:    return "AppleTVOS"
         case .watchos: return "WatchOS"
         }
     }
     
-    public var target: String? {
+    public func target(bundleVersion: String) -> String? {
         switch self {
-        case .ios: return "arm64-apple-ios13.0"
+        case .ios:     return "arm64-apple-ios\(bundleVersion)"
+        case .macos:   return "x86_64-macosx\(bundleVersion)"
         default: return nil
         }
     }

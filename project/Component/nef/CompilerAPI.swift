@@ -29,7 +29,7 @@ public extension CompilerAPI {
     private static func environment(console: Console) -> NefCompiler.Compiler.Environment {
         .init(console: console,
               fileSystem: MacFileSystem(),
-              compilerShell: DummyCompilerShell(),//MacCompilerShell(),
+              compilerShell: MacCompilerShell(),//DummyCompilerShell(),//MacCompilerShell(),
               playgroundSystem: MacPlaygroundSystem(),
               codePrinter: CoreRender.code.render)
     }
@@ -46,7 +46,7 @@ class DummyCompilerShell: CompilerShell {
         shell.dependencies(platform: platform)
     }
     
-    func compile(file: URL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> IO<CompilerShellError, Void> {
-        shell.compile(file: file, sources: sources, platform: platform, frameworks: frameworks, linkers: linkers)
+    func compile(file: URL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL], output: URL, log: URL) -> IO<CompilerShellError, Void> {
+        shell.compile(file: file, sources: sources, platform: platform, frameworks: frameworks, linkers: linkers, output: output, log: log)
     }
 }

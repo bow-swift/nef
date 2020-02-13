@@ -63,27 +63,27 @@ public struct Compiler {
         return binding(
             xcworkspace <- self.xcworkspace(atFolder: folder),
              frameworks <- self.compile(workspace: xcworkspace.get, inProject: folder, platform: pages.head.platform, cached: cached),
-                        |<-self.compile(pages: pages, inPlayground: playground, frameworks: frameworks.get),
+                        |<-self.compile(pages: pages, inPlayground: playground, andProject: folder, frameworks: frameworks.get),
         yield: ())^
     }
     
     // MARK: private <compiler>
-    private func compile(page: RenderingOutput, inPlayground: URL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+    private func compile(page: RenderingOutput, filename: String, inPlayground: URL, andProject project: URL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         let page = page.output.all().joined()
         let env = EnvIO<Environment, RenderError, Environment>.var()
         
         return binding(
             env <- ask(),
                 |<-env.get.compilerSystem
-                    .compile(page: page, inPlayground: inPlayground, platform: platform, frameworks: frameworks)
+                    .compile(page: page, filename: filename, inPlayground: inPlayground, andProject: project, platform: platform, frameworks: frameworks)
                     .contramap(\Environment.compilerEnvironment)
                     .mapError { _ in RenderError.content },
         yield: ())^
     }
     
-    private func compile(pages: PlaygroundOutput, inPlayground playground: URL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+    private func compile(pages: PlaygroundOutput, inPlayground playground: URL, andProject project: URL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         pages.traverse { info in
-            self.compile(page: info.output, inPlayground: playground, platform: info.platform, frameworks: frameworks)
+            self.compile(page: info.output, filename: info.page.escapedTitle, inPlayground: playground, andProject: project, platform: info.platform, frameworks: frameworks)
         }.void()^
     }
     

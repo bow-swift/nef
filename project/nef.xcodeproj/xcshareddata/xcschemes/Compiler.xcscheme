@@ -56,6 +56,10 @@
             argument = "--project /Users/miguelangel/Desktop/BowPlayground.app"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--use-cache"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
    <ProfileAction

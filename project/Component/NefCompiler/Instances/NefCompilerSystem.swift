@@ -9,18 +9,15 @@ import BowEffects
 class NefCompilerSystem: CompilerSystem {
     
     func compile(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
-        return EnvIO.pure(self.frameworks(project: project))^
-        
-        #warning("enable this code")
         binding(
             |<-self.createStructure(project: project, cached: cached),
             |<-self.buildDependencies(xcworkspace: xcworkspace, platform: platform, cached: cached),
             |<-self.buildProject(xcworkspace: xcworkspace, inProject: project, platform: platform, cached: cached),
             |<-self.copyFrameworks(inProject: project),
-        yield: self.frameworks(project: project))^
+        yield: Path(project: project, action: .fw).url)^
     }
     
-    func compile(page: String, inPlayground playground: URL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    func compile(page: String, filename: String, inPlayground playground: URL, andProject project: URL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         let content = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
         let linkers = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
         let sources = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
@@ -29,19 +26,21 @@ class NefCompilerSystem: CompilerSystem {
             content <- self.reorganizeHeaders(page: page),
             linkers <- self.dependencies(platform: platform),
             sources <- self.sources(inPlayground: playground),
-                    |<-self.compile(content: content.get, sources: sources.get, platform: platform, frameworks: frameworks, linkers: linkers.get),
+                    |<-self.compile(content: content.get, filename: filename, inPlayground: playground, andProject: project, sources: sources.get, platform: platform, frameworks: frameworks, linkers: linkers.get),
         yield: ())^
     }
     
     // MARK: - steps <shell>
     private func createStructure(project: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
-            let cleanIO = cached ? env.fileSystem.remove(itemPath: self.frameworks(project: project).path).handleError { _ in }
-                                 : env.fileSystem.remove(itemPath: self.nef(project: project).path).handleError { _ in }
+            let cleanBuildIO = env.fileSystem.remove(itemPath: Path(project: project, action: .build).url.path).handleError { _ in }
+            let cleanLogIO = env.fileSystem.remove(itemPath: Path(project: project, action: .log).url.path).handleError { _ in }
+            let cleanRootIO = env.fileSystem.remove(itemPath: Path(project: project, action: .root).url.path).handleError { _ in }
+            let cleanIO = cached ? cleanBuildIO.followedBy(cleanLogIO) : cleanRootIO
             
-            let createDerivedDataIO = env.fileSystem.createDirectory(atPath: self.derivedData(project: project).path)
-            let createFrameworksIO = env.fileSystem.createDirectory(atPath: self.frameworks(project: project).path)
-            let createLogIO = env.fileSystem.createDirectory(atPath: self.log(project: project).path)
+            let createDerivedDataIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .derivedData).url.path)
+            let createFrameworksIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .fw).url.path)
+            let createLogIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .log).url.path)
             
             return cleanIO
                     .followedBy(createDerivedDataIO)
@@ -62,8 +61,7 @@ class NefCompilerSystem: CompilerSystem {
     private func copyFrameworks(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         func items(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             EnvIO { env in
-                let buildFolder = self.derivedData(project: project).appendingPathComponent("Build")
-                return env.fileSystem.items(atPath: buildFolder.path, recursive: true)
+                return env.fileSystem.items(atPath: Path(project: project, action: .derivedData).appending("Build").path, recursive: true)
                                      .mapError { _ in .build(project, info: "get frameworks in '\(project.path)'") }
             }
         }
@@ -80,14 +78,13 @@ class NefCompilerSystem: CompilerSystem {
             }.mapError { _ in .build(project, info: "move frameworks into '\(output.path)'") }
         }
         
-        let fwFolder = self.frameworks(project: project)
         let paths = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]>.var()
         let frameworks = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]>.var()
         
         return binding(
                    paths <- items(inProject: project),
               frameworks <- extractFrameworks(paths: paths.get),
-                         |<-copyFrameworks(paths: frameworks.get, to: fwFolder),
+                         |<-copyFrameworks(paths: frameworks.get, to: Path(project: project, action: .fw).url),
         yield: ())^
     }
     
@@ -122,12 +119,12 @@ class NefCompilerSystem: CompilerSystem {
         
         func build(xcworkspace: URL, inProject project: URL, scheme: String, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
-                let workspaceFramework = self.framework(xcworkspace: xcworkspace, inProject: project)
+                let derivedData = Path(project: project, action: .derivedData).url
+                let workspaceFramework = Path(project: project, action: .fw).appending(xcworkspace.lastPathComponent.removeExtension)
+                let log = Path(project: project, action: .log).appending(xcworkspace.lastPathComponent.removeExtension)
+                
                 let isCached = cached && env.fileSystem.exist(itemPath: workspaceFramework.path)
                 guard !isCached else { return IO.pure(()) }
-                
-                let derivedData = self.derivedData(project: project)
-                let log = self.log(xcworkspace: xcworkspace, inProject: project)
                 
                 return env.shell.build(xcworkspace: xcworkspace, scheme: scheme, platform: platform, derivedData: derivedData, log: log)
             }.mapError { (e: CompilerShellError) in CompilerSystemError.build(xcworkspace, info: "\(e)") }
@@ -138,16 +135,26 @@ class NefCompilerSystem: CompilerSystem {
         return binding(
             schemeName <- extractScheme(xcworkspace: xcworkspace),
                        |<-build(xcworkspace: xcworkspace, inProject: project, scheme: schemeName.get, platform: platform, cached: cached),
-        yield: self.frameworks(project: project))^
+        yield: Path(project: project, action: .fw).url)^
     }
     
-    private func compile(content: String, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    private func compile(content: String, filename: String, inPlayground playground: URL, andProject project: URL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
+            let playgroundName = playground.lastPathComponent.removeExtension
+            let filename = "\(playgroundName)-\(filename).swift".lowercased()
+            let output = Path(project: project, action: .build).appending(filename)
+            let log = Path(project: project, action: .log).appending(filename)
             let temporal = IO<CompilerSystemError, URL>.var()
             
             return binding(
-                temporal <- env.fileSystem.temporalFile(content: content, filename: "content.swift").mapError { e in .build(info: "\(e)") },
-                         |<-env.shell.compile(file: temporal.get, sources: sources, platform: platform, frameworks: frameworks, linkers: linkers).mapError { e in .build(temporal.get, info: "\(e)") },
+                temporal <- env.fileSystem.temporalFile(content: content, filename: "main.swift").mapError { e in .build(info: "\(e)") },
+                         |<-env.shell.compile(file: temporal.get,
+                                              sources: sources,
+                                              platform: platform,
+                                              frameworks: frameworks,
+                                              linkers: linkers,
+                                              output: output, log: log).mapError { e in .build(temporal.get, info: "\(e)") },
+                         |<-env.fileSystem.write(content: content, toFile: output.path).mapError { e in .build(output, info: "\(e)") },
             yield: ())
         }
     }
@@ -190,23 +197,23 @@ class NefCompilerSystem: CompilerSystem {
     private func reorganizeHeaders(page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
         func getImports(page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             EnvIO.pure(Array(Set(
-                page.matches(pattern: "(?<=import).*(?=\n)"))).map { fw in
+                page.matches(pattern: "(?<=\nimport).*(?=\n)"))).map { fw in
                     fw.trimmingCharacters(in: .whitespaces)
-                }
+                }.sorted(by: >)
             )^
         }
         
         func removeImports(_ imports: [String], inPage page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
             EnvIO.pure(
                 imports.reduce(page) { (acc, fw) in
-                    acc.replacingOccurrences(of: "import \(fw)", with: "")
+                    acc.replacingOccurrences(of: "\nimport \(fw)", with: "")
                 }
             )^
         }
         
         func insertHeaders(_ imports: [String], toPage page: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
             EnvIO.pure(
-                imports.sorted(by: >).reduce(page) { (acc, fw) in
+                imports.reduce(page) { (acc, fw) in
                     "import \(fw)\n\(acc)"
                 }
             )^
@@ -232,34 +239,53 @@ class NefCompilerSystem: CompilerSystem {
     }
     
     private func sources(inPlayground playground: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
-        EnvIO { (env: CompilerSystemEnvironment) in
+        EnvIO { env in
             let sources = playground.appendingPathComponent("Sources")
-            return env.fileSystem.exist(itemPath: sources.path) ? IO.pure([sources])^ : IO.pure([])^
+            return env.fileSystem.items(atPath: sources.path, recursive: true)
+                                 .map { items in items.map(URL.init(fileURLWithPath:)) }^
+                                 .mapError { _ in .build() }.handleError { _ in [] }^
         }
     }
     
     // MARK: helpers <path>
-    func nef(project: URL) -> URL {
-        project.appendingPathComponent("nef")
-    }
-    
-    func derivedData(project: URL) -> URL {
-        nef(project: project).appendingPathComponent("DerivedData")
-    }
-    
-    func log(project: URL) -> URL {
-        nef(project: project).appendingPathComponent("log")
-    }
-    
-    func frameworks(project: URL) -> URL {
-        nef(project: project).appendingPathComponent("build").appendingPathComponent("fw")
-    }
-    
-    func framework(xcworkspace: URL, inProject project: URL) -> URL {
-        frameworks(project: project).appendingPathComponent(xcworkspace.lastPathComponent.removeExtension).appendingPathExtension("framework")
-    }
-    
-    func log(xcworkspace: URL, inProject project: URL) -> URL {
-        log(project: project).appendingPathComponent(xcworkspace.lastPathComponent.removeExtension).appendingPathExtension("log")
+    struct Path {
+        enum Action: String {
+            case root = "nef"
+            case derivedData
+            case log
+            case build
+            case fw
+            
+            var `extension`: String {
+                switch self {
+                case .root:        return ""
+                case .derivedData: return ""
+                case .log:         return "log"
+                case .build:       return "swift"
+                case .fw:          return "framework"
+                }
+            }
+            
+            var pathComponent: String {
+                switch self {
+                case .root:        return rawValue
+                case .derivedData: return "\(Action.root.pathComponent)/\(rawValue)"
+                case .log:         return "\(Action.root.pathComponent)/\(rawValue)"
+                case .build:       return "\(Action.root.pathComponent)/\(rawValue)"
+                case .fw:          return "\(Action.build.pathComponent)/\(rawValue)"
+                }
+            }
+        }
+        
+        let project: URL
+        let action: Action
+        
+        var url: URL {
+            project.appendingPathComponent(action.pathComponent)
+        }
+        
+        func appending(_ component: String) -> URL {
+            self.url.appendingPathComponent(component.removeExtension).appendingPathExtension(action.extension)
+        }
     }
 }

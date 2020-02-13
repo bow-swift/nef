@@ -93,7 +93,7 @@
 		8BA1EF5823D62BFA00B33CD0 /* RenderEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4F23D62BF200B33CD0 /* RenderEnvironment.swift */; };
 		8BA1EF5923D62BFA00B33CD0 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */; };
 		8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */; };
-		8BA1EF6B23D62D1F00B33CD0 /* Array+Slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */; };
+		8BA1EF6B23D62D1F00B33CD0 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6323D62CF700B33CD0 /* Array+Utils.swift */; };
 		8BA1EF6E23D62D1F00B33CD0 /* EnumeratedSequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */; };
 		8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6023D62CF700B33CD0 /* String+Path.swift */; };
 		8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */; };
@@ -423,7 +423,7 @@
 		8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingURL.swift; sourceTree = "<group>"; };
 		8BA1EF6023D62CF700B33CD0 /* String+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Path.swift"; sourceTree = "<group>"; };
 		8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnumeratedSequence+Extension.swift"; sourceTree = "<group>"; };
-		8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Slice.swift"; sourceTree = "<group>"; };
+		8BA1EF6323D62CF700B33CD0 /* Array+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
 		8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8BA1EF7523D86B2D00B33CD0 /* MacDummyConsole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDummyConsole.swift; sourceTree = "<group>"; };
 		8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRenderError.swift; sourceTree = "<group>"; };
@@ -1017,7 +1017,7 @@
 		8BA1EF5E23D62CF700B33CD0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				8BA1EF6323D62CF700B33CD0 /* Array+Slice.swift */,
+				8BA1EF6323D62CF700B33CD0 /* Array+Utils.swift */,
 				8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */,
 				8BA1EF6023D62CF700B33CD0 /* String+Path.swift */,
 				8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */,
@@ -1935,7 +1935,7 @@
 				8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */,
 				8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */,
 				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
-				8BA1EF6B23D62D1F00B33CD0 /* Array+Slice.swift in Sources */,
+				8BA1EF6B23D62D1F00B33CD0 /* Array+Utils.swift in Sources */,
 				8BA1EF4623D62BBA00B33CD0 /* RenderingPersistence.swift in Sources */,
 				8BA1EF4423D62BBA00B33CD0 /* RenderingPersistenceError.swift in Sources */,
 				8BA1EF4323D62BBA00B33CD0 /* RenderingOutput.swift in Sources */,
@@ -3234,8 +3234,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bow-swift/SwiftLine.git";
 			requirement = {
-				branch = environment;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

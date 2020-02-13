@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/bow-swift/bow", .branch("master")),
-        .package(url: "https://github.com/bow-swift/Swiftline", .branch("environment")),
+        .package(url: "https://github.com/bow-swift/Swiftline", .branch("master")),
     ],
     targets: [
         .target(name: "NefCommon", dependencies: ["Bow", "BowEffects", "BowOptics"], path: "Component/NefCommon", publicHeadersPath: "Support Files"),

@@ -72,10 +72,12 @@ public struct Console {
             
             while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
                 let match = args.enumerated().first { (index, _) in opt == Int32(index) }
-                guard let key = match?.element.name else { return IO.raiseError(Console.Error.arguments)^ }
+                guard let element = match?.element else { return IO.raiseError(Console.Error.arguments)^ }
                 
                 if optarg != nil {
-                    result[key] = String(cString: optarg)
+                    result[element.name] = String(cString: optarg)
+                } else if element.isFlag {
+                    result[element.name] = "true"
                 }
             }
             
