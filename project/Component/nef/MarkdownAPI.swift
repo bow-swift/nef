@@ -56,6 +56,6 @@ public extension MarkdownAPI {
               fileSystem: MacFileSystem(),
               persistence: .init(),
               playgroundSystem: MacPlaygroundSystem(),
-              markdownPrinter: { content in CoreRender.markdown.render(content: content) })
+              markdownPrinter: CoreRender.markdown.render)
     }
 }

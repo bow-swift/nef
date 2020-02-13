@@ -135,12 +135,10 @@ extension CarbonStyle.Color {
 
 // MARK: Error
 public struct CarbonError: Error {
-    public let filename: String
     public let snippet: String
     public let cause: CarbonError.Cause
     
-    public init(filename: String, snippet: String, cause: CarbonError.Cause) {
-        self.filename = filename
+    public init(snippet: String, cause: CarbonError.Cause) {
         self.snippet = snippet
         self.cause = cause
     }

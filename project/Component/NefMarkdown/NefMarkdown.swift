@@ -25,12 +25,10 @@ public struct Markdown {
 
     public func page(content: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, (url: URL, ast: String, rendered: String)> {
         let file = output.appendingPathComponent(filename)
-        let content = EnvIO<Environment, RenderError, String>.var()
         let rendered = EnvIO<Environment, RenderError, RenderingOutput>.var()
         
         return binding(
-             content <- self.read(file: file).contramap(\Environment.fileSystem),
-            rendered <- self.renderPage(content: content.get),
+            rendered <- self.renderPage(content: content),
                      |<-self.write(page: rendered.get, into: file),
         yield: (url: file, ast: rendered.get.ast, rendered: self.contentFrom(page: rendered.get)))^
     }
@@ -77,28 +75,22 @@ public struct Markdown {
                .map { _ in playground.url }^
     }
     
-    func read(file: URL) -> EnvIO<FileSystem, RenderError, String> {
-        EnvIO { fileSystem in
-            fileSystem.readFile(atPath: file.path).mapLeft { _ in .page(file) }
-        }
-    }
-    
-    func write(page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
+    private func write(page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
         EnvIO { env in
             env.persistence.writePage(page, file).provide(env.fileSystem).mapLeft { _ in .page(file) }
         }
     }
     
     // MARK: private <renders>
-    func renderPage(content: String) -> EnvIO<Environment, RenderError, RenderingOutput> {
+    private func renderPage(content: String) -> EnvIO<Environment, RenderError, RenderingOutput> {
         EnvIO { env in env.render.page(content: content).provide(env.renderEnvironment) }
     }
     
-    func renderPlayground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
+    private func renderPlayground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
         EnvIO { env in env.render.playground(playground).provide(env.renderEnvironment) }
     }
     
-    func renderPlaygrounds(atFolder folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
+    private func renderPlaygrounds(atFolder folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
         EnvIO { env in env.render.playgrounds(at: folder).provide(env.renderEnvironment) }
     }
     

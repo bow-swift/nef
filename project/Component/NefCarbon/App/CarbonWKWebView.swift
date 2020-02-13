@@ -3,26 +3,19 @@
 import AppKit
 import WebKit
 import NefModels
+import NefCore
+import Bow
 
 /// Carbon view definition
-public protocol CarbonView: NSView {
-    var carbonDelegate: CarbonViewDelegate? { get set }
-    func load(carbon: CarbonModel, filename: String)
+protocol CarbonView: NSView {
+    func load(carbon: CarbonModel, callback: @escaping (Either<CarbonError, Image>) -> Void)
 }
-
-public protocol CarbonViewDelegate: class {
-    func didFailLoadCarbon(error: CarbonError)
-    func didLoadCarbon(filename: String)
-}
-
 
 /// Web view where loading/downloading the carbon configuration
-class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
-
-    private var filename: String?
+class CarbonWKWebView: WKWebView, WKNavigationDelegate, CarbonView {
     private var carbon: CarbonModel?
+    private var callback: ((Either<CarbonError, Image>) -> Void)?
     private var isCached: Bool = false
-    weak var carbonDelegate: CarbonViewDelegate?
     
     init(frame: CGRect) {
         super.init(frame: frame, configuration: WKWebViewConfiguration())
@@ -33,9 +26,9 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func load(carbon: CarbonModel, filename: String) {
-        self.filename = filename
+    func load(carbon: CarbonModel, callback: @escaping (Either<CarbonError, Image>) -> Void) {
         self.carbon = carbon
+        self.callback = callback
         isCached ? launchCachedRequest() : buildCache()
     }
     
@@ -61,25 +54,23 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     }
     
     private func screenshot() {
-        guard let filename = filename, let code = carbon?.code else { didFailLoadingCarbonWebView(); return }
-        let screenshotError = CarbonError(filename: filename, snippet: code, cause: .invalidSnapshot)
-        let scale = CGFloat(carbon?.style.size.rawValue ?? 1)
+        guard let carbon = carbon else { didFailLoadingCarbonWebView(); return }
+        
+        let screenshotError = CarbonError(snippet: carbon.code, cause: .invalidSnapshot)
+        let scale = CGFloat(carbon.style.size.rawValue)
         
         setZoom(in: self, scale: scale)
         carbonRectArea(in: self, zoom: scale) { configuration in
             guard let configuration = configuration else {
-                self.carbonDelegate?.didFailLoadCarbon(error: screenshotError)
-                return
+                self.callback?(.left(screenshotError)); return
             }
             
             self.takeSnapshot(with: configuration) { (image, error) in
-                guard let image = image else {
-                    self.carbonDelegate?.didFailLoadCarbon(error: screenshotError)
-                    return
+                guard let image = image?.image(usingType: .png, metadata: carbon.code) else {
+                    self.callback?(.left(screenshotError)); return
                 }
                 
-//                _ = image.writeToFile(file: "\(filename).png", plainText: code, atomically: true, usingType: .png)
-                self.carbonDelegate?.didLoadCarbon(filename: filename)
+                self.callback?(.right(image))
             }
         }
     }
@@ -100,8 +91,8 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     }
     
     private func didFailLoadingCarbonWebView() {
-        let error = CarbonError(filename: filename ?? "", snippet: carbon?.code ?? "", cause: .notFound)
-        carbonDelegate?.didFailLoadCarbon(error: error)
+        let error = CarbonError(snippet: carbon?.code ?? "", cause: .notFound)
+        callback?(.left(error))
     }
     
     // MARK: javascript <helpers>
@@ -129,12 +120,12 @@ class CarbonWebView: WKWebView, WKNavigationDelegate, CarbonView {
     private func injectWatermark() {
         let showWatermark = carbon?.style.watermark ?? false
         guard showWatermark else { return }
-        evaluateJavaScript(injectPoweredByJS +  injectNefLogoJS)
+        evaluateJavaScript(injectPoweredByJS + injectNefLogoJS)
     }
 }
 
 // MARK: nef watermark
-private extension CarbonWebView {
+private extension CarbonWKWebView {
     private var resetPosition: String {
         return "var main = document.getElementsByClassName('main')[0];" +
                "var container = document.getElementsByClassName('export-container')[0];" +
