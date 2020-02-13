@@ -70,21 +70,31 @@ public struct Compiler {
     // MARK: private <compiler>
     private func compile(page: RenderingOutput, filename: String, inPlayground: URL, andProject project: URL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         let page = page.output.all().joined()
-        let env = EnvIO<Environment, RenderError, Environment>.var()
         
-        return binding(
-            env <- ask(),
-                |<-env.get.compilerSystem
-                    .compile(page: page, filename: filename, inPlayground: inPlayground, andProject: project, platform: platform, frameworks: frameworks)
-                    .contramap(\Environment.compilerEnvironment)
-                    .mapError { _ in RenderError.content },
-        yield: ())^
+        return EnvIO { (env: Environment) -> IO<RenderError, Void> in
+            binding(
+                |<-env.console.print(information: "\t• Compiling page '\(filename.removeExtension)'"),
+                |<-env.compilerSystem
+                      .compile(page: page, filename: filename, inPlayground: inPlayground, andProject: project, platform: platform, frameworks: frameworks)
+                      .contramap(\Environment.compilerEnvironment).provide(env)
+                      .mapError { _ in RenderError.content },
+            yield: ())^.reportStatus(console: env.console)
+        }
     }
     
     private func compile(pages: PlaygroundOutput, inPlayground playground: URL, andProject project: URL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
-        pages.traverse { info in
-            self.compile(page: info.output, filename: info.page.escapedTitle, inPlayground: playground, andProject: project, platform: info.platform, frameworks: frameworks)
-        }.void()^
+        func compilePages(_ pages: PlaygroundOutput, inPlayground: URL, andProject: URL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+            pages.traverse { info in
+                self.compile(page: info.output, filename: info.page.escapedTitle, inPlayground: inPlayground, andProject: andProject, platform: info.platform, frameworks: frameworks)
+            }.void()^
+        }
+        
+        return EnvIO { env in
+            binding(
+                |<-compilePages(pages, inPlayground: playground, andProject: project, frameworks: frameworks).provide(env),
+                |<-env.console.print(information: "Building playground '\(playground.lastPathComponent.removeExtension)'"),
+            yield: ())^.reportStatus(console: env.console)
+        }
     }
     
     private func compile(workspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, [URL]> {

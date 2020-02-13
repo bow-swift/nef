@@ -249,6 +249,17 @@ class NefCompilerSystem: CompilerSystem {
     
     // MARK: helpers <path>
     struct Path {
+        let project: URL
+        let action: Action
+        
+        var url: URL {
+            project.appendingPathComponent(action.pathComponent)
+        }
+        
+        func appending(_ component: String) -> URL {
+            self.url.appendingPathComponent(component.removeExtension).appendingPathExtension(action.extension)
+        }
+        
         enum Action: String {
             case root = "nef"
             case derivedData
@@ -275,17 +286,6 @@ class NefCompilerSystem: CompilerSystem {
                 case .fw:          return "\(Action.build.pathComponent)/\(rawValue)"
                 }
             }
-        }
-        
-        let project: URL
-        let action: Action
-        
-        var url: URL {
-            project.appendingPathComponent(action.pathComponent)
-        }
-        
-        func appending(_ component: String) -> URL {
-            self.url.appendingPathComponent(component.removeExtension).appendingPathExtension(action.extension)
         }
     }
 }
