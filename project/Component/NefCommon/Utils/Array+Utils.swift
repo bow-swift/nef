@@ -4,7 +4,7 @@ import Foundation
 
 public extension Array {
     func appending<S: Sequence>(contentsOf newElements: S) -> [Element] where Element == S.Element {
-        newElements.reduce(self) { (acc: [Element], elem: Element) in acc + [elem] }
+        self + newElements
     }
 }
 
