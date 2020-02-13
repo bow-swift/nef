@@ -6,18 +6,25 @@ import nef
 import Bow
 import BowEffects
 
+
+enum Shell: String {
+    case page
+    case output
+    case verbose
+}
+
 private let console = Console(script: "nef-markdown-page",
                               description: "Render a markdown file from a Playground page",
-                              arguments: .init(name: "page", placeholder: "path-to-playground-page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
-                                         .init(name: "output", placeholder: "path-to-output", description: "path where markdown are saved to. ex. `/home`"),
-                                         .init(name: "verbose", placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
+                              arguments: .init(name: Shell.page.rawValue, placeholder: "path-to-playground-page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
+                                         .init(name: Shell.output.rawValue, placeholder: "path-to-output", description: "path where markdown are saved to. ex. `/home`"),
+                                         .init(name: Shell.verbose.rawValue, placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
 
 
 func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, filename: String, output: URL, verbose: Bool)> {
     console.input().flatMap { args in
-        guard let pagePath = args["page"]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let outputPath = args["output"]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let verbose = Bool(args["verbose"] ?? "") else {
+        guard let pagePath = args[Shell.page.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
+              let outputPath = args[Shell.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
+              let verbose = Bool(args[Shell.verbose.rawValue] ?? "") else {
                 return IO.raiseError(.arguments)
         }
         
