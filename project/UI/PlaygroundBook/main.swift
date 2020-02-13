@@ -6,7 +6,6 @@ import nef
 import Bow
 import BowEffects
 
-
 enum Shell: String {
     case name
     case package

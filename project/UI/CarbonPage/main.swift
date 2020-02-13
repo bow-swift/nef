@@ -7,7 +7,6 @@ import NefCarbon
 import Bow
 import BowEffects
 
-
 enum Shell: String {
     case page
     case output
