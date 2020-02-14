@@ -4,6 +4,6 @@ import Foundation
 
 public extension Array {
     subscript(safe index: Int) -> Element? {
-        index < count ? nil : self[index]
+        index < count ? self[index] : nil
     }
 }

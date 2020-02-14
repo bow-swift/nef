@@ -106,7 +106,6 @@
 		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
 		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
-		8BBCA655239683D400BE058B /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 		8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */; };
@@ -129,7 +128,8 @@
 		8BD6976A23F6D6E7000A512F /* NefPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD6976823F6D6E7000A512F /* NefPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BD6977823F6E8C5000A512F /* PlaygroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977723F6E8C5000A512F /* PlaygroundAPI.swift */; };
 		8BD6977A23F6E9F6000A512F /* PlaygroundDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977923F6E9F6000A512F /* PlaygroundDependencies.swift */; };
-		8BD6977C23F7119C000A512F /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977B23F7119C000A512F /* Array+Utils.swift */; };
+		8BD6977E23F7130F000A512F /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBCA654239683D400BE058B /* Console.swift */; };
+		8BD6977F23F71316000A512F /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977B23F7119C000A512F /* Array+Utils.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -1950,11 +1950,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */,
+				8BD6977E23F7130F000A512F /* Console.swift in Sources */,
 				8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */,
 				8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */,
 				8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */,
+				8BD6977F23F71316000A512F /* Array+Utils.swift in Sources */,
 				8BED79BB23A9357D00115479 /* Console+Utils.swift in Sources */,
-				8BBCA655239683D400BE058B /* Console.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2151,7 +2152,6 @@
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
 				8BA1EF7623D86B2D00B33CD0 /* MacDummyConsole.swift in Sources */,
-				8BD6977C23F7119C000A512F /* Array+Utils.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B0286DA23E078830033ECBA /* CompilerAPI.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
