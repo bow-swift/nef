@@ -125,6 +125,8 @@
 		8BD6727A23DF249900631D62 /* CompilerSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6727823DF249400631D62 /* CompilerSystem.swift */; };
 		8BD6727C23DF381D00631D62 /* CompilerSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6727B23DF381D00631D62 /* CompilerSystemError.swift */; };
 		8BD6973B23F5AA36000A512F /* Kleisli+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6973923F5AA2E000A512F /* Kleisli+API.swift */; };
+		8BD6975D23F6D6A7000A512F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6975C23F6D6A7000A512F /* main.swift */; };
+		8BD6976A23F6D6E7000A512F /* NefPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD6976823F6D6E7000A512F /* NefPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -296,6 +298,34 @@
 			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
 			remoteInfo = NefModels;
 		};
+		8BD6976F23F6D9EE000A512F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BD6976523F6D6E7000A512F;
+			remoteInfo = NefPlayground;
+		};
+		8BD6977123F6DA02000A512F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B0FB583237C0A5600221548;
+			remoteInfo = CLIKit;
+		};
+		8BD6977323F6DA1F000A512F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BBD14AE2390179B0002970C;
+			remoteInfo = NefCommon;
+		};
+		8BD6977523F6DA38000A512F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
+			remoteInfo = NefModels;
+		};
 		8BE9D5A823CF23E600332D75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -458,6 +488,11 @@
 		8BD6727823DF249400631D62 /* CompilerSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerSystem.swift; sourceTree = "<group>"; };
 		8BD6727B23DF381D00631D62 /* CompilerSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerSystemError.swift; sourceTree = "<group>"; };
 		8BD6973923F5AA2E000A512F /* Kleisli+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kleisli+API.swift"; sourceTree = "<group>"; };
+		8BD6975A23F6D6A7000A512F /* nef-playground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-playground"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BD6975C23F6D6A7000A512F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8BD6976623F6D6E7000A512F /* NefPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BD6976823F6D6E7000A512F /* NefPlayground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefPlayground.h; sourceTree = "<group>"; };
+		8BD6976923F6D6E7000A512F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BD6F704238C259100DD93C4 /* MacFileSytem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacFileSytem.swift; sourceTree = "<group>"; };
 		8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEnvironment.swift; sourceTree = "<group>"; };
 		8BD6F70C238C495600DD93C4 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
@@ -587,6 +622,7 @@
 				8B3CB83E22D3929B00919F36 /* NefModels */,
 				8BBD14B02390179B0002970C /* NefCommon */,
 				8B51C79423CCC8A4003EE485 /* NefRender */,
+				8BD6976723F6D6E7000A512F /* NefPlayground */,
 				8BD4E31E238817BB002DECDB /* NefSwiftPlayground */,
 			);
 			path = Component;
@@ -700,6 +736,7 @@
 				8B3CB85422D392C000919F36 /* JekyllPage */,
 				8B7E808323DB4C5800D4F6BD /* Carbon */,
 				8B3CB85822D392C000919F36 /* CarbonPage */,
+				8BD6975B23F6D6A7000A512F /* Playground */,
 				8BD4E2F4238802C2002DECDB /* PlaygroundBook */,
 				8B0FB585237C0A5600221548 /* CLIKit */,
 			);
@@ -914,6 +951,8 @@
 				8B7E808223DB4C5700D4F6BD /* nef-carbon */,
 				8BD6726723DF0A7900631D62 /* NefCompiler.framework */,
 				8B0286E123E079650033ECBA /* nefc */,
+				8BD6975A23F6D6A7000A512F /* nef-playground */,
+				8BD6976623F6D6E7000A512F /* NefPlayground.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1169,6 +1208,31 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		8BD6975B23F6D6A7000A512F /* Playground */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6975C23F6D6A7000A512F /* main.swift */,
+			);
+			path = Playground;
+			sourceTree = "<group>";
+		};
+		8BD6976723F6D6E7000A512F /* NefPlayground */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6976E23F6D6F9000A512F /* Support Files */,
+			);
+			path = NefPlayground;
+			sourceTree = "<group>";
+		};
+		8BD6976E23F6D6F9000A512F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8BD6976923F6D6E7000A512F /* Info.plist */,
+				8BD6976823F6D6E7000A512F /* NefPlayground.h */,
+			);
+			path = "Support Files";
+			sourceTree = "<group>";
+		};
 		8BD6F6FE238C252F00DD93C4 /* Algebras */ = {
 			isa = PBXGroup;
 			children = (
@@ -1275,6 +1339,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD6726B23DF0A7900631D62 /* NefCompiler.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD6976123F6D6E7000A512F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BD6976A23F6D6E7000A512F /* NefPlayground.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1625,6 +1697,40 @@
 			productReference = 8BD6726723DF0A7900631D62 /* NefCompiler.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		8BD6975923F6D6A7000A512F /* Playground */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BD6975E23F6D6A7000A512F /* Build configuration list for PBXNativeTarget "Playground" */;
+			buildPhases = (
+				8BD6975623F6D6A7000A512F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8BD6977223F6DA02000A512F /* PBXTargetDependency */,
+			);
+			name = Playground;
+			productName = Playground;
+			productReference = 8BD6975A23F6D6A7000A512F /* nef-playground */;
+			productType = "com.apple.product-type.tool";
+		};
+		8BD6976523F6D6E7000A512F /* NefPlayground */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BD6976B23F6D6E7000A512F /* Build configuration list for PBXNativeTarget "NefPlayground" */;
+			buildPhases = (
+				8BD6976123F6D6E7000A512F /* Headers */,
+				8BD6976223F6D6E7000A512F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8BD6977623F6DA38000A512F /* PBXTargetDependency */,
+				8BD6977423F6DA1F000A512F /* PBXTargetDependency */,
+			);
+			name = NefPlayground;
+			productName = NefPlayground;
+			productReference = 8BD6976623F6D6E7000A512F /* NefPlayground.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		8BF75F8422CA71E700EC53A1 /* nef */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BF75F9A22CA71E700EC53A1 /* Build configuration list for PBXNativeTarget "nef" */;
@@ -1640,6 +1746,7 @@
 				8B18E65A23B0C56F001F9C19 /* PBXTargetDependency */,
 				8B18E65823B0C56F001F9C19 /* PBXTargetDependency */,
 				8B18E65223B0C56F001F9C19 /* PBXTargetDependency */,
+				8BD6977023F6D9EE000A512F /* PBXTargetDependency */,
 				8B18E65E23B0C56F001F9C19 /* PBXTargetDependency */,
 			);
 			name = nef;
@@ -1736,6 +1843,12 @@
 					8BD6726623DF0A7900631D62 = {
 						CreatedOnToolsVersion = 11.3;
 					};
+					8BD6975923F6D6A7000A512F = {
+						CreatedOnToolsVersion = 11.3;
+					};
+					8BD6976523F6D6E7000A512F = {
+						CreatedOnToolsVersion = 11.3;
+					};
 					8BF75F8422CA71E700EC53A1 = {
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
@@ -1769,6 +1882,7 @@
 				8B6FC584221ECE6A008F7694 /* JekyllPage */,
 				8B7E808123DB4C5700D4F6BD /* Carbon */,
 				8B0CA51522AE669600181BC0 /* CarbonPage */,
+				8BD6975923F6D6A7000A512F /* Playground */,
 				8BD4E309238814B1002DECDB /* PlaygroundBook */,
 				8B0FB583237C0A5600221548 /* CLIKit */,
 				8BF75F8422CA71E700EC53A1 /* nef */,
@@ -1776,6 +1890,7 @@
 				8B22248222D5EAD500C85856 /* NefMarkdown */,
 				8B12D79A22D6235200D05A70 /* NefJekyll */,
 				8BF75FC522CA7DA500EC53A1 /* NefCarbon */,
+				8BD6976523F6D6E7000A512F /* NefPlayground */,
 				8BD4E31C238817BB002DECDB /* NefSwiftPlayground */,
 				8B51C79223CCC8A4003EE485 /* NefRender */,
 				8B6B119322CB9FDE0060177F /* NefCore */,
@@ -2001,6 +2116,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BD6975623F6D6A7000A512F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BD6975D23F6D6A7000A512F /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BD6976223F6D6E7000A512F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BF75F8122CA71E700EC53A1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2162,6 +2292,26 @@
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
 			targetProxy = 8BD4E33D238824F3002DECDB /* PBXContainerItemProxy */;
+		};
+		8BD6977023F6D9EE000A512F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BD6976523F6D6E7000A512F /* NefPlayground */;
+			targetProxy = 8BD6976F23F6D9EE000A512F /* PBXContainerItemProxy */;
+		};
+		8BD6977223F6DA02000A512F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B0FB583237C0A5600221548 /* CLIKit */;
+			targetProxy = 8BD6977123F6DA02000A512F /* PBXContainerItemProxy */;
+		};
+		8BD6977423F6DA1F000A512F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BBD14AE2390179B0002970C /* NefCommon */;
+			targetProxy = 8BD6977323F6DA1F000A512F /* PBXContainerItemProxy */;
+		};
+		8BD6977623F6DA38000A512F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
+			targetProxy = 8BD6977523F6DA38000A512F /* PBXContainerItemProxy */;
 		};
 		8BE9D5A923CF23E600332D75 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2934,6 +3084,72 @@
 			};
 			name = Release;
 		};
+		8BD6975F23F6D6A7000A512F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Playground;
+				PRODUCT_NAME = "nef-playground";
+			};
+			name = Debug;
+		};
+		8BD6976023F6D6A7000A512F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Playground;
+				PRODUCT_NAME = "nef-playground";
+			};
+			name = Release;
+		};
+		8BD6976C23F6D6E7000A512F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Component/NefPlayground/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.NefPlayground;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8BD6976D23F6D6E7000A512F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Component/NefPlayground/Support Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.NefPlayground;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		8BF75F9622CA71E700EC53A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3209,6 +3425,24 @@
 			buildConfigurations = (
 				8BD6726D23DF0A7900631D62 /* Debug */,
 				8BD6726E23DF0A7900631D62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BD6975E23F6D6A7000A512F /* Build configuration list for PBXNativeTarget "Playground" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BD6975F23F6D6A7000A512F /* Debug */,
+				8BD6976023F6D6A7000A512F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BD6976B23F6D6E7000A512F /* Build configuration list for PBXNativeTarget "NefPlayground" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BD6976C23F6D6E7000A512F /* Debug */,
+				8BD6976D23F6D6E7000A512F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
