@@ -10,7 +10,7 @@ class NefCompilerSystem: CompilerSystem {
     
     func compile(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
         binding(
-            |<-self.createStructure(project: project, cached: cached),
+            |<-self.createStructure(xcworkspace: xcworkspace, inProject: project, cached: cached),
             |<-self.buildDependencies(xcworkspace: xcworkspace, platform: platform, cached: cached),
             |<-self.buildProject(xcworkspace: xcworkspace, inProject: project, platform: platform, cached: cached),
             |<-self.copyFrameworks(inProject: project),
@@ -31,18 +31,19 @@ class NefCompilerSystem: CompilerSystem {
     }
     
     // MARK: - steps <shell>
-    private func createStructure(project: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    private func createStructure(xcworkspace: URL, inProject project: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
             let cleanBuildIO = env.fileSystem.remove(itemPath: Path(project: project, action: .build).url.path).handleError { _ in }
             let cleanLogIO = env.fileSystem.remove(itemPath: Path(project: project, action: .log).url.path).handleError { _ in }
             let cleanRootIO = env.fileSystem.remove(itemPath: Path(project: project, action: .root).url.path).handleError { _ in }
             let cleanIO = cached ? cleanBuildIO.followedBy(cleanLogIO) : cleanRootIO
+            let cleanDependenciesIO = self.cleanDependencies(xcworkspace: xcworkspace, cached: cached).provide(env).mapError { _ in FileSystemError.remove(item: "") }
             
             let createDerivedDataIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .derivedData).url.path)
             let createFrameworksIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .fw).url.path)
             let createLogIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .log).url.path)
             
-            return cleanIO
+            return cleanIO.followedBy(cleanDependenciesIO)
                     .followedBy(createDerivedDataIO)
                     .followedBy(createFrameworksIO)
                     .followedBy(createLogIO)^
@@ -189,6 +190,43 @@ class NefCompilerSystem: CompilerSystem {
     }
     
     private func buildSPM(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        #warning("it must be done when apple fixes the Xcode bug '47668990'")
+        return EnvIO.pure(())^
+    }
+    
+    private func cleanDependencies(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        guard !cached else { return EnvIO.pure(())^ }
+        
+        return binding(
+            |<-self.cleanPods(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+            |<-self.cleanCarthage(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+            |<-self.cleanSPM(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+        yield: ())^
+    }
+    
+    private func cleanPods(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        EnvIO { env in
+            let parent = xcworkspace.deletingLastPathComponent()
+            let pods = parent.appendingPathComponent("Pods")
+            let resolved = parent.appendingPathComponent("Podfile.lock")
+            
+            let podsIO = env.fileSystem.remove(itemPath: pods.path).handleError { _ in }
+            let resolvedIO = env.fileSystem.remove(itemPath: resolved.path).handleError { _ in }
+            
+            return podsIO.followedBy(resolvedIO)^.mapError { _ in .dependencies() }
+        }
+    }
+    
+    private func cleanCarthage(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        EnvIO { env in
+            let parent = xcworkspace.deletingLastPathComponent()
+            let cartfile = parent.appendingPathComponent("Carthage")
+            return env.fileSystem.remove(itemPath: cartfile.path)^
+                                 .mapError { _ in .dependencies() }.handleError { _ in }
+        }
+    }
+    
+    private func cleanSPM(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         #warning("it must be done when apple fixes the Xcode bug '47668990'")
         return EnvIO.pure(())^
     }
