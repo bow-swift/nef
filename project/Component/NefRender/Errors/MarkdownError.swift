@@ -3,29 +3,35 @@
 import Foundation
 
 public enum RenderError: Error {
-    case content
+    case content(info: String = "")
     case page(_ page: URL)
     case playground(_ playground: URL)
     case playgrounds
+    case workspace(_ workspace: URL, info: String = "")
     case getPlaygrounds(folder: URL)
     case getPages(playground: URL)
+    case getWorkspace(folder: URL)
 }
 
-extension RenderError {
-    var information: String {
+extension RenderError: CustomStringConvertible {
+    public var description: String {
         switch self {
-        case .content:
-            return "can not render content"
+        case .content(let info):
+            return "Cannot render content\(info.isEmpty ? "" : ": \(info)")"
         case .page(let page):
-            return "can not render page '\(page.path)'"
+            return "Cannot render page '\(page.path)'"
         case .playground(let playground):
-            return "can not render playground '\(playground.path)'"
+            return "Cannot render playground '\(playground.path)'"
+        case .workspace(let workspace, let info):
+            return "Cannot render workspace '\(workspace.path)'\(info.isEmpty ? "" : ". \n  Reason: \(info.description.firstLowercased)")"
         case .playgrounds:
-            return "can not render playgrounds"
+            return "Cannot render playgrounds"
         case .getPlaygrounds(let folder):
-            return "could not get playgrounds at '\(folder.path)'"
+            return "Could not get playgrounds at '\(folder.path)'"
         case .getPages(let playground):
-            return "could not get pages at '\(playground.path)'"
+            return "Could not get pages at '\(playground.path)'"
+        case .getWorkspace(let folder):
+            return "Could not extract only xcworkspace at '\(folder.path)'"
         }
     }
 }

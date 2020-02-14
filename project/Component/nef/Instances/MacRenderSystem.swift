@@ -1,6 +1,7 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
+import NefCommon
 import NefCore
 import Bow
 import BowEffects
@@ -12,8 +13,8 @@ extension RenderingPersistence where A == String {
             let folder = file.deletingLastPathComponent()
             
             return binding(
-                |<-fileSystem.createDirectory(atPath: folder.path).mapLeft { _ in .structure(folder: folder) },
-                |<-fileSystem.write(content: page.output.all().joined(), toFile: file.path).mapLeft { _ in .persist(item: file) },
+                |<-fileSystem.createDirectory(atPath: folder.path).mapError { _ in .structure(folder: folder) },
+                |<-fileSystem.write(content: page.output.all().joined(), toFile: file.path).mapError { _ in .persist(item: file) },
             yield: ())
         }
     }}
@@ -50,7 +51,7 @@ extension RenderingPersistence where A == Image {
             let file = folder.appendingPathComponent("\(filename)\(sufix).png")
             
             return EnvIO { fileSystem in
-                fileSystem.write(content: image, toFile: file.path).mapLeft { _ in .persist(item: file) }
+                fileSystem.write(content: image, toFile: file.path).mapError { _ in .persist(item: file) }
             }
         }.as(())^
     }

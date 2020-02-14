@@ -19,7 +19,7 @@ public extension MarkdownAPI {
         NefMarkdown.Markdown()
                    .page(content: content)
                    .contramap(environment)
-                   .mapError { _ in nef.Error.markdown }
+                   .mapError { _ in nef.Error.markdown() }
     }
     
     static func render(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
@@ -33,21 +33,21 @@ public extension MarkdownAPI {
         return NefMarkdown.Markdown()
                           .page(content: content, filename: filename, into: output)
                           .contramap(environment)
-                          .mapError { e in nef.Error.markdown }^
+                          .mapError { e in nef.Error.markdown(info: "\(e)") }^
     }
     
     static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
         NefMarkdown.Markdown()
                    .playground(playground, into: output)
                    .contramap(environment)
-                   .mapError { _ in nef.Error.markdown }^
+                   .mapError { _ in nef.Error.markdown() }^
     }
     
     static func render(playgroundsAt folder: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
         NefMarkdown.Markdown()
                    .playgrounds(atFolder: folder, into: output)
                    .contramap(environment)
-                   .mapError { _ in nef.Error.markdown }^
+                   .mapError { _ in nef.Error.markdown() }^
     }
     
     // MARK: - private <helpers>

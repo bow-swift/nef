@@ -25,6 +25,6 @@ extension SwiftPlaygroundAPI {
                                  .build(cached: true, excludes: excludes + invalidModules + invalidFiles)
                                  .contramap { console in PlaygroundEnvironment(console: console, shell: MacPlaygroundShell(), system: MacFileSystem()) }^
                                  .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
-                                 .mapError { _ in .swiftPlaygrond }^
+                                 .mapError { _ in .swiftPlaygrond() }^
     }
 }

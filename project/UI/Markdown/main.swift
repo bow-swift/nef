@@ -6,7 +6,6 @@ import nef
 import Bow
 import BowEffects
 
-
 enum Shell: String {
     case project
     case output
@@ -38,7 +37,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
         .flatMap { (input, output) in
             nef.Markdown.render(playgroundsAt: input, into: output)
                .provide(console)^
-               .mapLeft { _ in .render() }
+               .mapError { _ in .render() }
                .foldM({ _ in console.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
                       { _ in console.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")  }) }^
         .reportStatus(in: console)

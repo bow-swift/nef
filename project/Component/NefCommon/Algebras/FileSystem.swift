@@ -8,19 +8,21 @@ public protocol FileSystem {
     func createDirectory(atPath: String) -> IO<FileSystemError, ()>
     func copy(itemPath: String, toPath: String) -> IO<FileSystemError, ()>
     func remove(itemPath: String) -> IO<FileSystemError, ()>
-    func items(atPath path: String) -> IO<FileSystemError, [String]>
+    func items(atPath path: String, recursive: Bool) -> IO<FileSystemError, [String]>
     func readFile(atPath path: String) -> IO<FileSystemError, String>
     func write(content: String, toFile path: String) -> IO<FileSystemError, ()>
     func write(content: Data, toFile path: String) -> IO<FileSystemError, ()>
     func exist(itemPath: String) -> Bool
+    func temporalFile(content: String, filename: String) -> IO<FileSystemError, URL>
     
     func createDirectory<D>(atPath: String) -> EnvIO<D, FileSystemError, ()>
     func copy<D>(itemPath: String, toPath: String) -> EnvIO<D, FileSystemError, ()>
     func remove<D>(itemPath: String) -> EnvIO<D, FileSystemError, ()>
-    func items<D>(atPath path: String) -> EnvIO<D, FileSystemError, [String]>
+    func items<D>(atPath path: String, recursive: Bool) -> EnvIO<D, FileSystemError, [String]>
     func readFile<D>(atPath path: String) -> EnvIO<D, FileSystemError, String>
     func write<D>(content: String, toFile path: String) -> EnvIO<D, FileSystemError, ()>
     func write<D>(content: Data, toFile path: String) -> EnvIO<D, FileSystemError, ()>
+    func temporalFile<D>(content: String, filename: String) -> EnvIO<D, FileSystemError, URL>
 }
 
 public extension FileSystem {
@@ -36,8 +38,8 @@ public extension FileSystem {
         remove(itemPath: itemPath).env()
     }
     
-    func items<D>(atPath path: String) -> EnvIO<D, FileSystemError, [String]> {
-        items(atPath: path).env()
+    func items<D>(atPath path: String, recursive: Bool) -> EnvIO<D, FileSystemError, [String]> {
+        items(atPath: path, recursive: recursive).env()
     }
     
     func readFile<D>(atPath path: String) -> EnvIO<D, FileSystemError, String> {
@@ -50,6 +52,10 @@ public extension FileSystem {
     
     func write<D>(content: Data, toFile path: String) -> EnvIO<D, FileSystemError, ()> {
         write(content: content, toFile: path).env()
+    }
+    
+    func temporalFile<D>(content: String, filename: String) -> EnvIO<D, FileSystemError, URL> {
+        temporalFile(content: content, filename: filename).env()
     }
 }
 
@@ -86,18 +92,18 @@ public extension FileSystem {
     func moveFile(from origin: String, to destination: String) -> IO<FileSystemError, Void> {
         copy(itemPath: origin, toPath: destination)
             .followedBy(removeFiles(origin))^
-            .mapLeft { _ in .move(from: origin, to: destination) }
+            .mapError { _ in .move(from: origin, to: destination) }
     }
     
     func moveFiles(in input: String, to output: String) -> IO<FileSystemError, ()> {
         let items = IO<FileSystemError, [String]>.var()
         
         return binding(
-            items <- self.items(atPath: input),
+            items <- self.items(atPath: input, recursive: false),
                   |<-self.copy(items: items.get, from: input, to: output),
                   |<-self.removeDirectory(input),
             yield: ()
-        )^.mapLeft { _ in .move(from: input, to: output) }
+        )^.mapError { _ in .move(from: input, to: output) }
     }
     
     func rename(_ newName: String, itemAt: String) -> IO<FileSystemError, ()> {

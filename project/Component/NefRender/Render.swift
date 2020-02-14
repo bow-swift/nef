@@ -52,11 +52,39 @@ public struct Render<A> {
     }
     
     private func renderPages(_ pages: NEA<RenderingURL>, inPlayground playground: RenderingURL) -> EnvIO<Environment, RenderError, PlaygroundOutput<A>> {
-        pages.traverse { (page: RenderingURL) in
+        func readPlatform(playground: RenderingURL) -> EnvIO<Environment, RenderError, Platform> {
+            let info = playground.url.appendingPathComponent("contents.xcplayground")
+            guard let xcplayground = try? String(contentsOf: info),
+                  let rawPlatform = xcplayground.matches(pattern: "(?<=target-platform=').*(?=' )").first,
+                  let platform = Platform(rawValue: rawPlatform) else { return EnvIO.raiseError(.page(info))^ }
+            return EnvIO.pure(platform)^
+        }
+        
+        func readPlayground(page: RenderingURL) -> EnvIO<Environment, RenderError, String> {
             let url = page.url.appendingPathComponent("Contents.swift")
             guard let content = try? String(contentsOf: url) else { return EnvIO.raiseError(.page(url))^ }
-            return self.renderPage(content: content, info: .info(playground: playground, page: page)).map { output in (page: page, output: output) }^
-        }^
+            return EnvIO.pure(content)^
+        }
+        
+        func renderPages(_ pages: NEA<RenderingURL>, platform: Platform, inPlayground playground: RenderingURL) -> EnvIO<Environment, RenderError, PlaygroundOutput<A>> {
+            pages.traverse { (page: RenderingURL) in
+                let content = EnvIO<Environment, RenderError, String>.var()
+                let rendered = EnvIO<Environment, RenderError, RenderingOutput<A>>.var()
+            
+                return binding(
+                     content <- readPlayground(page: page),
+                    rendered <- self.renderPage(content: content.get, info: .info(playground: playground, page: page)),
+                yield: (page: page, platform: platform, output: rendered.get))^
+            }^
+        }
+        
+        let platform = EnvIO<Environment, RenderError, Platform>.var()
+        let rendered = EnvIO<Environment, RenderError, PlaygroundOutput<A>>.var()
+        
+        return binding(
+            platform <- readPlatform(playground: playground),
+            rendered <- renderPages(pages, platform: platform.get, inPlayground: playground),
+        yield: rendered.get)^
     }
     
     private func renderPage(content: String, info: RenderEnvironmentInfo) -> EnvIO<Environment, RenderError, RenderingOutput<A>> {
@@ -65,7 +93,7 @@ public struct Render<A> {
             
             return binding(
                              |<-env.console.print(information: "\t• Rendering page \(info.data?.page.title ?? "content")"),
-                    rendered <- env.nodePrinter(content).provide(info).mapLeft { _ in .content },
+                    rendered <- env.nodePrinter(content).provide(info).mapError { _ in .content() },
             yield: rendered.get)^.reportStatus(console: env.console)
         }
     }
@@ -78,7 +106,7 @@ public struct Render<A> {
             
             return binding(
                               |<-env.console.print(information: "Get pages in playground '\(playground)'"),
-                        pages <- env.playgroundSystem.pages(in: playground.url).mapLeft { _ in .getPages(playground: playground.url) },
+                        pages <- env.playgroundSystem.pages(in: playground.url).mapError { _ in .getPages(playground: playground.url) },
                 rendererPages <- pages.get.traverse { url in RenderingURL(url: url, title: self.pageName(url)).io() },
             yield: rendererPages.get)^.reportStatus(console: env.console)
         }
@@ -91,7 +119,7 @@ public struct Render<A> {
             
             return binding(
                            |<-env.console.print(information: "Get playgrounds in '\(folder.lastPathComponent.removeExtension)'"),
-               playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapLeft { _ in .getPlaygrounds(folder: folder) },
+               playgrounds <- env.playgroundSystem.playgrounds(at: folder).mapError { _ in .getPlaygrounds(folder: folder) },
                   rendered <- playgrounds.get.traverse { url in RenderingURL(url: url, title: self.playgroundName(url)).io() },
             yield: rendered.get)^.reportStatus(console: env.console)
         }

@@ -72,10 +72,12 @@ public struct Console {
             
             while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
                 let match = args.enumerated().first { (index, _) in opt == Int32(index) }
-                guard let key = match?.element.name else { return IO.raiseError(Console.Error.arguments)^ }
+                guard let element = match?.element else { return IO.raiseError(Console.Error.arguments)^ }
                 
                 if optarg != nil {
-                    result[key] = String(cString: optarg)
+                    result[element.name] = String(cString: optarg)
+                } else if element.isFlag {
+                    result[element.name] = "true"
                 }
             }
             
@@ -179,7 +181,7 @@ public struct Console {
             case .arguments:
                 return "do not received the whole required arguments."+" Use".bold+" --help, --h".cyan
             case .render(let info):
-                return "fail the render\(info.isEmpty ? "" : " (".lightGray+"\(info)".lightRed+")".lightGray)."
+                return info.isEmpty ? "" : "Render failure: \(info.lightRed)"
             }
         }
     }
@@ -229,10 +231,9 @@ extension Console: NefModels.Console {
     }
     
     public func printStatus<E: Swift.Error>(information: String, success: Bool) -> IO<E, Void> {
-        ConsoleIO.print(success ? !information.isEmpty ? "(\(information)) "+"✓".bold.green : "✓".bold.green
-                                : !information.isEmpty ? "(\(information)) "+"✗".bold.red   : "✗".bold.red,
+        ConsoleIO.print(success ? "✓".bold.green + (!information.isEmpty ? "\n> \(information)" : "")
+                                : "✗".bold.red   + (!information.isEmpty ? "\n> \(information)" : ""),
                         separator: "",
                         terminator: "\n")
     }
 }
-

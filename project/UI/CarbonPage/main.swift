@@ -7,7 +7,6 @@ import NefCarbon
 import Bow
 import BowEffects
 
-
 enum Shell: String {
     case page
     case output
@@ -89,7 +88,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
                                                                               "verbose: \(args.get.verbose)"]),
          output <- nef.Carbon.renderVerbose(content: args.get.content, style: args.get.style, filename: args.get.filename, into: args.get.output)
                              .provide(console)
-                             .mapLeft { _ in .render() }^,
+                             .mapError { _ in .render() }^,
                 |<-console.printStep(step: step(partial: 1), information: "Rendering playground page"),
     yield: args.get.verbose ? Either<(ast: String, url: URL), URL>.left(output.get)
                             : Either<(ast: String, url: URL), URL>.right(output.get.url))^

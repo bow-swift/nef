@@ -67,7 +67,7 @@ public struct Jekyll {
         EnvIO { env in
             let file = output.appendingPathComponent(page.escapedTitle).appendingPathComponent("README.md")
             return env.persistence.writePage(content, file).provide(env.fileSystem)
-                                  .map { _ in file }^.mapLeft { _ in .page(file) }
+                                  .map { _ in file }^.mapError { _ in .page(file) }
         }^
     }
     
@@ -82,7 +82,7 @@ public struct Jekyll {
     
     private func writePage(_ page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
         EnvIO { env in
-            env.persistence.writePage(page, file).provide(env.fileSystem).mapLeft { _ in .page(file) }
+            env.persistence.writePage(page, file).provide(env.fileSystem).mapError { _ in .page(file) }
         }
     }
     
@@ -115,14 +115,14 @@ public struct Jekyll {
                 |<-env.console.print(information: "Building main page '\(mainPage.path)'"),
                 |<-env.fileSystem.createDirectory(atPath: docs.path),
                 |<-env.fileSystem.write(content: content ?? defaultContent, toFile: file.path),
-            yield: ())^.mapLeft { _ in .page(mainPage) }^.reportStatus(console: env.console)
+            yield: ())^.mapError { _ in .page(mainPage) }^.reportStatus(console: env.console)
         }
     }
     
     private func buildSideBar(rendered: PlaygroundsOutput, data: URL) -> EnvIO<Environment, RenderError, Void> {
         func sidebarPage(playground: RenderingURL, page: RenderingURL) -> IO<RenderError, String> {
             Environment.permalink(info: .info(playground: playground, page: page))
-                       .mapLeft { _ in .page(page.url) }^
+                       .mapError { _ in .page(page.url) }^
                        .map { permalink in
                             """
                                      - title: \(page)
@@ -132,7 +132,7 @@ public struct Jekyll {
         }
 
         func sidebarPlayground(playground: RenderingURL, info: PlaygroundOutput) -> IO<RenderError, String> {
-            info.traverse { (page, _) in sidebarPage(playground: playground, page: page) }.map { sidebarPages in
+            info.traverse { (page, _, _) in sidebarPage(playground: playground, page: page) }.map { sidebarPages in
                 """
                    - title: \(playground)
 
@@ -160,9 +160,9 @@ public struct Jekyll {
         return EnvIO { env in
             binding(
                       |<-env.console.print(information: "Building sidebar '\(sidebarFile.path)'"),
-                      |<-env.fileSystem.createDirectory(atPath: data.path).mapLeft { _ in .page(sidebarFile) },
+                      |<-env.fileSystem.createDirectory(atPath: data.path).mapError { _ in .page(sidebarFile) },
               content <- sidebar(rendered),
-                      |<-env.fileSystem.write(content: content.get, toFile: sidebarFile.path).mapLeft { _ in .page(sidebarFile) },
+                      |<-env.fileSystem.write(content: content.get, toFile: sidebarFile.path).mapError { _ in .page(sidebarFile) },
             yield: ())^.reportStatus(console: env.console)
         }
     }

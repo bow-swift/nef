@@ -7,11 +7,30 @@ import Bow
 import BowEffects
 
 
+public enum Compiler: CompilerAPI {}
 public enum Markdown: MarkdownAPI {}
 public enum Jekyll: JekyllAPI {}
 public enum Carbon: CarbonAPI {}
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
+
+public protocol CompilerAPI {
+    /// Compile Xcode Playground.
+    ///
+    /// - Parameters:
+    ///   - playground: Xcode Playgrounds to be compiled.
+    ///   - cached: use cached dependencies if it is possible, in another case, it will download them.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
+    static func compile(playground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
+    
+    /// Compile Xcode Playground.
+    ///
+    /// - Parameters:
+    ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
+    ///   - cached: use cached dependencies if it is possible, in another case, it will download them.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
+    static func compile(playgroundsAt: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
+}
 
 public protocol MarkdownAPI {
     /// Renders content into markdown.

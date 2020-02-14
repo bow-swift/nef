@@ -24,3 +24,7 @@ public struct CoreCarbonEnvironment {
         self.style = style
     }
 }
+
+public struct CoreCodeEnvironment {
+    public init() {}
+}

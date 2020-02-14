@@ -6,7 +6,6 @@ import nef
 import Bow
 import BowEffects
 
-
 enum Shell: String {
     case name
     case package
@@ -45,7 +44,7 @@ func main() -> Either<CLIKit.Console.Error, Void> {
         .flatMap { (packageContent, projectName, output) in
             nef.SwiftPlayground.render(packageContent: packageContent, name: projectName, output: output)
                 .provide(console)^
-                .mapLeft { _ in .render() }
+                .mapError { _ in .render() }
                 .foldM({ _   in console.exit(failure: "rendering Playground Book")                  },
                        { url in console.exit(success: "rendered Playground Book in '\(url.path)'")  }) }^
         .reportStatus(in: console)

@@ -15,7 +15,7 @@ public struct CoreRender<D, A> {
         let syntaxAST = SyntaxAnalyzer.parse(content: content)
         guard syntaxAST.count > 0 else { return EnvIO.raiseError(.ast)^ }
 
-        let filteredAST = syntaxAST.filter { !$0.isHidden }.reduce()
+        let filteredAST = syntaxAST.reduce()
         let ast = filteredAST.map { "\($0)" }.joined(separator: "\n")
         
         return filteredAST.traverse(nodeProcessor.render)
@@ -42,4 +42,8 @@ public extension CoreRender where D == CoreMarkdownEnvironment, A == String {
 
 public extension CoreRender where D == CoreCarbonEnvironment, A == Image {
     static var carbon: CoreRender { .init(.carbon) }
+}
+
+public extension CoreRender where D == CoreCodeEnvironment, A == String {
+    static var code: CoreRender { .init(.code) }
 }

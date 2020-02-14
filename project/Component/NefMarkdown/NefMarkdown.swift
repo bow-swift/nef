@@ -62,7 +62,7 @@ public struct Markdown {
         EnvIO { env in
             let file = output.appendingPathComponent(page.escapedTitle).appendingPathExtension("md")
             return env.persistence.writePage(content, file).provide(env.fileSystem)
-                                  .map { _ in file }^.mapLeft { _ in .page(file) }
+                                  .map { _ in file }^.mapError { _ in .page(file) }
         }^
     }
     
@@ -77,7 +77,7 @@ public struct Markdown {
     
     private func write(page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
         EnvIO { env in
-            env.persistence.writePage(page, file).provide(env.fileSystem).mapLeft { _ in .page(file) }
+            env.persistence.writePage(page, file).provide(env.fileSystem).mapError { _ in .page(file) }
         }
     }
     
