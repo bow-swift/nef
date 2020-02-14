@@ -36,7 +36,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: St
     console.input().flatMap { args in
         guard let pagePath = args[Shell.page.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
               let outputPath = args[Shell.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let backgroundColor = CarbonStyle.Color(hex: args[Shell.background.rawValue] ?? "") ?? CarbonStyle.Color(default: args["background"] ?? ""),
+              let backgroundColor = CarbonStyle.Color(hex: args[Shell.background.rawValue] ?? "") ?? CarbonStyle.Color(default: args[Shell.background.rawValue] ?? ""),
               let theme = CarbonStyle.Theme(rawValue: args[Shell.theme.rawValue] ?? ""),
               let size = CarbonStyle.Size(factor: args[Shell.size.rawValue] ?? ""),
               let fontName = args[Shell.font.rawValue]?.replacingOccurrences(of: "-", with: " ").capitalized,

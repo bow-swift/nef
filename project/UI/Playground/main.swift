@@ -25,26 +25,26 @@ private let console = Console(script: "nef-playground",
                               
                                          .init(name: Shell.name.rawValue, placeholder: "playground-name", description: "specify the name for the nef Playground", default: "BowPlayground"),
                                          .init(name: Shell.platform.rawValue, placeholder: "", description: "set the target to `ios` or `macos`", default: "ios"),
-                                         .init(name: Shell.playground.rawValue, placeholder: "path-to-playground", description: "Xcode Playground to be transformed into nef Playground", default: ""),
+                                         .init(name: Shell.playground.rawValue, placeholder: "path-to-playground", description: "Xcode Playground to be transformed into nef Playground", default: " "),
                                          
-                                         .init(name: Shell.bowVersion.rawValue, placeholder: "", description: "specify the version of Bow", default: ""),
-                                         .init(name: Shell.bowBranch.rawValue,  placeholder: "", description: "specify the branch of Bow", default: ""),
-                                         .init(name: Shell.bowCommit.rawValue,  placeholder: "", description: "specify the commit of Bow", default: ""),
-                                         .init(name: Shell.podfile.rawValue,    placeholder: "", description: "path to Podfile with your own dependencies", default: ""),
-                                         .init(name: Shell.cartfile.rawValue,   placeholder: "", description: "path to Cartfile with your own dependencies", default: ""))
+                                         .init(name: Shell.bowVersion.rawValue, placeholder: "", description: "specify the version of Bow", default: " "),
+                                         .init(name: Shell.bowBranch.rawValue,  placeholder: "", description: "specify the branch of Bow", default: " "),
+                                         .init(name: Shell.bowCommit.rawValue,  placeholder: "", description: "specify the commit of Bow", default: " "),
+                                         .init(name: Shell.podfile.rawValue,    placeholder: "", description: "path to Podfile with your own dependencies", default: " "),
+                                         .init(name: Shell.cartfile.rawValue,   placeholder: "", description: "path to Cartfile with your own dependencies", default: " "))
 
 
 func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (name: String, output: URL, platform: Platform, playground: URL?, dependencies: PlaygroundDependencies)> {
     console.input().flatMap { args in
         guard let outputPath = args[Shell.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-              let name = args[Shell.name.rawValue],
-              let platform = Platform(platform: args[Shell.platform.rawValue] ?? ""),
-              let playgroundPath = args[Shell.playground.rawValue],
-              let bowVersion = args[Shell.bowVersion.rawValue],
-              let bowBranch = args[Shell.bowBranch.rawValue],
-              let bowCommit = args[Shell.bowCommit.rawValue],
-              let podfile = args[Shell.podfile.rawValue],
-              let cartfile = args[Shell.cartfile.rawValue] else {
+              let name = args[Shell.name.rawValue]?.trimmingEmptyCharacters,
+              let platform = Platform(platform: args[Shell.platform.rawValue]?.trimmingEmptyCharacters ?? ""),
+              let playgroundPath = args[Shell.playground.rawValue]?.trimmingEmptyCharacters,
+              let bowVersion = args[Shell.bowVersion.rawValue]?.trimmingEmptyCharacters,
+              let bowBranch = args[Shell.bowBranch.rawValue]?.trimmingEmptyCharacters,
+              let bowCommit = args[Shell.bowCommit.rawValue]?.trimmingEmptyCharacters,
+              let podfile = args[Shell.podfile.rawValue]?.trimmingEmptyCharacters,
+              let cartfile = args[Shell.cartfile.rawValue]?.trimmingEmptyCharacters else {
                 return IO.raiseError(.arguments)
         }
         

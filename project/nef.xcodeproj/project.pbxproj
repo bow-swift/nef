@@ -129,6 +129,7 @@
 		8BD6976A23F6D6E7000A512F /* NefPlayground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BD6976823F6D6E7000A512F /* NefPlayground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BD6977823F6E8C5000A512F /* PlaygroundAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977723F6E8C5000A512F /* PlaygroundAPI.swift */; };
 		8BD6977A23F6E9F6000A512F /* PlaygroundDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977923F6E9F6000A512F /* PlaygroundDependencies.swift */; };
+		8BD6977C23F7119C000A512F /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977B23F7119C000A512F /* Array+Utils.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -497,6 +498,7 @@
 		8BD6976923F6D6E7000A512F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BD6977723F6E8C5000A512F /* PlaygroundAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundAPI.swift; sourceTree = "<group>"; };
 		8BD6977923F6E9F6000A512F /* PlaygroundDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundDependencies.swift; sourceTree = "<group>"; };
+		8BD6977B23F7119C000A512F /* Array+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
 		8BD6F704238C259100DD93C4 /* MacFileSytem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacFileSytem.swift; sourceTree = "<group>"; };
 		8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEnvironment.swift; sourceTree = "<group>"; };
 		8BD6F70C238C495600DD93C4 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 		8B0FB585237C0A5600221548 /* CLIKit */ = {
 			isa = PBXGroup;
 			children = (
+				8BD6977B23F7119C000A512F /* Array+Utils.swift */,
 				8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */,
 				8BBCA654239683D400BE058B /* Console.swift */,
 				8BED79BA23A9357D00115479 /* Console+Utils.swift */,
@@ -2148,6 +2151,7 @@
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
 				8BA1EF7623D86B2D00B33CD0 /* MacDummyConsole.swift in Sources */,
+				8BD6977C23F7119C000A512F /* Array+Utils.swift in Sources */,
 				8B46C432238FD70D00437659 /* MacPlaygroundShell.swift in Sources */,
 				8B0286DA23E078830033ECBA /* CompilerAPI.swift in Sources */,
 				8B89BA0E238300A80025BC04 /* JekyllAPI.swift in Sources */,
