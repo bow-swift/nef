@@ -11,6 +11,7 @@ public enum Compiler: CompilerAPI {}
 public enum Markdown: MarkdownAPI {}
 public enum Jekyll: JekyllAPI {}
 public enum Carbon: CarbonAPI {}
+public enum Playground: PlaygroundAPI {}
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
 
@@ -215,6 +216,11 @@ public protocol CarbonAPI {
     /// - Parameter carbon: configuration
     /// - Returns: view of type `NSView`
     static func view(configuration: CarbonModel) -> CarbonView
+}
+
+public protocol PlaygroundAPI {
+    static func nef(fromPlayground playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
+    static func nef(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
 }
 
 public protocol SwiftPlaygroundAPI {

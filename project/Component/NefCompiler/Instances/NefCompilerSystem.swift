@@ -59,6 +59,16 @@ class NefCompilerSystem: CompilerSystem {
         yield: ())^
     }
     
+    private func cleanDependencies(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        guard !cached else { return EnvIO.pure(())^ }
+        
+        return binding(
+            |<-self.cleanPods(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+            |<-self.cleanCarthage(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+            |<-self.cleanSPM(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+        yield: ())^
+    }
+    
     private func copyFrameworks(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         func items(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             EnvIO { env in
@@ -192,16 +202,6 @@ class NefCompilerSystem: CompilerSystem {
     private func buildSPM(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         #warning("it must be done when apple fixes the Xcode bug '47668990'")
         return EnvIO.pure(())^
-    }
-    
-    private func cleanDependencies(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-        guard !cached else { return EnvIO.pure(())^ }
-        
-        return binding(
-            |<-self.cleanPods(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
-            |<-self.cleanCarthage(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
-            |<-self.cleanSPM(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
-        yield: ())^
     }
     
     private func cleanPods(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
