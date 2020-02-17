@@ -11,9 +11,11 @@ public struct Playground {
     public init() {}
     
     public func build(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
-        binding(
-            |<-self.template(output: output, name: name, platform: platform),
-//            |<-self.createStructure(project: project),
+        let playground = EnvIO<PlaygroundEnvironment, PlaygroundError, URL>.var()
+        
+        return binding(
+            playground <- self.template(output: output, name: name, platform: platform),
+                       |<-self.createStructure(project: playground.get),
         yield: ())^
     }
     
@@ -27,12 +29,14 @@ public struct Playground {
         }
     }
     
-    private func template(output: URL, name: String, platform: Platform) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+    private func template(output: URL, name: String, platform: Platform) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
         EnvIO { (env: PlaygroundEnvironment) in
-            binding(
-                |<-env.console.print(information: "Downloading playground template '\(output.path)'"),
-                |<-env.shell.installTemplate(into: output, name: name, platform: platform).mapError { e in .template(info: e) },
-            yield: ())^.reportStatus(console: env.console)
+            let playground = IO<PlaygroundError, URL>.var()
+            
+            return binding(
+                           |<-env.console.print(information: "Downloading playground template '\(output.path)'"),
+                playground <- env.shell.installTemplate(into: output, name: name, platform: platform).mapError { e in .template(info: e) },
+            yield: playground.get)^.reportStatus(console: env.console)
         }
     }
 }

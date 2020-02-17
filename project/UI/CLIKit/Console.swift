@@ -212,9 +212,11 @@ extension Console: NefModels.Console {
     }
     
     public func printStatus<E: Swift.Error>(information: String, success: Bool) -> IO<E, Void> {
-        ConsoleIO.print(success ? "✓".bold.green + (!information.isEmpty ? "\n> \(information)" : "")
-                                : "✗".bold.red   + (!information.isEmpty ? "\n> \(information)" : ""),
-                        separator: "",
-                        terminator: "\n")
+        let infoFormatted = !information.isEmpty ? "\n\t| \(information.replacingOccurrences(of: ": ", with: "\n\t| "))" : ""
+        
+        return ConsoleIO.print(success ? "✓".bold.green + infoFormatted
+                                       : "✗".bold.red   + infoFormatted,
+                               separator: "",
+                               terminator: "\n")
     }
 }

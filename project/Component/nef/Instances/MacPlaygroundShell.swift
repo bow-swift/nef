@@ -14,6 +14,10 @@ class MacPlaygroundShell: PlaygroundShell {
     }
     
     func installTemplate(into output: URL, name: String, platform: Platform) -> IO<PlaygroundShellError, URL> {
+        guard !fileSystem.exist(itemPath: output.appendingPathComponent("\(name).app").path) else {
+            return IO.raiseError(PlaygroundShellError.template(info: "nef playground '\(name)' already exists"))^
+        }
+        
         let template = IO<PlaygroundShellError, URL>.var()
         let playground = IO<PlaygroundShellError, URL>.var()
         

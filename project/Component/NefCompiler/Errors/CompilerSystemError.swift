@@ -1,6 +1,7 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
+import NefCommon
 
 public enum CompilerSystemError: Error {
     case code(String)
@@ -14,9 +15,9 @@ extension CompilerSystemError: CustomStringConvertible {
         case .code(_):
             return "compiling code"
         case .dependencies(let url, let info):
-            return "resolving dependencies \(url?.path ??  "") \(info.isEmpty ? "" : info.description.firstCapitalized)"
+            return "resolving dependencies \(url?.path ??  "")".appending(error: info)
         case .build(let url, let info):
-            return "building \(url?.path ??  "file") \(info.isEmpty ? "" : info.description.firstCapitalized)"
+            return "building \(url?.path ??  "file")".appending(error: info)
         }
     }
 }

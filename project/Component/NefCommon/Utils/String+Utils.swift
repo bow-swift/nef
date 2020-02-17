@@ -28,12 +28,15 @@ public extension String {
 public typealias ErrorStringConvertible = Error & CustomStringConvertible
 
 public extension String {
-    
     func appending(error: ErrorStringConvertible?) -> String {
         if let e = error {
             return "\(self): \(e)"
         } else {
             return self
         }
+    }
+    
+    func appending(error: String) -> String {
+        "\(self)\(error.isEmpty ? "" : ": \(error)")"
     }
 }

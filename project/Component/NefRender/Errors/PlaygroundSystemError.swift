@@ -1,6 +1,7 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
+import NefCommon
 
 public enum PlaygroundSystemError: Error {
     case xcworkspaces(information: String = "")
@@ -11,12 +12,12 @@ public enum PlaygroundSystemError: Error {
 extension PlaygroundSystemError: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .xcworkspaces(let information):
-            return "workspaces operation \(information.isEmpty ? "" : "(\(information))")"
-        case .playgrounds(let information):
-            return "playgrounds operation \(information.isEmpty ? "" : "(\(information))")"
-        case .pages(let information):
-            return "pages operation \(information.isEmpty ? "" : "(\(information))")"
+        case .xcworkspaces(let info):
+            return "workspaces operation".appending(error: info)
+        case .playgrounds(let info):
+            return "playgrounds operation".appending(error: info)
+        case .pages(let info):
+            return "pages operation".appending(error: info)
         }
     }
 }
