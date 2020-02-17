@@ -60,10 +60,6 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--playground /Users/miguelangel/Desktop"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "--bow-version &quot;0.7.0&quot;"
             isEnabled = "YES">
          </CommandLineArgument>

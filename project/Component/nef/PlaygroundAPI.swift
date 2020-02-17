@@ -2,7 +2,7 @@
 
 import Foundation
 import NefModels
-import NefSwiftPlayground
+import NefPlayground
 
 import Bow
 import BowEffects
@@ -15,6 +15,10 @@ extension PlaygroundAPI {
     }
     
     public static func nef(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL> {
-        fatalError()
+        NefPlayground.Playground()
+                     .build(name: name, output: output, platform: platform, dependencies: dependencies)
+                     .contramap { console in NefPlayground.PlaygroundEnvironment(console: console, shell: MacPlaygroundShell(), fileSystem: MacFileSystem()) }^
+                     .map { output }^
+                     .mapError { _ in .playground() }
     }
 }

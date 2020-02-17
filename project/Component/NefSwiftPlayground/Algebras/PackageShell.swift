@@ -4,7 +4,7 @@ import Foundation
 import NefCommon
 import BowEffects
 
-public protocol PlaygroundShell {
+public protocol PackageShell {
     func resolve(packagePath: String, buildPath: String) -> IO<PlaygroundShellError, Void>
     func describe(repositoryPath: String) -> IO<PlaygroundShellError, Data>
     func linkPath(itemPath: String, parentPath: String) -> IO<PlaygroundShellError, String>
