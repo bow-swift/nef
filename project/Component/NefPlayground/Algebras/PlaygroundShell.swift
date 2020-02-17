@@ -6,5 +6,5 @@ import Bow
 import BowEffects
 
 public protocol PlaygroundShell {
-    func downloadTemplate(into output: URL, name: String, platform: Platform) -> IO<PlaygroundShellError, URL>
+    func installTemplate(into output: URL, name: String, platform: Platform) -> IO<PlaygroundShellError, URL>
 }
