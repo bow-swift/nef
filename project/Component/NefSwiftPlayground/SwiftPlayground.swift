@@ -133,7 +133,7 @@ public struct SwiftPlayground {
             }
         }
         
-        func linkPathForSources(in modules: [Module]) -> EnvIO<PackageShell, PlaygroundShellError, [Module]> {
+        func linkPathForSources(in modules: [Module]) -> EnvIO<PackageShell, PackageShellError, [Module]> {
             EnvIO { shell in
                 modules.traverse { (module: Module) in
                     let sourcesIO = module.sources.map { ($0, module.path) }.traverse(shell.linkPath)^

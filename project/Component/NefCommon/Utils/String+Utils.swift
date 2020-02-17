@@ -3,7 +3,6 @@
 import Foundation
 
 public extension String {
-
     func clean(_ ocurrences: String...) -> String {
         return ocurrences.reduce(self) { (output, ocurrence) in
             output.replacingOccurrences(of: ocurrence, with: "")
@@ -22,5 +21,19 @@ public extension String {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else { return [] }
         return regex.matches(in: self, range: NSRange(location: 0, length: self.count))
                     .map { match in NSString(string: "\(self)").substring(with: match.range) as String }
+    }
+}
+
+// MARK: manage errors
+public typealias ErrorStringConvertible = Error & CustomStringConvertible
+
+public extension String {
+    
+    func appending(error: ErrorStringConvertible?) -> String {
+        if let e = error {
+            return "\(self): \(e)"
+        } else {
+            return self
+        }
     }
 }

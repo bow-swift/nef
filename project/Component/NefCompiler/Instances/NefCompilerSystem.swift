@@ -14,7 +14,7 @@ class NefCompilerSystem: CompilerSystem {
             |<-self.buildDependencies(xcworkspace: xcworkspace, platform: platform, cached: cached),
             |<-self.buildProject(xcworkspace: xcworkspace, inProject: project, platform: platform, cached: cached),
             |<-self.copyFrameworks(inProject: project),
-        yield: Path(project: project, action: .fw).url)^
+        yield: NefURL(project: project, action: .fw).url)^
     }
     
     func compile(page: String, filename: String, inPlayground playground: URL, andProject project: URL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
@@ -33,15 +33,15 @@ class NefCompilerSystem: CompilerSystem {
     // MARK: - steps <shell>
     private func createStructure(xcworkspace: URL, inProject project: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
-            let cleanBuildIO = env.fileSystem.remove(itemPath: Path(project: project, action: .build).url.path).handleError { _ in }
-            let cleanLogIO = env.fileSystem.remove(itemPath: Path(project: project, action: .log).url.path).handleError { _ in }
-            let cleanRootIO = env.fileSystem.remove(itemPath: Path(project: project, action: .root).url.path).handleError { _ in }
+            let cleanBuildIO = env.fileSystem.remove(itemPath: NefURL(project: project, action: .build).url.path).handleError { _ in }
+            let cleanLogIO = env.fileSystem.remove(itemPath: NefURL(project: project, action: .log).url.path).handleError { _ in }
+            let cleanRootIO = env.fileSystem.remove(itemPath: NefURL(project: project, action: .root).url.path).handleError { _ in }
             let cleanIO = cached ? cleanBuildIO.followedBy(cleanLogIO) : cleanRootIO
             let cleanDependenciesIO = self.cleanDependencies(xcworkspace: xcworkspace, cached: cached).provide(env).mapError { _ in FileSystemError.remove(item: "") }
             
-            let createDerivedDataIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .derivedData).url.path)
-            let createFrameworksIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .fw).url.path)
-            let createLogIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .log).url.path)
+            let createDerivedDataIO = env.fileSystem.createDirectory(atPath: NefURL(project: project, action: .derivedData).url.path)
+            let createFrameworksIO = env.fileSystem.createDirectory(atPath: NefURL(project: project, action: .fw).url.path)
+            let createLogIO = env.fileSystem.createDirectory(atPath: NefURL(project: project, action: .log).url.path)
             
             return cleanIO.followedBy(cleanDependenciesIO)
                     .followedBy(createDerivedDataIO)
@@ -72,7 +72,7 @@ class NefCompilerSystem: CompilerSystem {
     private func copyFrameworks(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         func items(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             EnvIO { env in
-                return env.fileSystem.items(atPath: Path(project: project, action: .derivedData).appending("Build").path, recursive: true)
+                return env.fileSystem.items(atPath: NefURL(project: project, action: .derivedData).appending("Build").path, recursive: true)
                                      .mapError { _ in .build(project, info: "get frameworks in '\(project.path)'") }
             }
         }
@@ -95,7 +95,7 @@ class NefCompilerSystem: CompilerSystem {
         return binding(
                    paths <- items(inProject: project),
               frameworks <- extractFrameworks(paths: paths.get),
-                         |<-copyFrameworks(paths: frameworks.get, to: Path(project: project, action: .fw).url),
+                         |<-copyFrameworks(paths: frameworks.get, to: NefURL(project: project, action: .fw).url),
         yield: ())^
     }
     
@@ -130,9 +130,9 @@ class NefCompilerSystem: CompilerSystem {
         
         func build(xcworkspace: URL, inProject project: URL, scheme: String, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
-                let derivedData = Path(project: project, action: .derivedData).url
-                let workspaceFramework = Path(project: project, action: .fw).appending(xcworkspace.lastPathComponent.removeExtension)
-                let log = Path(project: project, action: .log).appending(xcworkspace.lastPathComponent.removeExtension)
+                let derivedData = NefURL(project: project, action: .derivedData).url
+                let workspaceFramework = NefURL(project: project, action: .fw).appending(xcworkspace.lastPathComponent.removeExtension)
+                let log = NefURL(project: project, action: .log).appending(xcworkspace.lastPathComponent.removeExtension)
                 
                 let isCached = cached && env.fileSystem.exist(itemPath: workspaceFramework.path)
                 guard !isCached else { return IO.pure(()) }
@@ -146,15 +146,15 @@ class NefCompilerSystem: CompilerSystem {
         return binding(
             schemeName <- extractScheme(xcworkspace: xcworkspace),
                        |<-build(xcworkspace: xcworkspace, inProject: project, scheme: schemeName.get, platform: platform, cached: cached),
-        yield: Path(project: project, action: .fw).url)^
+        yield: NefURL(project: project, action: .fw).url)^
     }
     
     private func compile(content: String, filename: String, inPlayground playground: URL, andProject project: URL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
             let playgroundName = playground.lastPathComponent.removeExtension
             let filename = "\(playgroundName)-\(filename).swift".lowercased()
-            let output = Path(project: project, action: .build).appending(filename)
-            let log = Path(project: project, action: .log).appending(filename)
+            let output = NefURL(project: project, action: .build).appending(filename)
+            let log = NefURL(project: project, action: .log).appending(filename)
             let temporal = IO<CompilerSystemError, URL>.var()
             
             return binding(
@@ -286,44 +286,5 @@ class NefCompilerSystem: CompilerSystem {
     }
     
     // MARK: helpers <path>
-    struct Path {
-        let project: URL
-        let action: Action
-        
-        var url: URL {
-            project.appendingPathComponent(action.pathComponent)
-        }
-        
-        func appending(_ component: String) -> URL {
-            self.url.appendingPathComponent(component.removeExtension).appendingPathExtension(action.extension)
-        }
-        
-        enum Action: String {
-            case root = "nef"
-            case derivedData
-            case log
-            case build
-            case fw
-            
-            var `extension`: String {
-                switch self {
-                case .root:        return ""
-                case .derivedData: return ""
-                case .log:         return "log"
-                case .build:       return "swift"
-                case .fw:          return "framework"
-                }
-            }
-            
-            var pathComponent: String {
-                switch self {
-                case .root:        return rawValue
-                case .derivedData: return "\(Action.root.pathComponent)/\(rawValue)"
-                case .log:         return "\(Action.root.pathComponent)/\(rawValue)"
-                case .build:       return "\(Action.root.pathComponent)/\(rawValue)"
-                case .fw:          return "\(Action.build.pathComponent)/\(rawValue)"
-                }
-            }
-        }
-    }
+    
 }

@@ -3,18 +3,18 @@
 import Foundation
 
 public enum CompilerShellError: Error {
-    case notFound(command: String, information: String)
-    case failed(command: String, information: String)
+    case notFound(command: String, info: String = "")
+    case failed(command: String, info: String = "")
 }
 
 extension CompilerShellError: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .notFound(let command, let information):
-            return "command '\(command)' not found: \(information.isEmpty ? "." : " (\(information))")"
+        case .notFound(let command, let info):
+            return "command '\(command)' not found\(info.isEmpty ? "." : " (\(info))")"
             
-        case .failed(let command, let information):
-            return "command '\(command)' failed: \(information)"
+        case .failed(let command, let info):
+            return "command '\(command)' failed: \(info)"
         }
     }
 }

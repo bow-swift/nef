@@ -77,7 +77,7 @@ public struct Compiler {
                 |<-env.compilerSystem
                       .compile(page: page, filename: filename, inPlayground: inPlayground, andProject: project, platform: platform, frameworks: frameworks)
                       .contramap(\Environment.compilerEnvironment).provide(env)
-                      .mapError { e in RenderError.content(info: "\(e)") },
+                      .mapError { e in RenderError.content(info: e) },
             yield: ())^.reportStatus(console: env.console)
         }
     }
@@ -103,7 +103,7 @@ public struct Compiler {
             EnvIO { env in
                 env.compilerSystem.compile(xcworkspace: workspace, inProject: project, platform: platform, cached: cached)
                                   .provide(env.compilerEnvironment)
-                                  .mapError { e in .workspace(workspace, info: "\(e)") }
+                                  .mapError { e in .workspace(workspace, info: e) }
             }
         }
         
