@@ -46,7 +46,7 @@ class MacPlaygroundShell: PlaygroundShell {
         }
     }
     
-    func linkPlaygrounds(_ playgrounds: [URL],  xcworkspace: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+    func linkPlaygrounds(_ playgrounds: NEA<URL>,  xcworkspace: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         fatalError()
 //        local workspacePath=$(getWorkspace "$1")
 //        local workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | cut -d'.' -f2- | rev)
@@ -184,14 +184,26 @@ class MacPlaygroundShell: PlaygroundShell {
             }
         }
         
+        func createWorkspace(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+            EnvIO.invoke { _ in
+                let result = run("pod", args: ["install", "--project-directory=\(playground.appending(.contentFiles).path)"])
+                guard result.exitStatus == 0 else {
+                    throw PlaygroundShellError.dependencies(info: "creating xcworkspace using CocoaPods: \(result.stderr) \(result.stdout)")
+                }
+                
+                return ()
+            }
+        }
+        
         let contentPodfile = playground.appending(filename: "Podfile", in: .contentFiles)
         
         return binding(
-//            |<-self.checkCocoaPod(),
+            |<-self.checkCocoaPod(),
             |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
             |<-self.cleanTemplates(playground: playground),
             |<-self.rewriteFile(contentPodfile, with: podfile),
             |<-updateTarget(podfile: contentPodfile, with: target),
+            |<-createWorkspace(playground: playground),
         yield: ())^
     }
     
