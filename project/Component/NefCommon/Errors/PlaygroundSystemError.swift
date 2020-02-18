@@ -1,7 +1,6 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
-import NefCommon
 
 public enum PlaygroundSystemError: Error {
     case xcworkspaces(information: String = "")
