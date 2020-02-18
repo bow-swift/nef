@@ -60,7 +60,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--bow-version &quot;0.7.0&quot;"
+            argument = "--podfile /Users/miguelangel/Desktop/podfile-migue"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

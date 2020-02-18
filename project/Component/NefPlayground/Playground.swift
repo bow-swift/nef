@@ -44,7 +44,7 @@ public struct Playground {
     private func resolveDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
         EnvIO { env in
             binding(
-                |<-env.console.print(information: "Resolving nef playground '\(name)' dependencies"),
+                |<-env.console.print(information: "Resolving dependencies '\(name)'"),
                 |<-env.shell.setDependencies(dependencies, playground: playground, target: name).provide(env.fileSystem).mapError { e in .template(info: e) },
             yield: ())^.reportStatus(console: env.console)
         }

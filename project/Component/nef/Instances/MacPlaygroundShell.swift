@@ -29,7 +29,7 @@ class MacPlaygroundShell: PlaygroundShell {
                         |<-existPlayground(at: output, name: name),
                template <- self.downloadTemplate(into: output),
                         |<-self.installTemplate(template.get, name: name),
-             playground <- self.makePlayground(template: template.get, name: name),
+             playground <- self.nefPlayground(name: name, fromTemplate: template.get),
                         |<-self.setPlaygroundPlatform(playground: playground.get, platform: platform),
                         |<-self.configureLauncher(playground: playground.get, name: name),
         yield: playground.get)^
@@ -38,11 +38,11 @@ class MacPlaygroundShell: PlaygroundShell {
     func setDependencies(_ dependencies: PlaygroundDependencies,  playground: NefPlaygroundURL, target: String) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         switch dependencies {
         case .bow(let bow):
-            return resolveDependencies(playground: playground, target: target, bow: bow)
+            return setDependencies(playground: playground, target: target, bow: bow)
         case .cartfile(let url):
-            return resolveDependencies(playground: playground, target: target, cartfile: url)
+            return setDependencies(playground: playground, target: target, cartfile: url)
         case .podfile(let url):
-            return resolveDependencies(playground: playground, target: target, podfile: url)
+            return setDependencies(playground: playground, target: target, podfile: url)
         }
     }
     
@@ -119,7 +119,7 @@ class MacPlaygroundShell: PlaygroundShell {
         }
     }
     
-    private func makePlayground(template: URL, name: String) -> EnvIO<FileSystem, PlaygroundShellError, NefPlaygroundURL> {
+    private func nefPlayground(name: String, fromTemplate template: URL) -> EnvIO<FileSystem, PlaygroundShellError, NefPlaygroundURL> {
         EnvIO { fileSystem in
             let templateApp = template.appendingPathComponent("\(name).app")
             let playground = NefPlaygroundURL(folder: template.deletingLastPathComponent(), name: name)
@@ -159,20 +159,39 @@ class MacPlaygroundShell: PlaygroundShell {
     }
     
     // MARK: dependencies
-    private func resolveDependencies(playground: NefPlaygroundURL, target: String, bow: PlaygroundDependencies.Bow) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+    private func setDependencies(playground: NefPlaygroundURL, target: String, bow: PlaygroundDependencies.Bow) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         fatalError()
     }
     
-    private func resolveDependencies(playground: NefPlaygroundURL, target: String, cartfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+    private func setDependencies(playground: NefPlaygroundURL, target: String, cartfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         fatalError()
     }
     
-    private func resolveDependencies(playground: NefPlaygroundURL, target: String, podfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+    private func setDependencies(playground: NefPlaygroundURL, target: String, podfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        func updateTarget(podfile: URL, with target: String) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+            EnvIO { fileSystem in
+                let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
+                let writeContentIO = { (content: String) in fileSystem.write(content: content, toFile: podfile.path) }
+                let replaceTarget = { (content: String) -> String in
+                    guard let replaceTarget = content.matches(pattern: "(?<=target ').*(?=' do)").first else { return content }
+                    return content.replacingOccurrences(of: "target '\(replaceTarget)' do", with: "target '\(target)' do")
+                }
+                
+                return readPodfileIO
+                        .map(replaceTarget)
+                        .flatMap(writeContentIO)^
+                        .mapError { _ in PlaygroundShellError.dependencies() }
+            }
+        }
+        
+        let contentPodfile = playground.appending(filename: "Podfile", in: .contentFiles)
+        
         return binding(
-            |<-self.checkCocoaPod(),
-            
-            
+//            |<-self.checkCocoaPod(),
+            |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
             |<-self.cleanTemplates(playground: playground),
+            |<-self.rewriteFile(contentPodfile, with: podfile),
+            |<-updateTarget(podfile: contentPodfile, with: target),
         yield: ())^
     }
     
@@ -181,7 +200,7 @@ class MacPlaygroundShell: PlaygroundShell {
             let dependencies = [playground.appending(.cocoapodsTemplate),
                                 playground.appending(.carthageTemplate)]
             
-            return dependencies.traverse { template in fileSystem.removeDirectory(template.path) }^
+            return dependencies.traverse { template in fileSystem.removeDirectory(template.path).handleError { _ in } }^
                                .mapError { e in PlaygroundShellError.dependencies(info: "clean templates: \(e)") }
                                .void()
         }
@@ -215,7 +234,7 @@ class MacPlaygroundShell: PlaygroundShell {
     
     
     
-    // MARK: helpers
+    // MARK: helpers <dependencies>
     private func lastBowVersion() -> EnvIO<FileSystem, PlaygroundShellError, String> {
         EnvIO.invoke { _ in
             let result = run("curl", args: ["--silent", Bow.tags])
@@ -230,9 +249,9 @@ class MacPlaygroundShell: PlaygroundShell {
     
     private func checkCocoaPod() -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         EnvIO.invoke { _ in
-            let result = run("command", args: ["-v", "pod"])
+            let result = run("pod", args: ["--version"])
             guard result.exitStatus == 0 else {
-                throw PlaygroundShellError.dependencies(info: "Required CocoaPods. Run: 'sudo gem install cocoapods'")
+                throw PlaygroundShellError.dependencies(info: "Required CocoaPods. Run 'sudo gem install cocoapods'")
             }
             
             return ()
@@ -241,12 +260,28 @@ class MacPlaygroundShell: PlaygroundShell {
     
     private func checkCarthage() -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         EnvIO.invoke { _ in
-            let result = run("command", args: ["-v", "carthage"])
+            let result = run("carthage")
             guard result.exitStatus == 0 else {
-                throw PlaygroundShellError.dependencies(info: "Required Carthage. Run: 'brew install carthage'")
+                throw PlaygroundShellError.dependencies(info: "Required Carthage. Run 'brew install carthage'")
             }
             
             return ()
+        }
+    }
+    
+    // MARK: helpers <file manager>
+    private func moveFiles(at input: URL, into output: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        EnvIO { fileSystem in
+            fileSystem.moveFiles(in: input.path, to: output.path).mapError { _ in PlaygroundShellError.dependencies() }
+        }
+    }
+    
+    private func rewriteFile(_ file: URL, with newFile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        EnvIO { fileSystem in
+            let removeOldFileIO = (fileSystem as FileSystem).remove(itemPath: file.path).handleError { _ in }
+            let copyNewFileIO = (fileSystem as FileSystem).copy(itemPath: newFile.path, toPath: file.path)
+            
+            return removeOldFileIO.followedBy(copyNewFileIO)^.mapError { _ in PlaygroundShellError.dependencies() }
         }
     }
     
