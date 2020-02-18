@@ -30,7 +30,7 @@ func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL,
 func main() -> Either<CLIKit.Console.Error, Void> {
     arguments(console: console)
         .flatMap { (input, cached) in
-            nef.Compiler.compile(playgroundsAt: input, cached: cached)
+            nef.Compiler.compile(nefPlayground: input, cached: cached)
                .provide(console)^
                .mapError { _ in .render() }
                .foldM({ e in console.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'. \(e)") },

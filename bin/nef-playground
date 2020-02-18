@@ -34,6 +34,23 @@ printHelp() {
     echo "${reset}"
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #: - Playground
 
 ##
@@ -156,21 +173,6 @@ setBowVersionDependency() {
     fi
 }
 
-configureLauncher() {
-    cd "$1"
-    local projectName="$2"   # parameter `projectName`
-
-    launcherName="launcher"
-    launcher=""
-
-    while read -r -d $'\0' path; do
-      launcher="`pwd`/$path"
-    done < <(find . -name $launcherName -print0)
-
-    [ "$launcher" = "" ] && return
-    sed -i '' "1,/{{nef}}/s/{{nef}}/$projectName/" "$launcher"
-}
-
 ##
 #   checkCocoaPods() throws
 ##
@@ -201,6 +203,40 @@ checkCarthage() {
     echo "[!] ${bold}${red}error: ${reset}required carthage. Please ${bold}install carthage${reset}. Run: 'brew install carthage'"
     exit 1
   fi
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+configureLauncher() {
+    cd "$1"
+    local projectName="$2"   # parameter `projectName`
+
+    launcherName="launcher"
+    launcher=""
+
+    while read -r -d $'\0' path; do
+      launcher="`pwd`/$path"
+    done < <(find . -name $launcherName -print0)
+
+    [ "$launcher" = "" ] && return
+    sed -i '' "1,/{{nef}}/s/{{nef}}/$projectName/" "$launcher"
 }
 
 ##

@@ -15,7 +15,7 @@ class MacCompilerShell: CompilerShell {
             let result = run("pod", args: cached ? ["install", "--project-directory=\(project.path)"]
                                                  : ["install", "--repo-update", "--project-directory=\(project.path)"])
             guard result.exitStatus == 0 else {
-                throw CompilerShellError.notFound(command: "pod", info: "error: \(result.stderr) - output: \(result.stdout) install cocoapods using `gem install cocoapods`")
+                throw CompilerShellError.notFound(command: "pod", info: "error: \(result.stderr) - output:\(result.stdout) install cocoapods using `gem install cocoapods`")
             }
             
             return ()

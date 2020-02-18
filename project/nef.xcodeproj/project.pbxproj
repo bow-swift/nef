@@ -137,7 +137,9 @@
 		8BD6978E23FAAB2D000A512F /* MacPlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978C23FAAB2A000A512F /* MacPlaygroundShell.swift */; };
 		8BD6979023FAAED0000A512F /* PlaygroundShellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978F23FAAED0000A512F /* PlaygroundShellError.swift */; };
 		8BD6979323FAAF98000A512F /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979223FAAF98000A512F /* IO+Console.swift */; };
-		8BD6979623FAC94C000A512F /* NefURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979423FAC93F000A512F /* NefURL.swift */; };
+		8BD6979623FAC94C000A512F /* NefPlaygroundURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979423FAC93F000A512F /* NefPlaygroundURL.swift */; };
+		8BD6979F23FC4641000A512F /* Platform+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979D23FC463D000A512F /* Platform+Utils.swift */; };
+		8BD697A223FC48D8000A512F /* PlaygroundPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979A23FC45FD000A512F /* PlaygroundPlatform.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -225,13 +227,6 @@
 			remoteGlobalIDString = 8BD4E31C238817BB002DECDB;
 			remoteInfo = NefSwiftPlayground;
 		};
-		8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
-			remoteInfo = NefModels;
-		};
 		8B51C79C23CCC9A2003EE485 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -302,13 +297,6 @@
 			remoteGlobalIDString = 8B0FB583237C0A5600221548;
 			remoteInfo = CLIKit;
 		};
-		8BD4E33D238824F3002DECDB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B4F45A422CF9AF400E6F471;
-			remoteInfo = NefModels;
-		};
 		8BD6976F23F6D9EE000A512F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
@@ -330,7 +318,7 @@
 			remoteGlobalIDString = 8BBD14AE2390179B0002970C;
 			remoteInfo = NefCommon;
 		};
-		8BD6977523F6DA38000A512F /* PBXContainerItemProxy */ = {
+		8BD697A023FC46D5000A512F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B6FC57D221ECE6A008F7694 /* Project object */;
 			proxyType = 1;
@@ -514,7 +502,9 @@
 		8BD6978C23FAAB2A000A512F /* MacPlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundShell.swift; sourceTree = "<group>"; };
 		8BD6978F23FAAED0000A512F /* PlaygroundShellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShellError.swift; sourceTree = "<group>"; };
 		8BD6979223FAAF98000A512F /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
-		8BD6979423FAC93F000A512F /* NefURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefURL.swift; sourceTree = "<group>"; };
+		8BD6979423FAC93F000A512F /* NefPlaygroundURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefPlaygroundURL.swift; sourceTree = "<group>"; };
+		8BD6979A23FC45FD000A512F /* PlaygroundPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundPlatform.swift; sourceTree = "<group>"; };
+		8BD6979D23FC463D000A512F /* Platform+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+Utils.swift"; sourceTree = "<group>"; };
 		8BD6F704238C259100DD93C4 /* MacFileSytem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacFileSytem.swift; sourceTree = "<group>"; };
 		8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEnvironment.swift; sourceTree = "<group>"; };
 		8BD6F70C238C495600DD93C4 /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
@@ -692,6 +682,7 @@
 				8BD4E33A2388233D002DECDB /* Console.swift */,
 				8BD6977923F6E9F6000A512F /* PlaygroundDependencies.swift */,
 				8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */,
+				8BD6979A23FC45FD000A512F /* PlaygroundPlatform.swift */,
 				8B3CB83F22D3929B00919F36 /* Support Files */,
 			);
 			path = NefModels;
@@ -1078,7 +1069,7 @@
 			isa = PBXGroup;
 			children = (
 				8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */,
-				8BD6979423FAC93F000A512F /* NefURL.swift */,
+				8BD6979423FAC93F000A512F /* NefPlaygroundURL.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1090,6 +1081,7 @@
 				8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */,
 				8BA1EF6023D62CF700B33CD0 /* String+Path.swift */,
 				8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */,
+				8BD6979D23FC463D000A512F /* Platform+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1624,7 +1616,6 @@
 			);
 			dependencies = (
 				8BAF222423D2258A00786F2F /* PBXTargetDependency */,
-				8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */,
 			);
 			name = NefCore;
 			productName = Markup;
@@ -1692,6 +1683,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8BD697A123FC46D5000A512F /* PBXTargetDependency */,
 			);
 			name = NefCommon;
 			packageProductDependencies = (
@@ -1733,7 +1725,6 @@
 			);
 			dependencies = (
 				8BBD14C0239019570002970C /* PBXTargetDependency */,
-				8BD4E33E238824F3002DECDB /* PBXTargetDependency */,
 			);
 			name = NefSwiftPlayground;
 			packageProductDependencies = (
@@ -1788,7 +1779,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				8BD6977623F6DA38000A512F /* PBXTargetDependency */,
 				8BD6977423F6DA1F000A512F /* PBXTargetDependency */,
 			);
 			name = NefPlayground;
@@ -1960,8 +1950,8 @@
 				8BD4E31C238817BB002DECDB /* NefSwiftPlayground */,
 				8B51C79223CCC8A4003EE485 /* NefRender */,
 				8B6B119322CB9FDE0060177F /* NefCore */,
-				8B4F45A422CF9AF400E6F471 /* NefModels */,
 				8BBD14AE2390179B0002970C /* NefCommon */,
+				8B4F45A422CF9AF400E6F471 /* NefModels */,
 				8B6B119B22CB9FDE0060177F /* CoreTests */,
 			);
 		};
@@ -2047,6 +2037,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B46C422238EBD9300437659 /* PlaygroundExcludeItem.swift in Sources */,
+				8BD697A223FC48D8000A512F /* PlaygroundPlatform.swift in Sources */,
 				8B3CB8C022D3963B00919F36 /* CarbonModel.swift in Sources */,
 				8BD6978823FAA902000A512F /* PlaygroundDependencies.swift in Sources */,
 				8BD4E33C238824D9002DECDB /* Console.swift in Sources */,
@@ -2129,6 +2120,7 @@
 				8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */,
 				8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */,
 				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
+				8BD6979F23FC4641000A512F /* Platform+Utils.swift in Sources */,
 				8BA1EF6B23D62D1F00B33CD0 /* Array+Utils.swift in Sources */,
 				8BA1EF4623D62BBA00B33CD0 /* RenderingPersistence.swift in Sources */,
 				8BA1EF4423D62BBA00B33CD0 /* RenderingPersistenceError.swift in Sources */,
@@ -2136,7 +2128,7 @@
 				8BA1EF7023D62D1F00B33CD0 /* String+Utils.swift in Sources */,
 				8BA1EF6E23D62D1F00B33CD0 /* EnumeratedSequence+Extension.swift in Sources */,
 				8BA1EF4223D62BBA00B33CD0 /* FileSystemError.swift in Sources */,
-				8BD6979623FAC94C000A512F /* NefURL.swift in Sources */,
+				8BD6979623FAC94C000A512F /* NefPlaygroundURL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2306,11 +2298,6 @@
 			target = 8BD4E31C238817BB002DECDB /* NefSwiftPlayground */;
 			targetProxy = 8B18E65D23B0C56F001F9C19 /* PBXContainerItemProxy */;
 		};
-		8B4F45BD22CF9B4F00E6F471 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
-			targetProxy = 8B4F45BC22CF9B4F00E6F471 /* PBXContainerItemProxy */;
-		};
 		8B51C79D23CCC9A2003EE485 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B51C79223CCC8A4003EE485 /* NefRender */;
@@ -2365,11 +2352,6 @@
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
 			targetProxy = 8BD4E31323881506002DECDB /* PBXContainerItemProxy */;
 		};
-		8BD4E33E238824F3002DECDB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
-			targetProxy = 8BD4E33D238824F3002DECDB /* PBXContainerItemProxy */;
-		};
 		8BD6977023F6D9EE000A512F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8BD6976523F6D6E7000A512F /* NefPlayground */;
@@ -2385,10 +2367,10 @@
 			target = 8BBD14AE2390179B0002970C /* NefCommon */;
 			targetProxy = 8BD6977323F6DA1F000A512F /* PBXContainerItemProxy */;
 		};
-		8BD6977623F6DA38000A512F /* PBXTargetDependency */ = {
+		8BD697A123FC46D5000A512F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8B4F45A422CF9AF400E6F471 /* NefModels */;
-			targetProxy = 8BD6977523F6DA38000A512F /* PBXContainerItemProxy */;
+			targetProxy = 8BD697A023FC46D5000A512F /* PBXContainerItemProxy */;
 		};
 		8BE9D5A923CF23E600332D75 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -11,16 +11,14 @@ import Bow
 import BowEffects
 
 public extension CompilerAPI {
-    static func compile(playground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
-        NefCompiler.Compiler()
-                   .playground(playground, cached: cached)
-                   .contramap(environment)
-                   .mapError { e in nef.Error.compiler(info: "\(e)") }
+    static func compile(playground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
+        #warning("it will be completed after nef-playground refactor")
+        fatalError()
     }
         
-    static func compile(playgroundsAt: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
+    static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
         NefCompiler.Compiler()
-                   .playgrounds(atFolder: playgroundsAt, cached: cached)
+                   .nefPlayground(.init(project: nefPlayground), cached: cached)
                    .contramap(environment)
                    .mapError { e in nef.Error.compiler(info: "\(e)") }
     }

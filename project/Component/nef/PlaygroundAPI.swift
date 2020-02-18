@@ -1,6 +1,7 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
+import NefCommon
 import NefModels
 import NefPlayground
 
@@ -18,7 +19,7 @@ extension PlaygroundAPI {
         NefPlayground.Playground()
                      .build(name: name, output: output, platform: platform, dependencies: dependencies)
                      .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
-                                                                                 shell: MacPlaygroundShell(fileSystem: MacFileSystem()),
+                                                                                 shell: MacPlaygroundShell(),
                                                                                  fileSystem: MacFileSystem()) }^
                      .map { output }^
                      .mapError { _ in .playground() }

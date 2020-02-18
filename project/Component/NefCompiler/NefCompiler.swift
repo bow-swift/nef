@@ -17,22 +17,12 @@ public struct Compiler {
     
     public init() {}
     
-    public func playground(_ playground: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
-        let rendered = EnvIO<Environment, RenderError, PlaygroundOutput>.var()
-        let folder = playground.deletingLastPathComponent()
-        
-        return binding(
-             rendered <- self.renderPlayground(playground),
-                      |<-self.buildPages(rendered.get, inPlayground: playground, atFolder: folder, cached: cached),
-        yield: ())^
-    }
-    
-    public func playgrounds(atFolder folder: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+    public func nefPlayground(_ nefPlayground: NefPlaygroundURL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
         let rendered = EnvIO<Environment, RenderError, PlaygroundsOutput>.var()
         
         return binding(
-            rendered <- self.renderPlaygrounds(atFolder: folder),
-                     |<-self.buildPlaygrounds(rendered.get, atFolder: folder, cached: cached),
+            rendered <- self.renderPlaygrounds(atFolder: nefPlayground.appending(.contentFiles)),
+                     |<-self.buildPlaygrounds(rendered.get, atNefPlayground: nefPlayground, cached: cached),
         yield: ())^
     }
     
@@ -50,58 +40,58 @@ public struct Compiler {
     }
     
     // MARK: private <builders>
-    private func buildPlaygrounds(_ playgrounds: PlaygroundsOutput, atFolder folder: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+    private func buildPlaygrounds(_ playgrounds: PlaygroundsOutput, atNefPlayground: NefPlaygroundURL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
         playgrounds.traverse { info in
-            self.buildPages(info.output, inPlayground: info.playground.url, atFolder: folder, cached: cached)
+            self.buildPages(info.output, inPlayground: info.playground.url, atNefPlayground: atNefPlayground, cached: cached)
         }.void()^
     }
     
-    private func buildPages(_ pages: PlaygroundOutput, inPlayground playground: URL, atFolder folder: URL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
+    private func buildPages(_ pages: PlaygroundOutput, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
         let xcworkspace = EnvIO<Environment, RenderError, URL>.var()
         let frameworks = EnvIO<Environment, RenderError, [URL]>.var()
         
         return binding(
-            xcworkspace <- self.xcworkspace(atFolder: folder),
-             frameworks <- self.compile(workspace: xcworkspace.get, inProject: folder, platform: pages.head.platform, cached: cached),
-                        |<-self.compile(pages: pages, inPlayground: playground, andProject: folder, frameworks: frameworks.get),
+            xcworkspace <- self.xcworkspace(atFolder: nefPlayground.appending(.contentFiles)),
+             frameworks <- self.compile(workspace: xcworkspace.get, atNefPlayground: nefPlayground, platform: pages.head.platform, cached: cached),
+                        |<-self.compile(pages: pages, inPlayground: playground, atNefPlayground: nefPlayground, frameworks: frameworks.get),
         yield: ())^
     }
     
     // MARK: private <compiler>
-    private func compile(page: RenderingOutput, filename: String, inPlayground: URL, andProject project: URL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+    private func compile(page: RenderingOutput, filename: String, inPlayground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         let page = page.output.all().joined()
         
         return EnvIO { (env: Environment) -> IO<RenderError, Void> in
             binding(
                 |<-env.console.print(information: "\t• Compiling page '\(filename.removeExtension)'"),
                 |<-env.compilerSystem
-                      .compile(page: page, filename: filename, inPlayground: inPlayground, andProject: project, platform: platform, frameworks: frameworks)
+                      .compile(page: page, filename: filename, inPlayground: inPlayground, atNefPlayground: nefPlayground, platform: platform, frameworks: frameworks)
                       .contramap(\Environment.compilerEnvironment).provide(env)
                       .mapError { e in RenderError.content(info: e) },
             yield: ())^.reportStatus(console: env.console)
         }
     }
     
-    private func compile(pages: PlaygroundOutput, inPlayground playground: URL, andProject project: URL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
-        func compilePages(_ pages: PlaygroundOutput, inPlayground: URL, andProject: URL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+    private func compile(pages: PlaygroundOutput, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+        func compilePages(_ pages: PlaygroundOutput, inPlayground: URL, atNefPlayground: NefPlaygroundURL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
             pages.traverse { info in
-                self.compile(page: info.output, filename: info.page.escapedTitle, inPlayground: inPlayground, andProject: andProject, platform: info.platform, frameworks: frameworks)
+                self.compile(page: info.output, filename: info.page.escapedTitle, inPlayground: inPlayground, atNefPlayground: atNefPlayground, platform: info.platform, frameworks: frameworks)
             }.void()^
         }
         
         return EnvIO { env in
             binding(
-                |<-compilePages(pages, inPlayground: playground, andProject: project, frameworks: frameworks).provide(env),
+                |<-compilePages(pages, inPlayground: playground, atNefPlayground: nefPlayground, frameworks: frameworks).provide(env),
                 |<-env.console.print(information: "Building playground '\(playground.lastPathComponent.removeExtension)'"),
                 |<-env.console.printStatus(success: true),
             yield: ())^
         }
     }
     
-    private func compile(workspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, [URL]> {
-        func buildWorkspace(_ workspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, URL> {
+    private func compile(workspace: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, [URL]> {
+        func buildWorkspace(_ workspace: URL, atNefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, URL> {
             EnvIO { env in
-                env.compilerSystem.compile(xcworkspace: workspace, inProject: project, platform: platform, cached: cached)
+                env.compilerSystem.compile(xcworkspace: workspace, atNefPlayground: atNefPlayground, platform: platform, cached: cached)
                                   .provide(env.compilerEnvironment)
                                   .mapError { e in .workspace(workspace, info: e) }
             }
@@ -112,7 +102,7 @@ public struct Compiler {
             
             return binding(
                              |<-env.console.print(information: "Building workspace '\(workspace.lastPathComponent.removeExtension)'"),
-                dependencies <- buildWorkspace(workspace, inProject: project, platform: platform, cached: cached).provide(env),
+                dependencies <- buildWorkspace(workspace, atNefPlayground: nefPlayground, platform: platform, cached: cached).provide(env),
             yield: [dependencies.get])^.reportStatus(console: env.console)
         }
     }

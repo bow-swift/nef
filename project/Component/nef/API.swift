@@ -20,17 +20,19 @@ public protocol CompilerAPI {
     ///
     /// - Parameters:
     ///   - playground: Xcode Playgrounds to be compiled.
+    ///   - platform: target to use for compiling Xcode Playground.
+    ///   - dependencies: to use for the compiler.
     ///   - cached: use cached dependencies if it is possible, in another case, it will download them.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
-    static func compile(playground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
+    static func compile(playground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void>
     
     /// Compile Xcode Playground.
     ///
     /// - Parameters:
-    ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
+    ///   - nefPlayground: folder where to search Xcode Playgrounds - it must be a nef Playground structure.
     ///   - cached: use cached dependencies if it is possible, in another case, it will download them.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
-    static func compile(playgroundsAt: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
+    static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
 }
 
 public protocol MarkdownAPI {
@@ -219,7 +221,7 @@ public protocol CarbonAPI {
 }
 
 public protocol PlaygroundAPI {
-    static func nef(fromPlayground playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
+    static func nef(fromPlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
     static func nef(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
 }
 
