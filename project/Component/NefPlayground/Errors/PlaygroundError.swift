@@ -6,6 +6,7 @@ import NefCommon
 public enum PlaygroundError: Error {
     case structure(info: (Error & CustomStringConvertible)? = nil)
     case template(info: (Error & CustomStringConvertible)? = nil)
+    case operation(operation: String, info: (Error & CustomStringConvertible)? = nil)
 }
 
 extension PlaygroundError: CustomStringConvertible {
@@ -15,6 +16,8 @@ extension PlaygroundError: CustomStringConvertible {
             return "creating the nef playground structure".appending(error: e)
         case .template(let e):
             return "download playground template".appending(error: e)
+        case .operation(let operation, let e):
+            return "could not \(operation) successful".appending(error: e)
         }
     }
 }

@@ -21,6 +21,18 @@ public struct Playground {
         yield: ())^
     }
     
+    public func build(playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+        let nefPlayground = EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL>.var()
+        
+        return binding(
+            nefPlayground <- self.template(output: output, name: name, platform: platform),
+                          |<-self.createStructure(playground: nefPlayground.get),
+                          |<-self.resolveDependencies(dependencies, playground: nefPlayground.get, name: name),
+                          |<-self.setNefPlayground(nefPlayground.get, withPlayground: playground, name: name),
+                          |<-self.linkPlaygrounds(nefPlayground.get),
+        yield: ())^
+    }
+    
     // MARK: - steps
     private func template(output: URL, name: String, platform: Platform) -> EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL> {
         EnvIO { env in
@@ -49,6 +61,13 @@ public struct Playground {
                 |<-env.shell.setDependencies(dependencies, playground: playground, target: name).provide(env.fileSystem).mapError { e in .template(info: e) },
             yield: ())^.reportStatus(console: env.console)
         }
+    }
+    
+    private func setNefPlayground(_ nefPlayground: NefPlaygroundURL, withPlayground playground: URL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+        binding(
+            |<-self.removePlaygrounds(in: nefPlayground).handleError { _ in },
+            |<-self.move(playground: playground, to: nefPlayground, name: name),
+        yield: ())^
     }
     
     private func linkPlaygrounds(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
@@ -84,6 +103,40 @@ public struct Playground {
                 playgrounds <- playgrounsAt(playground).provide(env),
                             |<-linkPlaygrounds(playgrounds.get, xcworkspace: xcworkspace.get).provide(env),
             yield: ())^.reportStatus(console: env.console)
+        }
+    }
+    
+    // MARK: helpers
+    private func removePlaygrounds(in nefPlayground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+        func findPlaygrounds(in folder: URL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, NEA<URL>> {
+            EnvIO { env in
+                env.playgroundSystem
+                    .playgrounds(at: folder)
+                    .provide(env.fileSystem)
+                    .mapError { e in PlaygroundError.operation(operation: "find playgrounds", info: e) }
+            }
+        }
+        
+        func removePlaygrouds(_ playgrounds: NEA<URL>) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+            EnvIO { env in
+                return playgrounds.traverse { playground in env.fileSystem.remove(itemPath: playground.path) }^
+                                  .mapError { e in PlaygroundError.operation(operation: "remove playgrounds", info: e) }
+                                  .void()
+            }
+        }
+        
+        let playgrounds = EnvIO<PlaygroundEnvironment, PlaygroundError, NEA<URL>>.var()
+        
+        return binding(
+            playgrounds <- findPlaygrounds(in: nefPlayground.appending(.contentFiles)),
+                        |<-removePlaygrouds(playgrounds.get),
+        yield: ())^
+    }
+    
+    private func move(playground: URL, to nefPlayground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+        EnvIO { env in
+            env.fileSystem.copy(itemPath: playground.path, toPath: nefPlayground.appending(.contentFiles).appendingPathComponent("\(name).playground").path)
+                .mapError { e in PlaygroundError.operation(operation: "move playground into nef Playground", info: e) }
         }
     }
 }
