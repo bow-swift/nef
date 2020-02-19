@@ -185,11 +185,39 @@ class MacPlaygroundShell: PlaygroundShell {
     
     // MARK: dependencies
     private func setDependencies(playground: NefPlaygroundURL, target: String, bow: PlaygroundDependencies.Bow) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
-        fatalError()
-    }
-    
-    private func setDependencies(playground: NefPlaygroundURL, target: String, cartfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
-        fatalError()
+        func dependency(bow: PlaygroundDependencies.Bow, lastBowVersion: String) -> String {
+            switch bow {
+            case .version(let version): return "~> \(version.isEmpty ? lastBowVersion : version)"
+            case .branch(let branch):   return ":git => '\(Bow.repository)', :branch => '\(branch)'"
+            case .tag(let tag):         return ":git => '\(Bow.repository)', :tag => '\(tag)'"
+            case .commit(let commit):   return ":git => '\(Bow.repository)', :commit => '\(commit)'"
+            }
+        }
+        
+        func updateBowDependency(podfile: URL, with: PlaygroundDependencies.Bow, lastBowVersion: String) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+            EnvIO { fileSystem in
+                let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
+                let writeContentIO = { (content: String) in fileSystem.write(content: content, toFile: podfile.path) }
+                let setDependencyIO = { (content: String) in content.replacingOccurrences(of: "~> 0.0.0", with: dependency(bow: bow, lastBowVersion: lastBowVersion)) }
+                
+                return readPodfileIO
+                        .map(setDependencyIO)
+                        .flatMap(writeContentIO)^
+                        .mapError { _ in PlaygroundShellError.dependencies() }
+            }
+        }
+        
+        let podfile = playground.appending(filename: "Podfile", in: .contentFiles)
+        let lastBowVersion = EnvIO<FileSystem, PlaygroundShellError, String>.var()
+        
+        return binding(
+                           |<-self.checkCocoaPod(),
+            lastBowVersion <- self.lastBowVersion(),
+                           |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
+                           |<-self.cleanTemplates(playground: playground),
+                           |<-updateBowDependency(podfile: podfile, with: bow, lastBowVersion: lastBowVersion.get),
+                           |<-self.createCocoaPodsWorkspace(playground: playground),
+        yield: ())^
     }
     
     private func setDependencies(playground: NefPlaygroundURL, target: String, podfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
@@ -209,17 +237,6 @@ class MacPlaygroundShell: PlaygroundShell {
             }
         }
         
-        func createWorkspace(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
-            EnvIO.invoke { _ in
-                let result = run("pod", args: ["install", "--project-directory=\(playground.appending(.contentFiles).path)"])
-                guard result.exitStatus == 0 else {
-                    throw PlaygroundShellError.dependencies(info: "creating xcworkspace using CocoaPods: \(result.stderr) \(result.stdout)")
-                }
-                
-                return ()
-            }
-        }
-        
         let contentPodfile = playground.appending(filename: "Podfile", in: .contentFiles)
         
         return binding(
@@ -228,8 +245,12 @@ class MacPlaygroundShell: PlaygroundShell {
             |<-self.cleanTemplates(playground: playground),
             |<-self.rewriteFile(contentPodfile, with: podfile),
             |<-updateTarget(podfile: contentPodfile, with: target),
-            |<-createWorkspace(playground: playground),
+            |<-self.createCocoaPodsWorkspace(playground: playground),
         yield: ())^
+    }
+    
+    private func setDependencies(playground: NefPlaygroundURL, target: String, cartfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        fatalError()
     }
     
     private func cleanTemplates(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
@@ -306,6 +327,17 @@ class MacPlaygroundShell: PlaygroundShell {
         }
     }
     
+    func createCocoaPodsWorkspace(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        EnvIO.invoke { _ in
+            let result = run("pod", args: ["install", "--project-directory=\(playground.appending(.contentFiles).path)"])
+            guard result.exitStatus == 0 else {
+                throw PlaygroundShellError.dependencies(info: "creating xcworkspace using CocoaPods: \(result.stderr) \(result.stdout)")
+            }
+            
+            return ()
+        }
+    }
+    
     // MARK: helpers <file manager>
     private func moveFiles(at input: URL, into output: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         EnvIO { fileSystem in
@@ -330,5 +362,6 @@ class MacPlaygroundShell: PlaygroundShell {
     
     private enum Bow {
         static let tags = "https://api.github.com/repos/bow-swift/bow/tags"
+        static let repository = "https://github.com/bow-swift/bow.git"
     }
 }

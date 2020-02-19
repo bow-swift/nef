@@ -10,6 +10,7 @@ public enum PlaygroundDependencies {
     public enum Bow {
         case version(String = "")
         case branch(String)
+        case tag(String)
         case commit(String)
     }
 }
