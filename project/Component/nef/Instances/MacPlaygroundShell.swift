@@ -47,25 +47,49 @@ class MacPlaygroundShell: PlaygroundShell {
     }
     
     func linkPlaygrounds(_ playgrounds: NEA<URL>,  xcworkspace: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
-        print("playgrounds: \(playgrounds)")
-        print("xcworkspace: \(xcworkspace)")
-        fatalError()
-//        local workspacePath=$(getWorkspace "$1")
-//        local workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | cut -d'.' -f2- | rev)
-//        local workspaceContent="$workspacePath/contents.xcworkspacedata"
-//        local tmp="`pwd`/nef/log/$workspaceName.tmp.workspace"
-//
-//        hasPlaygrounds=$(cat "$workspaceContent" | grep '\.playground\"' | wc -c)
-//        [ $hasPlaygrounds -ne 0 ] && return
-//
-//        playgroundsForProjectPath "$1"
-//        for playground in "${playgroundsForProjectPath[@]}"; do
-//            playgroundScaped=$(echo "$playground" | sed 's/\//\\\//g')
-//            sed -i '' "1,/<FileRef/s/<FileRef/<FileRef location = \"group:$playgroundScaped\"> <\/FileRef><FileRef/" "$workspaceContent"
-//        done
-//
-//        awk '{ gsub("FileRef><FileRef", "FileRef>\n<FileRef") }1' "$workspaceContent" 1> "$tmp"
-//        mv "$tmp" "$workspaceContent"
+        func extractPlaygroundsNames(in xcworkspace: URL) -> EnvIO<FileSystem, PlaygroundShellError, [String]> {
+            EnvIO { fileSystem in
+                let workspaceContentFile = xcworkspace.appendingPathComponent("contents.xcworkspacedata")
+                
+                return fileSystem.readFile(atPath: workspaceContentFile.path)
+                                 .map { content in let a = content.matches(pattern: "(?<=location = \".*:).*(?=.playground\")"); print(a); return a }^
+                                 .mapError { e in PlaygroundShellError.linking(info: "\(e)") }
+            }
+        }
+        
+        func difference(playgrounds: NEA<URL>, names: [String]) -> EnvIO<FileSystem, PlaygroundShellError, [URL]> {
+            print("names: \(names)")
+            let playgroundsNames = names.map { $0.removeExtension.lowercased() }
+            let filtered = playgrounds.all().filter { playground in
+                let playgroundName = playground.lastPathComponent.removeExtension.lowercased()
+                return !playgroundsNames.contains(playgroundName)
+            }
+            
+            return EnvIO.pure(filtered)^
+        }
+        
+        func link(playgrounds: [URL], into xcworkspace: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+            EnvIO { fileSystem in
+                let xcworkspacedataFile = xcworkspace.appendingPathComponent("contents.xcworkspacedata")
+                let playgroundRefs = playgrounds.map { playground in
+                    "<FileRef location = \"group:\(playground.lastPathComponent.removeExtension).playground\"></FileRef>"
+                }
+                
+                return fileSystem.readFile(atPath: xcworkspacedataFile.path)
+                                 .map { content in content.replacingFirstOccurrence(of: "<FileRef", with: "\(playgroundRefs.joined(separator: "\n\t"))\n\t<FileRef") }
+                                 .flatMap { content in fileSystem.write(content: content, toFile: xcworkspacedataFile.path) }^
+                                 .mapError { _ in PlaygroundShellError.linking() }.void()^
+            }
+        }
+        
+        let playgroundsNames = EnvIO<FileSystem, PlaygroundShellError, [String]>.var()
+        let linkPlaygrounds = EnvIO<FileSystem, PlaygroundShellError, [URL]>.var()
+        
+        return binding(
+            playgroundsNames <- extractPlaygroundsNames(in: xcworkspace),
+             linkPlaygrounds <- difference(playgrounds: playgrounds, names: playgroundsNames.get),
+                             |<-link(playgrounds: linkPlaygrounds.get, into: xcworkspace),
+        yield: ())^
     }
     
     // MARK: - steps

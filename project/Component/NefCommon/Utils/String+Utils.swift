@@ -22,6 +22,11 @@ public extension String {
         return regex.matches(in: self, range: NSRange(location: 0, length: self.count))
                     .map { match in NSString(string: "\(self)").substring(with: match.range) as String }
     }
+    
+    func replacingFirstOccurrence(of: String, with: String) -> String {
+        guard let range = range(of: of) else { return self }
+        return replacingCharacters(in: range, with: with)
+    }
 }
 
 // MARK: manage errors

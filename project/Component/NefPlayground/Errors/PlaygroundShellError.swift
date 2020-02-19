@@ -6,6 +6,7 @@ import NefCommon
 public enum PlaygroundShellError: Error {
     case template(info: String = "")
     case dependencies(info: String = "")
+    case linking(info: String = "")
 }
 
 extension PlaygroundShellError: CustomStringConvertible {
@@ -15,6 +16,8 @@ extension PlaygroundShellError: CustomStringConvertible {
             return "creating nef playground template".appending(error: info)
         case .dependencies(let info):
             return "resolving nef playground dependencies".appending(error: info)
+        case .linking(let info):
+            return "linking playground into workspace".appending(error: info)
         }
     }
 }
