@@ -17,6 +17,7 @@ public struct Playground {
                playground <- self.template(output: output, name: name, platform: platform),
                           |<-self.createStructure(playground: playground.get),
                           |<-self.resolveDependencies(dependencies, playground: playground.get, name: name),
+                          |<-self.linkPlaygrounds(playground.get),
         yield: ())^
     }
     
@@ -46,6 +47,35 @@ public struct Playground {
             binding(
                 |<-env.console.print(information: "Resolving dependencies '\(name)'"),
                 |<-env.shell.setDependencies(dependencies, playground: playground, target: name).provide(env.fileSystem).mapError { e in .template(info: e) },
+            yield: ())^.reportStatus(console: env.console)
+        }
+    }
+    
+    private func linkPlaygrounds(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+        func xcworkspaceAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundSystem, PlaygroundError, URL> {
+            EnvIO { playgroundSystem in
+                playgroundSystem.xcworkspaces(at: playground.appending(.contentFiles))
+                    .map { xcworkspaces in xcworkspaces.head }^
+                    .mapError { e in .template(info: e) }
+            }
+        }
+        
+        func playgrounsAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundSystem, PlaygroundError, NEA<URL>> {
+            EnvIO { playgroundSystem in
+                playgroundSystem.playgrounds(at: playground.appending(.contentFiles))
+                    .mapError { e in .template(info: e) }
+            }
+        }
+        
+        return EnvIO { env in
+            let xcworkspace = IO<PlaygroundError, URL>.var()
+            let playgrounds = IO<PlaygroundError, NEA<URL>>.var()
+            
+            return binding(
+                            |<-env.console.print(information: "Linking playgrounds '\(playground.name)'"),
+                xcworkspace <- xcworkspaceAt(playground).provide(env.playgroundSystem),
+                playgrounds <- playgrounsAt(playground).provide(env.playgroundSystem),
+                            |<-env.shell.linkPlaygrounds(playgrounds.get, xcworkspace: xcworkspace.get).provide(env.fileSystem).mapError { e in PlaygroundError.template(info: e) }^,
             yield: ())^.reportStatus(console: env.console)
         }
     }

@@ -87,9 +87,7 @@
 		8BA1EF4423D62BBA00B33CD0 /* RenderingPersistenceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */; };
 		8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */; };
 		8BA1EF4623D62BBA00B33CD0 /* RenderingPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */; };
-		8BA1EF5523D62BFA00B33CD0 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */; };
 		8BA1EF5623D62BFA00B33CD0 /* MarkdownError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */; };
-		8BA1EF5723D62BFA00B33CD0 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */; };
 		8BA1EF5823D62BFA00B33CD0 /* RenderEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4F23D62BF200B33CD0 /* RenderEnvironment.swift */; };
 		8BA1EF5923D62BFA00B33CD0 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */; };
 		8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */; };
@@ -140,6 +138,8 @@
 		8BD6979623FAC94C000A512F /* NefPlaygroundURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979423FAC93F000A512F /* NefPlaygroundURL.swift */; };
 		8BD6979F23FC4641000A512F /* Platform+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979D23FC463D000A512F /* Platform+Utils.swift */; };
 		8BD697A223FC48D8000A512F /* PlaygroundPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979A23FC45FD000A512F /* PlaygroundPlatform.swift */; };
+		8BD697A323FC5C05000A512F /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */; };
+		8BD697A423FC5C23000A512F /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */; };
 		8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */; };
 		8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F704238C259100DD93C4 /* MacFileSytem.swift */; };
 		8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6F70C238C495600DD93C4 /* IO+Console.swift */; };
@@ -907,7 +907,6 @@
 			isa = PBXGroup;
 			children = (
 				8B51C7A023CCC9CD003EE485 /* Render.swift */,
-				8BA1EF4A23D62BF200B33CD0 /* Algrebras */,
 				8BA1EF4723D62BF200B33CD0 /* Errors */,
 				8BA1EF4E23D62BF200B33CD0 /* Models */,
 				8BA1EF4C23D62BF200B33CD0 /* Utils */,
@@ -1019,6 +1018,7 @@
 				8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */,
 				8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */,
 				8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */,
+				8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -1027,6 +1027,7 @@
 			isa = PBXGroup;
 			children = (
 				8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */,
+				8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */,
 				8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */,
 			);
 			path = Algebras;
@@ -1036,17 +1037,8 @@
 			isa = PBXGroup;
 			children = (
 				8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */,
-				8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */,
 			);
 			path = Errors;
-			sourceTree = "<group>";
-		};
-		8BA1EF4A23D62BF200B33CD0 /* Algrebras */ = {
-			isa = PBXGroup;
-			children = (
-				8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */,
-			);
-			path = Algrebras;
 			sourceTree = "<group>";
 		};
 		8BA1EF4C23D62BF200B33CD0 /* Utils */ = {
@@ -2051,9 +2043,7 @@
 			files = (
 				8B51C7A123CCC9CD003EE485 /* Render.swift in Sources */,
 				8BA1EF5823D62BFA00B33CD0 /* RenderEnvironment.swift in Sources */,
-				8BA1EF5523D62BFA00B33CD0 /* PlaygroundSystem.swift in Sources */,
 				8BA1EF5923D62BFA00B33CD0 /* IO+Console.swift in Sources */,
-				8BA1EF5723D62BFA00B33CD0 /* PlaygroundSystemError.swift in Sources */,
 				8BA1EF5623D62BFA00B33CD0 /* MarkdownError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2118,6 +2108,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BA1EF4523D62BBA00B33CD0 /* FileSystem.swift in Sources */,
+				8BD697A323FC5C05000A512F /* PlaygroundSystem.swift in Sources */,
+				8BD697A423FC5C23000A512F /* PlaygroundSystemError.swift in Sources */,
 				8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */,
 				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
 				8BD6979F23FC4641000A512F /* Platform+Utils.swift in Sources */,

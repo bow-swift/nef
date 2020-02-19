@@ -1,11 +1,13 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefRender
+import NefCommon
 import Bow
 import BowEffects
 
 class MacPlaygroundSystem: PlaygroundSystem {
+    
+    
     private let fileManager = FileManager.default
     
     func xcworkspaces(at folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
@@ -29,7 +31,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
                              { nea in IO.pure(nea) })^
     }
     
-    func playgrounds(at folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+    func linkedPlaygrounds(at folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
         let xcworkspaces = IOPartial<PlaygroundSystemError>.var(NEA<URL>.self)
         let playgrounds = IOPartial<PlaygroundSystemError>.var(NEA<URL>.self)
         
@@ -37,6 +39,10 @@ class MacPlaygroundSystem: PlaygroundSystem {
             xcworkspaces <- self.xcworkspaces(at: folder),
              playgrounds <- self.getPlaygrounds(in: xcworkspaces.get),
         yield: playgrounds.get)^
+    }
+    
+    func playgrounds(at folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+        fatalError()
     }
     
     func pages(in playground: URL) -> IO<PlaygroundSystemError, NEA<URL>> {

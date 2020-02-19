@@ -47,6 +47,8 @@ class MacPlaygroundShell: PlaygroundShell {
     }
     
     func linkPlaygrounds(_ playgrounds: NEA<URL>,  xcworkspace: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        print("playgrounds: \(playgrounds)")
+        print("xcworkspace: \(xcworkspace)")
         fatalError()
 //        local workspacePath=$(getWorkspace "$1")
 //        local workspaceName=$(echo "$workspacePath" | rev | cut -d'/' -f 1 | cut -d'.' -f2- | rev)
