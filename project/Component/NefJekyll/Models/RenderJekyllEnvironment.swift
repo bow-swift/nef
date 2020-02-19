@@ -7,13 +7,13 @@ import NefRender
 import BowEffects
 
 public struct RenderJekyllEnvironment<A> {
-    public let fileSystem: FileSystem
     public let persistence: RenderingPersistence<A>
     public let render: Render<A>
     public let jekyllEnvironment: (_ permalink: String) -> RenderEnvironment<A>
     public let renderEnvironment: RenderEnvironment<A>
     
     internal var console: Console { renderEnvironment.console }
+    internal var fileSystem: FileSystem { renderEnvironment.fileSystem }
     
     public init(console: Console,
                 fileSystem: FileSystem,
@@ -21,11 +21,10 @@ public struct RenderJekyllEnvironment<A> {
                 playgroundSystem: PlaygroundSystem,
                 jekyllPrinter: @escaping (_ content: String) -> EnvIO<CoreJekyllEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
-        self.fileSystem = fileSystem
         self.persistence = persistence
         self.render = Render<A>()
-        self.jekyllEnvironment = { permalink in RenderEnvironment(console: console, playgroundSystem: playgroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter, permalink: permalink)) }
-        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter))
+        self.jekyllEnvironment = { permalink in RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter, permalink: permalink)) }
+        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter))
     }
     
     // MARK: - helpers

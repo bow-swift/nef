@@ -7,10 +7,11 @@ import NefRender
 import BowEffects
 
 public struct RenderMarkdownEnvironment<A> {
-    public let fileSystem: FileSystem
     public let persistence: RenderingPersistence<A>
     public let render: Render<A>
     public let renderEnvironment: RenderEnvironment<A>
+    
+    internal var fileSystem: FileSystem { renderEnvironment.fileSystem }
     
     public init(console: Console,
                 fileSystem: FileSystem,
@@ -18,9 +19,8 @@ public struct RenderMarkdownEnvironment<A> {
                 playgroundSystem: PlaygroundSystem,
                 markdownPrinter: @escaping (_ content: String) -> EnvIO<CoreMarkdownEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
-        self.fileSystem = fileSystem
         self.persistence = persistence
         self.render = Render<A>()
-        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, nodePrinter: { content in markdownPrinter(content).provide(.init()).env() })
+        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: { content in markdownPrinter(content).provide(.init()).env() })
     }
 }

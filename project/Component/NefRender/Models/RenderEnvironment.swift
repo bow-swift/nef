@@ -10,11 +10,13 @@ public struct RenderEnvironment<A> {
     
     public let console: Console
     public let playgroundSystem: PlaygroundSystem
+    public let fileSystem: FileSystem
     public let nodePrinter: NodePrinter
 
-    public init(console: Console, playgroundSystem: PlaygroundSystem, nodePrinter: @escaping NodePrinter) {
+    public init(console: Console, playgroundSystem: PlaygroundSystem, fileSystem: FileSystem, nodePrinter: @escaping NodePrinter) {
         self.console = console
         self.playgroundSystem = playgroundSystem
+        self.fileSystem = fileSystem
         self.nodePrinter = nodePrinter
     }
 }
