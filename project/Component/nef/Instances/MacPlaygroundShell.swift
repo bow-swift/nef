@@ -52,7 +52,7 @@ class MacPlaygroundShell: PlaygroundShell {
                 let workspaceContentFile = xcworkspace.appendingPathComponent("contents.xcworkspacedata")
                 
                 return fileSystem.readFile(atPath: workspaceContentFile.path)
-                                 .map { content in let a = content.matches(pattern: "(?<=location = \".*:).*(?=.playground\")"); print(a); return a }^
+                                 .map { content in content.matches(pattern: "(?<=location = \"group:).*(?=.playground\")") }^
                                  .mapError { e in PlaygroundShellError.linking(info: "\(e)") }
             }
         }
