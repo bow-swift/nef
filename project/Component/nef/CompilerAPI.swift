@@ -6,14 +6,22 @@ import NefCore
 import NefModels
 import NefRender
 import NefCompiler
+import NefPlayground
 
 import Bow
 import BowEffects
 
 public extension CompilerAPI {
+    
     static func compile(playground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
-        #warning("it will be completed after nef-playground refactor")
-        fatalError()
+        let playgroundName = playground.lastPathComponent.removeExtension
+        let output = URL(fileURLWithPath: "/tmp/\(playgroundName)")
+        let nefPlayground = EnvIO<Console, nef.Error, URL>.var()
+        
+        return binding(
+            nefPlayground <- Playground.nef(fromPlayground: playground, name: playgroundName, output: output, platform: platform, dependencies: dependencies),
+                          |<-compile(nefPlayground: nefPlayground.get, cached: cached),
+        yield: ())^
     }
         
     static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {

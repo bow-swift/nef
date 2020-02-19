@@ -58,7 +58,6 @@ class MacPlaygroundShell: PlaygroundShell {
         }
         
         func difference(playgrounds: NEA<URL>, names: [String]) -> EnvIO<FileSystem, PlaygroundShellError, [URL]> {
-            print("names: \(names)")
             let playgroundsNames = names.map { $0.removeExtension.lowercased() }
             let filtered = playgrounds.all().filter { playground in
                 let playgroundName = playground.lastPathComponent.removeExtension.lowercased()

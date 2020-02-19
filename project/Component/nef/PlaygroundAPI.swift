@@ -18,7 +18,6 @@ extension PlaygroundAPI {
                                                                                  shell: MacPlaygroundShell(),
                                                                                  playgroundSystem: MacPlaygroundSystem(),
                                                                                  fileSystem: MacFileSystem()) }^
-                     .map { output }^
                      .mapError { _ in .playground() }
     }
     
@@ -29,7 +28,6 @@ extension PlaygroundAPI {
                                                                                  shell: MacPlaygroundShell(),
                                                                                  playgroundSystem: MacPlaygroundSystem(),
                                                                                  fileSystem: MacFileSystem()) }^
-                     .map { output }^
                      .mapError { _ in .playground() }
     }
 }

@@ -10,18 +10,18 @@ import BowEffects
 public struct Playground {
     public init() {}
     
-    public func build(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
-        let playground = EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL>.var()
+    public func build(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
+        let nefPlayground = EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL>.var()
         
         return binding(
-               playground <- self.template(output: output, name: name, platform: platform),
-                          |<-self.createStructure(playground: playground.get),
-                          |<-self.resolveDependencies(dependencies, playground: playground.get, name: name),
-                          |<-self.linkPlaygrounds(playground.get),
-        yield: ())^
+            nefPlayground <- self.template(output: output, name: name, platform: platform),
+                          |<-self.createStructure(playground: nefPlayground.get),
+                          |<-self.resolveDependencies(dependencies, playground: nefPlayground.get, name: name),
+                          |<-self.linkPlaygrounds(nefPlayground.get),
+        yield: nefPlayground.get.project)^
     }
     
-    public func build(playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+    public func build(playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
         let nefPlayground = EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL>.var()
         
         return binding(
@@ -30,7 +30,7 @@ public struct Playground {
                           |<-self.resolveDependencies(dependencies, playground: nefPlayground.get, name: name),
                           |<-self.setNefPlayground(nefPlayground.get, withPlayground: playground, name: name),
                           |<-self.linkPlaygrounds(nefPlayground.get),
-        yield: ())^
+        yield: nefPlayground.get.project)^
     }
     
     // MARK: - steps
@@ -140,4 +140,3 @@ public struct Playground {
         }
     }
 }
-    
