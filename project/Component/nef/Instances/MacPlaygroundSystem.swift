@@ -7,22 +7,10 @@ import BowEffects
 
 class MacPlaygroundSystem: PlaygroundSystem {
     
-    func xcworkspaces(at folder: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
-        func isDependency(xcworkspace: URL) -> Bool {
-            return xcworkspace.path.contains("/Pods/") || xcworkspace.path.contains("/Carthage/")
-        }
-        
-        func workspace(file: URL, fileSystem: FileSystem) -> URL? {
-            guard file.pathExtension == "pbxproj" else { return nil }
-            
-            let xcodeproj = file.deletingLastPathComponent()
-            let xcworkspace = xcodeproj.deletingPathExtension().appendingPathExtension("xcworkspace")
-            return fileSystem.exist(itemPath: xcworkspace.path) ? xcworkspace : nil
-        }
-        
-        func nea(from xcworkspaces: [URL], atFolder folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
-            NEA<URL>.fromArray(xcworkspaces)
-                    .fold({ IO.raiseError(.playgrounds(information: "not found any valid workspace in '\(folder.path)'")) },
+    func xcodeprojs(at folder: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
+        func nea(from xcodeprojs: [URL], inFolder folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+            NEA<URL>.fromArray(xcodeprojs)
+                    .fold({ IO.raiseError(.playgrounds(information: "not found any valid xcodeproj in '\(folder.path)'")) },
                           { nea in IO.pure(nea) })^
         }
         
@@ -30,9 +18,34 @@ class MacPlaygroundSystem: PlaygroundSystem {
             fileSystem.items(atPath: folder.path, recursive: true)
                       .mapError { e in PlaygroundSystemError.playgrounds(information: "\(e)") }
                       .map { paths in paths.map(URL.init(fileURLWithPath:)) }
-                      .map { files in files.compactMap { file in workspace(file: file, fileSystem: fileSystem) } }
-                      .map { workspaces in workspaces.filter { !isDependency(xcworkspace: $0) } }
-                      .flatMap { xcworkspaces in nea(from: xcworkspaces, atFolder: folder) }
+                      .map { files in files.compactMap(self.xcodeprojs) }
+                      .map { xcodeprojs in xcodeprojs.filter(self.notDependency) }
+                      .flatMap { xcodeprojs in nea(from: xcodeprojs, inFolder: folder) }
+        }
+    }
+    
+    
+    func xcworkspaces(at folder: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
+        func xcworkspace(file: URL, fileSystem: FileSystem) -> URL? {
+            guard let xcodeproj = self.xcodeprojs(file: file) else { return nil }
+            
+            let xcworkspace = xcodeproj.deletingPathExtension().appendingPathExtension("xcworkspace")
+            return fileSystem.exist(itemPath: xcworkspace.path) ? xcworkspace : nil
+        }
+        
+        func nea(from xcworkspaces: [URL], inFolder folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+            NEA<URL>.fromArray(xcworkspaces)
+                    .fold({ IO.raiseError(.playgrounds(information: "not found any valid xcworkspace in '\(folder.path)'")) },
+                          { nea in IO.pure(nea) })^
+        }
+        
+        return EnvIO { fileSystem in
+            fileSystem.items(atPath: folder.path, recursive: true)
+                      .mapError { e in PlaygroundSystemError.playgrounds(information: "\(e)") }
+                      .map { paths in paths.map(URL.init(fileURLWithPath:)) }
+                      .map { files in files.compactMap { file in xcworkspace(file: file, fileSystem: fileSystem) } }
+                      .map { xcworkspaces in xcworkspaces.filter(self.notDependency) }
+                      .flatMap { xcworkspaces in nea(from: xcworkspaces, inFolder: folder) }
         }
     }
     
@@ -133,5 +146,15 @@ class MacPlaygroundSystem: PlaygroundSystem {
                 .parFlatTraverse(extractPlaygrounds)
                 .flatMap(validatePlaygrounds)
                 .flatMap(buildNEA)^
+    }
+    
+    // MARK: helpers <workspaces>
+    private func notDependency(workspace: URL) -> Bool {
+        !workspace.path.contains("/Pods/") &&
+        !workspace.path.contains("/Carthage/")
+    }
+    
+    private func xcodeprojs(file: URL) -> URL? {
+        file.pathExtension == "pbxproj" ? file.deletingLastPathComponent() : nil
     }
 }

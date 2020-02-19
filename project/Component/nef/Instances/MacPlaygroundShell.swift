@@ -35,12 +35,12 @@ class MacPlaygroundShell: PlaygroundShell {
         yield: playground.get)^
     }
     
-    func setDependencies(_ dependencies: PlaygroundDependencies,  playground: NefPlaygroundURL, target: String) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+    func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, inXcodeproj xcodeproj: URL, target: String) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         switch dependencies {
         case .bow(let bow):
-            return setDependencies(playground: playground, target: target, bow: bow)
+            return setDependencies(playground: playground, bow: bow)
         case .cartfile(let url):
-            return setDependencies(playground: playground, target: target, cartfile: url)
+            return setDependencies(playground: playground, xcodeproj: xcodeproj, cartfile: url)
         case .podfile(let url):
             return setDependencies(playground: playground, target: target, podfile: url)
         }
@@ -184,7 +184,7 @@ class MacPlaygroundShell: PlaygroundShell {
     }
     
     // MARK: dependencies
-    private func setDependencies(playground: NefPlaygroundURL, target: String, bow: PlaygroundDependencies.Bow) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+    private func setDependencies(playground: NefPlaygroundURL, bow: PlaygroundDependencies.Bow) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         func dependency(bow: PlaygroundDependencies.Bow, lastBowVersion: String) -> String {
             switch bow {
             case .version(let version): return "~> \(version.isEmpty ? lastBowVersion : version)"
@@ -249,8 +249,16 @@ class MacPlaygroundShell: PlaygroundShell {
         yield: ())^
     }
     
-    private func setDependencies(playground: NefPlaygroundURL, target: String, cartfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
-        fatalError()
+    private func setDependencies(playground: NefPlaygroundURL, xcodeproj: URL, cartfile: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        let contentCartfile = playground.appending(filename: "Cartfile", in: .contentFiles)
+        
+        return binding(
+            |<-self.checkCarthage(),
+            |<-self.emptyWorkspace(xcodeproj: xcodeproj),
+            |<-self.moveFiles(at: playground.appending(.carthageTemplate), into: playground.appending(.contentFiles)),
+            |<-self.cleanTemplates(playground: playground),
+            |<-self.rewriteFile(contentCartfile, with: cartfile),
+        yield: ())^
     }
     
     private func cleanTemplates(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
@@ -264,33 +272,27 @@ class MacPlaygroundShell: PlaygroundShell {
         }
     }
     
-    private func emptyWorkspace(nefPlayground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
-        fatalError()
-        //        createEmptyWorkspace() {
-        //            cd "$1"
-        //
-        //            find . -name '*.pbxproj' -print0 | while IFS= read -r -d $'\0' project; do
-        //                workspaceWithoutExtension=$(echo "$1/$project" | rev | cut -d'/' -f 2- | cut -d'.' -f 2- | rev)
-        //                workspaceProj="$workspaceWithoutExtension.xcodeproj"
-        //                workspace="$workspaceWithoutExtension.xcworkspace"
-        //                projReference=$(echo "$workspaceProj" | rev | cut -d'/' -f 1 | rev)
-        //                isDependency=$(isPathFromDependencies "$workspaceWithoutExtension")
-        //
-        //                ([ $isDependency -eq 1 ] || [ -d "$workspace" ] || ! [ -d "$workspaceProj" ]) && continue
-        //
-        //                content="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-        //                 <Workspace
-        //                    version = \"1.0\">
-        //                    <FileRef location = \"container:$projReference\"></FileRef>
-        //                 </Workspace>"
-        //
-        //                mkdir "$workspace"
-        //                echo "$content" > "$workspace/contents.xcworkspacedata"
-        //            done
-        //        }
+    private func emptyWorkspace(xcodeproj: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        EnvIO { fileSystem in
+            let xcworkspace = xcodeproj.deletingPathExtension().appendingPathExtension("xcworkspace")
+            guard !fileSystem.exist(itemPath: xcworkspace.path) else { return IO.pure(())^ }
+            
+            let xcworkspacedata = """
+                                  <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+                                  <Workspace
+                                      version = \"1.0\">
+                                        <FileRef location = \"container:\(xcodeproj.lastPathComponent)\"></FileRef>
+                                  </Workspace>
+                                  """
+            
+            let createWorkspaceIO = fileSystem.createDirectory(atPath: xcworkspace.path)
+            let writeWorkspaceDataIO = fileSystem.write(content: xcworkspacedata, toFile: xcworkspace.appendingPathComponent("contents.xcworkspacedata").path)
+            
+            return createWorkspaceIO
+                    .followedBy(writeWorkspaceDataIO)^
+                    .mapError { e in .dependencies(info: "\(e)") }
+        }
     }
-    
-    
     
     // MARK: helpers <dependencies>
     private func lastBowVersion() -> EnvIO<FileSystem, PlaygroundShellError, String> {

@@ -16,7 +16,7 @@ public struct Playground {
         return binding(
             nefPlayground <- self.template(output: output, name: name, platform: platform),
                           |<-self.createStructure(playground: nefPlayground.get),
-                          |<-self.resolveDependencies(dependencies, playground: nefPlayground.get, name: name),
+                          |<-self.setDependencies(dependencies, playground: nefPlayground.get, name: name),
                           |<-self.linkPlaygrounds(nefPlayground.get),
         yield: nefPlayground.get.project)^
     }
@@ -27,7 +27,7 @@ public struct Playground {
         return binding(
             nefPlayground <- self.template(output: output, name: name, platform: platform),
                           |<-self.createStructure(playground: nefPlayground.get),
-                          |<-self.resolveDependencies(dependencies, playground: nefPlayground.get, name: name),
+                          |<-self.setDependencies(dependencies, playground: nefPlayground.get, name: name),
                           |<-self.setNefPlayground(nefPlayground.get, withPlayground: playground, name: name),
                           |<-self.linkPlaygrounds(nefPlayground.get),
         yield: nefPlayground.get.project)^
@@ -54,12 +54,23 @@ public struct Playground {
         }
     }
     
-    private func resolveDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
-        EnvIO { env in
+    private func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+        func xcodeprojAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
+            EnvIO { env in
+                env.playgroundSystem.xcodeprojs(at: playground.appending(.contentFiles)).provide(env.fileSystem)
+                                    .map { xcworkspaces in xcworkspaces.head }^
+                                    .mapError { e in .dependencies(info: e) }
+            }
+        }
+        
+        let xcodeproj = IO<PlaygroundError, URL>.var()
+        
+        return EnvIO { env in
             binding(
-                |<-env.console.print(information: "Resolving dependencies '\(name)'"),
-                |<-env.shell.setDependencies(dependencies, playground: playground, target: name).provide(env.fileSystem).mapError { e in .template(info: e) },
-            yield: ())^.reportStatus(console: env.console)
+                          |<-env.console.print(information: "Resolving dependencies '\(name)'"),
+                xcodeproj <- xcodeprojAt(playground).provide(env),
+                          |<-env.shell.setDependencies(dependencies, playground: playground, inXcodeproj: xcodeproj.get, target: name).provide(env.fileSystem).mapError { e in .dependencies(info: e) },
+            yield: ())^.reportStatus(console: env.console)^
         }
     }
     
