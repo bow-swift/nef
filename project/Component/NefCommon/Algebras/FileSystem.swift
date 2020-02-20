@@ -13,6 +13,7 @@ public protocol FileSystem {
     func write(content: String, toFile path: String) -> IO<FileSystemError, ()>
     func write(content: Data, toFile path: String) -> IO<FileSystemError, ()>
     func exist(itemPath: String) -> Bool
+    func temporalDirectory() -> URL
     func temporalFile(content: String, filename: String) -> IO<FileSystemError, URL>
     
     func createDirectory<D>(atPath: String) -> EnvIO<D, FileSystemError, ()>
@@ -108,5 +109,10 @@ public extension FileSystem {
     
     func rename(_ newName: String, itemAt: String) -> IO<FileSystemError, ()> {
         moveFile(from: itemAt, to: "\(itemAt.parentPath)/\(newName)")
+    }
+    
+    func temporalFile(content: String, filename: String) -> IO<FileSystemError, URL> {
+        let file = temporalDirectory().appendingPathComponent(filename)
+        return write(content: content, toFile: file.path).map { file }^
     }
 }

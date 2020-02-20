@@ -52,15 +52,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--output /Users/miguelangel/Desktop"
+            argument = "--output /Users/miguelangel/Desktop/untitled\ folder"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--name Migue"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--podfile /Users/miguelangel/Desktop/podfile-migue"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

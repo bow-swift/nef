@@ -106,13 +106,27 @@ class MacPlaygroundShell: PlaygroundShell {
         }
         
         func unzip(_ zip: URL, into output: URL) -> EnvIO<FileSystem, PlaygroundShellError, URL> {
-            EnvIO.invoke { _ in
-                let result = run("unzip", args: [zip.path, "-d", output.path])
-                guard result.exitStatus == 0 else {
-                    throw PlaygroundShellError.template(info: result.stderr)
+            func unzip(_ zip: URL, output: URL, log: URL) -> IO<FileSystemError, Void> {
+                IO.invoke {
+                    let result = run("/usr/bin/unzip", args: [zip.path, "-d", output.path.trimmingEmptyCharacters]) { settings in settings.execution = .log(file: log.path) }
+                    guard result.exitStatus == 0 else { throw FileSystemError.create(item: "unzip \(output.path): \(result.stderr)") }
+                    return ()
                 }
+            }
+            
+            return EnvIO { fileSystem in
+                let templateName = "nef-\(Template.name)"
+                let unzipFolder = output.appendingPathComponent(templateName)
                 
-                return output.appendingPathComponent("nef-\(Template.name)")
+                let cleamTemplateIO = fileSystem.removeDirectory(unzipFolder.path).handleError { _ in }
+                let createTemplateIO = fileSystem.createDirectory(atPath: unzipFolder.path)
+                let unzipIO = unzip(zip, output: output, log: unzipFolder.appendingPathComponent("unzip.log"))
+                
+                return cleamTemplateIO
+                        .followedBy(createTemplateIO)
+                        .followedBy(unzipIO)
+                        .map { unzipFolder }^
+                        .mapError { e in .template(info: "\(e)") }
             }
         }
         
@@ -311,7 +325,7 @@ class MacPlaygroundShell: PlaygroundShell {
         EnvIO.invoke { _ in
             let result = run("pod", args: ["--version"])
             guard result.exitStatus == 0 else {
-                throw PlaygroundShellError.dependencies(info: "Required CocoaPods. Run 'sudo gem install cocoapods'")
+                throw PlaygroundShellError.dependencies(info: "Required CocoaPods. Run 'sudo gem install cocoapods'\n\(result.stderr)")
             }
             
             return ()
@@ -322,7 +336,7 @@ class MacPlaygroundShell: PlaygroundShell {
         EnvIO.invoke { _ in
             let result = run("carthage")
             guard result.exitStatus == 0 else {
-                throw PlaygroundShellError.dependencies(info: "Required Carthage. Run 'brew install carthage'")
+                throw PlaygroundShellError.dependencies(info: "Required Carthage. Run 'brew install carthage'\n\(result.stderr)")
             }
             
             return ()

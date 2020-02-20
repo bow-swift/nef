@@ -75,11 +75,7 @@ class MacFileSystem: NefCommon.FileSystem {
         FileManager.default.fileExists(atPath: itemPath)
     }
     
-    func temporalFile(content: String, filename: String) -> IO<FileSystemError, URL> {
-        IO.invoke {
-            let file = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
-            try content.write(to: file, atomically: true, encoding: .utf8)
-            return file
-        }
+    func temporalDirectory() -> URL {
+        FileManager.default.temporaryDirectory
     }
 }
