@@ -149,7 +149,7 @@ class MacPlaygroundShell: PlaygroundShell {
     private func installTemplate(_ template: URL, name: String) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         EnvIO.invoke { _ in
             let script = template.appendingPathComponent("setup").appendingPathComponent("nef.rb")
-            let result = run("ruby", args: [script.path, template.path , name])
+            let result = run("ruby", args: [script.path, template.path, name])
             guard result.exitStatus == 0 else {
                 throw PlaygroundShellError.template(info: result.stderr)
             }
@@ -373,7 +373,7 @@ class MacPlaygroundShell: PlaygroundShell {
     // MARK: - Constants
     private enum Template {
         static let path = "https://github.com/bow-swift/nef/archive/\(Template.name).zip"
-        static let name = "master"
+        static let name = "nefplayground-refactor"
     }
     
     private enum Bow {

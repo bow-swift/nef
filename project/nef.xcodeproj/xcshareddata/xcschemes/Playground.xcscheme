@@ -56,7 +56,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--name Migue"
+            argument = "--name Miguel\ Angel"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

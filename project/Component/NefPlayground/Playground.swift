@@ -11,6 +11,7 @@ public struct Playground {
     public init() {}
     
     public func build(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
+        let name = playgroundName(name)
         let nefPlayground = EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL>.var()
         
         return binding(
@@ -22,6 +23,7 @@ public struct Playground {
     }
     
     public func build(playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
+        let name = playgroundName(name)
         let nefPlayground = EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL>.var()
         
         return binding(
@@ -149,5 +151,9 @@ public struct Playground {
             env.fileSystem.copy(itemPath: playground.path, toPath: nefPlayground.appending(.contentFiles).appendingPathComponent("\(name).playground").path)
                 .mapError { e in PlaygroundError.operation(operation: "move playground into nef Playground", info: e) }
         }
+    }
+    
+    private func playgroundName(_ name: String) -> String {
+        name.capitalized.replacingOccurrences(of: " ", with: "").trimmingEmptyCharacters
     }
 }
