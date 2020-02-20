@@ -21,9 +21,9 @@ extension PlaygroundAPI {
                      .mapError { _ in .playground() }
     }
     
-    public static func nef(fromPlayground playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL> {
+    public static func nef(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL> {
         NefPlayground.Playground()
-                     .build(playground: playground, name: name, output: output, platform: platform, dependencies: dependencies)
+                     .build(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
                      .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
                                                                                  shell: MacPlaygroundShell(),
                                                                                  playgroundSystem: MacPlaygroundSystem(),

@@ -19,12 +19,12 @@ public protocol CompilerAPI {
     /// Compile Xcode Playground.
     ///
     /// - Parameters:
-    ///   - playground: Xcode Playgrounds to be compiled.
+    ///   - xcodePlayground: Xcode Playgrounds to be compiled.
     ///   - platform: target to use for compiling Xcode Playground.
     ///   - dependencies: to use for the compiler.
     ///   - cached: use cached dependencies if it is possible, in another case, it will download them.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
-    static func compile(playground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void>
+    static func compile(xcodePlayground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void>
     
     /// Compile Xcode Playground.
     ///
@@ -234,13 +234,13 @@ public protocol PlaygroundAPI {
     /// Make a nef Playground compatible with 3rd-party libraries from an Xcode Playground.
     ///
     /// - Parameters:
-    ///   - fromPlayground: Xcode Playground to transform to nef Playground.
+    ///   - xcodePlayground: Xcode Playground to transform to nef Playground.
     ///   - name: name for the output nef Playground.
     ///   - output: folder where to write the nef Playground.
     ///   - platform: target to use for compiling Xcode Playground.
     ///   - dependencies: dependencies to use for the compiler.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the nef Playground output of the type `URL`, having access to an immutable environment of type `Console`.
-    static func nef(fromPlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
+    static func nef(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
 }
 
 public protocol SwiftPlaygroundAPI {

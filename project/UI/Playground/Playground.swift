@@ -19,13 +19,13 @@ enum PlaygroundCommand: String {
     case cartfile
 }
 
-private func nefPlayground<A>(from playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, CLIKit.Console.Error, A> {
+private func nefPlayground<A>(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, CLIKit.Console.Error, A> {
     EnvIO { console in
-        nef.Playground.nef(fromPlayground: playground, name: name, output: output, platform: platform, dependencies: dependencies)
+        nef.Playground.nef(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
                       .provide(console)^
                       .mapError { _ in .render() }
-                      .foldM({ e in console.exit(failure: "building nef Playground from Xcode Playground '\(playground.path)'. \(e)") },
-                             { _ in console.exit(success: "nef Playground created successfully in '\(output.path)'")                  })^
+                      .foldM({ e in console.exit(failure: "building nef Playground from Xcode Playground '\(xcodePlayground.path)'. \(e)") },
+                             { _ in console.exit(success: "nef Playground created successfully in '\(output.path)'")                       })^
     }
 }
 
@@ -90,8 +90,8 @@ public func playground() -> Either<CLIKit.Console.Error, Void> {
     return arguments(console: console)
         .flatMap { (name, output, platform, playground, dependencies) in
             playground.toOption()
-                .fold({        nefPlayground(name: name, output: output, platform: platform, dependencies: dependencies).provide(console)            },
-                      { url in nefPlayground(from: url, name: name, output: output, platform: platform, dependencies: dependencies).provide(console) })
+                .fold({        nefPlayground(name: name, output: output, platform: platform, dependencies: dependencies).provide(console)                       },
+                      { url in nefPlayground(xcodePlayground: url, name: name, output: output, platform: platform, dependencies: dependencies).provide(console) })
         }^
         .reportStatus(in: console)
         .foldM({ e in console.exit(failure: "\(e)")        },
