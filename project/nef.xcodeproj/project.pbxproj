@@ -59,24 +59,24 @@
 		8B444F1823FED31400975C8C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F1723FED31400975C8C /* main.swift */; };
 		8B444F2323FED5AC00975C8C /* _Playground.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B444F2123FED5AB00975C8C /* _Playground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B444F2423FED5AC00975C8C /* _Compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B444F2223FED5AC00975C8C /* _Compiler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B444F2623FED6ED00975C8C /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2523FED6ED00975C8C /* Markdown.swift */; };
-		8B444F2B23FED72200975C8C /* MarkdownPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2923FED72200975C8C /* MarkdownPage.swift */; };
-		8B444F3123FED74B00975C8C /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2D23FED74800975C8C /* Jekyll.swift */; };
-		8B444F3623FED76C00975C8C /* JekyllPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3223FED76900975C8C /* JekyllPage.swift */; };
-		8B444F3B23FED7A900975C8C /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3723FED79E00975C8C /* Carbon.swift */; };
-		8B444F4023FED7C000975C8C /* CarbonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3C23FED7BB00975C8C /* CarbonPage.swift */; };
-		8B444F4323FEF33600975C8C /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4123FEF32E00975C8C /* Playground.swift */; };
-		8B444F4623FEF37400975C8C /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4423FEF36800975C8C /* PlaygroundBook.swift */; };
-		8B444F4F23FEF5BF00975C8C /* Compiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F1C23FED3BE00975C8C /* Compiler.swift */; };
-		8B444F5E23FEF73200975C8C /* Compiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F1C23FED3BE00975C8C /* Compiler.swift */; };
-		8B444F5F23FEF73200975C8C /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2523FED6ED00975C8C /* Markdown.swift */; };
-		8B444F6023FEF73200975C8C /* MarkdownPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2923FED72200975C8C /* MarkdownPage.swift */; };
-		8B444F6123FEF73200975C8C /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2D23FED74800975C8C /* Jekyll.swift */; };
-		8B444F6223FEF73200975C8C /* JekyllPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3223FED76900975C8C /* JekyllPage.swift */; };
-		8B444F6323FEF73200975C8C /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3723FED79E00975C8C /* Carbon.swift */; };
-		8B444F6423FEF73200975C8C /* CarbonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3C23FED7BB00975C8C /* CarbonPage.swift */; };
-		8B444F6523FEF73200975C8C /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4123FEF32E00975C8C /* Playground.swift */; };
-		8B444F6623FEF73200975C8C /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4423FEF36800975C8C /* PlaygroundBook.swift */; };
+		8B444F6D23FF06AD00975C8C /* CarbonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3C23FED7BB00975C8C /* CarbonPage.swift */; };
+		8B444F6E23FF06AF00975C8C /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4123FEF32E00975C8C /* Playground.swift */; };
+		8B444F6F23FF06B200975C8C /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4423FEF36800975C8C /* PlaygroundBook.swift */; };
+		8B444F7623FF073D00975C8C /* Compiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F1C23FED3BE00975C8C /* Compiler.swift */; };
+		8B444F7723FF074000975C8C /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2523FED6ED00975C8C /* Markdown.swift */; };
+		8B444F7823FF074100975C8C /* MarkdownPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2923FED72200975C8C /* MarkdownPage.swift */; };
+		8B444F7923FF074300975C8C /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2D23FED74800975C8C /* Jekyll.swift */; };
+		8B444F7A23FF074500975C8C /* JekyllPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3223FED76900975C8C /* JekyllPage.swift */; };
+		8B444F7B23FF074600975C8C /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3723FED79E00975C8C /* Carbon.swift */; };
+		8B444F7C23FF075700975C8C /* Compiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F1C23FED3BE00975C8C /* Compiler.swift */; };
+		8B444F7D23FF075700975C8C /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2523FED6ED00975C8C /* Markdown.swift */; };
+		8B444F7E23FF075700975C8C /* MarkdownPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2923FED72200975C8C /* MarkdownPage.swift */; };
+		8B444F7F23FF075700975C8C /* Jekyll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F2D23FED74800975C8C /* Jekyll.swift */; };
+		8B444F8023FF075700975C8C /* JekyllPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3223FED76900975C8C /* JekyllPage.swift */; };
+		8B444F8123FF075700975C8C /* Carbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3723FED79E00975C8C /* Carbon.swift */; };
+		8B444F8223FF075700975C8C /* CarbonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F3C23FED7BB00975C8C /* CarbonPage.swift */; };
+		8B444F8323FF075700975C8C /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4123FEF32E00975C8C /* Playground.swift */; };
+		8B444F8423FF075700975C8C /* PlaygroundBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B444F4423FEF36800975C8C /* PlaygroundBook.swift */; };
 		8B46C40B238D689F00437659 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C409238D689800437659 /* Module.swift */; };
 		8B46C40E238D75A400437659 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C40C238D71C900437659 /* Package.swift */; };
 		8B46C412238D87F200437659 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B46C411238D87F200437659 /* Assets.swift */; };
@@ -2048,7 +2048,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B444F4F23FEF5BF00975C8C /* Compiler.swift in Sources */,
+				8B444F7623FF073D00975C8C /* Compiler.swift in Sources */,
 				8B0286E423E079650033ECBA /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2057,7 +2057,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B444F2623FED6ED00975C8C /* Markdown.swift in Sources */,
+				8B444F7723FF074000975C8C /* Markdown.swift in Sources */,
 				8B0A905C23ACD3A400091C39 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2067,7 +2067,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88122D3932000919F36 /* main.swift in Sources */,
-				8B444F4023FED7C000975C8C /* CarbonPage.swift in Sources */,
+				8B444F6D23FF06AD00975C8C /* CarbonPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2108,7 +2108,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88422D3932400919F36 /* main.swift in Sources */,
-				8B444F2B23FED72200975C8C /* MarkdownPage.swift in Sources */,
+				8B444F7823FF074100975C8C /* MarkdownPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2116,16 +2116,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B444F5E23FEF73200975C8C /* Compiler.swift in Sources */,
-				8B444F6323FEF73200975C8C /* Carbon.swift in Sources */,
-				8B444F6523FEF73200975C8C /* Playground.swift in Sources */,
-				8B444F6023FEF73200975C8C /* MarkdownPage.swift in Sources */,
-				8B444F5F23FEF73200975C8C /* Markdown.swift in Sources */,
-				8B444F6623FEF73200975C8C /* PlaygroundBook.swift in Sources */,
-				8B444F6223FEF73200975C8C /* JekyllPage.swift in Sources */,
-				8B444F6423FEF73200975C8C /* CarbonPage.swift in Sources */,
+				8B444F7C23FF075700975C8C /* Compiler.swift in Sources */,
+				8B444F8123FF075700975C8C /* Carbon.swift in Sources */,
+				8B444F8323FF075700975C8C /* Playground.swift in Sources */,
+				8B444F7E23FF075700975C8C /* MarkdownPage.swift in Sources */,
+				8B444F7D23FF075700975C8C /* Markdown.swift in Sources */,
+				8B444F8423FF075700975C8C /* PlaygroundBook.swift in Sources */,
+				8B444F8023FF075700975C8C /* JekyllPage.swift in Sources */,
+				8B444F8223FF075700975C8C /* CarbonPage.swift in Sources */,
 				8B444F1823FED31400975C8C /* main.swift in Sources */,
-				8B444F6123FEF73200975C8C /* Jekyll.swift in Sources */,
+				8B444F7F23FF075700975C8C /* Jekyll.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2157,7 +2157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B444F3123FED74B00975C8C /* Jekyll.swift in Sources */,
+				8B444F7923FF074300975C8C /* Jekyll.swift in Sources */,
 				8B51C7AF23CDCE99003EE485 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2198,7 +2198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3CB88022D3931D00919F36 /* main.swift in Sources */,
-				8B444F3623FED76C00975C8C /* JekyllPage.swift in Sources */,
+				8B444F7A23FF074500975C8C /* JekyllPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2206,7 +2206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B444F3B23FED7A900975C8C /* Carbon.swift in Sources */,
+				8B444F7B23FF074600975C8C /* Carbon.swift in Sources */,
 				8B7E808523DB4C5800D4F6BD /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2237,7 +2237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD4E312238814B7002DECDB /* main.swift in Sources */,
-				8B444F4623FEF37400975C8C /* PlaygroundBook.swift in Sources */,
+				8B444F6F23FF06B200975C8C /* PlaygroundBook.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2282,7 +2282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B444F4323FEF33600975C8C /* Playground.swift in Sources */,
+				8B444F6E23FF06AF00975C8C /* Playground.swift in Sources */,
 				8BD6975D23F6D6A7000A512F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

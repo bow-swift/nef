@@ -1,5 +1,6 @@
 //  Copyright © 2020 The nef Authors.
 
+import Foundation
 import CLIKit
 import nef
 import Bow

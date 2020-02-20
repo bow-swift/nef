@@ -7,6 +7,7 @@ let package = Package(
         .macOS(.v10_14),
     ],
     products: [
+        .executable(name: "nef",                 targets: ["NefMenu"]),
         .executable(name: "nefc",                targets: ["Compiler"]),
         .executable(name: "nef-markdown",        targets: ["Markdown"]),
         .executable(name: "nef-markdown-page",   targets: ["MarkdownPage"]),
@@ -45,6 +46,7 @@ let package = Package(
                                             "NefSwiftPlayground"], path: "Component/nef", publicHeadersPath: "Support Files"),
         .target(name: "CLIKit", dependencies: ["nef"], path: "UI/CLIKit", publicHeadersPath: "Support Files"),
 
+//        .target(name: "NefMenu",        dependencies: ["CLIKit", "nef"], path: "UI", exclude: ["UI/CLIKit/*"]),
         .target(name: "Compiler",       dependencies: ["CLIKit", "nef"], path: "UI/Compiler"),
         .target(name: "Markdown",       dependencies: ["CLIKit", "nef"], path: "UI/Markdown"),
         .target(name: "MarkdownPage",   dependencies: ["CLIKit", "nef"], path: "UI/MarkdownPage"),
