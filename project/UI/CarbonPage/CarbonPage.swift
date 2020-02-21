@@ -64,7 +64,7 @@ public func carbonPage(script: String) -> Either<CLIKit.Console.Error, Void> {
     }
     
     let console = Console(script: script,
-                          description: "Export Carbon code snippets for given Xcode Playground page",
+                          description: "Export Carbon code snippets for given Playground page",
                           arguments: .init(name: CarbonPageCommand.page.rawValue, placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
                                      .init(name: CarbonPageCommand.output.rawValue, placeholder: "carbon output", description: "path where Carbon snippets are saved to. ex. `/home`"),
                                      .init(name: CarbonPageCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),

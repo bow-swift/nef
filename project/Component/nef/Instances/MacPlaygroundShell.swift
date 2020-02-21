@@ -373,7 +373,7 @@ class MacPlaygroundShell: PlaygroundShell {
     // MARK: - Constants
     private enum Template {
         static let path = "https://github.com/bow-swift/nef/archive/\(Template.name).zip"
-        static let name = "nefplayground-refactor"
+        static let name = "nef-menu-refactor"
     }
     
     private enum Bow {

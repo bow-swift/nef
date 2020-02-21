@@ -59,7 +59,10 @@ public struct Console {
         func arguments(_ args: [Argument]) -> IO<Console.Error, [String: String]> {
             let result: [String: String] = args.reduce(into: [:]) { (res, argument) in
                 let commandline = CommandLine.arguments.enumerated().first { (offset, element) in
-                    element.trimmingCharacters(in: ["-"]).lowercased() == argument.name.lowercased()
+                    let found = element.trimmingCharacters(in: ["-"]).lowercased() == argument.name.lowercased()
+                    let isValid = "$\(element)".contains("$-") || argument.isFlag
+                    
+                    return found && isValid
                 }
                 
                 if let index = commandline?.offset {
@@ -101,6 +104,7 @@ public struct Console {
         let requireds = arguments.filter { $0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
         let optionals = arguments.filter { !$0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
         let commands = arguments.filter { !$0.isRequired }.map { arg in arg.displayCommand }.joined(separator: "\n")
+        let allAreFlags = arguments.filter { $0.isFlag }.count == arguments.count
         
         if optionals.isEmpty {
             return  """
@@ -111,13 +115,24 @@ public struct Console {
                     \(requireds)
                     
                     """
-        } else if requireds.isEmpty {
+        } else if requireds.isEmpty, allAreFlags {
             return  """
                     \(scriptName.bold) \(listArguments)
                     
                     \t\(description.bold)
                     
                     \(commands)
+                    
+                    """
+        } else if requireds.isEmpty {
+            return  """
+                    \(scriptName.bold) \(listArguments)
+                    
+                    \t\(description)
+                    
+                    \t\("Options".bold)
+                    
+                    \(optionals)
                     
                     """
         } else {
@@ -195,14 +210,14 @@ extension Console.Argument {
     var displayDescription: String {
         let defaultValue = self.default.trimmingEmptyCharacters
         if defaultValue.isEmpty {
-            return "\t--\(display(name: name).lightCyan)  \(description)"
+            return "\t--\(display(name: name))".lightCyan+"  \(description)"
         } else {
-            return "\t--\(display(name: name).lightCyan)  \(description)"+" [default: ".dim.lightMagenta+defaultValue.lightMagenta+"]".dim.lightMagenta
+            return "\t--\(display(name: name))".lightCyan+"  \(description)"+" [default: ".dim.lightMagenta+defaultValue.lightMagenta+"]".dim.lightMagenta
         }
     }
     
     var displayCommand: String {
-        "\t\(display(name: name).lightCyan)  \(description.trimmingEmptyCharacters)"
+        "\t\(display(name: name))".bold.lightCyan+"  \(description.trimmingEmptyCharacters)"
     }
     
     private func display(name: String) -> String {

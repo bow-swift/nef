@@ -52,11 +52,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "playground"
+            argument = "-h"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-h"
+            argument = "playground"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

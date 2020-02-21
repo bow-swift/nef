@@ -49,7 +49,7 @@ public func carbon(script: String) -> Either<CLIKit.Console.Error, Void> {
     
     let console = Console(script: script,
                           description: "Generates Carbon code snippets",
-                          arguments: .init(name: CarbonCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                          arguments: .init(name: CarbonCommand.project.rawValue, placeholder: "path-to-input", description: "path to the nef Playground to render"),
                                      .init(name: CarbonCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
                                      .init(name: CarbonCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
                                      .init(name: CarbonCommand.theme.rawValue, placeholder: "", description: "carbon's theme.", default: "dracula"),

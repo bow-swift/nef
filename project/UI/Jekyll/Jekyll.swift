@@ -34,7 +34,7 @@ public func jekyll(script: String) -> Either<CLIKit.Console.Error, Void> {
     
     let console = Console(script: script,
                           description: "Render markdown files that can be consumed from Jekyll to generate a microsite",
-                          arguments: .init(name: JekyllCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                          arguments: .init(name: JekyllCommand.project.rawValue, placeholder: "path-to-input", description: "path to the nef Playground to render"),
                                      .init(name: JekyllCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
                                      .init(name: JekyllCommand.main.rawValue, placeholder: "path-to-index", description: "path to 'README.md' file to be used as the index page", default: "README.md"))
     

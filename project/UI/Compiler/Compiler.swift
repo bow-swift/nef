@@ -24,8 +24,8 @@ public func compiler(script: String) -> Either<CLIKit.Console.Error, Void> {
     }
     
     let console = Console(script: script,
-                          description: "Compile Xcode Playground",
-                          arguments: .init(name: CompilerCommands.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                          description: "Compile nef Playground",
+                          arguments: .init(name: CompilerCommands.project.rawValue, placeholder: "path-nef-playground", description: "path to nef Playground to compile"),
                                      .init(name: CompilerCommands.cached.rawValue, placeholder: "", description: "use cached dependencies if it is possible.", isFlag: true, default: "false"))
     
     return arguments(console: console)
@@ -33,7 +33,7 @@ public func compiler(script: String) -> Either<CLIKit.Console.Error, Void> {
             nef.Compiler.compile(nefPlayground: input, cached: cached)
                .provide(console)^
                .mapError { _ in .render() }
-               .foldM({ e in console.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'. \(e)") },
+               .foldM({ e in console.exit(failure: "compiling Xcode Playgrounds from '\(input.path)'. \(e)") },
                       { _ in console.exit(success: "'\(input.path)' compiled successfully")            })    }^
         .reportStatus(in: console)
         .foldM({ e in console.exit(failure: "\(e)")        },

@@ -18,7 +18,7 @@ enum NefCommand: String, CaseIterable {
 
 
 func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
-    Step(total: 3, partial: partial, duration: duration)
+    Step(total: 2, partial: partial, duration: duration)
 }
 
 @discardableResult

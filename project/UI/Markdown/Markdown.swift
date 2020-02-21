@@ -30,8 +30,8 @@ public func markdown(script: String) -> Either<CLIKit.Console.Error, Void> {
     }
     
     let console = Console(script: script,
-                          description: "Render markdown files from Xcode Playground",
-                          arguments: .init(name: MarkdownCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                          description: "Render markdown files from nef Playground",
+                          arguments: .init(name: MarkdownCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playground to render"),
                                      .init(name: MarkdownCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"))
     
     return arguments(console: console)
