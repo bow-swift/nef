@@ -3,4 +3,4 @@
 import Foundation
 
 // #: - MAIN <launcher>
-compiler()
+compiler(script: "nefc")

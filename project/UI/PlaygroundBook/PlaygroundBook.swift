@@ -14,13 +14,7 @@ enum PlaygroundBookCommand: String {
 
 
 @discardableResult
-public func playgroundBook() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nef-playground-book",
-                          description: "Build a Playground Book with 3r-party libraries defined in a Swift Package",
-                          arguments: .init(name: PlaygroundBookCommand.name.rawValue, placeholder: "swift-playground name", description: "name for the Swift Playground. ex. `nef`"),
-                                     .init(name: PlaygroundBookCommand.package.rawValue, placeholder: "package path", description: "path to Package.swift file. ex. `/home/Package.swift`"),
-                                     .init(name: PlaygroundBookCommand.output.rawValue, placeholder: "output path", description: "path where Playground is saved to. ex. `/home`"))
-
+public func playgroundBook(script: String) -> Either<CLIKit.Console.Error, Void> {
 
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (packageContent: String, projectName: String, output: URL)> {
         console.input().flatMap { args in
@@ -40,6 +34,12 @@ public func playgroundBook() -> Either<CLIKit.Console.Error, Void> {
             
         }^
     }
+    
+    let console = Console(script: script,
+                          description: "Build a Playground Book with 3r-party libraries defined in a Swift Package",
+                          arguments: .init(name: PlaygroundBookCommand.name.rawValue, placeholder: "swift-playground name", description: "name for the Swift Playground. ex. `nef`"),
+                                     .init(name: PlaygroundBookCommand.package.rawValue, placeholder: "package path", description: "path to Package.swift file. ex. `/home/Package.swift`"),
+                                     .init(name: PlaygroundBookCommand.output.rawValue, placeholder: "output path", description: "path where Playground is saved to. ex. `/home`"))
     
     return arguments(console: console)
         .flatMap { (packageContent, projectName, output) in

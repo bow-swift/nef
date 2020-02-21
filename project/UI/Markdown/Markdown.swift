@@ -13,13 +13,8 @@ enum MarkdownCommand: String {
 
 
 @discardableResult
-public func markdown() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nef-markdown",
-                          description: "Render markdown files from Xcode Playground",
-                          arguments: .init(name: MarkdownCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
-                                     .init(name: MarkdownCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"))
-
-
+public func markdown(script: String) -> Either<CLIKit.Console.Error, Void> {
+    
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, output: URL)> {
         console.input().flatMap { args in
             guard let inputPath = args[MarkdownCommand.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
@@ -33,6 +28,11 @@ public func markdown() -> Either<CLIKit.Console.Error, Void> {
             return IO.pure((input: folder, output: output))
         }^
     }
+    
+    let console = Console(script: script,
+                          description: "Render markdown files from Xcode Playground",
+                          arguments: .init(name: MarkdownCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                                     .init(name: MarkdownCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"))
     
     return arguments(console: console)
         .flatMap { (input, output) in

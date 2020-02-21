@@ -14,14 +14,8 @@ enum JekyllCommand: String {
 
 
 @discardableResult
-public func jekyll() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nef-jekyll",
-                          description: "Render markdown files that can be consumed from Jekyll to generate a microsite",
-                          arguments: .init(name: JekyllCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
-                                     .init(name: JekyllCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
-                                     .init(name: JekyllCommand.main.rawValue, placeholder: "path-to-index", description: "path to 'README.md' file to be used as the index page", default: "README.md"))
-
-
+public func jekyll(script: String) -> Either<CLIKit.Console.Error, Void> {
+    
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, output: URL, mainPage: URL)> {
         console.input().flatMap { args in
             guard let inputPath = args[JekyllCommand.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
@@ -37,6 +31,12 @@ public func jekyll() -> Either<CLIKit.Console.Error, Void> {
             return IO.pure((input: input, output: output, mainPage: mainPage))
         }^
     }
+    
+    let console = Console(script: script,
+                          description: "Render markdown files that can be consumed from Jekyll to generate a microsite",
+                          arguments: .init(name: JekyllCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                                     .init(name: JekyllCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
+                                     .init(name: JekyllCommand.main.rawValue, placeholder: "path-to-index", description: "path to 'README.md' file to be used as the index page", default: "README.md"))
     
     return arguments(console: console)
         .flatMap { (input, output, mainPage) in

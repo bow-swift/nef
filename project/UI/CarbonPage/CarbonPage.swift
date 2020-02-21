@@ -20,19 +20,7 @@ enum CarbonPageCommand: String {
 
 
 @discardableResult
-public func carbonPage() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nef-carbon-page",
-                          description: "Export Carbon code snippets for given Xcode Playground page",
-                          arguments: .init(name: CarbonPageCommand.page.rawValue, placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
-                                     .init(name: CarbonPageCommand.output.rawValue, placeholder: "carbon output", description: "path where Carbon snippets are saved to. ex. `/home`"),
-                                     .init(name: CarbonPageCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
-                                     .init(name: CarbonPageCommand.theme.rawValue, placeholder: "", description: "carbon's theme.", default: "dracula"),
-                                     .init(name: CarbonPageCommand.size.rawValue, placeholder: "", description: "export file size [1-5].", default: "2"),
-                                     .init(name: CarbonPageCommand.font.rawValue, placeholder: "", description: "carbon's font type.", default: "fira-code"),
-                                     .init(name: CarbonPageCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
-                                     .init(name: CarbonPageCommand.watermark.rawValue, placeholder: "", description: "shows/hides the watermark [true | false].", default: "true"),
-                                     .init(name: CarbonPageCommand.verbose.rawValue, placeholder: "", description: "run carbon page in verbose mode.", isFlag: true, default: "false"))
-
+public func carbonPage(script: String) -> Either<CLIKit.Console.Error, Void> {
 
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, filename:String, output: URL, style: CarbonStyle, verbose: Bool)> {
         console.input().flatMap { args in
@@ -74,6 +62,18 @@ public func carbonPage() -> Either<CLIKit.Console.Error, Void> {
     func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
         Step(total: 3, partial: partial, duration: duration)
     }
+    
+    let console = Console(script: script,
+                          description: "Export Carbon code snippets for given Xcode Playground page",
+                          arguments: .init(name: CarbonPageCommand.page.rawValue, placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
+                                     .init(name: CarbonPageCommand.output.rawValue, placeholder: "carbon output", description: "path where Carbon snippets are saved to. ex. `/home`"),
+                                     .init(name: CarbonPageCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
+                                     .init(name: CarbonPageCommand.theme.rawValue, placeholder: "", description: "carbon's theme.", default: "dracula"),
+                                     .init(name: CarbonPageCommand.size.rawValue, placeholder: "", description: "export file size [1-5].", default: "2"),
+                                     .init(name: CarbonPageCommand.font.rawValue, placeholder: "", description: "carbon's font type.", default: "fira-code"),
+                                     .init(name: CarbonPageCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
+                                     .init(name: CarbonPageCommand.watermark.rawValue, placeholder: "", description: "shows/hides the watermark [true | false].", default: "true"),
+                                     .init(name: CarbonPageCommand.verbose.rawValue, placeholder: "", description: "run carbon page in verbose mode.", isFlag: true, default: "false"))
 
     let args = IO<CLIKit.Console.Error, (content: String, filename: String, output: URL, style: CarbonStyle, verbose: Bool)>.var()
     let output = IO<CLIKit.Console.Error, (ast: String, url: URL)>.var()

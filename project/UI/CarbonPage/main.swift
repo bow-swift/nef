@@ -5,5 +5,5 @@ import NefCarbon
 
 // #: - MAIN <launcher - AppKit>
 _ = CarbonApplication {
-    carbonPage()
+    carbonPage(script: "nef-carbon-page")
 }

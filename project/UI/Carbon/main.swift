@@ -5,5 +5,5 @@ import NefCarbon
 
 // #: - MAIN <launcher - AppKit>
 _ = CarbonApplication {
-    carbon()
+    carbon(script: "nef-carbon")
 }

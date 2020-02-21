@@ -3,4 +3,4 @@
 import Foundation
 
 // #: - MAIN <launcher>
-markdown()
+markdown(script: "nef-markdown")

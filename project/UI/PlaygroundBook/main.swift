@@ -3,4 +3,4 @@
 import Foundation
 
 // #: - MAIN <launcher>
-playgroundBook()
+playgroundBook(script: "nef-playground-book")

@@ -20,18 +20,7 @@ enum CarbonCommand: String {
 
 
 @discardableResult
-public func carbon() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nef-carbon",
-                          description: "Generates Carbon code snippets",
-                          arguments: .init(name: CarbonCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
-                                     .init(name: CarbonCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
-                                     .init(name: CarbonCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
-                                     .init(name: CarbonCommand.theme.rawValue, placeholder: "", description: "carbon's theme.", default: "dracula"),
-                                     .init(name: CarbonCommand.size.rawValue, placeholder: "", description: "export file size [1-5].", default: "2"),
-                                     .init(name: CarbonCommand.font.rawValue, placeholder: "", description: "carbon's font type.", default: "fira-code"),
-                                     .init(name: CarbonCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
-                                     .init(name: CarbonCommand.watermark.rawValue, placeholder: "", description: "shows/hides the watermark [true | false].", default: "true"))
-
+public func carbon(script: String) -> Either<CLIKit.Console.Error, Void> {
 
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, output: URL, style: CarbonStyle)> {
         console.input().flatMap { args in
@@ -57,6 +46,17 @@ public func carbon() -> Either<CLIKit.Console.Error, Void> {
             return IO.pure((input: input, output: output, style: style))
         }^
     }
+    
+    let console = Console(script: script,
+                          description: "Generates Carbon code snippets",
+                          arguments: .init(name: CarbonCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                                     .init(name: CarbonCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
+                                     .init(name: CarbonCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
+                                     .init(name: CarbonCommand.theme.rawValue, placeholder: "", description: "carbon's theme.", default: "dracula"),
+                                     .init(name: CarbonCommand.size.rawValue, placeholder: "", description: "export file size [1-5].", default: "2"),
+                                     .init(name: CarbonCommand.font.rawValue, placeholder: "", description: "carbon's font type.", default: "fira-code"),
+                                     .init(name: CarbonCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
+                                     .init(name: CarbonCommand.watermark.rawValue, placeholder: "", description: "shows/hides the watermark [true | false].", default: "true"))
     
     return arguments(console: console)
         .flatMap { (input, output, style) in

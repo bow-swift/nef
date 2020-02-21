@@ -3,4 +3,4 @@
 import Foundation
 
 // #: - MAIN <launcher>
-markdownPage()
+markdownPage(script: "nef-markdown-page")

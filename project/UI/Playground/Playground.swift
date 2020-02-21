@@ -19,6 +19,7 @@ enum PlaygroundCommand: String {
     case cartfile
 }
 
+
 private func nefPlayground<A>(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, CLIKit.Console.Error, A> {
     EnvIO { console in
         nef.Playground.nef(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
@@ -40,19 +41,7 @@ private func nefPlayground<A>(name: String, output: URL, platform: Platform, dep
 }
 
 @discardableResult
-public func playground() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nef-playground",
-                          description: "Build a nef Playground compatible with 3rd-party libraries",
-                          arguments: .init(name: PlaygroundCommand.output.rawValue, placeholder: "path-to-output",  description: "path where nef Playground will be generated"),
-                                     .init(name: PlaygroundCommand.name.rawValue, placeholder: "playground-name", description: "specify the name for the nef Playground", default: "BowPlayground"),
-                                     .init(name: PlaygroundCommand.platform.rawValue, placeholder: "", description: "set the target to `ios` or `macos`", default: "ios"),
-                                     .init(name: PlaygroundCommand.playground.rawValue, placeholder: "path-to-playground", description: "Xcode Playground to be transformed into nef Playground", default: " "),
-                                     .init(name: PlaygroundCommand.bowVersion.rawValue, placeholder: "", description: "specify the version of Bow", default: " "),
-                                     .init(name: PlaygroundCommand.bowBranch.rawValue,  placeholder: "", description: "specify the branch of Bow", default: " "),
-                                     .init(name: PlaygroundCommand.bowCommit.rawValue,  placeholder: "", description: "specify the commit of Bow", default: " "),
-                                     .init(name: PlaygroundCommand.podfile.rawValue,    placeholder: "", description: "path to Podfile with your own dependencies", default: " "),
-                                     .init(name: PlaygroundCommand.cartfile.rawValue,   placeholder: "", description: "path to Cartfile with your own dependencies", default: " "))
-
+public func playground(script: String) -> Either<CLIKit.Console.Error, Void> {
 
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (name: String, output: URL, platform: Platform, playground: URL?, dependencies: PlaygroundDependencies)> {
         console.input().flatMap { args in
@@ -86,6 +75,18 @@ public func playground() -> Either<CLIKit.Console.Error, Void> {
                             dependencies: dependencies))
         }^
     }
+    
+    let console = Console(script: script,
+                          description: "Build a nef Playground compatible with 3rd-party libraries",
+                          arguments: .init(name: PlaygroundCommand.output.rawValue, placeholder: "path-to-output",  description: "path where nef Playground will be generated"),
+                                     .init(name: PlaygroundCommand.name.rawValue, placeholder: "playground-name", description: "specify the name for the nef Playground", default: "BowPlayground"),
+                                     .init(name: PlaygroundCommand.platform.rawValue, placeholder: "", description: "set the target to `ios` or `macos`", default: "ios"),
+                                     .init(name: PlaygroundCommand.playground.rawValue, placeholder: "path-to-playground", description: "Xcode Playground to be transformed into nef Playground", default: " "),
+                                     .init(name: PlaygroundCommand.bowVersion.rawValue, placeholder: "", description: "specify the version of Bow", default: " "),
+                                     .init(name: PlaygroundCommand.bowBranch.rawValue,  placeholder: "", description: "specify the branch of Bow", default: " "),
+                                     .init(name: PlaygroundCommand.bowCommit.rawValue,  placeholder: "", description: "specify the commit of Bow", default: " "),
+                                     .init(name: PlaygroundCommand.podfile.rawValue,    placeholder: "", description: "path to Podfile with your own dependencies", default: " "),
+                                     .init(name: PlaygroundCommand.cartfile.rawValue,   placeholder: "", description: "path to Cartfile with your own dependencies", default: " "))
 
     return arguments(console: console)
         .flatMap { (name, output, platform, playground, dependencies) in

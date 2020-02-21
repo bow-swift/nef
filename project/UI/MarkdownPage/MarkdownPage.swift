@@ -13,16 +13,9 @@ enum MarkdownPageCommand: String {
 }
 
 
-
 @discardableResult
-public func markdownPage() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nef-markdown-page",
-                          description: "Render a markdown file from a Playground page",
-                          arguments: .init(name: MarkdownPageCommand.page.rawValue, placeholder: "path-to-playground-page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
-                                     .init(name: MarkdownPageCommand.output.rawValue, placeholder: "path-to-output", description: "path where markdown are saved to. ex. `/home`"),
-                                     .init(name: MarkdownPageCommand.verbose.rawValue, placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
-
-
+public func markdownPage(script: String) -> Either<CLIKit.Console.Error, Void> {
+    
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (content: String, filename: String, output: URL, verbose: Bool)> {
         console.input().flatMap { args in
             guard let pagePath = args[MarkdownPageCommand.page.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
@@ -46,6 +39,12 @@ public func markdownPage() -> Either<CLIKit.Console.Error, Void> {
     func step(partial: UInt, duration: DispatchTimeInterval = .seconds(1)) -> Step {
         Step(total: 3, partial: partial, duration: duration)
     }
+    
+    let console = Console(script: script,
+                          description: "Render a markdown file from a Playground page",
+                          arguments: .init(name: MarkdownPageCommand.page.rawValue, placeholder: "path-to-playground-page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
+                                     .init(name: MarkdownPageCommand.output.rawValue, placeholder: "path-to-output", description: "path where markdown are saved to. ex. `/home`"),
+                                     .init(name: MarkdownPageCommand.verbose.rawValue, placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, filename: String, output: URL, verbose: Bool).self)
     let output = IO<CLIKit.Console.Error, (url: URL, ast: String, rendered: String)>.var()

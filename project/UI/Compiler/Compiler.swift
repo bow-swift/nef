@@ -13,13 +13,7 @@ enum CompilerCommands: String {
 
 
 @discardableResult
-public func compiler() -> Either<CLIKit.Console.Error, Void> {
-    let console = Console(script: "nefc",
-                                  description: "Compile Xcode Playground",
-                                  arguments: .init(name: CompilerCommands.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
-                                             .init(name: CompilerCommands.cached.rawValue, placeholder: "", description: "use cached dependencies if it is possible.", isFlag: true, default: "false"))
-
-
+public func compiler(script: String) -> Either<CLIKit.Console.Error, Void> {
     func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, cached: Bool)> {
         console.input().flatMap { args in
             guard let inputPath = args[CompilerCommands.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
@@ -28,6 +22,11 @@ public func compiler() -> Either<CLIKit.Console.Error, Void> {
             return IO.pure((input: URL(fileURLWithPath: inputPath, isDirectory: true), cached: cached))
         }^
     }
+    
+    let console = Console(script: script,
+                          description: "Compile Xcode Playground",
+                          arguments: .init(name: CompilerCommands.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playgrounds to render"),
+                                     .init(name: CompilerCommands.cached.rawValue, placeholder: "", description: "use cached dependencies if it is possible.", isFlag: true, default: "false"))
     
     return arguments(console: console)
         .flatMap { (input, cached) in

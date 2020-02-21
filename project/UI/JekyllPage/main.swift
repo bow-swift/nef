@@ -3,4 +3,4 @@
 import Foundation
 
 // #: - MAIN <launcher>
-jekyllPage()
+jekyllPage(script: "nef-jekyll-page")

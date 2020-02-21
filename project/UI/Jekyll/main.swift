@@ -3,4 +3,4 @@
 import Foundation
 
 // #: - MAIN <launcher>
-jekyll()
+jekyll(script: "nef-jekyll")

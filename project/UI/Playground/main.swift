@@ -3,4 +3,4 @@
 import Foundation
 
 // #: - MAIN <launcher>
-playground()
+playground(script: "nef-playground")
