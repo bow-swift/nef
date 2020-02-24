@@ -45,7 +45,7 @@ public func main() -> Either<CLIKit.Console.Error, Void> {
         
         switch action {
             case .compile:    return compiler(script: script)
-            case .clean:      fatalError()
+            case .clean:      return clean(script: script)
             case .playground: return playground(script: script)
             case .ipad:       return playgroundBook(script: script)
             case .markdown:   return markdown(script: script)
