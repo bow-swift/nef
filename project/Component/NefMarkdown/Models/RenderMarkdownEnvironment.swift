@@ -16,11 +16,11 @@ public struct RenderMarkdownEnvironment<A> {
     public init(console: Console,
                 fileSystem: FileSystem,
                 persistence: RenderingPersistence<A>,
-                playgroundSystem: XcodePlaygroundSystem,
+                xcodePlaygroundSystem: XcodePlaygroundSystem,
                 markdownPrinter: @escaping (_ content: String) -> EnvIO<CoreMarkdownEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.persistence = persistence
         self.render = Render<A>()
-        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: { content in markdownPrinter(content).provide(.init()).env() })
+        self.renderEnvironment = RenderEnvironment(console: console, fileSystem: fileSystem, xcodePlaygroundSystem: xcodePlaygroundSystem, nodePrinter: { content in markdownPrinter(content).provide(.init()).env() })
     }
 }

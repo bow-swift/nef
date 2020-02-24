@@ -6,14 +6,14 @@ import NefModels
 
 public struct PlaygroundEnvironment {
     public let console: Console
-    public let shell: PlaygroundShell
-    public let playgroundSystem: XcodePlaygroundSystem
     public let fileSystem: FileSystem
+    public let nefPlaygroundSystem: NefPlaygroundSystem
+    public let xcodePlaygroundSystem: XcodePlaygroundSystem
     
-    public init(console: Console, shell: PlaygroundShell, playgroundSystem: XcodePlaygroundSystem, fileSystem: FileSystem) {
+    public init(console: Console, fileSystem: FileSystem, nefPlaygroundSystem: NefPlaygroundSystem, xcodePlaygroundSystem: XcodePlaygroundSystem) {
         self.console = console
-        self.shell = shell
-        self.playgroundSystem = playgroundSystem
         self.fileSystem = fileSystem
+        self.nefPlaygroundSystem = nefPlaygroundSystem
+        self.xcodePlaygroundSystem = xcodePlaygroundSystem
     }
 }

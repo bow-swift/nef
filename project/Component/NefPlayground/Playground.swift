@@ -42,7 +42,7 @@ public struct Playground {
             
             return binding(
                            |<-env.console.print(information: "Downloading playground template '\(output.path)'"),
-                playground <- env.shell.installTemplate(into: output, name: name, platform: platform).provide(env.fileSystem).mapError { e in .template(info: e) },
+                playground <- env.nefPlaygroundSystem.installTemplate(into: output, name: name, platform: platform).provide(env.fileSystem).mapError { e in .template(info: e) },
             yield: playground.get)^.reportStatus(console: env.console)
         }
     }
@@ -59,9 +59,9 @@ public struct Playground {
     private func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
         func xcodeprojAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
             EnvIO { env in
-                env.playgroundSystem.xcodeprojs(at: playground.appending(.contentFiles)).provide(env.fileSystem)
-                                    .map { xcworkspaces in xcworkspaces.head }^
-                                    .mapError { e in .dependencies(info: e) }
+                env.xcodePlaygroundSystem.xcodeprojs(at: playground.appending(.contentFiles)).provide(env.fileSystem)
+                                         .map { xcworkspaces in xcworkspaces.head }^
+                                         .mapError { e in .dependencies(info: e) }
             }
         }
         
@@ -71,7 +71,7 @@ public struct Playground {
             binding(
                           |<-env.console.print(information: "Resolving dependencies '\(name)'"),
                 xcodeproj <- xcodeprojAt(playground).provide(env),
-                          |<-env.shell.setDependencies(dependencies, playground: playground, inXcodeproj: xcodeproj.get, target: name).provide(env.fileSystem).mapError { e in .dependencies(info: e) },
+                          |<-env.nefPlaygroundSystem.setDependencies(dependencies, playground: playground, inXcodeproj: xcodeproj.get, target: name).provide(env.fileSystem).mapError { e in .dependencies(info: e) },
             yield: ())^.reportStatus(console: env.console)^
         }
     }
@@ -86,7 +86,7 @@ public struct Playground {
     private func linkPlaygrounds(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
         func xcworkspaceAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
             EnvIO { env in
-                env.playgroundSystem.xcworkspaces(at: playground.appending(.contentFiles)).provide(env.fileSystem)
+                env.xcodePlaygroundSystem.xcworkspaces(at: playground.appending(.contentFiles)).provide(env.fileSystem)
                     .map { xcworkspaces in xcworkspaces.head }^
                     .mapError { e in .template(info: e) }
             }
@@ -94,14 +94,14 @@ public struct Playground {
         
         func playgrounsAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, NEA<URL>> {
             EnvIO { env in
-                env.playgroundSystem.playgrounds(at: playground.appending(.contentFiles)).provide(env.fileSystem)
+                env.xcodePlaygroundSystem.playgrounds(at: playground.appending(.contentFiles)).provide(env.fileSystem)
                     .mapError { e in .template(info: e) }
             }
         }
         
         func linkPlaygrounds(_ playgrounds: NEA<URL>, xcworkspace: URL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
             EnvIO { env in
-                env.shell.linkPlaygrounds(playgrounds, xcworkspace: xcworkspace).provide(env.fileSystem)
+                env.nefPlaygroundSystem.linkPlaygrounds(playgrounds, xcworkspace: xcworkspace).provide(env.fileSystem)
                     .mapError { e in .template(info: e) }
             }
         }
@@ -123,10 +123,10 @@ public struct Playground {
     private func removePlaygrounds(in nefPlayground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
         func findPlaygrounds(in folder: URL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, NEA<URL>> {
             EnvIO { env in
-                env.playgroundSystem
-                    .playgrounds(at: folder)
-                    .provide(env.fileSystem)
-                    .mapError { e in PlaygroundError.operation(operation: "find playgrounds", info: e) }
+                env.xcodePlaygroundSystem
+                   .playgrounds(at: folder)
+                   .provide(env.fileSystem)
+                   .mapError { e in PlaygroundError.operation(operation: "find playgrounds", info: e) }
             }
         }
         

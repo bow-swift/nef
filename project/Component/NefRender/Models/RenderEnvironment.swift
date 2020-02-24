@@ -9,14 +9,14 @@ public struct RenderEnvironment<A> {
     public typealias NodePrinter = (_ content: String) -> EnvIO<RenderEnvironmentInfo, CoreRenderError, RenderingOutput<A>>
     
     public let console: Console
-    public let playgroundSystem: XcodePlaygroundSystem
     public let fileSystem: FileSystem
+    public let xcodePlaygroundSystem: XcodePlaygroundSystem
     public let nodePrinter: NodePrinter
 
-    public init(console: Console, playgroundSystem: XcodePlaygroundSystem, fileSystem: FileSystem, nodePrinter: @escaping NodePrinter) {
+    public init(console: Console, fileSystem: FileSystem, xcodePlaygroundSystem: XcodePlaygroundSystem, nodePrinter: @escaping NodePrinter) {
         self.console = console
-        self.playgroundSystem = playgroundSystem
         self.fileSystem = fileSystem
+        self.xcodePlaygroundSystem = xcodePlaygroundSystem
         self.nodePrinter = nodePrinter
     }
 }

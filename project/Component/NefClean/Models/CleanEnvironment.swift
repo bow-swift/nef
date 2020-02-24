@@ -7,9 +7,9 @@ import NefModels
 public struct CleanEnvironment {
     public let console: Console
     public let fileSystem: FileSystem
-    public let shell: PlaygroundShell
+    public let shell: NefPlaygroundSystem
     
-    public init(console: Console, fileSystem: FileSystem, shell: PlaygroundShell) {
+    public init(console: Console, fileSystem: FileSystem, shell: NefPlaygroundSystem) {
         self.console = console
         self.fileSystem = fileSystem
         self.shell = shell

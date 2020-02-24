@@ -3,14 +3,14 @@
 import Foundation
 import NefCommon
 
-public enum PlaygroundShellError: Error {
+public enum NefPlaygroundSystemError: Error {
     case template(info: String = "")
     case dependencies(info: String = "")
     case linking(info: String = "")
     case clean(info: String = "")
 }
 
-extension PlaygroundShellError: CustomStringConvertible {
+extension NefPlaygroundSystemError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .template(let info):

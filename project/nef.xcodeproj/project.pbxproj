@@ -101,7 +101,7 @@
 		8B5812662403D8CC00587211 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */; };
 		8B5812672403D8CC00587211 /* XcodePlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4B23D62BF200B33CD0 /* XcodePlaygroundSystem.swift */; };
 		8B5812682403D8CC00587211 /* RenderingPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */; };
-		8B5812692403D8CC00587211 /* PlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978623FAA8C0000A512F /* PlaygroundShell.swift */; };
+		8B5812692403D8CC00587211 /* NefPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978623FAA8C0000A512F /* NefPlaygroundSystem.swift */; };
 		8B58126A2403D8CC00587211 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */; };
 		8B58126B2403D8CC00587211 /* RenderingOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */; };
 		8B58126C2403D8CC00587211 /* RenderingPersistenceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */; };
@@ -166,7 +166,7 @@
 		8BD6978423FAA84F000A512F /* PlaygroundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978323FAA84F000A512F /* PlaygroundError.swift */; };
 		8BD6978823FAA902000A512F /* PlaygroundDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6977923F6E9F6000A512F /* PlaygroundDependencies.swift */; };
 		8BD6978B23FAAA63000A512F /* PlaygroundEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978A23FAAA63000A512F /* PlaygroundEnvironment.swift */; };
-		8BD6978E23FAAB2D000A512F /* MacPlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978C23FAAB2A000A512F /* MacPlaygroundShell.swift */; };
+		8BD6978E23FAAB2D000A512F /* MacNefPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978C23FAAB2A000A512F /* MacNefPlaygroundSystem.swift */; };
 		8BD6979323FAAF98000A512F /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979223FAAF98000A512F /* IO+Console.swift */; };
 		8BD6979623FAC94C000A512F /* NefPlaygroundURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979423FAC93F000A512F /* NefPlaygroundURL.swift */; };
 		8BD6979F23FC4641000A512F /* Platform+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6979D23FC463D000A512F /* Platform+Utils.swift */; };
@@ -588,9 +588,9 @@
 		8BD6977B23F7119C000A512F /* Array+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
 		8BD6978023FAA7DE000A512F /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		8BD6978323FAA84F000A512F /* PlaygroundError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundError.swift; sourceTree = "<group>"; };
-		8BD6978623FAA8C0000A512F /* PlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShell.swift; sourceTree = "<group>"; };
+		8BD6978623FAA8C0000A512F /* NefPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefPlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BD6978A23FAAA63000A512F /* PlaygroundEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEnvironment.swift; sourceTree = "<group>"; };
-		8BD6978C23FAAB2A000A512F /* MacPlaygroundShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundShell.swift; sourceTree = "<group>"; };
+		8BD6978C23FAAB2A000A512F /* MacNefPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacNefPlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BD6978F23FAAED0000A512F /* PlaygroundShellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundShellError.swift; sourceTree = "<group>"; };
 		8BD6979223FAAF98000A512F /* IO+Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
 		8BD6979423FAC93F000A512F /* NefPlaygroundURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefPlaygroundURL.swift; sourceTree = "<group>"; };
@@ -1007,9 +1007,9 @@
 				8BA1EF7523D86B2D00B33CD0 /* MacDummyConsole.swift */,
 				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
 				8B46C430238FD70700437659 /* MacPackageShell.swift */,
-				8BD6978C23FAAB2A000A512F /* MacPlaygroundShell.swift */,
-				8BB7D13823B0E10300C8E6F8 /* MacXcodePlaygroundSystem.swift */,
 				8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */,
+				8BB7D13823B0E10300C8E6F8 /* MacXcodePlaygroundSystem.swift */,
+				8BD6978C23FAAB2A000A512F /* MacNefPlaygroundSystem.swift */,
 			);
 			path = Instances;
 			sourceTree = "<group>";
@@ -1200,7 +1200,7 @@
 				8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */,
 				8BA1EF4B23D62BF200B33CD0 /* XcodePlaygroundSystem.swift */,
 				8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */,
-				8BD6978623FAA8C0000A512F /* PlaygroundShell.swift */,
+				8BD6978623FAA8C0000A512F /* NefPlaygroundSystem.swift */,
 			);
 			path = Algebras;
 			sourceTree = "<group>";
@@ -2405,7 +2405,7 @@
 				8B58126E2403D8CC00587211 /* PlaygroundShellError.swift in Sources */,
 				8BA1EF6E23D62D1F00B33CD0 /* EnumeratedSequence+Extension.swift in Sources */,
 				8BD6979623FAC94C000A512F /* NefPlaygroundURL.swift in Sources */,
-				8B5812692403D8CC00587211 /* PlaygroundShell.swift in Sources */,
+				8B5812692403D8CC00587211 /* NefPlaygroundSystem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2480,7 +2480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
-				8BD6978E23FAAB2D000A512F /* MacPlaygroundShell.swift in Sources */,
+				8BD6978E23FAAB2D000A512F /* MacNefPlaygroundSystem.swift in Sources */,
 				8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */,
 				8BD6973B23F5AA36000A512F /* Kleisli+API.swift in Sources */,
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,

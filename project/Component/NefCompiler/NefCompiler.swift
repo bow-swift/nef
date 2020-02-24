@@ -110,7 +110,7 @@ public struct Compiler {
     // MARK: private <utils>
     private func xcworkspace(atFolder folder: URL) -> EnvIO<Environment, RenderError, URL> {
         func getWorkspaces(atFolder folder: URL) -> EnvIO<Environment, XcodePlaygroundSystemError, NEA<URL>> {
-            EnvIO { env in env.playgroundSystem.xcworkspaces(at: folder).provide(env.fileSystem) }
+            EnvIO { env in env.xcodePlaygroundSystem.xcworkspaces(at: folder).provide(env.fileSystem) }
         }
         
         func assertNumberOf(xcworkspaces: NEA<URL>, equalsTo total: Int) -> EnvIO<Environment, XcodePlaygroundSystemError, Void> {
