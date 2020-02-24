@@ -5,10 +5,10 @@ import NefCommon
 import Bow
 import BowEffects
 
-class MacPlaygroundSystem: PlaygroundSystem {
+class MacXcodePlaygroundSystem: XcodePlaygroundSystem {
     
-    func xcodeprojs(at folder: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
-        func nea(from xcodeprojs: [URL], inFolder folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+    func xcodeprojs(at folder: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
+        func nea(from xcodeprojs: [URL], inFolder folder: URL) -> IO<XcodePlaygroundSystemError, NEA<URL>> {
             NEA<URL>.fromArray(xcodeprojs)
                     .fold({ IO.raiseError(.playgrounds(information: "not found any valid xcodeproj in '\(folder.path)'")) },
                           { nea in IO.pure(nea) })^
@@ -16,7 +16,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
         
         return EnvIO { fileSystem in
             fileSystem.items(atPath: folder.path, recursive: true)
-                      .mapError { e in PlaygroundSystemError.playgrounds(information: "\(e)") }
+                      .mapError { e in XcodePlaygroundSystemError.playgrounds(information: "\(e)") }
                       .map { paths in paths.map(URL.init(fileURLWithPath:)) }
                       .map { files in files.compactMap(self.xcodeprojs) }
                       .map { xcodeprojs in xcodeprojs.filter(self.notDependency) }
@@ -25,7 +25,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
     }
     
     
-    func xcworkspaces(at folder: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
+    func xcworkspaces(at folder: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
         func xcworkspace(file: URL, fileSystem: FileSystem) -> URL? {
             guard let xcodeproj = self.xcodeprojs(file: file) else { return nil }
             
@@ -33,7 +33,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
             return fileSystem.exist(itemPath: xcworkspace.path) ? xcworkspace : nil
         }
         
-        func nea(from xcworkspaces: [URL], inFolder folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+        func nea(from xcworkspaces: [URL], inFolder folder: URL) -> IO<XcodePlaygroundSystemError, NEA<URL>> {
             NEA<URL>.fromArray(xcworkspaces)
                     .fold({ IO.raiseError(.playgrounds(information: "not found any valid xcworkspace in '\(folder.path)'")) },
                           { nea in IO.pure(nea) })^
@@ -41,7 +41,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
         
         return EnvIO { fileSystem in
             fileSystem.items(atPath: folder.path, recursive: true)
-                      .mapError { e in PlaygroundSystemError.playgrounds(information: "\(e)") }
+                      .mapError { e in XcodePlaygroundSystemError.playgrounds(information: "\(e)") }
                       .map { paths in paths.map(URL.init(fileURLWithPath:)) }
                       .map { files in files.compactMap { file in xcworkspace(file: file, fileSystem: fileSystem) } }
                       .map { xcworkspaces in xcworkspaces.filter(self.notDependency) }
@@ -49,9 +49,9 @@ class MacPlaygroundSystem: PlaygroundSystem {
         }
     }
     
-    func linkedPlaygrounds(at folder: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
-        let xcworkspaces = EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>>.var()
-        let playgrounds = EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>>.var()
+    func linkedPlaygrounds(at folder: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
+        let xcworkspaces = EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>>.var()
+        let playgrounds = EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>>.var()
         
         return binding(
             xcworkspaces <- self.xcworkspaces(at: folder),
@@ -59,8 +59,8 @@ class MacPlaygroundSystem: PlaygroundSystem {
         yield: playgrounds.get)^
     }
     
-    func playgrounds(at folder: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
-        func nea(from playgrounds: [URL], atFolder folder: URL) -> IO<PlaygroundSystemError, NEA<URL>> {
+    func playgrounds(at folder: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
+        func nea(from playgrounds: [URL], atFolder folder: URL) -> IO<XcodePlaygroundSystemError, NEA<URL>> {
             NEA<URL>.fromArray(playgrounds)
                     .fold({ IO.raiseError(.playgrounds(information: "not found any playround in '\(folder.path)'")) },
                           { nea in IO.pure(nea) })^
@@ -68,15 +68,15 @@ class MacPlaygroundSystem: PlaygroundSystem {
         
         return EnvIO { fileSystem in
             fileSystem.items(atPath: folder.path, recursive: false)
-                      .mapError { e in PlaygroundSystemError.playgrounds(information: "\(e)") }
+                      .mapError { e in XcodePlaygroundSystemError.playgrounds(information: "\(e)") }
                       .map { paths in paths.filter { "\($0)$".contains(".playground$") } }
                       .map { paths in paths.map(URL.init(fileURLWithPath:)) }
                       .flatMap { playgrounds in nea(from: playgrounds, atFolder: folder) }
         }
     }
     
-    func pages(in playground: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
-        func extractPages(in playground: URL) -> EnvIO<FileSystem, PlaygroundSystemError, [URL]> {
+    func pages(in playground: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
+        func extractPages(in playground: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, [URL]> {
             EnvIO.invoke { _ in
                 let xcplayground = playground.appendingPathComponent("contents.xcplayground")
                 let content = try String(contentsOf: xcplayground)
@@ -88,7 +88,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
             }
         }
         
-        func checkNumberOfPages(_ pages: [URL], playground: URL) -> EnvIO<FileSystem, PlaygroundSystemError, [URL]> {
+        func checkNumberOfPages(_ pages: [URL], playground: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, [URL]> {
             EnvIO { fileSystem in
                 guard pages.count == 0 else { return IO.pure(pages)^ }
                 
@@ -98,7 +98,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
             }
         }
         
-        func validatePages(_ pages: [URL], playground: URL) -> EnvIO<FileSystem, PlaygroundSystemError, [URL]> {
+        func validatePages(_ pages: [URL], playground: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, [URL]> {
             EnvIO { fileSystem in
                 pages.traverse { page in
                     fileSystem.exist(itemPath: page.path) ? IO.pure(page)
@@ -107,7 +107,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
             }
         }
         
-        func buildNEA(pages: [URL], playground: URL) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
+        func buildNEA(pages: [URL], playground: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
             NEA<URL>.fromArray(pages).fold({ EnvIO.raiseError(.pages(information: "not found pages in '\(playground.path)'")) },
                                            { nea in EnvIO.pure(nea) })^
         }
@@ -119,8 +119,8 @@ class MacPlaygroundSystem: PlaygroundSystem {
     }
     
     // MARK: - helpers
-    private func getPlaygrounds(in xcworkspaces: NEA<URL>) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
-        func extractPlaygrounds(from xcworkspace: URL) -> EnvIO<FileSystem, PlaygroundSystemError, [URL]> {
+    private func getPlaygrounds(in xcworkspaces: NEA<URL>) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
+        func extractPlaygrounds(from xcworkspace: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, [URL]> {
             EnvIO.invoke { _ in
                 let content = try String(contentsOf: xcworkspace.appendingPathComponent("contents.xcworkspacedata"))
                 return content.matches(pattern: "(?<=group:).*.playground(?=\")")
@@ -128,7 +128,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
             }^
         }
         
-        func validatePlaygrounds(_ playgrounds: [URL]) -> EnvIO<FileSystem, PlaygroundSystemError, [URL]> {
+        func validatePlaygrounds(_ playgrounds: [URL]) -> EnvIO<FileSystem, XcodePlaygroundSystemError, [URL]> {
             EnvIO { fileSystem in
                 playgrounds.traverse { playground in
                     fileSystem.exist(itemPath: playground.path) ? IO.pure(playground)
@@ -137,7 +137,7 @@ class MacPlaygroundSystem: PlaygroundSystem {
             }
         }
         
-        func buildNEA(playgrounds: [URL]) -> EnvIO<FileSystem, PlaygroundSystemError, NEA<URL>> {
+        func buildNEA(playgrounds: [URL]) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
             NEA<URL>.fromArray(playgrounds).fold({ EnvIO.raiseError(.playgrounds(information: "can not find any playground in the workspace")) },
                                                  { nea in EnvIO.pure(nea) })^
         }

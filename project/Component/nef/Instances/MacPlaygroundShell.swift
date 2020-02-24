@@ -92,7 +92,11 @@ class MacPlaygroundShell: PlaygroundShell {
     }
     
     func clean(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
-        fatalError()
+        binding(
+            |<-self.cleanTemplates(playground: playground),
+            |<-self.cleanDependencies(playground: playground),
+            |<-self.cleanBinaries(playground: playground),
+        yield: ())^
     }
     
     // MARK: - steps
@@ -290,6 +294,21 @@ class MacPlaygroundShell: PlaygroundShell {
         }
     }
     
+    private func cleanDependencies(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        binding(
+            |<-self.cleanPods(playground: playground).handleError { _ in },
+            |<-self.cleanCarthage(playground: playground).handleError { _ in },
+            |<-self.cleanSPM(playground: playground).handleError { _ in },
+        yield: ())^
+    }
+    
+    private func cleanBinaries(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        EnvIO { fileSystem in
+            fileSystem.remove(itemPath: playground.appending(.nef).path)^
+                      .mapError { _ in .clean() }.handleError { _ in }
+        }
+    }
+    
     private func emptyWorkspace(xcodeproj: URL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
         EnvIO { fileSystem in
             let xcworkspace = xcodeproj.deletingPathExtension().appendingPathExtension("xcworkspace")
@@ -356,6 +375,31 @@ class MacPlaygroundShell: PlaygroundShell {
             
             return ()
         }
+    }
+    
+    private func cleanPods(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        EnvIO { fileSystem in
+            let pods = playground.appending(filename: "Pods", in: .contentFiles)
+            let resolved = playground.appending(filename: "Podfile.lock", in: .contentFiles)
+            
+            let podsIO = fileSystem.remove(itemPath: pods.path).handleError { _ in }
+            let resolvedIO = fileSystem.remove(itemPath: resolved.path).handleError { _ in }
+            
+            return podsIO.followedBy(resolvedIO)^.mapError { _ in .clean() }
+        }
+    }
+    
+    private func cleanCarthage(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        EnvIO { fileSystem in
+            let cartfile = playground.appending(filename: "Carthage", in: .contentFiles)
+            return fileSystem.remove(itemPath: cartfile.path)^
+                             .mapError { _ in .clean() }.handleError { _ in }
+        }
+    }
+    
+    private func cleanSPM(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        #warning("it must be done when apple fixes the Xcode bug '47668990'")
+        return EnvIO.pure(())^
     }
     
     // MARK: helpers <file manager>

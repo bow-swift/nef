@@ -16,7 +16,7 @@ public struct RenderMarkdownEnvironment<A> {
     public init(console: Console,
                 fileSystem: FileSystem,
                 persistence: RenderingPersistence<A>,
-                playgroundSystem: PlaygroundSystem,
+                playgroundSystem: XcodePlaygroundSystem,
                 markdownPrinter: @escaping (_ content: String) -> EnvIO<CoreMarkdownEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.persistence = persistence

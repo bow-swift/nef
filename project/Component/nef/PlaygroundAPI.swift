@@ -16,7 +16,7 @@ extension PlaygroundAPI {
                      .build(name: name, output: output, platform: platform, dependencies: dependencies)
                      .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
                                                                                  shell: MacPlaygroundShell(),
-                                                                                 playgroundSystem: MacPlaygroundSystem(),
+                                                                                 playgroundSystem: MacXcodePlaygroundSystem(),
                                                                                  fileSystem: MacFileSystem()) }^
                      .mapError { _ in .playground() }
     }
@@ -26,7 +26,7 @@ extension PlaygroundAPI {
                      .build(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
                      .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
                                                                                  shell: MacPlaygroundShell(),
-                                                                                 playgroundSystem: MacPlaygroundSystem(),
+                                                                                 playgroundSystem: MacXcodePlaygroundSystem(),
                                                                                  fileSystem: MacFileSystem()) }^
                      .mapError { _ in .playground() }
     }

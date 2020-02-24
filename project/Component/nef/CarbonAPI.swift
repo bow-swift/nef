@@ -70,7 +70,7 @@ public extension CarbonAPI {
         .init(console: console,
               fileSystem: MacFileSystem(),
               persistence: .init(),
-              playgroundSystem: MacPlaygroundSystem(),
+              playgroundSystem: MacXcodePlaygroundSystem(),
               style: style,
               carbonPrinter: CoreRender.carbon.render)
     }

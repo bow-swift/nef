@@ -13,17 +13,18 @@ public struct RenderCompilerEnvironment<A> {
     let codeEnvironment: RenderEnvironment<A>
     
     internal var console: Console { codeEnvironment.console }
-    internal var playgroundSystem: PlaygroundSystem { codeEnvironment.playgroundSystem }
+    internal var playgroundSystem: XcodePlaygroundSystem { codeEnvironment.playgroundSystem }
     internal var fileSystem: FileSystem { codeEnvironment.fileSystem }
     
     public init(console: Console,
                 fileSystem: FileSystem,
                 compilerShell: CompilerShell,
-                playgroundSystem: PlaygroundSystem,
+                playgroundShell: PlaygroundShell,
+                playgroundSystem: XcodePlaygroundSystem,
                 codePrinter: @escaping (_ content: String) -> EnvIO<CoreCodeEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.compilerSystem = NefCompilerSystem()
-        self.compilerEnvironment = CompilerSystemEnvironment(fileSystem: fileSystem, shell: compilerShell)
+        self.compilerEnvironment = CompilerSystemEnvironment(fileSystem: fileSystem, shell: compilerShell, playgroundShell: playgroundShell)
         
         self.render = Render<A>()
         self.codeEnvironment = RenderEnvironment(console: console,

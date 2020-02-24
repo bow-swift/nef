@@ -2,13 +2,13 @@
 
 import Foundation
 
-public enum PlaygroundSystemError: Error {
+public enum XcodePlaygroundSystemError: Error {
     case xcworkspaces(information: String = "")
     case playgrounds(information: String = "")
     case pages(information: String = "")
 }
 
-extension PlaygroundSystemError: CustomStringConvertible {
+extension XcodePlaygroundSystemError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .xcworkspaces(let info):

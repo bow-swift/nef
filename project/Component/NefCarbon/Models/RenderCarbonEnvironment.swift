@@ -17,7 +17,7 @@ public struct RenderCarbonEnvironment<A> {
     public init(console: Console,
                 fileSystem: FileSystem,
                 persistence: RenderingPersistence<A>,
-                playgroundSystem: PlaygroundSystem,
+                playgroundSystem: XcodePlaygroundSystem,
                 style: CarbonStyle,
                 carbonPrinter: @escaping (_ content: String) -> EnvIO<CoreCarbonEnvironment, CoreRenderError, RenderingOutput<A>>) {
         

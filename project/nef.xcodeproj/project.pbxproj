@@ -99,13 +99,13 @@
 		8B5812612403D89F00587211 /* IO+Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58125F2403D89A00587211 /* IO+Console.swift */; };
 		8B5812652403D8BE00587211 /* CleanError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812632403D8BB00587211 /* CleanError.swift */; };
 		8B5812662403D8CC00587211 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */; };
-		8B5812672403D8CC00587211 /* PlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */; };
+		8B5812672403D8CC00587211 /* XcodePlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4B23D62BF200B33CD0 /* XcodePlaygroundSystem.swift */; };
 		8B5812682403D8CC00587211 /* RenderingPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */; };
 		8B5812692403D8CC00587211 /* PlaygroundShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978623FAA8C0000A512F /* PlaygroundShell.swift */; };
 		8B58126A2403D8CC00587211 /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */; };
 		8B58126B2403D8CC00587211 /* RenderingOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */; };
 		8B58126C2403D8CC00587211 /* RenderingPersistenceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */; };
-		8B58126D2403D8CC00587211 /* PlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */; };
+		8B58126D2403D8CC00587211 /* XcodePlaygroundSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF4923D62BF200B33CD0 /* XcodePlaygroundSystemError.swift */; };
 		8B58126E2403D8CC00587211 /* PlaygroundShellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD6978F23FAAED0000A512F /* PlaygroundShellError.swift */; };
 		8B58126F2403D9B000587211 /* CleanAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812582403D78400587211 /* CleanAPI.swift */; };
 		8B5812712403D9F000587211 /* _Clean.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B5812702403D9F000587211 /* _Clean.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -137,7 +137,7 @@
 		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
 		8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17923B0C2AF000DB61F /* BowEffects */; };
 		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
-		8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */; };
+		8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacXcodePlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
@@ -537,8 +537,8 @@
 		8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingPersistence.swift; sourceTree = "<group>"; };
 		8BA1EF4823D62BF200B33CD0 /* MarkdownError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownError.swift; sourceTree = "<group>"; };
-		8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundSystemError.swift; sourceTree = "<group>"; };
-		8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundSystem.swift; sourceTree = "<group>"; };
+		8BA1EF4923D62BF200B33CD0 /* XcodePlaygroundSystemError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcodePlaygroundSystemError.swift; sourceTree = "<group>"; };
+		8BA1EF4B23D62BF200B33CD0 /* XcodePlaygroundSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcodePlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BA1EF4D23D62BF200B33CD0 /* IO+Console.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IO+Console.swift"; sourceTree = "<group>"; };
 		8BA1EF4F23D62BF200B33CD0 /* RenderEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderEnvironment.swift; sourceTree = "<group>"; };
 		8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderingURL.swift; sourceTree = "<group>"; };
@@ -550,7 +550,7 @@
 		8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRenderError.swift; sourceTree = "<group>"; };
 		8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreEnvironments.swift; sourceTree = "<group>"; };
 		8BAF222123D223A400786F2F /* CoreRender+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreRender+Test.swift"; sourceTree = "<group>"; };
-		8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlaygroundSystem.swift; sourceTree = "<group>"; };
+		8BB7D13823B0E10300C8E6F8 /* MacXcodePlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacXcodePlaygroundSystem.swift; sourceTree = "<group>"; };
 		8BBCA654239683D400BE058B /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		8BBD14AF2390179B0002970C /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD14B12390179B0002970C /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
@@ -1008,7 +1008,7 @@
 				8BD6F704238C259100DD93C4 /* MacFileSytem.swift */,
 				8B46C430238FD70700437659 /* MacPackageShell.swift */,
 				8BD6978C23FAAB2A000A512F /* MacPlaygroundShell.swift */,
-				8BB7D13823B0E10300C8E6F8 /* MacPlaygroundSystem.swift */,
+				8BB7D13823B0E10300C8E6F8 /* MacXcodePlaygroundSystem.swift */,
 				8BA1EF3923D62B9C00B33CD0 /* MacRenderSystem.swift */,
 			);
 			path = Instances;
@@ -1188,7 +1188,7 @@
 				8BA1EF3C23D62BBA00B33CD0 /* FileSystemError.swift */,
 				8BA1EF3D23D62BBA00B33CD0 /* RenderingOutput.swift */,
 				8BA1EF3E23D62BBA00B33CD0 /* RenderingPersistenceError.swift */,
-				8BA1EF4923D62BF200B33CD0 /* PlaygroundSystemError.swift */,
+				8BA1EF4923D62BF200B33CD0 /* XcodePlaygroundSystemError.swift */,
 				8BD6978F23FAAED0000A512F /* PlaygroundShellError.swift */,
 			);
 			path = Errors;
@@ -1198,7 +1198,7 @@
 			isa = PBXGroup;
 			children = (
 				8BA1EF4023D62BBA00B33CD0 /* FileSystem.swift */,
-				8BA1EF4B23D62BF200B33CD0 /* PlaygroundSystem.swift */,
+				8BA1EF4B23D62BF200B33CD0 /* XcodePlaygroundSystem.swift */,
 				8BA1EF4123D62BBA00B33CD0 /* RenderingPersistence.swift */,
 				8BD6978623FAA8C0000A512F /* PlaygroundShell.swift */,
 			);
@@ -2391,8 +2391,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B5812662403D8CC00587211 /* FileSystem.swift in Sources */,
-				8B58126D2403D8CC00587211 /* PlaygroundSystemError.swift in Sources */,
-				8B5812672403D8CC00587211 /* PlaygroundSystem.swift in Sources */,
+				8B58126D2403D8CC00587211 /* XcodePlaygroundSystemError.swift in Sources */,
+				8B5812672403D8CC00587211 /* XcodePlaygroundSystem.swift in Sources */,
 				8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */,
 				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
 				8BD6979F23FC4641000A512F /* Platform+Utils.swift in Sources */,
@@ -2481,7 +2481,7 @@
 			files = (
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8BD6978E23FAAB2D000A512F /* MacPlaygroundShell.swift in Sources */,
-				8BB7D13A23B0E10800C8E6F8 /* MacPlaygroundSystem.swift in Sources */,
+				8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */,
 				8BD6973B23F5AA36000A512F /* Kleisli+API.swift in Sources */,
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,

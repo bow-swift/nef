@@ -18,7 +18,7 @@ public struct RenderJekyllEnvironment<A> {
     public init(console: Console,
                 fileSystem: FileSystem,
                 persistence: RenderingPersistence<A>,
-                playgroundSystem: PlaygroundSystem,
+                playgroundSystem: XcodePlaygroundSystem,
                 jekyllPrinter: @escaping (_ content: String) -> EnvIO<CoreJekyllEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.persistence = persistence
