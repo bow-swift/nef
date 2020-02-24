@@ -13,6 +13,7 @@ public struct Clean {
         EnvIO { (env: CleanEnvironment) in
             binding(
                 |<-env.console.print(information: "\t• Clean playground '\(nefPlayground.name)'"),
+                |<-env.shell.clean(playground: nefPlayground).provide(env.fileSystem).mapError { e in .clean(info: e) },
             yield: ())^.reportStatus(console: env.console)
         }
     }

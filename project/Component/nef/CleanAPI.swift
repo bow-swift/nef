@@ -14,7 +14,7 @@ public extension CleanAPI {
     static func clean(nefPlayground: URL) -> EnvIO<Console, nef.Error, Void> {
         NefClean.Clean()
                 .nefPlayground(.init(project: nefPlayground))
-                .contramap { console in CleanEnvironment(console: console, shell: MacPlaygroundShell()) }
+                .contramap { console in CleanEnvironment(console: console, fileSystem: MacFileSystem(), shell: MacPlaygroundShell()) }
                 .mapError { e in nef.Error.compiler(info: "clean: \(e)") }
     }
 }
