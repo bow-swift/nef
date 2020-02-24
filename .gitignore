@@ -2,6 +2,8 @@
 **/.DS_Store
 **/xcuserdata/
 BowPlayground
+bin
+sha_*.txt
 
 ## SPM
 .build
