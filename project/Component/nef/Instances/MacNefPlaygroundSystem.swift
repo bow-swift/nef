@@ -229,7 +229,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
             }
         }
         
-        let podfile = playground.appending(filename: "Podfile", in: .contentFiles)
+        let podfile = playground.appending(pathComponent: "Podfile", in: .contentFiles)
         let lastBowVersion = EnvIO<FileSystem, NefPlaygroundSystemError, String>.var()
         
         return binding(
@@ -259,7 +259,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
             }
         }
         
-        let contentPodfile = playground.appending(filename: "Podfile", in: .contentFiles)
+        let contentPodfile = playground.appending(pathComponent: "Podfile", in: .contentFiles)
         
         return binding(
             |<-self.checkCocoaPod(),
@@ -272,7 +272,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
     }
     
     private func setDependencies(playground: NefPlaygroundURL, xcodeproj: URL, cartfile: URL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-        let contentCartfile = playground.appending(filename: "Cartfile", in: .contentFiles)
+        let contentCartfile = playground.appending(pathComponent: "Cartfile", in: .contentFiles)
         
         return binding(
             |<-self.checkCarthage(),
@@ -379,8 +379,8 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
     
     private func cleanPods(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         EnvIO { fileSystem in
-            let pods = playground.appending(filename: "Pods", in: .contentFiles)
-            let resolved = playground.appending(filename: "Podfile.lock", in: .contentFiles)
+            let pods = playground.appending(pathComponent: "Pods", in: .contentFiles)
+            let resolved = playground.appending(pathComponent: "Podfile", extension: "lock", in: .contentFiles)
             
             let podsIO = fileSystem.remove(itemPath: pods.path).handleError { _ in }
             let resolvedIO = fileSystem.remove(itemPath: resolved.path).handleError { _ in }
@@ -391,7 +391,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
     
     private func cleanCarthage(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         EnvIO { fileSystem in
-            let cartfile = playground.appending(filename: "Carthage", in: .contentFiles)
+            let cartfile = playground.appending(pathComponent: "Carthage", in: .contentFiles)
             return fileSystem.remove(itemPath: cartfile.path)^
                              .mapError { _ in .clean() }.handleError { _ in }
         }

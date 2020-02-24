@@ -127,8 +127,8 @@ class NefCompilerSystem: CompilerSystem {
             EnvIO { env in
                 let xcworkspaceName = xcworkspace.lastPathComponent.removeExtension
                 let derivedData = nefPlayground.appending(.derivedData)
-                let workspaceFramework = nefPlayground.appending(filename: xcworkspaceName, in: .fw)
-                let log = nefPlayground.appending(filename: xcworkspaceName, in: .log)
+                let workspaceFramework = nefPlayground.appending(pathComponent: xcworkspaceName, in: .fw)
+                let log = nefPlayground.appending(pathComponent: xcworkspaceName, in: .log)
                 
                 let isCached = cached && env.fileSystem.exist(itemPath: workspaceFramework.path)
                 guard !isCached else { return IO.pure(()) }
@@ -149,8 +149,8 @@ class NefCompilerSystem: CompilerSystem {
         EnvIO { env in
             let playgroundName = playground.lastPathComponent.removeExtension
             let filename = "\(playgroundName)-\(filename).swift".lowercased()
-            let output = nefPlayground.appending(filename: filename, in: .build)
-            let log = nefPlayground.appending(filename: filename, in: .log)
+            let output = nefPlayground.appending(pathComponent: filename, in: .build)
+            let log = nefPlayground.appending(pathComponent: filename, in: .log)
             let temporal = IO<CompilerSystemError, URL>.var()
             
             return binding(

@@ -7,19 +7,23 @@ public struct NefPlaygroundURL {
     public var name: String { project.lastPathComponent.removeExtension }
     
     public init(project: URL) {
-        self.project = project
+        self.project = project.deletingPathExtension().appendingPathExtension("app")
     }
     
     public init(folder: URL, name: String) {
-        self.project = folder.appendingPathComponent("\(name).app")
+        self.project = folder.appendingPathComponent("\(name.removeExtension).app")
     }
     
     public func appending(_ component: Component) -> URL {
         project.appendingPathComponent(component.pathComponent)
     }
     
-    public func appending(filename: String, in component: Component) -> URL {
-        project.appendingPathComponent(component.pathComponent).appendingPathComponent(filename.removeExtension).appendingPathExtension(component.extension)
+    public func appending(pathComponent: String, in component: Component) -> URL {
+        project.appendingPathComponent(component.pathComponent).appendingPathComponent(pathComponent.removeExtension).appendingPathExtension(component.extension)
+    }
+    
+    public func appending(pathComponent: String, extension: String, in component: Component) -> URL {
+        project.appendingPathComponent(component.pathComponent).appendingPathComponent(pathComponent.removeExtension).appendingPathExtension(`extension`)
     }
     
     public enum Component: String {
