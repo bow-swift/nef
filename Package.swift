@@ -22,6 +22,7 @@ let package = Package(
         .target(name: "NefJekyll", dependencies: ["NefRender"], path: "project/Component/NefJekyll", publicHeadersPath: "Support Files"),
         .target(name: "NefCarbon", dependencies: ["NefRender"], path: "project/Component/NefCarbon", publicHeadersPath: "Support Files"),
         .target(name: "NefCompiler", dependencies: ["NefRender"], path: "project/Component/NefCompiler", publicHeadersPath: "Support Files"),
+        .target(name: "NefClean", dependencies: ["NefCommon"], path: "project/Component/NefClean", publicHeadersPath: "Support Files"),
         .target(name: "NefPlayground", dependencies: ["NefCommon"], path: "project/Component/NefPlayground", publicHeadersPath: "Support Files"),
         .target(name: "NefSwiftPlayground", dependencies: ["NefCommon"], path: "project/Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
 
@@ -29,6 +30,7 @@ let package = Package(
                 dependencies: ["Swiftline",
                                "NefCore",
                                "NefCompiler",
+                               "NefClean",
                                "NefMarkdown",
                                "NefJekyll",
                                "NefCarbon",

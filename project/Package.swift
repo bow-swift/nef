@@ -9,6 +9,7 @@ let package = Package(
     products: [
         .executable(name: "nef",                 targets: ["NefMenu"]),
         .executable(name: "nefc",                targets: ["Compiler"]),
+        .executable(name: "nef-clean",           targets: ["Clean"]),
         .executable(name: "nef-markdown",        targets: ["Markdown"]),
         .executable(name: "nef-markdown-page",   targets: ["MarkdownPage"]),
         .executable(name: "nef-jekyll",          targets: ["Jekyll"]),
@@ -31,6 +32,7 @@ let package = Package(
         .target(name: "NefJekyll", dependencies: ["NefRender"], path: "Component/NefJekyll", publicHeadersPath: "Support Files"),
         .target(name: "NefCarbon", dependencies: ["NefRender"], path: "Component/NefCarbon", publicHeadersPath: "Support Files"),
         .target(name: "NefCompiler", dependencies: ["NefRender"], path: "Component/NefCompiler", publicHeadersPath: "Support Files"),
+        .target(name: "NefClean", dependencies: ["NefCommon"], path: "Component/NefClean", publicHeadersPath: "Support Files"),
         .target(name: "NefPlayground", dependencies: ["NefCommon"], path: "Component/NefPlayground", publicHeadersPath: "Support Files"),
         .target(name: "NefSwiftPlayground", dependencies: ["NefCommon"], path: "Component/NefSwiftPlayground", publicHeadersPath: "Support Files"),
 
@@ -40,6 +42,7 @@ let package = Package(
                 dependencies: ["Swiftline",
                                "NefCore",
                                "NefCompiler",
+                               "NefClean",
                                "NefMarkdown",
                                "NefJekyll",
                                "NefCarbon",
@@ -47,12 +50,13 @@ let package = Package(
                                "NefSwiftPlayground"],
                 path: "Component/nef",
                 publicHeadersPath: "Support Files"),
-        
+
         .target(name: "CLIKit",
                 dependencies: ["nef"],
                 path: "UI",
                 exclude: ["Nef/main.swift",
                           "Compiler/main.swift",
+                          "Clean/main.swift",
                           "Markdown/main.swift",
                           "MarkdownPage/main.swift",
                           "Jekyll/main.swift",
@@ -62,9 +66,10 @@ let package = Package(
                           "Playground/main.swift",
                           "PlaygroundBook/main.swift"],
                 publicHeadersPath: "CLIKit/Support Files"),
-        
+
         .target(name: "NefMenu",        dependencies: ["CLIKit", "nef"], path: "UI/Nef",            sources: ["main.swift"]),
         .target(name: "Compiler",       dependencies: ["CLIKit", "nef"], path: "UI/Compiler",       sources: ["main.swift"]),
+        .target(name: "Clean",          dependencies: ["CLIKit", "nef"], path: "UI/Clean",          sources: ["main.swift"]),
         .target(name: "Markdown",       dependencies: ["CLIKit", "nef"], path: "UI/Markdown",       sources: ["main.swift"]),
         .target(name: "MarkdownPage",   dependencies: ["CLIKit", "nef"], path: "UI/MarkdownPage",   sources: ["main.swift"]),
         .target(name: "Jekyll",         dependencies: ["CLIKit", "nef"], path: "UI/Jekyll",         sources: ["main.swift"]),
