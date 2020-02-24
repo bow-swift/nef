@@ -91,6 +91,10 @@ class MacPlaygroundShell: PlaygroundShell {
         yield: ())^
     }
     
+    func clean(playground: NefPlaygroundURL) -> EnvIO<FileSystem, PlaygroundShellError, Void> {
+        fatalError()
+    }
+    
     // MARK: - steps
     private func downloadTemplate(into output: URL) -> EnvIO<FileSystem, PlaygroundShellError, URL> {
         func downloadZip(into output: URL) -> EnvIO<FileSystem, PlaygroundShellError, URL> {

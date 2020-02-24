@@ -61,7 +61,7 @@ public struct Compiler {
     private func compile(page: RenderingOutput, filename: String, inPlayground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         let page = page.output.all().joined()
         
-        return EnvIO { (env: Environment) -> IO<RenderError, Void> in
+        return EnvIO { env -> IO<RenderError, Void> in
             binding(
                 |<-env.console.print(information: "\t• Compiling page '\(filename.removeExtension)'"),
                 |<-env.compilerSystem

@@ -7,6 +7,7 @@ public enum PlaygroundShellError: Error {
     case template(info: String = "")
     case dependencies(info: String = "")
     case linking(info: String = "")
+    case clean(info: String = "")
 }
 
 extension PlaygroundShellError: CustomStringConvertible {
@@ -18,6 +19,8 @@ extension PlaygroundShellError: CustomStringConvertible {
             return "resolving nef playground dependencies".appending(error: info)
         case .linking(let info):
             return "linking playground into workspace".appending(error: info)
+        case .clean(let info):
+             return "clean up nef playground".appending(error: info)
         }
     }
 }

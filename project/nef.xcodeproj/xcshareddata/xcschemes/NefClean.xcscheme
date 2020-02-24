@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8BF75F8422CA71E700EC53A1"
-               BuildableName = "nef.framework"
-               BlueprintName = "nef"
+               BlueprintIdentifier = "8B5812442403D69000587211"
+               BuildableName = "NefClean.framework"
+               BlueprintName = "NefClean"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -50,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8BF75F8422CA71E700EC53A1"
-            BuildableName = "nef.framework"
-            BlueprintName = "nef"
+            BlueprintIdentifier = "8B5812442403D69000587211"
+            BuildableName = "NefClean.framework"
+            BlueprintName = "NefClean"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
