@@ -8,13 +8,13 @@ import Bow
 import BowEffects
 
 
-extension SwiftPlaygroundAPI {
+public extension SwiftPlaygroundAPI {
     
-    public static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
         render(packageContent: packageContent, name: name, output: output, excludes: [])
     }
     
-    public static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL> {
+    static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL> {
         let invalidModules: [PlaygroundExcludeItem] = [.module(name: "RxSwift"), .module(name: "RxRelay"), .module(name: "RxTest"), .module(name: "RxBlocking"), .module(name: "RxCocoa"),
                                                        .module(name: "SwiftCheck"),
                                                        .module(name: "Swiftline"),

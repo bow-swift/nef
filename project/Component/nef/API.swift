@@ -7,6 +7,7 @@ import Bow
 import BowEffects
 
 
+public enum Version: VersionAPI {}
 public enum Compiler: CompilerAPI {}
 public enum Clean: CleanAPI {}
 public enum Markdown: MarkdownAPI {}
@@ -15,6 +16,13 @@ public enum Carbon: CarbonAPI {}
 public enum Playground: PlaygroundAPI {}
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
+
+public protocol VersionAPI {
+    /// Get the nef build's version number.
+    /// 
+    /// - Returns: An IO that produce errors of type `nef.Error` and the build's version number.
+    static func info() -> IO<nef.Error, String>
+}
 
 public protocol CompilerAPI {
     /// Compile Xcode Playground.
