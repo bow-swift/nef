@@ -114,7 +114,7 @@
 		8B5812842403DD5E00587211 /* Clean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58127F2403DC8C00587211 /* Clean.swift */; };
 		8B5812862403F65400587211 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812852403F65400587211 /* Version.swift */; };
 		8B5812892403F7ED00587211 /* VersionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812872403F7DD00587211 /* VersionAPI.swift */; };
-		8B58128D2403FB5700587211 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58128B2403FB5500587211 /* Configuration.swift */; };
+		8B58128D2403FB5700587211 /* BuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58128B2403FB5500587211 /* BuildConfiguration.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B7E807923DA13D700D4F6BD /* RenderCarbonEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E807723DA13D200D4F6BD /* RenderCarbonEnvironment.swift */; };
@@ -523,7 +523,7 @@
 		8B58127F2403DC8C00587211 /* Clean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clean.swift; sourceTree = "<group>"; };
 		8B5812852403F65400587211 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		8B5812872403F7DD00587211 /* VersionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAPI.swift; sourceTree = "<group>"; };
-		8B58128B2403FB5500587211 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		8B58128B2403FB5500587211 /* BuildConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildConfiguration.swift; sourceTree = "<group>"; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B646F94237D71C50009AB43 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		8B6B119422CB9FDE0060177F /* NefCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1395,7 +1395,7 @@
 		8BD6973823F5AA11000A512F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				8B58128B2403FB5500587211 /* Configuration.swift */,
+				8B58128B2403FB5500587211 /* BuildConfiguration.swift */,
 				8BD6973923F5AA2E000A512F /* Kleisli+API.swift */,
 			);
 			path = Utils;
@@ -2492,7 +2492,7 @@
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8BD6978E23FAAB2D000A512F /* MacNefPlaygroundSystem.swift in Sources */,
 				8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */,
-				8B58128D2403FB5700587211 /* Configuration.swift in Sources */,
+				8B58128D2403FB5700587211 /* BuildConfiguration.swift in Sources */,
 				8BD6973B23F5AA36000A512F /* Kleisli+API.swift in Sources */,
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
