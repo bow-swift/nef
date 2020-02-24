@@ -20,8 +20,8 @@ public enum SwiftPlayground: SwiftPlaygroundAPI {}
 public protocol VersionAPI {
     /// Get the nef build's version number.
     /// 
-    /// - Returns: An IO that produce errors of type `nef.Error` and the build's version number.
-    static func info() -> IO<nef.Error, String>
+    /// - Returns: An IO that never produce errors and return the build's version number.
+    static func info() -> UIO<String>
 }
 
 public protocol CompilerAPI {

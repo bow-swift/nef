@@ -11,8 +11,8 @@ import BowEffects
 
 public extension VersionAPI {
     
-    static func info() -> IO<nef.Error, String> {
-        IO.pure("0.6.0")^
+    static func info() -> UIO<String> {
+        IO.pure(Configuration.buildVersion)^
     }
 }
 
