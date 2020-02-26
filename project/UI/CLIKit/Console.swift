@@ -27,13 +27,13 @@ public struct Console {
     }
     
     public func exit<A>(failure: String) -> IO<Console.Error, A> {
-        print(message: "☠️  error:\(scriptName.lowercased()) ".bold.red + "\(failure)")
+        print(message: "☠️  \(scriptName.lowercased()) ".bold.red + "\(failure)")
             .map { _ in Darwin.exit(-1) }^
         
     }
     
     public func exit<A>(success: String) -> IO<Console.Error, A> {
-        print(message: "🙌 success:\(scriptName.lowercased()) ".bold.green + "\(success)")
+        print(message: "🙌 \(scriptName.lowercased()) ".bold.green + "\(success)")
             .map { _ in Darwin.exit(0) }^
     }
     
@@ -43,11 +43,12 @@ public struct Console {
     /// In case the parameters are not correct or are incompleted it won't return anything.
     ///
     /// - Returns: the parameters to configure the script: path to parser file and output path for render.
-    public func input() -> IO<Console.Error, [String: String]> {
+    public func input(help: Bool = true) -> IO<Console.Error, [String: String]> {
         func getArgumentList() -> IO<Console.Error, [Argument]> {
             IO.invoke {
-                let args = self.arguments + [.init(name: "help", placeholder: "", description: "", isFlag: true, default: "false"),
-                                             .init(name: "h", placeholder: "", description: "", isFlag: true, default: "false")]
+                let helpArguments = [Argument(name: "help", placeholder: "", description: "", isFlag: true, default: "false"),
+                                     Argument(name: "h", placeholder: "", description: "", isFlag: true, default: "false")]
+                let args = self.arguments + (help ? helpArguments : [])
                 let keys = args.map { $0.name }
                 
                 guard Array(Set(keys)).count == keys.count else { throw Console.Error.duplicated }
@@ -58,7 +59,10 @@ public struct Console {
         func arguments(_ args: [Argument]) -> IO<Console.Error, [String: String]> {
             let result: [String: String] = args.reduce(into: [:]) { (res, argument) in
                 let commandline = CommandLine.arguments.enumerated().first { (offset, element) in
-                    element.trimmingCharacters(in: ["-"]).lowercased() == argument.name.lowercased()
+                    let found = element.trimmingCharacters(in: ["-"]).lowercased() == argument.name.lowercased()
+                    let isValid = "$\(element)".contains("$-") || argument.isFlag
+                    
+                    return found && isValid
                 }
                 
                 if let index = commandline?.offset {
@@ -99,6 +103,8 @@ public struct Console {
         let listArguments = arguments.map { arg in arg.displayParameter }.joined(separator: " ")
         let requireds = arguments.filter { $0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
         let optionals = arguments.filter { !$0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
+        let commands = arguments.filter { !$0.isRequired }.map { arg in arg.displayCommand }.joined(separator: "\n")
+        let allAreFlags = arguments.filter { $0.isFlag }.count == arguments.count
         
         if optionals.isEmpty {
             return  """
@@ -107,6 +113,26 @@ public struct Console {
                     \t\(description)
                     
                     \(requireds)
+                    
+                    """
+        } else if requireds.isEmpty, allAreFlags {
+            return  """
+                    \(scriptName.bold) \(listArguments)
+                    
+                    \t\(description.bold)
+                    
+                    \(commands)
+                    
+                    """
+        } else if requireds.isEmpty {
+            return  """
+                    \(scriptName.bold) \(listArguments)
+                    
+                    \t\(description)
+                    
+                    \t\("Options".bold)
+                    
+                    \(optionals)
                     
                     """
         } else {
@@ -160,7 +186,7 @@ public struct Console {
             case .duplicated:
                 return "the script has declared duplicated keys."
             case .arguments:
-                return "do not received the whole required arguments."+" Use".bold+" --help, --h".cyan
+                return "did not receive all the required arguments."+" Use".bold+" --help, --h".cyan
             case .render(let info):
                 return info.isEmpty ? "" : "Render failure: \(info.lightRed)"
             }
@@ -184,10 +210,18 @@ extension Console.Argument {
     var displayDescription: String {
         let defaultValue = self.default.trimmingEmptyCharacters
         if defaultValue.isEmpty {
-            return "\t--\(name)".lightCyan+" \(description)"
+            return "\t--\(display(name: name))".lightCyan+"  \(description)"
         } else {
-            return "\t--\(name)".lightCyan+" \(description)"+" [default: ".dim.lightMagenta+defaultValue.lightMagenta+"]".dim.lightMagenta
+            return "\t--\(display(name: name))".lightCyan+"  \(description)"+" [default: ".dim.lightMagenta+defaultValue.lightMagenta+"]".dim.lightMagenta
         }
+    }
+    
+    var displayCommand: String {
+        "\t\(display(name: name))".bold.lightCyan+"  \(description.trimmingEmptyCharacters)"
+    }
+    
+    private func display(name: String) -> String {
+        name.padding(toLength: 12, withPad: " ", startingAt: 0)
     }
 }
 

@@ -13,13 +13,13 @@ import BowEffects
 
 public extension CompilerAPI {
     
-    static func compile(playground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
-        let playgroundName = playground.lastPathComponent.removeExtension
+    static func compile(xcodePlayground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
+        let playgroundName = xcodePlayground.lastPathComponent.removeExtension
         let output = URL(fileURLWithPath: "/tmp/\(playgroundName)")
         let nefPlayground = EnvIO<Console, nef.Error, URL>.var()
         
         return binding(
-            nefPlayground <- Playground.nef(fromPlayground: playground, name: playgroundName, output: output, platform: platform, dependencies: dependencies),
+            nefPlayground <- Playground.nef(xcodePlayground: xcodePlayground, name: playgroundName, output: output, platform: platform, dependencies: dependencies),
                           |<-compile(nefPlayground: nefPlayground.get, cached: cached),
         yield: ())^
     }

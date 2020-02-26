@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1130"
-   version = "1.7">
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8BF75F8422CA71E700EC53A1"
-               BuildableName = "nef.framework"
-               BlueprintName = "nef"
+               BlueprintIdentifier = "8B444F1423FED31400975C8C"
+               BuildableName = "nef-menu"
+               BlueprintName = "Nef"
                ReferencedContainer = "container:nef.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,8 +27,8 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <TestPlans>
-      </TestPlans>
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -40,15 +40,26 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8BF75F8422CA71E700EC53A1"
-            BuildableName = "nef.framework"
-            BlueprintName = "nef"
+            BlueprintIdentifier = "8B444F1423FED31400975C8C"
+            BuildableName = "nef-menu"
+            BlueprintName = "Nef"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-h"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "playground"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -56,15 +67,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8BF75F8422CA71E700EC53A1"
-            BuildableName = "nef.framework"
-            BlueprintName = "nef"
+            BlueprintIdentifier = "8B444F1423FED31400975C8C"
+            BuildableName = "nef-menu"
+            BlueprintName = "Nef"
             ReferencedContainer = "container:nef.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

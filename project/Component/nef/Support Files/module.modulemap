@@ -7,6 +7,12 @@ framework module nef {
         export *
     }
     
+    explicit module Compiler {
+        header "_Compiler.h"
+        export Core
+        export *
+    }
+    
     explicit module Markdown {
         header "_Markdown.h"
         export Core
@@ -21,6 +27,12 @@ framework module nef {
   
     explicit module Carbon {
         header "_Carbon.h"
+        export Core
+        export *
+    }
+    
+    explicit module Playground {
+        header "_Playground.h"
         export Core
         export *
     }

@@ -22,7 +22,7 @@ public struct Playground {
         yield: nefPlayground.get.project)^
     }
     
-    public func build(playground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
+    public func build(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
         let name = playgroundName(name)
         let nefPlayground = EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL>.var()
         
@@ -30,7 +30,7 @@ public struct Playground {
             nefPlayground <- self.template(output: output, name: name, platform: platform),
                           |<-self.createStructure(playground: nefPlayground.get),
                           |<-self.setDependencies(dependencies, playground: nefPlayground.get, name: name),
-                          |<-self.setNefPlayground(nefPlayground.get, withPlayground: playground, name: name),
+                          |<-self.setNefPlayground(nefPlayground.get, withXcodePlayground: xcodePlayground, name: name),
                           |<-self.linkPlaygrounds(nefPlayground.get),
         yield: nefPlayground.get.project)^
     }
@@ -76,10 +76,10 @@ public struct Playground {
         }
     }
     
-    private func setNefPlayground(_ nefPlayground: NefPlaygroundURL, withPlayground playground: URL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+    private func setNefPlayground(_ nefPlayground: NefPlaygroundURL, withXcodePlayground xcodePlayground: URL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
         binding(
             |<-self.removePlaygrounds(in: nefPlayground).handleError { _ in },
-            |<-self.move(playground: playground, to: nefPlayground, name: name),
+            |<-self.move(playground: xcodePlayground, to: nefPlayground, name: name),
         yield: ())^
     }
     
