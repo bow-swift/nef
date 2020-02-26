@@ -43,7 +43,7 @@ public func markdownPage(script: String) -> Either<CLIKit.Console.Error, Void> {
     let console = Console(script: script,
                           description: "Render a markdown file from a Playground page",
                           arguments: .init(name: MarkdownPageCommand.page.rawValue, placeholder: "path-to-playground-page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
-                                     .init(name: MarkdownPageCommand.output.rawValue, placeholder: "path-to-output", description: "path where markdown are saved to. ex. `/home`"),
+                                     .init(name: MarkdownPageCommand.output.rawValue, placeholder: "path-to-output", description: "path where markdown files are saved to. ex. `/home`"),
                                      .init(name: MarkdownPageCommand.verbose.rawValue, placeholder: "", description: "run markdown page in verbose mode.", isFlag: true, default: "false"))
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, filename: String, output: URL, verbose: Bool).self)
