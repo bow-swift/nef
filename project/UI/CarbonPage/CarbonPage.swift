@@ -70,7 +70,7 @@ public func carbonPage(script: String) -> Either<CLIKit.Console.Error, Void> {
                                      .init(name: CarbonPageCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
                                      .init(name: CarbonPageCommand.theme.rawValue, placeholder: "", description: "Carbon theme.", default: "dracula"),
                                      .init(name: CarbonPageCommand.size.rawValue, placeholder: "", description: "export file size [1-5].", default: "2"),
-                                     .init(name: CarbonPageCommand.font.rawValue, placeholder: "", description: "carbon's font type.", default: "fira-code"),
+                                     .init(name: CarbonPageCommand.font.rawValue, placeholder: "", description: "Carbon font type.", default: "fira-code"),
                                      .init(name: CarbonPageCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
                                      .init(name: CarbonPageCommand.watermark.rawValue, placeholder: "", description: "shows/hides the watermark [true | false].", default: "true"),
                                      .init(name: CarbonPageCommand.verbose.rawValue, placeholder: "", description: "run carbon page in verbose mode.", isFlag: true, default: "false"))
