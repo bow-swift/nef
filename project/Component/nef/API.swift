@@ -18,7 +18,7 @@ public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
 
 public protocol VersionAPI {
-    /// Get the nef build's version number.
+    /// Gets nef build version number.
     /// 
     /// - Returns: An IO that never produce errors and return the build's version number.
     static func info() -> UIO<String>
