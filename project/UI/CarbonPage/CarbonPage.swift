@@ -73,7 +73,7 @@ public func carbonPage(script: String) -> Either<CLIKit.Console.Error, Void> {
                                      .init(name: CarbonPageCommand.font.rawValue, placeholder: "", description: "Carbon font type.", default: "fira-code"),
                                      .init(name: CarbonPageCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
                                      .init(name: CarbonPageCommand.watermark.rawValue, placeholder: "", description: "shows/hides the watermark [true | false].", default: "true"),
-                                     .init(name: CarbonPageCommand.verbose.rawValue, placeholder: "", description: "run carbon page in verbose mode.", isFlag: true, default: "false"))
+                                     .init(name: CarbonPageCommand.verbose.rawValue, placeholder: "", description: "run Carbon page in verbose mode.", isFlag: true, default: "false"))
 
     let args = IO<CLIKit.Console.Error, (content: String, filename: String, output: URL, style: CarbonStyle, verbose: Bool)>.var()
     let output = IO<CLIKit.Console.Error, (ast: String, url: URL)>.var()
