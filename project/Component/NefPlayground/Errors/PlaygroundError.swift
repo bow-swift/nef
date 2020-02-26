@@ -20,7 +20,7 @@ extension PlaygroundError: CustomStringConvertible {
         case .dependencies(let e):
             return "set nef playground dependencies".appending(error: e)
         case .operation(let operation, let e):
-            return "could not \(operation) successful".appending(error: e)
+            return "could not \(operation) successfully".appending(error: e)
         }
     }
 }
