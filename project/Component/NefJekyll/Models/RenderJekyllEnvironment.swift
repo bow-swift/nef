@@ -18,13 +18,13 @@ public struct RenderJekyllEnvironment<A> {
     public init(console: Console,
                 fileSystem: FileSystem,
                 persistence: RenderingPersistence<A>,
-                playgroundSystem: PlaygroundSystem,
+                xcodePlaygroundSystem: XcodePlaygroundSystem,
                 jekyllPrinter: @escaping (_ content: String) -> EnvIO<CoreJekyllEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.persistence = persistence
         self.render = Render<A>()
-        self.jekyllEnvironment = { permalink in RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter, permalink: permalink)) }
-        self.renderEnvironment = RenderEnvironment(console: console, playgroundSystem: playgroundSystem, fileSystem: fileSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter))
+        self.jekyllEnvironment = { permalink in RenderEnvironment(console: console, fileSystem: fileSystem, xcodePlaygroundSystem: xcodePlaygroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter, permalink: permalink)) }
+        self.renderEnvironment = RenderEnvironment(console: console, fileSystem: fileSystem, xcodePlaygroundSystem: xcodePlaygroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter))
     }
     
     // MARK: - helpers

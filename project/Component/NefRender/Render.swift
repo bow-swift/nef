@@ -106,7 +106,7 @@ public struct Render<A> {
             
             return binding(
                               |<-env.console.print(information: "Get pages in playground '\(playground)'"),
-                        pages <- env.playgroundSystem.pages(in: playground.url).provide(env.fileSystem).mapError { _ in .getPages(playground: playground.url) },
+                        pages <- env.xcodePlaygroundSystem.pages(in: playground.url).provide(env.fileSystem).mapError { _ in .getPages(playground: playground.url) },
                 rendererPages <- pages.get.traverse { url in RenderingURL(url: url, title: self.pageName(url)).io() },
             yield: rendererPages.get)^.reportStatus(console: env.console)
         }
@@ -119,7 +119,7 @@ public struct Render<A> {
             
             return binding(
                            |<-env.console.print(information: "Get playgrounds in '\(folder.lastPathComponent.removeExtension)'"),
-               playgrounds <- env.playgroundSystem.linkedPlaygrounds(at: folder).provide(env.fileSystem).mapError { _ in .getPlaygrounds(folder: folder) },
+               playgrounds <- env.xcodePlaygroundSystem.linkedPlaygrounds(at: folder).provide(env.fileSystem).mapError { _ in .getPlaygrounds(folder: folder) },
                   rendered <- playgrounds.get.traverse { url in RenderingURL(url: url, title: self.playgroundName(url)).io() },
             yield: rendered.get)^.reportStatus(console: env.console)
         }

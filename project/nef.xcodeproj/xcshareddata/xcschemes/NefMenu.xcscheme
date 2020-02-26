@@ -52,11 +52,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-h"
+            argument = "clean"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "playground"
+            argument = "--project ~/Desktop/BowPlayground"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

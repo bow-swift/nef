@@ -15,9 +15,9 @@ extension PlaygroundAPI {
         NefPlayground.Playground()
                      .build(name: name, output: output, platform: platform, dependencies: dependencies)
                      .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
-                                                                                 shell: MacPlaygroundShell(),
-                                                                                 playgroundSystem: MacPlaygroundSystem(),
-                                                                                 fileSystem: MacFileSystem()) }^
+                                                                                 fileSystem: MacFileSystem(),
+                                                                                 nefPlaygroundSystem: MacNefPlaygroundSystem(),
+                                                                                 xcodePlaygroundSystem: MacXcodePlaygroundSystem()) }^
                      .mapError { _ in .playground() }
     }
     
@@ -25,9 +25,9 @@ extension PlaygroundAPI {
         NefPlayground.Playground()
                      .build(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
                      .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
-                                                                                 shell: MacPlaygroundShell(),
-                                                                                 playgroundSystem: MacPlaygroundSystem(),
-                                                                                 fileSystem: MacFileSystem()) }^
+                                                                                 fileSystem: MacFileSystem(),
+                                                                                 nefPlaygroundSystem: MacNefPlaygroundSystem(),
+                                                                                 xcodePlaygroundSystem: MacXcodePlaygroundSystem()) }^
                      .mapError { _ in .playground() }
     }
 }

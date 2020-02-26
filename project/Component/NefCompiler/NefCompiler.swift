@@ -61,7 +61,7 @@ public struct Compiler {
     private func compile(page: RenderingOutput, filename: String, inPlayground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         let page = page.output.all().joined()
         
-        return EnvIO { (env: Environment) -> IO<RenderError, Void> in
+        return EnvIO { env -> IO<RenderError, Void> in
             binding(
                 |<-env.console.print(information: "\t• Compiling page '\(filename.removeExtension)'"),
                 |<-env.compilerSystem
@@ -109,15 +109,15 @@ public struct Compiler {
     
     // MARK: private <utils>
     private func xcworkspace(atFolder folder: URL) -> EnvIO<Environment, RenderError, URL> {
-        func getWorkspaces(atFolder folder: URL) -> EnvIO<Environment, PlaygroundSystemError, NEA<URL>> {
-            EnvIO { env in env.playgroundSystem.xcworkspaces(at: folder).provide(env.fileSystem) }
+        func getWorkspaces(atFolder folder: URL) -> EnvIO<Environment, XcodePlaygroundSystemError, NEA<URL>> {
+            EnvIO { env in env.xcodePlaygroundSystem.xcworkspaces(at: folder).provide(env.fileSystem) }
         }
         
-        func assertNumberOf(xcworkspaces: NEA<URL>, equalsTo total: Int) -> EnvIO<Environment, PlaygroundSystemError, Void> {
+        func assertNumberOf(xcworkspaces: NEA<URL>, equalsTo total: Int) -> EnvIO<Environment, XcodePlaygroundSystemError, Void> {
             xcworkspaces.all().count == total ? EnvIO.pure(())^ : EnvIO.raiseError(.xcworkspaces())^
         }
         
-        let xcworkspaces = EnvIO<Environment, PlaygroundSystemError, NEA<URL>>.var()
+        let xcworkspaces = EnvIO<Environment, XcodePlaygroundSystemError, NEA<URL>>.var()
         
         return binding(
             xcworkspaces <- getWorkspaces(atFolder: folder),

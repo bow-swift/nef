@@ -36,7 +36,8 @@ public extension CompilerAPI {
         .init(console: console,
               fileSystem: MacFileSystem(),
               compilerShell: MacCompilerShell(),
-              playgroundSystem: MacPlaygroundSystem(),
+              nefPlaygroundSystem: MacNefPlaygroundSystem(),
+              xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
               codePrinter: CoreRender.code.render)
     }
 }
