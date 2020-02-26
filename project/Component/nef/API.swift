@@ -40,7 +40,7 @@ public protocol CleanAPI {
     /// Cleans a nef Playground.
     ///
     /// - Parameters:
-    ///   - nefPlayground: folder where to search Xcode Playgrounds - it must be a nef Playground structure.
+    ///   - nefPlayground: folder where to search for Xcode Playgrounds - it must be a nef Playground structure.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
     static func clean(nefPlayground: URL) -> EnvIO<Console, nef.Error, Void>
 }
