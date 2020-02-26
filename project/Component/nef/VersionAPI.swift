@@ -12,7 +12,7 @@ import BowEffects
 public extension VersionAPI {
     
     static func info() -> UIO<String> {
-        IO.pure(Configuration.buildVersion)^
+        IO.pure(BuildConfiguration.buildVersion)^
     }
 }
 
