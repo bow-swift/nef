@@ -37,7 +37,7 @@ public protocol CompilerAPI {
 }
 
 public protocol CleanAPI {
-    /// Clean nef Playground.
+    /// Cleans a nef Playground.
     ///
     /// - Parameters:
     ///   - nefPlayground: folder where to search Xcode Playgrounds - it must be a nef Playground structure.
