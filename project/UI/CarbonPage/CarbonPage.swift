@@ -68,7 +68,7 @@ public func carbonPage(script: String) -> Either<CLIKit.Console.Error, Void> {
                           arguments: .init(name: CarbonPageCommand.page.rawValue, placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
                                      .init(name: CarbonPageCommand.output.rawValue, placeholder: "carbon output", description: "path where Carbon snippets are saved to. ex. `/home`"),
                                      .init(name: CarbonPageCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
-                                     .init(name: CarbonPageCommand.theme.rawValue, placeholder: "", description: "carbon's theme.", default: "dracula"),
+                                     .init(name: CarbonPageCommand.theme.rawValue, placeholder: "", description: "Carbon theme.", default: "dracula"),
                                      .init(name: CarbonPageCommand.size.rawValue, placeholder: "", description: "export file size [1-5].", default: "2"),
                                      .init(name: CarbonPageCommand.font.rawValue, placeholder: "", description: "carbon's font type.", default: "fira-code"),
                                      .init(name: CarbonPageCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
