@@ -186,7 +186,7 @@ public struct Console {
             case .duplicated:
                 return "the script has declared duplicated keys."
             case .arguments:
-                return "does not received the whole required arguments."+" Use".bold+" --help, --h".cyan
+                return "did not receive all the required arguments."+" Use".bold+" --help, --h".cyan
             case .render(let info):
                 return info.isEmpty ? "" : "Render failure: \(info.lightRed)"
             }
