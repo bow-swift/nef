@@ -112,6 +112,9 @@
 		8B58127B2403DC6C00587211 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58127A2403DC6C00587211 /* main.swift */; };
 		8B5812812403DC8F00587211 /* Clean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58127F2403DC8C00587211 /* Clean.swift */; };
 		8B5812842403DD5E00587211 /* Clean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58127F2403DC8C00587211 /* Clean.swift */; };
+		8B5812862403F65400587211 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812852403F65400587211 /* Version.swift */; };
+		8B5812892403F7ED00587211 /* VersionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812872403F7DD00587211 /* VersionAPI.swift */; };
+		8B58128D2403FB5700587211 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58128B2403FB5500587211 /* Configuration.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
 		8B7E807923DA13D700D4F6BD /* RenderCarbonEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E807723DA13D200D4F6BD /* RenderCarbonEnvironment.swift */; };
@@ -518,6 +521,9 @@
 		8B5812782403DC6C00587211 /* nef-clean */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "nef-clean"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B58127A2403DC6C00587211 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8B58127F2403DC8C00587211 /* Clean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clean.swift; sourceTree = "<group>"; };
+		8B5812852403F65400587211 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		8B5812872403F7DD00587211 /* VersionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAPI.swift; sourceTree = "<group>"; };
+		8B58128B2403FB5500587211 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		8B603E9F237A3CFE0059C9C7 /* nef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nef.h; sourceTree = "<group>"; };
 		8B646F94237D71C50009AB43 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		8B6B119422CB9FDE0060177F /* NefCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -746,6 +752,7 @@
 				8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */,
 				8BD6977723F6E8C5000A512F /* PlaygroundAPI.swift */,
 				8BD4E32A23881898002DECDB /* SwiftPlaygroundAPI.swift */,
+				8B5812872403F7DD00587211 /* VersionAPI.swift */,
 				8B46C436238FDA3A00437659 /* Instances */,
 				8B75AF9523805B3400388B1C /* Models */,
 				8BD6973823F5AA11000A512F /* Utils */,
@@ -987,6 +994,7 @@
 			isa = PBXGroup;
 			children = (
 				8B444F1723FED31400975C8C /* main.swift */,
+				8B5812852403F65400587211 /* Version.swift */,
 			);
 			path = Nef;
 			sourceTree = "<group>";
@@ -1387,6 +1395,7 @@
 		8BD6973823F5AA11000A512F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				8B58128B2403FB5500587211 /* Configuration.swift */,
 				8BD6973923F5AA2E000A512F /* Kleisli+API.swift */,
 			);
 			path = Utils;
@@ -2280,6 +2289,7 @@
 				8B444F8023FF075700975C8C /* JekyllPage.swift in Sources */,
 				8B444F8223FF075700975C8C /* CarbonPage.swift in Sources */,
 				8B444F1823FED31400975C8C /* main.swift in Sources */,
+				8B5812862403F65400587211 /* Version.swift in Sources */,
 				8B444F7F23FF075700975C8C /* Jekyll.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2482,6 +2492,7 @@
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8BD6978E23FAAB2D000A512F /* MacNefPlaygroundSystem.swift in Sources */,
 				8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */,
+				8B58128D2403FB5700587211 /* Configuration.swift in Sources */,
 				8BD6973B23F5AA36000A512F /* Kleisli+API.swift in Sources */,
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
 				8B3CB8C222D3964000919F36 /* CarbonAPI.swift in Sources */,
@@ -2492,6 +2503,7 @@
 				8B89BA0F238300A80025BC04 /* MarkdownAPI.swift in Sources */,
 				8BD4E32B23881898002DECDB /* SwiftPlaygroundAPI.swift in Sources */,
 				8B58126F2403D9B000587211 /* CleanAPI.swift in Sources */,
+				8B5812892403F7ED00587211 /* VersionAPI.swift in Sources */,
 				8BD6977823F6E8C5000A512F /* PlaygroundAPI.swift in Sources */,
 				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
 				8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */,

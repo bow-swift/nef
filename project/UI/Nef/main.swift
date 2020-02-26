@@ -7,6 +7,7 @@ import Bow
 import BowEffects
 
 enum NefCommand: String, CaseIterable {
+    case version
     case compile
     case clean
     case playground
@@ -40,10 +41,11 @@ public func main() -> Either<CLIKit.Console.Error, Void> {
         yield: action.get)^.reportStatus(in: console)
     }
     
-    func unsafeRunSyncCommand(action: NefCommand) -> Either<CLIKit.Console.Error, Void> {
+    func unsafeRunSyncCommand(action: NefCommand, console: CLIKit.Console) -> Either<CLIKit.Console.Error, Void> {
         let script = "nef \(action.rawValue)"
         
         switch action {
+            case .version:    return version(console: console)
             case .compile:    return compiler(script: script)
             case .clean:      return clean(script: script)
             case .playground: return playground(script: script)
@@ -56,7 +58,8 @@ public func main() -> Either<CLIKit.Console.Error, Void> {
     
     let console = Console(script: "nef",
                           description: "Commands",
-                          arguments: .init(name: NefCommand.compile.rawValue,    placeholder: "", description: "Compile Xcode Playgrounds given a <path>", isFlag: true, default: "false"),
+                          arguments: .init(name: NefCommand.version.rawValue,    placeholder: "", description: "Get the build's version number", isFlag: true, default: "false"),
+                                     .init(name: NefCommand.compile.rawValue,    placeholder: "", description: "Compile Xcode Playgrounds given a <path>", isFlag: true, default: "false"),
                                      .init(name: NefCommand.clean.rawValue,      placeholder: "", description: "Clean a generated nef project from a <path>", isFlag: true, default: "false"),
                                      .init(name: NefCommand.playground.rawValue, placeholder: "", description: "Build a playground compatible with external frameworks", isFlag: true, default: "false"),
                                      .init(name: NefCommand.ipad.rawValue,       placeholder: "", description: "Build a playground compatible with iPad and 3rd-party libraries", isFlag: true, default: "false"),
@@ -66,7 +69,7 @@ public func main() -> Either<CLIKit.Console.Error, Void> {
     
     return readAction(console: console)
             .unsafeRunSyncEither()
-            .flatMap(unsafeRunSyncCommand)^
+            .flatMap { command in unsafeRunSyncCommand(action: command, console: console) }^
 }
 
 // #: - MAIN <launcher>
