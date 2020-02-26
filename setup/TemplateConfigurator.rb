@@ -46,7 +46,7 @@ module Nef
     end
 
     def setPlaygroundApp
-      `mv PROJECT.app #{@project_name}.app`
+      File.rename("PROJECT.app", @project_name+".app")
     end
 
     # properties

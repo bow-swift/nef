@@ -103,7 +103,7 @@ public struct SwiftPlayground {
         }
     }
     
-    private func buildPackage(content: String, packageFilePath: String, packagePath: String, buildPath: String) -> EnvIO<(FileSystem, PlaygroundShell), SwiftPlaygroundError, Void> {
+    private func buildPackage(content: String, packageFilePath: String, packagePath: String, buildPath: String) -> EnvIO<(FileSystem, PackageShell), SwiftPlaygroundError, Void> {
         EnvIO { (system, shell) in
             let writePackageIO = system.write(content: content, toFile: packageFilePath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) }
             let resolvePackageIO = shell.resolve(packagePath: packagePath, buildPath: buildPath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) }
@@ -120,7 +120,7 @@ public struct SwiftPlayground {
         }
     }
     
-    private func swiftLibraryModules(in repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PlaygroundShell, SwiftPlaygroundError, [Module]> {
+    private func swiftLibraryModules(in repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
         func modules(in data: Data) -> [Module] {
             guard let package = try? JSONDecoder().decode(Package.self, from: data) else { return [] }
             
@@ -133,7 +133,7 @@ public struct SwiftPlayground {
             }
         }
         
-        func linkPathForSources(in modules: [Module]) -> EnvIO<PlaygroundShell, PlaygroundShellError, [Module]> {
+        func linkPathForSources(in modules: [Module]) -> EnvIO<PackageShell, PackageShellError, [Module]> {
             EnvIO { shell in
                 modules.traverse { (module: Module) in
                     let sourcesIO = module.sources.map { ($0, module.path) }.traverse(shell.linkPath)^

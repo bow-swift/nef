@@ -14,6 +14,7 @@ public struct RenderCompilerEnvironment<A> {
     
     internal var console: Console { codeEnvironment.console }
     internal var playgroundSystem: PlaygroundSystem { codeEnvironment.playgroundSystem }
+    internal var fileSystem: FileSystem { codeEnvironment.fileSystem }
     
     public init(console: Console,
                 fileSystem: FileSystem,
@@ -27,6 +28,7 @@ public struct RenderCompilerEnvironment<A> {
         self.render = Render<A>()
         self.codeEnvironment = RenderEnvironment(console: console,
                                                  playgroundSystem: playgroundSystem,
+                                                 fileSystem: fileSystem,
                                                  nodePrinter: { content in codePrinter(content).provide(.init()).env() })
     }
 }

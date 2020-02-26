@@ -56,35 +56,16 @@ public struct Console {
         }
         
         func arguments(_ args: [Argument]) -> IO<Console.Error, [String: String]> {
-            var result: [String: String] = [:]
-            
-            var longopts: [option] {
-                let lopts: [option] = args.enumerated().map { (offset, element) -> option in
-                    return option(name: strdup(element.name),
-                                  has_arg: element.isFlag ? no_argument : element.isRequired ? required_argument : optional_argument,
-                                  flag: nil,
-                                  val: Int32(offset))
+            let result: [String: String] = args.reduce(into: [:]) { (res, argument) in
+                let commandline = CommandLine.arguments.enumerated().first { (offset, element) in
+                    element.trimmingCharacters(in: ["-"]).lowercased() == argument.name.lowercased()
                 }
-                return lopts + [option()]
-            }
-
-            let optLongKey = args.map { arg in String(arg.name[arg.name.startIndex]) }.joined(separator: "")
-            
-            while case let opt = getopt_long(CommandLine.argc, CommandLine.unsafeArgv, "\(optLongKey):", longopts, nil), opt != -1 {
-                let match = args.enumerated().first { (index, _) in opt == Int32(index) }
-                guard let element = match?.element else { return IO.raiseError(Console.Error.arguments)^ }
                 
-                if optarg != nil {
-                    result[element.name] = String(cString: optarg)
-                } else if element.isFlag {
-                    result[element.name] = "true"
+                if let index = commandline?.offset {
+                    res[argument.name] = argument.isFlag ? "true" : CommandLine.arguments[safe: index+1] ?? argument.default
+                } else if !argument.default.isEmpty {
+                    res[argument.name] = argument.default
                 }
-            }
-            
-            let optionals = args.compactMap { $0.default.isEmpty ? nil : ($0.name, $0.default) }
-            optionals.forEach { (key, value) in
-                guard result[key] == nil else { return }
-                result[key] = value
             }
             
             return IO.pure(result)^
@@ -231,9 +212,11 @@ extension Console: NefModels.Console {
     }
     
     public func printStatus<E: Swift.Error>(information: String, success: Bool) -> IO<E, Void> {
-        ConsoleIO.print(success ? "✓".bold.green + (!information.isEmpty ? "\n> \(information)" : "")
-                                : "✗".bold.red   + (!information.isEmpty ? "\n> \(information)" : ""),
-                        separator: "",
-                        terminator: "\n")
+        let infoFormatted = !information.isEmpty ? "\n\t| \(information.replacingOccurrences(of: ": ", with: "\n\t| "))" : ""
+        
+        return ConsoleIO.print(success ? "✓".bold.green + infoFormatted
+                                       : "✗".bold.red   + infoFormatted,
+                               separator: "",
+                               terminator: "\n")
     }
 }

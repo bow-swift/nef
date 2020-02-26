@@ -6,21 +6,27 @@ import NefCore
 import NefModels
 import NefRender
 import NefCompiler
+import NefPlayground
 
 import Bow
 import BowEffects
 
 public extension CompilerAPI {
-    static func compile(playground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
-        NefCompiler.Compiler()
-                   .playground(playground, cached: cached)
-                   .contramap(environment)
-                   .mapError { e in nef.Error.compiler(info: "\(e)") }
+    
+    static func compile(playground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
+        let playgroundName = playground.lastPathComponent.removeExtension
+        let output = URL(fileURLWithPath: "/tmp/\(playgroundName)")
+        let nefPlayground = EnvIO<Console, nef.Error, URL>.var()
+        
+        return binding(
+            nefPlayground <- Playground.nef(fromPlayground: playground, name: playgroundName, output: output, platform: platform, dependencies: dependencies),
+                          |<-compile(nefPlayground: nefPlayground.get, cached: cached),
+        yield: ())^
     }
         
-    static func compile(playgroundsAt: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
+    static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void> {
         NefCompiler.Compiler()
-                   .playgrounds(atFolder: playgroundsAt, cached: cached)
+                   .nefPlayground(.init(project: nefPlayground), cached: cached)
                    .contramap(environment)
                    .mapError { e in nef.Error.compiler(info: "\(e)") }
     }

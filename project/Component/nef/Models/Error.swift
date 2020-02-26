@@ -8,6 +8,7 @@ public enum Error: Swift.Error {
     case jekyll(info: String = "")
     case carbon(info: String = "")
     case invalidSnapshot(info: String = "")
+    case playground(info: String = "")
     case swiftPlaygrond(info: String = "")
 }
 
@@ -24,6 +25,8 @@ extension Error: CustomStringConvertible {
             return info.isEmpty ? "Carbon failure." : info
         case .invalidSnapshot(let info):
             return info.isEmpty ? "Invalid snapshot." : info
+        case .playground(let info):
+            return info.isEmpty ? "Playground generator failure." : info
         case .swiftPlaygrond(let info):
             return info.isEmpty ? "Swift Playground generator failure." : info
         }

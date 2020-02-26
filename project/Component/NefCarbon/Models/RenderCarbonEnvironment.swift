@@ -8,10 +8,11 @@ import NefRender
 import BowEffects
 
 public struct RenderCarbonEnvironment<A> {
-    public let fileSystem: FileSystem
     public let persistence: RenderingPersistence<A>
     public let render: Render<A>
     public let renderEnvironment: RenderEnvironment<A>
+    
+    internal var fileSystem: FileSystem { renderEnvironment.fileSystem }
     
     public init(console: Console,
                 fileSystem: FileSystem,
@@ -25,11 +26,11 @@ public struct RenderCarbonEnvironment<A> {
                   style: style)
         }
         
-        self.fileSystem = fileSystem
         self.persistence = persistence
         self.render = Render<A>()
         self.renderEnvironment = RenderEnvironment(console: console,
                                                    playgroundSystem: playgroundSystem,
+                                                   fileSystem: fileSystem,
                                                    nodePrinter: { content in carbonPrinter(content).provide(environment(style: style)).env() })
     }
 }

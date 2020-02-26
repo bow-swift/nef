@@ -1,6 +1,7 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
+import NefModels
 import NefCommon
 import Bow
 import BowEffects
@@ -8,16 +9,16 @@ import BowEffects
 
 class NefCompilerSystem: CompilerSystem {
     
-    func compile(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
+    func compile(xcworkspace: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
         binding(
-            |<-self.createStructure(project: project, cached: cached),
+            |<-self.createStructure(xcworkspace: xcworkspace, nefPlayground: nefPlayground, cached: cached),
             |<-self.buildDependencies(xcworkspace: xcworkspace, platform: platform, cached: cached),
-            |<-self.buildProject(xcworkspace: xcworkspace, inProject: project, platform: platform, cached: cached),
-            |<-self.copyFrameworks(inProject: project),
-        yield: Path(project: project, action: .fw).url)^
+            |<-self.buildProject(xcworkspace: xcworkspace, nefPlayground: nefPlayground, platform: platform, cached: cached),
+            |<-self.copyFrameworks(nefPlayground: nefPlayground),
+        yield: nefPlayground.appending(.fw))^
     }
     
-    func compile(page: String, filename: String, inPlayground playground: URL, andProject project: URL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    func compile(page: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         let content = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
         let linkers = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
         let sources = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
@@ -26,27 +27,32 @@ class NefCompilerSystem: CompilerSystem {
             content <- self.reorganizeHeaders(page: page),
             linkers <- self.dependencies(platform: platform),
             sources <- self.sources(inPlayground: playground),
-                    |<-self.compile(content: content.get, filename: filename, inPlayground: playground, andProject: project, sources: sources.get, platform: platform, frameworks: frameworks, linkers: linkers.get),
+                    |<-self.compile(content: content.get, filename: filename,
+                                    inPlayground: playground, atNefPlayground: nefPlayground,
+                                    sources: sources.get,
+                                    platform: platform,
+                                    frameworks: frameworks, linkers: linkers.get),
         yield: ())^
     }
     
     // MARK: - steps <shell>
-    private func createStructure(project: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    private func createStructure(xcworkspace: URL, nefPlayground: NefPlaygroundURL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
-            let cleanBuildIO = env.fileSystem.remove(itemPath: Path(project: project, action: .build).url.path).handleError { _ in }
-            let cleanLogIO = env.fileSystem.remove(itemPath: Path(project: project, action: .log).url.path).handleError { _ in }
-            let cleanRootIO = env.fileSystem.remove(itemPath: Path(project: project, action: .root).url.path).handleError { _ in }
+            let cleanBuildIO = env.fileSystem.remove(itemPath: nefPlayground.appending(.build).path).handleError { _ in }
+            let cleanLogIO = env.fileSystem.remove(itemPath: nefPlayground.appending(.log).path).handleError { _ in }
+            let cleanRootIO = env.fileSystem.remove(itemPath: nefPlayground.appending(.nef).path).handleError { _ in }
             let cleanIO = cached ? cleanBuildIO.followedBy(cleanLogIO) : cleanRootIO
+            let cleanDependenciesIO = self.cleanDependencies(xcworkspace: xcworkspace, cached: cached).provide(env).mapError { _ in FileSystemError.remove(item: "") }
             
-            let createDerivedDataIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .derivedData).url.path)
-            let createFrameworksIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .fw).url.path)
-            let createLogIO = env.fileSystem.createDirectory(atPath: Path(project: project, action: .log).url.path)
+            let createDerivedDataIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.derivedData).path)
+            let createFrameworksIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.fw).path)
+            let createLogIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.log).path)
             
-            return cleanIO
+            return cleanIO.followedBy(cleanDependenciesIO)
                     .followedBy(createDerivedDataIO)
                     .followedBy(createFrameworksIO)
                     .followedBy(createLogIO)^
-                    .mapError { _ in .build(project, info: "creating the project structure") }
+                    .mapError { _ in .build(nefPlayground.project, info: "creating the project structure") }
         }
     }
     
@@ -58,37 +64,47 @@ class NefCompilerSystem: CompilerSystem {
         yield: ())^
     }
     
-    private func copyFrameworks(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-        func items(inProject project: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
+    private func cleanDependencies(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        guard !cached else { return EnvIO.pure(())^ }
+        
+        return binding(
+            |<-self.cleanPods(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+            |<-self.cleanCarthage(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+            |<-self.cleanSPM(xcworkspace: xcworkspace, cached: cached).handleError { _ in },
+        yield: ())^
+    }
+    
+    private func copyFrameworks(nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        func items(nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             EnvIO { env in
-                return env.fileSystem.items(atPath: Path(project: project, action: .derivedData).appending("Build").path, recursive: true)
-                                     .mapError { _ in .build(project, info: "get frameworks in '\(project.path)'") }
+                return env.fileSystem.items(atPath: nefPlayground.appending(.derivedData).appendingPathComponent("Build").path, recursive: true)
+                                     .mapError { _ in .build(nefPlayground.project, info: "get frameworks") }
             }
         }
         
         func extractFrameworks(paths: [String]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             let frameworks = paths.filter { $0.filename.extension == "framework" }
-            guard frameworks.count > 0 else { return EnvIO.raiseError(.build(project, info: "copy frameworks: no frameworks found!"))^ }
+            guard frameworks.count > 0 else { return EnvIO.raiseError(.build(info: "copy frameworks: no frameworks found!"))^ }
             return EnvIO.pure(frameworks)^
         }
         
-        func copyFrameworks(paths: [String], to output: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        func copyFrameworks(paths: [String], nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
-                env.fileSystem.copy(itemPaths: paths, to: output.path).void()
-            }.mapError { _ in .build(project, info: "move frameworks into '\(output.path)'") }
+                env.fileSystem.copy(itemPaths: paths, to: nefPlayground.appending(.fw).path).void()
+            }.mapError { _ in .build(nefPlayground.project, info: "move frameworks into '\(nefPlayground.project.path)'") }
         }
         
         let paths = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]>.var()
         let frameworks = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]>.var()
         
         return binding(
-                   paths <- items(inProject: project),
+                   paths <- items(nefPlayground: nefPlayground),
               frameworks <- extractFrameworks(paths: paths.get),
-                         |<-copyFrameworks(paths: frameworks.get, to: Path(project: project, action: .fw).url),
+                         |<-copyFrameworks(paths: frameworks.get, nefPlayground: nefPlayground),
         yield: ())^
     }
     
-    private func buildProject(xcworkspace: URL, inProject project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
+    private func buildProject(xcworkspace: URL, nefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
         func scheme(pbxproj: String, name: String) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, String> {
             let schemes = pbxproj.matches(pattern: "(?s)(/\\* Begin PBX\(name.capitalized)Target section.*\n).*(End PBX\(name.capitalized)Target section \\*/)").joined()
                                  .matches(pattern: "(?<=\tname = ).*(?=;)")
@@ -117,11 +133,12 @@ class NefCompilerSystem: CompilerSystem {
             yield: schemeName.get)^
         }
         
-        func build(xcworkspace: URL, inProject project: URL, scheme: String, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        func build(xcworkspace: URL, nefPlayground: NefPlaygroundURL, scheme: String, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
-                let derivedData = Path(project: project, action: .derivedData).url
-                let workspaceFramework = Path(project: project, action: .fw).appending(xcworkspace.lastPathComponent.removeExtension)
-                let log = Path(project: project, action: .log).appending(xcworkspace.lastPathComponent.removeExtension)
+                let xcworkspaceName = xcworkspace.lastPathComponent.removeExtension
+                let derivedData = nefPlayground.appending(.derivedData)
+                let workspaceFramework = nefPlayground.appending(filename: xcworkspaceName, in: .fw)
+                let log = nefPlayground.appending(filename: xcworkspaceName, in: .log)
                 
                 let isCached = cached && env.fileSystem.exist(itemPath: workspaceFramework.path)
                 guard !isCached else { return IO.pure(()) }
@@ -134,16 +151,16 @@ class NefCompilerSystem: CompilerSystem {
         
         return binding(
             schemeName <- extractScheme(xcworkspace: xcworkspace),
-                       |<-build(xcworkspace: xcworkspace, inProject: project, scheme: schemeName.get, platform: platform, cached: cached),
-        yield: Path(project: project, action: .fw).url)^
+                       |<-build(xcworkspace: xcworkspace, nefPlayground: nefPlayground, scheme: schemeName.get, platform: platform, cached: cached),
+        yield: nefPlayground.appending(.fw))^
     }
     
-    private func compile(content: String, filename: String, inPlayground playground: URL, andProject project: URL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    private func compile(content: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
             let playgroundName = playground.lastPathComponent.removeExtension
             let filename = "\(playgroundName)-\(filename).swift".lowercased()
-            let output = Path(project: project, action: .build).appending(filename)
-            let log = Path(project: project, action: .log).appending(filename)
+            let output = nefPlayground.appending(filename: filename, in: .build)
+            let log = nefPlayground.appending(filename: filename, in: .log)
             let temporal = IO<CompilerSystemError, URL>.var()
             
             return binding(
@@ -189,6 +206,33 @@ class NefCompilerSystem: CompilerSystem {
     }
     
     private func buildSPM(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        #warning("it must be done when apple fixes the Xcode bug '47668990'")
+        return EnvIO.pure(())^
+    }
+    
+    private func cleanPods(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        EnvIO { env in
+            let parent = xcworkspace.deletingLastPathComponent()
+            let pods = parent.appendingPathComponent("Pods")
+            let resolved = parent.appendingPathComponent("Podfile.lock")
+            
+            let podsIO = env.fileSystem.remove(itemPath: pods.path).handleError { _ in }
+            let resolvedIO = env.fileSystem.remove(itemPath: resolved.path).handleError { _ in }
+            
+            return podsIO.followedBy(resolvedIO)^.mapError { _ in .dependencies() }
+        }
+    }
+    
+    private func cleanCarthage(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        EnvIO { env in
+            let parent = xcworkspace.deletingLastPathComponent()
+            let cartfile = parent.appendingPathComponent("Carthage")
+            return env.fileSystem.remove(itemPath: cartfile.path)^
+                                 .mapError { _ in .dependencies() }.handleError { _ in }
+        }
+    }
+    
+    private func cleanSPM(xcworkspace: URL, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         #warning("it must be done when apple fixes the Xcode bug '47668990'")
         return EnvIO.pure(())^
     }
@@ -248,44 +292,5 @@ class NefCompilerSystem: CompilerSystem {
     }
     
     // MARK: helpers <path>
-    struct Path {
-        let project: URL
-        let action: Action
-        
-        var url: URL {
-            project.appendingPathComponent(action.pathComponent)
-        }
-        
-        func appending(_ component: String) -> URL {
-            self.url.appendingPathComponent(component.removeExtension).appendingPathExtension(action.extension)
-        }
-        
-        enum Action: String {
-            case root = "nef"
-            case derivedData
-            case log
-            case build
-            case fw
-            
-            var `extension`: String {
-                switch self {
-                case .root:        return ""
-                case .derivedData: return ""
-                case .log:         return "log"
-                case .build:       return "swift"
-                case .fw:          return "framework"
-                }
-            }
-            
-            var pathComponent: String {
-                switch self {
-                case .root:        return rawValue
-                case .derivedData: return "\(Action.root.pathComponent)/\(rawValue)"
-                case .log:         return "\(Action.root.pathComponent)/\(rawValue)"
-                case .build:       return "\(Action.root.pathComponent)/\(rawValue)"
-                case .fw:          return "\(Action.build.pathComponent)/\(rawValue)"
-                }
-            }
-        }
-    }
+    
 }

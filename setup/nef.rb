@@ -6,9 +6,10 @@ require 'ConfigureNef'
 require 'ProjectManipulator'
 
 #: - MAIN <launcher>
-if ARGV.length != 1
-    puts "nef.rb <project name>"
+if ARGV.length != 2
+    puts "nef.rb <project_path> <project_name>"
     exit 1
 end
 
-Nef::TemplateConfigurator.new(ARGV[0]).run
+Dir.chdir ARGV[0]
+Nef::TemplateConfigurator.new(ARGV[1]).run

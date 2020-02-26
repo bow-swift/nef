@@ -2,14 +2,14 @@
 
 import Foundation
 
-public enum PlaygroundShellError: Error {
+public enum PackageShellError: Error {
     case empty(directory: String)
     case dependencies(package: String, information: String)
     case describe(repository: String)
     case linkPath(item: String)
 }
 
-extension PlaygroundShellError: CustomStringConvertible {
+extension PackageShellError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .empty(let directory):

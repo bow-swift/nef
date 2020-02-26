@@ -11,6 +11,7 @@ public enum Compiler: CompilerAPI {}
 public enum Markdown: MarkdownAPI {}
 public enum Jekyll: JekyllAPI {}
 public enum Carbon: CarbonAPI {}
+public enum Playground: PlaygroundAPI {}
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
 
@@ -19,17 +20,19 @@ public protocol CompilerAPI {
     ///
     /// - Parameters:
     ///   - playground: Xcode Playgrounds to be compiled.
+    ///   - platform: target to use for compiling Xcode Playground.
+    ///   - dependencies: to use for the compiler.
     ///   - cached: use cached dependencies if it is possible, in another case, it will download them.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
-    static func compile(playground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
+    static func compile(playground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<Console, nef.Error, Void>
     
     /// Compile Xcode Playground.
     ///
     /// - Parameters:
-    ///   - playgroundsAt: folder where to search Xcode Playgrounds (recursive search).
+    ///   - nefPlayground: folder where to search Xcode Playgrounds - it must be a nef Playground structure.
     ///   - cached: use cached dependencies if it is possible, in another case, it will download them.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
-    static func compile(playgroundsAt: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
+    static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
 }
 
 public protocol MarkdownAPI {
@@ -217,23 +220,46 @@ public protocol CarbonAPI {
     static func view(configuration: CarbonModel) -> CarbonView
 }
 
+public protocol PlaygroundAPI {
+    /// Make a nef Playground compatible with 3rd-party libraries.
+    ///
+    /// - Parameters:
+    ///   - name: name for the output nef Playground.
+    ///   - output: folder where to write the nef Playground.
+    ///   - platform: target to use for compiling Xcode Playground.
+    ///   - dependencies: dependencies to use for the compiler.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the nef Playground output of the type `URL`, having access to an immutable environment of type `Console`.
+    static func nef(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
+    
+    /// Make a nef Playground compatible with 3rd-party libraries from an Xcode Playground.
+    ///
+    /// - Parameters:
+    ///   - fromPlayground: Xcode Playground to transform to nef Playground.
+    ///   - name: name for the output nef Playground.
+    ///   - output: folder where to write the nef Playground.
+    ///   - platform: target to use for compiling Xcode Playground.
+    ///   - dependencies: dependencies to use for the compiler.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the nef Playground output of the type `URL`, having access to an immutable environment of type `Console`.
+    static func nef(fromPlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
+}
+
 public protocol SwiftPlaygroundAPI {
     /// Renders a Swift Package content into Swift Playground compatible to iPad.
     ///
     /// - Parameters:
-    ///   - packageContent: Swift Package content
-    ///   - name: name for the output Swift Playground
-    ///   - output: folder where to write the Swift Playground
+    ///   - packageContent: Swift Package content.
+    ///   - name: name for the output Swift Playground.
+    ///   - output: folder where to write the Swift Playground.
     /// - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the Swift Playground output of type `URL`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, URL>`.
     static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL>
     
     /// Renders a Swift Package content into Swift Playground compatible to iPad.
     ///
     /// - Parameters:
-    ///   - packageContent: Swift Package content
-    ///   - name: name for the output Swift Playground
-    ///   - output: folder where to write the Swift Playground
-    ///   - excludes: list of items to exclude for building the Swift Playground
+    ///   - packageContent: Swift Package content.
+    ///   - name: name for the output Swift Playground.
+    ///   - output: folder where to write the Swift Playground.
+    ///   - excludes: list of items to exclude for building the Swift Playground.
     /// - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the Swift Playground output of type `URL`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, URL>`.
     static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL>
 }

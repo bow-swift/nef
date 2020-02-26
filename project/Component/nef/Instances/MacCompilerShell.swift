@@ -15,7 +15,7 @@ class MacCompilerShell: CompilerShell {
             let result = run("pod", args: cached ? ["install", "--project-directory=\(project.path)"]
                                                  : ["install", "--repo-update", "--project-directory=\(project.path)"])
             guard result.exitStatus == 0 else {
-                throw CompilerShellError.notFound(command: "pod", information: "error: \(result.stderr) - output: \(result.stdout) install cocoapods using `gem install cocoapods`")
+                throw CompilerShellError.notFound(command: "pod", info: "error: \(result.stderr) - output:\(result.stdout) install cocoapods using `gem install cocoapods`")
             }
             
             return ()
@@ -27,7 +27,7 @@ class MacCompilerShell: CompilerShell {
             let result = run("carthage", args: cached ? ["bootstrap", "--cache-builds", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path]
                                                       : ["bootstrap", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
             guard result.exitStatus == 0 else {
-                throw CompilerShellError.notFound(command: "carthage", information: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
+                throw CompilerShellError.notFound(command: "carthage", info: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
             }
             
             return ()
@@ -44,7 +44,7 @@ class MacCompilerShell: CompilerShell {
             guard result.exitStatus == 0,
                   let logContent = try? String(contentsOfFile: log.path),
                   logContent.contains("BUILD SUCCEEDED") else {
-                throw CompilerShellError.failed(command: "xcodebuild", information: result.stderr)
+                throw CompilerShellError.failed(command: "xcodebuild", info: result.stderr)
             }
             
             return ()
@@ -55,7 +55,7 @@ class MacCompilerShell: CompilerShell {
         IO.invoke {
             let result = run("/usr/bin/xcode-select", args: ["-p"])
             guard result.exitStatus == 0 else {
-                throw CompilerShellError.failed(command: "xcode-select", information: result.stderr)
+                throw CompilerShellError.failed(command: "xcode-select", info: result.stderr)
             }
             
             return URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer/Library/Frameworks")
@@ -103,7 +103,7 @@ class MacCompilerShell: CompilerShell {
             guard result.exitStatus == 0,
                   let logContent = try? String(contentsOfFile: log.path),
                   !logContent.contains("error:") else {
-                throw CompilerShellError.failed(command: "xcrun", information: result.stderr)
+                throw CompilerShellError.failed(command: "xcrun", info: result.stderr)
             }
             
             return ()
@@ -114,7 +114,7 @@ class MacCompilerShell: CompilerShell {
         IO.invoke {
             let result = run("/usr/bin/xcode-select", args: ["-p"])
             guard result.exitStatus == 0 else {
-                throw CompilerShellError.failed(command: "xcode-select", information: result.stderr)
+                throw CompilerShellError.failed(command: "xcode-select", info: result.stderr)
             }
             
             let file = URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer/SDKs/\(platform.framework).sdk/SDKSettings.json")
@@ -123,7 +123,7 @@ class MacCompilerShell: CompilerShell {
                   let rawBundleVersion = content.matches(pattern: "(?<=\"MinimalDisplayName\":\").*(?=\")").first,
                   let bundleVersion = rawBundleVersion.components(separatedBy: "\"").first,
                   let target = platform.target(bundleVersion: bundleVersion) else {
-                    throw CompilerShellError.failed(command: "xcode-select", information: "can not extract CFBundleVersion from \(platform.framework)")
+                    throw CompilerShellError.failed(command: "xcode-select", info: "can not extract CFBundleVersion from \(platform.framework)")
             }
             
             return target
