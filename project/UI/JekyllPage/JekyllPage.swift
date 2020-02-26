@@ -46,7 +46,7 @@ public func jekyllPage(script: String) -> Either<CLIKit.Console.Error, Void> {
                           description: "Render a markdown file from a Playground page that can be consumed from Jekyll",
                           arguments: .init(name: JekyllPageCommand.page.rawValue, placeholder: "playground's page", description: "path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`"),
                                      .init(name: JekyllPageCommand.output.rawValue, placeholder: "output Jekyll's markdown", description: "path where Jekyll markdown are saved to. ex. `/home`"),
-                                     .init(name: JekyllPageCommand.permalink.rawValue, placeholder: "relative URL", description: "is the relative path where Jekyll will render the documentation. ex. `/about/`"),
+                                     .init(name: JekyllPageCommand.permalink.rawValue, placeholder: "relative URL", description: "relative path where Jekyll will render the documentation. ex. `/about/`"),
                                      .init(name: JekyllPageCommand.verbose.rawValue, placeholder: "", description: "run jekyll page in verbose mode.", isFlag: true, default: "false"))
     
     let args = IOPartial<CLIKit.Console.Error>.var((content: String, filename: String, output: URL, permalink: String, verbose: Bool).self)
