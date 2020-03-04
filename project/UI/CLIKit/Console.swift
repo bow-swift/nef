@@ -4,224 +4,54 @@ import Foundation
 import nef
 import Bow
 import BowEffects
+import ArgumentParser
 
-public struct Console {
-    private let scriptName: String
-    private let description: String
-    private let arguments: [Argument]
+public enum Console {
+    case `default`
     
-    public init(script: String, description: String, arguments: Argument...) {
-        self.scriptName  = script
-        self.description = description
-        self.arguments = arguments
+    public static func readArguments<A: ParsableCommand>(_ parsableCommand: A.Type) -> IO<Console.Error, A> {
+        IO.invoke {
+            try parsableCommand.parseAsRoot() as! A
+        }^.mapError { (e: Swift.Error) in
+            let info = parsableCommand.fullMessage(for: e)
+            return Console.Error.arguments(info: info)
+        }
     }
     
-    // MARK: -public methods
-    public func print(message: @escaping @autoclosure () -> String) -> IO<Console.Error, Void> {
+    public static func print(message: @escaping @autoclosure () -> String) -> IO<Console.Error, Void> {
         ConsoleIO.print(message(), separator: " ", terminator: "\n")
     }
     
-    public func help<A>() -> IO<Console.Error, A> {
-        print(message: self.helpMessage)
+    public static func help<A>(_ helpMessage: @escaping @autoclosure () -> String) -> IO<Console.Error, A> {
+        print(message: helpMessage())
             .map { _ in Darwin.exit(-2) }^
     }
     
-    public func exit<A>(failure: String) -> IO<Console.Error, A> {
-        print(message: "☠️  \(scriptName.lowercased()) ".bold.red + "\(failure)")
+    public static func exit<A>(failure: String) -> IO<Console.Error, A> {
+        print(message: "☠️ ".bold.red + "\(failure)")
             .map { _ in Darwin.exit(-1) }^
         
     }
     
-    public func exit<A>(success: String) -> IO<Console.Error, A> {
-        print(message: "🙌 \(scriptName.lowercased()) ".bold.green + "\(success)")
+    public static func exit<A>(success: String) -> IO<Console.Error, A> {
+        print(message: "🙌 ".bold.green + "\(success)")
             .map { _ in Darwin.exit(0) }^
     }
     
     
-    /// Get the parameters from the command line to configure the script.
-    ///
-    /// In case the parameters are not correct or are incompleted it won't return anything.
-    ///
-    /// - Returns: the parameters to configure the script: path to parser file and output path for render.
-    public func input(help: Bool = true) -> IO<Console.Error, [String: String]> {
-        func getArgumentList() -> IO<Console.Error, [Argument]> {
-            IO.invoke {
-                let helpArguments = [Argument(name: "help", placeholder: "", description: "", isFlag: true, default: "false"),
-                                     Argument(name: "h", placeholder: "", description: "", isFlag: true, default: "false")]
-                let args = self.arguments + (help ? helpArguments : [])
-                let keys = args.map { $0.name }
-                
-                guard Array(Set(keys)).count == keys.count else { throw Console.Error.duplicated }
-                return args
-            }
-        }
-        
-        func arguments(_ args: [Argument]) -> IO<Console.Error, [String: String]> {
-            let result: [String: String] = args.reduce(into: [:]) { (res, argument) in
-                let commandline = CommandLine.arguments.enumerated().first { (offset, element) in
-                    let found = element.trimmingCharacters(in: ["-"]).lowercased() == argument.name.lowercased()
-                    let isValid = "$\(element)".contains("$-") || argument.isFlag
-                    
-                    return found && isValid
-                }
-                
-                if let index = commandline?.offset {
-                    res[argument.name] = argument.isFlag ? "true" : CommandLine.arguments[safe: index+1] ?? argument.default
-                } else if !argument.default.isEmpty {
-                    res[argument.name] = argument.default
-                }
-            }
-            
-            return IO.pure(result)^
-        }
-        
-        func validate(arguments: [String: String], keys: [String]) -> IO<Console.Error, [String: String]> {
-            IO.invoke {
-                if Bool(arguments["help"] ?? "") ?? false || Bool(arguments["h"] ?? "") ?? false {
-                    throw Console.Error.help
-                } else if arguments.keys.containsAll(keys) {
-                    return arguments
-                } else {
-                    throw Console.Error.arguments
-                }
-            }
-        }
-        
-        let options = IOPartial<Console.Error>.var([Argument].self)
-        let args = IOPartial<Console.Error>.var([String: String].self)
-        let validated = IOPartial<Console.Error>.var([String: String].self)
-        
-        return binding(
-             options <- getArgumentList(),
-                args <- arguments(options.get),
-           validated <- validate(arguments: args.get, keys: options.get.map { $0.name }),
-        yield: validated.get)^
-    }
-    
-    // MARK: internal attributes <helpers>
-    private var helpMessage: String {
-        let listArguments = arguments.map { arg in arg.displayParameter }.joined(separator: " ")
-        let requireds = arguments.filter { $0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
-        let optionals = arguments.filter { !$0.isRequired }.map { arg in arg.displayDescription }.joined(separator: "\n")
-        let commands = arguments.filter { !$0.isRequired }.map { arg in arg.displayCommand }.joined(separator: "\n")
-        let allAreFlags = arguments.filter { $0.isFlag }.count == arguments.count
-        
-        if optionals.isEmpty {
-            return  """
-                    \(scriptName.bold) \(listArguments)
-                    
-                    \t\(description)
-                    
-                    \(requireds)
-                    
-                    """
-        } else if requireds.isEmpty, allAreFlags {
-            return  """
-                    \(scriptName.bold) \(listArguments)
-                    
-                    \t\(description.bold)
-                    
-                    \(commands)
-                    
-                    """
-        } else if requireds.isEmpty {
-            return  """
-                    \(scriptName.bold) \(listArguments)
-                    
-                    \t\(description)
-                    
-                    \t\("Options".bold)
-                    
-                    \(optionals)
-                    
-                    """
-        } else {
-            return  """
-                    \(scriptName.bold) \(listArguments)
-                    
-                    \t\(description)
-                    
-                    \(requireds)
-                    
-                    \t\("Options".bold)
-                    
-                    \(optionals)
-                    
-                    """
-        }
-    }
-    
-    /// Definition of an argument for Console
-    public struct Argument: Equatable {
-        let name: String
-        let placeholder: String
-        let description: String
-        let `default`: String
-        let isFlag: Bool
-        
-        var isRequired: Bool {
-            self.default.isEmpty
-        }
-            
-        public init(name: String, placeholder: String, description: String, isFlag: Bool = false, default: String = "") {
-            self.name = name
-            self.placeholder = placeholder
-            self.description = description
-            self.isFlag = isFlag
-            self.default = `default`
-        }
-    }
-    
     /// Kind of errors in ConsoleIO
     public enum Error: Swift.Error, CustomStringConvertible {
-        case duplicated
-        case arguments
-        case help
-        case render(information: String = "")
+        case arguments(info: String)
+        case render(info: String = "")
         
         public var description: String {
             switch self {
-            case .help:
-                return ""
-            case .duplicated:
-                return "the script has declared duplicated keys."
-            case .arguments:
-                return "did not receive all the required arguments."+" Use".bold+" --help, --h".cyan
+            case .arguments(let info):
+                return info
             case .render(let info):
                 return info.isEmpty ? "" : "Render failure: \(info.lightRed)"
             }
         }
-    }
-}
-
-
-/// Argument representation
-extension Console.Argument {
-    var displayParameter: String {
-        guard isRequired else { return "" }
-        
-        if isFlag || placeholder.isEmpty {
-            return "--\(name)".bold.lightCyan
-        } else {
-            return "--\(name)".bold.lightCyan+" <\(placeholder)>"
-        }
-    }
-    
-    var displayDescription: String {
-        let defaultValue = self.default.trimmingEmptyCharacters
-        if defaultValue.isEmpty {
-            return "\t--\(display(name: name))".lightCyan+"  \(description)"
-        } else {
-            return "\t--\(display(name: name))".lightCyan+"  \(description)"+" [default: ".dim.lightMagenta+defaultValue.lightMagenta+"]".dim.lightMagenta
-        }
-    }
-    
-    var displayCommand: String {
-        "\t\(display(name: name))".bold.lightCyan+"  \(description.trimmingEmptyCharacters)"
-    }
-    
-    private func display(name: String) -> String {
-        name.padding(toLength: 12, withPad: " ", startingAt: 0)
     }
 }
 

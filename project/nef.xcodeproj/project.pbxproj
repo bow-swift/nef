@@ -181,6 +181,7 @@
 		8BE9D5CD23D09BDA00332D75 /* RenderMarkdownEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9D5CB23D09BD600332D75 /* RenderMarkdownEnvironment.swift */; };
 		8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */; };
 		8BED79BB23A9357D00115479 /* Console+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BED79BA23A9357D00115479 /* Console+Utils.swift */; };
+		8BF31D90240FC135006516DC /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8B742753240FC11B0095D94A /* ArgumentParser */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -637,6 +638,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B742754240FC1290095D94A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BF31D90240FC135006516DC /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1661,6 +1670,7 @@
 			buildPhases = (
 				8B0FB57F237C0A5600221548 /* Headers */,
 				8B0FB580237C0A5600221548 /* Sources */,
+				8B742754240FC1290095D94A /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1669,6 +1679,7 @@
 			);
 			name = CLIKit;
 			packageProductDependencies = (
+				8B742753240FC11B0095D94A /* ArgumentParser */,
 			);
 			productName = CLI;
 			productReference = 8B0FB584237C0A5600221548 /* CLIKit.framework */;
@@ -2162,6 +2173,7 @@
 			packageReferences = (
 				8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */,
 				8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */,
+				8B742752240FC11B0095D94A /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 8B6FC586221ECE6A008F7694 /* Products */;
 			projectDirPath = "";
@@ -3946,6 +3958,14 @@
 				minimumVersion = 0.5.4;
 			};
 		};
+		8B742752240FC11B0095D94A /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3978,6 +3998,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */;
 			productName = Swiftline;
+		};
+		8B742753240FC11B0095D94A /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B742752240FC11B0095D94A /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
 		};
 		8BBCA6952396A59600BE058B /* Bow */ = {
 			isa = XCSwiftPackageProductDependency;
