@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-playgroundBook(script: "nef-playground-book")
+playgroundBook(commandName: "nef-playground-book")
