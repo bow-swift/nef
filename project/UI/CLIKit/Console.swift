@@ -6,34 +6,55 @@ import Bow
 import BowEffects
 import ArgumentParser
 
+extension ParsableCommand {
+    func runIO() -> IO<Swift.Error, ParsableCommand> {
+        IO.invoke { try self.run() }.map { _ in self }^
+    }
+    
+    func exit(when condition: (ParsableCommand) -> Bool) -> IO<Swift.Error, ParsableCommand> {
+        if condition(self) { return runIO().flatMap { _ in IO.raiseError(Console.Error.arguments(info: ""))^ }^ }
+        else { return IO.pure(self)^ }
+    }
+}
+
 public enum Console {
     case `default`
     
-    public static func readArguments<A: ParsableCommand>(_ parsableCommand: A.Type) -> IO<Console.Error, A> {
-        IO.invoke {
-            try parsableCommand.parseAsRoot() as! A
-        }^.mapError { (e: Swift.Error) in
-            let info = parsableCommand.fullMessage(for: e)
-            return Console.Error.arguments(info: info)
-        }
+    public func readArguments<A: ParsableCommand>(_ parsableCommand: A.Type) -> IO<Console.Error, A> {
+        let parseCommandsIO = IO<Swift.Error, ParsableCommand>.invoke { try parsableCommand.parseAsRoot() }
+        let isHelpParsableCommand = { (parsableCommand: ParsableCommand) -> Bool in !(parsableCommand is A) }
+        
+        return parseCommandsIO
+            .flatMap { $0.exit(when: isHelpParsableCommand) }
+            .map { $0 as! A }^
+            .mapError { (e: Swift.Error) -> Console.Error in
+                let info: String
+                if let e = e as? Console.Error {
+                    info = "\(e)"
+                } else {
+                    info = parsableCommand.fullMessage(for: e)
+                }
+                
+                return Console.Error.arguments(info: info)
+            }^
     }
     
-    public static func print(message: @escaping @autoclosure () -> String) -> IO<Console.Error, Void> {
+    public func print(message: @escaping @autoclosure () -> String) -> IO<Console.Error, Void> {
         ConsoleIO.print(message(), separator: " ", terminator: "\n")
     }
     
-    public static func help<A>(_ helpMessage: @escaping @autoclosure () -> String) -> IO<Console.Error, A> {
+    public func help<A>(_ helpMessage: @escaping @autoclosure () -> String) -> IO<Console.Error, A> {
         print(message: helpMessage())
             .map { _ in Darwin.exit(-2) }^
     }
     
-    public static func exit<A>(failure: String) -> IO<Console.Error, A> {
+    public func exit<A>(failure: String) -> IO<Console.Error, A> {
         print(message: "☠️ ".bold.red + "\(failure)")
             .map { _ in Darwin.exit(-1) }^
         
     }
     
-    public static func exit<A>(success: String) -> IO<Console.Error, A> {
+    public func exit<A>(success: String) -> IO<Console.Error, A> {
         print(message: "🙌 ".bold.green + "\(success)")
             .map { _ in Darwin.exit(0) }^
     }

@@ -41,14 +41,14 @@ public func playgroundBook(commandName: String) -> Either<CLIKit.Console.Error, 
                         output: parsableCommand.outputURL))^
     }
         
-    return Console.readArguments(PlaygroundBookCommand.self)
-                  .flatMap(arguments)
-                  .flatMap { (packageContent, projectName, output) in
-                        nef.SwiftPlayground.render(packageContent: packageContent, name: projectName, output: output)
-                            .provide(Console.default)^
-                            .mapError { _ in .render() }
-                            .foldM({ _   in Console.exit(failure: "rendering Playground Book")                  },
-                                   { url in Console.exit(success: "rendered Playground Book in '\(url.path)'")  }) }^
-                  .reportStatus(in: Console.self)
-                  .unsafeRunSyncEither()
+    return CLIKit.Console.default.readArguments(PlaygroundBookCommand.self)
+        .flatMap(arguments)
+        .flatMap { (packageContent, projectName, output) in
+            nef.SwiftPlayground.render(packageContent: packageContent, name: projectName, output: output)
+                .provide(Console.default)^
+                .mapError { _ in .render() }
+                .foldM({ _   in Console.default.exit(failure: "rendering Playground Book")                  },
+                       { url in Console.default.exit(success: "rendered Playground Book in '\(url.path)'")  }) }^
+        .reportStatus(in: .default)
+        .unsafeRunSyncEither()
 }

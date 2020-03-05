@@ -182,6 +182,7 @@
 		8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */; };
 		8BED79BB23A9357D00115479 /* Console+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BED79BA23A9357D00115479 /* Console+Utils.swift */; };
 		8BF31D90240FC135006516DC /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8B742753240FC11B0095D94A /* ArgumentParser */; };
+		8BF31D94240FD9A8006516DC /* ExpressibleByArgument+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF31D93240FD9A8006516DC /* ExpressibleByArgument+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -610,6 +611,7 @@
 		8BE9D5CB23D09BD600332D75 /* RenderMarkdownEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderMarkdownEnvironment.swift; sourceTree = "<group>"; };
 		8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchTimeInterval+Utils.swift"; sourceTree = "<group>"; };
 		8BED79BA23A9357D00115479 /* Console+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Console+Utils.swift"; sourceTree = "<group>"; };
+		8BF31D93240FD9A8006516DC /* ExpressibleByArgument+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByArgument+Extension.swift"; sourceTree = "<group>"; };
 		8BF75F8522CA71E700EC53A1 /* nef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = nef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BF75FC622CA7DA500EC53A1 /* NefCarbon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCarbon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -678,6 +680,7 @@
 				8BBCA654239683D400BE058B /* Console.swift */,
 				8BED79BA23A9357D00115479 /* Console+Utils.swift */,
 				8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */,
+				8BF31D93240FD9A8006516DC /* ExpressibleByArgument+Extension.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
 				8B304D5F23ABA954001E9303 /* String+Colorize.swift */,
 				8B0FB58E237C0A8F00221548 /* Support Files */,
@@ -2254,6 +2257,7 @@
 				8BD6977E23F7130F000A512F /* Console.swift in Sources */,
 				8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */,
 				8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */,
+				8BF31D94240FD9A8006516DC /* ExpressibleByArgument+Extension.swift in Sources */,
 				8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */,
 				8BD6977F23F71316000A512F /* Array+Utils.swift in Sources */,
 				8BED79BB23A9357D00115479 /* Console+Utils.swift in Sources */,

@@ -2,23 +2,48 @@
 
 import Foundation
 import CLIKit
+import ArgumentParser
 import nef
 import Bow
 import BowEffects
 
-enum PlaygroundCommand: String {
-    case name
-    case output
-    case playground
-    case platform
-    
-    case bowVersion = "bow-version"
-    case bowBranch  = "bow-branch"
-    case bowCommit  = "bow-commit"
-    case podfile
-    case cartfile
-}
+struct PlaygroundCommand: ParsableCommand {
+    static var commandName: String = "nef-playground"
+    static var configuration = CommandConfiguration(commandName: commandName,
+                                                    abstract: "Build a nef Playground compatible with 3rd-party libraries")
 
+    @ArgumentParser.Option(help: "Path where nef Playground will be generated")
+    var output: String
+
+    @ArgumentParser.Option(default: "BowPlayground", help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
+    var name: String
+
+    @ArgumentParser.Option(default: .ios, help: "set the target to `ios` or `macos`")
+    var platform: Platform
+    
+    @ArgumentParser.Option(default: ArgumentEmpty, help: "Xcode Playground to be transformed into nef Playground")
+    var playground: String
+    
+    @ArgumentParser.Option(default: ArgumentEmpty, help: "Path to Podfile with your own dependencies")
+    var podfile: String
+    
+    @ArgumentParser.Option(default: ArgumentEmpty, help: "Path to Cartfile with your own dependencies")
+    var cartfile: String
+    
+    @ArgumentParser.Option(default: ArgumentEmpty, help: ArgumentHelp("Specify the version of Bow", valueName: "bow-version"))
+    var bowVersion: String
+    
+    @ArgumentParser.Option(default: ArgumentEmpty, help: ArgumentHelp("Specify the branch of Bow", valueName: "bow-branch"))
+    var bowBranch: String
+    
+    @ArgumentParser.Option(default: ArgumentEmpty, help: ArgumentHelp("Specify the commit of Bow", valueName: "bow-commit"))
+    var bowCommit: String
+    
+    var outputURL: URL { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
+    var playgroundURL: URL? { playground == ArgumentEmpty ? nil : URL(fileURLWithPath: playground.trimmingEmptyCharacters.expandingTildeInPath) }
+    var podfileURL: URL  { URL(fileURLWithPath: podfile.trimmingEmptyCharacters.expandingTildeInPath) }
+    var cartfileURL: URL { URL(fileURLWithPath: cartfile.trimmingEmptyCharacters.expandingTildeInPath) }
+}
 
 private func nefPlayground<A>(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, CLIKit.Console.Error, A> {
     EnvIO { console in
@@ -41,61 +66,32 @@ private func nefPlayground<A>(name: String, output: URL, platform: Platform, dep
 }
 
 @discardableResult
-public func playground(script: String) -> Either<CLIKit.Console.Error, Void> {
-
-    func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (name: String, output: URL, platform: Platform, playground: URL?, dependencies: PlaygroundDependencies)> {
-        console.input().flatMap { args in
-            guard let outputPath = args[PlaygroundCommand.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let name = args[PlaygroundCommand.name.rawValue]?.trimmingEmptyCharacters,
-                  let platform = Platform(platform: args[PlaygroundCommand.platform.rawValue]?.trimmingEmptyCharacters ?? ""),
-                  let playgroundPath = args[PlaygroundCommand.playground.rawValue]?.trimmingEmptyCharacters,
-                  let bowVersion = args[PlaygroundCommand.bowVersion.rawValue]?.trimmingEmptyCharacters,
-                  let bowBranch = args[PlaygroundCommand.bowBranch.rawValue]?.trimmingEmptyCharacters,
-                  let bowCommit = args[PlaygroundCommand.bowCommit.rawValue]?.trimmingEmptyCharacters,
-                  let podfile = args[PlaygroundCommand.podfile.rawValue]?.trimmingEmptyCharacters,
-                  let cartfile = args[PlaygroundCommand.cartfile.rawValue]?.trimmingEmptyCharacters else {
-                    return IO.raiseError(.arguments)
-            }
-            
-            let output = URL(fileURLWithPath: outputPath, isDirectory: true)
-            let playground = playgroundPath.isEmpty ? nil : URL(fileURLWithPath: playgroundPath)
-            
-            let dependencies: PlaygroundDependencies
-            if !bowVersion.isEmpty     { dependencies = .bow(.version(bowVersion)) }
-            else if !bowBranch.isEmpty { dependencies = .bow(.branch(bowBranch)) }
-            else if !bowCommit.isEmpty { dependencies = .bow(.commit(bowCommit)) }
-            else if !podfile.isEmpty   { dependencies = .podfile(URL(fileURLWithPath: podfile)) }
-            else if !cartfile.isEmpty  { dependencies = .cartfile(URL(fileURLWithPath: cartfile)) }
-            else { dependencies = .bow(.version("")) }
-            
-            return IO.pure((name: name,
-                            output: output,
-                            platform: platform,
-                            playground: playground,
-                            dependencies: dependencies))
-        }^
+public func playground(commandName: String) -> Either<CLIKit.Console.Error, Void> {
+    PlaygroundCommand.commandName = commandName
+    
+    func arguments(parsableCommand: PlaygroundCommand) -> IO<CLIKit.Console.Error, (name: String, output: URL, platform: Platform, playground: URL?, dependencies: PlaygroundDependencies)> {
+        let dependencies: PlaygroundDependencies
+        if parsableCommand.bowVersion != ArgumentEmpty     { dependencies = .bow(.version(parsableCommand.bowVersion)) }
+        else if parsableCommand.bowBranch != ArgumentEmpty { dependencies = .bow(.branch(parsableCommand.bowBranch)) }
+        else if parsableCommand.bowCommit != ArgumentEmpty { dependencies = .bow(.commit(parsableCommand.bowCommit)) }
+        else if parsableCommand.podfile != ArgumentEmpty   { dependencies = .podfile(parsableCommand.podfileURL) }
+        else if parsableCommand.cartfile != ArgumentEmpty  { dependencies = .cartfile(parsableCommand.cartfileURL) }
+        else { dependencies = .bow(.version("")) }
+        
+        return IO.pure((name: parsableCommand.name,
+                        output: parsableCommand.outputURL,
+                        platform: parsableCommand.platform,
+                        playground: parsableCommand.playgroundURL,
+                        dependencies: dependencies))^
     }
     
-    let console = Console(script: script,
-                          description: "Build a nef Playground compatible with 3rd-party libraries",
-                          arguments: .init(name: PlaygroundCommand.output.rawValue, placeholder: "path-to-output",  description: "path where nef Playground will be generated"),
-                                     .init(name: PlaygroundCommand.name.rawValue, placeholder: "playground-name", description: "specify the name for the nef Playground", default: "BowPlayground"),
-                                     .init(name: PlaygroundCommand.platform.rawValue, placeholder: "", description: "set the target to `ios` or `macos`", default: "ios"),
-                                     .init(name: PlaygroundCommand.playground.rawValue, placeholder: "path-to-playground", description: "Xcode Playground to be transformed into nef Playground", default: " "),
-                                     .init(name: PlaygroundCommand.bowVersion.rawValue, placeholder: "", description: "specify the version of Bow", default: " "),
-                                     .init(name: PlaygroundCommand.bowBranch.rawValue,  placeholder: "", description: "specify the branch of Bow", default: " "),
-                                     .init(name: PlaygroundCommand.bowCommit.rawValue,  placeholder: "", description: "specify the commit of Bow", default: " "),
-                                     .init(name: PlaygroundCommand.podfile.rawValue,    placeholder: "", description: "path to Podfile with your own dependencies", default: " "),
-                                     .init(name: PlaygroundCommand.cartfile.rawValue,   placeholder: "", description: "path to Cartfile with your own dependencies", default: " "))
-
-    return arguments(console: console)
+    return CLIKit.Console.default.readArguments(PlaygroundCommand.self)
+        .flatMap(arguments)
         .flatMap { (name, output, platform, playground, dependencies) in
             playground.toOption()
-                .fold({        nefPlayground(name: name, output: output, platform: platform, dependencies: dependencies).provide(console)                       },
-                      { url in nefPlayground(xcodePlayground: url, name: name, output: output, platform: platform, dependencies: dependencies).provide(console) })
+                .fold({        nefPlayground(name: name, output: output, platform: platform, dependencies: dependencies).provide(Console.default)                       },
+                      { url in nefPlayground(xcodePlayground: url, name: name, output: output, platform: platform, dependencies: dependencies).provide(Console.default) })
         }^
-        .reportStatus(in: console)
-        .foldM({ e in console.exit(failure: "\(e)")        },
-               { success in console.exit(success: success) })
+        .reportStatus(in: .default)
         .unsafeRunSyncEither()
 }
