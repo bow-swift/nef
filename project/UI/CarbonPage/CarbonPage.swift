@@ -31,10 +31,10 @@ struct CarbonPageCommand: ConsoleCommand {
     @ArgumentParser.Option(default: .firaCode, help: "Carbon font type")
     var font: CarbonStyle.Font
     
-    @ArgumentParser.Option(default: true, help: ArgumentHelp("Shows/hides lines of code [true | false]", valueName: "show-lines"))
+    @ArgumentParser.Option(name: .customLong("show-lines"), default: true, help: "Shows/hides lines of code [true | false]")
     var lines: Bool
     
-    @ArgumentParser.Option(default: true, help: ArgumentHelp("Shows/hides the watermark [true | false]", valueName: "show-watermark"))
+    @ArgumentParser.Option(name: .customLong("show-watermark"), default: true, help: "Shows/hides the watermark [true | false]")
     var watermark: Bool
     
     @ArgumentParser.Flag (help: "Run carbon page in verbose mode")

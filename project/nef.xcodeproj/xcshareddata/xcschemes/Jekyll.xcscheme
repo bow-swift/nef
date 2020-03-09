@@ -56,7 +56,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--output ~/Desktop/migue"
+            argument = "--output /Users/miguelangel/Desktop/migue"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

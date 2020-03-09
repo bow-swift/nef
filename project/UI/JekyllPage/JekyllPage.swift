@@ -51,7 +51,7 @@ public func jekyllPage(commandName: String) -> Either<CLIKit.Console.Error, Void
         .flatMap(arguments)
         .flatMap { (content, permalink, output, verbose) in
             nef.Jekyll.renderVerbose(content: content, permalink: permalink, toFile: output)
-                .provide(CLIKit.Console.default)
+                .provide(Console.default)
                 .mapError { _ in .render() }
                 .foldM({ e in Console.default.exit(failure: "rendering jekyll page. \(e)") },
                        { (url, ast, rendered) in Console.default.exit(success: "rendered jekyll page '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") }) }^
