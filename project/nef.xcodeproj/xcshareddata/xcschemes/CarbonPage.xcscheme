@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--page &quot;~/Desktop/BowPlayground.app/Contents/MacOS/BowPlayground.playground/Pages/adios.xcplaygroundpage&quot;"
+            argument = "--page &quot;/Users/miguelangel/Desktop/BowPlayground.app/Contents/MacOS/BowPlayground.playground/Pages/page.xcplaygroundpage&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
