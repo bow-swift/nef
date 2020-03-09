@@ -7,7 +7,7 @@ import nef
 import Bow
 import BowEffects
 
-struct PlaygroundCommand: ParsableCommand {
+struct PlaygroundCommand: ConsoleCommand {
     static var commandName: String = "nef-playground"
     static var configuration = CommandConfiguration(commandName: commandName,
                                                     abstract: "Build a nef Playground compatible with 3rd-party libraries")

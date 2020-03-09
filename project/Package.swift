@@ -22,6 +22,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/bow-swift/bow", .branch("master")),
         .package(url: "https://github.com/bow-swift/Swiftline", .exact("0.5.4")),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", .exact("0.0.1")),
     ],
     targets: [
         .target(name: "NefModels", dependencies: ["BowEffects"], path: "Component/NefModels", publicHeadersPath: "Support Files"),
@@ -52,7 +53,7 @@ let package = Package(
                 publicHeadersPath: "Support Files"),
 
         .target(name: "CLIKit",
-                dependencies: ["nef"],
+                dependencies: ["nef", "ArgumentParser"],
                 path: "UI",
                 exclude: ["Nef/main.swift",
                           "Compiler/main.swift",
