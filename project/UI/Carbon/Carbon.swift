@@ -66,8 +66,8 @@ public func carbon(commandName: String) -> Either<CLIKit.Console.Error, Void> {
             nef.Carbon.render(playgroundsAt: input, style: style, into: output)
                 .provide(Console.default)^
                 .mapError { _ in .render() }
-                .foldM({ _ in Console.default.exit(failure: "rendering carbon files from nef Playground at '\(input.path)'") },
-                       { _ in Console.default.exit(success: "rendering carbon files from nef Playground at '\(output.path)'")   }) }^
+                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
+                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
         .reportStatus(in: .default)
         .unsafeRunSyncEither()
 }

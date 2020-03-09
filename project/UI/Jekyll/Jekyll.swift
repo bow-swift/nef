@@ -12,7 +12,7 @@ struct JekyllCommand: ConsoleCommand {
     static var configuration = CommandConfiguration(commandName: commandName,
                                                     abstract: "Render markdown files that can be consumed from Jekyll to generate a microsite")
 
-    @ArgumentParser.Option(help: "Path to the nef Playground to render")
+    @ArgumentParser.Option(help: "Path to the Xcode Playground to render")
     var project: String
     
     @ArgumentParser.Option(help: "Path where the resulting jekyll files will be generated")
@@ -46,8 +46,8 @@ public func jekyll(commandName: String) -> Either<CLIKit.Console.Error, Void> {
             nef.Jekyll.render(playgroundsAt: input, mainPage: mainPage, into: output)
                 .provide(Console.default)^
                 .mapError { _ in .render() }
-                .foldM({ e in Console.default.exit(failure: "rendering jekyll. \(e)") },
-                       { _ in Console.default.exit(success: "rendered jekyll '\(output.path)'") }) }^
+                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
+                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
         .reportStatus(in: .default)
         .unsafeRunSyncEither()
 }

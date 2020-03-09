@@ -2,47 +2,43 @@
 
 import Foundation
 import CLIKit
+import ArgumentParser
 import nef
 import Bow
 import BowEffects
 
-enum MarkdownCommand: String {
-    case project
-    case output
+struct MarkdownCommand: ConsoleCommand {
+    static var commandName: String = "nef-markdown"
+    static var configuration = CommandConfiguration(commandName: commandName,
+                                                    abstract: "Render markdown files from nef Playground")
+
+    @ArgumentParser.Option(help: "Path to the folder containing Xcode Playground to render")
+    var project: String
+    
+    @ArgumentParser.Option(help: "Path where the resulting Markdown files will be generated")
+    var output: String
+    
+    var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
+    var outputURL: URL  { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
 }
 
-
 @discardableResult
-public func markdown(script: String) -> Either<CLIKit.Console.Error, Void> {
+public func markdown(commandName: String) -> Either<CLIKit.Console.Error, Void> {
+    MarkdownCommand.commandName = commandName
     
-    func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, output: URL)> {
-        console.input().flatMap { args in
-            guard let inputPath = args[MarkdownCommand.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let outputPath = args[MarkdownCommand.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath else {
-                    return IO.raiseError(.arguments)
-            }
-            
-            let folder = URL(fileURLWithPath: inputPath, isDirectory: true)
-            let output = URL(fileURLWithPath: outputPath, isDirectory: true)
-
-            return IO.pure((input: folder, output: output))
-        }^
+    func arguments(parsableCommand: MarkdownCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL)> {
+        IO.pure((input: parsableCommand.projectURL,
+                 output: parsableCommand.outputURL))^
     }
     
-    let console = Console(script: script,
-                          description: "Render markdown files from nef Playground",
-                          arguments: .init(name: MarkdownCommand.project.rawValue, placeholder: "path-to-input", description: "path to the folder containing Xcode Playground to render"),
-                                     .init(name: MarkdownCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"))
-    
-    return arguments(console: console)
+    return CLIKit.Console.default.readArguments(MarkdownCommand.self)
+        .flatMap(arguments)
         .flatMap { (input, output) in
             nef.Markdown.render(playgroundsAt: input, into: output)
-               .provide(console)^
-               .mapError { _ in .render() }
-               .foldM({ _ in console.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                      { _ in console.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")  }) }^
-        .reportStatus(in: console)
-        .foldM({ e in console.exit(failure: "\(e)")        },
-               { success in console.exit(success: success) })
+                .provide(Console.default)
+                .mapError { _ in .render() }
+                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
+                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
+        .reportStatus(in: .default)
         .unsafeRunSyncEither()
 }
