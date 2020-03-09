@@ -30,13 +30,13 @@ struct PlaygroundCommand: ConsoleCommand {
     @ArgumentParser.Option(default: ArgumentEmpty, help: "Path to Cartfile with your own dependencies")
     var cartfile: String
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: ArgumentHelp("Specify the version of Bow", valueName: "bow-version"))
+    @ArgumentParser.Option(default: ArgumentEmpty, help: "Specify the version of Bow")
     var bowVersion: String
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: ArgumentHelp("Specify the branch of Bow", valueName: "bow-branch"))
+    @ArgumentParser.Option(default: ArgumentEmpty, help: "Specify the branch of Bow")
     var bowBranch: String
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: ArgumentHelp("Specify the commit of Bow", valueName: "bow-commit"))
+    @ArgumentParser.Option(default: ArgumentEmpty, help: "Specify the commit of Bow")
     var bowCommit: String
     
     var outputURL: URL { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }

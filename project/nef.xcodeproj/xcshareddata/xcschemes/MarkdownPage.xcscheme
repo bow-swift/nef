@@ -56,10 +56,6 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--h"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "--page /Users/miguelangel/Desktop/BowPlayground.app/Contents/MacOS/BowPlayground.playground/Pages/page.xcplaygroundpage"
             isEnabled = "YES">
          </CommandLineArgument>

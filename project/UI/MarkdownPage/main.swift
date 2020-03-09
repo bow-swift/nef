@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-markdownPage(script: "nef-markdown-page")
+markdownPage(commandName: MarkdownPageCommand.commandName)
