@@ -2,41 +2,38 @@
 
 import Foundation
 import CLIKit
+import ArgumentParser
 import nef
 import Bow
 import BowEffects
 
-enum CleanCommands: String {
-    case project
+struct CleanCommand: ConsoleCommand {
+    static var commandName: String = "nef-clean"
+    static var configuration = CommandConfiguration(commandName: commandName,
+                                                    abstract: "Clean up nef Playground")
+
+    @ArgumentParser.Option(help: "Path to nef Playground to clean up")
+    var project: String
+    
+    var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
 }
 
-
 @discardableResult
-public func clean(script: String) -> Either<CLIKit.Console.Error, Void> {
-    func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, URL> {
-        console.input().flatMap { args in
-            guard let inputPath = args[CleanCommands.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath else {
-                return IO.raiseError(.arguments)
-            }
-            
-            let nefPlayground = URL(fileURLWithPath: inputPath, isDirectory: true)
-            return IO.pure(nefPlayground)
-        }^
+public func clean(commandName: String) -> Either<CLIKit.Console.Error, Void> {
+    CleanCommand.commandName = commandName
+    
+    func arguments(parsableCommand: CleanCommand) -> IO<CLIKit.Console.Error, URL> {
+        IO.pure(parsableCommand.projectURL)^
     }
     
-    let console = Console(script: script,
-                          description: "Clean up nef Playground",
-                          arguments: .init(name: CleanCommands.project.rawValue, placeholder: "path-nef-playground", description: "path to nef Playground to clean up"))
-    
-    return arguments(console: console)
+    return CLIKit.Console.default.readArguments(CleanCommand.self)
+        .flatMap(arguments)
         .flatMap { input in
             nef.Clean.clean(nefPlayground: input)
-               .provide(console)^
-               .mapError { _ in .render() }
-               .foldM({ e in console.exit(failure: "clean up nef Playground '\(input.path)'. \(e)") },
-                      { _ in console.exit(success: "'\(input.path)' clean up successfully")         })    }^
-        .reportStatus(in: console)
-        .foldM({ e in console.exit(failure: "\(e)")        },
-               { success in console.exit(success: success) })
+                .provide(Console.default)^
+                .mapError { _ in .render() }
+                .foldM({ e in Console.default.exit(failure: "clean up nef Playground '\(input.path)'. \(e)") },
+                       { _ in Console.default.exit(success: "'\(input.path)' clean up successfully")         })    }^
+        .reportStatus(in: .default)
         .unsafeRunSyncEither()
 }
