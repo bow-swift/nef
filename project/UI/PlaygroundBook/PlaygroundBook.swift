@@ -33,7 +33,7 @@ public func playgroundBook(commandName: String) -> Either<CLIKit.Console.Error, 
     
     func arguments(parsableCommand: PlaygroundBookCommand) -> IO<CLIKit.Console.Error, (packageContent: String, projectName: String, output: URL)> {
         guard let packageContent = parsableCommand.packageContent, !packageContent.isEmpty else {
-            return IO.raiseError(.render(info: "invalid Swift Package"))^
+            return IO.raiseError(.arguments(info: "invalid Swift Package"))^
         }
     
         return IO.pure((packageContent: packageContent,
@@ -47,7 +47,7 @@ public func playgroundBook(commandName: String) -> Either<CLIKit.Console.Error, 
             nef.SwiftPlayground.render(packageContent: packageContent, name: projectName, output: output)
                 .provide(Console.default)^
                 .mapError { _ in .render() }
-                .foldM({ _   in Console.default.exit(failure: "rendering Playground Book")                  },
+                .foldM({ e   in Console.default.exit(failure: "rendering Playground Book. \(e)")            },
                        { url in Console.default.exit(success: "rendered Playground Book in '\(url.path)'")  }) }^
         .reportStatus(in: .default)
         .unsafeRunSyncEither()
