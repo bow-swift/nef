@@ -37,7 +37,7 @@ struct CarbonPageCommand: ConsoleCommand {
     @ArgumentParser.Option(default: true, help: ArgumentHelp("Shows/hides the watermark [true | false]", valueName: "show-watermark"))
     var watermark: Bool
     
-    @ArgumentParser.Flag (help: "Run Carbon page in verbose mode")
+    @ArgumentParser.Flag (help: "Run carbon page in verbose mode")
     var verbose: Bool
     
     var pageContent: String? { try? String(contentsOfFile: pagePath) }
@@ -81,7 +81,7 @@ public func carbonPage(commandName: String) -> Either<CLIKit.Console.Error, Void
                 .provide(Console.default)
                 .mapError { _ in .render() }
                 .foldM({ e in Console.default.exit(failure: "rendering carbon images. \(e)") },
-                       { (ast, url) in Console.default.exit(success: "rendered carbon images at '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)" : "")") }) }^
+                       { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)" : "")") }) }^
         .reportStatus(in: .default)
         .unsafeRunSyncEither()
 }
