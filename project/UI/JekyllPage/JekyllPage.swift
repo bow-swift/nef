@@ -7,11 +7,13 @@ import nef
 import Bow
 import BowEffects
 
-struct JekyllPageCommand: ConsoleCommand {
-    static var commandName: String = "nef-jekyll-page"
-    static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Render a markdown file from a Playground page that can be consumed from Jekyll")
+public struct JekyllPageCommand: ConsoleCommand {
+    public static var commandName: String = "nef-jekyll-page"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Render a markdown file from a Playground page that can be consumed from Jekyll")
 
+    public init() {}
+    
     @ArgumentParser.Option(help: ArgumentHelp("Path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`", valueName: "playground's page"))
     var page: String
     
@@ -30,15 +32,21 @@ struct JekyllPageCommand: ConsoleCommand {
         let path = page.trimmingEmptyCharacters.expandingTildeInPath
         return path.contains("Contents.swift") ? path : "\(path)/Contents.swift"
     }
-}
-
-@discardableResult
-public func jekyllPage(commandName: String) -> Either<CLIKit.Console.Error, Void> {
-    JekyllPageCommand.commandName = commandName
     
-    func arguments(parsableCommand: JekyllPageCommand) -> IO<CLIKit.Console.Error, (content: String, permalink: String, output: URL, verbose: Bool)> {
+    public func main() -> IO<CLIKit.Console.Error, Void> {
+        arguments(parsableCommand: self)
+            .flatMap { (content, permalink, output, verbose) in
+                nef.Jekyll.renderVerbose(content: content, permalink: permalink, toFile: output)
+                    .provide(Console.default)
+                    .mapError { _ in .render() }
+                    .foldM({ e in Console.default.exit(failure: "rendering jekyll page. \(e)") },
+                           { (url, ast, rendered) in Console.default.exit(success: "rendered jekyll page '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") })
+            }^
+    }
+    
+    private func arguments(parsableCommand: JekyllPageCommand) -> IO<CLIKit.Console.Error, (content: String, permalink: String, output: URL, verbose: Bool)> {
         guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
-            return IO.raiseError(.arguments(info: "could not read page content"))^
+            return IO.raiseError(.arguments(info: "Error: could not read page content"))^
         }
         
         return IO.pure((content: pageContent,
@@ -46,15 +54,4 @@ public func jekyllPage(commandName: String) -> Either<CLIKit.Console.Error, Void
                         output: parsableCommand.outputURL,
                         verbose: parsableCommand.verbose))^
     }
-    
-    return CLIKit.Console.default.readArguments(JekyllPageCommand.self)
-        .flatMap(arguments)
-        .flatMap { (content, permalink, output, verbose) in
-            nef.Jekyll.renderVerbose(content: content, permalink: permalink, toFile: output)
-                .provide(Console.default)
-                .mapError { _ in .render() }
-                .foldM({ e in Console.default.exit(failure: "rendering jekyll page. \(e)") },
-                       { (url, ast, rendered) in Console.default.exit(success: "rendered jekyll page '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") }) }^
-        .reportStatus(in: .default)
-        .unsafeRunSyncEither()
 }

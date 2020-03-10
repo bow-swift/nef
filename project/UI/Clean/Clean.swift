@@ -7,33 +7,31 @@ import nef
 import Bow
 import BowEffects
 
-struct CleanCommand: ConsoleCommand {
-    static var commandName: String = "nef-clean"
-    static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Clean up nef Playground")
+public struct CleanCommand: ConsoleCommand {
+    public static var commandName: String = "nef-clean"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Clean up nef Playground")
 
+    public init() {}
+    
     @ArgumentParser.Option(help: "Path to nef Playground to clean up")
-    var project: String
+    public var project: String
     
     var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
-}
-
-@discardableResult
-public func clean(commandName: String) -> Either<CLIKit.Console.Error, Void> {
-    CleanCommand.commandName = commandName
     
-    func arguments(parsableCommand: CleanCommand) -> IO<CLIKit.Console.Error, URL> {
-        IO.pure(parsableCommand.projectURL)^
+    
+    public func main() -> IO<CLIKit.Console.Error, Void> {
+        arguments(parsableCommand: self)
+            .flatMap { input in
+                nef.Clean.clean(nefPlayground: input)
+                    .provide(Console.default)^
+                    .mapError { _ in .render() }
+                    .foldM({ e in Console.default.exit(failure: "clean up nef Playground '\(input.path)'. \(e)") },
+                           { _ in Console.default.exit(success: "'\(input.path)' clean up successfully")         })
+            }^
     }
     
-    return CLIKit.Console.default.readArguments(CleanCommand.self)
-        .flatMap(arguments)
-        .flatMap { input in
-            nef.Clean.clean(nefPlayground: input)
-                .provide(Console.default)^
-                .mapError { _ in .render() }
-                .foldM({ e in Console.default.exit(failure: "clean up nef Playground '\(input.path)'. \(e)") },
-                       { _ in Console.default.exit(success: "'\(input.path)' clean up successfully")         })    }^
-        .reportStatus(in: .default)
-        .unsafeRunSyncEither()
+    private func arguments(parsableCommand: CleanCommand) -> IO<CLIKit.Console.Error, URL> {
+        IO.pure(parsableCommand.projectURL)^
+    }
 }

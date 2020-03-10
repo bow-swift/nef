@@ -5,5 +5,5 @@ import NefCarbon
 
 // #: - MAIN <launcher - AppKit>
 _ = CarbonApplication {
-    carbon(commandName: CarbonCommand.commandName)
+    CommandLineTool<CarbonCommand>.unsafeRunSync()
 }

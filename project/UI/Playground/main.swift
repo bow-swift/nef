@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-playground(commandName: PlaygroundCommand.commandName)
+CommandLineTool<PlaygroundCommand>.unsafeRunSync()

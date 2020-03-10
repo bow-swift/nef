@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-compiler(commandName: CompilerCommands.commandName)
+CommandLineTool<CompilerCommand>.unsafeRunSync()

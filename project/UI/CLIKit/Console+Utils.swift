@@ -5,7 +5,8 @@ import NefModels
 import Bow
 import BowEffects
 
-public extension IO where E == Console.Error {
+internal extension IO where E == Console.Error {
+    
     func reportStatus(in console: Console) -> IO<Console.Error, A> {
         handleErrorWith { error in
             switch error {

@@ -8,11 +8,13 @@ import NefModels
 import Bow
 import BowEffects
 
-struct CarbonPageCommand: ConsoleCommand {
-    static var commandName: String = "nef-carbon-page"
-    static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Export Carbon code snippets for given Playground page")
+public struct CarbonPageCommand: ConsoleCommand {
+    public static var commandName: String = "nef-carbon-page"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Export Carbon code snippets for given Playground page")
 
+    public init() {}
+    
     @ArgumentParser.Option(help: ArgumentHelp("Path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`", valueName: "playground's page"))
     var page: String
     
@@ -47,19 +49,26 @@ struct CarbonPageCommand: ConsoleCommand {
         let path = page.trimmingEmptyCharacters.expandingTildeInPath
         return path.contains("Contents.swift") ? path : "\(path)/Contents.swift"
     }
-}
-
-@discardableResult
-public func carbonPage(commandName: String) -> Either<CLIKit.Console.Error, Void> {
-    CarbonPageCommand.commandName = commandName
     
-    func arguments(parsableCommand: CarbonPageCommand) -> IO<CLIKit.Console.Error, (content: String, filename:String, output: URL, style: CarbonStyle, verbose: Bool)> {
+    
+    public func main() -> IO<CLIKit.Console.Error, Void> {
+        arguments(parsableCommand: self)
+            .flatMap { (content, filename, output, style, verbose) in
+                nef.Carbon.renderVerbose(content: content, style: style, filename: filename, into: output)
+                    .provide(Console.default)
+                    .mapError { _ in .render() }
+                    .foldM({ e in Console.default.exit(failure: "rendering carbon images. \(e)") },
+                           { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)" : "")") })
+            }^
+    }
+    
+    private func arguments(parsableCommand: CarbonPageCommand) -> IO<CLIKit.Console.Error, (content: String, filename:String, output: URL, style: CarbonStyle, verbose: Bool)> {
         guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
-            return IO.raiseError(.arguments(info: "could not read page content"))^
+            return IO.raiseError(.arguments(info: "Error: could not read page content"))^
         }
         
         guard let backgroundColor = CarbonStyle.Color(hex: parsableCommand.background) ?? CarbonStyle.Color(default: parsableCommand.background) else {
-            return IO.raiseError(.arguments(info: "invalid background color"))^
+            return IO.raiseError(.arguments(info: "Error: invalid background color"))^
         }
         
         return IO.pure((content: pageContent,
@@ -73,15 +82,4 @@ public func carbonPage(commandName: String) -> Either<CLIKit.Console.Error, Void
                                            watermark: parsableCommand.watermark),
                         verbose: parsableCommand.verbose))^
     }
-    
-    return CLIKit.Console.default.readArguments(CarbonPageCommand.self)
-        .flatMap(arguments)
-        .flatMap { (content, filename, output, style, verbose) in
-            nef.Carbon.renderVerbose(content: content, style: style, filename: filename, into: output)
-                .provide(Console.default)
-                .mapError { _ in .render() }
-                .foldM({ e in Console.default.exit(failure: "rendering carbon images. \(e)") },
-                       { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)" : "")") }) }^
-        .reportStatus(in: .default)
-        .unsafeRunSyncEither()
 }

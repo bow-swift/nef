@@ -8,11 +8,13 @@ import NefCarbon
 import Bow
 import BowEffects
 
-struct CarbonCommand: ConsoleCommand {
-    static var commandName: String = "nef-carbon"
-    static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Generates Carbon code snippets")
+public struct CarbonCommand: ConsoleCommand {
+    public static var commandName: String = "nef-carbon"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Export Carbon code snippets for given nef Playground")
 
+    public init() {}
+    
     @ArgumentParser.Option(help: "Path to the nef Playground to render")
     var project: String
     
@@ -39,15 +41,22 @@ struct CarbonCommand: ConsoleCommand {
     
     var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
     var outputURL: URL  { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
-}
-
-@discardableResult
-public func carbon(commandName: String) -> Either<CLIKit.Console.Error, Void> {
-    CarbonCommand.commandName = commandName
     
-    func arguments(parsableCommand: CarbonCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL, style: CarbonStyle)> {
+    
+    public func main() -> IO<CLIKit.Console.Error, Void> {
+        arguments(parsableCommand: self)
+            .flatMap { (input, output, style) in
+                nef.Carbon.render(playgroundsAt: input, style: style, into: output)
+                    .provide(Console.default)^
+                    .mapError { _ in .render() }
+                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
+                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   })
+            }^
+    }
+    
+    private func arguments(parsableCommand: CarbonCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL, style: CarbonStyle)> {
         guard let backgroundColor = CarbonStyle.Color(hex: parsableCommand.background) ?? CarbonStyle.Color(default: parsableCommand.background) else {
-            return IO.raiseError(.arguments(info: "invalid background color"))^
+            return IO.raiseError(.arguments(info: "Error: invalid background color"))^
         }
         
         return IO.pure((input: parsableCommand.projectURL,
@@ -59,15 +68,4 @@ public func carbon(commandName: String) -> Either<CLIKit.Console.Error, Void> {
                                            lineNumbers: parsableCommand.lines,
                                            watermark: parsableCommand.watermark)))^
     }
-    
-    return CLIKit.Console.default.readArguments(CarbonCommand.self)
-        .flatMap(arguments)
-        .flatMap { (input, output, style) in
-            nef.Carbon.render(playgroundsAt: input, style: style, into: output)
-                .provide(Console.default)^
-                .mapError { _ in .render() }
-                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
-        .reportStatus(in: .default)
-        .unsafeRunSyncEither()
 }

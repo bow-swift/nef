@@ -7,11 +7,13 @@ import nef
 import Bow
 import BowEffects
 
-struct MarkdownCommand: ConsoleCommand {
-    static var commandName: String = "nef-markdown"
-    static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Render markdown files from nef Playground")
+public struct MarkdownCommand: ConsoleCommand {
+    public static var commandName: String = "nef-markdown"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Render Markdown files for given Xcode Playgrounds")
 
+    public init() {}
+    
     @ArgumentParser.Option(help: "Path to the folder containing Xcode Playground to render")
     var project: String
     
@@ -20,25 +22,21 @@ struct MarkdownCommand: ConsoleCommand {
     
     var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
     var outputURL: URL  { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
-}
-
-@discardableResult
-public func markdown(commandName: String) -> Either<CLIKit.Console.Error, Void> {
-    MarkdownCommand.commandName = commandName
     
-    func arguments(parsableCommand: MarkdownCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL)> {
+    
+    public func main() -> IO<CLIKit.Console.Error, Void> {
+        arguments(parsableCommand: self)
+            .flatMap { (input, output) in
+                nef.Markdown.render(playgroundsAt: input, into: output)
+                    .provide(Console.default)
+                    .mapError { _ in .render() }
+                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
+                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   })
+            }^
+    }
+    
+    private func arguments(parsableCommand: MarkdownCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL)> {
         IO.pure((input: parsableCommand.projectURL,
                  output: parsableCommand.outputURL))^
     }
-    
-    return CLIKit.Console.default.readArguments(MarkdownCommand.self)
-        .flatMap(arguments)
-        .flatMap { (input, output) in
-            nef.Markdown.render(playgroundsAt: input, into: output)
-                .provide(Console.default)
-                .mapError { _ in .render() }
-                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
-        .reportStatus(in: .default)
-        .unsafeRunSyncEither()
 }

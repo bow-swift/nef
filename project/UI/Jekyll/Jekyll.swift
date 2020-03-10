@@ -7,11 +7,13 @@ import nef
 import Bow
 import BowEffects
 
-struct JekyllCommand: ConsoleCommand {
-    static var commandName: String = "nef-jekyll"
-    static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Render markdown files that can be consumed from Jekyll to generate a microsite")
+public struct JekyllCommand: ConsoleCommand {
+    public static var commandName: String = "nef-jekyll"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Render Markdown files that can be consumed from Jekyll to generate a microsite")
 
+    public init() {}
+    
     @ArgumentParser.Option(help: "Path to the Xcode Playground to render")
     var project: String
     
@@ -19,18 +21,25 @@ struct JekyllCommand: ConsoleCommand {
     var output: String
     
     @ArgumentParser.Option(name: .customLong("main-page"), default: "README.md", help: "Path to 'README.md' file to be used as the index page")
-    var main: String
+    var mainPage: String
     
     var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
     var outputURL: URL  { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
-    var mainPath: String { main.trimmingEmptyCharacters.expandingTildeInPath }
-}
-
-@discardableResult
-public func jekyll(commandName: String) -> Either<CLIKit.Console.Error, Void> {
-    JekyllCommand.commandName = commandName
+    var mainPath: String { mainPage.trimmingEmptyCharacters.expandingTildeInPath }
     
-    func arguments(parsableCommand: JekyllCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL, mainPage: URL)> {
+    
+    public func main() -> IO<CLIKit.Console.Error, Void> {
+        arguments(parsableCommand: self)
+            .flatMap { (input, output, mainPage) in
+                nef.Jekyll.render(playgroundsAt: input, mainPage: mainPage, into: output)
+                    .provide(Console.default)^
+                    .mapError { _ in .render() }
+                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
+                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   })
+            }^
+    }
+    
+    private func arguments(parsableCommand: JekyllCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL, mainPage: URL)> {
         let mainURL = parsableCommand.mainPath == "README.md"
             ? parsableCommand.outputURL.appendingPathComponent("README.md")
             : URL(fileURLWithPath: parsableCommand.mainPath, isDirectory: false)
@@ -39,15 +48,4 @@ public func jekyll(commandName: String) -> Either<CLIKit.Console.Error, Void> {
                         output: parsableCommand.outputURL,
                         mainPage: mainURL))^
     }
-    
-    return CLIKit.Console.default.readArguments(JekyllCommand.self)
-        .flatMap(arguments)
-        .flatMap { (input, output, mainPage) in
-            nef.Jekyll.render(playgroundsAt: input, mainPage: mainPage, into: output)
-                .provide(Console.default)^
-                .mapError { _ in .render() }
-                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
-        .reportStatus(in: .default)
-        .unsafeRunSyncEither()
 }

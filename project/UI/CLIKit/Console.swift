@@ -8,12 +8,8 @@ import BowEffects
 public enum Console {
     case `default`
     
-    public func readArguments<A: ConsoleCommand>(_ parsableCommand: A.Type) -> IO<Console.Error, A> {
-        parsableCommand.parseArguments().map { command in command as! A }^
-    }
-    
-    public func print(message: @escaping @autoclosure () -> String) -> IO<Console.Error, Void> {
-        ConsoleIO.print(message(), separator: " ", terminator: "\n")
+    public func print(message: @escaping @autoclosure () -> String, separator: String = " ", terminator: String = "\n") -> IO<Console.Error, Void> {
+        ConsoleIO.print(message(), separator: separator, terminator: terminator)
     }
     
     public func help<A>(_ helpMessage: @escaping @autoclosure () -> String) -> IO<Console.Error, A> {
