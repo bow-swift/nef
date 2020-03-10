@@ -33,6 +33,7 @@ public struct JekyllPageCommand: ConsoleCommand {
         return path.contains("Contents.swift") ? path : "\(path)/Contents.swift"
     }
     
+    
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
             .flatMap { (content, permalink, output, verbose) in

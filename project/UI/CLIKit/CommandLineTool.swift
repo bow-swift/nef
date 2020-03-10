@@ -1,6 +1,7 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
+import ArgumentParser
 import Bow
 import BowEffects
 
@@ -9,9 +10,9 @@ public struct CommandLineTool<T: ConsoleCommand> {
     @discardableResult
     public static func unsafeRunSync() -> Either<Console.Error, Void> {
         T.parseArguments()
-            .map { command in command as! ConsoleCommand }^
-            .flatMap { command in command.main() }^
-            .reportStatus(in: Console.default)
+            .flatMap { (command: ParsableCommand) in command.fix() }^
+            .flatMap { (command: ConsoleCommand) in command.main() }^
+            .reportStatus(in: .default)
             .unsafeRunSyncEither()^
     }
 }

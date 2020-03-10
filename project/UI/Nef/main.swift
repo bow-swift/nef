@@ -20,7 +20,7 @@ struct NefCommand: ConsoleCommand {
                                                                   CarbonCommand.self])
     
     func main() -> IO<Console.Error, Void> {
-        fatalError("should be invoked a subcommand")
+        fatalError("must be invoked a subcommand")
     }
 }
 
