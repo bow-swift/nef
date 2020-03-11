@@ -17,6 +17,6 @@ public struct VersionCommand: ConsoleCommand {
     public func main() -> IO<CLIKit.Console.Error, Void> {
         nef.Version.info()
             .mapError { _ in .render() }^
-            .flatMap { version in Console.default.exit(success: "Build's version number: \(version)", terminator: " ") }^
+            .flatMap { version in Console.default.print(message: "Build's version number: \(version)", terminator: " ") }^
     }
 }
