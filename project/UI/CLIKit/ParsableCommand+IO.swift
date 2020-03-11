@@ -21,8 +21,8 @@ extension ParsableCommand {
         .arguments(info: fullMessage(for: e))
     }
     
-    static func helpError() -> Console.Error {
-        fullMessage(CleanExit.helpRequest(self))
+    static func helpError() -> Swift.Error {
+        CleanExit.helpRequest(self)
     }
     
     // MARK: helpers

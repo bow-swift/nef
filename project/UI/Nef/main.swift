@@ -24,7 +24,7 @@ struct NefCommand: ConsoleCommand {
     }
 }
 
-// #: - MAIN <launcher>
+// MARK: Configuration
 CompilerCommand.commandName = "compile"
 CleanCommand.commandName = "clean"
 PlaygroundCommand.commandName = "playground"
@@ -33,4 +33,5 @@ MarkdownCommand.commandName = "markdown"
 JekyllCommand.commandName = "jekyll"
 CarbonCommand.commandName = "carbon"
 
+// #: - MAIN <launcher - AppKit>
 CommandLineTool<NefCommand>.unsafeRunSync()

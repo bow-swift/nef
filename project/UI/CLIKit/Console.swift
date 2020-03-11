@@ -17,14 +17,14 @@ public enum Console {
             .map { _ in Darwin.exit(-2) }^
     }
     
-    public func exit<A>(failure: String) -> IO<Console.Error, A> {
-        print(message: "☠️ ".bold.red + "\(failure)")
+    public func exit<A>(failure: String, separator: String = " ", terminator: String = "\n") -> IO<Console.Error, A> {
+        print(message: "☠️".bold.red + " \(failure)", separator: separator, terminator: terminator)
             .map { _ in Darwin.exit(-1) }^
         
     }
     
-    public func exit<A>(success: String) -> IO<Console.Error, A> {
-        print(message: "🙌 ".bold.green + "\(success)")
+    public func exit<A>(success: String, separator: String = " ", terminator: String = "\n") -> IO<Console.Error, A> {
+        print(message: "🙌".bold.green + " \(success)", separator: separator, terminator: terminator)
             .map { _ in Darwin.exit(0) }^
     }
     

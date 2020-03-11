@@ -2,17 +2,19 @@
 
 import Foundation
 import ArgumentParser
+import NefCarbon
 import Bow
 import BowEffects
 
 public struct CommandLineTool<T: ConsoleCommand> {
     
-    @discardableResult
-    public static func unsafeRunSync() -> Either<Console.Error, Void> {
-        T.parseArguments()
-            .flatMap { (command: ParsableCommand) in command.fix() }^
-            .flatMap { (command: ConsoleCommand) in command.main() }^
-            .reportStatus(in: .default)
-            .unsafeRunSyncEither()^
+    public static func unsafeRunSync() -> Void {
+        _ = CarbonApplication {
+            _ = T.parseArguments()
+                 .flatMap { (command: ParsableCommand) in command.fix() }^
+                 .flatMap { (command: ConsoleCommand) in command.main() }^
+                 .reportStatus(in: .default)
+                 .unsafeRunSyncEither()^
+        }
     }
 }
