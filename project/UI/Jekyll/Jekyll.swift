@@ -7,6 +7,12 @@ import nef
 import Bow
 import BowEffects
 
+struct JekyllArguments {
+    let input: URL
+    let output: URL
+    let mainPage: URL
+}
+
 public struct JekyllCommand: ConsoleCommand {
     public static var commandName: String = "nef-jekyll"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -30,22 +36,22 @@ public struct JekyllCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (input, output, mainPage) in
-                nef.Jekyll.render(playgroundsAt: input, mainPage: mainPage, into: output)
+            .flatMap { args in
+                nef.Jekyll.render(playgroundsAt: args.input, mainPage: args.mainPage, into: args.output)
                     .provide(Console.default)^
                     .mapError { _ in .render() }
-                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   })
+                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(args.input.path)'") },
+                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(args.output.path)'")   })
             }^
     }
     
-    private func arguments(parsableCommand: JekyllCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL, mainPage: URL)> {
+    private func arguments(parsableCommand: JekyllCommand) -> IO<CLIKit.Console.Error, JekyllArguments> {
         let mainURL = parsableCommand.mainPath == "README.md"
             ? parsableCommand.outputURL.appendingPathComponent("README.md")
             : URL(fileURLWithPath: parsableCommand.mainPath, isDirectory: false)
         
-        return IO.pure((input: parsableCommand.projectURL,
-                        output: parsableCommand.outputURL,
-                        mainPage: mainURL))^
+        return IO.pure(.init(input: parsableCommand.projectURL,
+                             output: parsableCommand.outputURL,
+                             mainPage: mainURL))^
     }
 }

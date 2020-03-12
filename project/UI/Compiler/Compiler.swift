@@ -7,6 +7,11 @@ import nef
 import Bow
 import BowEffects
 
+struct CompilerArguments {
+    let input: URL
+    let cached: Bool
+}
+
 public struct CompilerCommand: ConsoleCommand {
     public static var commandName: String = "nefc"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -24,17 +29,17 @@ public struct CompilerCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (input, cached) in
-                nef.Compiler.compile(nefPlayground: input, cached: cached)
+            .flatMap { args in
+                nef.Compiler.compile(nefPlayground: args.input, cached: args.cached)
                     .provide(Console.default)^
                     .mapError { _ in .render() }
-                    .foldM({ e in Console.default.exit(failure: "compiling Xcode Playgrounds from '\(input.path)'. \(e)") },
-                           { _ in Console.default.exit(success: "'\(input.path)' compiled successfully")                  })
+                    .foldM({ e in Console.default.exit(failure: "compiling Xcode Playgrounds from '\(args.input.path)'. \(e)") },
+                           { _ in Console.default.exit(success: "'\(args.input.path)' compiled successfully")                  })
             }^
     }
     
-    private func arguments(parsableCommand: CompilerCommand) -> IO<CLIKit.Console.Error, (input: URL, cached: Bool)> {
-        IO.pure((input: parsableCommand.projectURL,
-                 cached: parsableCommand.cached))^
+    private func arguments(parsableCommand: CompilerCommand) -> IO<CLIKit.Console.Error, CompilerArguments> {
+        IO.pure(.init(input: parsableCommand.projectURL,
+                      cached: parsableCommand.cached))^
     }
 }

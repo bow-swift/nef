@@ -7,6 +7,14 @@ import nef
 import Bow
 import BowEffects
 
+struct PlaygroundArguments {
+    let name: String
+    let output: URL
+    let platform: Platform
+    let playground: URL?
+    let dependencies: PlaygroundDependencies
+}
+
 public struct PlaygroundCommand: ConsoleCommand {
     public static var commandName: String = "nef-playground"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -49,10 +57,10 @@ public struct PlaygroundCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (name, output, platform, playground, dependencies) in
-                playground.toOption()
-                    .fold({        self.nefPlayground(name: name, output: output, platform: platform, dependencies: dependencies).provide(Console.default)                       },
-                          { url in self.nefPlayground(xcodePlayground: url, name: name, output: output, platform: platform, dependencies: dependencies).provide(Console.default) })
+            .flatMap { args in
+                args.playground.toOption()
+                    .fold({        self.nefPlayground(name: args.name, output: args.output, platform: args.platform, dependencies: args.dependencies).provide(Console.default)                       },
+                          { url in self.nefPlayground(xcodePlayground: url, name: args.name, output: args.output, platform: args.platform, dependencies: args.dependencies).provide(Console.default) })
             }^
     }
     
@@ -77,7 +85,7 @@ public struct PlaygroundCommand: ConsoleCommand {
         }
     }
     
-    private func arguments(parsableCommand: PlaygroundCommand) -> IO<CLIKit.Console.Error, (name: String, output: URL, platform: Platform, playground: URL?, dependencies: PlaygroundDependencies)> {
+    private func arguments(parsableCommand: PlaygroundCommand) -> IO<CLIKit.Console.Error, PlaygroundArguments> {
         let dependencies: PlaygroundDependencies
         if parsableCommand.bowVersion != ArgumentEmpty {
             dependencies = .bow(.version(parsableCommand.bowVersion))
@@ -93,10 +101,10 @@ public struct PlaygroundCommand: ConsoleCommand {
             dependencies = .bow(.version(""))
         }
         
-        return IO.pure((name: parsableCommand.name,
-                        output: parsableCommand.outputURL,
-                        platform: parsableCommand.platform,
-                        playground: parsableCommand.playgroundURL,
-                        dependencies: dependencies))^
+        return IO.pure(.init(name: parsableCommand.name,
+                             output: parsableCommand.outputURL,
+                             platform: parsableCommand.platform,
+                             playground: parsableCommand.playgroundURL,
+                             dependencies: dependencies))^
     }
 }

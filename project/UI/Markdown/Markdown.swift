@@ -7,6 +7,11 @@ import nef
 import Bow
 import BowEffects
 
+struct MarkdownArguments {
+    let input: URL
+    let output: URL
+}
+
 public struct MarkdownCommand: ConsoleCommand {
     public static var commandName: String = "nef-markdown"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -26,17 +31,17 @@ public struct MarkdownCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (input, output) in
-                nef.Markdown.render(playgroundsAt: input, into: output)
+            .flatMap { args in
+                nef.Markdown.render(playgroundsAt: args.input, into: args.output)
                     .provide(Console.default)
                     .mapError { _ in .render() }
-                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   })
+                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(args.input.path)'") },
+                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(args.output.path)'")   })
             }^
     }
     
-    private func arguments(parsableCommand: MarkdownCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL)> {
-        IO.pure((input: parsableCommand.projectURL,
-                 output: parsableCommand.outputURL))^
+    private func arguments(parsableCommand: MarkdownCommand) -> IO<CLIKit.Console.Error, MarkdownArguments> {
+        IO.pure(.init(input: parsableCommand.projectURL,
+                      output: parsableCommand.outputURL))^
     }
 }

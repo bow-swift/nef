@@ -8,6 +8,12 @@ import NefCarbon
 import Bow
 import BowEffects
 
+struct CarbonArguments {
+    let input: URL
+    let output: URL
+    let style: CarbonStyle
+}
+
 public struct CarbonCommand: ConsoleCommand {
     public static var commandName: String = "nef-carbon"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -45,27 +51,29 @@ public struct CarbonCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (input, output, style) in
-                nef.Carbon.render(playgroundsAt: input, style: style, into: output)
+            .flatMap { args in
+                nef.Carbon.render(playgroundsAt: args.input, style: args.style, into: args.output)
                     .provide(Console.default)^
                     .mapError { _ in .render() }
-                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   })
+                    .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(args.input.path)'") },
+                           { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(args.output.path)'")   })
             }^
     }
     
-    private func arguments(parsableCommand: CarbonCommand) -> IO<CLIKit.Console.Error, (input: URL, output: URL, style: CarbonStyle)> {
+    private func arguments(parsableCommand: CarbonCommand) -> IO<CLIKit.Console.Error, CarbonArguments> {
         guard let backgroundColor = CarbonStyle.Color(hex: parsableCommand.background) ?? CarbonStyle.Color(default: parsableCommand.background) else {
             return IO.raiseError(.arguments(info: "Error: invalid background color"))^
         }
         
-        return IO.pure((input: parsableCommand.projectURL,
-                        output: parsableCommand.outputURL,
-                        style: CarbonStyle(background: backgroundColor,
-                                           theme: parsableCommand.theme,
-                                           size: parsableCommand.size,
-                                           fontType: parsableCommand.font,
-                                           lineNumbers: parsableCommand.lines,
-                                           watermark: parsableCommand.watermark)))^
+        let style = CarbonStyle(background: backgroundColor,
+                                theme: parsableCommand.theme,
+                                size: parsableCommand.size,
+                                fontType: parsableCommand.font,
+                                lineNumbers: parsableCommand.lines,
+                                watermark: parsableCommand.watermark)
+        
+        return IO.pure(.init(input: parsableCommand.projectURL,
+                             output: parsableCommand.outputURL,
+                             style: style))^
     }
 }

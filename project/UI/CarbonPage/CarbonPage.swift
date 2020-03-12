@@ -8,6 +8,14 @@ import NefModels
 import Bow
 import BowEffects
 
+struct CarbonPageArguments {
+    let content: String
+    let filename:String
+    let output: URL
+    let style: CarbonStyle
+    let verbose: Bool
+}
+
 public struct CarbonPageCommand: ConsoleCommand {
     public static var commandName: String = "nef-carbon-page"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -53,16 +61,16 @@ public struct CarbonPageCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (content, filename, output, style, verbose) in
-                nef.Carbon.renderVerbose(content: content, style: style, filename: filename, into: output)
+            .flatMap { args in
+                nef.Carbon.renderVerbose(content: args.content, style: args.style, filename: args.filename, into: args.output)
                     .provide(Console.default)
                     .mapError { _ in .render() }
                     .foldM({ e in Console.default.exit(failure: "rendering carbon images. \(e)") },
-                           { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)" : "")") })
+                           { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(args.verbose ? "\n\n• AST \n\t\(ast)" : "")") })
             }^
     }
     
-    private func arguments(parsableCommand: CarbonPageCommand) -> IO<CLIKit.Console.Error, (content: String, filename:String, output: URL, style: CarbonStyle, verbose: Bool)> {
+    private func arguments(parsableCommand: CarbonPageCommand) -> IO<CLIKit.Console.Error, CarbonPageArguments> {
         guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
             return IO.raiseError(.arguments(info: "Error: could not read page content"))^
         }
@@ -71,15 +79,17 @@ public struct CarbonPageCommand: ConsoleCommand {
             return IO.raiseError(.arguments(info: "Error: invalid background color"))^
         }
         
-        return IO.pure((content: pageContent,
+        let style = CarbonStyle(background: backgroundColor,
+                                theme: parsableCommand.theme,
+                                size: parsableCommand.size,
+                                fontType: parsableCommand.font,
+                                lineNumbers: parsableCommand.lines,
+                                watermark: parsableCommand.watermark)
+        
+        return IO.pure(.init(content: pageContent,
                         filename: parsableCommand.filename,
                         output: parsableCommand.outputURL,
-                        style: CarbonStyle(background: backgroundColor,
-                                           theme: parsableCommand.theme,
-                                           size: parsableCommand.size,
-                                           fontType: parsableCommand.font,
-                                           lineNumbers: parsableCommand.lines,
-                                           watermark: parsableCommand.watermark),
+                        style: style,
                         verbose: parsableCommand.verbose))^
     }
 }

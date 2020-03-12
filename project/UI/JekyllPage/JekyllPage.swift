@@ -7,6 +7,13 @@ import nef
 import Bow
 import BowEffects
 
+struct JekyllPageArguments {
+    let content: String
+    let permalink: String
+    let output: URL
+    let verbose: Bool
+}
+
 public struct JekyllPageCommand: ConsoleCommand {
     public static var commandName: String = "nef-jekyll-page"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -36,23 +43,23 @@ public struct JekyllPageCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (content, permalink, output, verbose) in
-                nef.Jekyll.renderVerbose(content: content, permalink: permalink, toFile: output)
+            .flatMap { args in
+                nef.Jekyll.renderVerbose(content: args.content, permalink: args.permalink, toFile: args.output)
                     .provide(Console.default)
                     .mapError { _ in .render() }
                     .foldM({ e in Console.default.exit(failure: "rendering jekyll page. \(e)") },
-                           { (url, ast, rendered) in Console.default.exit(success: "rendered jekyll page '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") })
+                           { (url, ast, rendered) in Console.default.exit(success: "rendered jekyll page '\(url.path)'.\(args.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") })
             }^
     }
     
-    private func arguments(parsableCommand: JekyllPageCommand) -> IO<CLIKit.Console.Error, (content: String, permalink: String, output: URL, verbose: Bool)> {
+    private func arguments(parsableCommand: JekyllPageCommand) -> IO<CLIKit.Console.Error, JekyllPageArguments> {
         guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
             return IO.raiseError(.arguments(info: "Error: could not read page content"))^
         }
         
-        return IO.pure((content: pageContent,
-                        permalink: parsableCommand.permalink,
-                        output: parsableCommand.outputURL,
-                        verbose: parsableCommand.verbose))^
+        return IO.pure(.init(content: pageContent,
+                             permalink: parsableCommand.permalink,
+                             output: parsableCommand.outputURL,
+                             verbose: parsableCommand.verbose))^
     }
 }

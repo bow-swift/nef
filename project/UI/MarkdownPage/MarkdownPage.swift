@@ -7,6 +7,13 @@ import nef
 import Bow
 import BowEffects
 
+struct MarkdownPageArguments {
+    let content: String
+    let filename: String
+    let output: URL
+    let verbose: Bool
+}
+
 public struct MarkdownPageCommand: ConsoleCommand {
     public static var commandName: String = "nef-markdown-page"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -33,17 +40,17 @@ public struct MarkdownPageCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (content, filename, output, verbose) in
-                nef.Markdown.renderVerbose(content: content, toFile: output)
+            .flatMap { args in
+                nef.Markdown.renderVerbose(content: args.content, toFile: args.output)
                     .provide(Console.default)
                     .mapError { _ in .render() }
                     .foldM({ e in Console.default.exit(failure: "rendering markdown page. \(e)") },
-                           { (url, ast, rendered) in Console.default.exit(success: "rendered markdown page '\(url.path)'.\(verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") })
+                           { (url, ast, rendered) in Console.default.exit(success: "rendered markdown page '\(url.path)'.\(args.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") })
                 
             }^
     }
     
-    private func arguments(parsableCommand: MarkdownPageCommand) -> IO<CLIKit.Console.Error, (content: String, filename: String, output: URL, verbose: Bool)> {
+    private func arguments(parsableCommand: MarkdownPageCommand) -> IO<CLIKit.Console.Error, MarkdownPageArguments> {
         guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
             return IO.raiseError(.arguments(info: "Error: could not read playground's page content (\(parsableCommand.pagePath.filename))"))^
         }
@@ -51,9 +58,9 @@ public struct MarkdownPageCommand: ConsoleCommand {
         let filename = parsableCommand.pagePath.parentPath.filename.removeExtension
         let output = URL(fileURLWithPath: parsableCommand.outputPath).appendingPathComponent(filename)
         
-        return IO.pure((content: pageContent,
-                        filename: filename,
-                        output: output,
-                        verbose: parsableCommand.verbose))^
+        return IO.pure(.init(content: pageContent,
+                             filename: filename,
+                             output: output,
+                             verbose: parsableCommand.verbose))^
     }
 }

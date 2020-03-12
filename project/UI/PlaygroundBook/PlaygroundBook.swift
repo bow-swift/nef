@@ -7,6 +7,12 @@ import nef
 import Bow
 import BowEffects
 
+struct PlaygroundBookArguments {
+    let packageContent: String
+    let projectName: String
+    let output: URL
+}
+
 public struct PlaygroundBookCommand: ConsoleCommand {
     public static var commandName: String = "nef-playground-book"
     public static var configuration = CommandConfiguration(commandName: commandName,
@@ -31,8 +37,8 @@ public struct PlaygroundBookCommand: ConsoleCommand {
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
         arguments(parsableCommand: self)
-            .flatMap { (packageContent, projectName, output) in
-                nef.SwiftPlayground.render(packageContent: packageContent, name: projectName, output: output)
+            .flatMap { args in
+                nef.SwiftPlayground.render(packageContent: args.packageContent, name: args.projectName, output: args.output)
                     .provide(Console.default)^
                     .mapError { _ in .render() }
                     .foldM({ e   in Console.default.exit(failure: "rendering Playground Book. \(e)")            },
@@ -41,13 +47,13 @@ public struct PlaygroundBookCommand: ConsoleCommand {
             }^
     }
     
-    private func arguments(parsableCommand: PlaygroundBookCommand) -> IO<CLIKit.Console.Error, (packageContent: String, projectName: String, output: URL)> {
+    private func arguments(parsableCommand: PlaygroundBookCommand) -> IO<CLIKit.Console.Error, PlaygroundBookArguments> {
         guard let packageContent = parsableCommand.packageContent, !packageContent.isEmpty else {
             return IO.raiseError(.arguments(info: "Error: invalid Swift Package"))^
         }
         
-        return IO.pure((packageContent: packageContent,
-                        projectName: parsableCommand.projectName,
-                        output: parsableCommand.outputURL))^
+        return IO.pure(.init(packageContent: packageContent,
+                             projectName: parsableCommand.projectName,
+                             output: parsableCommand.outputURL))^
     }
 }
