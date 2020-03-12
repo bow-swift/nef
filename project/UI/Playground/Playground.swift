@@ -79,12 +79,19 @@ public struct PlaygroundCommand: ConsoleCommand {
     
     private func arguments(parsableCommand: PlaygroundCommand) -> IO<CLIKit.Console.Error, (name: String, output: URL, platform: Platform, playground: URL?, dependencies: PlaygroundDependencies)> {
         let dependencies: PlaygroundDependencies
-        if parsableCommand.bowVersion != ArgumentEmpty     { dependencies = .bow(.version(parsableCommand.bowVersion)) }
-        else if parsableCommand.bowBranch != ArgumentEmpty { dependencies = .bow(.branch(parsableCommand.bowBranch)) }
-        else if parsableCommand.bowCommit != ArgumentEmpty { dependencies = .bow(.commit(parsableCommand.bowCommit)) }
-        else if parsableCommand.podfile != ArgumentEmpty   { dependencies = .podfile(parsableCommand.podfileURL) }
-        else if parsableCommand.cartfile != ArgumentEmpty  { dependencies = .cartfile(parsableCommand.cartfileURL) }
-        else { dependencies = .bow(.version("")) }
+        if parsableCommand.bowVersion != ArgumentEmpty {
+            dependencies = .bow(.version(parsableCommand.bowVersion))
+        } else if parsableCommand.bowBranch != ArgumentEmpty {
+            dependencies = .bow(.branch(parsableCommand.bowBranch))
+        } else if parsableCommand.bowCommit != ArgumentEmpty {
+            dependencies = .bow(.commit(parsableCommand.bowCommit))
+        } else if parsableCommand.podfile != ArgumentEmpty {
+            dependencies = .podfile(parsableCommand.podfileURL)
+        } else if parsableCommand.cartfile != ArgumentEmpty {
+            dependencies = .cartfile(parsableCommand.cartfileURL)
+        } else {
+            dependencies = .bow(.version(""))
+        }
         
         return IO.pure((name: parsableCommand.name,
                         output: parsableCommand.outputURL,

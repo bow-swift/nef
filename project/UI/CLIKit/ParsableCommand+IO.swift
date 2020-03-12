@@ -31,7 +31,10 @@ extension ParsableCommand {
     }
     
     private func runIO() -> IO<Swift.Error, ParsableCommand> {
-        IO.invoke { try self.run() }.map { _ in self }^
+        IO.invoke {
+            try self.run()
+            return self
+        }
     }
 }
 
@@ -45,7 +48,7 @@ extension ParsableCommand {
     }
 }
 
-/// `ConsoleCommand` default run() method will show help by default in Menu with subcommands and ignore in other case (it will be handle in each submodule)
+/// `ConsoleCommand` run() method will show help by default in Menu with subcommands and ignore in other case (it will be handle in each submodule)
 public extension ConsoleCommand {
     func run() throws {
         guard Self.configuration.subcommands.count > 0 else { return }
