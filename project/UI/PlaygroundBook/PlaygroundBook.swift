@@ -20,7 +20,7 @@ public struct PlaygroundBookCommand: ConsoleCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Path to Package.swift file. ex. `/home/Package.swift`", valueName: "package path"))
     var package: String
 
-    @ArgumentParser.Option(help: ArgumentHelp("Path where Playground Bool will be generated. ex. `/home`", valueName: "output path"))
+    @ArgumentParser.Option(help: ArgumentHelp("Path where Playground Book will be generated. ex. `/home`", valueName: "output path"))
     var output: String
     
     var projectName: String { name.trimmingEmptyCharacters }
