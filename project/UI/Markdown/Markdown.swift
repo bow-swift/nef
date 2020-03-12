@@ -20,13 +20,10 @@ public struct MarkdownCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: "Path to the folder containing Xcode Playground to render")
-    var project: String
+    private var project: ArgumentPath
     
     @ArgumentParser.Option(help: "Path where the resulting Markdown files will be generated")
-    var output: String
-    
-    var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
-    var outputURL: URL  { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
+    private var output: ArgumentPath
     
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
@@ -41,7 +38,7 @@ public struct MarkdownCommand: ConsoleCommand {
     }
     
     private func arguments(parsableCommand: MarkdownCommand) -> IO<CLIKit.Console.Error, MarkdownArguments> {
-        IO.pure(.init(input: parsableCommand.projectURL,
-                      output: parsableCommand.outputURL))^
+        IO.pure(.init(input: parsableCommand.project.url,
+                      output: parsableCommand.output.url))^
     }
 }

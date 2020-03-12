@@ -22,31 +22,28 @@ public struct CarbonCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: "Path to the nef Playground to render")
-    var project: String
+    private var project: ArgumentPath
     
     @ArgumentParser.Option(help: "Path where the resulting carbon files will be generated")
-    var output: String
+    private var output: ArgumentPath
     
     @ArgumentParser.Option(default: "nef", help: "Background color in hexadecimal")
-    var background: String
+    private var background: String
     
     @ArgumentParser.Option(default: .dracula, help: "Carbon theme")
-    var theme: CarbonStyle.Theme
+    private var theme: CarbonStyle.Theme
     
     @ArgumentParser.Option(default: .x2, help: "export file size [1-5]")
-    var size: CarbonStyle.Size
+    private var size: CarbonStyle.Size
     
     @ArgumentParser.Option(default: .firaCode, help: "Carbon font type")
-    var font: CarbonStyle.Font
+    private var font: CarbonStyle.Font
     
     @ArgumentParser.Option(name: .customLong("show-lines"), default: true, help: "Shows/hides lines of code [true | false]")
-    var lines: Bool
+    private var lines: Bool
     
     @ArgumentParser.Option(name: .customLong("show-watermark"), default: true, help: "Shows/hides the watermark [true | false]")
-    var watermark: Bool
-    
-    var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
-    var outputURL: URL  { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
+    private var watermark: Bool
     
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
@@ -72,8 +69,8 @@ public struct CarbonCommand: ConsoleCommand {
                                 lineNumbers: parsableCommand.lines,
                                 watermark: parsableCommand.watermark)
         
-        return IO.pure(.init(input: parsableCommand.projectURL,
-                             output: parsableCommand.outputURL,
+        return IO.pure(.init(input: parsableCommand.project.url,
+                             output: parsableCommand.output.url,
                              style: style))^
     }
 }

@@ -15,9 +15,7 @@ public struct CleanCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: "Path to nef Playground to clean up")
-    public var project: String
-    
-    var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
+    private var project: ArgumentPath
     
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
@@ -32,6 +30,6 @@ public struct CleanCommand: ConsoleCommand {
     }
     
     private func arguments(parsableCommand: CleanCommand) -> IO<CLIKit.Console.Error, URL> {
-        IO.pure(parsableCommand.projectURL)^
+        IO.pure(parsableCommand.project.url)^
     }
 }

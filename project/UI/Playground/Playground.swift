@@ -23,36 +23,31 @@ public struct PlaygroundCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: "Path where nef Playground will be generated")
-    var output: String
+    private var output: ArgumentPath
 
     @ArgumentParser.Option(default: "BowPlayground", help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
-    var name: String
+    private var name: String
 
     @ArgumentParser.Option(default: .ios, help: "set the target to `ios` or `macos`")
-    var platform: Platform
+    private var platform: Platform
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: "Xcode Playground to be transformed into nef Playground")
-    var playground: String
+    @ArgumentParser.Option(help: "Xcode Playground to be transformed into nef Playground")
+    private var playground: ArgumentPath?
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: "Path to Podfile with your own dependencies")
-    var podfile: String
+    @ArgumentParser.Option(help: "Path to Podfile with your own dependencies")
+    private var podfile: ArgumentPath?
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: "Path to Cartfile with your own dependencies")
-    var cartfile: String
+    @ArgumentParser.Option(help: "Path to Cartfile with your own dependencies")
+    private var cartfile: ArgumentPath?
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: "Specify the version of Bow")
-    var bowVersion: String
+    @ArgumentParser.Option(help: "Specify the version of Bow")
+    private var bowVersion: String?
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: "Specify the branch of Bow")
-    var bowBranch: String
+    @ArgumentParser.Option(help: "Specify the branch of Bow")
+    var bowBranch: String?
     
-    @ArgumentParser.Option(default: ArgumentEmpty, help: "Specify the commit of Bow")
-    var bowCommit: String
-    
-    var outputURL: URL { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
-    var playgroundURL: URL? { playground == ArgumentEmpty ? nil : URL(fileURLWithPath: playground.trimmingEmptyCharacters.expandingTildeInPath) }
-    var podfileURL: URL  { URL(fileURLWithPath: podfile.trimmingEmptyCharacters.expandingTildeInPath) }
-    var cartfileURL: URL { URL(fileURLWithPath: cartfile.trimmingEmptyCharacters.expandingTildeInPath) }
+    @ArgumentParser.Option(help: "Specify the commit of Bow")
+    var bowCommit: String?
     
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
@@ -87,24 +82,24 @@ public struct PlaygroundCommand: ConsoleCommand {
     
     private func arguments(parsableCommand: PlaygroundCommand) -> IO<CLIKit.Console.Error, PlaygroundArguments> {
         let dependencies: PlaygroundDependencies
-        if parsableCommand.bowVersion != ArgumentEmpty {
-            dependencies = .bow(.version(parsableCommand.bowVersion))
-        } else if parsableCommand.bowBranch != ArgumentEmpty {
-            dependencies = .bow(.branch(parsableCommand.bowBranch))
-        } else if parsableCommand.bowCommit != ArgumentEmpty {
-            dependencies = .bow(.commit(parsableCommand.bowCommit))
-        } else if parsableCommand.podfile != ArgumentEmpty {
-            dependencies = .podfile(parsableCommand.podfileURL)
-        } else if parsableCommand.cartfile != ArgumentEmpty {
-            dependencies = .cartfile(parsableCommand.cartfileURL)
+        if let version = parsableCommand.bowVersion {
+            dependencies = .bow(.version(version))
+        } else if let branch = parsableCommand.bowBranch {
+            dependencies = .bow(.branch(branch))
+        } else if let commit = parsableCommand.bowCommit {
+            dependencies = .bow(.commit(commit))
+        } else if let podfileURL = parsableCommand.podfile?.url {
+            dependencies = .podfile(podfileURL)
+        } else if let cartfileURL = parsableCommand.cartfile?.url {
+            dependencies = .cartfile(cartfileURL)
         } else {
             dependencies = .bow(.version(""))
         }
         
         return IO.pure(.init(name: parsableCommand.name,
-                             output: parsableCommand.outputURL,
+                             output: parsableCommand.output.url,
                              platform: parsableCommand.platform,
-                             playground: parsableCommand.playgroundURL,
+                             playground: parsableCommand.playground?.url,
                              dependencies: dependencies))^
     }
 }

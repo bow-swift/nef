@@ -18,7 +18,7 @@ public struct CompilerCommand: ConsoleCommand {
                                                     abstract: "Compile nef Playground")
     public init() {}
     
-    @ArgumentParser.Option(help: "Path to nef Playground to compile")
+    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to compile", valueName: "nef playground"))
     var project: String
     
     @ArgumentParser.Flag(name: .customLong("use-cache"), help: "Use cached dependencies if it is possible")

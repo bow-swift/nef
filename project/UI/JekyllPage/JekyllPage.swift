@@ -22,22 +22,23 @@ public struct JekyllPageCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: ArgumentHelp("Path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`", valueName: "playground's page"))
-    var page: String
+    private var page: ArgumentPath
     
     @ArgumentParser.Option(help: "Path where Jekyll markdown are saved to. ex. `/home`")
-    var output: String
+    private var output: ArgumentPath
     
     @ArgumentParser.Option(help: ArgumentHelp("Relative path where Jekyll will render the documentation. ex. `/about/`", valueName: "relative URL"))
-    var permalink: String
+    private var permalink: String
     
     @ArgumentParser.Flag (help: "Run jekyll page in verbose mode")
-    var verbose: Bool
+    private var verbose: Bool
     
-    var pageContent: String? { try? String(contentsOfFile: pagePath) }
-    var outputURL: URL { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath).appendingPathComponent("README.md") }
-    var pagePath: String {
-        let path = page.trimmingEmptyCharacters.expandingTildeInPath
-        return path.contains("Contents.swift") ? path : "\(path)/Contents.swift"
+    private var pageContent: String? { try? String(contentsOfFile: pageURL.path) }
+    private var outputFile: URL { output.url.appendingPathComponent("README.md") }
+    private var pageURL: URL {
+        page.path.contains("Contents.swift")
+            ? page.url
+            : page.url.appendingPathComponent("Contents.swift")
     }
     
     
@@ -59,7 +60,7 @@ public struct JekyllPageCommand: ConsoleCommand {
         
         return IO.pure(.init(content: pageContent,
                              permalink: parsableCommand.permalink,
-                             output: parsableCommand.outputURL,
+                             output: parsableCommand.output.url,
                              verbose: parsableCommand.verbose))^
     }
 }

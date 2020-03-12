@@ -21,18 +21,16 @@ public struct PlaygroundBookCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: "Name for the Swift Playground. ex. `nef`")
-    var name: String
+    private var name: String
 
     @ArgumentParser.Option(help: ArgumentHelp("Path to Package.swift file. ex. `/home/Package.swift`", valueName: "package path"))
-    var package: String
+    private var package: ArgumentPath
 
     @ArgumentParser.Option(help: ArgumentHelp("Path where Playground Book will be generated. ex. `/home`", valueName: "output path"))
-    var output: String
+    private var output: ArgumentPath
     
-    var projectName: String { name.trimmingEmptyCharacters }
-    var packagePath: String { package.trimmingEmptyCharacters.expandingTildeInPath }
-    var packageContent: String? { try? String(contentsOfFile: packagePath) }
-    var outputURL: URL { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
+    private var projectName: String { name.trimmingEmptyCharacters }
+    private var packageContent: String? { try? String(contentsOfFile: package.path) }
     
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
@@ -54,6 +52,6 @@ public struct PlaygroundBookCommand: ConsoleCommand {
         
         return IO.pure(.init(packageContent: packageContent,
                              projectName: parsableCommand.projectName,
-                             output: parsableCommand.outputURL))^
+                             output: parsableCommand.output.url))^
     }
 }

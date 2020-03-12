@@ -22,19 +22,19 @@ public struct MarkdownPageCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: ArgumentHelp("Path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`", valueName: "playground's page"))
-    var page: String
+    private var page: ArgumentPath
     
     @ArgumentParser.Option(help: "Path where markdown files are saved to. ex. `/home`")
-    var output: String
+    private var output: ArgumentPath
     
     @ArgumentParser.Flag (help: "Run markdown page in verbose mode.")
-    var verbose: Bool
+    private var verbose: Bool
     
-    var pageContent: String? { try? String(contentsOfFile: pagePath) }
-    var outputPath: String { output.trimmingEmptyCharacters.expandingTildeInPath }
-    var pagePath: String {
-        let path = page.trimmingEmptyCharacters.expandingTildeInPath
-        return path.contains("Contents.swift") ? path : "\(path)/Contents.swift"
+    private var pageContent: String? { try? String(contentsOfFile: pageURL.path) }
+    private var pageURL: URL {
+        page.path.contains("Contents.swift")
+            ? page.url
+            : page.url.appendingPathComponent("Contents.swift")
     }
     
     
@@ -51,12 +51,12 @@ public struct MarkdownPageCommand: ConsoleCommand {
     }
     
     private func arguments(parsableCommand: MarkdownPageCommand) -> IO<CLIKit.Console.Error, MarkdownPageArguments> {
-        guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
-            return IO.raiseError(.arguments(info: "Error: could not read playground's page content (\(parsableCommand.pagePath.filename))"))^
-        }
+        let filename = parsableCommand.page.url.lastPathComponent.removeExtension
+        let output = parsableCommand.output.url.appendingPathComponent(filename)
         
-        let filename = parsableCommand.pagePath.parentPath.filename.removeExtension
-        let output = URL(fileURLWithPath: parsableCommand.outputPath).appendingPathComponent(filename)
+        guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
+            return IO.raiseError(.arguments(info: "Error: could not read playground's page content (\(filename))"))^
+        }
         
         return IO.pure(.init(content: pageContent,
                              filename: filename,

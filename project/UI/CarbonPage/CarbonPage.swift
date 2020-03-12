@@ -24,38 +24,38 @@ public struct CarbonPageCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: ArgumentHelp("Path to playground page. ex. `/home/nef.playground/Pages/Intro.xcplaygroundpage`", valueName: "playground's page"))
-    var page: String
+    private var page: ArgumentPath
     
     @ArgumentParser.Option(help: ArgumentHelp("Path where Carbon snippets are saved to. ex. `/home`", valueName: "carbon output"))
-    var output: String
+    private var output: ArgumentPath
     
     @ArgumentParser.Option(default: "nef", help: "Background color in hexadecimal")
-    var background: String
+    private var background: String
     
     @ArgumentParser.Option(default: .dracula, help: "Carbon theme")
-    var theme: CarbonStyle.Theme
+    private var theme: CarbonStyle.Theme
     
     @ArgumentParser.Option(default: .x2, help: "export file size [1-5]")
-    var size: CarbonStyle.Size
+    private var size: CarbonStyle.Size
     
     @ArgumentParser.Option(default: .firaCode, help: "Carbon font type")
-    var font: CarbonStyle.Font
+    private var font: CarbonStyle.Font
     
     @ArgumentParser.Option(name: .customLong("show-lines"), default: true, help: "Shows/hides lines of code [true | false]")
-    var lines: Bool
+    private var lines: Bool
     
     @ArgumentParser.Option(name: .customLong("show-watermark"), default: true, help: "Shows/hides the watermark [true | false]")
-    var watermark: Bool
+    private var watermark: Bool
     
     @ArgumentParser.Flag (help: "Run carbon page in verbose mode")
-    var verbose: Bool
+    private var verbose: Bool
     
-    var pageContent: String? { try? String(contentsOfFile: pagePath) }
-    var outputURL: URL { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
-    var filename: String { PlaygroundUtils.playgroundName(fromPage: pagePath) }
-    var pagePath: String {
-        let path = page.trimmingEmptyCharacters.expandingTildeInPath
-        return path.contains("Contents.swift") ? path : "\(path)/Contents.swift"
+    private var pageContent: String? { try? String(contentsOfFile: pageURL.path) }
+    private var filename: String { PlaygroundUtils.playgroundName(fromPage: pageURL.path) }
+    private var pageURL: URL {
+        page.path.contains("Contents.swift")
+            ? page.url
+            : page.url.appendingPathComponent("Contents.swift")
     }
     
     
@@ -88,7 +88,7 @@ public struct CarbonPageCommand: ConsoleCommand {
         
         return IO.pure(.init(content: pageContent,
                         filename: parsableCommand.filename,
-                        output: parsableCommand.outputURL,
+                        output: parsableCommand.output.url,
                         style: style,
                         verbose: parsableCommand.verbose))^
     }

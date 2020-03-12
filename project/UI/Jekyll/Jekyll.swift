@@ -21,17 +21,13 @@ public struct JekyllCommand: ConsoleCommand {
     public init() {}
     
     @ArgumentParser.Option(help: "Path to the Xcode Playground to render")
-    var project: String
+    private var project: ArgumentPath
     
     @ArgumentParser.Option(help: "Path where the resulting jekyll files will be generated")
-    var output: String
+    private var output: ArgumentPath
     
     @ArgumentParser.Option(name: .customLong("main-page"), default: "README.md", help: "Path to 'README.md' file to be used as the index page")
-    var mainPage: String
-    
-    var projectURL: URL { URL(fileURLWithPath: project.trimmingEmptyCharacters.expandingTildeInPath) }
-    var outputURL: URL  { URL(fileURLWithPath: output.trimmingEmptyCharacters.expandingTildeInPath) }
-    var mainPath: String { mainPage.trimmingEmptyCharacters.expandingTildeInPath }
+    private var mainPage: String
     
     
     public func main() -> IO<CLIKit.Console.Error, Void> {
@@ -46,12 +42,12 @@ public struct JekyllCommand: ConsoleCommand {
     }
     
     private func arguments(parsableCommand: JekyllCommand) -> IO<CLIKit.Console.Error, JekyllArguments> {
-        let mainURL = parsableCommand.mainPath == "README.md"
-            ? parsableCommand.outputURL.appendingPathComponent("README.md")
-            : URL(fileURLWithPath: parsableCommand.mainPath, isDirectory: false)
+        let mainURL = parsableCommand.mainPage == "README.md"
+            ? parsableCommand.output.url.appendingPathComponent("README.md")
+            : URL(fileURLWithPath: mainPage.trimmingEmptyCharacters.expandingTildeInPath)
         
-        return IO.pure(.init(input: parsableCommand.projectURL,
-                             output: parsableCommand.outputURL,
+        return IO.pure(.init(input: parsableCommand.project.url,
+                             output: parsableCommand.output.url,
                              mainPage: mainURL))^
     }
 }
