@@ -15,10 +15,10 @@ class CarbonAssembler {
 
     private func resolveWindow() -> NSWindow {
         NSWindow(contentRect: CarbonScreen.bounds,
-                styleMask: [.titled, .closable, .miniaturizable, .resizable],
-                backing: .buffered,
-                defer: true,
-                screen: CarbonScreen())
+                 styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                 backing: .buffered,
+                 defer: true,
+                 screen: CarbonScreen())
     }
 }
 

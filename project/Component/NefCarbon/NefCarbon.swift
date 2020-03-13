@@ -62,16 +62,35 @@ public struct Carbon {
     // MARK: private <renders>
     private func renderPage(content: String) -> EnvIO<Environment, RenderError, RenderingOutput> {
         EnvIO { env in
-            env.render.page(content: content).provide(env.renderEnvironment)
+            let rendered = IO<RenderError, RenderingOutput>.var()
+            
+            return binding(
+                    continueOn(.main),
+                rendered <- env.render.page(content: content).provide(env.renderEnvironment),
+            yield: rendered.get)
         }
     }
     
     private func renderPlayground(_ playground: URL) -> EnvIO<Environment, RenderError, PlaygroundOutput> {
-        EnvIO { env in env.render.playground(playground).provide(env.renderEnvironment) }
+        EnvIO { env in
+            let rendered = IO<RenderError, PlaygroundOutput>.var()
+            
+            return binding(
+                    continueOn(.main),
+                rendered <- env.render.playground(playground).provide(env.renderEnvironment),
+            yield: rendered.get)
+        }
     }
     
     private func renderPlaygrounds(atFolder folder: URL) -> EnvIO<Environment, RenderError, PlaygroundsOutput> {
-        EnvIO { env in env.render.playgrounds(at: folder).provide(env.renderEnvironment) }
+        EnvIO { env in
+            let rendered = IO<RenderError, PlaygroundsOutput>.var()
+            
+            return binding(
+                    continueOn(.main),
+                rendered <- env.render.playgrounds(at: folder).provide(env.renderEnvironment),
+            yield: rendered.get)
+        }
     }
     
     // MARK: private <helper>
