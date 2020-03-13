@@ -15,6 +15,14 @@ public extension MarkdownAPI {
         renderVerbose(content: content).map { info in info.rendered }^
     }
     
+    static func render(page: URL) -> EnvIO<Console, nef.Error, String> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+            
+        return render(content: contentPage)
+    }
+    
     static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
         NefMarkdown.Markdown()
                    .page(content: content)
@@ -22,8 +30,24 @@ public extension MarkdownAPI {
                    .mapError { _ in nef.Error.markdown() }
     }
     
+    static func renderVerbose(page: URL) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return renderVerbose(content: contentPage)
+    }
+    
     static func render(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
         renderVerbose(content: content, toFile: file).map { info in info.url }^
+    }
+    
+    static func render(page: URL, toFile output: URL) -> EnvIO<Console, nef.Error, URL> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return render(content: contentPage, toFile: output)
     }
     
     static func renderVerbose(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
@@ -34,6 +58,14 @@ public extension MarkdownAPI {
                           .page(content: content, filename: filename, into: output)
                           .contramap(environment)
                           .mapError { e in nef.Error.markdown(info: "\(e)") }^
+    }
+    
+    static func renderVerbose(page: URL, toFile output: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return renderVerbose(content: contentPage, toFile: output)
     }
     
     static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {

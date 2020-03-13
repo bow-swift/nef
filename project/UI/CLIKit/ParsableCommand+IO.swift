@@ -12,9 +12,11 @@ public protocol ConsoleCommand: ParsableCommand {
 extension ParsableCommand {
     
     static func parseArguments() -> IO<Console.Error, ParsableCommand> {
-        parseIO()
-            .flatMap { command in command.runIO() }^
-            .mapError(fullMessage)^
+        IO.invoke {
+            let command = try parseAsRoot()
+            try command.run()
+            return command
+        }.mapError(fullMessage)^
     }
     
     static func fullMessage(_ e: Swift.Error) -> Console.Error {
@@ -23,18 +25,6 @@ extension ParsableCommand {
     
     static func helpError() -> Swift.Error {
         CleanExit.helpRequest(self)
-    }
-    
-    // MARK: helpers
-    private static func parseIO() -> IO<Swift.Error, ParsableCommand> {
-        IO.invoke { try parseAsRoot() }
-    }
-    
-    private func runIO() -> IO<Swift.Error, ParsableCommand> {
-        IO.invoke {
-            try self.run()
-            return self
-        }
     }
 }
 

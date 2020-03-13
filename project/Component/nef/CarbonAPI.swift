@@ -15,11 +15,27 @@ public extension CarbonAPI {
         renderVerbose(content: content, style: style).map { info in info.images }^
     }
     
+    static func render(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return render(content: contentPage, style: style)
+    }
+    
     static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
         NefCarbon.Carbon()
                  .page(content: content)
                  .contramap { console in environment(console: console, style: style) }
                  .mapError { _ in nef.Error.carbon() }
+    }
+    
+    static func renderVerbose(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return renderVerbose(content: contentPage, style: style)
     }
     
     static func render(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, Data> {
@@ -34,11 +50,27 @@ public extension CarbonAPI {
         renderVerbose(content: content, style: style, filename: filename, into: output).map { output in output.url }^
     }
     
+    static func render(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return render(content: contentPage, style: style, filename: filename, into: output)
+    }
+    
     static func renderVerbose(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
         NefCarbon.Carbon()
                  .page(content: content, filename: filename.removeExtension, into: output)
                  .contramap { console in environment(console: console, style: style) }
                  .mapError { e in nef.Error.carbon(info: "\(e)") }
+    }
+    
+    static func renderVerbose(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return renderVerbose(content: contentPage, style: style, filename: filename, into: output)
     }
     
     static func render(playground: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
