@@ -17,7 +17,7 @@ public extension JekyllAPI {
     
     static func render(page: URL, permalink: String) -> EnvIO<Console, nef.Error, String> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return render(content: contentPage, permalink: permalink)
@@ -32,7 +32,7 @@ public extension JekyllAPI {
     
     static func renderVerbose(page: URL, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return renderVerbose(content: contentPage, permalink: permalink)
@@ -44,7 +44,7 @@ public extension JekyllAPI {
     
     static func render(page: URL, permalink: String, toFile output: URL) -> EnvIO<Console, nef.Error, URL> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return render(content: contentPage, permalink: permalink, toFile: output)
@@ -62,7 +62,7 @@ public extension JekyllAPI {
     
     static func renderVerbose(page: URL, permalink: String, toFile output: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return renderVerbose(content: contentPage, permalink: permalink, toFile: output)

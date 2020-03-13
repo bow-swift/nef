@@ -17,7 +17,7 @@ public extension CarbonAPI {
     
     static func render(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return render(content: contentPage, style: style)
@@ -32,7 +32,7 @@ public extension CarbonAPI {
     
     static func renderVerbose(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return renderVerbose(content: contentPage, style: style)
@@ -52,7 +52,7 @@ public extension CarbonAPI {
     
     static func render(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return render(content: contentPage, style: style, filename: filename, into: output)
@@ -67,7 +67,7 @@ public extension CarbonAPI {
     
     static func renderVerbose(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
-            return EnvIO.raiseError(.markdown(info: "Error: could not read playground's page content (\(page.pageName))"))^
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
         return renderVerbose(content: contentPage, style: style, filename: filename, into: output)
