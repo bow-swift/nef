@@ -8,15 +8,7 @@ import NefModels
 import Bow
 import BowEffects
 
-struct CarbonPageArguments {
-    let content: String
-    let filename:String
-    let output: URL
-    let style: CarbonStyle
-    let verbose: Bool
-}
-
-public struct CarbonPageCommand: ConsoleCommand {
+public struct CarbonPageCommand: ParsableCommand {
     public static var commandName: String = "nef-carbon-page"
     public static var configuration = CommandConfiguration(commandName: commandName,
                                                            abstract: "Export Carbon code snippets for given Playground page")
@@ -50,46 +42,18 @@ public struct CarbonPageCommand: ConsoleCommand {
     @ArgumentParser.Flag (help: "Run carbon page in verbose mode")
     private var verbose: Bool
     
-    private var pageContent: String? { try? String(contentsOfFile: pageURL.path) }
-    private var filename: String { PlaygroundUtils.playgroundName(fromPage: pageURL.path) }
-    private var pageURL: URL {
-        page.path.contains("Contents.swift")
-            ? page.url
-            : page.url.appendingPathComponent("Contents.swift")
-    }
-    
-    
-    public func main() -> IO<CLIKit.Console.Error, Void> {
-        arguments(parsableCommand: self)
-            .flatMap { args in
-                nef.Carbon.renderVerbose(content: args.content, style: args.style, filename: args.filename, into: args.output)
-                    .provide(Console.default)
-                    .mapError { _ in .render() }
-                    .foldM({ e in Console.default.exit(failure: "rendering carbon images. \(e)") },
-                           { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(args.verbose ? "\n\n• AST \n\t\(ast)" : "")") })
-            }^
-    }
-    
-    private func arguments(parsableCommand: CarbonPageCommand) -> IO<CLIKit.Console.Error, CarbonPageArguments> {
-        guard let pageContent = parsableCommand.pageContent, !pageContent.isEmpty else {
-            return IO.raiseError(.arguments(info: "Error: could not read page content"))^
-        }
+    public func run() throws {
+        let style = CarbonStyle(background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
+                                theme: theme,
+                                size: size,
+                                fontType: font,
+                                lineNumbers: lines,
+                                watermark: watermark)
         
-        guard let backgroundColor = CarbonStyle.Color(hex: parsableCommand.background) ?? CarbonStyle.Color(default: parsableCommand.background) else {
-            return IO.raiseError(.arguments(info: "Error: invalid background color"))^
-        }
-        
-        let style = CarbonStyle(background: backgroundColor,
-                                theme: parsableCommand.theme,
-                                size: parsableCommand.size,
-                                fontType: parsableCommand.font,
-                                lineNumbers: parsableCommand.lines,
-                                watermark: parsableCommand.watermark)
-        
-        return IO.pure(.init(content: pageContent,
-                        filename: parsableCommand.filename,
-                        output: parsableCommand.output.url,
-                        style: style,
-                        verbose: parsableCommand.verbose))^
+        try nef.Carbon.renderVerbose(page: page.url, style: style, filename: page.path.filename, into: output.url)
+                .provide(Console.default)
+                .foldM({ e in Console.default.exit(failure: "rendering carbon images. \(e)") },
+                       { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)" : "")") })^
+                .unsafeRunSync()
     }
 }

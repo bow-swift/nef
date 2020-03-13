@@ -7,16 +7,16 @@ import nef
 import Bow
 import BowEffects
 
-public struct VersionCommand: ConsoleCommand {
+public struct VersionCommand: ParsableCommand {
     public static var commandName: String = "version"
     public static var configuration = CommandConfiguration(commandName: commandName,
                                                     abstract: "Get the build's version number")
     
     public init() {}
     
-    public func main() -> IO<CLIKit.Console.Error, Void> {
-        nef.Version.info()
-            .mapError { _ in .render() }^
-            .flatMap { version in Console.default.print(message: "Build's version number: \(version)", terminator: " ") }^
+    public func run() throws {
+        try nef.Version.info()
+                .flatMap { version in Console.default.print(message: "Build's version number: \(version)", terminator: " ") }^
+                .unsafeRunSync()
     }
 }

@@ -8,39 +8,23 @@ import BowEffects
 public enum Console {
     case `default`
     
-    public func print(message: @escaping @autoclosure () -> String, separator: String = " ", terminator: String = "\n") -> IO<Console.Error, Void> {
+    public func print<E: Swift.Error>(message: @escaping @autoclosure () -> String, separator: String = " ", terminator: String = "\n") -> IO<E, Void> {
         ConsoleIO.print(message(), separator: separator, terminator: terminator)
     }
     
-    public func help<A>(_ helpMessage: @escaping @autoclosure () -> String) -> IO<Console.Error, A> {
+    public func help<E: Swift.Error>(_ helpMessage: @escaping @autoclosure () -> String) -> IO<E, Void> {
         print(message: helpMessage())
-            .map { _ in Darwin.exit(-2) }^
+            .map { _ in Darwin.exit(-2) }.void()^
     }
     
-    public func exit<A>(failure: String, separator: String = " ", terminator: String = "\n") -> IO<Console.Error, A> {
+    public func exit<E: Swift.Error>(failure: String, separator: String = " ", terminator: String = "\n") -> IO<E, Void> {
         print(message: "☠️".bold.red + " \(failure)", separator: separator, terminator: terminator)
-            .map { _ in Darwin.exit(-1) }^
-        
+            .map { _ in Darwin.exit(-1) }.void()^
     }
     
-    public func exit<A>(success: String, separator: String = " ", terminator: String = "\n") -> IO<Console.Error, A> {
+    public func exit<E: Swift.Error>(success: String, separator: String = " ", terminator: String = "\n") -> IO<E, Void> {
         print(message: "🙌".bold.green + " \(success)", separator: separator, terminator: terminator)
-            .map { _ in Darwin.exit(0) }^
-    }
-    
-    /// Kind of errors in ConsoleIO
-    public enum Error: Swift.Error, CustomStringConvertible {
-        case arguments(info: String)
-        case render(info: String = "")
-        
-        public var description: String {
-            switch self {
-            case .arguments(let info):
-                return info
-            case .render(let info):
-                return info.isEmpty ? "" : "Render failure: \(info.lightRed)"
-            }
-        }
+            .map { _ in Darwin.exit(0) }.void()^
     }
 }
 

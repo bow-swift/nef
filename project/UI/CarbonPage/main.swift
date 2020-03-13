@@ -4,4 +4,4 @@ import CLIKit
 import NefCarbon
 
 // #: - MAIN <launcher - AppKit>
-CommandLineTool<CarbonPageCommand>.unsafeRunSync()
+CommandLineTool<CarbonPageCommand>.main()

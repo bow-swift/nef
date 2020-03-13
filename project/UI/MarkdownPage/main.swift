@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-CommandLineTool<MarkdownPageCommand>.unsafeRunSync()
+CommandLineTool<MarkdownPageCommand>.main()

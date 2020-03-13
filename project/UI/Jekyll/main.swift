@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-CommandLineTool<JekyllCommand>.unsafeRunSync()
+CommandLineTool<JekyllCommand>.main()

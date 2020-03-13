@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-CommandLineTool<PlaygroundBookCommand>.unsafeRunSync()
+CommandLineTool<PlaygroundBookCommand>.main()

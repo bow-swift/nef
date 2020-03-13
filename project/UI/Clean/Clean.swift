@@ -7,7 +7,7 @@ import nef
 import Bow
 import BowEffects
 
-public struct CleanCommand: ConsoleCommand {
+public struct CleanCommand: ParsableCommand {
     public static var commandName: String = "nef-clean"
     public static var configuration = CommandConfiguration(commandName: commandName,
                                                            abstract: "Clean up nef Playground")
@@ -18,18 +18,11 @@ public struct CleanCommand: ConsoleCommand {
     private var project: ArgumentPath
     
     
-    public func main() -> IO<CLIKit.Console.Error, Void> {
-        arguments(parsableCommand: self)
-            .flatMap { input in
-                nef.Clean.clean(nefPlayground: input)
-                    .provide(Console.default)^
-                    .mapError { _ in .render() }
-                    .foldM({ e in Console.default.exit(failure: "clean up nef Playground '\(input.path)'. \(e)") },
-                           { _ in Console.default.exit(success: "'\(input.path)' clean up successfully")         })
-            }^
-    }
-    
-    private func arguments(parsableCommand: CleanCommand) -> IO<CLIKit.Console.Error, URL> {
-        IO.pure(parsableCommand.project.url)^
+    public func run() throws {
+        try nef.Clean.clean(nefPlayground: project.url)
+                .provide(Console.default)^
+                .foldM({ e in Console.default.exit(failure: "clean up nef Playground '\(self.project.path)'. \(e)") },
+                       { _ in Console.default.exit(success: "'\(self.project.path)' clean up successfully")         })^
+                .unsafeRunSync()
     }
 }

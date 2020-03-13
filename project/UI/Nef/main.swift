@@ -6,8 +6,7 @@ import ArgumentParser
 import Bow
 import BowEffects
 
-struct NefCommand: ConsoleCommand {
-    
+struct NefCommand: ParsableCommand {
     static var configuration = CommandConfiguration(commandName: "nef",
                                                     abstract: "💊 steroids for Xcode Playgrounds",
                                                     subcommands: [VersionCommand.self,
@@ -18,10 +17,6 @@ struct NefCommand: ConsoleCommand {
                                                                   MarkdownCommand.self,
                                                                   JekyllCommand.self,
                                                                   CarbonCommand.self])
-    
-    func main() -> IO<Console.Error, Void> {
-        fatalError("A subcommand must be invoked.")
-    }
 }
 
 // MARK: Configuration
@@ -34,4 +29,4 @@ JekyllCommand.commandName = "jekyll"
 CarbonCommand.commandName = "carbon"
 
 // #: - MAIN <launcher - AppKit>
-CommandLineTool<NefCommand>.unsafeRunSync()
+CommandLineTool<NefCommand>.main()
