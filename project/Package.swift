@@ -22,7 +22,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/bow-swift/bow", .branch("master")),
         .package(url: "https://github.com/bow-swift/Swiftline", .exact("0.5.4")),
-        .package(url: "https://github.com/miguelangel-dev/swift-argument-parser.git", .branch("miguelangel/effects_help_command")),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.1"),
     ],
     targets: [
         .target(name: "NefModels", dependencies: ["BowEffects"], path: "Component/NefModels", publicHeadersPath: "Support Files"),
