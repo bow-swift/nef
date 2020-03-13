@@ -1,0 +1,15 @@
+name: Verify Xcode integrity
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Compile project
+      run: |
+        set -o pipefail
+        xcodebuild -project ./project/nef.xcodeproj -scheme nef | xcpretty -c
