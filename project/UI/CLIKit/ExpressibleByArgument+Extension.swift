@@ -10,14 +10,12 @@ extension CarbonStyle.Theme: ExpressibleByArgument {}
 extension CarbonStyle.Font: ExpressibleByArgument {}
 
 // MARK: - Models
-
 public struct ArgumentPath: Codable, ExpressibleByArgument {
-    public var url: URL { URL(fileURLWithPath: path) }
-    public var path: String { _path.trimmingEmptyCharacters.expandingTildeInPath }
-    
-    private let _path: String
+    public let url: URL
+    public let path: String
     
     public init(argument: String) {
-        self._path = argument
+        self.path = argument.trimmingEmptyCharacters.expandingTildeInPath
+        self.url = URL(fileURLWithPath: self.path)
     }
 }
