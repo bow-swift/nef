@@ -56,7 +56,7 @@
 .package(url: "https://github.com/bow-swift/nef.git", from: "{version}")
 ```
 
-It is an excellent option if you want to use the full features in your app, even to build new tools on top of nef.
+It is an excellent option if you want to use the full nef features in your macOS app, even to build new tooling on top of nef.
 
 > You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/tutorials/how-to-use-nef-library-/).
 
