@@ -57,3 +57,25 @@ extension Console: NefModels.Console {
                                terminator: "\n")
     }
 }
+
+/// `Console` report status
+extension EnvIO where F == IOPartial<nef.Error>, D == NefModels.Console {
+    
+    public func reportStatus(failure: @escaping (nef.Error) -> String, success: @escaping (A) -> String) -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        contramap { (console: CLIKit.Console) in console }
+            .foldM({ e in self.reportFailure(failure(e)) },
+                   { a in self.reportSuccess(success(a)) })
+    }
+    
+    private func reportFailure(_ failure: String) -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        EnvIO { console in
+            console.exit(failure: failure)
+        }^
+    }
+    
+    private func reportSuccess(_ success: String) -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        EnvIO { console in
+            console.exit(success: success)
+        }^
+    }
+}

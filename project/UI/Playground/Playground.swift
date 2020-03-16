@@ -43,10 +43,13 @@ public struct PlaygroundCommand: ParsableCommand {
     
     
     public func run() throws {
-        try playground.toOption()
-            .fold({ self.nefPlayground(name: self.name, output: self.output.url, platform: self.platform, dependencies: self.dependencies).provide(.default) },
-                  { arg in self.nefPlayground(xcodePlayground: arg.url, name: self.name, output: self.output.url, platform: self.platform, dependencies: self.dependencies).provide(.default) })^
-            .unsafeRunSync()
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        playground.toOption()
+            .fold({ self.nefPlayground(name: self.name, output: self.output.url, platform: self.platform, dependencies: self.dependencies) },
+                  { arg in self.nefPlayground(xcodePlayground: arg.url, name: self.name, output: self.output.url, platform: self.platform, dependencies: self.dependencies) })^
     }
     
     // MARK: attributes
@@ -71,20 +74,14 @@ public struct PlaygroundCommand: ParsableCommand {
     
     // MARK: private methods
     private func nefPlayground(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, nef.Error, Void> {
-        EnvIO { console in
-            nef.Playground.nef(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
-                          .provide(console)^
-                          .foldM({ e in console.exit(failure: "building nef Playground from Xcode Playground '\(xcodePlayground.path)'. \(e)") },
-                                 { _ in console.exit(success: "nef Playground created successfully in '\(output.path)'")                       })^
-        }
+        nef.Playground.nef(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
+            .reportStatus(failure: { e in "building nef Playground from Xcode Playground '\(xcodePlayground.path)'. \(e)" },
+                          success: { output in "nef Playground created successfully in '\(output.path)'" })
     }
-
+    
     private func nefPlayground(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, nef.Error, Void> {
-        EnvIO { console in
-            nef.Playground.nef(name: name, output: output, platform: platform, dependencies: dependencies)
-                          .provide(console)^
-                          .foldM({ e in console.exit(failure: "building nef Playground in '\(output.path)'. \(e)")            },
-                                 { output in console.exit(success: "nef Playground created successfully in '\(output.path)'") })^
-        }
+        nef.Playground.nef(name: name, output: output, platform: platform, dependencies: dependencies)
+            .reportStatus(failure: { e in "building nef Playground in '\(output.path)'. \(e)" },
+                          success: { output in "nef Playground created successfully in '\(output.path)'" })
     }
 }

@@ -42,7 +42,12 @@ public struct CarbonPageCommand: ParsableCommand {
     @ArgumentParser.Flag (help: "Run carbon page in verbose mode")
     private var verbose: Bool
     
+    
     public func run() throws {
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
         let style = CarbonStyle(background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
                                 theme: theme,
                                 size: size,
@@ -50,10 +55,8 @@ public struct CarbonPageCommand: ParsableCommand {
                                 lineNumbers: lines,
                                 watermark: watermark)
         
-        try nef.Carbon.renderVerbose(page: page.url, style: style, filename: page.path.filename, into: output.url)
-                .provide(Console.default)
-                .foldM({ e in Console.default.exit(failure: "rendering carbon images. \(e)") },
-                       { (ast, url) in Console.default.exit(success: "rendered carbon images '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)" : "")") })^
-                .unsafeRunSync()
+        return nef.Carbon.renderVerbose(page: page.url, style: style, filename: page.path.filename, into: output.url)
+            .reportStatus(failure: { e in "rendering carbon images. \(e)" },
+                          success: { (ast, url) in "rendered carbon images '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)" : "")" })
     }
 }

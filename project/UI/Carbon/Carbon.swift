@@ -41,6 +41,10 @@ public struct CarbonCommand: ParsableCommand {
     
     
     public func run() throws {
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
         let style = CarbonStyle(background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
                                 theme: theme,
                                 size: size,
@@ -48,10 +52,8 @@ public struct CarbonCommand: ParsableCommand {
                                 lineNumbers: lines,
                                 watermark: watermark)
         
-        try nef.Carbon.render(playgroundsAt: project.url, style: style, into: output.url)
-                .provide(Console.default)^
-                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(self.project.path)'") },
-                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(self.output.path)'")   })^
-                .unsafeRunSync()
+        return nef.Carbon.render(playgroundsAt: project.url, style: style, into: output.url)
+            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
+                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
     }
 }

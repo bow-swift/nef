@@ -28,11 +28,14 @@ public struct JekyllCommand: ParsableCommand {
                                 : URL(fileURLWithPath: mainPage.trimmingEmptyCharacters.expandingTildeInPath)
     }
     
+    
     public func run() throws {
-        try nef.Jekyll.render(playgroundsAt: project.url, mainPage: mainURL, into: output.url)
-                .provide(Console.default)^
-                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(self.project.path)'") },
-                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(self.output.path)'")   })^
-                .unsafeRunSync()
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        nef.Jekyll.render(playgroundsAt: project.url, mainPage: mainURL, into: output.url)
+            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
+                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
     }
 }

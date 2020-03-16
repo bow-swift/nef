@@ -22,10 +22,12 @@ public struct MarkdownCommand: ParsableCommand {
     
     
     public func run() throws {
-        try nef.Markdown.render(playgroundsAt: self.project.url, into: self.output.url)
-                .provide(Console.default)
-                .foldM({ _ in Console.default.exit(failure: "rendering Xcode Playgrounds from '\(self.project.path)'") },
-                       { _ in Console.default.exit(success: "rendered Xcode Playgrounds in '\(self.output.path)'")     })^
-                .unsafeRunSync()
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        nef.Markdown.render(playgroundsAt: self.project.url, into: self.output.url)
+            .reportStatus(failure: { e in "rendering Xcode Playgrounds from '\(self.project.path)'" },
+                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
     }
 }

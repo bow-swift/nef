@@ -14,9 +14,17 @@ public struct VersionCommand: ParsableCommand {
     
     public init() {}
     
+    
     public func run() throws {
-        try nef.Version.info()
-                .flatMap { version in Console.default.print(message: "Build's version number: \(version)", terminator: " ") }^
-                .unsafeRunSync()
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, Never, Void> {
+        EnvIO { console in
+            nef.Version.info()
+                .flatMap { version in Self.console.print(message: "Build's version number: \(version)", terminator: " ") }
+                .flatMap { _ in Self.console.printStatus(success: true) }
+        }^
     }
 }
+

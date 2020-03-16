@@ -4,7 +4,6 @@
 BowPlayground
 bin
 sha_*.txt
-.travis.yml
 /project/build
 
 ## SPM

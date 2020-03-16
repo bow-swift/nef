@@ -28,12 +28,14 @@ public struct JekyllPageCommand: ParsableCommand {
     
     private var outputFile: URL { output.url.appendingPathComponent("README.md") }
     
+    
     public func run() throws {
-        try nef.Jekyll.renderVerbose(page: page.url, permalink: permalink, toFile: outputFile)
-                .provide(Console.default)
-                .foldM({ e in Console.default.exit(failure: "rendering jekyll page. \(e)") },
-                       { (url, ast, rendered) in Console.default.exit(success: "rendered jekyll page '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") })^
-               .unsafeRunSync()
-        
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        nef.Jekyll.renderVerbose(page: page.url, permalink: permalink, toFile: outputFile)
+            .reportStatus(failure: { e in "rendering jekyll page. \(e)" },
+                          success: { (url, ast, rendered) in "rendered jekyll page '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")" })
     }
 }

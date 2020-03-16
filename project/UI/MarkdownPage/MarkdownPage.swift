@@ -25,10 +25,12 @@ public struct MarkdownPageCommand: ParsableCommand {
     
     
     public func run() throws {
-        try nef.Markdown.renderVerbose(page: page.url, toFile: output.url)
-                .provide(Console.default)
-                .foldM({ e in Console.default.exit(failure: "rendering markdown page. \(e)") },
-                       { (url, ast, rendered) in Console.default.exit(success: "rendered markdown page '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")") })^
-                .unsafeRunSync()
+        try run().provide(Self.console)^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        nef.Markdown.renderVerbose(page: page.url, toFile: output.url)
+            .reportStatus(failure: { e in "rendering markdown page. \(e)" },
+                          success: { (url, ast, rendered) in "rendered markdown page '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")" })
     }
 }
