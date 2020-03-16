@@ -14,7 +14,7 @@ public struct JekyllCommand: ParsableCommand {
 
     public init() {}
     
-    @ArgumentParser.Option(help: "Path to the Xcode Playground to render")
+    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to render", valueName: "nef playground"))
     private var project: ArgumentPath
     
     @ArgumentParser.Option(help: "Path where the resulting jekyll files will be generated")

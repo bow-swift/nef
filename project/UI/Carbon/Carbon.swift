@@ -15,7 +15,7 @@ public struct CarbonCommand: ParsableCommand {
 
     public init() {}
     
-    @ArgumentParser.Option(help: "Path to the nef Playground to render")
+    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to render", valueName: "nef playground"))
     private var project: ArgumentPath
     
     @ArgumentParser.Option(help: "Path where the resulting carbon files will be generated")
