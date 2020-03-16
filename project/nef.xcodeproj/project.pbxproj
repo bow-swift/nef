@@ -3970,8 +3970,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/miguelangel-dev/swift-argument-parser.git";
 			requirement = {
-				branch = miguelangel/effects_help_command;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
