@@ -11,7 +11,3 @@ public struct CommandLineTool<T: ParsableCommand> {
         _ = CarbonApplication { T.main() }
     }
 }
-
-public extension ParsableCommand {
-    static var console: Console { .default }
-}

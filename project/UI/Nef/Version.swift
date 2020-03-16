@@ -16,14 +16,14 @@ public struct VersionCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(Self.console)^.unsafeRunSync()
+        try run().provide(ArgumentConsole())^.unsafeRunSync()
     }
     
     func run() -> EnvIO<CLIKit.Console, Never, Void> {
-        EnvIO { console in
+        EnvIO { (console: CLIKit.Console) in
             nef.Version.info()
-                .flatMap { version in Self.console.print(message: "Build's version number: \(version)", terminator: " ") }
-                .flatMap { _ in Self.console.printStatus(success: true) }
+                .flatMap { version in console.print(message: "Build's version number: \(version)", terminator: " ") }
+                .flatMap { _ in console.printStatus(success: true) }
         }^
     }
 }

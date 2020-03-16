@@ -21,7 +21,7 @@ public struct CompilerCommand: ParsableCommand {
 
     
     public func run() throws {
-        try run().provide(Self.console)^.unsafeRunSync()
+        try run().provide(ArgumentConsole())^.unsafeRunSync()
     }
     
     func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {

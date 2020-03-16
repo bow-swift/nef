@@ -5,9 +5,42 @@ import nef
 import Bow
 import BowEffects
 
-public enum Console {
-    case `default`
+public protocol Console: NefModels.Console {
+    func print<E: Swift.Error>(message: @escaping @autoclosure () -> String, separator: String, terminator: String) -> IO<E, Void>
+    func help<E: Swift.Error>(_ helpMessage: @escaping @autoclosure () -> String) -> IO<E, Void>
+    func exit<E: Swift.Error>(failure: String, separator: String, terminator: String) -> IO<E, Void>
+    func exit<E: Swift.Error>(success: String, separator: String, terminator: String) -> IO<E, Void>
+}
+
+public extension Console {
+    func print<E: Swift.Error>(message: @escaping @autoclosure () -> String) -> IO<E, Void> {
+        print(message: message(), separator: " ", terminator: "\n")
+    }
     
+    func print<E: Swift.Error>(message: @escaping @autoclosure () -> String, separator: String) -> IO<E, Void> {
+        print(message: message(), separator: separator, terminator: "\n")
+    }
+    
+    func print<E: Swift.Error>(message: @escaping @autoclosure () -> String, terminator: String) -> IO<E, Void> {
+        print(message: message(), separator: " ", terminator: terminator)
+    }
+    
+    func exit<E: Swift.Error>(failure: String) -> IO<E, Void> {
+        exit(failure: failure, separator: " ", terminator: "\n")
+    }
+    
+    func exit<E: Swift.Error>(success: String) -> IO<E, Void> {
+        exit(success: success, separator: " ", terminator: "\n")
+    }
+}
+
+
+/// Instance for CLIKit.Console
+public struct ArgumentConsole: CLIKit.Console {
+    
+    public init() { }
+    
+    //MARK: - protocol <CLIKit.Console>
     public func print<E: Swift.Error>(message: @escaping @autoclosure () -> String, separator: String = " ", terminator: String = "\n") -> IO<E, Void> {
         ConsoleIO.print(message(), separator: separator, terminator: terminator)
     }
@@ -26,10 +59,8 @@ public enum Console {
         print(message: "🙌".bold.green + " \(success)", separator: separator, terminator: terminator)
             .map { _ in Darwin.exit(0) }.void()^
     }
-}
-
-/// Defined `NefModel.Console` into `ConsoleIO`
-extension Console: NefModels.Console {
+    
+    //MARK: - protocol <NefModel.Console>
     public func printStep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void> {
         ConsoleIO.print(step.estimatedDuration > .seconds(3) ? "\(information)"+"...".lightGray : information,
                         separator: " ",

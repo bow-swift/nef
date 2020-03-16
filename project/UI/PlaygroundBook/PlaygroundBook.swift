@@ -11,7 +11,7 @@ public struct PlaygroundBookCommand: ParsableCommand {
     public static var commandName: String = "nef-playground-book"
     public static var configuration = CommandConfiguration(commandName: commandName,
                                                            abstract: "Build a playground compatible with iPad and 3rd-party libraries")
-
+    
     public init() {}
     
     @ArgumentParser.Option(help: "Name for the Swift Playground. ex. `nef`")
@@ -28,7 +28,7 @@ public struct PlaygroundBookCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(Self.console)^.unsafeRunSync()
+        try run().provide(ArgumentConsole())^.unsafeRunSync()
     }
     
     func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
