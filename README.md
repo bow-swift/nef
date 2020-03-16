@@ -62,7 +62,7 @@ It is an excellent option if you want to use the full nef features in your macOS
 
 #### 🔌 Using [Xcode Editor Extension](https://github.com/bow-swift/nef-plugin)
 
-Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8).
+Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8) or downloading the last binary from the [**releases section**](https://github.com/bow-swift/nef-plugin/releases).
 
 &nbsp;
 
