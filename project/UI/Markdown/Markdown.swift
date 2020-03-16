@@ -10,7 +10,7 @@ import BowEffects
 public struct MarkdownCommand: ParsableCommand {
     public static var commandName: String = "nef-markdown"
     public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Render Markdown files for given Xcode Playgrounds")
+                                                           abstract: "Render Markdown files for a given Xcode Playgrounds")
 
     public init() {}
     

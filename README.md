@@ -46,6 +46,8 @@
 
 > It will warn you if there is a missing dependency and will provide guidance to install it.
 
+&nbsp;
+
 #### 📦 Using [Swift Package Manager](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
 
 `nef` can be consumed as a library in your **macOS project**.
