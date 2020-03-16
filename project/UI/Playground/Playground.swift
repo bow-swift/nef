@@ -14,7 +14,7 @@ public struct PlaygroundCommand: ParsableCommand {
 
     public init() {}
     
-    @ArgumentParser.Option(help: "Path where nef Playground will be generated")
+    @ArgumentParser.Option(default: .init(argument: "."), help: "Path where nef Playground will be generated")
     private var output: ArgumentPath
 
     @ArgumentParser.Option(default: "BowPlayground", help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
