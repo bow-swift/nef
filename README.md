@@ -28,11 +28,11 @@
 
 💡 Builds a [__Playground Book__](#-creating-a-playground-book) for iPad with external dependencies defined in a Swift Package.
 
-💡 Generates [__Markdown__](#-generating-a-markdown-project) project from Xcode Playground.
+💡 Generates [__Markdown__](#-generating-a-markdown-project) project from nef Playground.
 
 💡 Generates Markdown files that can be consumed from [__Jekyll__](#-generating-markdown-files-for-jekyll) to create a microsite.
 
-💡 Export [__Carbon__](#-exporting-carbon-code-snippets) code snippets for given Xcode Playgrounds.
+💡 Export [__Carbon__](#-exporting-carbon-code-snippets) code snippets for a given nef Playground.
 
 &nbsp;
 
@@ -254,12 +254,12 @@ protocol MyProtocol {}
 It makes Xcode Playgrounds the proper tool to write an article with compilable examples. The command provided by `nef` to generate the Markdown files is:
 
 ```bash
-➜ nef markdown --project <path-to-input> --output <path-to-output>
+➜ nef markdown --project <nef playground> --output <path>
 ```
 
 Options:
 
-- `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
+- `--project`: Path to your nef Playground.
 - `--output`: Path where the resulting Markdown project will be generated.
 
 &nbsp;
@@ -270,23 +270,23 @@ As you can write comments in [Markdown](https://developer.apple.com/library/arch
 Leveraging this, `nef` can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:
 
 ```bash
-➜ nef jekyll --project <path-to-input> --output <path-to-output> --main-page <path-to-index>
+➜ nef jekyll --project <nef playground> --output <path> --main-page <main-page>
 ```
 
 Options:
 
-- `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
+- `--project`: Path to your nef Playground.
 - `--output`: Path where the resulting Markdown files will be generated.
-- `--main-page`: Optional. Path to a `README.md` file to be used as the index page of the generated microsite.
+- `--main-page`: Optional. Path to 'README.md' file to be used as the index page of the generated microsite.
 
 ###
 
 <details>
-<summary>📣 How to setup an Xcode Playgroud for Jekyll?</summary>
+<summary>📣 How to setup a nef Playgroud for Jekyll?</summary>
 
 ###
 
-`nef` finds all the Xcode Playgrounds in an Xcode project. Each playground is considered a section in the generated microsite structure. For each page in a playground, an entry in the corresponding section is created. The page is transformed from Swift to Markdown using the syntax described above. As a result, a directory structure matching the Xcode project structure is generated, together with a `sidebar.yml` that can be used as a menu in Jekyll.
+`nef` finds all the Xcode Playgrounds in a nef Playground. Each playground is considered a section in the generated microsite structure. For each page in a playground, an entry in the corresponding section is created. The page is transformed from Swift to Markdown using the syntax described above. As a result, a directory structure matching the nef Playground structure is generated, together with a `sidebar.yml` that can be used as a menu in Jekyll.
 
 `nef` adds some commands to modify the Markdown transformation process. All `nef` commands are included as Swift comments. They begin with `// nef:begin:` and end with `// nef:end`. The supported commands are:
 
@@ -315,15 +315,15 @@ struct Person {} // This will be present in the Markdown file
 
 ### 🌁 Exporting Carbon code snippets
 
-Xcode Playgrounds are a great place for prototyping and trying new concepts. Oftentimes we want to share some Swift snippets. `Carbon` is a cool tool for this, and `nef` nicely integrates with it. You can take your Xcode Playground, write several pieces of code, and keep it verified. Later, you can export all your code snippets with the next command:
+Xcode Playgrounds are a great place for prototyping and trying new concepts. Oftentimes we want to share some Swift snippets. `Carbon` is a cool tool for this, and `nef` nicely integrates with it. You can take your nef Playground, write several pieces of code, and keep it verified. Later, you can export all your code snippets with the next command:
 
 ```bash
-➜ nef carbon --project <path-to-input> --output <path-to-output>
+➜ nef carbon --project <nef playground> --output <path>
 ```
 
 Options:
 
-- `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
+- `--project`: Path to your nef Playground.
 - `--output`: Path where the resulting Carbon snippets will be generated.
 
 ###
@@ -397,7 +397,7 @@ print("nef is super cool: \(example)")
 Running the following command, we will customize the `background color` to ![#d54048](https://placehold.it/15/d54048/000000?text=+) bow, `hide the number of lines`, and set the export file to `size 3`:
 
 ```bash
-➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --lines false
+➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --show-lines false
 ```
 
 <p align="center">
