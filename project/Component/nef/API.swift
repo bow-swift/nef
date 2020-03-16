@@ -64,9 +64,23 @@ public protocol MarkdownAPI {
     /// Renders content into markdown.
     ///
     /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the markdown generated of type `String`, having access to an immutable environment of type `Console`.
+    static func render(page: URL) -> EnvIO<Console, nef.Error, String>
+    
+    /// Renders content into markdown.
+    ///
+    /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
     static func renderVerbose(content: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)>
+    
+    /// Renders content into markdown.
+    ///
+    /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
+    static func renderVerbose(page: URL) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)>
     
     /// Renders content into markdown file.
     ///
@@ -79,10 +93,26 @@ public protocol MarkdownAPI {
     /// Renders content into markdown file.
     ///
     /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `Console`.
+    static func render(page: URL, toFile file: URL) -> EnvIO<Console, nef.Error, URL>
+    
+    /// Renders content into markdown file.
+    ///
+    /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - toFile: output where to write the Markdown render.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
     static func renderVerbose(content: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)>
+    
+    /// Renders content into markdown file.
+    ///
+    /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
+    static func renderVerbose(page: URL, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)>
     
     /// Renders playground pages into markdown files.
     ///
@@ -113,10 +143,26 @@ public protocol JekyllAPI {
     /// Renders content into jekyll format.
     ///
     /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - permalink: relative url where locate the page.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the jekyll generated of type `String`, having access to an immutable environment of type `Console`.
+    static func render(page: URL, permalink: String) -> EnvIO<Console, nef.Error, String>
+    
+    /// Renders content into jekyll format.
+    ///
+    /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - permalink: relative url where locate the page.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
     static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)>
+    
+    /// Renders content into jekyll format.
+    ///
+    /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - permalink: relative url where locate the page.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
+    static func renderVerbose(page: URL, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)>
     
     /// Renders content into jekyll file.
     ///
@@ -130,11 +176,29 @@ public protocol JekyllAPI {
     /// Renders content into jekyll file.
     ///
     /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - permalink: relative url where locate the page.
+    ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `Console`.
+    static func render(page: URL, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL>
+    
+    /// Renders content into jekyll file.
+    ///
+    /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - permalink: relative url where locate the page.
     ///   - toFile: output where to write the Markdown render.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
     static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)>
+    
+    /// Renders content into jekyll file.
+    ///
+    /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - permalink: relative url where locate the page.
+    ///   - toFile: output where to write the Markdown render.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
+    static func renderVerbose(page: URL, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)>
     
     /// Renders playground pages into jekyll files.
     ///
@@ -166,10 +230,26 @@ public protocol CarbonAPI {
     /// Renders a page into Carbon images.
     ///
     /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - style: style to apply to the generated snippets.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the images generated of type `NEA<Data>`, having access to an immutable environment of type `Console`.
+    static func render(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>>
+    
+    /// Renders a page into Carbon images.
+    ///
+    /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - style: style to apply to the generated snippets.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
     static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)>
+    
+    /// Renders a page into Carbon images.
+    ///
+    /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - style: style to apply to the generated snippets.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
+    static func renderVerbose(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)>
     
     /// Renders a code selection into Carbon image.
     ///
@@ -200,12 +280,32 @@ public protocol CarbonAPI {
     /// Renders a page into Carbon images and persit them.
     ///
     /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - style: style to apply to the generated snippets.
+    ///   - filename: name to use in the exported carbon images.
+    ///   - into: folder where to render carbon images.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `Console`.
+    static func render(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL>
+    
+    /// Renders a page into Carbon images and persit them.
+    ///
+    /// - Parameters:
     ///   - content: content page in Xcode playground.
     ///   - style: style to apply to the generated snippets.
     ///   - filename: name to use in the exported carbon images.
     ///   - into: folder where to render carbon images.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.   
     static func renderVerbose(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)>
+    
+    /// Renders a page into Carbon images and persit them.
+    ///
+    /// - Parameters:
+    ///   - page: path to Xcode playground page.
+    ///   - style: style to apply to the generated snippets.
+    ///   - filename: name to use in the exported carbon images.
+    ///   - into: folder where to render carbon images.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `Console`.
+    static func renderVerbose(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)>
     
     /// Renders playground pages into Carbon images and persit them.
     ///
@@ -270,6 +370,15 @@ public protocol SwiftPlaygroundAPI {
     ///   - output: folder where to write the Swift Playground.
     /// - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the Swift Playground output of type `URL`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, URL>`.
     static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL>
+    
+    /// Renders a Swift Package content into Swift Playground compatible to iPad.
+    ///
+    /// - Parameters:
+    ///   - package: Swift Package file.
+    ///   - name: name for the output Swift Playground.
+    ///   - output: folder where to write the Swift Playground.
+    /// - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the Swift Playground output of type `URL`, having access to an immutable environment of type `Console`. It can be seen as a Kleisli function `(Console) -> IO<nef.Error, URL>`.
+    static func render(package: URL, name: String, output: URL) -> EnvIO<Console, nef.Error, URL>
     
     /// Renders a Swift Package content into Swift Playground compatible to iPad.
     ///

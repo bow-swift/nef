@@ -52,11 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--output /Users/miguelangel/Desktop/untitled\ folder"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--name Miguel\ Angel"
+            argument = "-h"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

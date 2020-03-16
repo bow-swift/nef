@@ -2,54 +2,38 @@
 
 import Foundation
 import CLIKit
+import ArgumentParser
 import nef
 import Bow
 import BowEffects
 
-enum PlaygroundBookCommand: String {
-    case name
-    case package
-    case output
-}
+public struct PlaygroundBookCommand: ParsableCommand {
+    public static var commandName: String = "nef-playground-book"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Build a playground compatible with iPad and 3rd-party libraries")
+    
+    public init() {}
+    
+    @ArgumentParser.Option(help: "Name for the Swift Playground. ex. `nef`")
+    private var name: String
 
+    @ArgumentParser.Option(help: ArgumentHelp("Path to Package.swift file. ex. `/home/Package.swift`", valueName: "package path"))
+    private var package: ArgumentPath
 
-@discardableResult
-public func playgroundBook(script: String) -> Either<CLIKit.Console.Error, Void> {
-
-    func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (packageContent: String, projectName: String, output: URL)> {
-        console.input().flatMap { args in
-            guard let projectName = args[PlaygroundBookCommand.name.rawValue]?.trimmingEmptyCharacters,
-                  let packagePath = args[PlaygroundBookCommand.package.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let outputPath  = args[PlaygroundBookCommand.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath else {
-                    return IO.raiseError(CLIKit.Console.Error.arguments)
-            }
-            
-            guard let content = try? String(contentsOfFile: packagePath), !content.isEmpty else {
-                return IO.raiseError(CLIKit.Console.Error.render(information: "invalid Swift Package"))
-            }
-            
-            return IO.pure((packageContent: content,
-                            projectName: projectName,
-                            output: URL(fileURLWithPath: outputPath)))^
-            
-        }^
+    @ArgumentParser.Option(help: ArgumentHelp("Path where Playground Book will be generated. ex. `/home`", valueName: "output path"))
+    private var output: ArgumentPath
+    
+    private var projectName: String { name.trimmingEmptyCharacters }
+    private var packageContent: String? { try? String(contentsOfFile: package.path) }
+    
+    
+    public func run() throws {
+        try run().provide(ArgumentConsole())^.unsafeRunSync()
     }
     
-    let console = Console(script: script,
-                          description: "Build a Playground Book with 3r-party libraries defined in a Swift Package",
-                          arguments: .init(name: PlaygroundBookCommand.name.rawValue, placeholder: "swift-playground name", description: "name for the Swift Playground. ex. `nef`"),
-                                     .init(name: PlaygroundBookCommand.package.rawValue, placeholder: "package path", description: "path to Package.swift file. ex. `/home/Package.swift`"),
-                                     .init(name: PlaygroundBookCommand.output.rawValue, placeholder: "output path", description: "path where Playground is saved to. ex. `/home`"))
-    
-    return arguments(console: console)
-        .flatMap { (packageContent, projectName, output) in
-            nef.SwiftPlayground.render(packageContent: packageContent, name: projectName, output: output)
-                .provide(console)^
-                .mapError { _ in .render() }
-                .foldM({ _   in console.exit(failure: "rendering Playground Book")                  },
-                       { url in console.exit(success: "rendered Playground Book in '\(url.path)'")  }) }^
-        .reportStatus(in: console)
-        .foldM({ e in console.exit(failure: "\(e)")        },
-               { success in console.exit(success: success) })
-        .unsafeRunSyncEither()
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        nef.SwiftPlayground.render(package: package.url, name: name, output: output.url)
+            .reportStatus(failure: { e in "rendering Playground Book. \(e)" },
+                          success: { url in "rendered Playground Book in '\(url.path)'" })
+    }
 }

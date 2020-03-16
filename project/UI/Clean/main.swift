@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-clean(script: "nef-clean")
+CommandLineTool<CleanCommand>.main()

@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-playground(script: "nef-playground")
+CommandLineTool<PlaygroundCommand>.main()

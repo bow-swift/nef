@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-jekyllPage(script: "nef-jekyll-page")
+CommandLineTool<JekyllPageCommand>.main()

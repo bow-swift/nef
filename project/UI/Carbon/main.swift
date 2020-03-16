@@ -4,6 +4,4 @@ import CLIKit
 import NefCarbon
 
 // #: - MAIN <launcher - AppKit>
-_ = CarbonApplication {
-    carbon(script: "nef-carbon")
-}
+CommandLineTool<CarbonCommand>.main()

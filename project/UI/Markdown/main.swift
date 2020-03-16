@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-markdown(script: "nef-markdown")
+CommandLineTool<MarkdownCommand>.main()

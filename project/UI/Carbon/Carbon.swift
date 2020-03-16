@@ -2,71 +2,58 @@
 
 import Foundation
 import CLIKit
+import ArgumentParser
 import nef
 import NefCarbon
 import Bow
 import BowEffects
 
-enum CarbonCommand: String {
-    case project
-    case output
-    case background
-    case theme
-    case size
-    case font
-    case lines = "show-lines"
-    case watermark = "show-watermark"
-}
+public struct CarbonCommand: ParsableCommand {
+    public static var commandName: String = "nef-carbon"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Export Carbon code snippets for given nef Playground")
 
-
-@discardableResult
-public func carbon(script: String) -> Either<CLIKit.Console.Error, Void> {
-
-    func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, output: URL, style: CarbonStyle)> {
-        console.input().flatMap { args in
-            guard let inputPath = args[CarbonCommand.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let outputPath = args[CarbonCommand.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let backgroundColor = CarbonStyle.Color(hex: args[CarbonCommand.background.rawValue] ?? "") ?? CarbonStyle.Color(default: args[CarbonCommand.background.rawValue] ?? ""),
-                  let theme = CarbonStyle.Theme(rawValue: args[CarbonCommand.theme.rawValue] ?? ""),
-                  let size = CarbonStyle.Size(factor: args[CarbonCommand.size.rawValue] ?? ""),
-                  let fontName = args[CarbonCommand.font.rawValue]?.replacingOccurrences(of: "-", with: " ").capitalized,
-                  let fontType = CarbonStyle.Font(rawValue: fontName),
-                  let lines = Bool(args[CarbonCommand.lines.rawValue] ?? ""),
-                  let watermark = Bool(args[CarbonCommand.watermark.rawValue] ?? "") else { return IO.raiseError(.arguments) }
-            
-            let input = URL(fileURLWithPath: inputPath, isDirectory: true)
-            let output = URL(fileURLWithPath: outputPath, isDirectory: true)
-            let style = CarbonStyle(background: backgroundColor,
-                                    theme: theme,
-                                    size: size,
-                                    fontType: fontType,
-                                    lineNumbers: lines,
-                                    watermark: watermark)
-            
-            return IO.pure((input: input, output: output, style: style))
-        }^
+    public init() {}
+    
+    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to render", valueName: "nef playground"))
+    private var project: ArgumentPath
+    
+    @ArgumentParser.Option(help: "Path where the resulting carbon files will be generated")
+    private var output: ArgumentPath
+    
+    @ArgumentParser.Option(default: "nef", help: "Background color in hexadecimal")
+    private var background: String
+    
+    @ArgumentParser.Option(default: .dracula, help: "Carbon theme")
+    private var theme: CarbonStyle.Theme
+    
+    @ArgumentParser.Option(default: .x2, help: "export file size [1-5]")
+    private var size: CarbonStyle.Size
+    
+    @ArgumentParser.Option(default: .firaCode, help: "Carbon font type")
+    private var font: CarbonStyle.Font
+    
+    @ArgumentParser.Option(name: .customLong("show-lines"), default: true, help: "Shows/hides lines of code [true | false]")
+    private var lines: Bool
+    
+    @ArgumentParser.Option(name: .customLong("show-watermark"), default: true, help: "Shows/hides the watermark [true | false]")
+    private var watermark: Bool
+    
+    
+    public func run() throws {
+        try run().provide(ArgumentConsole())^.unsafeRunSync()
     }
     
-    let console = Console(script: script,
-                          description: "Generates Carbon code snippets",
-                          arguments: .init(name: CarbonCommand.project.rawValue, placeholder: "path-to-input", description: "path to the nef Playground to render"),
-                                     .init(name: CarbonCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
-                                     .init(name: CarbonCommand.background.rawValue, placeholder: "", description: "background color in hexadecimal.", default: "nef"),
-                                     .init(name: CarbonCommand.theme.rawValue, placeholder: "", description: "carbon's theme.", default: "dracula"),
-                                     .init(name: CarbonCommand.size.rawValue, placeholder: "", description: "export file size [1-5].", default: "2"),
-                                     .init(name: CarbonCommand.font.rawValue, placeholder: "", description: "carbon's font type.", default: "fira-code"),
-                                     .init(name: CarbonCommand.lines.rawValue, placeholder: "", description: "shows/hides lines of code [true | false].", default: "true"),
-                                     .init(name: CarbonCommand.watermark.rawValue, placeholder: "", description: "shows/hides the watermark [true | false].", default: "true"))
-    
-    return arguments(console: console)
-        .flatMap { (input, output, style) in
-            nef.Carbon.render(playgroundsAt: input, style: style, into: output)
-                      .provide(console)^
-                      .mapError { _ in .render() }
-                      .foldM({ _ in console.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                             { _ in console.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
-        .reportStatus(in: console)
-        .foldM({ e in console.exit(failure: "\(e)")        },
-               { success in console.exit(success: success) })
-        .unsafeRunSyncEither()
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        let style = CarbonStyle(background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
+                                theme: theme,
+                                size: size,
+                                fontType: font,
+                                lineNumbers: lines,
+                                watermark: watermark)
+        
+        return nef.Carbon.render(playgroundsAt: project.url, style: style, into: output.url)
+            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
+                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+    }
 }

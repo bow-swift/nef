@@ -1,4 +1,4 @@
-name: nef Compilation
+name: nef verify documentation
 
 on: [pull_request]
 

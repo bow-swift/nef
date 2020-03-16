@@ -2,51 +2,40 @@
 
 import Foundation
 import CLIKit
+import ArgumentParser
 import nef
 import Bow
 import BowEffects
 
-enum JekyllCommand: String {
-    case project
-    case output
-    case main = "main-page"
-}
+public struct JekyllCommand: ParsableCommand {
+    public static var commandName: String = "nef-jekyll"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                           abstract: "Render Markdown files that can be consumed from Jekyll to generate a microsite")
 
-
-@discardableResult
-public func jekyll(script: String) -> Either<CLIKit.Console.Error, Void> {
+    public init() {}
     
-    func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, output: URL, mainPage: URL)> {
-        console.input().flatMap { args in
-            guard let inputPath = args[JekyllCommand.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let outputPath = args[JekyllCommand.output.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let mainPagePath = args[JekyllCommand.main.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath else {
-                    return IO.raiseError(.arguments)
-            }
-            
-            let input = URL(fileURLWithPath: inputPath, isDirectory: true)
-            let output = URL(fileURLWithPath: outputPath, isDirectory: true)
-            let mainPage = mainPagePath == "README.md" ? output.appendingPathComponent("README.md") : URL(fileURLWithPath: mainPagePath, isDirectory: false)
-            
-            return IO.pure((input: input, output: output, mainPage: mainPage))
-        }^
+    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to render", valueName: "nef playground"))
+    private var project: ArgumentPath
+    
+    @ArgumentParser.Option(help: "Path where the resulting jekyll files will be generated")
+    private var output: ArgumentPath
+    
+    @ArgumentParser.Option(name: .customLong("main-page"), default: "README.md", help: "Path to 'README.md' file to be used as the index page")
+    private var mainPage: String
+    
+    private var mainURL: URL {
+        mainPage == "README.md" ? output.url.appendingPathComponent("README.md")
+                                : URL(fileURLWithPath: mainPage.trimmingEmptyCharacters.expandingTildeInPath)
     }
     
-    let console = Console(script: script,
-                          description: "Render markdown files that can be consumed from Jekyll to generate a microsite",
-                          arguments: .init(name: JekyllCommand.project.rawValue, placeholder: "path-to-input", description: "path to the nef Playground to render"),
-                                     .init(name: JekyllCommand.output.rawValue, placeholder: "path-to-output", description: "path where the resulting Markdown files will be generated"),
-                                     .init(name: JekyllCommand.main.rawValue, placeholder: "path-to-index", description: "path to 'README.md' file to be used as the index page", default: "README.md"))
     
-    return arguments(console: console)
-        .flatMap { (input, output, mainPage) in
-            nef.Jekyll.render(playgroundsAt: input, mainPage: mainPage, into: output)
-                      .provide(console)^
-                      .mapError { _ in .render() }
-                      .foldM({ _ in console.exit(failure: "rendering Xcode Playgrounds from '\(input.path)'") },
-                             { _ in console.exit(success: "rendered Xcode Playgrounds in '\(output.path)'")   }) }^
-        .reportStatus(in: console)
-        .foldM({ e in console.exit(failure: "\(e)")        },
-               { success in console.exit(success: success) })
-        .unsafeRunSyncEither()
+    public func run() throws {
+        try run().provide(ArgumentConsole())^.unsafeRunSync()
+    }
+    
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        nef.Jekyll.render(playgroundsAt: project.url, mainPage: mainURL, into: output.url)
+            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
+                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+    }
 }

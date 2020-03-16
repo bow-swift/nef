@@ -2,41 +2,31 @@
 
 import Foundation
 import CLIKit
+import ArgumentParser
 import nef
 import Bow
 import BowEffects
 
-enum CompilerCommands: String {
-    case project
-    case cached = "use-cache"
-}
+public struct CompilerCommand: ParsableCommand {
+    public static var commandName: String = "nefc"
+    public static var configuration = CommandConfiguration(commandName: commandName,
+                                                    abstract: "Compile nef Playground")
+    public init() {}
+    
+    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to compile", valueName: "nef playground"))
+    var project: ArgumentPath
+    
+    @ArgumentParser.Flag(name: .customLong("use-cache"), help: "Use cached dependencies if it is possible")
+    var cached: Bool
 
-
-@discardableResult
-public func compiler(script: String) -> Either<CLIKit.Console.Error, Void> {
-    func arguments(console: CLIKit.Console) -> IO<CLIKit.Console.Error, (input: URL, cached: Bool)> {
-        console.input().flatMap { args in
-            guard let inputPath = args[CompilerCommands.project.rawValue]?.trimmingEmptyCharacters.expandingTildeInPath,
-                  let cached = Bool(args[CompilerCommands.cached.rawValue] ?? "") else { return IO.raiseError(.arguments) }
-            
-            return IO.pure((input: URL(fileURLWithPath: inputPath, isDirectory: true), cached: cached))
-        }^
+    
+    public func run() throws {
+        try run().provide(ArgumentConsole())^.unsafeRunSync()
     }
     
-    let console = Console(script: script,
-                          description: "Compile nef Playground",
-                          arguments: .init(name: CompilerCommands.project.rawValue, placeholder: "path-nef-playground", description: "path to nef Playground to compile"),
-                                     .init(name: CompilerCommands.cached.rawValue, placeholder: "", description: "use cached dependencies if it is possible.", isFlag: true, default: "false"))
-    
-    return arguments(console: console)
-        .flatMap { (input, cached) in
-            nef.Compiler.compile(nefPlayground: input, cached: cached)
-               .provide(console)^
-               .mapError { _ in .render() }
-               .foldM({ e in console.exit(failure: "compiling Xcode Playgrounds from '\(input.path)'. \(e)") },
-                      { _ in console.exit(success: "'\(input.path)' compiled successfully")            })    }^
-        .reportStatus(in: console)
-        .foldM({ e in console.exit(failure: "\(e)")        },
-               { success in console.exit(success: success) })
-        .unsafeRunSyncEither()
+    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+        nef.Compiler.compile(nefPlayground: project.url, cached: cached)
+            .reportStatus(failure: { e in "compiling Xcode Playgrounds from '\(self.project.path)'. \(e)" },
+                          success: { _ in "'\(self.project.path)' compiled successfully" })
+    }
 }

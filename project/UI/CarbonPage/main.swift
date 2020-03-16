@@ -4,6 +4,4 @@ import CLIKit
 import NefCarbon
 
 // #: - MAIN <launcher - AppKit>
-_ = CarbonApplication {
-    carbonPage(script: "nef-carbon-page")
-}
+CommandLineTool<CarbonPageCommand>.main()

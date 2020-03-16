@@ -3,4 +3,4 @@
 import CLIKit
 
 // #: - MAIN <launcher>
-compiler(script: "nefc")
+CommandLineTool<CompilerCommand>.main()
