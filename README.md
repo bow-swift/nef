@@ -22,9 +22,9 @@
 
 ### Features
 
-💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-xcode-playground).
+💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-nef-playground).
 
-💡 [__Compiles Xcode Playgrounds__](#-compiling-a-xcode-playground) with support for 3rd-party libraries from the command line.
+💡 [__Compiles Xcode Playgrounds__](#-compiling-a-nef-playground) with support for 3rd-party libraries from the command line.
 
 💡 Builds a [__Playground Book__](#-creating-a-playground-book) for iPad with external dependencies defined in a Swift Package.
 
@@ -40,11 +40,11 @@
 
 #### 📟 Using [Homebrew](https://github.com/bow-swift/homebrew-nef) (preferred)
 
-> It will warn you if there is a missing dependency and will provide guidance to install it.
+```bash
+➜ brew install nef
+```
 
-<p align="center">
-<img src="assets/nef-installation.gif">
-</p>
+> It will warn you if there is a missing dependency and will provide guidance to install it.
 
 #### 📦 Using [Swift Package Manager](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
 
@@ -53,6 +53,8 @@
 ```swift
 .package(url: "https://github.com/bow-swift/nef.git", from: "{version}")
 ```
+
+It is an excellent option if you want to use the full features in your app, even to build new tools on top of nef.
 
 > You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/tutorials/how-to-use-nef-library-/).
 
@@ -66,7 +68,7 @@ Some of the `nef` features can be used directly in Xcode as an Extension. You ca
 
 ## Usage
 
-### 📃 Creating an Xcode Playground
+### 📃 Creating a nef Playground
 
 Xcode Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make the creation of an Xcode Playground easier with support for one or more libraries.
 
@@ -80,13 +82,13 @@ By default, `nef` can create an Xcode Playground with support for [Bow](http://b
 <img src="assets/nef-playground.png" height="100">
 </p>
 
-And you can use the following option to specify the name for the Xcode project that you are creating:
+And you can use the following option to specify the name for the `nef Playground` that you are creating:
 
 ```bash
-➜ nef playground --name LatestBowProject
+➜ nef playground --output ~/Desktop --name LatestBowProject
 ```
 
-It will create an Xcode project with support for the latest available version of Bow, named `LatestBowProject`. If you open this `nef playground`, you will have an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
+It will create an Xcode project with support for the latest available version of Bow, named `LatestBowProject` in your `~/Desktop`. If you open this `nef playground`, you will find an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
 
 By default, `nef playground` will be created for iOS platform. If you need to change it, you can use the `--platform` option.
 
@@ -94,10 +96,18 @@ By default, `nef playground` will be created for iOS platform. If you need to ch
 ➜ nef playground --platform osx
 ```
 
+If you need to take advantage of nef in your Xcode Playgrounds, you can transform your Xcode Playground into a nef Playground using the following command:
+
+```bash
+➜ nef playground --playground <Xcode Playground>
+```
+
+Where `<Xcode Playground>` is the path to your Xcode Playground.
+
 ###
 
 <details>
-<summary>📣 You can select any different Bow version or branch, even a third-party dependency</summary>
+<summary>📣 You can create a nef Playground compatible to any different Bow version, branch or commit; even third-parties dependencies</summary>
 
 ###
 
@@ -113,7 +123,7 @@ By default, `nef playground` will be created for iOS platform. If you need to ch
 
 ##
 
-- `--bow-branch <branch-name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
+- `--bow-branch <branch name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
 
 ```bash
 ➜ nef playground --name BranchBowProject --bow-branch master
@@ -121,7 +131,15 @@ By default, `nef playground` will be created for iOS platform. If you need to ch
 
 ##
 
-- `--podfile <Podfile>`: Specify a **Podfile** with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
+- `--bow-commit <commit hash>`: Specify the commit hash of Bow that you want to use in the project. This option lets you test features of Bow exactly at the moment you need, released or not. Example:
+
+```bash
+➜ nef playground --name CommitBowProject --bow-commit e70c739067be1f5700f8b692523e1bb8931c7236
+```
+
+##
+
+- `--podfile <podfile>`: Specify a **Podfile** with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
 
 Your `Podfile`, located in `./folder/dependencies`:
 
@@ -140,7 +158,7 @@ end
 
 ##
 
-- `--cartfile <Cartfile>`: Specify a **Cartfile** with your dependencies. Create a `Cartfile` listing your dependencies and pass it to `nef`. Example:
+- `--cartfile <cartfile>`: Specify a **Cartfile** with your dependencies. Create a `Cartfile` listing your dependencies and pass it to `nef`. Example:
 
 Your `Cartfile`, located in `./folder/dependencies`:
 
@@ -156,26 +174,27 @@ github "bow-swift/Bow"
 
 &nbsp;
 
-### 🔨 Compiling an Xcode Playground
+### 🔨 Compiling a nef Playground
 
-Xcode lets you check for correctness of your Xcode Playground and run it. However, compiling an Xcode Playground from the command line is not so easy when it has dependencies on third-party libraries. This is particularly useful in Continuous Integration when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile Xcode Playgrounds in an Xcode project with dependencies. To do this, you can run the following command:
+Xcode lets you check for correctness of your Xcode Playground and run it. However, Apple does not give us compiling commands for Xcode Playground as they do for building Xcode projects. It is particularly useful in Continuous Integration when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile a `nef Playground`. To do this, you can run the following command:
 
 ```bash
-➜ nef compile <path>
+➜ nef compile --project <nef playground>
 ```
+> If you need to transform your Xcode Playground into a nef Playground you can check [Creating a nef Playground](#-creating-a-nef-playground) section.
 
-Where `<path>` is the path to the folder where the project and playgrounds are located. You can use the following option with this command:
+Where `<nef playground>` is the path to `nef Playground` where your playgrounds are located. Also, you can use the following option with this command:
 
 - `--use-cache`: Use cached dependencies if it is possible, in another case, it will download them. Example:
 
 ```bash
-➜ nef compile <path> --use-cache
+➜ nef compile --project <nef playground> --use-cache
 ```
 
 You can also clean the result of the compilation:
 
 ```bash
-➜ nef clean <path>
+➜ nef clean --project <nef playground>
 ```
 
 &nbsp;
