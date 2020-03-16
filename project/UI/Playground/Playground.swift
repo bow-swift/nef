@@ -14,7 +14,7 @@ public struct PlaygroundCommand: ParsableCommand {
 
     public init() {}
     
-    @ArgumentParser.Option(default: .init(argument: "."), help: "Path where nef Playground will be generated")
+    @ArgumentParser.Option(default: .init(argument: "."), help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
     private var output: ArgumentPath
 
     @ArgumentParser.Option(default: "BowPlayground", help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
@@ -23,7 +23,7 @@ public struct PlaygroundCommand: ParsableCommand {
     @ArgumentParser.Option(default: .ios, help: "set the target to `ios` or `macos`")
     private var platform: Platform
     
-    @ArgumentParser.Option(help: "Xcode Playground to be transformed into nef Playground")
+    @ArgumentParser.Option(help: ArgumentHelp("Xcode Playground to be transformed into nef Playground", valueName: "Xcode Playground"))
     private var playground: ArgumentPath?
     
     @ArgumentParser.Option(help: "Path to Podfile with your own dependencies")
@@ -32,13 +32,13 @@ public struct PlaygroundCommand: ParsableCommand {
     @ArgumentParser.Option(help: "Path to Cartfile with your own dependencies")
     private var cartfile: ArgumentPath?
     
-    @ArgumentParser.Option(help: "Specify the version of Bow")
+    @ArgumentParser.Option(help: ArgumentHelp("Specify the version of Bow", valueName: "x.y.z"))
     private var bowVersion: String?
     
-    @ArgumentParser.Option(help: "Specify the branch of Bow")
+    @ArgumentParser.Option(help: ArgumentHelp("Specify the branch of Bow", valueName: "branch name"))
     var bowBranch: String?
     
-    @ArgumentParser.Option(help: "Specify the commit of Bow")
+    @ArgumentParser.Option(help: ArgumentHelp("Specify the commit hash of Bow", valueName: "commit hash"))
     var bowCommit: String?
     
     
