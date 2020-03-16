@@ -1,9 +1,8 @@
 ![](assets/header-nef.png)
 
 <p align="center">
-<a href="https://travis-ci.org/bow-swift/nef">
-<img src="https://travis-ci.org/bow-swift/nef.svg?branch=develop">
-</a>
+<img src="https://github.com/bow-swift/nef/workflows/Compile and test/badge.svg" alt="Build">
+<img src="https://github.com/bow-swift/nef/workflows/Deploy docs/badge.svg" alt="Site">
 <a href="https://github.com/bow-swift/nef">
 <img src="https://img.shields.io/badge/platform-macOS-orange" alt="Platforms">
 </a>
@@ -13,7 +12,6 @@
 <a href="https://gitter.im/bowswift/bow">
 <img src="https://img.shields.io/badge/gitter-nef-blueviolet.svg" alt="Gitter">
 </a>
-
 </p>
 
 `nef`, short for [Nefertiti](https://en.wikipedia.org/wiki/Nefertiti), mother of Ankhesenamun, is a toolset to ease the **creation of documentation** in the form of Xcode Playgrounds. It provides compile-time **verification** of documentation, exports it in **Markdown** format that can be consumed by [Jekyll](https://jekyllrb.com/) to generate websites, and export [Carbon](https://carbon.now.sh/) snippets for a given Xcode Playground.
