@@ -412,8 +412,20 @@ You can contribute in different ways to make `nef` better:
 
 - File an issue if you encounter a bug or malfunction in `nef`.
 - Suggest a new use case or feature for `nef`.
-- Open a Pull Request fixing a problem or adding new functionality.
+- Open a Pull Request fixing a problem or adding new functionality. You can check the [Issues](https://github.com/bow-swift/nef/issues) to see some of the pending tasks.
 - Discuss with us in the [Gitter channel for Bow](https://gitter.im/bowswift/bow) about all the above.
+
+### How to run the project
+
+Open `project/nef.xcodeproj` in Xcode 11 (or newer) and you are ready to go. nef uses the [Swift Package Manager] to handle its dependencies - they will be resolving automatically from Xcode.
+
+### How to run the documentation project
+
+- Go to main directory where you can find the nef Playground `Documentation.app`.
+- Run `nef compile --project Documentation.app` to set up the project with its dependencies.
+- Open `Documentation.app`
+
+For further information, refer to our [Contribution guidelines](CONTRIBUTING.md).
 
 &nbsp;
 
