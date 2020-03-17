@@ -421,9 +421,9 @@ Open `project/nef.xcodeproj` in Xcode 11 (or newer) and you are ready to go. nef
 
 ### How to run the documentation project
 
-- Go to main directory where you can find the nef Playground `Documentation`.
-- Run `nef compile --project Documentation.app` to get all dependencies.
-- Open `Documentation` and run the project.
+- Go to main directory where you can find the nef Playground `Documentation.app`.
+- Run `nef compile --project Documentation.app` to set up the project with its dependencies.
+- Open `Documentation.app`
 
 For further information, refer to our [Contribution guidelines](CONTRIBUTING.md).
 
