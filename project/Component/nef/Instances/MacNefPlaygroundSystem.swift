@@ -209,7 +209,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
     private func setDependencies(playground: NefPlaygroundURL, bow: PlaygroundDependencies.Bow) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         func dependency(bow: PlaygroundDependencies.Bow, lastBowVersion: String) -> String {
             switch bow {
-            case .version(let version): return "~> \(version.isEmpty ? lastBowVersion : version)"
+            case .version(let version): return "\"~> \(version.isEmpty ? lastBowVersion : version)\""
             case .branch(let branch):   return ":git => '\(Bow.repository)', :branch => '\(branch)'"
             case .tag(let tag):         return ":git => '\(Bow.repository)', :tag => '\(tag)'"
             case .commit(let commit):   return ":git => '\(Bow.repository)', :commit => '\(commit)'"
@@ -220,7 +220,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
             EnvIO { fileSystem in
                 let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
                 let writeContentIO = { (content: String) in fileSystem.write(content: content, toFile: podfile.path) }
-                let setDependencyIO = { (content: String) in content.replacingOccurrences(of: "~> 0.0.0", with: dependency(bow: bow, lastBowVersion: lastBowVersion)) }
+                let setDependencyIO = { (content: String) in content.replacingOccurrences(of: "\"~> 0.0.0\"", with: dependency(bow: bow, lastBowVersion: lastBowVersion)) }
                 
                 return readPodfileIO
                         .map(setDependencyIO)

@@ -10,7 +10,7 @@ import BowEffects
 public struct VersionCommand: ParsableCommand {
     public static var commandName: String = "version"
     public static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Get the build's version number")
+                                                    abstract: "Get the build version number")
     
     public init() {}
     
@@ -22,7 +22,7 @@ public struct VersionCommand: ParsableCommand {
     func run() -> EnvIO<CLIKit.Console, Never, Void> {
         EnvIO { (console: CLIKit.Console) in
             nef.Version.info()
-                .flatMap { version in console.print(message: "Build's version number: \(version)", terminator: " ") }
+                .flatMap { version in console.print(message: "Build version number: \(version)", terminator: " ") }
                 .flatMap { _ in console.printStatus(success: true) }
         }^
     }

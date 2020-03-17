@@ -101,7 +101,7 @@ public struct Compiler {
             let dependencies = IO<RenderError, URL>.var()
             
             return binding(
-                             |<-env.console.print(information: "Building workspace '\(workspace.lastPathComponent.removeExtension)'"),
+                             |<-env.console.print(information: "Getting dependencies from workspace '\(workspace.lastPathComponent.removeExtension)'"),
                 dependencies <- buildWorkspace(workspace, atNefPlayground: nefPlayground, platform: platform, cached: cached).provide(env),
             yield: [dependencies.get])^.reportStatus(console: env.console)
         }

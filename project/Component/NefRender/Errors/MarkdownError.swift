@@ -12,6 +12,7 @@ public enum RenderError: Error {
     case getPlaygrounds(folder: URL)
     case getPages(playground: URL)
     case getWorkspace(folder: URL)
+    case extractPlatform(_ page: URL)
 }
 
 extension RenderError: CustomStringConvertible {
@@ -33,6 +34,8 @@ extension RenderError: CustomStringConvertible {
             return "Could not get pages at '\(playground.path)'"
         case .getWorkspace(let folder):
             return "Could not extract only xcworkspace at '\(folder.path)'"
+        case .extractPlatform(let page):
+            return "Cannot extract platform information '\(page.path)'"
         }
     }
 }

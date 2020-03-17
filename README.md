@@ -1,9 +1,8 @@
 ![](assets/header-nef.png)
 
 <p align="center">
-<a href="https://travis-ci.org/bow-swift/nef">
-<img src="https://travis-ci.org/bow-swift/nef.svg?branch=develop">
-</a>
+<img src="https://github.com/bow-swift/nef/workflows/Compile and test/badge.svg" alt="Build">
+<img src="https://github.com/bow-swift/nef/workflows/Deploy docs/badge.svg" alt="Site">
 <a href="https://github.com/bow-swift/nef">
 <img src="https://img.shields.io/badge/platform-macOS-orange" alt="Platforms">
 </a>
@@ -13,7 +12,6 @@
 <a href="https://gitter.im/bowswift/bow">
 <img src="https://img.shields.io/badge/gitter-nef-blueviolet.svg" alt="Gitter">
 </a>
-
 </p>
 
 `nef`, short for [Nefertiti](https://en.wikipedia.org/wiki/Nefertiti), mother of Ankhesenamun, is a toolset to ease the **creation of documentation** in the form of Xcode Playgrounds. It provides compile-time **verification** of documentation, exports it in **Markdown** format that can be consumed by [Jekyll](https://jekyllrb.com/) to generate websites, and export [Carbon](https://carbon.now.sh/) snippets for a given Xcode Playground.
@@ -22,17 +20,17 @@
 
 ### Features
 
-💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-xcode-playground).
+💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](#-creating-a-nef-playground).
 
-💡 [__Compiles Xcode Playgrounds__](#-compiling-a-xcode-playground) with support for 3rd-party libraries from the command line.
+💡 [__Compiles Xcode Playgrounds__](#-compiling-a-nef-playground) with support for 3rd-party libraries from the command line.
 
 💡 Builds a [__Playground Book__](#-creating-a-playground-book) for iPad with external dependencies defined in a Swift Package.
 
-💡 Generates [__Markdown__](#-generating-a-markdown-project) project from Xcode Playground.
+💡 Generates [__Markdown__](#-generating-a-markdown-project) project from nef Playground.
 
 💡 Generates Markdown files that can be consumed from [__Jekyll__](#-generating-markdown-files-for-jekyll) to create a microsite.
 
-💡 Export [__Carbon__](#-exporting-carbon-code-snippets) code snippets for given Xcode Playgrounds.
+💡 Export [__Carbon__](#-exporting-carbon-code-snippets) code snippets for a given nef Playground.
 
 &nbsp;
 
@@ -40,11 +38,13 @@
 
 #### 📟 Using [Homebrew](https://github.com/bow-swift/homebrew-nef) (preferred)
 
+```bash
+➜ brew install nef
+```
+
 > It will warn you if there is a missing dependency and will provide guidance to install it.
 
-<p align="center">
-<img src="assets/nef-installation.gif">
-</p>
+&nbsp;
 
 #### 📦 Using [Swift Package Manager](https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode)
 
@@ -54,19 +54,21 @@
 .package(url: "https://github.com/bow-swift/nef.git", from: "{version}")
 ```
 
+It is an excellent option if you want to use all nef features in your macOS app, even to build new tooling on top of nef.
+
 > You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/tutorials/how-to-use-nef-library-/).
 
 &nbsp;
 
 #### 🔌 Using [Xcode Editor Extension](https://github.com/bow-swift/nef-plugin)
 
-Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8).
+Some of `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8) or downloading the last binary from the [**releases section**](https://github.com/bow-swift/nef-plugin/releases).
 
 &nbsp;
 
 ## Usage
 
-### 📃 Creating an Xcode Playground
+### 📃 Creating a nef Playground
 
 Xcode Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of `nef` is to make the creation of an Xcode Playground easier with support for one or more libraries.
 
@@ -80,13 +82,13 @@ By default, `nef` can create an Xcode Playground with support for [Bow](http://b
 <img src="assets/nef-playground.png" height="100">
 </p>
 
-And you can use the following option to specify the name for the Xcode project that you are creating:
+And you can use the following option to specify the name for the `nef Playground` that you are creating:
 
 ```bash
-➜ nef playground --name LatestBowProject
+➜ nef playground --output ~/Desktop --name LatestBowProject
 ```
 
-It will create an Xcode project with support for the latest available version of Bow, named `LatestBowProject`. If you open this `nef playground`, you will have an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
+It will create an Xcode project with support for the latest available version of Bow, named `LatestBowProject` in your `~/Desktop`. If you open this `nef playground`, you will find an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.
 
 By default, `nef playground` will be created for iOS platform. If you need to change it, you can use the `--platform` option.
 
@@ -94,10 +96,18 @@ By default, `nef playground` will be created for iOS platform. If you need to ch
 ➜ nef playground --platform osx
 ```
 
+If you need to take advantage of nef in your Xcode Playgrounds, you can transform your Xcode Playground into a nef Playground using the following command:
+
+```bash
+➜ nef playground --playground <Xcode Playground>
+```
+
+Where `<Xcode Playground>` is the path to your Xcode Playground.
+
 ###
 
 <details>
-<summary>📣 You can select any different Bow version or branch, even a third-party dependency</summary>
+<summary>📣 You can create a nef Playground compatible with any different Bow version, branch or commit; even third-party dependencies</summary>
 
 ###
 
@@ -113,7 +123,7 @@ By default, `nef playground` will be created for iOS platform. If you need to ch
 
 ##
 
-- `--bow-branch <branch-name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
+- `--bow-branch <branch name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
 
 ```bash
 ➜ nef playground --name BranchBowProject --bow-branch master
@@ -121,7 +131,15 @@ By default, `nef playground` will be created for iOS platform. If you need to ch
 
 ##
 
-- `--podfile <Podfile>`: Specify a **Podfile** with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
+- `--bow-commit <commit hash>`: Specify the commit hash of Bow that you want to use in the project. This option lets you test features of Bow exactly at the moment you need, released or not. Example:
+
+```bash
+➜ nef playground --name CommitBowProject --bow-commit e70c739067be1f5700f8b692523e1bb8931c7236
+```
+
+##
+
+- `--podfile <podfile>`: Specify a **Podfile** with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
 
 Your `Podfile`, located in `./folder/dependencies`:
 
@@ -140,7 +158,7 @@ end
 
 ##
 
-- `--cartfile <Cartfile>`: Specify a **Cartfile** with your dependencies. Create a `Cartfile` listing your dependencies and pass it to `nef`. Example:
+- `--cartfile <cartfile>`: Specify a **Cartfile** with your dependencies. Create a `Cartfile` listing your dependencies and pass it to `nef`. Example:
 
 Your `Cartfile`, located in `./folder/dependencies`:
 
@@ -156,26 +174,27 @@ github "bow-swift/Bow"
 
 &nbsp;
 
-### 🔨 Compiling an Xcode Playground
+### 🔨 Compiling a nef Playground
 
-Xcode lets you check for correctness of your Xcode Playground and run it. However, compiling an Xcode Playground from the command line is not so easy when it has dependencies on third-party libraries. This is particularly useful in Continuous Integration when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile Xcode Playgrounds in an Xcode project with dependencies. To do this, you can run the following command:
+Xcode lets you check for correctness of your Xcode Playground and run it. However, Apple does not provide us commands to compile an Xcode Playground, as they do for building Xcode projects. It is particularly useful in Continuous Integration when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile a `nef Playground`. To do this, you can run the following command:
 
 ```bash
-➜ nef compile <path>
+➜ nef compile --project <nef playground>
 ```
+> If you need to transform your Xcode Playground into a nef Playground you can check [Creating a nef Playground](#-creating-a-nef-playground) section.
 
-Where `<path>` is the path to the folder where the project and playgrounds are located. You can use the following option with this command:
+Where `<nef playground>` is the path to `nef Playground` where your playgrounds are located. Also, you can use the following option with this command:
 
 - `--use-cache`: Use cached dependencies if it is possible, in another case, it will download them. Example:
 
 ```bash
-➜ nef compile <path> --use-cache
+➜ nef compile --project <nef playground> --use-cache
 ```
 
 You can also clean the result of the compilation:
 
 ```bash
-➜ nef clean <path>
+➜ nef clean --project <nef playground>
 ```
 
 &nbsp;
@@ -193,7 +212,7 @@ Given a `Package.swift` like the next one:
 import PackageDescription
 
 let package = Package(
-    name: "BowTestProject",
+    name: "BowProject",
     dependencies: [
         .package(url: "https://github.com/bow-swift/bow.git", from: "0.7.0"),
     ]
@@ -233,12 +252,12 @@ protocol MyProtocol {}
 It makes Xcode Playgrounds the proper tool to write an article with compilable examples. The command provided by `nef` to generate the Markdown files is:
 
 ```bash
-➜ nef markdown --project <path-to-input> --output <path-to-output>
+➜ nef markdown --project <nef playground> --output <path>
 ```
 
 Options:
 
-- `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
+- `--project`: Path to your nef Playground.
 - `--output`: Path where the resulting Markdown project will be generated.
 
 &nbsp;
@@ -249,23 +268,23 @@ As you can write comments in [Markdown](https://developer.apple.com/library/arch
 Leveraging this, `nef` can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:
 
 ```bash
-➜ nef jekyll --project <path-to-input> --output <path-to-output> --main-page <path-to-index>
+➜ nef jekyll --project <nef playground> --output <path> --main-page <main-page>
 ```
 
 Options:
 
-- `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
+- `--project`: Path to your nef Playground.
 - `--output`: Path where the resulting Markdown files will be generated.
-- `--main-page`: Optional. Path to a `README.md` file to be used as the index page of the generated microsite.
+- `--main-page`: Optional. Path to 'README.md' file to be used as the index page of the generated microsite.
 
 ###
 
 <details>
-<summary>📣 How to setup an Xcode Playgroud for Jekyll?</summary>
+<summary>📣 How to setup a nef Playgroud for Jekyll?</summary>
 
 ###
 
-`nef` finds all the Xcode Playgrounds in an Xcode project. Each playground is considered a section in the generated microsite structure. For each page in a playground, an entry in the corresponding section is created. The page is transformed from Swift to Markdown using the syntax described above. As a result, a directory structure matching the Xcode project structure is generated, together with a `sidebar.yml` that can be used as a menu in Jekyll.
+`nef` finds all the Xcode Playgrounds in a nef Playground. Each playground is considered a section in the generated microsite structure. For each page in a playground, an entry in the corresponding section is created. The page is transformed from Swift to Markdown using the syntax described above. As a result, a directory structure matching the nef Playground structure is generated, together with a `sidebar.yml` that can be used as a menu in Jekyll.
 
 `nef` adds some commands to modify the Markdown transformation process. All `nef` commands are included as Swift comments. They begin with `// nef:begin:` and end with `// nef:end`. The supported commands are:
 
@@ -294,15 +313,15 @@ struct Person {} // This will be present in the Markdown file
 
 ### 🌁 Exporting Carbon code snippets
 
-Xcode Playgrounds are a great place for prototyping and trying new concepts. Oftentimes we want to share some Swift snippets. `Carbon` is a cool tool for this, and `nef` nicely integrates with it. You can take your Xcode Playground, write several pieces of code, and keep it verified. Later, you can export all your code snippets with the next command:
+Xcode Playgrounds are a great place for prototyping and trying new concepts. Oftentimes we want to share some Swift snippets. `Carbon` is a cool tool for this, and `nef` nicely integrates with it. You can take your nef Playground, write several pieces of code, and keep it verified. Later, you can export all your code snippets with the next command:
 
 ```bash
-➜ nef carbon --project <path-to-input> --output <path-to-output>
+➜ nef carbon --project <nef playground> --output <path>
 ```
 
 Options:
 
-- `--project`: Path to the folder containing the Xcode project with Xcode Playgrounds.
+- `--project`: Path to your nef Playground.
 - `--output`: Path where the resulting Carbon snippets will be generated.
 
 ###
@@ -376,7 +395,7 @@ print("nef is super cool: \(example)")
 Running the following command, we will customize the `background color` to ![#d54048](https://placehold.it/15/d54048/000000?text=+) bow, `hide the number of lines`, and set the export file to `size 3`:
 
 ```bash
-➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --lines false
+➜ nef carbon --project . --output ~/Desktop/nef-carbon --background bow --size 3 --show-lines false
 ```
 
 <p align="center">

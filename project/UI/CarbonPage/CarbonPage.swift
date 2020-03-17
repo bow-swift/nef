@@ -11,7 +11,7 @@ import BowEffects
 public struct CarbonPageCommand: ParsableCommand {
     public static var commandName: String = "nef-carbon-page"
     public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Export Carbon code snippets for given Playground page")
+                                                           abstract: "Export Carbon code snippets for a given Playground page")
 
     public init() {}
     
