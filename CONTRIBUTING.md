@@ -16,7 +16,7 @@ nef provides a section in its microsite where its documentation is [published](h
 
 ### Installation
 
-- Make sure you have last version of `nef`, Xcode 11 (o newer), [CocoaPods](https://cocoapods.org/), and [brew](https://brew.sh/index_es) installed in your computer.
+- Make sure you have last version of [nef](https://github.com/bow-swift/nef/#-using-homebrew-preferred), Xcode 11 (o newer), [CocoaPods](https://cocoapods.org/), and [brew](https://brew.sh/index_es) installed in your computer.
 - Clone the repository for nef and go to the cloned folder.
 - Run `nef compile --project Documentation.app` to set up the project with its dependencies.
 - Open `Documentation.app`
@@ -25,8 +25,8 @@ nef provides a section in its microsite where its documentation is [published](h
 
 If you pay attention to the project structure, you can see that it has multiple Xcode Playgrounds that mirror the side bar of [this page](https://nef.bow-swift.io/docs/). You can also see that the Playground pages for each section match the pages inside each section on the web.
 
-- ¿Do you want to add a new section? You just need to add a new Playground and place it in the order you want it to appear on the website.
-- ¿Do you want to add a new page? You just need to add a new page to the corresponding Playground (section).
+- Do you want to add a new section? You just need to add a new Playground and place it in the order you want it to appear on the website.
+- Do you want to add a new page? You just need to add a new page to the corresponding Playground (section).
 
 In order to add documentation, use the standard Markdown format used in Xcode Playgrounds. For reference, you can check it out in the [official documentation from Apple](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html).
 
