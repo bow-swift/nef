@@ -54,7 +54,7 @@
 .package(url: "https://github.com/bow-swift/nef.git", from: "{version}")
 ```
 
-It is an excellent option if you want to use the full nef features in your macOS app, even to build new tooling on top of nef.
+It is an excellent option if you want to use all nef features in your macOS app, even to build new tooling on top of nef.
 
 > You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/tutorials/how-to-use-nef-library-/).
 
@@ -62,7 +62,7 @@ It is an excellent option if you want to use the full nef features in your macOS
 
 #### 🔌 Using [Xcode Editor Extension](https://github.com/bow-swift/nef-plugin)
 
-Some of the `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8) or downloading the last binary from the [**releases section**](https://github.com/bow-swift/nef-plugin/releases).
+Some of `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8) or downloading the last binary from the [**releases section**](https://github.com/bow-swift/nef-plugin/releases).
 
 &nbsp;
 
@@ -107,7 +107,7 @@ Where `<Xcode Playground>` is the path to your Xcode Playground.
 ###
 
 <details>
-<summary>📣 You can create a nef Playground compatible to any different Bow version, branch or commit; even third-parties dependencies</summary>
+<summary>📣 You can create a nef Playground compatible with any different Bow version, branch or commit; even third-party dependencies</summary>
 
 ###
 
@@ -176,7 +176,7 @@ github "bow-swift/Bow"
 
 ### 🔨 Compiling a nef Playground
 
-Xcode lets you check for correctness of your Xcode Playground and run it. However, Apple does not give us compiling commands for Xcode Playground as they do for building Xcode projects. It is particularly useful in Continuous Integration when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile a `nef Playground`. To do this, you can run the following command:
+Xcode lets you check for correctness of your Xcode Playground and run it. However, Apple does not provide us commands to compile an Xcode Playground, as they do for building Xcode projects. It is particularly useful in Continuous Integration when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. `nef` has an option to compile a `nef Playground`. To do this, you can run the following command:
 
 ```bash
 ➜ nef compile --project <nef playground>
@@ -212,7 +212,7 @@ Given a `Package.swift` like the next one:
 import PackageDescription
 
 let package = Package(
-    name: "BowTestProject",
+    name: "BowProject",
     dependencies: [
         .package(url: "https://github.com/bow-swift/bow.git", from: "0.7.0"),
     ]
