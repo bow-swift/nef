@@ -41,14 +41,14 @@ class NefCompilerSystem: CompilerSystem {
             let cleanBuildIO = env.fileSystem.remove(itemPath: nefPlayground.appending(.build).path).handleError { _ in }
             let cleanLogIO = env.fileSystem.remove(itemPath: nefPlayground.appending(.log).path).handleError { _ in }
             let cleanRootIO = env.fileSystem.remove(itemPath: nefPlayground.appending(.nef).path).handleError { _ in }
-            let cleanIO = cached ? cleanBuildIO.followedBy(cleanLogIO) : cleanRootIO
             let cleanDependenciesIO = env.nefPlaygroundSystem.clean(playground: nefPlayground).provide(env.fileSystem).mapError { _ in FileSystemError.remove(item: "") }
+            let cleanIO = cached ? cleanBuildIO.followedBy(cleanLogIO) : cleanRootIO.followedBy(cleanDependenciesIO)
             
             let createDerivedDataIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.derivedData).path)
             let createFrameworksIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.fw).path)
             let createLogIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.log).path)
             
-            return cleanIO.followedBy(cleanDependenciesIO)
+            return cleanIO
                     .followedBy(createDerivedDataIO)
                     .followedBy(createFrameworksIO)
                     .followedBy(createLogIO)^
