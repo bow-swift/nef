@@ -154,6 +154,9 @@ public struct Playground {
     }
     
     private func playgroundName(_ name: String) -> String {
-        name.capitalized.replacingOccurrences(of: " ", with: "").trimmingEmptyCharacters
+        name.components(separatedBy: " ")
+            .map { $0.firstCapitalized }
+            .joined()
+            .trimmingEmptyCharacters
     }
 }
