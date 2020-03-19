@@ -3,49 +3,30 @@
 import Foundation
 import NefCore
 import NefModels
+import Bow
+import BowEffects
 
-class CarbonSyncDownloader: CarbonDownloader, CarbonViewDelegate {
+class CarbonSyncDownloader: CarbonDownloader {
+    private let view: CarbonView
     
-    private weak var view: CarbonView?
-
-    private let multiFiles: Bool
-    private let semaphore: DispatchSemaphore
-    private var syncResult: Result<String, CarbonError>!
-    private var counter: Int = 0
-    
-    init(view: CarbonView, multiFiles: Bool) {
+    init(view: CarbonView) {
         self.view = view
-        self.multiFiles = multiFiles
-        self.semaphore = DispatchSemaphore(value: 0)
     }
     
     // MARK: delegate <CarbonDownloader>
-    func carbon(withConfiguration configuration: CarbonModel, filename: String) -> Result<String, CarbonError> {
-        guard let view = view else { return .failure(CarbonError(filename: filename, snippet: configuration.code, cause: .notFound)) }
+    func carbon(configuration: CarbonModel) -> IO<CarbonError, Image> {
+        let image = IO<CarbonError, Image>.var()
         
-        run {
-            let filename = self.multiFiles ? "\(filename)-\(self.counter)" : filename
-            view.load(carbon: configuration, filename: filename)
-            self.counter += 1
-        }
-
-        return syncResult
+        return binding(
+                     continueOn(.main),
+            image <- self.load(carbon: configuration),
+        yield: image.get)^
     }
     
-    // MARK: delegate <CarbonViewDelegate>
-    func didFailLoadCarbon(error: CarbonError) {
-        syncResult = .failure(error)
-        semaphore.signal()
-    }
-    
-    func didLoadCarbon(filename: String) {
-        syncResult = .success(filename)
-        semaphore.signal()
-    }
-    
-    // MARK: private methods <helpers>
-    private func run(operation: @escaping () -> Void) {
-        DispatchQueue.main.async { operation() }
-        semaphore.wait()
+    // MARK: private <helpers>
+    private func load(carbon: CarbonModel) -> IO<CarbonError, Image> {
+        IO.async { callback in
+            self.view.load(carbon: carbon, callback: callback)
+        }^
     }
 }

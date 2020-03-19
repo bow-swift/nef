@@ -1,7 +1,9 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
+import NefCore
 import NefModels
+import NefRender
 import NefJekyll
 
 import Bow
@@ -9,45 +11,83 @@ import BowEffects
 
 public extension JekyllAPI {
     
-    static func render(content: String, toFile file: URL, permalink: String) -> IO<nef.Error, URL> {
-        IO.async { callback in
-            let output = URL(fileURLWithPath: "\(file.path).md")
-            self.jekyll(content: content,
-                        to: output.path,
-                        permalink: permalink,
-                        success: {
-                            let fileExist = FileManager.default.fileExists(atPath: output.path)
-                            fileExist ? callback(.right(output)) : callback(.left(.markdown))
-                        },
-                        failure: { error in
-                            callback(.left(.markdown))
-                        })
-        }^
+    static func render(content: String, permalink: String) -> EnvIO<Console, nef.Error, String> {
+        renderVerbose(content: content, permalink: permalink).map { info in info.rendered }^
     }
-}
-
-// MARK: - Helpers
-fileprivate extension JekyllAPI {
     
-    /// Renders content into Jekyll format.
-    ///
-    /// - Precondition: this method must be invoked from main thread.
-    ///
-    /// - Parameters:
-    ///   - content: content page in Xcode playground.
-    ///   - outputPath: output where to write the Markdown render.
-    ///   - permalink: website relative url where locate the page.
-    ///   - success: callback to notify if everything goes well.
-    ///   - failure: callback with information to notify if something goes wrong.
-    static func jekyll(content: String, to outputPath: String, permalink: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
-        guard Thread.isMainThread else {
-            fatalError("jekyll(content:outputPath:permalink:success:failure:) should be invoked in main thread")
+    static func render(page: URL, permalink: String) -> EnvIO<Console, nef.Error, String> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
-        renderJekyll(content: content,
-                     to: outputPath,
-                     permalink: permalink,
-                     success: success,
-                     failure: failure)
+        return render(content: contentPage, permalink: permalink)
+    }
+    
+    static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
+        NefJekyll.Jekyll()
+                 .page(content: content, permalink: permalink)
+                 .contramap(environment)
+                 .mapError { _ in nef.Error.jekyll() }
+    }
+    
+    static func renderVerbose(page: URL, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return renderVerbose(content: contentPage, permalink: permalink)
+    }
+    
+    static func render(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
+        renderVerbose(content: content, permalink: permalink, toFile: file).map { info in info.url }^
+    }
+    
+    static func render(page: URL, permalink: String, toFile output: URL) -> EnvIO<Console, nef.Error, URL> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return render(content: contentPage, permalink: permalink, toFile: output)
+    }
+    
+    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
+        let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
+        let filename = file.pathExtension == "md" ? file.lastPathComponent : file.appendingPathExtension("md").lastPathComponent
+
+        return NefJekyll.Jekyll()
+                        .page(content: content, permalink: permalink, filename: filename, into: output)
+                        .contramap(environment)
+                        .mapError { _ in nef.Error.jekyll() }
+    }
+    
+    static func renderVerbose(page: URL, permalink: String, toFile output: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return renderVerbose(content: contentPage, permalink: permalink, toFile: output)
+    }
+    
+    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+        NefJekyll.Jekyll()
+                 .playground(playground, into: output)
+                 .contramap(environment)
+                 .mapError { _ in nef.Error.jekyll() }^
+    }
+    
+    static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+        NefJekyll.Jekyll()
+                 .playgrounds(at: playgroundsAt, mainPage: mainPage, into: output)
+                 .contramap(environment)
+                 .mapError { _ in nef.Error.jekyll() }^
+    }
+    
+    // MARK: - private <helpers>
+    private static func environment(console: Console) -> NefJekyll.Jekyll.Environment {
+        .init(console: console,
+              fileSystem: MacFileSystem(),
+              persistence: .init(),
+              xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
+              jekyllPrinter: CoreRender.jekyll.render)
     }
 }

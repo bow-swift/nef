@@ -39,22 +39,25 @@ public struct CarbonStyle: Codable, Equatable {
     }
     
     public enum Theme: String, Codable, Equatable, CaseIterable {
-        case cobalt
+        case base16 = "base16-dark"
         case blackboard
-        case dracula
+        case cobalt
         case duotone = "duotone-dark"
+        case dracula
         case hopscotch
         case lucario
         case material
         case monokai
+        case nightOwl = "night-owl"
         case nord
         case oceanicNext = "oceanic-next"
         case oneDark = "one-dark"
         case panda = "panda-syntax"
         case paraiso = "paraiso-dark"
-        case seti
         case purple = "shades-of-purple"
+        case seti
         case solarized = "solarized dark"
+        case synthwave84 = "synthwave-84"
         case tomorrow = "tomorrow-night-bright"
         case twilight
         case verminal
@@ -98,6 +101,19 @@ public struct CarbonStyle: Codable, Equatable {
     }
 }
 
+extension CarbonStyle: CustomStringConvertible {
+    public var description: String {
+        """
+                background: \(background)
+                size: \(size)
+                theme: \(theme.rawValue)
+                fontType: \(fontType.rawValue)
+                lineNumbers: \(lineNumbers)
+                watermark: \(watermark)
+        """
+    }
+}
+
 // MARK: Default colors
 extension CarbonStyle.Color {
     public static let all: [String: CarbonStyle.Color] = ["nef": nef,
@@ -119,12 +135,10 @@ extension CarbonStyle.Color {
 
 // MARK: Error
 public struct CarbonError: Error {
-    public let filename: String
     public let snippet: String
     public let cause: CarbonError.Cause
     
-    public init(filename: String, snippet: String, cause: CarbonError.Cause) {
-        self.filename = filename
+    public init(snippet: String, cause: CarbonError.Cause) {
         self.snippet = snippet
         self.cause = cause
     }

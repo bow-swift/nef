@@ -34,7 +34,7 @@ public struct PlaygroundBook {
             let createDirectoryIO = system.createDirectory(atPath: folderPath)
             let writeManifiestIO = system.write(content: manifest, toFile: "\(folderPath)/Manifest.plist")
             
-            return createDirectoryIO.followedBy(writeManifiestIO)^.mapLeft { _ in .manifest(path: folderPath) }
+            return createDirectoryIO.followedBy(writeManifiestIO)^.mapError { _ in .manifest(path: folderPath) }
         }
     }
     
@@ -47,7 +47,7 @@ public struct PlaygroundBook {
             let writePageIO = system.write(content: pageHeader, toFile: "\(pagePath)/main.swift")
             let writeManifiestIO = system.write(content: manifest, toFile: "\(pagePath)/Manifest.plist")
             
-            return createDirectoryIO.followedBy(writePageIO).followedBy(writeManifiestIO)^.mapLeft { _ in .page(path: pagePath) }
+            return createDirectoryIO.followedBy(writePageIO).followedBy(writeManifiestIO)^.mapError { _ in .page(path: pagePath) }
         }
     }
     
@@ -57,7 +57,7 @@ public struct PlaygroundBook {
             let createDirectoryIO = system.createDirectory(atPath: resourcesPath)
             let writeResourceIO = system.write(content: data, toFile: "\(resourcesPath)/\(resourceName)")
             
-            return createDirectoryIO.followedBy(writeResourceIO)^.mapLeft { _ in .resource(name: resourceName) }
+            return createDirectoryIO.followedBy(writeResourceIO)^.mapError { _ in .resource(name: resourceName) }
         }
     }
     
@@ -69,7 +69,7 @@ public struct PlaygroundBook {
 
                 return binding(
                     dest <- createModuleDirectory(atPath: modulesPath, andName: module.name).provide(system),
-                         |<-system.copy(itemPaths: module.sources, to: dest.get).mapLeft { _ in .sources(module: module.name) },
+                         |<-system.copy(itemPaths: module.sources, to: dest.get).mapError { _ in .sources(module: module.name) },
                 yield: ())^
             }
         }
@@ -80,7 +80,7 @@ public struct PlaygroundBook {
                 let sourcesPath = "\(modulePath)/Sources"
                 
                 return system.createDirectory(atPath: sourcesPath)^
-                             .mapLeft { _ in .invalidModule(name: name) }
+                             .mapError { _ in .invalidModule(name: name) }
                              .map { _ in sourcesPath }
             }
         }

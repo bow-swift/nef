@@ -1,7 +1,9 @@
-//  Copyright © 2019 The nef Authors.
+//  Copyright © 2020 The nef Authors.
 
 import AppKit
+import NefCore
 import NefModels
+import NefRender
 import NefCarbon
 
 import Bow
@@ -9,104 +11,99 @@ import BowEffects
 
 public extension CarbonAPI {
     
-    static func render(carbon: CarbonModel, toFile output: URL) -> IO<nef.Error, URL> {
-        func runAsync(carbon: CarbonModel, outputURL: URL) -> IO<nef.Error, URL> {
-            IO.async { callback in
-                self.carbon(code: carbon.code,
-                            style: carbon.style,
-                            outputPath: outputURL.path,
-                            success: {
-                                let file = URL(fileURLWithPath: "\(outputURL.path).png")
-                                let fileExist = FileManager.default.fileExists(atPath: file.path)
-                                fileExist ? callback(.right(file)) : callback(.left(.carbon))
-                            },
-                            failure: { error in
-                                callback(.left(.invalidSnapshot))
-                            })
-            }^
-        }
-        
-        guard !Thread.isMainThread else {
-            fatalError("carbonIO(_ carbon:,output:) should be invoked in background thread")
-        }
-        
-        let file = IO<nef.Error, URL>.var()
-        return binding(
-                    continueOn(.main),
-            file <- runAsync(carbon: carbon, outputURL: output),
-        yield: file.get)^
+    static func render(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>> {
+        renderVerbose(content: content, style: style).map { info in info.images }^
     }
     
-    static func request(with configuration: CarbonModel) -> URLRequest { CarbonViewer.urlRequest(from: configuration) }
-    
-    static func view(with configuration: CarbonModel) -> CarbonView { CarbonWebView(code: configuration.code, state: configuration.style) }
-}
-
-
-// MARK: - Helpers
-fileprivate extension CarbonAPI {
-    
-    /// Renders a code selection into multiple Carbon images.
-    ///
-    /// - Precondition: this method must be invoked from main thread.
-    ///
-    /// - Parameters:
-    ///   - code: content to generate the snippet.
-    ///   - style: style to apply to exported code snippet.
-    ///   - outputPath: output where to render the snippets.
-    ///   - success: callback to notify if everything goes well.
-    ///   - failure: callback with information to notify if something goes wrong.
-    static func carbon(code: String, style: CarbonStyle, outputPath: String, success: @escaping () -> Void, failure: @escaping (String) -> Void) {
-        guard Thread.isMainThread else {
-            fatalError("carbon(code:style:outputPath:success:failure:) should be invoked in main thread")
+    static func render(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
-        let assembler = CarbonAssembler()
-        let window = assembler.resolveWindow()
-        let view = window.contentView!
-        let retainSuccess = { success(); _ = view }
-        let retainFailure = { (output: String) in failure(output); _ = view }
-        
-        carbon(parentView: view,
-               code: code,
-               style: style,
-               outputPath: outputPath,
-               success: retainSuccess, failure: retainFailure)
+        return render(content: contentPage, style: style)
     }
     
-    /// Renders a code selection into multiple Carbon images.
-    ///
-    /// - Precondition: this method must be invoked from main thread.
-    ///
-    /// - Parameters:
-    ///   - parentView: canvas view where to render Carbon image.
-    ///   - code: content to generate the snippet.
-    ///   - style: style to apply to exported code snippet.
-    ///   - outputPath: output where to render the snippets.
-    ///   - success: callback to notify if everything goes well.
-    ///   - failure: callback with information to notify if something goes wrong.
-    static func carbon(parentView: NSView,
-                code: String,
-                style: CarbonStyle,
-                outputPath: String,
-                success: @escaping () -> Void, failure: @escaping (String) -> Void) {
-        guard Thread.isMainThread else {
-            fatalError("carbon(parentView:code:style:outputPath:success:failure:) should be invoked in main thread")
+    static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
+        NefCarbon.Carbon()
+                 .page(content: content)
+                 .contramap { console in environment(console: console, style: style) }
+                 .mapError { _ in nef.Error.carbon() }
+    }
+    
+    static func renderVerbose(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
         
-        let assembler = CarbonAssembler()
-        let carbonView = assembler.resolveCarbonView(frame: parentView.bounds)
-        let downloader = assembler.resolveCarbonDownloader(view: carbonView, multiFiles: false)
-        
-        parentView.addSubview(carbonView)
-        
-        DispatchQueue(label: "nef-framework", qos: .userInitiated).async {
-            renderCarbon(downloader: downloader,
-                         code: "\(code)\n",
-                         style: style,
-                         outputPath: outputPath,
-                         success: success,
-                         failure: failure)
+        return renderVerbose(content: contentPage, style: style)
+    }
+    
+    static func render(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, Data> {
+        renderVerbose(code: code, style: style).map { info in info.image }^
+    }
+    
+    static func renderVerbose(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, image: Data)> {
+        renderVerbose(content: code, style: style).map { output in (ast: output.ast, image: output.images.head) }^
+    }
+    
+    static func render(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
+        renderVerbose(content: content, style: style, filename: filename, into: output).map { output in output.url }^
+    }
+    
+    static func render(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
+        
+        return render(content: contentPage, style: style, filename: filename, into: output)
+    }
+    
+    static func renderVerbose(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
+        NefCarbon.Carbon()
+                 .page(content: content, filename: filename.removeExtension, into: output)
+                 .contramap { console in environment(console: console, style: style) }
+                 .mapError { e in nef.Error.carbon(info: "\(e)") }
+    }
+    
+    static func renderVerbose(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
+        guard let contentPage = page.contentPage, !contentPage.isEmpty else {
+            return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
+        }
+        
+        return renderVerbose(content: contentPage, style: style, filename: filename, into: output)
+    }
+    
+    static func render(playground: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+        NefCarbon.Carbon()
+                 .playground(playground, into: output)
+                 .contramap { console in environment(console: console, style: style) }
+                 .mapError { _ in nef.Error.carbon() }
+    }
+    
+    static func render(playgroundsAt: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+        NefCarbon.Carbon()
+                 .playgrounds(at: playgroundsAt, into: output)
+                 .contramap { console in environment(console: console, style: style) }
+                 .mapError { _ in nef.Error.carbon() }
+    }
+    
+    static func request(configuration: CarbonModel) -> URLRequest {
+        NefCarbon.Carbon()
+                 .request(configuration: configuration)
+    }
+    
+    static func view(configuration: CarbonModel) -> NefModels.CarbonView {
+        NefCarbon.Carbon()
+                 .view(configuration: configuration)
+    }
+    
+    // MARK: - private <helpers>
+    private static func environment(console: Console, style: CarbonStyle) -> NefCarbon.Carbon.Environment {
+        .init(console: console,
+              fileSystem: MacFileSystem(),
+              persistence: .init(),
+              xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
+              style: style,
+              carbonPrinter: CoreRender.carbon.render)
     }
 }

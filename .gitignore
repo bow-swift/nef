@@ -2,6 +2,9 @@
 **/.DS_Store
 **/xcuserdata/
 BowPlayground
+bin
+sha_*.txt
+/project/build
 
 ## SPM
 .build
@@ -14,6 +17,7 @@ swiftpm
 _site
 .sass-cache
 .jekyll-metadata
+.jekyll-cache
 
 ## Ruby environment normalization:
 .bundle/

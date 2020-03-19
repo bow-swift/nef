@@ -34,7 +34,10 @@ module Nef
     end
 
     def clean_unuseful_files
-      [".git", ".gitignore", ".travis.yml", ".mailmap", "LICENSE", "README.md", "Package.swift", "assets", "bin", "configure", "contents", "docs", "project", "setup", "Documentation.app"].each do |asset|
+      [".git", ".gitignore", ".travis.yml", ".mailmap", ".github",
+        "LICENSE", "README.md", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md",
+        "assets", "bin", "configure", "contents", "docs", "project", "setup",
+        "Package.swift", "Documentation.app", "Makefile", "*.log"].each do |asset|
         `rm -rf #{asset}`
       end
     end
@@ -46,7 +49,7 @@ module Nef
     end
 
     def setPlaygroundApp
-      `mv PROJECT.app #{@project_name}.app`
+      File.rename("PROJECT.app", @project_name+".app")
     end
 
     # properties

@@ -1,0 +1,13 @@
+name: Compile and test
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: swift test --disable-sandbox --package-path project --configuration debug | xcpretty -c

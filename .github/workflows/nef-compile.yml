@@ -1,0 +1,17 @@
+name: nef verify documentation
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Compile documentation
+      run: |
+        brew tap bow-swift/nef
+        brew install nef
+        gem install cocoapods -v 1.9.1
+        nef compile Documentation.app

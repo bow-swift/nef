@@ -8,13 +8,21 @@ import Bow
 import BowEffects
 
 
-extension SwiftPlaygroundAPI {
+public extension SwiftPlaygroundAPI {
     
-    public static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
         render(packageContent: packageContent, name: name, output: output, excludes: [])
     }
     
-    public static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL> {
+    static func render(package: URL, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
+        guard let packageContent = try? String(contentsOfFile: package.path), !packageContent.isEmpty else {
+            return EnvIO.raiseError(.swiftPlaygrond(info: "Error: invalid Swift Package"))^
+        }
+        
+        return render(packageContent: packageContent, name: name, output: output)
+    }
+    
+    static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL> {
         let invalidModules: [PlaygroundExcludeItem] = [.module(name: "RxSwift"), .module(name: "RxRelay"), .module(name: "RxTest"), .module(name: "RxBlocking"), .module(name: "RxCocoa"),
                                                        .module(name: "SwiftCheck"),
                                                        .module(name: "Swiftline"),
@@ -23,8 +31,8 @@ extension SwiftPlaygroundAPI {
         
         return NefSwiftPlayground.SwiftPlayground(packageContent: packageContent, name: name, output: output)
                                  .build(cached: true, excludes: excludes + invalidModules + invalidFiles)
-                                 .contramap { console in PlaygroundEnvironment(console: console, shell: MacPlaygroundShell(), system: MacFileSystem()) }^
+                                 .contramap { console in PlaygroundEnvironment(console: console, shell: MacPackageShell(), system: MacFileSystem()) }^
                                  .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
-                                 .mapError { _ in .swiftPlaygrond }^
+                                 .mapError { _ in .swiftPlaygrond() }^
     }
 }
