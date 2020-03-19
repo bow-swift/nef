@@ -1,9 +1,12 @@
+SHELL = /bin/bash
 TOOL_NAME = nef
-VERSION = 0.6.0
 
-PREFIX_BIN = /usr/local/bin
-BUILD_PATH = bin/nef
-TAR_FILENAME = $(VERSION).tar.gz
+prefix ?= /usr/local
+version ?= 0.6.0
+
+BUILD_PATH = /tmp/$(TOOL_NAME)/$(version)
+PREFIX_BIN = $(prefix)/bin
+TAR_FILENAME = $(version).tar.gz
 SWIFT_PACKAGE_PATH = project
 BINARIES_PATH = $(BUILD_PATH)/release
 BINARIES =  nef\
@@ -19,26 +22,37 @@ BINARIES =  nef\
 						nef-playground-book
 
 
+.PHONY: install
+install: build install_bin
+	$(foreach binary,$(BINARIES),$(shell install $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
+
+.PHONY: install_bin
+install_bin:
+	@install -d "$(PREFIX_BIN)"
+
 .PHONY: build
+build: clean
+	@swift build --disable-sandbox --package-path $(SWIFT_PACKAGE_PATH) --configuration release --build-path $(BUILD_PATH)
 
-install: build
-	install -d "$(PREFIX_BIN)"
-	$(foreach binary,$(BINARIES),$(shell install -C -m 755 $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
-
-build:
-	swift build --disable-sandbox --package-path $(SWIFT_PACKAGE_PATH) --configuration release --build-path $(BUILD_PATH)
-
+.PHONY: uninstall
 uninstall:
-	rm -f $(PREFIX_BIN)/$(TOOL_NAME)*
+	@rm -f $(PREFIX_BIN)/$(TOOL_NAME)*
 
+.PHONY: clean
+clean:
+	@rm -rf $(BUILD_PATH)
+
+.PHONY: zip
 zip: build
-	zip $(TOOL_NAME).$(VERSION).zip $(foreach binary,$(BINARIES),$(BINARIES_PATH)/$(binary))
+	@zip $(TOOL_NAME).$(version).zip $(foreach binary,$(BINARIES),$(BINARIES_PATH)/$(binary))
 
+.PHONY: get_sha
 get_sha:
-	curl -OLs https://github.com/bow-swift/$(TOOL_NAME)/archive/$(TAR_FILENAME)
-	shasum -a 256 $(TAR_FILENAME) | cut -f 1 -d " " > sha_$(VERSION).txt
-	rm $(TAR_FILENAME)
+	@curl -OLs https://github.com/bow-swift/$(TOOL_NAME)/archive/$(TAR_FILENAME)
+	@shasum -a 256 $(TAR_FILENAME) | cut -f 1 -d " " > sha_$(version).txt
+	@rm $(TAR_FILENAME)
 
+.PHONY: brew_push
 brew_push: get_sha
-	SHA=$(shell cat sha_$(VERSION).txt); \
-	brew bump-formula-pr --url=https://github.com/bow-swift/$(TOOL_NAME)/archive/$(TAR_FILENAME) --sha256=$$SHA
+	SHA=$(shell cat sha_$(version).txt); \
+	@brew bump-formula-pr --url=https://github.com/bow-swift/$(TOOL_NAME)/archive/$(TAR_FILENAME) --sha256=$$SHA
