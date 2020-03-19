@@ -6,6 +6,7 @@ version ?= 0.6.0
 
 BUILD_PATH = /tmp/$(TOOL_NAME)/$(version)
 PREFIX_BIN = $(prefix)/bin
+PREFIX_TESTS = $(prefix)/share/tests
 TAR_FILENAME = $(version).tar.gz
 SWIFT_PACKAGE_PATH = project
 BINARIES_PATH = $(BUILD_PATH)/release
@@ -23,12 +24,14 @@ BINARIES =  nef\
 
 
 .PHONY: install
-install: build install_bin
+install: build install_folders
 	$(foreach binary,$(BINARIES),$(shell install $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
+	@cp -R Documentation.app $(PREFIX_TESTS)
 
-.PHONY: install_bin
-install_bin:
+.PHONY: install_folders
+install_folders:
 	@install -d "$(PREFIX_BIN)"
+	@install -d "$(PREFIX_TESTS)"
 
 .PHONY: build
 build: clean
@@ -37,6 +40,7 @@ build: clean
 .PHONY: uninstall
 uninstall:
 	@rm -f $(PREFIX_BIN)/$(TOOL_NAME)*
+	@rm -rf $(PREFIX_TESTS)
 
 .PHONY: clean
 clean:
