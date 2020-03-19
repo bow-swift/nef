@@ -1,0 +1,17 @@
+name: Bump Homebrew formula
+
+on:
+  push:
+    tags: '*'
+
+jobs:
+  homebrew:
+    name: Bump nef formula
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mislav/bump-homebrew-formula-action@v1
+        if: "!contains(github.ref, '-')" # skip prereleases
+        with:
+          formula-name: nef
+        env:
+          COMMITTER_TOKEN: ${{ secrets.COMMITER_HOMEBREW }}
