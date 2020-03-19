@@ -10,24 +10,28 @@ short for [Nefertiti](https://en.wikipedia.org/wiki/Nefertiti), mother of Ankhes
 
 `nef` is inspired by [ΛNK](https://github.com/arrow-kt/ank) for Kotlin and [tut](https://github.com/tpolecat/tut) for Scala.
 
-&nbsp;
 
-## 📥 Installation
+### Why nef?
 
-`nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode and [Cocoapods](https://cocoapods.org) as dependencies. It will warn you if there is a missing dependency and will provide guidance to install it.
+💡 Eases the creation of Xcode Playgrounds with support for [__third party libraries__](https://github.com/bow-swift/nef#-creating-a-nef-playground).
 
-<p align="center">
-<img src="https://github.com/bow-swift/nef/raw/master/assets/nef-installation.gif">
-</p>
+💡 [__Compiles Xcode Playgrounds__](https://github.com/bow-swift/nef#-compiling-a-nef-playground) with support for 3rd-party libraries from the command line.
 
-## 🌟 Features
+💡 Builds a [__Playground Book__](https://github.com/bow-swift/nef#-creating-a-playground-book) for iPad with external dependencies defined in a Swift Package.
 
-`nef` highlights the following features:
+💡 Generates [__Markdown__](https://github.com/bow-swift/nef#-generating-a-markdown-project) project from nef Playground.
 
-💡 Eases the creation of Swift Playgrounds with support for third party libraries.
+💡 Generates Markdown files that can be consumed from [__Jekyll__](https://github.com/bow-swift/nef#-generating-markdown-files-for-jekyll) to create a microsite.
 
-💡 Compiles Swift Playgrounds with support for third party libraries from the command line.
+💡 Export [__Carbon__](https://github.com/bow-swift/nef#-exporting-carbon-code-snippets) code snippets for a given nef Playground.
 
-💡 Generates Markdown project from Swift Playground.
 
-💡 Generates Markdown files that can be consumed from Jekyll to create a microsite.
+### 📥 Installation
+
+`nef` can be installed using [Homebrew](https://brew.sh). `nef` needs Xcode 11 (o newer), [CocoaPods](https://cocoapods.org/), and [brew](https://brew.sh/index_es) installed in your computer.
+
+```bash
+➜ brew install nef
+```
+
+> It will warn you if there is a missing dependency and will provide guidance to install it.
