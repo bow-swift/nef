@@ -156,4 +156,4 @@ end
 
 # And finally we move the source to the directory that will be published.
 # Remember that this should be the same directory set in GH Pages/Travis.
-`mv #{$source_dir}/* #{$publishing_dir}/`
+`cp -R #{$source_dir}/* #{$publishing_dir}/`
