@@ -101,25 +101,6 @@ def generate_api_site(version)
   system "ls -la #{$gen_docs_dir}/#{version}"
 end
 
-
-# Initially, we save the name of the current branch/tag to be used later
-current_branch_tag = `git name-rev --name-only HEAD`
-system "echo == Current branch/tag is #{current_branch_tag}"
-
-#This is the list of versions that will be built, and used, as part of the process
-versions = []
-versions.unshift({
-  "title" => $default_version,
-})
-
-# Besides default, another version that will be available to select will be
-# the current branch/tag, if desired through the use of $current_branch_path
-if !$current_branch_path.to_s.empty?
-  versions.push({
-    "title" => $current_branch_path,
-  })
-end
-
 # Directory initialization
 `mkdir -p #{$json_files_dir}`
 `mkdir -p #{$publishing_dir}`
@@ -128,49 +109,6 @@ end
 # Initial generic logic and dependencies for the docs site
 system "echo == Installing ruby dependencies"
 system "bundle install --gemfile #{$source_dir}/Gemfile --path vendor/bundle"
-
-# Following logic will process and generate the different releases specific sites
-
-# Then, tags will contain the list of Git tags present in the repo
-tags = `git tag`.split("\n")
-system "echo == The tags present in the repo are #{tags}"
-
-# This is done to avoid the need to write down all the tags when we want everything in
-if !$valid_tags.any?
-  $valid_tags = tags
-end
-
-if tags.any?
-  filtered_out_tags = tags.reject { |t| $invalid_tags.include? t }
-  filtered_tags = filtered_out_tags.select { |t| $valid_tags.include? t }
-  system "echo == And the tags that will be actually processed are #{filtered_tags}"
-  # First iteration is done to have the list of versions available
-  filtered_tags.each { |t|
-                        versions.push({
-                          "title" => t,
-                        })
-                      }
-  filtered_tags.each { |t|
-                        system "git checkout -f #{t}"
-                        system "echo == Current branch/tag is now #{t}"
-                        system "echo == Compiling the library in #{t}"
-                        system "swift package clean"
-                        system "swift build"
-                        generate_nef_site("#{t}", versions)
-                        generate_json("#{t}")
-                        join_json("#{t}")
-                        generate_api_site("#{t}")
-                      }
-
-  if filtered_tags.any?
-    if $default_version.to_s.empty?
-      $default_version = filtered_tags.last
-    end
-  else
-    $default_version = "master"
-  end
-end
-
 
 # Now, we generate the content available at the initial branch (master?)
 # to be at $current_branch_path (/next?) path
