@@ -60,5 +60,5 @@ In this tutorial, we assume you do not have any project, and we will follow up f
 /*:
  &nbsp;
  ### 4. Customize your snippets!
- Go back to [Carbon Integration](/docs/integration/carbon/) for reading more about these and another parameters you can use :)
+ Go back to [Carbon Integration](/docs/command-line/exporting-carbon-code-snippets/) for reading more about these and another parameters you can use :)
  */

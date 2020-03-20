@@ -124,3 +124,7 @@ Nef.Playground.needsIndefiniteExecution(false)
  </tr>
  </table>
  */
+
+/*:
+ You can find an example of use in the section [How to export my snippets?](http://127.0.0.1:4000/docs/first-steps/how-to-export-my-snippets-/)
+ */

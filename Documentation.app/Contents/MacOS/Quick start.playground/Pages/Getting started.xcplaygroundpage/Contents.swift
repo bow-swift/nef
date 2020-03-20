@@ -19,7 +19,7 @@
 
  > It will warn you if there is a missing dependency and will provide guidance to install it.
 
- 📣 You will find more information in [Command Line Tool](/docs/command-line-tool/creating-a-nef-playground/) section.
+ 📣 You will find more information in [Command-Line](/docs/command-line/creating-a-nef-playground/) section.
 
  &nbsp;
 
@@ -33,7 +33,7 @@
 
  It is an excellent option if you want to use all nef features in your macOS app, even to build new tooling on top of nef.
 
- 📣 You will find more information in [Library](/docs/command-line-tool/creating-a-nef-playground//) section.
+ 📣 You will find more information in [Library](/docs/library/how-to-use-nef-library-/) section.
  
  &nbsp;
 
