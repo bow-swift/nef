@@ -47,7 +47,7 @@
  let imageIO: IO<nef.Error, NSImage> = io.provide(console).flatMap(extractImage)^
  ```
 
- You can write the `NSImage` or draw in your view, and the appearance will be
+ You can write the `NSImage` or draw in your view, and the appearance will be:
 
   ![Example: use of nef library](/assets/nef-library-example.png)
 
