@@ -43,9 +43,9 @@ If everything is correct, your document should be ready for publication.
 
 ### Rendering content locally
 
-If you want to check how your documentation will be rendered once it is published, you need to follow these steps:
+If you want to check **how** your documentation will be rendered once it is published, follow the next steps in the root directory.
 
-- Run the following command from the root directory to generate the site:
+#### A. Rendering simple documentation (without API docs)
 
 ```bash
 ➜ nef jekyll --project Documentation.app --output docs --main-page Documentation.app/Jekyll/Home.md
@@ -63,4 +63,30 @@ If you want to check how your documentation will be rendered once it is publishe
 BUNDLE_GEMFILE=./docs/Gemfile bundle exec jekyll serve -s ./docs
 ```
 
-- The site will be available at the URL [http://127.0.0.1:4000](http://127.0.0.1:4000). Note: syntax highlighting may not render properly if you do not generate the API reference.
+- The site will be available at the URL [http://127.0.0.1:4000](http://127.0.0.1:4000). Note: syntax highlighting may not render properly if you do not generate the API reference (read B. subsection)
+
+#### B. Rendering full documentation (including API reference)
+
+```bash
+➜ brew install sourcekitten
+➜ ./scripts/gen-docs.rb
+```
+
+- You can install the dependencies you need with:
+
+```bash
+➜ bundle install --gemfile pub-dir/Gemfile --path vendor/bundle
+```
+
+- Once it is done, you can set up a local server with the site by running:
+
+```
+BUNDLE_GEMFILE=./pub-dir/Gemfile bundle exec jekyll serve -s ./pub-dir
+```
+
+- The site will be available at the URL [http://127.0.0.1:4000](http://127.0.0.1:4000)
+
+🚨 If you need to regenerate the site after changing nef Playground `Documentation`, you only need run (and the site will be reloaded):
+```bash
+➜ nef jekyll --project Documentation.app --output pub-dir --main-page Documentation.app/Jekyll/Home.md
+```

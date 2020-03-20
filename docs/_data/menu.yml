@@ -1,4 +1,7 @@
 nav:
+    - title: API Reference
+      url: /api-docs
+      
     - title: Documentation
       url: /docs
 

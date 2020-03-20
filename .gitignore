@@ -23,8 +23,17 @@ _site
 .bundle/
 vendor/
 /lib/bundler/man/
-docs/docs/*
+/docs/docs/*
+/docs/.bundle/
+/docs/vendor/
+
+## Docs
+/pub-dir
+/gen-docs
+/json-files
 /docs/_data/sidebar.yml
+/docs/_data/versions.json
+/docs/Gemfile.lock
 
 ## nef
 /Documentation.app/nef
