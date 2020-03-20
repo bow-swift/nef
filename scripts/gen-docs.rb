@@ -146,10 +146,9 @@ if !$current_branch_path.to_s.empty?
 end
 
 # Now we need to move default API docs to the default publishing location too.
-`mv #{$gen_docs_dir}/#{$current_branch_path}/api-docs #{$gen_docs_dir}/`
-
-# We also move the rest of version generated sites to its publishing destination
-`mv #{$gen_docs_dir}/* #{$publishing_dir}/`
+`mv #{$gen_docs_dir}/#{$current_branch_path}/api-docs #{$publishing_dir}/`
+`rm -rf #{$gen_docs_dir}`
+`rm -rf #{$json_files_dir}`
 
 # We need to remove dependencies dir, as it's unnecessary, and it messes GH Pages
 `rm -rf #{$source_dir}/vendor`
@@ -157,3 +156,4 @@ end
 # And finally we move the source to the directory that will be published.
 # Remember that this should be the same directory set in GH Pages/Travis.
 `cp -R #{$source_dir}/* #{$publishing_dir}/`
+`cp -R assets #{$publishing_dir}/api-docs/`
