@@ -146,7 +146,7 @@ if !$current_branch_path.to_s.empty?
 end
 
 # Now we need to move default API docs to the default publishing location too.
-`mv #{$gen_docs_dir}/#{$default_version}/api-docs #{$gen_docs_dir}/`
+`mv #{$gen_docs_dir}/#{$current_branch_path}/api-docs #{$gen_docs_dir}/`
 
 # We also move the rest of version generated sites to its publishing destination
 `mv #{$gen_docs_dir}/* #{$publishing_dir}/`
