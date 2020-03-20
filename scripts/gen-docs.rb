@@ -15,7 +15,7 @@ $current_branch_path = "next"
 # This is a list to filter -out- tags we know are not valuable to generate docs
 # for. If you set one tag in the default_version, you can add it here, so it's
 # not generated twice. Unless you want to have the same content at two paths.
-$invalid_tags = ["0.1.0", "0.1.1", "0.1.2", "0.1.3", "0.1.4", "0.1.5", "0.1.6", "0.1.7", "0.2.0", "0.2.1", "0.2.2", "0.2.3", "0.3.0", "0.3.1", "0.3.2", "0.4.0", "0.5.2"]
+$invalid_tags = []
 
 # This is a list to filter -in- tags. Unless it's empty, where it will be ignored.
 # If you want an empty tags list in the end (for some reason ¯\_(ツ)_/¯)
@@ -37,6 +37,8 @@ $json_files_dir = "json-files"
 
 # This a list of modules in which the Swift project is split on
 $modules = ["NefModels", "nef"]
+
+
 
 # Generate the JSON files that will be needed later.
 # Modules present in the project are used to split the JSON info.
@@ -96,15 +98,29 @@ def generate_api_site(version)
   system "echo == Generating API site for #{version}"
   # Removing lockfile to avoid conflict in case it differs between versions
   system "rm #{$source_dir}/Gemfile.lock"
-  system "BUNDLE_GEMFILE=#{$source_dir}/Gemfile bundle exec jazzy -o #{$gen_docs_dir}/#{version}/api-docs --sourcekitten-sourcefile #{$json_files_dir}/#{version}/all.json --author Nef --author_url https://nef.bow-swift.io --github_url https://github.com/bow-swift/nef --module nef --root-url https://nef.bow-swift.io/#{version}/api-docs --theme docs/extra/nef-jazzy-theme"
+  system "BUNDLE_GEMFILE=#{$source_dir}/Gemfile bundle exec jazzy -o #{$gen_docs_dir}/#{version}/api-docs --sourcekitten-sourcefile #{$json_files_dir}/#{version}/all.json --author nef --author_url https://nef.bow-swift.io --github_url https://github.com/bow-swift/nef --module nef --root-url https://nef.bow-swift.io/#{version}/api-docs --theme docs/extra/nef-jazzy-theme"
   system "ls -la #{$source_dir}"
   system "ls -la #{$gen_docs_dir}/#{version}"
 end
 
+
 # Initially, we save the name of the current branch/tag to be used later
 current_branch_tag = `git name-rev --name-only HEAD`
 system "echo == Current branch/tag is #{current_branch_tag}"
+
+#This is the list of versions that will be built, and used, as part of the process
 versions = []
+versions.unshift({
+  "title" => $default_version,
+})
+
+# Besides default, another version that will be available to select will be
+# the current branch/tag, if desired through the use of $current_branch_path
+if !$current_branch_path.to_s.empty?
+  versions.push({
+    "title" => $current_branch_path,
+  })
+end
 
 # Directory initialization
 `mkdir -p #{$json_files_dir}`
