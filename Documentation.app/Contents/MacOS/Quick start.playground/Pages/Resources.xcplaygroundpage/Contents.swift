@@ -7,7 +7,7 @@
 /*:
  ## Resources
 
- In this section you can find a list of projects, libraries, presentations or blog posts that use Bow:
+ In this section you can find a list of projects, libraries, presentations or blog posts that use nef:
 
  ### GitHub projects
 

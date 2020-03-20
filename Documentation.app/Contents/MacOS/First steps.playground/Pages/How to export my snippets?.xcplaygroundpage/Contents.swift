@@ -39,7 +39,7 @@ In this tutorial, we assume you do not have any project, and we will follow up f
  &nbsp;
  ### 3. Generate code snippets
 
- Using your terminal we will export the whole code snippets using `nef` and your `nef Playground`, in our case to `TutorialCarbon`.
+ Using your terminal we will export all code snippets using `nef` and your `nef Playground`, in our case from `TutorialCarbon`.
 
  ```bash
  ➜ nef carbon --project TutorialCarbon.app --output ~/Desktop/snippets
@@ -60,5 +60,5 @@ In this tutorial, we assume you do not have any project, and we will follow up f
 /*:
  &nbsp;
  ### 4. Customize your snippets!
- Go back to [Carbon Integration](/docs/command-line/exporting-carbon-code-snippets/) for reading more about these and another parameters you can use :)
+ Go back to [Carbon Integration](/docs/command-line/exporting-carbon-code-snippets/) to read more about these and other parameters you can use :)
  */

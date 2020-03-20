@@ -17,7 +17,7 @@
  
  Where `<nef playground>` is the path to `nef Playground` where your playgrounds are located. Also, you can use the following option with this command:
  
- - `--use-cache`: Use cached dependencies if it is possible, in another case, it will download them. Example:
+ - `--use-cache`: Use cached dependencies if it is possible; otherwise, it will download them. Example:
  
  ```bash
  ➜ nef compile --project <nef playground> --use-cache

@@ -13,7 +13,7 @@ Nef.Playground.needsIndefiniteExecution(false)
 /*:
  ## 🌁 Exporting Carbon code snippets
  
- Xcode Playgrounds are a great place where prototyping and trying new concepts. Oftentimes we want to share some Swift snippets; for this, `Carbon` is a cool tool and `nef` lovely integrated it. You can take your nef Playground, write several pieces of code and keep it verified. Later you can export all your code snippets, with the next command:
+Xcode Playgrounds are a great tool for prototyping and trying new concepts. Oftentimes we want to share some Swift snippets; for this, `Carbon` is a cool tool, and `nef` integrates seamlessly with it. You can take your nef Playground, write several pieces of code and keep it verified. Later you can export all your code snippets, with the following command:
  
  ```bash
  ➜ nef carbon --project <nef playground> --output <path>
@@ -126,5 +126,5 @@ Nef.Playground.needsIndefiniteExecution(false)
  */
 
 /*:
- You can find an example of use in the section [How to export my snippets?](http://127.0.0.1:4000/docs/first-steps/how-to-export-my-snippets-/)
+ You can find an example of use in the section [How to export my snippets?](/docs/first-steps/how-to-export-my-snippets-/)
  */

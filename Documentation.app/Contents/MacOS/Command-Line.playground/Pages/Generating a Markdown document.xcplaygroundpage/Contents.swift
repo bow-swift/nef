@@ -16,8 +16,8 @@ Nef.Playground.needsIndefiniteExecution(false)
  
  ```swift
  /•:
- ‌‌ ### This is a heading 1
- This is regular text. *This is bold text*. [This is a link](http://bow-swift.io).
+ ‌‌ # This is a heading 1
+ This is regular text. **This is bold text**. [This is a link](http://bow-swift.io).
  •/
  
  protocol MyProtocol {}
