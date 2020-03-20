@@ -34,7 +34,7 @@
  ➜ nef playground --platform osx
  ```
 
- If you need to take advantage of nef in your Xcode Playgrounds, you can transform your Xcode Playground into a nef Playground using the following command:
+ 🚨 If you need to take advantage of nef in your `Xcode Playgrounds`, you can transform your Xcode Playground into a nef Playground using the following command:
 
  ```bash
  ➜ nef playground --playground <Xcode Playground>
