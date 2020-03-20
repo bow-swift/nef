@@ -104,6 +104,7 @@ end
 # Initially, we save the name of the current branch/tag to be used later
 current_branch_tag = `git name-rev --name-only HEAD`
 system "echo == Current branch/tag is #{current_branch_tag}"
+versions = []
 
 # Directory initialization
 `mkdir -p #{$json_files_dir}`
