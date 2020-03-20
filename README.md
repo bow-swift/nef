@@ -56,7 +56,7 @@
 
 It is an excellent option if you want to use all nef features in your macOS app, even to build new tooling on top of nef.
 
-> You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/docs/library/how-to-use-nef-library-/).
+> You can read more about how to use nef library in the [**nef site**](https://nef.bow-swift.io/docs/library/how-to-use-nef-library-/).
 
 &nbsp;
 

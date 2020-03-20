@@ -32,7 +32,6 @@ vendor/
 /gen-docs
 /json-files
 /docs/_data/sidebar.yml
-/docs/_data/versions.json
 /docs/Gemfile.lock
 
 ## nef

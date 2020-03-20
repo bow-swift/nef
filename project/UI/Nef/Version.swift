@@ -21,28 +21,8 @@ public struct VersionCommand: ParsableCommand {
     }
     
     func run() -> EnvIO<CLIKit.Console, Never, Void> {
-        let code =  """
-                    import nef
-                    let library = 'nef library is super cool!'
-                    """
-        
-        let style = CarbonStyle(background: .bow,
-                                theme: .dracula,
-                                size: .x1,
-                                fontType: .firaCode,
-                                lineNumbers: true, watermark: true)
-        
-        let io: EnvIO<nef.Console, nef.Error, Data> = nef.Carbon.render(code: code, style: style)
-        
-        return EnvIO { (console: CLIKit.Console) in
-            func extractImage(from data: Data) -> IO<nef.Error, NSImage> {
-                guard let image = NSImage(data: data) else { return IO.raiseError(.carbon(info: "invalid image"))^ }
-                return IO.pure(image)^
-            }
-            
-            let imageIO: IO<nef.Error, NSImage> = io.provide(console).flatMap(extractImage)^
-            
-            return nef.Version.info()
+        EnvIO { console in
+            nef.Version.info()
                 .flatMap { version in console.print(message: "Build version number: \(version)", terminator: " ") }
                 .flatMap { _ in console.printStatus(success: true) }
         }^
