@@ -101,6 +101,10 @@ def generate_api_site(version)
   system "ls -la #{$gen_docs_dir}/#{version}"
 end
 
+# Initially, we save the name of the current branch/tag to be used later
+current_branch_tag = `git name-rev --name-only HEAD`
+system "echo == Current branch/tag is #{current_branch_tag}"
+
 # Directory initialization
 `mkdir -p #{$json_files_dir}`
 `mkdir -p #{$publishing_dir}`
