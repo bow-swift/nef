@@ -28,8 +28,8 @@ vendor/
 /docs/vendor/
 
 ## Docs
-/docs-json
 /pub-dir
+/gen-docs
 /json-files
 /docs/_data/sidebar.yml
 /docs/_data/versions.json
