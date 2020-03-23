@@ -278,7 +278,7 @@ extension CarbonStyle.Color {
     }
 }
 
-// MARK: - Helpers
+// MARK: - private <helpers>
 private extension UInt8 {
     var hex: String { String(format: "%02X", self) }
 }

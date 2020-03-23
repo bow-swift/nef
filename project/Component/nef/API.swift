@@ -6,17 +6,32 @@ import Foundation
 import Bow
 import BowEffects
 
-
+/// Instance of the Version API
 public enum Version: VersionAPI {}
+
+/// Instance of the Compiler API
 public enum Compiler: CompilerAPI {}
+
+/// Instance of the Clean API
 public enum Clean: CleanAPI {}
+
+/// Instance of the Markdown API
 public enum Markdown: MarkdownAPI {}
+
+/// Instance of the Jekyll API
 public enum Jekyll: JekyllAPI {}
+
+/// Instance of the Carbon API
 public enum Carbon: CarbonAPI {}
+
+/// Instance of the Playground API
 public enum Playground: PlaygroundAPI {}
+
+/// Instance of the Swift Playground API
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
 
 
+/// Describes the API for `Version`
 public protocol VersionAPI {
     /// Gets nef build version number.
     /// 
@@ -24,6 +39,7 @@ public protocol VersionAPI {
     static func info() -> UIO<String>
 }
 
+/// Describes the API for `Compiler`
 public protocol CompilerAPI {
     /// Compile Xcode Playground.
     ///
@@ -44,6 +60,7 @@ public protocol CompilerAPI {
     static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<Console, nef.Error, Void>
 }
 
+/// Describes the API for `Clean`
 public protocol CleanAPI {
     /// Cleans a nef Playground.
     ///
@@ -53,6 +70,7 @@ public protocol CleanAPI {
     static func clean(nefPlayground: URL) -> EnvIO<Console, nef.Error, Void>
 }
 
+/// Describes the API for `Markdown`
 public protocol MarkdownAPI {
     /// Renders content into markdown.
     ///
@@ -131,6 +149,7 @@ public protocol MarkdownAPI {
     static func render(playgroundsAt: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>>
 }
 
+/// Describes the API for `Jekyll`
 public protocol JekyllAPI {
     /// Renders content into jekyll format.
     ///
@@ -218,6 +237,7 @@ public protocol JekyllAPI {
     static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>>
 }
 
+/// Describes the API for `Carbon`
 public protocol CarbonAPI {
     /// Renders a page into Carbon images.
     ///
@@ -338,6 +358,7 @@ public protocol CarbonAPI {
     static func view(configuration: CarbonModel) -> CarbonView
 }
 
+/// Describes the API for `Playground`
 public protocol PlaygroundAPI {
     /// Make a nef Playground compatible with 3rd-party libraries.
     ///
@@ -361,6 +382,7 @@ public protocol PlaygroundAPI {
     static func nef(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL>
 }
 
+/// Describes the API for `Swift Playground`
 public protocol SwiftPlaygroundAPI {
     /// Renders a Swift Package content into Swift Playground compatible to iPad.
     ///
