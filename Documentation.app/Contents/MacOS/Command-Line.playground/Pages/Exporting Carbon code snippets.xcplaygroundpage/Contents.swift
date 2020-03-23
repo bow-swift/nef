@@ -109,14 +109,14 @@ Xcode Playgrounds are a great tool for prototyping and trying new concepts. Ofte
  <td align="center"><code>firaCode</code></td>
  </tr>
  <tr>
- <td align="center"><code>--lines</code></td>
+ <td align="center"><code>--show-lines</code></td>
  <td>shows/hides number of lines in code snippet</td>
  <td align="center">Bool</td>
  <td><code>true</code> <code>false</code></td>
  <td align="center"><code>true</code></td>
  </tr>
  <tr>
- <td align="center"><code>--watermark</code></td>
+ <td align="center"><code>--show-watermark</code></td>
  <td>shows/hides watermark in code snippet</td>
  <td align="center">Bool</td>
  <td><code>true</code> <code>false</code></td>
