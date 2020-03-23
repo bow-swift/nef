@@ -2,17 +2,33 @@
 
 import Foundation
 
+/// Models a `nef` error.
 public enum Error: Swift.Error {
+    /// Describes a `Compiler` error given detailed information.
     case compiler(info: String = "")
+    
+    /// Describes a `Markdown` error given detailed information.
     case markdown(info: String = "")
+    
+    /// Describes a `Jekyll` error given detailed information.
     case jekyll(info: String = "")
+    
+    /// Describes a `Carbon` error given detailed information.
     case carbon(info: String = "")
+    
+    /// Describes a `Carbon` error given detailed information about the snapshot failure.
     case invalidSnapshot(info: String = "")
+    
+    /// Describes a `Playground` error given detailed information.
     case playground(info: String = "")
+    
+    /// Describes a `Swift Playground` error given detailed information.
     case swiftPlaygrond(info: String = "")
 }
 
 extension Error: CustomStringConvertible {
+    
+    /// A textual representation of `nef.Error`
     public var description: String {
         switch self {
         case .compiler(let info):
