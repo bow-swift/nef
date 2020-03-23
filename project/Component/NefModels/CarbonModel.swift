@@ -61,55 +61,132 @@ public struct CarbonStyle: Codable, Equatable {
     
     /// Represents file size.
     public enum Size: Double, Codable, Equatable, CaseIterable {
+        /// Output file size to 1x
         case x1 = 1
+        /// Output file size to 2x
         case x2 = 2
+        /// Output file size to 3x
         case x3 = 3
+        /// Output file size to 4x
         case x4 = 4
+        /// Output file size to 5x
         case x5 = 5
     }
     
     /// Represents Carbon theme.
     public enum Theme: String, Codable, Equatable, CaseIterable {
+        /// Base 16 dark
         case base16 = "base16-dark"
+        
+        /// Balckboard
         case blackboard
+        
+        /// Cobalt
         case cobalt
+        
+        /// Duotone dark
         case duotone = "duotone-dark"
+        
+        /// Dracula
         case dracula
+        
+        /// Hopscotch
         case hopscotch
+        
+        /// Lucario
         case lucario
+        
+        /// Material
         case material
+        
+        ///Monokai
         case monokai
+        
+        /// Night Owl
         case nightOwl = "night-owl"
+        
+        /// Nord
         case nord
+        
+        /// Oceanic Next
         case oceanicNext = "oceanic-next"
+        
+        /// One Dark
         case oneDark = "one-dark"
+        
+        /// Panda
         case panda = "panda-syntax"
+        
+        /// Paraiso dark
         case paraiso = "paraiso-dark"
+        
+        /// Shades of purple
         case purple = "shades-of-purple"
+        
+        /// Seti
         case seti
+        
+        /// Solarized dark
         case solarized = "solarized dark"
+        
+        /// Synthwave 84
         case synthwave84 = "synthwave-84"
+        
+        /// Tomorrow night bright
         case tomorrow = "tomorrow-night-bright"
+        
+        /// Twilight
         case twilight
+        
+        /// Verminal
         case verminal
+        
+        /// VSCode
         case vscode
+        
+        /// Zenburn
         case zenburn
     }
     
     /// Represents Carbon font type
     public enum Font: String, Codable, Equatable, CaseIterable {
+        /// Fira Code
         case firaCode = "Fira Code"
+        
+        /// Hack
         case hack = "Hack"
+        
+        /// Inconsolata
         case inconsolata = "Inconsolata"
+        
+        /// Iosevka
         case iosevka = "Iosevka"
+        
+        /// Monoid
         case monoid = "Monoid"
+        
+        /// Anonymous Pro
         case anonymous = "Anonymous Pro"
+        
+        /// Source Code Pro
         case sourceCodePro = "Source Code Pro"
+        
+        /// Dark Mono
         case darkMono = "dm"
+        
+        /// Droid Sans Mono
         case droidMono = "Droid Sans Mono"
+        
+        /// Fantasque Sans Mono
         case fantasqueMono = "Fantasque Sans Mono"
+        
+        /// IBM Plex Mono
         case ibmPlexMono = "IBM Plex Mono"
+        
+        /// Space Mono
         case spaceMono = "Space Mono"
+        
+        /// Ubuntu Mono
         case ubuntuMono = "Ubuntu Mono"
     }
     
@@ -149,8 +226,9 @@ public struct CarbonStyle: Codable, Equatable {
     }
 }
 
-/// A textual representation of `CarbonStyle`.
 extension CarbonStyle: CustomStringConvertible {
+    
+    /// A textual representation of `CarbonStyle`.
     public var description: String {
         """
                 background: \(background)
@@ -217,11 +295,11 @@ public struct CarbonError: Error {
     }
     
     /// Models the reason of a carbon error.
-    ///
-    /// - notFound: Could not open Carbon web view with the current configuration.
-    /// - invalidSnapshot: Could not take a snapshot.
     public enum Cause: Error, CustomStringConvertible {
+        ///  Could not open Carbon web view with the current configuration.
         case notFound
+        
+        /// Could not take a snapshot.
         case invalidSnapshot
         
         /// A textual representation of `CarbonError.Cause`.
@@ -238,8 +316,7 @@ extension CarbonStyle.Size {
     
     /// Initializes a `CarbonStyle.Size`.
     ///
-    /// - Parameters:
-    ///   - factor: export file size.
+    /// - Parameter factor: export file size.
     public init?(factor string: String) {
         guard let factor = Int8(string),
               let size = CarbonStyle.Size(rawValue: Double(factor)) else { return nil }

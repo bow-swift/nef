@@ -3,15 +3,17 @@
 import Foundation
 
 /// Models the different platforms in the Apple ecosystem.
-///
-/// - ios: represents the iOS platform.
-/// - macos: represents the macOS platform.
-/// - tvos: represents the tvOS platform.
-/// - watchos: represents the watchOS platform.
 public enum Platform: String {
+    /// Represents the iOS platform.
     case ios
+    
+    /// Represents the macOS platform.
     case macos
+    
+    /// Represents the tvOS platform.
     case tvos
+    
+    /// Represents the watchOS platform.
     case watchos
     
     /// Initializes a `Platform`.
