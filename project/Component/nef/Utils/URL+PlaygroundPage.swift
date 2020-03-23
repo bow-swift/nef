@@ -2,7 +2,7 @@
 
 import Foundation
 
-extension URL {
+internal extension URL {
     var playgroundPage: URL {
         path.contains("Contents.swift") ? self : appendingPathComponent("Contents.swift")
     }
