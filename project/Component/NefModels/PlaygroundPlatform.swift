@@ -18,7 +18,7 @@ public enum Platform: String {
     
     /// Initializes a `Platform`
     ///
-    /// - Parameter platform: a textual `Platform`.
+    /// - Parameter platform: A textual `Platform`.
     public init?(platform: String) {
         guard let platform = Platform(rawValue: platform) else { return nil }
         self = platform

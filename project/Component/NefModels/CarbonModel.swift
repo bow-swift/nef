@@ -13,8 +13,8 @@ public struct CarbonModel: Codable, Equatable {
     /// Initializes a `CarbonModel`
     ///
     /// - Parameters:
-    ///   - code: code to render as a Carbon image.
-    ///   - style: style to apply to the generated snippet.
+    ///   - code: Code to render as a Carbon image.
+    ///   - style: Style to apply to the generated snippet.
     public init(code: String, style: CarbonStyle) {
         self.code = code
         self.style = style
@@ -44,12 +44,12 @@ public struct CarbonStyle: Codable, Equatable {
     /// Initializes a `CarbonStyle`
     ///
     /// - Parameters:
-    ///   - background: background color.
-    ///   - theme: carbon theme.
-    ///   - size: exported image size.
-    ///   - fontType: carbon font type.
-    ///   - lineNumbers: shows/hides lines of code.
-    ///   - watermark: shows/hides the watermark.
+    ///   - background: Background color.
+    ///   - theme: Carbon theme.
+    ///   - size: Exported image size.
+    ///   - fontType: Carbon font type.
+    ///   - lineNumbers: Shows/hides lines of code.
+    ///   - watermark: Shows/hides the watermark.
     public init(background: Color, theme: Theme, size: Size, fontType: Font, lineNumbers: Bool, watermark: Bool) {
         self.background = background
         self.theme = theme
@@ -99,7 +99,7 @@ public struct CarbonStyle: Codable, Equatable {
         /// Material
         case material
         
-        ///Monokai
+        /// Monokai
         case monokai
         
         /// Night Owl
@@ -207,10 +207,10 @@ public struct CarbonStyle: Codable, Equatable {
         /// Initializes a `CarbonStyle.Color`
         ///
         /// - Parameters:
-        ///   - r: the red value of the color object.
-        ///   - g: the green value of the color object.
-        ///   - b: the blue value of the color object.
-        ///   - a: the alpha value of the color object.
+        ///   - r: The red value of the color object.
+        ///   - g: The green value of the color object.
+        ///   - b: The blue value of the color object.
+        ///   - a: The alpha value of the color object.
         public init(r: UInt8, g: UInt8, b: UInt8, a: Double) {
             self.r = r
             self.g = g
@@ -228,7 +228,6 @@ public struct CarbonStyle: Codable, Equatable {
 
 extension CarbonStyle: CustomStringConvertible {
     
-    /// A textual representation of `CarbonStyle`.
     public var description: String {
         """
                 background: \(background)
@@ -244,7 +243,7 @@ extension CarbonStyle: CustomStringConvertible {
 /// Predefined Carbon `Color`.
 extension CarbonStyle.Color {
     
-    /// A group of predefined Carbon colours.
+    /// A group of predefined Carbon colors.
     public static let all: [String: CarbonStyle.Color] = ["nef": nef,
                                                           "bow": bow,
                                                           "white": white,
@@ -287,8 +286,8 @@ public struct CarbonError: Error {
     /// Initializes a `CarbonError`
     ///
     /// - Parameters:
-    ///   - snippet: snippet of code that was being rendered when the action failed.
-    ///   - cause: reason for the failure.
+    ///   - snippet: Snippet of code that was being rendered when the action failed.
+    ///   - cause: Reason for the failure.
     public init(snippet: String, cause: CarbonError.Cause) {
         self.snippet = snippet
         self.cause = cause
@@ -302,7 +301,6 @@ public struct CarbonError: Error {
         /// Could not take a snapshot.
         case invalidSnapshot
         
-        /// A textual representation of `CarbonError.Cause`.
         public var description: String {
             switch self {
             case .notFound: return "can not open carbon with selected code snippet"
@@ -316,7 +314,7 @@ extension CarbonStyle.Size {
     
     /// Initializes a `CarbonStyle.Size`
     ///
-    /// - Parameter factor: export image size.
+    /// - Parameter factor: Export image size.
     public init?(factor string: String) {
         guard let factor = Int8(string),
               let size = CarbonStyle.Size(rawValue: Double(factor)) else { return nil }
@@ -328,7 +326,7 @@ extension CarbonStyle.Color {
     
     /// Initializes a `CarbonStyle.Color`
     ///
-    /// - Parameter hex: creates a `Color` from a hexadecimal String.
+    /// - Parameter hex: Creates a `Color` from a hexadecimal String.
     public init?(hex: String) {
         let hexRaw = hex.hexColorWithAlpha
         guard hex.isHexColor else { return nil }
@@ -342,7 +340,7 @@ extension CarbonStyle.Color {
     
     /// Initializes a `CarbonStyle.Color`.
     ///
-    /// - Parameter default: creates a `Color` from a predefined value.
+    /// - Parameter default: Creates a `Color` from a predefined value.
     public init?(default string: String) {
         guard let value = CarbonStyle.Color.all[string.lowercased()] else { return nil }
         self = value

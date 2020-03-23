@@ -17,9 +17,9 @@ public struct Step {
     /// Initializes a `Step`
     ///
     /// - Parameters:
-    ///   - total: total of operations.
-    ///   - partial: the current operation. Values between [0, total]
-    ///   - duration: estimated duration for current operation.
+    ///   - total: Total of operations.
+    ///   - partial: The current operation. Values between [0, total]
+    ///   - duration: Estimated duration for current operation.
     public init(total: UInt, partial: UInt, duration: DispatchTimeInterval) {
         self.total = total
         self.partial = partial
@@ -32,7 +32,7 @@ extension Step {
     public static var empty: Step { .init(total: 0, partial: 0, duration: .never) }
     
     /// Advance the step a number of increments.
-    /// - Parameter partial: number of increments for the step.
+    /// - Parameter partial: Number of increments for the step.
     /// - Returns: A `Step` with the current operation advanced.
     public func increment(_ partial: UInt) -> Step {
         .init(total: total, partial: self.partial + partial, duration: estimatedDuration)
@@ -44,27 +44,27 @@ public protocol Console {
     
     /// Detailed information about the progress of current step.
     /// - Parameters:
-    ///   - step: current `Step`
-    ///   - information: detailed information.
+    ///   - step: Current `Step`
+    ///   - information: Detailed information.
     /// - Returns: An `IO` that represent the information for the step.
     func printStep<E: Swift.Error>(step: Step, information: String) -> IO<E, Void>
     
     /// Detailed information about the progress of a subtask in current step.
     /// - Parameters:
-    ///   - step: current `Step`
-    ///   - information: detailed information.
+    ///   - step: Current `Step`
+    ///   - information: Detailed information.
     /// - Returns: An `IO` that represent the information for the substep.
     func printSubstep<E: Swift.Error>(step: Step, information: [String]) -> IO<E, Void>
     
     /// Describes how the step has been terminated.
-    /// - Parameter success: output status.
+    /// - Parameter success: Output status.
     /// - Returns: An `IO` that represent the output status.
     func printStatus<E: Swift.Error>(success: Bool) -> IO<E, Void>
     
     /// Describes how the step has been terminated with detailed information.
     /// - Parameters:
-    ///   - information: detailed information.
-    ///   - success: output status.
+    ///   - information: Detailed information.
+    ///   - success: Output status.
     /// - Returns: An `IO` that represent the output status.
     func printStatus<E: Swift.Error>(information: String, success: Bool) -> IO<E, Void>
 }
@@ -72,14 +72,14 @@ public protocol Console {
 public extension Console {
     
     /// Detailed information about the progress of current step.
-    /// - Parameter information: detailed information.
+    /// - Parameter information: Detailed information.
     /// - Returns: An `IO` that represent the information for the step.
     func print<E: Swift.Error>(information: String) -> IO<E, Void> {
         printStep(step: Step.empty, information: information)
     }
     
     /// Detailed information about the progress of a subtask in current step.
-    /// - Parameter information: detailed information.
+    /// - Parameter information: Detailed information.
     /// - Returns: An `IO` that represent the information for the substep.
     func print<E: Swift.Error>(information: [String]) -> IO<E, Void> {
         printSubstep(step: Step.empty, information: information)

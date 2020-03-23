@@ -5,10 +5,10 @@ import AppKit
 /// Describes a Carbon loading view.
 public protocol CarbonLoadingView: NSView {
     
-    /// Loading view should change its state to show.
+    /// Shows the loading view.
     func show()
     
-    /// Loading view should change its state to hidden.
+    /// Hides the loading view.
     func hide()
 }
 
