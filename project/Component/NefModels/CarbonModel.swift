@@ -2,7 +2,7 @@
 
 import Foundation
 
-/// Represents the configuration for the rendering of carbon snippets.
+/// Represents the configuration for rendering carbon snippets.
 public struct CarbonModel: Codable, Equatable {
     /// Code to render into Carbon image.
     public let code: String
