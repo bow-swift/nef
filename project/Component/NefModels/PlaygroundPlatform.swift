@@ -16,7 +16,7 @@ public enum Platform: String {
     /// Represents the watchOS platform.
     case watchos
     
-    /// Initializes a `Platform`.
+    /// Initializes a `Platform`
     ///
     /// - Parameter platform: a textual `Platform`.
     public init?(platform: String) {

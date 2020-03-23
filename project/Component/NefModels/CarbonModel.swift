@@ -4,16 +4,16 @@ import Foundation
 
 /// Represents the configuration for rendering carbon snippets.
 public struct CarbonModel: Codable, Equatable {
-    /// Code to render into Carbon image.
+    /// Code to render as a Carbon image.
     public let code: String
     
     /// Style to apply to the generated snippet.
     public let style: CarbonStyle
     
-    /// Initializes a `CarbonModel`.
+    /// Initializes a `CarbonModel`
     ///
     /// - Parameters:
-    ///   - code: code to render into Carbon image.
+    ///   - code: code to render as a Carbon image.
     ///   - style: style to apply to the generated snippet.
     public init(code: String, style: CarbonStyle) {
         self.code = code
@@ -26,7 +26,7 @@ public struct CarbonStyle: Codable, Equatable {
     /// Background color
     public let background: Color
     
-    /// File size.
+    /// Image size.
     public let size: Size
     
     /// Carbon theme.
@@ -41,12 +41,12 @@ public struct CarbonStyle: Codable, Equatable {
     /// Shows/hides nef watermark.
     public let watermark: Bool
     
-    /// Initializes a `CarbonStyle`.
+    /// Initializes a `CarbonStyle`
     ///
     /// - Parameters:
-    ///   - background: background color in hexadecimal.
+    ///   - background: background color.
     ///   - theme: carbon theme.
-    ///   - size: export file size.
+    ///   - size: exported image size.
     ///   - fontType: carbon font type.
     ///   - lineNumbers: shows/hides lines of code.
     ///   - watermark: shows/hides the watermark.
@@ -59,26 +59,26 @@ public struct CarbonStyle: Codable, Equatable {
         self.watermark = watermark
     }
     
-    /// Represents file size.
+    /// Represents image size.
     public enum Size: Double, Codable, Equatable, CaseIterable {
-        /// Output file size to 1x
+        /// Output image size to 1x
         case x1 = 1
-        /// Output file size to 2x
+        /// Output image size to 2x
         case x2 = 2
-        /// Output file size to 3x
+        /// Output image size to 3x
         case x3 = 3
-        /// Output file size to 4x
+        /// Output image size to 4x
         case x4 = 4
-        /// Output file size to 5x
+        /// Output image size to 5x
         case x5 = 5
     }
     
-    /// Represents Carbon theme.
+    /// Represents a Carbon theme.
     public enum Theme: String, Codable, Equatable, CaseIterable {
         /// Base 16 dark
         case base16 = "base16-dark"
         
-        /// Balckboard
+        /// Blackboard
         case blackboard
         
         /// Cobalt
@@ -148,7 +148,7 @@ public struct CarbonStyle: Codable, Equatable {
         case zenburn
     }
     
-    /// Represents Carbon font type
+    /// Represents a Carbon font type
     public enum Font: String, Codable, Equatable, CaseIterable {
         /// Fira Code
         case firaCode = "Fira Code"
@@ -204,7 +204,7 @@ public struct CarbonStyle: Codable, Equatable {
         /// The alpha value of the color object. Values between [0.0, 1.0]
         public let a: Double
         
-        /// Initializes a `CarbonStyle.Color`.
+        /// Initializes a `CarbonStyle.Color`
         ///
         /// - Parameters:
         ///   - r: the red value of the color object.
@@ -278,17 +278,17 @@ extension CarbonStyle.Color {
 /// Represents an error in a Carbon action.
 public struct CarbonError: Error {
     
-    /// The snippet of code fails in the action.
+    /// Snippet that was being rendered when the action failed.
     public let snippet: String
     
-    /// Describe the reason for the failure.
+    /// Describes the reason for the failure.
     public let cause: CarbonError.Cause
     
-    /// Initializes a `CarbonError`.
+    /// Initializes a `CarbonError`
     ///
     /// - Parameters:
-    ///   - snippet: the snippet of code fails in the action
-    ///   - cause: the reason for the failure.
+    ///   - snippet: snippet of code that was being rendered when the action failed.
+    ///   - cause: reason for the failure.
     public init(snippet: String, cause: CarbonError.Cause) {
         self.snippet = snippet
         self.cause = cause
@@ -314,9 +314,9 @@ public struct CarbonError: Error {
 
 extension CarbonStyle.Size {
     
-    /// Initializes a `CarbonStyle.Size`.
+    /// Initializes a `CarbonStyle.Size`
     ///
-    /// - Parameter factor: export file size.
+    /// - Parameter factor: export image size.
     public init?(factor string: String) {
         guard let factor = Int8(string),
               let size = CarbonStyle.Size(rawValue: Double(factor)) else { return nil }
@@ -326,9 +326,9 @@ extension CarbonStyle.Size {
 
 extension CarbonStyle.Color {
     
-    /// Initializes a `CarbonStyle.Color`.
+    /// Initializes a `CarbonStyle.Color`
     ///
-    /// - Parameter hex: creates a `Color` from an hexadecimal.
+    /// - Parameter hex: creates a `Color` from a hexadecimal String.
     public init?(hex: String) {
         let hexRaw = hex.hexColorWithAlpha
         guard hex.isHexColor else { return nil }
