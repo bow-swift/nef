@@ -14,6 +14,9 @@ public enum Platform: String {
     case tvos
     case watchos
     
+    /// Initializes a `Platform`.
+    ///
+    /// - Parameter platform: a textual `Platform`.
     public init?(platform: String) {
         guard let platform = Platform(rawValue: platform) else { return nil }
         self = platform
