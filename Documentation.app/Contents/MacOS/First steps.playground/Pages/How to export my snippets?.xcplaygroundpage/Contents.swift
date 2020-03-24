@@ -10,7 +10,7 @@
 
 In this tutorial, we assume you do not have any project, and we will follow up from the beginning. If you have a current project, you can jump straight to third step.
 
- ### 1. Create a new `nef` project
+ #### Step 1: Create a new `nef` project
 
  You will need a `nef Playground`. Therefore, you can start to create a new one with this command:
 
@@ -21,11 +21,8 @@ In this tutorial, we assume you do not have any project, and we will follow up f
   ![](/assets/nef-playground.png)
  
  Go back to [Creating a nef Playground](/docs/command-line/creating-a-nef-playground/) to read more about these and other parameters you can use :)
- */
-
-/*:
- &nbsp;
- ### 2. Add content to nef Playground
+ 
+ #### Step 2: Add content to nef Playground
 
  Great! Open `TutorialCarbon.app` playground. It is an easy view where to see the future Playgrounds you will be creating and their pages.
 
@@ -37,9 +34,9 @@ In this tutorial, we assume you do not have any project, and we will follow up f
  print("\(example) created by nef!")
 
  // This is my first snippet created by nef!
-/*:
- &nbsp;
- ### 3. Generate code snippets
+ /*:
+ 
+ #### Step 3: Generate code snippets
 
  Using your terminal we will export all code snippets using `nef` and your `nef Playground`, in our case from `TutorialCarbon`.
 
@@ -57,10 +54,7 @@ In this tutorial, we assume you do not have any project, and we will follow up f
 
  ![](/assets/nef-tutorial-carbon-customsnippet.png)
 
- */
-
-/*:
- &nbsp;
- ### 4. Customize your snippets!
+ #### Step 4: Customize your snippets!
+ 
  Go back to [Carbon Integration](/docs/command-line/exporting-carbon-code-snippets/) to read more about these and other parameters you can use :)
  */

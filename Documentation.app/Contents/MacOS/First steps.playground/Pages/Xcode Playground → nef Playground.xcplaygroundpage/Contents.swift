@@ -18,13 +18,15 @@
  
  &nbsp;
  
+ #### Step 1: Prepare your Xcode Playground
+ 
  Given an Xcode Playground, which name will be `MyPlayground` and it is located at `~/Desktop`
  
- 1.- If your playground does not have any page, add someone, for example `Tutorial`. Your playground structure should look like:
+ If your playground does not have any page, add someone, for example `Tutorial`. Your playground structure should look like:
  
  ![](/assets/myplayground.png)
  
- 2.- Run nef with the option --playground:
+ #### Step 2: Converts an Xcode Playground to nef Playground
  
  ```bash
  ➜ nef playground --playground ~/Desktop/MyPlayground.playground --name MyPlayground
@@ -46,7 +48,9 @@
  
  Following the options seen above, we will continue the example to make our Xcode Playground compatibles with 3rd-party libraries using CocoaPods as a dependency manager.
  
- 1.- Create a `Podfile` listing your dependencies. I'll be named `MyPodfile` and located at `~/Desktop`
+ #### Step 1: Create a `Podfile` listing your dependencies
+
+ I'll be named `MyPodfile` and located at `~/Desktop`
  
  ```
  target 'MyPodfile' do
@@ -57,7 +61,10 @@
  end
  ```
  
- 2.- Run nef with the options `--playground` and `--podfile`:
+ #### Step 2: Converts Xcode Playground using your dependencies
+ 
+ Run nef with the options `--playground` and `--podfile`:
+ 
  ```bash
  ➜ nef playground --playground ~/Desktop/MyPlayground.playground --name MyPlayground --podfile ~/Desktop/MyPodfile
  ```

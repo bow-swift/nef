@@ -11,14 +11,17 @@
 
  In this section, we will see how we can use the `Carbon API`.
  
- Firstly, you need to import nef library in your project.
+ #### Step 1: Import nef library in your project
  > If you need to know how to add nef dependency to your macOS project, read [How to use nef as a library?](/docs/library/how-to-use-nef-as-a-library-/) section.
  
  ```swift
  import nef
  ```
  
- Now, you can create a Carbon style to apply to our code, for the generated snippet.
+ #### Step 2: Create a Carbon style
+ 
+ Create a carbon style to apply to our code, for the generated snippet.
+ 
  ```swift
  let code =  """
              import nef
@@ -31,6 +34,8 @@
                          fontType: .firaCode,
                          lineNumbers: true, watermark: true)
  ```
+ 
+ #### Step 3: Render a Carbon image using Carbon API
 
  We could render a Carbon image using this configuration and our code, invoking the next Carbon API
  ```swift
