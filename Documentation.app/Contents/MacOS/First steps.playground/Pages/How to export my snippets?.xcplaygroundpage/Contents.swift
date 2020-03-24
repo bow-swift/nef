@@ -19,6 +19,8 @@ In this tutorial, we assume you do not have any project, and we will follow up f
  ```
 
   ![](/assets/nef-playground.png)
+ 
+ Go back to [Creating a nef Playground](/docs/command-line/creating-a-nef-playground/) to read more about these and other parameters you can use :)
  */
 
 /*:
