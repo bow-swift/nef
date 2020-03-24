@@ -8,16 +8,13 @@
       location = "group:Quick start.playground">
    </FileRef>
    <FileRef
-      location = "group:Verification and Compilation.playground">
+      location = "group:Command-Line.playground">
    </FileRef>
    <FileRef
-      location = "group:Generation.playground">
+      location = "group:Library.playground">
    </FileRef>
    <FileRef
-      location = "group:Integration.playground">
-   </FileRef>
-   <FileRef
-      location = "group:Tutorials.playground">
+      location = "group:First steps.playground">
    </FileRef>
    <FileRef
       location = "group:Documentation.xcodeproj">

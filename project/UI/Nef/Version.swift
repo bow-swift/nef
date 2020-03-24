@@ -6,6 +6,7 @@ import ArgumentParser
 import nef
 import Bow
 import BowEffects
+import AppKit
 
 public struct VersionCommand: ParsableCommand {
     public static var commandName: String = "version"
@@ -20,11 +21,10 @@ public struct VersionCommand: ParsableCommand {
     }
     
     func run() -> EnvIO<CLIKit.Console, Never, Void> {
-        EnvIO { (console: CLIKit.Console) in
+        EnvIO { console in
             nef.Version.info()
                 .flatMap { version in console.print(message: "Build version number: \(version)", terminator: " ") }
                 .flatMap { _ in console.printStatus(success: true) }
         }^
     }
 }
-

@@ -34,10 +34,10 @@ module Nef
     end
 
     def clean_unuseful_files
-      [".git", ".gitignore", ".travis.yml", ".mailmap", ".github",
+      [".git", ".gitignore", ".build", ".travis.yml", ".mailmap", ".github",
         "LICENSE", "README.md", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md",
-        "assets", "bin", "configure", "contents", "docs", "project", "setup",
-        "Package.swift", "Documentation.app", "Makefile", "*.log"].each do |asset|
+        "assets", "bin", "configure", "contents", "docs", "project", "setup", "scripts",
+        "Package.swift", "Package.resolved", "Documentation.app", "Makefile", "*.log"].each do |asset|
         `rm -rf #{asset}`
       end
     end

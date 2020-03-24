@@ -1,9 +1,0 @@
-- name: Version
-  links:
-    stable: https://openapi.bow-swift.io/
-    next: https://openapi.bow-swift.io/
-
-- name: API Docs
-  links:
-    stable: https://openapi.bow-swift.io/
-    next: https://openapi.bow-swift.io/

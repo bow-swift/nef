@@ -1,9 +1,9 @@
 nav:
-    - title: API Reference
-      url: /api-docs
-      
     - title: Documentation
       url: /docs
+
+    - title: API Reference
+      url: /api-docs
 
     - title: Github
       url: https://github.com/bow-swift/nef
