@@ -98,7 +98,7 @@ def generate_api_site(version)
   system "echo == Generating API site for #{version}"
   # Removing lockfile to avoid conflict in case it differs between versions
   system "rm #{$source_dir}/Gemfile.lock"
-  system "BUNDLE_GEMFILE=#{$source_dir}/Gemfile bundle exec jazzy -o #{$gen_docs_dir}/#{version}/api-docs --sourcekitten-sourcefile #{$json_files_dir}/#{version}/all.json --author nef --author_url https://nef.bow-swift.io --github_url https://github.com/bow-swift/nef --module nef --root-url https://nef.bow-swift.io/api-docs --dash_url https://nef.bow-swift.io/api-docs/docsets/nef.xml --theme docs/extra/nef-jazzy-theme"
+  system "BUNDLE_GEMFILE=#{$source_dir}/Gemfile bundle exec jazzy -o #{$gen_docs_dir}/#{version}/api-docs --sourcekitten-sourcefile #{$json_files_dir}/#{version}/all.json --author nef --author_url https://nef.bow-swift.io --module nef --root-url https://nef.bow-swift.io/api-docs/ --github_url https://github.com/bow-swift/nef --theme docs/extra/nef-jazzy-theme"
   system "ls -la #{$source_dir}"
   system "ls -la #{$gen_docs_dir}/#{version}"
 end
