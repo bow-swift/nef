@@ -12,7 +12,7 @@
  
  #### Create a Swift Package
  
- Before you need to define a Swift Package with your dependencies. In this tutorial, we will create one with Bow as a dependency. It'll be located at `~/Desktop` and named `Tutorial.package`.
+ Before you need to define a Swift Package with your dependencies. In this tutorial, we will create one with Bow as a dependency. It'll be located at `~/Desktop`.
  
  ```swift
  // swift-tools-version:5.1
@@ -29,6 +29,51 @@
  
  ### 1. How to create a Playground book using nef Command-Line?
  
+ #### Step 1: Run nef with subcommand `iPad`
+ 
+ ```bash
+ ➜ nef ipad --name Tutorial --package  ~/Desktop/Package.swift --output ~/Desktop
+ ```
+ 
+ #### Step 2: Copy `Tutorial.playgroundbook` to your iPad
+ 
+ You can copy the Playground Book using `AirDrop`, `iCloud Drive` or `iTunes`. Our recommendation is use `AirDrop`; it is an easy way to transfer documents to your iPad and it will be auto-opened into Playgrounds app.
+ 
+ <p>
+ <img src="/assets/airdrop.png" height="350">
+ </p>
+ 
+ #### Step 3: Open it in your iPad using `Playgrounds` app
+ 
+ Once you copy `Tutorial.playgroundbook` to your iPad, you only need to find it and open. It'll be auto-opened using `Playgrounds` app.
+ 
+ <p>
+ <img src="/assets/tutorial-playgroundbook.jpeg" height="150">
+ </p>
+ 
  ### 2. How to create a Playground book using nef Xcode plugin?
  
+ #### Step 1: Install `nef Plugin` from GitHub
+ 
+ You can find the last `.dmg` release in [GitHub](https://github.com/bow-swift/nef-plugin/releases) page.
+
+ Just download the installer and move `nef` to `Applications` folder; after, you need to open it and follow the instructions:
+ 
+ <p>
+ <img src="/assets/nef-plugin-install.png" height="600">
+ </p>
+ 
+ #### Step 2: Open `Package.swift` using Xcode
+ 
+ Go to `~/Desktop` and open the `Package.swift` you created in previous steps.
+ 
+ #### Step 3: Make `Playground Book` using nef plugin
+ 
+ Xcode will detect it as a Swift Package; you only need to select `Editor` > `nef` > `Swift package ➜ Playground Book` to create the Playground Book.
+ 
+ ![](/assets/package-playground-book.png)
+ 
+ After the Playground has been created, you can follow the steps from the second one that you seen in the above section.
+ 
+ 📣 If you download [Swift Playgrounds](https://apps.apple.com/es/app/swift-playgrounds/id1496833156?mt=12) app in your macOS, you can open it and start to work. In the future, you can transfer the Playground Book to your iPad to continue the work; even better, you can use `iCloud Drive` and share the Playground between your Mac and your iPad.
  */
