@@ -103,7 +103,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
     private func downloadTemplate(into output: URL) -> EnvIO<FileSystem, NefPlaygroundSystemError, URL> {
         func downloadZip(into output: URL) -> EnvIO<FileSystem, NefPlaygroundSystemError, URL> {
             EnvIO.invoke { _ in
-                let zip = output.appendingPathComponent("\(BuildConfiguration.templateName).zip")
+                let zip = output.appendingPathComponent("\(BuildConfiguration.templateVersion).zip")
                 let result = run("curl", args: ["-LkSs", Template.path, "-o", zip.path])
                 guard result.exitStatus == 0 else {
                     throw NefPlaygroundSystemError.template(info: result.stderr)
@@ -123,7 +123,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
             }
             
             return EnvIO { fileSystem in
-                let templateName = "nef-\(BuildConfiguration.templateName)"
+                let templateName = "nef-\(BuildConfiguration.templateVersion)"
                 let unzipFolder = output.appendingPathComponent(templateName)
                 
                 let cleamTemplateIO = fileSystem.removeDirectory(unzipFolder.path).handleError { _ in }
@@ -420,7 +420,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
     
     // MARK: - Constants
     private enum Template {
-        static let path = "https://github.com/bow-swift/nef/archive/\(BuildConfiguration.templateName).zip"
+        static let path = "https://github.com/bow-swift/nef/archive/\(BuildConfiguration.templateVersion).zip"
     }
     
     private enum Bow {
