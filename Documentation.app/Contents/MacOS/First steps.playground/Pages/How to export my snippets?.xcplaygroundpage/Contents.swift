@@ -20,7 +20,7 @@ In this tutorial, we assume you do not have any project, and we will follow up f
 
   ![](/assets/nef-playground.png)
  
- Go back to [Creating a nef Playground](/docs/command-line/creating-a-nef-playground/) to read more about these and other parameters you can use :)
+ Go back to [Creating a nef Playground](/docs/command-line/creating-a-nef-playground/) to read more about these and other parameters you can use.
  
  #### Step 2: Add content to nef Playground
 
@@ -54,7 +54,7 @@ In this tutorial, we assume you do not have any project, and we will follow up f
 
  ![](/assets/nef-tutorial-carbon-customsnippet.png)
 
- #### Step 4: Customize your snippets!
+ #### Step 4: Customize your snippets
  
  Go back to [Carbon Integration](/docs/command-line/exporting-carbon-code-snippets/) to read more about these and other parameters you can use :)
  */

@@ -20,7 +20,7 @@
  
  #### Step 2: Create a Carbon style
  
- Create a carbon style to apply to our code, for the generated snippet.
+ Create a carbon style to apply to our code, in the generated snippet image.
  
  ```swift
  let code =  """

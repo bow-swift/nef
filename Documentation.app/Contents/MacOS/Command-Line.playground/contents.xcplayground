@@ -5,7 +5,7 @@
         <page name='Creating a Playground Book for iPad'/>
         <page name='Compiling a nef Playground'/>
         <page name='Generating a Markdown document'/>
-        <page name='Jekyll integration'/>
+        <page name='Generating content for Jekyll'/>
         <page name='Exporting Carbon code snippets'/>
     </pages>
 </playground>
