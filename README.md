@@ -363,18 +363,18 @@ Options:
     <td align="center"><code>--font</code></td>
     <td>Font type</td>
     <td align="center">String</td>
-    <td><code>fira-code</code> <code>hack</code> <code>inconsolata</code> <code>iosevka</code> <code>monoid</code> <code>anonymous-pro</code> <code>source-code-pro</code> <code>dm</code> <code>droid-sans-mono</code> <code>fantasque-sans-mono</code> <code>ibm-plex-mono</code> <code>space-mono</code> <code>ubuntu-mono</code></td>
+    <td><code>firaCode</code> <code>hack</code> <code>inconsolata</code> <code>iosevka</code> <code>monoid</code> <code>anonymousPro</code> <code>sourceCodePro</code> <code>darkMono</code> <code>droidMono</code> <code>fantasqueMono</code> <code>ibmPlexMono</code> <code>spaceMono</code> <code>ubuntuMono</code></td>
     <td align="center"><code>firaCode</code></td>
   </tr>
   <tr>
-    <td align="center"><code>--lines</code></td>
+    <td align="center"><code>--show-lines</code></td>
     <td>shows/hides number of lines in code snippet</td>
     <td align="center">Bool</td>
     <td><code>true</code> <code>false</code></td>
     <td align="center"><code>true</code></td>
   </tr>
   <tr>
-    <td align="center"><code>--watermark</code></td>
+    <td align="center"><code>--show-watermark</code></td>
     <td>shows/hides watermark in code snippet</td>
     <td align="center">Bool</td>
     <td><code>true</code> <code>false</code></td>

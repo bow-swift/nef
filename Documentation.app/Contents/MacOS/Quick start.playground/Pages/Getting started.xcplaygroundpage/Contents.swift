@@ -17,7 +17,7 @@
  ➜ brew install nef
  ```
 
- > It will warn you if there is a missing dependency and will provide guidance to install it.
+ > It will warn you if there is a missing dependency and will provide guidance to install it. nef is compatible with macOS 10.14+
 
  📣 You will find more information in [Command-Line](/docs/command-line/creating-a-nef-playground/) section.
 
