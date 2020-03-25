@@ -8,22 +8,20 @@ jobs:
   build:
 
     runs-on: macos-latest
-    
+
     steps:
     - uses: actions/checkout@v2
     - name: Generate microsite
       run: |
-        brew tap bow-swift/nef
         brew install nef
+        brew install sourcekitten
         gem install bundler -v 2.0.2
         gem install cocoapods -v 1.9.1
-        bundle install --gemfile docs/Gemfile --path vendor/bundle
-        nef jekyll --project Documentation.app --output docs --main-page Documentation.app/jekyll/Home.md
-        BUNDLE_GEMFILE=./docs/Gemfile bundle exec jekyll build -s docs -d gen-docs
+        ./scripts/gen-docs.rb
     - name: Deploy microsite
       uses: peaceiris/actions-gh-pages@v3
       with:
         deploy_key: ${{ secrets.DEPLOY_NEF_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: ./gen-docs
+        publish_dir: ./pub-dir
         enable_jekyll: true
