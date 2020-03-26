@@ -14,7 +14,7 @@ extension CoreRenderError: CustomStringConvertible {
         case .ast:
             return "Syntax analysis failed. Review all the begin/end delimiters are correct."
         case .renderNode(let node):
-            return "Could not render the node: \n\(node)\n"
+            return "Could not render node: \n\(node)\n"
         case .renderEmpty:
             return "Render result was empty. Review the page and the nef hidden blocks."
         }
