@@ -16,7 +16,7 @@ extension CoreRenderError: CustomStringConvertible {
         case .renderNode(let node):
             return "Could not render node: \n\(node)\n"
         case .renderEmpty:
-            return "Render result was empty. Review the page and the nef hidden blocks."
+            return "Render result was empty. Review the page and nef hidden blocks."
         }
     }
 }
