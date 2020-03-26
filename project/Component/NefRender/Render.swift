@@ -96,7 +96,7 @@ public struct Render<A> {
             
             return binding(
                              |<-env.console.print(information: "\t• Processing page \(info.data?.page.title ?? "content")"),
-                    rendered <- env.nodePrinter(content).provide(info).mapError { _ in .content() },
+                    rendered <- env.nodePrinter(content).provide(info).mapError { e in .content(info: e) },
             yield: rendered.get)^.reportStatus(console: env.console)
         }
     }
