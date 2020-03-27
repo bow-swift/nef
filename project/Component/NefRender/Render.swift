@@ -55,7 +55,7 @@ public struct Render<A> {
         func readPlatform(playground: RenderingURL) -> EnvIO<Environment, RenderError, Platform> {
             let info = playground.url.appendingPathComponent("contents.xcplayground")
             guard let xcplayground = try? String(contentsOf: info),
-                  let rawPlatform = xcplayground.matches(pattern: "(?<=target-platform=').*(?='*display-mode)").first,
+                  let rawPlatform = xcplayground.matches(pattern: "(?<=target-platform=').*(?=>)").first,
                   let extractedPlatform = rawPlatform.components(separatedBy: "'").first?.lowercased(),
                   let platform = Platform(rawValue: extractedPlatform) else {
                     return EnvIO.raiseError(.extractPlatform(info))^
