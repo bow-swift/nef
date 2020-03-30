@@ -94,6 +94,7 @@
 		8B51C79723CCC8A4003EE485 /* NefRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B51C79523CCC8A4003EE485 /* NefRender.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B51C7A123CCC9CD003EE485 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7A023CCC9CD003EE485 /* Render.swift */; };
 		8B51C7AF23CDCE99003EE485 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7AE23CDCE99003EE485 /* main.swift */; };
+		8B558DE82431FDB0004B9CAA /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8B558DE72431FDB0004B9CAA /* ArgumentParser */; };
 		8B5812492403D69000587211 /* NefClean.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B5812472403D69000587211 /* NefClean.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B5812562403D73700587211 /* CleanEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812542403D73100587211 /* CleanEnvironment.swift */; };
 		8B5812572403D73700587211 /* Clean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812512403D6E200587211 /* Clean.swift */; };
@@ -138,7 +139,6 @@
 		8BA1EF7623D86B2D00B33CD0 /* MacDummyConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF7523D86B2D00B33CD0 /* MacDummyConsole.swift */; };
 		8BAF221D23D20A8F00786F2F /* CoreRenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */; };
 		8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */; };
-		8BB221AA24164B6500FBD31D /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8BB221A924164B6500FBD31D /* ArgumentParser */; };
 		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
 		8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17923B0C2AF000DB61F /* BowEffects */; };
 		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
@@ -649,7 +649,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BB221AA24164B6500FBD31D /* ArgumentParser in Frameworks */,
+				8B558DE82431FDB0004B9CAA /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1685,7 +1685,7 @@
 			);
 			name = CLIKit;
 			packageProductDependencies = (
-				8BB221A924164B6500FBD31D /* ArgumentParser */,
+				8B558DE72431FDB0004B9CAA /* ArgumentParser */,
 			);
 			productName = CLI;
 			productReference = 8B0FB584237C0A5600221548 /* CLIKit.framework */;
@@ -2179,7 +2179,7 @@
 			packageReferences = (
 				8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */,
 				8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */,
-				8BB221A824164B6500FBD31D /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 8B6FC586221ECE6A008F7694 /* Products */;
 			projectDirPath = "";
@@ -3988,9 +3988,9 @@
 				minimumVersion = 0.5.4;
 			};
 		};
-		8BB221A824164B6500FBD31D /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/miguelangel-dev/swift-argument-parser.git";
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.0.4;
@@ -4029,9 +4029,9 @@
 			package = 8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */;
 			productName = Swiftline;
 		};
-		8BB221A924164B6500FBD31D /* ArgumentParser */ = {
+		8B558DE72431FDB0004B9CAA /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8BB221A824164B6500FBD31D /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			package = 8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
 		};
 		8BBCA6952396A59600BE058B /* Bow */ = {
