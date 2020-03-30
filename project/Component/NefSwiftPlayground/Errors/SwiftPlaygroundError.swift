@@ -23,7 +23,7 @@ public enum SwiftPlaygroundError: Error {
             return "command checkout failed: \(info)"
         case .modules(let paths):
             let packages = paths.map { $0.filename }.joined(separator: ", ")
-            return "could not extract any module from packages: \(packages)"
+            return "could not extract any module from dependencies in your Package.swift: \(packages)"
         case .playgroundBook(let info):
             return "could not create Playground Book: \(info)"
         case .ioError(let info):
