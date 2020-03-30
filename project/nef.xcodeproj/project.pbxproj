@@ -94,6 +94,7 @@
 		8B51C79723CCC8A4003EE485 /* NefRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B51C79523CCC8A4003EE485 /* NefRender.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B51C7A123CCC9CD003EE485 /* Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7A023CCC9CD003EE485 /* Render.swift */; };
 		8B51C7AF23CDCE99003EE485 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B51C7AE23CDCE99003EE485 /* main.swift */; };
+		8B558DE82431FDB0004B9CAA /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8B558DE72431FDB0004B9CAA /* ArgumentParser */; };
 		8B5812492403D69000587211 /* NefClean.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B5812472403D69000587211 /* NefClean.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B5812562403D73700587211 /* CleanEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812542403D73100587211 /* CleanEnvironment.swift */; };
 		8B5812572403D73700587211 /* Clean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5812512403D6E200587211 /* Clean.swift */; };
@@ -138,7 +139,6 @@
 		8BA1EF7623D86B2D00B33CD0 /* MacDummyConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1EF7523D86B2D00B33CD0 /* MacDummyConsole.swift */; };
 		8BAF221D23D20A8F00786F2F /* CoreRenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */; };
 		8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */; };
-		8BB221AA24164B6500FBD31D /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8BB221A924164B6500FBD31D /* ArgumentParser */; };
 		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
 		8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17923B0C2AF000DB61F /* BowEffects */; };
 		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
@@ -649,7 +649,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BB221AA24164B6500FBD31D /* ArgumentParser in Frameworks */,
+				8B558DE82431FDB0004B9CAA /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1685,7 +1685,7 @@
 			);
 			name = CLIKit;
 			packageProductDependencies = (
-				8BB221A924164B6500FBD31D /* ArgumentParser */,
+				8B558DE72431FDB0004B9CAA /* ArgumentParser */,
 			);
 			productName = CLI;
 			productReference = 8B0FB584237C0A5600221548 /* CLIKit.framework */;
@@ -2080,7 +2080,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "47 Degrees";
 				TargetAttributes = {
 					8B0286E023E079650033ECBA = {
@@ -2179,7 +2179,7 @@
 			packageReferences = (
 				8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */,
 				8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */,
-				8BB221A824164B6500FBD31D /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 8B6FC586221ECE6A008F7694 /* Products */;
 			projectDirPath = "";
@@ -2723,6 +2723,7 @@
 		8B0286E623E079650033ECBA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Compiler;
 				PRODUCT_NAME = nefc;
 			};
@@ -2731,6 +2732,7 @@
 		8B0286E723E079650033ECBA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Compiler;
 				PRODUCT_NAME = nefc;
 			};
@@ -2739,6 +2741,7 @@
 		8B0A905E23ACD3A400091C39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
 				PRODUCT_NAME = "nef-markdown";
 			};
@@ -2747,6 +2750,7 @@
 		8B0A905F23ACD3A400091C39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Markdown;
 				PRODUCT_NAME = "nef-markdown";
 			};
@@ -2755,6 +2759,7 @@
 		8B0CA51B22AE669600181BC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
 			};
@@ -2763,6 +2768,7 @@
 		8B0CA51C22AE669600181BC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.CarbonPage;
 				PRODUCT_NAME = "nef-carbon-page";
 			};
@@ -2924,6 +2930,7 @@
 		8B424B24224E28FC00AF9010 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
 			};
@@ -2932,6 +2939,7 @@
 		8B424B25224E28FC00AF9010 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.MarkdownPage;
 				PRODUCT_NAME = "nef-markdown-page";
 			};
@@ -2940,6 +2948,7 @@
 		8B444F1923FED31400975C8C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Nef;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "nef-menu";
@@ -2949,6 +2958,7 @@
 		8B444F1A23FED31400975C8C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Nef;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = "nef-menu";
@@ -3059,6 +3069,7 @@
 		8B51C7B123CDCE99003EE485 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
 				PRODUCT_NAME = "nef-jekyll";
 			};
@@ -3067,6 +3078,7 @@
 		8B51C7B223CDCE99003EE485 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Jekyll;
 				PRODUCT_NAME = "nef-jekyll";
 			};
@@ -3123,6 +3135,7 @@
 		8B58127D2403DC6C00587211 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Clean;
 				PRODUCT_NAME = "nef-clean";
 			};
@@ -3131,6 +3144,7 @@
 		8B58127E2403DC6C00587211 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Clean;
 				PRODUCT_NAME = "nef-clean";
 			};
@@ -3340,6 +3354,7 @@
 		8B6FC58D221ECE6A008F7694 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
@@ -3351,6 +3366,7 @@
 		8B6FC58E221ECE6A008F7694 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.JekyllPage;
@@ -3362,6 +3378,7 @@
 		8B7E808723DB4C5800D4F6BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Carbon;
 				PRODUCT_MODULE_NAME = nef_carbon;
 				PRODUCT_NAME = "nef-carbon";
@@ -3371,6 +3388,7 @@
 		8B7E808823DB4C5800D4F6BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Carbon;
 				PRODUCT_MODULE_NAME = nef_carbon;
 				PRODUCT_NAME = "nef-carbon";
@@ -3428,6 +3446,7 @@
 		8BD4E30F238814B1002DECDB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
 				PRODUCT_NAME = "nef-playground-book";
 			};
@@ -3436,6 +3455,7 @@
 		8BD4E310238814B1002DECDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
 				PRODUCT_NAME = "nef-playground-book";
 			};
@@ -3543,6 +3563,7 @@
 		8BD6975F23F6D6A7000A512F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Playground;
 				PRODUCT_NAME = "nef-playground";
 			};
@@ -3551,6 +3572,7 @@
 		8BD6976023F6D6A7000A512F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.Playground;
 				PRODUCT_NAME = "nef-playground";
 			};
@@ -3966,12 +3988,12 @@
 				minimumVersion = 0.5.4;
 			};
 		};
-		8BB221A824164B6500FBD31D /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/miguelangel-dev/swift-argument-parser.git";
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
+				minimumVersion = 0.0.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -4007,9 +4029,9 @@
 			package = 8B46C433238FDA3300437659 /* XCRemoteSwiftPackageReference "SwiftLine" */;
 			productName = Swiftline;
 		};
-		8BB221A924164B6500FBD31D /* ArgumentParser */ = {
+		8B558DE72431FDB0004B9CAA /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8BB221A824164B6500FBD31D /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			package = 8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
 		};
 		8BBCA6952396A59600BE058B /* Bow */ = {
