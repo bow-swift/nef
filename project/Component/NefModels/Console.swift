@@ -39,6 +39,13 @@ extension Step {
     }
 }
 
+extension Step: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.partial == rhs.partial &&
+        lhs.total == rhs.total
+    }
+}
+
 /// Describes a `Console` to represent progress information.
 public protocol Console {
     
