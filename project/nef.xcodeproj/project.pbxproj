@@ -1370,7 +1370,7 @@
 			isa = PBXGroup;
 			children = (
 				8BD6727023DF0AA200631D62 /* NefCompiler.swift */,
-				8BD6727723DF248B00631D62 /* Algrebras */,
+				8BD6727723DF248B00631D62 /* Algebras */,
 				8B43934523F4095A00177B88 /* Errors */,
 				8B43934423F406A400177B88 /* Instances */,
 				8BD6727323DF243300631D62 /* Models */,
@@ -1397,13 +1397,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		8BD6727723DF248B00631D62 /* Algrebras */ = {
+		8BD6727723DF248B00631D62 /* Algebras */ = {
 			isa = PBXGroup;
 			children = (
 				8B0286D123E074250033ECBA /* CompilerShell.swift */,
 				8BD6727823DF249400631D62 /* CompilerSystem.swift */,
 			);
-			path = Algrebras;
+			path = Algebras;
 			sourceTree = "<group>";
 		};
 		8BD6973823F5AA11000A512F /* Utils */ = {
