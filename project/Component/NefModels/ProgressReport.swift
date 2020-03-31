@@ -28,6 +28,18 @@ public extension ProgressReport {
             ProgressEvent(step: step,
                           status: .failed(error, info: info)))
     }
+    
+    func finished<E: Error, A: CustomProgressDescription>(successfully step: A) -> IO<E, Void> {
+        self.notify(
+            ProgressEvent(step: step,
+                          status: .finishedSuccessfully))
+    }
+    
+    func finished<E: Error, A: CustomProgressDescription>(withError step: A) -> IO<E, Void> {
+        self.notify(
+            ProgressEvent(step: step,
+                          status: .finishedWithError))
+    }
 }
 
 public enum ProgressEventStatus {
@@ -35,6 +47,8 @@ public enum ProgressEventStatus {
     case inProgress
     case successful(info: String)
     case failed(Error, info: String)
+    case finishedSuccessfully
+    case finishedWithError
 }
 
 public protocol CustomProgressDescription {
