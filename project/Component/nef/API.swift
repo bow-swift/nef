@@ -66,8 +66,8 @@ public protocol CleanAPI {
     ///
     /// - Parameters:
     ///   - nefPlayground: Folder where to search for Xcode Playgrounds - it must be a nef Playground structure.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `Console`.
-    static func clean(nefPlayground: URL) -> EnvIO<Console, nef.Error, Void>
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `ProgressReport`.
+    static func clean(nefPlayground: URL) -> EnvIO<ProgressReport, nef.Error, Void>
 }
 
 /// Describes the API for `Markdown`

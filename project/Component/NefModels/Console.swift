@@ -30,13 +30,6 @@ public struct Step {
 extension Step {
     /// Defined dummy `Step`
     public static var empty: Step { .init(total: 0, partial: 0, duration: .never) }
-    
-    /// Advance the step a number of increments.
-    /// - Parameter partial: Number of increments for the step.
-    /// - Returns: A `Step` with the current operation advanced.
-    public func increment(_ partial: UInt) -> Step {
-        .init(total: total, partial: self.partial + partial, duration: estimatedDuration)
-    }
 }
 
 /// Describes a `Console` to represent progress information.
