@@ -5,12 +5,12 @@ import NefCommon
 import NefModels
 
 public struct CleanEnvironment {
-    public let console: Console
+    public let progressReport: ProgressReport
     public let fileSystem: FileSystem
     public let shell: NefPlaygroundSystem
     
-    public init(console: Console, fileSystem: FileSystem, shell: NefPlaygroundSystem) {
-        self.console = console
+    public init(progressReport: ProgressReport, fileSystem: FileSystem, shell: NefPlaygroundSystem) {
+        self.progressReport = progressReport
         self.fileSystem = fileSystem
         self.shell = shell
     }
