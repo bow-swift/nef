@@ -19,12 +19,32 @@ public struct CleanCommand: ParsableCommand {
     
 
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
         nef.Clean.clean(nefPlayground: project.url)
-            .reportStatus(failure: { e in "clean up nef Playground '\(self.project.path)'. \(e)" },
-                          success: { _ in "'\(self.project.path)' clean up successfully" })
+            .finish(
+                onSuccess: CleanCommandOutcome.successful(self.project.path),
+                onFailure: { e in
+                    CleanCommandOutcome.failed(self.project.path, error: e)
+                })
+    }
+}
+
+enum CleanCommandOutcome {
+    case successful(String)
+    case failed(String, error: nef.Error)
+}
+
+extension CleanCommandOutcome: CustomProgressDescription {
+    var progressDescription: String {
+        switch self {
+        case .successful(let name):
+            return "🙌".bold.green + " '\(name)' clean up successfully"
+        
+        case let .failed(name, error: error):
+            return "☠️".bold.red + " clean up nef Playground '\(name)' failed with error: \(error)"
+        }
     }
 }
