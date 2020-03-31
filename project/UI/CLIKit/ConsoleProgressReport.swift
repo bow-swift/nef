@@ -16,38 +16,29 @@ public struct ConsoleProgressReport: ProgressReport {
             return ConsoleIO.print(event.step.progressDescription, terminator: " ")
             
         case let .successful(info: info):
-            return ConsoleIO.print("✓".bold.green + info, terminator: "\n")
+            return ConsoleIO.print("✓".bold.green + info)
             
         case let .failed(error, info: info):
-            return ConsoleIO.print("✗".bold.red + info + error.localizedDescription, terminator: "\n")
+            return ConsoleIO.print("✗".bold.red + info + error.localizedDescription)
+        
+        case .finishedSuccessfully:
+            return ConsoleIO.print(event.step.progressDescription)
+            
+        case .finishedWithError:
+            return ConsoleIO.print(event.step.progressDescription)
         }
     }
 }
 
-extension ProgressReport {
-    func exit<A: CustomProgressDescription, E: Swift.Error>(success step: A) -> IO<E, Void> {
-        oneShot(step).map { Darwin.exit(0) }^
-    }
-    
-    func exit<A: CustomProgressDescription, E: Swift.Error>(failure step: A) -> IO<E, Void> {
-        oneShot(step).map { Darwin.exit(-1) }^
-    }
-}
 
-public extension EnvIO where D == ProgressReport {
-    func finish<A: CustomProgressDescription>(
-        onSuccess: A,
-        onFailure: @escaping (nef.Error) -> A) -> EnvIO<ProgressReport, nef.Error, Void> where F == IOPartial<nef.Error> {
+public extension EnvIO where F == IOPartial<nef.Error>, D == ProgressReport {
+    func finish() -> EnvIO<ProgressReport, nef.Error, Void>  {
         self.foldM(
             { e in
-                EnvIO { progressReport in
-                    progressReport.exit(failure: onFailure(e))
-                }
+                EnvIO.invoke { _ in Darwin.exit(-1) }
             },
             { _ in
-                EnvIO { progressReport in
-                    progressReport.exit(success: onSuccess)
-                }
+                EnvIO.invoke { _ in Darwin.exit(0) }
             })
     }
 }

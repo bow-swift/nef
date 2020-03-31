@@ -24,27 +24,6 @@ public struct CleanCommand: ParsableCommand {
     
     func run() -> EnvIO<ProgressReport, nef.Error, Void> {
         nef.Clean.clean(nefPlayground: project.url)
-            .finish(
-                onSuccess: CleanCommandOutcome.successful(self.project.path),
-                onFailure: { e in
-                    CleanCommandOutcome.failed(self.project.path, error: e)
-                })
-    }
-}
-
-enum CleanCommandOutcome {
-    case successful(String)
-    case failed(String, error: nef.Error)
-}
-
-extension CleanCommandOutcome: CustomProgressDescription {
-    var progressDescription: String {
-        switch self {
-        case .successful(let name):
-            return "🙌".bold.green + " '\(name)' clean up successfully"
-        
-        case let .failed(name, error: error):
-            return "☠️".bold.red + " clean up nef Playground '\(name)' failed with error: \(error)"
-        }
+            .finish()
     }
 }
