@@ -9,12 +9,17 @@ import BowEffects
 
 public struct CleanCommand: ParsableCommand {
     public static var commandName: String = "nef-clean"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Clean up nef Playground")
+    public static var configuration =
+        CommandConfiguration(
+            commandName: commandName,
+            abstract: "Clean up nef Playground")
 
     public init() {}
     
-    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to clean up", valueName: "nef Playground"))
+    @ArgumentParser.Option(help:
+        ArgumentHelp(
+            "Path to nef Playground to clean up",
+            valueName: "nef Playground"))
     private var project: ArgumentPath
     
 
