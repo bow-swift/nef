@@ -11,6 +11,7 @@
 		11C9DFB724332F5900E906E4 /* CleanEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB624332F5900E906E4 /* CleanEvent.swift */; };
 		11C9DFB9243331DB00E906E4 /* IO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */; };
 		11C9DFBB2433350900E906E4 /* ConsoleProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBA2433350900E906E4 /* ConsoleProgressReport.swift */; };
+		11C9DFBD243383FB00E906E4 /* CompilerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */; };
 		8B0286DA23E078830033ECBA /* CompilerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286D623E077FA0033ECBA /* CompilerAPI.swift */; };
 		8B0286E423E079650033ECBA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286E323E079650033ECBA /* main.swift */; };
 		8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286F723E1D1E90033ECBA /* MacCompilerShell.swift */; };
@@ -421,6 +422,7 @@
 		11C9DFB624332F5900E906E4 /* CleanEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanEvent.swift; sourceTree = "<group>"; };
 		11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Extensions.swift"; sourceTree = "<group>"; };
 		11C9DFBA2433350900E906E4 /* ConsoleProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleProgressReport.swift; sourceTree = "<group>"; };
+		11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerEvent.swift; sourceTree = "<group>"; };
 		8B0286D123E074250033ECBA /* CompilerShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerShell.swift; sourceTree = "<group>"; };
 		8B0286D623E077FA0033ECBA /* CompilerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerAPI.swift; sourceTree = "<group>"; };
 		8B0286DB23E078D10033ECBA /* NefCompilerSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefCompilerSystem.swift; sourceTree = "<group>"; };
@@ -1392,6 +1394,7 @@
 		8BD6727323DF243300631D62 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */,
 				8B02870023E1D4640033ECBA /* CompilerSystemEnvironment.swift */,
 				8BD6727423DF244E00631D62 /* RenderCompilerEnvironment.swift */,
 			);
@@ -2481,6 +2484,7 @@
 				8BD6727623DF245300631D62 /* RenderCompilerEnvironment.swift in Sources */,
 				8BD6727223DF0AAE00631D62 /* NefCompiler.swift in Sources */,
 				8B43934323F4069C00177B88 /* NefCompilerSystem.swift in Sources */,
+				11C9DFBD243383FB00E906E4 /* CompilerEvent.swift in Sources */,
 				8B02870223E1D4670033ECBA /* CompilerSystemEnvironment.swift in Sources */,
 				8BD6727C23DF381D00631D62 /* CompilerSystemError.swift in Sources */,
 				8BD6727A23DF249900631D62 /* CompilerSystem.swift in Sources */,
