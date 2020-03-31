@@ -22,10 +22,10 @@ public struct ConsoleProgressReport: ProgressReport {
             return ConsoleIO.print("✗".bold.red + info + error.localizedDescription)
         
         case .finishedSuccessfully:
-            return ConsoleIO.print(event.step.progressDescription)
+            return ConsoleIO.print("🙌 " + event.step.progressDescription)
             
         case .finishedWithError:
-            return ConsoleIO.print(event.step.progressDescription)
+            return ConsoleIO.print("☠️ " + event.step.progressDescription)
         }
     }
 }

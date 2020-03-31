@@ -45,10 +45,10 @@ extension CleanCommandOutcome: CustomProgressDescription {
     var progressDescription: String {
         switch self {
         case .successful(let name):
-            return "🙌" + " '\(name)' clean up successfully"
+            return  "'\(name)' clean up successfully"
         
         case let .failed(name, error: error):
-            return "☠️" + " clean up nef Playground '\(name)' failed with error: \(error)"
+            return "clean up nef Playground '\(name)' failed with error: \(error)"
         }
     }
 }
