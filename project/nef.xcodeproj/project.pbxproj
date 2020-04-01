@@ -14,6 +14,7 @@
 		11C9DFBD243383FB00E906E4 /* CompilerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */; };
 		11C9DFBF2433931D00E906E4 /* RenderEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBE2433931D00E906E4 /* RenderEvent.swift */; };
 		11C9DFC3243475C700E906E4 /* JekyllEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFC2243475C700E906E4 /* JekyllEvent.swift */; };
+		11C9DFC524347A9F00E906E4 /* PlaygroundEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFC424347A9F00E906E4 /* PlaygroundEvent.swift */; };
 		8B0286DA23E078830033ECBA /* CompilerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286D623E077FA0033ECBA /* CompilerAPI.swift */; };
 		8B0286E423E079650033ECBA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286E323E079650033ECBA /* main.swift */; };
 		8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286F723E1D1E90033ECBA /* MacCompilerShell.swift */; };
@@ -427,6 +428,7 @@
 		11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerEvent.swift; sourceTree = "<group>"; };
 		11C9DFBE2433931D00E906E4 /* RenderEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEvent.swift; sourceTree = "<group>"; };
 		11C9DFC2243475C700E906E4 /* JekyllEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JekyllEvent.swift; sourceTree = "<group>"; };
+		11C9DFC424347A9F00E906E4 /* PlaygroundEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEvent.swift; sourceTree = "<group>"; };
 		8B0286D123E074250033ECBA /* CompilerShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerShell.swift; sourceTree = "<group>"; };
 		8B0286D623E077FA0033ECBA /* CompilerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerAPI.swift; sourceTree = "<group>"; };
 		8B0286DB23E078D10033ECBA /* NefCompilerSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefCompilerSystem.swift; sourceTree = "<group>"; };
@@ -1467,6 +1469,7 @@
 			isa = PBXGroup;
 			children = (
 				8BD6978A23FAAA63000A512F /* PlaygroundEnvironment.swift */,
+				11C9DFC424347A9F00E906E4 /* PlaygroundEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2515,6 +2518,7 @@
 			files = (
 				8BD6978B23FAAA63000A512F /* PlaygroundEnvironment.swift in Sources */,
 				8BD6978123FAA7DE000A512F /* Playground.swift in Sources */,
+				11C9DFC524347A9F00E906E4 /* PlaygroundEvent.swift in Sources */,
 				8BD6978423FAA84F000A512F /* PlaygroundError.swift in Sources */,
 				8BD6979323FAAF98000A512F /* IO+Console.swift in Sources */,
 			);
