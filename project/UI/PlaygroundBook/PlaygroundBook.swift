@@ -28,12 +28,16 @@ public struct PlaygroundBookCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
         nef.SwiftPlayground.render(package: package.url, name: name, output: output.url)
-            .reportStatus(failure: { e in "rendering Playground Book. \(e)" },
-                          success: { url in "rendered Playground Book in '\(url.path)'" })
+            .reportOutcome(
+                failure: "rendering Playground Book",
+                success: { url in
+                    "rendered Playground Book in '\(url.path)'"
+                })
+            .finish()
     }
 }
