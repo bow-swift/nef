@@ -12,9 +12,6 @@ public enum Version: VersionAPI {}
 /// Instance of the Compiler API
 public enum Compiler: CompilerAPI {}
 
-/// Instance of the Clean API
-public enum Clean: CleanAPI {}
-
 /// Instance of the Markdown API
 public enum Markdown: MarkdownAPI {}
 
@@ -58,16 +55,6 @@ public protocol CompilerAPI {
     ///   - cached: Use cached dependencies if it is possible, in another case, it will download them.
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `ProgressReport,.
     static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<ProgressReport, nef.Error, Void>
-}
-
-/// Describes the API for `Clean`
-public protocol CleanAPI {
-    /// Cleans a nef Playground.
-    ///
-    /// - Parameters:
-    ///   - nefPlayground: Folder where to search for Xcode Playgrounds - it must be a nef Playground structure.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `ProgressReport`.
-    static func clean(nefPlayground: URL) -> EnvIO<ProgressReport, nef.Error, Void>
 }
 
 /// Describes the API for `Markdown`
