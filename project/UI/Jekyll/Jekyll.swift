@@ -30,12 +30,17 @@ public struct JekyllCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
-        nef.Jekyll.render(playgroundsAt: project.url, mainPage: mainURL, into: output.url)
-            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
-                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
+        nef.Jekyll.render(
+            playgroundsAt: project.url,
+            mainPage: mainURL,
+            into: output.url)
+            .reportOutcome(
+                failure: "rendering Xcode Playgrounds from '\(self.project.path)'",
+                success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+            .finish()
     }
 }
