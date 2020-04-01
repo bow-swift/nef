@@ -21,12 +21,11 @@ public struct CompilerCommand: ParsableCommand {
 
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
         nef.Compiler.compile(nefPlayground: project.url, cached: cached)
-            .reportStatus(failure: { e in "compiling Xcode Playgrounds from '\(self.project.path)'. \(e)" },
-                          success: { _ in "'\(self.project.path)' compiled successfully" })
+            .finish()
     }
 }

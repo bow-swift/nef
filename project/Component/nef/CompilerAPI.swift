@@ -62,9 +62,12 @@ public extension CompilerAPI {
 public enum Compiler: CompilerAPI {
     public static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<ProgressReport, nef.Error, Void> {
         NefCompiler.Compiler()
-                   .nefPlayground(.init(project: nefPlayground), cached: cached)
-                   .contramap(environment)
-                   .mapError { e in nef.Error.compiler(info: "\(e)") }
+            .nefPlayground(.init(project: nefPlayground), cached: cached)
+            .contramap(environment)
+            .mapError { e in nef.Error.compiler(info: "\(e)") }
+        .reportOutcome(
+            success: "'\(nefPlayground.path)' compiled successfully",
+            failure: "compiling Xcode Playgrounds from '\(nefPlayground.path)'")
     }
     
     // MARK: - private <helpers>
