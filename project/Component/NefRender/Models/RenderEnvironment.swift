@@ -9,19 +9,15 @@ public struct RenderEnvironment<A> {
     public typealias NodePrinter = (_ content: String) -> EnvIO<RenderEnvironmentInfo, CoreRenderError, RenderingOutput<A>>
     
     public let progressReport: ProgressReport
-    #warning("Remove Console after refactoring is completed")
-    public let console: Console
     public let fileSystem: FileSystem
     public let xcodePlaygroundSystem: XcodePlaygroundSystem
     public let nodePrinter: NodePrinter
 
     public init(progressReport: ProgressReport,
-                console: Console,
                 fileSystem: FileSystem,
                 xcodePlaygroundSystem: XcodePlaygroundSystem,
                 nodePrinter: @escaping NodePrinter) {
         self.progressReport = progressReport
-        self.console = console
         self.fileSystem = fileSystem
         self.xcodePlaygroundSystem = xcodePlaygroundSystem
         self.nodePrinter = nodePrinter
