@@ -16,7 +16,6 @@ public struct RenderCarbonEnvironment<A> {
     
     public init(
         progressReport: ProgressReport,
-        console: Console,
         fileSystem: FileSystem,
         persistence: RenderingPersistence<A>,
         xcodePlaygroundSystem: XcodePlaygroundSystem,
@@ -32,7 +31,6 @@ public struct RenderCarbonEnvironment<A> {
         self.render = Render<A>()
         self.renderEnvironment = RenderEnvironment(
             progressReport: progressReport,
-            console: console,
             fileSystem: fileSystem,
             xcodePlaygroundSystem: xcodePlaygroundSystem,
             nodePrinter: { content in carbonPrinter(content).provide(environment(style: style)).env() })

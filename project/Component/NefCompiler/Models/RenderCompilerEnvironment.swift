@@ -12,14 +12,12 @@ public struct RenderCompilerEnvironment<A> {
     let render: Render<A>
     let codeEnvironment: RenderEnvironment<A>
     
-    internal var console: Console { codeEnvironment.console }
     internal var progressReport: ProgressReport { codeEnvironment.progressReport }
     internal var fileSystem: FileSystem { codeEnvironment.fileSystem }
     internal var xcodePlaygroundSystem: XcodePlaygroundSystem { codeEnvironment.xcodePlaygroundSystem }
     
     public init(
         progressReport: ProgressReport,
-        console: Console,
         fileSystem: FileSystem,
         compilerShell: CompilerShell,
         nefPlaygroundSystem: NefPlaygroundSystem,
@@ -35,7 +33,6 @@ public struct RenderCompilerEnvironment<A> {
         self.render = Render<A>()
         self.codeEnvironment = RenderEnvironment(
             progressReport: progressReport,
-            console: console,
             fileSystem: fileSystem,
             xcodePlaygroundSystem: xcodePlaygroundSystem,
             nodePrinter: { content in codePrinter(content).provide(.init()).env() })
