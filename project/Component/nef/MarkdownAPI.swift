@@ -162,9 +162,9 @@ public enum Markdown: MarkdownAPI {
     ) -> EnvIO<ProgressReport, nef.Error, VerboseOutput> {
         
         NefMarkdown.Markdown()
-                   .page(content: content)
-                   .contramap(environment)
-                   .mapError { _ in nef.Error.markdown() }
+            .page(content: content)
+            .contramap(environment)
+            .mapError { _ in nef.Error.markdown() }
     }
     
     public static func renderVerbose(
