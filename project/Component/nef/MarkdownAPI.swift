@@ -2,7 +2,7 @@
 
 import Foundation
 import NefCore
-import NefModels
+@_exported import NefModels
 import NefRender
 import NefMarkdown
 import Bow

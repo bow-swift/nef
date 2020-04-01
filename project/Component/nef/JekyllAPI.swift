@@ -2,10 +2,9 @@
 
 import Foundation
 import NefCore
-import NefModels
+@_exported import NefModels
 import NefRender
 import NefJekyll
-
 import Bow
 import BowEffects
 

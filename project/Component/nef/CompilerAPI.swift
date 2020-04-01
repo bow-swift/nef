@@ -3,7 +3,7 @@
 import Foundation
 import NefCommon
 import NefCore
-import NefModels
+@_exported import NefModels
 import NefRender
 import NefCompiler
 import NefPlayground

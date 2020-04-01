@@ -1,7 +1,7 @@
 //  Copyright © 2019 The nef Authors.
 
 import Foundation
-import NefModels
+@_exported import NefModels
 import NefSwiftPlayground
 import Bow
 import BowEffects
