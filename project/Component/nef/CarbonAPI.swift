@@ -302,7 +302,7 @@ public enum Carbon: CarbonAPI {
         NefCarbon.Carbon.Environment(
             progressReport: progressReport,
             fileSystem: MacFileSystem(),
-            persistence: RenderingPersistence(),
+            persistence: .init(),
             xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
             style: style,
             carbonPrinter: CoreRender.carbon.render)

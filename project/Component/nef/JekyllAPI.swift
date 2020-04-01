@@ -235,7 +235,7 @@ public enum Jekyll: JekyllAPI {
         NefJekyll.Jekyll.Environment(
             progressReport: progressReport,
             fileSystem: MacFileSystem(),
-            persistence: RenderingPersistence(),
+            persistence: .init(),
             xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
             jekyllPrinter: CoreRender.jekyll.render)
     }

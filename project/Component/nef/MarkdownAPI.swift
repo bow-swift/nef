@@ -211,7 +211,7 @@ public enum Markdown: MarkdownAPI {
         NefMarkdown.Markdown.Environment(
             progressReport: progressReport,
             fileSystem: MacFileSystem(),
-            persistence: RenderingPersistence(),
+            persistence: .init(),
             xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
             markdownPrinter: CoreRender.markdown.render)
     }
