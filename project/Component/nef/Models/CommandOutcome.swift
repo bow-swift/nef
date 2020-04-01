@@ -11,7 +11,7 @@ extension CommandOutcome: CustomProgressDescription {
         case .successful(let info):
             return info
         
-        case let .failed(name, error: error):
+        case let .failed(info, error: error):
             return "\(info) failed with error: \(error)"
         }
     }

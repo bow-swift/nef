@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		11A8D65624347F3E0058A71C /* PlaygroundBookEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */; };
 		11A8D6582434A31C0058A71C /* CommandOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D6572434A31C0058A71C /* CommandOutcome.swift */; };
+		11A8D65A2434A44F0058A71C /* Kleisli+ProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D6592434A44F0058A71C /* Kleisli+ProgressReport.swift */; };
 		11C9DFB524332B8300E906E4 /* ProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB424332B8300E906E4 /* ProgressReport.swift */; };
 		11C9DFB724332F5900E906E4 /* CleanEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB624332F5900E906E4 /* CleanEvent.swift */; };
 		11C9DFB9243331DB00E906E4 /* IO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */; };
@@ -422,6 +423,7 @@
 /* Begin PBXFileReference section */
 		11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookEvent.swift; sourceTree = "<group>"; };
 		11A8D6572434A31C0058A71C /* CommandOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandOutcome.swift; sourceTree = "<group>"; };
+		11A8D6592434A44F0058A71C /* Kleisli+ProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kleisli+ProgressReport.swift"; sourceTree = "<group>"; };
 		11C9DFB424332B8300E906E4 /* ProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressReport.swift; sourceTree = "<group>"; };
 		11C9DFB624332F5900E906E4 /* CleanEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanEvent.swift; sourceTree = "<group>"; };
 		11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Extensions.swift"; sourceTree = "<group>"; };
@@ -1412,6 +1414,7 @@
 			children = (
 				8B58128B2403FB5500587211 /* BuildConfiguration.swift */,
 				8BD6973923F5AA2E000A512F /* Kleisli+API.swift */,
+				11A8D6592434A44F0058A71C /* Kleisli+ProgressReport.swift */,
 				8BD8FE34241BF02500B84CDD /* URL+PlaygroundPage.swift */,
 			);
 			path = Utils;
@@ -2527,6 +2530,7 @@
 				8B5812892403F7ED00587211 /* VersionAPI.swift in Sources */,
 				8BD6977823F6E8C5000A512F /* PlaygroundAPI.swift in Sources */,
 				8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */,
+				11A8D65A2434A44F0058A71C /* Kleisli+ProgressReport.swift in Sources */,
 				8B0FB5B8237C61C000221548 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

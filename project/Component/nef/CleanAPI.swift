@@ -28,19 +28,8 @@ public enum Clean: CleanAPI {
                     fileSystem: MacFileSystem(),
                     shell: MacNefPlaygroundSystem()) }
             .mapError { e in nef.Error.compiler(info: "clean: \(e)") }
-        .foldM(
-            { e in
-                EnvIO { progressReport in
-                    progressReport.finished(withError:
-                        CommandOutcome.failed("clean up nef Playground '\(nefPlayground.lastPathComponent)'"
-                            ,
-                            error: e))
-                }
-            },
-            {
-                EnvIO { progressReport in
-                    progressReport.finished(successfully: CommandOutcome.successful("'\(nefPlayground.lastPathComponent)' clean up successfully"))
-                }
-            })
+        .reportOutcome(
+            success: "'\(nefPlayground.lastPathComponent)' clean up successfully",
+            failure: "clean up nef Playground '\(nefPlayground.lastPathComponent)'")
     }
 }
