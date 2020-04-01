@@ -36,11 +36,11 @@ public struct MarkdownPageCommand: ParsableCommand {
                     if self.verbose {
                         return """
                         rendered markdown page '\(url.path)'.
+                        • AST:
+                            \(ast)
                         
-                        AST:
-                        \t\(ast)
-                        Output:
-                        \t\(rendered)
+                        • Output:
+                            \(rendered)
                         """
                     } else {
                         return "rendered markdown page '\(url.path)'."
