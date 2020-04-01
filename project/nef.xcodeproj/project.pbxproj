@@ -25,7 +25,6 @@
 		8B0A905C23ACD3A400091C39 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A905B23ACD3A400091C39 /* main.swift */; };
 		8B0FB588237C0A5600221548 /* CLIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB586237C0A5600221548 /* CLIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */; };
-		8B0FB59E237C0EF000221548 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB59D237C0EF000221548 /* API.swift */; };
 		8B0FB5B8237C61C000221548 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0FB5B7237C61C000221548 /* Error.swift */; };
 		8B0FB5BA237D5B7A00221548 /* _Carbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5B9237D5B7A00221548 /* _Carbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B0FB5BC237D5B9800221548 /* _Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B0FB5BB237D5B9400221548 /* _Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -443,7 +442,6 @@
 		8B0FB584237C0A5600221548 /* CLIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CLIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B0FB586237C0A5600221548 /* CLIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLIKit.h; sourceTree = "<group>"; };
 		8B0FB587237C0A5600221548 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B0FB59D237C0EF000221548 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8B0FB5B7237C61C000221548 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		8B0FB5B9237D5B7A00221548 /* _Carbon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _Carbon.h; sourceTree = "<group>"; };
 		8B0FB5BB237D5B9400221548 /* _Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _Core.h; sourceTree = "<group>"; };
@@ -771,7 +769,6 @@
 		8B3CB83922D3929B00919F36 /* nef */ = {
 			isa = PBXGroup;
 			children = (
-				8B0FB59D237C0EF000221548 /* API.swift */,
 				8B5812582403D78400587211 /* CleanAPI.swift */,
 				8B0286D623E077FA0033ECBA /* CompilerAPI.swift */,
 				8B89BA0D238300A80025BC04 /* MarkdownAPI.swift */,
@@ -2525,7 +2522,6 @@
 				8B58126F2403D9B000587211 /* CleanAPI.swift in Sources */,
 				8B5812892403F7ED00587211 /* VersionAPI.swift in Sources */,
 				8BD6977823F6E8C5000A512F /* PlaygroundAPI.swift in Sources */,
-				8B0FB59E237C0EF000221548 /* API.swift in Sources */,
 				8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */,
 				8B0FB5B8237C61C000221548 /* Error.swift in Sources */,
 			);
