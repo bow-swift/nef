@@ -6,9 +6,6 @@ import Foundation
 import Bow
 import BowEffects
 
-/// Instance of the Markdown API
-public enum Markdown: MarkdownAPI {}
-
 /// Instance of the Jekyll API
 public enum Jekyll: JekyllAPI {}
 
@@ -20,85 +17,6 @@ public enum Playground: PlaygroundAPI {}
 
 /// Instance of the Swift Playground API
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
-
-/// Describes the API for `Markdown`
-public protocol MarkdownAPI {
-    /// Renders content into markdown.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the markdown generated of type `String`, having access to an immutable environment of type `ProgressReport`.
-    static func render(content: String) -> EnvIO<ProgressReport, nef.Error, String>
-    
-    /// Renders content into markdown.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the markdown generated of type `String`, having access to an immutable environment of type `ProgressReport`.
-    static func render(page: URL) -> EnvIO<ProgressReport, nef.Error, String>
-    
-    /// Renders content into markdown.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(content: String) -> EnvIO<ProgressReport, nef.Error, (ast: String, rendered: String)>
-    
-    /// Renders content into markdown.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(page: URL) -> EnvIO<ProgressReport, nef.Error, (ast: String, rendered: String)>
-    
-    /// Renders content into markdown file.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `ProgressReport`.
-    static func render(content: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, URL>
-    
-    /// Renders content into markdown file.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `ProgressReport`.
-    static func render(page: URL, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, URL>
-    
-    /// Renders content into markdown file.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(content: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, (url: URL, ast: String, rendered: String)>
-    
-    /// Renders content into markdown file.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(page: URL, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, (url: URL, ast: String, rendered: String)>
-    
-    /// Renders playground pages into markdown files.
-    ///
-    /// - Parameters:
-    ///   - playground: Path to Xcode playground.
-    ///   - into: Folder where to write the markdown files.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the markdown files generated of type `[URL]`, having access to an immutable environment of type `ProgressReport`.
-    static func render(playground: URL, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>>
-    
-    /// Renders playground pages into markdown files.
-    ///
-    /// - Parameters:
-    ///   - playgroundsAt: Folder where to search Xcode Playgrounds (recursive search).
-    ///   - into: Folder where to write the markdown files for each Xcode Playground page.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the playgrounds path rendered `[URL]`, having access to an immutable environment of type `ProgressReport`.
-    static func render(playgroundsAt: URL, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>>
-}
 
 /// Describes the API for `Jekyll`
 public protocol JekyllAPI {
