@@ -6,9 +6,6 @@ import Foundation
 import Bow
 import BowEffects
 
-/// Instance of the Jekyll API
-public enum Jekyll: JekyllAPI {}
-
 /// Instance of the Carbon API
 public enum Carbon: CarbonAPI {}
 
@@ -17,94 +14,6 @@ public enum Playground: PlaygroundAPI {}
 
 /// Instance of the Swift Playground API
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
-
-/// Describes the API for `Jekyll`
-public protocol JekyllAPI {
-    /// Renders content into jekyll format.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - permalink: Relative url where locate the page.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the jekyll generated of type `String`, having access to an immutable environment of type `ProgressReport`.
-    static func render(content: String, permalink: String) -> EnvIO<ProgressReport, nef.Error, String>
-    
-    /// Renders content into jekyll format.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - permalink: Relative url where locate the page.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the jekyll generated of type `String`, having access to an immutable environment of type `ProgressReport`.
-    static func render(page: URL, permalink: String) -> EnvIO<ProgressReport, nef.Error, String>
-    
-    /// Renders content into jekyll format.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - permalink: Relative url where locate the page.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(content: String, permalink: String) -> EnvIO<ProgressReport, nef.Error, (ast: String, rendered: String)>
-    
-    /// Renders content into jekyll format.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - permalink: Relative url where locate the page.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(page: URL, permalink: String) -> EnvIO<ProgressReport, nef.Error, (ast: String, rendered: String)>
-    
-    /// Renders content into jekyll file.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - permalink: Relative url where locate the page.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `ProgressReport`.
-    static func render(content: String, permalink: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, URL>
-    
-    /// Renders content into jekyll file.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - permalink: Relative url where locate the page.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the file generated of type `URL`, having access to an immutable environment of type `ProgressReport`.
-    static func render(page: URL, permalink: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, URL>
-    
-    /// Renders content into jekyll file.
-    ///
-    /// - Parameters:
-    ///   - content: Content page in Xcode playground.
-    ///   - permalink: Relative url where locate the page.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, (url: URL, ast: String, rendered: String)>
-    
-    /// Renders content into jekyll file.
-    ///
-    /// - Parameters:
-    ///   - page: Path to Xcode playground page.
-    ///   - permalink: Relative url where locate the page.
-    ///   - toFile: Output where to write the Markdown render.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
-    static func renderVerbose(page: URL, permalink: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, (url: URL, ast: String, rendered: String)>
-    
-    /// Renders playground pages into jekyll files.
-    ///
-    /// - Parameters:
-    ///   - playground: Path to Xcode playground.
-    ///   - into: Folder where to render the jekyll files (for each playground's page).
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the jekyll files generated of type `[URL]`, having access to an immutable environment of type `ProgressReport`.
-    static func render(playground: URL, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>>
-    
-    /// Renders playground pages into jekyll files.
-    ///
-    /// - Parameters:
-    ///   - playgroundsAt: Folder where to search Xcode Playgrounds (recursive search).
-    ///   - mainPage: The main page path (in jekyll file format).
-    ///   - into: Folder where to render the jekyll site.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and the playgrounds path rendered `[URL]`, having access to an immutable environment of type `ProgressReport`.
-    static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>>
-}
 
 /// Describes the API for `Carbon`
 public protocol CarbonAPI {
