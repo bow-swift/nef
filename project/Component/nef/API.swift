@@ -6,9 +6,6 @@ import Foundation
 import Bow
 import BowEffects
 
-/// Instance of the Version API
-public enum Version: VersionAPI {}
-
 /// Instance of the Markdown API
 public enum Markdown: MarkdownAPI {}
 
@@ -23,15 +20,6 @@ public enum Playground: PlaygroundAPI {}
 
 /// Instance of the Swift Playground API
 public enum SwiftPlayground: SwiftPlaygroundAPI {}
-
-
-/// Describes the API for `Version`
-public protocol VersionAPI {
-    /// Gets nef build version number.
-    /// 
-    /// - Returns: An IO that never produce errors and returns the build version number.
-    static func info() -> UIO<String>
-}
 
 /// Describes the API for `Markdown`
 public protocol MarkdownAPI {
