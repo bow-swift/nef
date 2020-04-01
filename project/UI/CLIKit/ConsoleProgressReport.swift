@@ -19,7 +19,7 @@ public struct ConsoleProgressReport: ProgressReport {
             return ConsoleIO.print("✓ ".bold.green + info)
             
         case let .failed(error, info: info):
-            return ConsoleIO.print("✗ ".bold.red + info + error.localizedDescription)
+            return ConsoleIO.print("✗ ".bold.red + info + " \(error)")
         
         case .finishedSuccessfully:
             return ConsoleIO.print("🙌 " + event.step.progressDescription)
