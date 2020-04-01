@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11A8D65624347F3E0058A71C /* PlaygroundBookEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */; };
 		11C9DFB524332B8300E906E4 /* ProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB424332B8300E906E4 /* ProgressReport.swift */; };
 		11C9DFB724332F5900E906E4 /* CleanEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB624332F5900E906E4 /* CleanEvent.swift */; };
 		11C9DFB9243331DB00E906E4 /* IO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */; };
@@ -421,6 +422,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookEvent.swift; sourceTree = "<group>"; };
 		11C9DFB424332B8300E906E4 /* ProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressReport.swift; sourceTree = "<group>"; };
 		11C9DFB624332F5900E906E4 /* CleanEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanEvent.swift; sourceTree = "<group>"; };
 		11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Extensions.swift"; sourceTree = "<group>"; };
@@ -1368,10 +1370,11 @@
 			children = (
 				8B46C409238D689800437659 /* Module.swift */,
 				8B46C40C238D71C900437659 /* Package.swift */,
-				8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */,
-				8BD4E33623881F9F002DECDB /* PlaygroundResolutionPath.swift */,
+				11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */,
 				8B46C41A238D8A0000437659 /* PlaygroundBookResolutionPath.swift */,
 				8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */,
+				8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */,
+				8BD4E33623881F9F002DECDB /* PlaygroundResolutionPath.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2475,6 +2478,7 @@
 				8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */,
 				8BD6F70D238C495600DD93C4 /* IO+Console.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
+				11A8D65624347F3E0058A71C /* PlaygroundBookEvent.swift in Sources */,
 				8B46C42D238FD4AF00437659 /* PackageShell.swift in Sources */,
 				8B46C42F238FD52900437659 /* PackageShellError.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
