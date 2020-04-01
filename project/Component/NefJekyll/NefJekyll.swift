@@ -109,13 +109,15 @@ public struct Jekyll {
                              permalink: /docs/
                              ---
                              """
+        let step = JekyllEvent.buildingMainPage(mainPage.path)
         
         return EnvIO { env in
             binding(
-                |<-env.console.print(information: "Building main page '\(mainPage.path)'"),
+                |<-env.progressReport.inProgress(step),
                 |<-env.fileSystem.createDirectory(atPath: docs.path),
                 |<-env.fileSystem.write(content: content ?? defaultContent, toFile: file.path),
-            yield: ())^.mapError { _ in .page(mainPage) }^.reportStatus(console: env.console)
+            yield: ())^.mapError { _ in .page(mainPage) }^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     
@@ -156,14 +158,16 @@ public struct Jekyll {
 
         let sidebarFile = data.appendingPathComponent("sidebar.yml")
         let content = IO<RenderError, String>.var()
+        let step = JekyllEvent.buildingSidebar(sidebarFile.path)
         
         return EnvIO { env in
             binding(
-                      |<-env.console.print(information: "Building sidebar '\(sidebarFile.path)'"),
+                      |<-env.progressReport.inProgress(step),
                       |<-env.fileSystem.createDirectory(atPath: data.path).mapError { _ in .page(sidebarFile) },
               content <- sidebar(rendered),
                       |<-env.fileSystem.write(content: content.get, toFile: sidebarFile.path).mapError { _ in .page(sidebarFile) },
-            yield: ())^.reportStatus(console: env.console)
+            yield: ())^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     
