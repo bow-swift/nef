@@ -4,14 +4,18 @@ import Foundation
 import NefCommon
 import NefModels
 
-public typealias Shell = (out: Console, run: PackageShell)
-
 public struct PlaygroundEnvironment {
-    public let shell: Shell
+    public let progressReport: ProgressReport
+    public let shell: PackageShell
     public let system: FileSystem
     
-    public init(console: Console, shell: PackageShell, system: FileSystem) {
-        self.shell = (out: console, run: shell)
+    public init(
+        progressReport: ProgressReport,
+        shell: PackageShell,
+        system: FileSystem) {
+        
+        self.progressReport = progressReport
+        self.shell = shell
         self.system = system
     }
 }
