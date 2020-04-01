@@ -11,9 +11,36 @@ import NefPlayground
 import Bow
 import BowEffects
 
+/// Describes the API for `Compiler`
+public protocol CompilerAPI {
+    /// Compile Xcode Playground.
+    ///
+    /// - Parameters:
+    ///   - nefPlayground: Folder where to search Xcode Playgrounds - it must be a nef Playground structure.
+    ///   - cached: Use cached dependencies if it is possible, in another case, it will download them.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `ProgressReport,.
+    static func compile(
+        nefPlayground: URL,
+        cached: Bool
+    ) -> EnvIO<ProgressReport, nef.Error, Void>
+}
+
 public extension CompilerAPI {
-    
-    static func compile(xcodePlayground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<ProgressReport, nef.Error, Void> {
+    /// Compile Xcode Playground.
+    ///
+    /// - Parameters:
+    ///   - xcodePlayground: Xcode Playgrounds to be compiled.
+    ///   - platform: Target to use for compiling Xcode Playground.
+    ///   - dependencies: To use for the compiler.
+    ///   - cached: Use cached dependencies if it is possible, in another case, it will download them.
+    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `ProgressReport,.
+    static func compile(
+        xcodePlayground: URL,
+        platform: Platform,
+        dependencies: PlaygroundDependencies,
+        cached: Bool
+    ) -> EnvIO<ProgressReport, nef.Error, Void> {
+        
         let playgroundName = xcodePlayground.lastPathComponent.removeExtension
         let output = URL(fileURLWithPath: "/tmp/\(playgroundName)")
         let nefPlayground = EnvIO<ProgressReport, nef.Error, URL>.var()
@@ -29,8 +56,11 @@ public extension CompilerAPI {
             |<-compile(nefPlayground: nefPlayground.get, cached: cached),
         yield: ())^
     }
-        
-    static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<ProgressReport, nef.Error, Void> {
+}
+
+/// Instance of the Compiler API
+public enum Compiler: CompilerAPI {
+    public static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<ProgressReport, nef.Error, Void> {
         NefCompiler.Compiler()
                    .nefPlayground(.init(project: nefPlayground), cached: cached)
                    .contramap(environment)

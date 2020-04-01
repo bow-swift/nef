@@ -9,9 +9,6 @@ import BowEffects
 /// Instance of the Version API
 public enum Version: VersionAPI {}
 
-/// Instance of the Compiler API
-public enum Compiler: CompilerAPI {}
-
 /// Instance of the Markdown API
 public enum Markdown: MarkdownAPI {}
 
@@ -34,27 +31,6 @@ public protocol VersionAPI {
     /// 
     /// - Returns: An IO that never produce errors and returns the build version number.
     static func info() -> UIO<String>
-}
-
-/// Describes the API for `Compiler`
-public protocol CompilerAPI {
-    /// Compile Xcode Playground.
-    ///
-    /// - Parameters:
-    ///   - xcodePlayground: Xcode Playgrounds to be compiled.
-    ///   - platform: Target to use for compiling Xcode Playground.
-    ///   - dependencies: To use for the compiler.
-    ///   - cached: Use cached dependencies if it is possible, in another case, it will download them.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `ProgressReport,.
-    static func compile(xcodePlayground: URL, platform: Platform, dependencies: PlaygroundDependencies, cached: Bool) -> EnvIO<ProgressReport, nef.Error, Void>
-    
-    /// Compile Xcode Playground.
-    ///
-    /// - Parameters:
-    ///   - nefPlayground: Folder where to search Xcode Playgrounds - it must be a nef Playground structure.
-    ///   - cached: Use cached dependencies if it is possible, in another case, it will download them.
-    ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error`, having access to an immutable environment of type `ProgressReport,.
-    static func compile(nefPlayground: URL, cached: Bool) -> EnvIO<ProgressReport, nef.Error, Void>
 }
 
 /// Describes the API for `Markdown`
