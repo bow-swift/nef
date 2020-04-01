@@ -4,27 +4,43 @@ import Foundation
 import CLIKit
 import ArgumentParser
 import nef
+import NefModels
 import Bow
 import BowEffects
 import AppKit
 
 public struct VersionCommand: ParsableCommand {
     public static var commandName: String = "version"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Get the build version number")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Get the build version number")
     
     public init() {}
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, Never, Void> {
-        EnvIO { console in
+    func run() -> EnvIO<ProgressReport, Never, Void> {
+        EnvIO { progressReport in
             nef.Version.info()
-                .flatMap { version in console.print(message: "Build version number: \(version)", terminator: " ") }
-                .flatMap { _ in console.printStatus(success: true) }
+                .flatMap { version in
+                    progressReport.oneShot(VersionEvent.version(version))
+                }
         }^
+    }
+}
+
+public enum VersionEvent {
+    case version(String)
+}
+
+extension VersionEvent: CustomProgressDescription {
+    public var progressDescription: String {
+        switch self {
+        case let .version(version):
+            return "Build version number: \(version)"
+        }
     }
 }
