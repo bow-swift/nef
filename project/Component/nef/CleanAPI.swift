@@ -32,32 +32,15 @@ public enum Clean: CleanAPI {
             { e in
                 EnvIO { progressReport in
                     progressReport.finished(withError:
-                        CleanCommandOutcome.failed(
-                            nefPlayground.lastPathComponent,
+                        CommandOutcome.failed("clean up nef Playground '\(nefPlayground.lastPathComponent)'"
+                            ,
                             error: e))
                 }
             },
             {
                 EnvIO { progressReport in
-                    progressReport.finished(successfully: CleanCommandOutcome.successful(nefPlayground.lastPathComponent))
+                    progressReport.finished(successfully: CommandOutcome.successful("'\(nefPlayground.lastPathComponent)' clean up successfully"))
                 }
             })
-    }
-}
-
-public enum CleanCommandOutcome {
-    case successful(String)
-    case failed(String, error: nef.Error)
-}
-
-extension CleanCommandOutcome: CustomProgressDescription {
-    public var progressDescription: String {
-        switch self {
-        case .successful(let name):
-            return  "'\(name)' clean up successfully"
-        
-        case let .failed(name, error: error):
-            return "clean up nef Playground '\(name)' failed with error: \(error)"
-        }
     }
 }
