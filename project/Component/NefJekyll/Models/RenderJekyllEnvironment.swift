@@ -13,9 +13,11 @@ public struct RenderJekyllEnvironment<A> {
     public let renderEnvironment: RenderEnvironment<A>
     
     internal var console: Console { renderEnvironment.console }
+    internal var progressReport: ProgressReport { renderEnvironment.progressReport }
     internal var fileSystem: FileSystem { renderEnvironment.fileSystem }
     
-    public init(console: Console,
+    public init(progressReport: ProgressReport,
+                console: Console,
                 fileSystem: FileSystem,
                 persistence: RenderingPersistence<A>,
                 xcodePlaygroundSystem: XcodePlaygroundSystem,
@@ -23,8 +25,20 @@ public struct RenderJekyllEnvironment<A> {
         
         self.persistence = persistence
         self.render = Render<A>()
-        self.jekyllEnvironment = { permalink in RenderEnvironment(console: console, fileSystem: fileSystem, xcodePlaygroundSystem: xcodePlaygroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter, permalink: permalink)) }
-        self.renderEnvironment = RenderEnvironment(console: console, fileSystem: fileSystem, xcodePlaygroundSystem: xcodePlaygroundSystem, nodePrinter: Self.nodePrinter(from: jekyllPrinter))
+        self.jekyllEnvironment = { permalink in
+            RenderEnvironment(
+                progressReport: progressReport,
+                console: console,
+                fileSystem: fileSystem,
+                xcodePlaygroundSystem: xcodePlaygroundSystem,
+                nodePrinter: Self.nodePrinter(from: jekyllPrinter, permalink: permalink))
+        }
+        self.renderEnvironment = RenderEnvironment(
+            progressReport: progressReport,
+            console: console,
+            fileSystem: fileSystem,
+            xcodePlaygroundSystem: xcodePlaygroundSystem,
+            nodePrinter: Self.nodePrinter(from: jekyllPrinter))
     }
     
     // MARK: - helpers
