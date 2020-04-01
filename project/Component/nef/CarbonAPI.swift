@@ -11,11 +11,11 @@ import BowEffects
 
 public extension CarbonAPI {
     
-    static func render(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>> {
+    static func render(content: String, style: CarbonStyle) -> EnvIO<ProgressReport, nef.Error, NEA<Data>> {
         renderVerbose(content: content, style: style).map { info in info.images }^
     }
     
-    static func render(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, NEA<Data>> {
+    static func render(page: URL, style: CarbonStyle) -> EnvIO<ProgressReport, nef.Error, NEA<Data>> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -23,14 +23,14 @@ public extension CarbonAPI {
         return render(content: contentPage, style: style)
     }
     
-    static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
+    static func renderVerbose(content: String, style: CarbonStyle) -> EnvIO<ProgressReport, nef.Error, (ast: String, images: NEA<Data>)> {
         NefCarbon.Carbon()
                  .page(content: content)
-                 .contramap { console in environment(console: console, style: style) }
+                 .contramap { progressReport in environment(progressReport: progressReport, style: style) }
                  .mapError { _ in nef.Error.carbon() }
     }
     
-    static func renderVerbose(page: URL, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, images: NEA<Data>)> {
+    static func renderVerbose(page: URL, style: CarbonStyle) -> EnvIO<ProgressReport, nef.Error, (ast: String, images: NEA<Data>)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -38,19 +38,19 @@ public extension CarbonAPI {
         return renderVerbose(content: contentPage, style: style)
     }
     
-    static func render(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, Data> {
+    static func render(code: String, style: CarbonStyle) -> EnvIO<ProgressReport, nef.Error, Data> {
         renderVerbose(code: code, style: style).map { info in info.image }^
     }
     
-    static func renderVerbose(code: String, style: CarbonStyle) -> EnvIO<Console, nef.Error, (ast: String, image: Data)> {
+    static func renderVerbose(code: String, style: CarbonStyle) -> EnvIO<ProgressReport, nef.Error, (ast: String, image: Data)> {
         renderVerbose(content: code, style: style).map { output in (ast: output.ast, image: output.images.head) }^
     }
     
-    static func render(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<ProgressReport, nef.Error, URL> {
         renderVerbose(content: content, style: style, filename: filename, into: output).map { output in output.url }^
     }
     
-    static func render(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<ProgressReport, nef.Error, URL> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -58,14 +58,14 @@ public extension CarbonAPI {
         return render(content: contentPage, style: style, filename: filename, into: output)
     }
     
-    static func renderVerbose(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
+    static func renderVerbose(content: String, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<ProgressReport, nef.Error, (ast: String, url: URL)> {
         NefCarbon.Carbon()
                  .page(content: content, filename: filename.removeExtension, into: output)
-                 .contramap { console in environment(console: console, style: style) }
+                 .contramap { progressReport in environment(progressReport: progressReport, style: style) }
                  .mapError { e in nef.Error.carbon(info: "\(e)") }
     }
     
-    static func renderVerbose(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<Console, nef.Error, (ast: String, url: URL)> {
+    static func renderVerbose(page: URL, style: CarbonStyle, filename: String, into output: URL) -> EnvIO<ProgressReport, nef.Error, (ast: String, url: URL)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.carbon(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -73,17 +73,17 @@ public extension CarbonAPI {
         return renderVerbose(content: contentPage, style: style, filename: filename, into: output)
     }
     
-    static func render(playground: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+    static func render(playground: URL, style: CarbonStyle, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>> {
         NefCarbon.Carbon()
                  .playground(playground, into: output)
-                 .contramap { console in environment(console: console, style: style) }
+            .contramap { progressReport in environment(progressReport: progressReport, style: style) }
                  .mapError { _ in nef.Error.carbon() }
     }
     
-    static func render(playgroundsAt: URL, style: CarbonStyle, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+    static func render(playgroundsAt: URL, style: CarbonStyle, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>> {
         NefCarbon.Carbon()
                  .playgrounds(at: playgroundsAt, into: output)
-                 .contramap { console in environment(console: console, style: style) }
+            .contramap { progressReport in environment(progressReport: progressReport, style: style) }
                  .mapError { _ in nef.Error.carbon() }
     }
     
@@ -98,12 +98,13 @@ public extension CarbonAPI {
     }
     
     // MARK: - private <helpers>
-    private static func environment(console: Console, style: CarbonStyle) -> NefCarbon.Carbon.Environment {
-        .init(console: console,
-              fileSystem: MacFileSystem(),
-              persistence: .init(),
-              xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
-              style: style,
-              carbonPrinter: CoreRender.carbon.render)
+    private static func environment(progressReport: ProgressReport, style: CarbonStyle) -> NefCarbon.Carbon.Environment {
+        .init(
+            progressReport: progressReport,
+            fileSystem: MacFileSystem(),
+            persistence: .init(),
+            xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
+            style: style,
+            carbonPrinter: CoreRender.carbon.render)
     }
 }

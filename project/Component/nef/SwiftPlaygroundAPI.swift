@@ -10,11 +10,11 @@ import BowEffects
 
 public extension SwiftPlaygroundAPI {
     
-    static func render(packageContent: String, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(packageContent: String, name: String, output: URL) -> EnvIO<ProgressReport, nef.Error, URL> {
         render(packageContent: packageContent, name: name, output: output, excludes: [])
     }
     
-    static func render(package: URL, name: String, output: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(package: URL, name: String, output: URL) -> EnvIO<ProgressReport, nef.Error, URL> {
         guard let packageContent = try? String(contentsOfFile: package.path), !packageContent.isEmpty else {
             return EnvIO.raiseError(.swiftPlaygrond(info: "Error: invalid Swift Package"))^
         }
@@ -22,17 +22,38 @@ public extension SwiftPlaygroundAPI {
         return render(packageContent: packageContent, name: name, output: output)
     }
     
-    static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<Console, nef.Error, URL> {
-        let invalidModules: [PlaygroundExcludeItem] = [.module(name: "RxSwift"), .module(name: "RxRelay"), .module(name: "RxTest"), .module(name: "RxBlocking"), .module(name: "RxCocoa"),
-                                                       .module(name: "SwiftCheck"),
-                                                       .module(name: "Swiftline"),
-                                                       .module(name: "BowRx"), .module(name: "BowGenerators"), .module(name: "BowEffectsGenerators"), .module(name: "BowRxGenerators"), .module(name: "BowFreeGenerators"), .module(name: "BowLaws"), .module(name: "BowEffectsLaws"), .module(name: "BowOpticsLaws")]
-        let invalidFiles: [PlaygroundExcludeItem]   = [.file(name: "NetworkReachabilityManager.swift", module: "Alamofire")]
+    static func render(packageContent: String, name: String, output: URL, excludes: [PlaygroundExcludeItem]) -> EnvIO<ProgressReport, nef.Error, URL> {
+        let invalidModules: [PlaygroundExcludeItem] = [
+            .module(name: "RxSwift"),
+            .module(name: "RxRelay"),
+            .module(name: "RxTest"),
+            .module(name: "RxBlocking"),
+            .module(name: "RxCocoa"),
+            .module(name: "SwiftCheck"),
+            .module(name: "Swiftline"),
+            .module(name: "BowRx"),
+            .module(name: "BowGenerators"),
+            .module(name: "BowEffectsGenerators"),
+            .module(name: "BowRxGenerators"),
+            .module(name: "BowFreeGenerators"),
+            .module(name: "BowLaws"),
+            .module(name: "BowEffectsLaws"),
+            .module(name: "BowOpticsLaws")]
+        let invalidFiles: [PlaygroundExcludeItem] = [
+            .file(name: "NetworkReachabilityManager.swift",
+                  module: "Alamofire")]
         
-        return NefSwiftPlayground.SwiftPlayground(packageContent: packageContent, name: name, output: output)
-                                 .build(cached: true, excludes: excludes + invalidModules + invalidFiles)
-                                 .contramap { console in PlaygroundEnvironment(console: console, shell: MacPackageShell(), system: MacFileSystem()) }^
-                                 .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
-                                 .mapError { _ in .swiftPlaygrond() }^
+        return NefSwiftPlayground.SwiftPlayground(
+            packageContent: packageContent, name: name, output: output)
+            .build(cached: true,
+                   excludes: excludes + invalidModules + invalidFiles)
+            .contramap { progressReport in
+                PlaygroundEnvironment(
+                    progressReport: progressReport,
+                    shell: MacPackageShell(),
+                    system: MacFileSystem())
+            }^
+            .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
+            .mapError { _ in .swiftPlaygrond() }^
     }
 }

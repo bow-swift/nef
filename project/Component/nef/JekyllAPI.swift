@@ -11,11 +11,11 @@ import BowEffects
 
 public extension JekyllAPI {
     
-    static func render(content: String, permalink: String) -> EnvIO<Console, nef.Error, String> {
+    static func render(content: String, permalink: String) -> EnvIO<ProgressReport, nef.Error, String> {
         renderVerbose(content: content, permalink: permalink).map { info in info.rendered }^
     }
     
-    static func render(page: URL, permalink: String) -> EnvIO<Console, nef.Error, String> {
+    static func render(page: URL, permalink: String) -> EnvIO<ProgressReport, nef.Error, String> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -23,14 +23,14 @@ public extension JekyllAPI {
         return render(content: contentPage, permalink: permalink)
     }
     
-    static func renderVerbose(content: String, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
+    static func renderVerbose(content: String, permalink: String) -> EnvIO<ProgressReport, nef.Error, (ast: String, rendered: String)> {
         NefJekyll.Jekyll()
                  .page(content: content, permalink: permalink)
                  .contramap(environment)
                  .mapError { _ in nef.Error.jekyll() }
     }
     
-    static func renderVerbose(page: URL, permalink: String) -> EnvIO<Console, nef.Error, (ast: String, rendered: String)> {
+    static func renderVerbose(page: URL, permalink: String) -> EnvIO<ProgressReport, nef.Error, (ast: String, rendered: String)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -38,11 +38,11 @@ public extension JekyllAPI {
         return renderVerbose(content: contentPage, permalink: permalink)
     }
     
-    static func render(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(content: String, permalink: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, URL> {
         renderVerbose(content: content, permalink: permalink, toFile: file).map { info in info.url }^
     }
     
-    static func render(page: URL, permalink: String, toFile output: URL) -> EnvIO<Console, nef.Error, URL> {
+    static func render(page: URL, permalink: String, toFile output: URL) -> EnvIO<ProgressReport, nef.Error, URL> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -50,7 +50,7 @@ public extension JekyllAPI {
         return render(content: contentPage, permalink: permalink, toFile: output)
     }
     
-    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
+    static func renderVerbose(content: String, permalink: String, toFile file: URL) -> EnvIO<ProgressReport, nef.Error, (url: URL, ast: String, rendered: String)> {
         let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
         let filename = file.pathExtension == "md" ? file.lastPathComponent : file.appendingPathExtension("md").lastPathComponent
 
@@ -60,7 +60,7 @@ public extension JekyllAPI {
                         .mapError { _ in nef.Error.jekyll() }
     }
     
-    static func renderVerbose(page: URL, permalink: String, toFile output: URL) -> EnvIO<Console, nef.Error, (url: URL, ast: String, rendered: String)> {
+    static func renderVerbose(page: URL, permalink: String, toFile output: URL) -> EnvIO<ProgressReport, nef.Error, (url: URL, ast: String, rendered: String)> {
         guard let contentPage = page.contentPage, !contentPage.isEmpty else {
             return EnvIO.raiseError(.jekyll(info: "Error: could not read playground's page content (\(page.pageName))"))^
         }
@@ -68,14 +68,14 @@ public extension JekyllAPI {
         return renderVerbose(content: contentPage, permalink: permalink, toFile: output)
     }
     
-    static func render(playground: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+    static func render(playground: URL, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>> {
         NefJekyll.Jekyll()
                  .playground(playground, into: output)
                  .contramap(environment)
                  .mapError { _ in nef.Error.jekyll() }^
     }
     
-    static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<Console, nef.Error, NEA<URL>> {
+    static func render(playgroundsAt: URL, mainPage: URL, into output: URL) -> EnvIO<ProgressReport, nef.Error, NEA<URL>> {
         NefJekyll.Jekyll()
                  .playgrounds(at: playgroundsAt, mainPage: mainPage, into: output)
                  .contramap(environment)
@@ -83,11 +83,12 @@ public extension JekyllAPI {
     }
     
     // MARK: - private <helpers>
-    private static func environment(console: Console) -> NefJekyll.Jekyll.Environment {
-        .init(console: console,
-              fileSystem: MacFileSystem(),
-              persistence: .init(),
-              xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
-              jekyllPrinter: CoreRender.jekyll.render)
+    private static func environment(progressReport: ProgressReport) -> NefJekyll.Jekyll.Environment {
+        .init(
+            progressReport: progressReport,
+            fileSystem: MacFileSystem(),
+            persistence: .init(),
+            xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
+            jekyllPrinter: CoreRender.jekyll.render)
     }
 }

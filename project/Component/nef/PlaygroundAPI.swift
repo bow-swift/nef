@@ -11,23 +11,48 @@ import BowEffects
 
 public extension PlaygroundAPI {
     
-    static func nef(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL> {
+    static func nef(
+        name: String,
+        output: URL,
+        platform: Platform,
+        dependencies: PlaygroundDependencies
+    ) -> EnvIO<ProgressReport, nef.Error, URL> {
+        
         NefPlayground.Playground()
-                     .build(name: name, output: output, platform: platform, dependencies: dependencies)
-                     .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
-                                                                                 fileSystem: MacFileSystem(),
-                                                                                 nefPlaygroundSystem: MacNefPlaygroundSystem(),
-                                                                                 xcodePlaygroundSystem: MacXcodePlaygroundSystem()) }^
-                     .mapError { _ in .playground() }
+            .build(name: name,
+                   output: output,
+                   platform: platform,
+                   dependencies: dependencies)
+            .contramap { progressReport in NefPlayground.PlaygroundEnvironment(
+                    progressReport: progressReport,
+                    fileSystem: MacFileSystem(),
+                    nefPlaygroundSystem: MacNefPlaygroundSystem(),
+                    xcodePlaygroundSystem: MacXcodePlaygroundSystem())
+            }^
+            .mapError { _ in .playground() }
     }
     
-    static func nef(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<Console, nef.Error, URL> {
+    static func nef(
+        xcodePlayground: URL,
+        name: String,
+        output: URL,
+        platform: Platform,
+        dependencies: PlaygroundDependencies
+    ) -> EnvIO<ProgressReport, nef.Error, URL> {
+        
         NefPlayground.Playground()
-                     .build(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
-                     .contramap { console in NefPlayground.PlaygroundEnvironment(console: console,
-                                                                                 fileSystem: MacFileSystem(),
-                                                                                 nefPlaygroundSystem: MacNefPlaygroundSystem(),
-                                                                                 xcodePlaygroundSystem: MacXcodePlaygroundSystem()) }^
-                     .mapError { _ in .playground() }
+            .build(
+                xcodePlayground: xcodePlayground,
+                name: name,
+                output: output,
+                platform: platform,
+                dependencies: dependencies)
+            .contramap { progressReport in NefPlayground.PlaygroundEnvironment(
+                    progressReport: progressReport,
+                    fileSystem: MacFileSystem(),
+                    nefPlaygroundSystem: MacNefPlaygroundSystem(),
+                    xcodePlaygroundSystem: MacXcodePlaygroundSystem())
+            }^
+            .mapError { _ in .playground() }
     }
 }
