@@ -41,10 +41,10 @@ public struct CarbonCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
         let style = CarbonStyle(
             background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
             theme: theme,
@@ -54,7 +54,9 @@ public struct CarbonCommand: ParsableCommand {
             watermark: watermark)
         
         return nef.Carbon.render(playgroundsAt: project.url, style: style, into: output.url)
-            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
-                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+            .reportOutcome(
+                failure: "rendering Xcode Playgrounds from '\(self.project.path)'",
+                success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+            .finish()
     }
 }
