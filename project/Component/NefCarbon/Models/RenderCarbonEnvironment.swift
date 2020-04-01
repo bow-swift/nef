@@ -14,12 +14,14 @@ public struct RenderCarbonEnvironment<A> {
     
     internal var fileSystem: FileSystem { renderEnvironment.fileSystem }
     
-    public init(console: Console,
-                fileSystem: FileSystem,
-                persistence: RenderingPersistence<A>,
-                xcodePlaygroundSystem: XcodePlaygroundSystem,
-                style: CarbonStyle,
-                carbonPrinter: @escaping (_ content: String) -> EnvIO<CoreCarbonEnvironment, CoreRenderError, RenderingOutput<A>>) {
+    public init(
+        progressReport: ProgressReport,
+        console: Console,
+        fileSystem: FileSystem,
+        persistence: RenderingPersistence<A>,
+        xcodePlaygroundSystem: XcodePlaygroundSystem,
+        style: CarbonStyle,
+        carbonPrinter: @escaping (_ content: String) -> EnvIO<CoreCarbonEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         func environment(style: CarbonStyle) -> CoreCarbonEnvironment {
             .init(downloader: CarbonAssembler().resolveCarbonDownloader(),
@@ -28,9 +30,11 @@ public struct RenderCarbonEnvironment<A> {
         
         self.persistence = persistence
         self.render = Render<A>()
-        self.renderEnvironment = RenderEnvironment(console: console,
-                                                   fileSystem: fileSystem,
-                                                   xcodePlaygroundSystem: xcodePlaygroundSystem,
-                                                   nodePrinter: { content in carbonPrinter(content).provide(environment(style: style)).env() })
+        self.renderEnvironment = RenderEnvironment(
+            progressReport: progressReport,
+            console: console,
+            fileSystem: fileSystem,
+            xcodePlaygroundSystem: xcodePlaygroundSystem,
+            nodePrinter: { content in carbonPrinter(content).provide(environment(style: style)).env() })
     }
 }
