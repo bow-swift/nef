@@ -29,7 +29,7 @@ public enum Clean: CleanAPI {
                     shell: MacNefPlaygroundSystem()) }
             .mapError { e in nef.Error.compiler(info: "clean: \(e)") }
         .reportOutcome(
-            success: "'\(nefPlayground.lastPathComponent)' clean up successfully",
-            failure: "clean up nef Playground '\(nefPlayground.lastPathComponent)'")
+            failure: "clean up nef Playground '\(nefPlayground.lastPathComponent)'",
+            success: { _ in "'\(nefPlayground.lastPathComponent)' clean up successfully" })
     }
 }

@@ -1,9 +1,9 @@
 import Bow
 import BowEffects
 
-public extension Kleisli where D == ProgressReport, F == IOPartial<nef.Error> {
+extension Kleisli where D == ProgressReport, F == IOPartial<nef.Error> {
     
-    func reportOutcome(success: String, failure: String) -> EnvIO<ProgressReport, nef.Error, Void> {
+    func reportOutcome(failure: String, success: @escaping (A) -> String) -> EnvIO<ProgressReport, nef.Error, Void> {
         self.foldM(
             { e in
                 EnvIO { progressReport in
@@ -11,9 +11,9 @@ public extension Kleisli where D == ProgressReport, F == IOPartial<nef.Error> {
                         CommandOutcome.failed(failure, error: e))
                 }
         },
-            { _ in
+            { a in
                 EnvIO { progressReport in
-                    progressReport.finished(successfully: CommandOutcome.successful(success))
+                    progressReport.finished(successfully: CommandOutcome.successful(success(a)))
                 }
         })
     }

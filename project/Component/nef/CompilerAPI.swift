@@ -66,8 +66,8 @@ public enum Compiler: CompilerAPI {
             .contramap(environment)
             .mapError { e in nef.Error.compiler(info: "\(e)") }
         .reportOutcome(
-            success: "'\(nefPlayground.path)' compiled successfully",
-            failure: "compiling Xcode Playgrounds from '\(nefPlayground.path)'")
+            failure: "compiling Xcode Playgrounds from '\(nefPlayground.path)'",
+            success: { _ in "'\(nefPlayground.path)' compiled successfully" })
     }
     
     // MARK: - private <helpers>
