@@ -10,16 +10,16 @@ public struct ConsoleProgressReport: ProgressReport {
         switch event.status {
         
         case .oneShot:
-            return ConsoleIO.print(event.step.progressDescription)
+            return ConsoleIO.print(event.step.progressDescription + " ✓".bold.green)
             
         case .inProgress:
             return ConsoleIO.print(event.step.progressDescription, terminator: " ")
             
         case let .successful(info: info):
-            return ConsoleIO.print("✓".bold.green + info)
+            return ConsoleIO.print("✓ ".bold.green + info)
             
         case let .failed(error, info: info):
-            return ConsoleIO.print("✗".bold.red + info + error.localizedDescription)
+            return ConsoleIO.print("✗ ".bold.red + info + error.localizedDescription)
         
         case .finishedSuccessfully:
             return ConsoleIO.print("🙌 " + event.step.progressDescription)
