@@ -44,10 +44,10 @@ public struct CarbonPageCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
         let style = CarbonStyle(background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
                                 theme: theme,
                                 size: size,
@@ -56,7 +56,20 @@ public struct CarbonPageCommand: ParsableCommand {
                                 watermark: watermark)
         
         return nef.Carbon.renderVerbose(page: page.url, style: style, filename: page.path.filename, into: output.url)
-            .reportStatus(failure: { e in "rendering carbon images. \(e)" },
-                          success: { (ast, url) in "rendered carbon images '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)" : "")" })
+            .reportOutcome(
+                failure: "rendering carbon images",
+                success: { (ast, url) in
+                    if self.verbose {
+                        return """
+                        "rendered carbon images '\(url.path)'.
+
+                        • AST
+                            \(ast)"
+                        """
+                    } else {
+                        return "rendered carbon images '\(url.path)'"
+                    }
+                })
+            .finish()
     }
 }
