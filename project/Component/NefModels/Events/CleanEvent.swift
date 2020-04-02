@@ -1,5 +1,3 @@
-import NefModels
-
 public enum CleanEvent {
     case cleaningPlayground(String)
 }

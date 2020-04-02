@@ -1,5 +1,3 @@
-import NefModels
-
 public enum JekyllEvent {
     case buildingMainPage(String)
     case buildingSidebar(String)

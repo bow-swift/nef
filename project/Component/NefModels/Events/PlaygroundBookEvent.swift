@@ -1,5 +1,3 @@
-import NefModels
-
 public enum PlaygroundBookEvent {
     case cleanup
     case creatingStructure(String)

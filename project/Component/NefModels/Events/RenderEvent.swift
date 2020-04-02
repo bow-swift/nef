@@ -1,5 +1,3 @@
-import NefModels
-
 public enum RenderEvent {
     case processingPage(String)
     case gettingPagesFromPlayground(String)

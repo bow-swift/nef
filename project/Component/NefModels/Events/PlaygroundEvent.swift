@@ -1,5 +1,3 @@
-import NefModels
-
 public enum PlaygroundEvent {
     case downloadingTemplate(String)
     case resolvingDependencies(String)
