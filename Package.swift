@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/bow-swift/Swiftline", .exact("0.5.4")),
     ],
     targets: [
-        .target(name: "NefModels", dependencies: ["BowEffects"], path: "project/Component/NefModels", publicHeadersPath: "Support Files"),
+        .target(name: "NefModels", dependencies: ["Bow", "BowEffects"], path: "project/Component/NefModels", publicHeadersPath: "Support Files"),
         .target(name: "NefCommon", dependencies: ["Bow", "BowEffects", "BowOptics", "NefModels"], path: "project/Component/NefCommon", publicHeadersPath: "Support Files"),
         .target(name: "NefCore", dependencies: ["NefCommon"], path: "project/Core", publicHeadersPath: "Support Files"),
         .target(name: "NefRender", dependencies: ["NefCore"], path: "project/Component/NefRender", publicHeadersPath: "Support Files"),

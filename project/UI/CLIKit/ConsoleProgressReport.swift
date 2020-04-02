@@ -8,9 +8,6 @@ public struct ConsoleProgressReport: ProgressReport {
     
     public func notify<E: Swift.Error, A>(_ event: ProgressEvent<A>) -> IO<E, Void> {
         switch event.status {
-        
-        case .oneShot:
-            return ConsoleIO.print(event.step.progressDescription + " ✓".bold.green)
             
         case .inProgress:
             return ConsoleIO.print(event.step.progressDescription, terminator: " ")
@@ -29,7 +26,6 @@ public struct ConsoleProgressReport: ProgressReport {
         }
     }
 }
-
 
 public extension EnvIO where F == IOPartial<nef.Error>, D == ProgressReport {
     func finish() -> EnvIO<ProgressReport, nef.Error, Void>  {

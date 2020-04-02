@@ -1,3 +1,4 @@
+import Bow
 import BowEffects
 
 public protocol ProgressReport {
@@ -6,9 +7,7 @@ public protocol ProgressReport {
 
 public extension ProgressReport {
     func oneShot<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
-        self.notify(
-            ProgressEvent(step: step,
-                          status: .oneShot))
+        self.inProgress(step).followedBy(self.succeeded(step))^
     }
     
     func inProgress<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
@@ -43,7 +42,6 @@ public extension ProgressReport {
 }
 
 public enum ProgressEventStatus {
-    case oneShot
     case inProgress
     case successful
     case failed(Error)

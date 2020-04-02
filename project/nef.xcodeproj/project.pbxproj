@@ -18,6 +18,8 @@
 		11EDF45B243611BF0092E959 /* RenderEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBE2433931D00E906E4 /* RenderEvent.swift */; };
 		11EDF45C243611E30092E959 /* PlaygroundEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFC424347A9F00E906E4 /* PlaygroundEvent.swift */; };
 		11EDF45D243611F50092E959 /* PlaygroundBookEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */; };
+		11EDF4642436342C0092E959 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 11EDF4632436342C0092E959 /* Bow */; };
+		11EDF4662436342C0092E959 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 11EDF4652436342C0092E959 /* BowEffects */; };
 		8B0286DA23E078830033ECBA /* CompilerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286D623E077FA0033ECBA /* CompilerAPI.swift */; };
 		8B0286E423E079650033ECBA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286E323E079650033ECBA /* main.swift */; };
 		8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286F723E1D1E90033ECBA /* MacCompilerShell.swift */; };
@@ -623,6 +625,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		11EDF462243634230092E959 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11EDF4662436342C0092E959 /* BowEffects in Frameworks */,
+				11EDF4642436342C0092E959 /* Bow in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B0FB5A7237C1D6B00221548 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1749,6 +1760,7 @@
 			buildPhases = (
 				8B4F45A022CF9AF400E6F471 /* Headers */,
 				8B4F45A122CF9AF400E6F471 /* Sources */,
+				11EDF462243634230092E959 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1757,6 +1769,8 @@
 			);
 			name = NefModels;
 			packageProductDependencies = (
+				11EDF4632436342C0092E959 /* Bow */,
+				11EDF4652436342C0092E959 /* BowEffects */,
 			);
 			productName = NefModels;
 			productReference = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */;
@@ -3983,6 +3997,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		11EDF4632436342C0092E959 /* Bow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = Bow;
+		};
+		11EDF4652436342C0092E959 /* BowEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowEffects;
+		};
 		8B0A908423ACE65600091C39 /* Bow */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
