@@ -17,16 +17,16 @@ public extension ProgressReport {
                           status: .inProgress))
     }
     
-    func succeeded<E: Error, A: CustomProgressDescription>(_ step: A, info: String = "") -> IO<E, Void> {
+    func succeeded<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
-                          status: .successful(info: info)))
+                          status: .successful))
     }
     
-    func failed<E: Error, A: CustomProgressDescription>(_ step: A, _ error: E, info: String = "") -> IO<E, Void> {
+    func failed<E: Error, A: CustomProgressDescription>(_ step: A, _ error: E) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
-                          status: .failed(error, info: info)))
+                          status: .failed(error)))
     }
     
     func finished<E: Error, A: CustomProgressDescription>(successfully step: A) -> IO<E, Void> {
@@ -45,8 +45,8 @@ public extension ProgressReport {
 public enum ProgressEventStatus {
     case oneShot
     case inProgress
-    case successful(info: String)
-    case failed(Error, info: String)
+    case successful
+    case failed(Error)
     case finishedSuccessfully
     case finishedWithError
 }

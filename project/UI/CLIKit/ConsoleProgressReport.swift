@@ -15,11 +15,11 @@ public struct ConsoleProgressReport: ProgressReport {
         case .inProgress:
             return ConsoleIO.print(event.step.progressDescription, terminator: " ")
             
-        case let .successful(info: info):
-            return ConsoleIO.print("✓ ".bold.green + info)
+        case let .successful:
+            return ConsoleIO.print("✓ ".bold.green)
             
-        case let .failed(error, info: info):
-            return ConsoleIO.print("✗ ".bold.red + info + " \(error)")
+        case let .failed(error):
+            return ConsoleIO.print("✗ ".bold.red + " \(error)")
         
         case .finishedSuccessfully:
             return ConsoleIO.print("🙌 " + event.step.progressDescription)
