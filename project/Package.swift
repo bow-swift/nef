@@ -25,8 +25,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.1"),
     ],
     targets: [
-        .target(name: "NefModels", dependencies: ["Bow", "BowEffects"], path: "Component/NefModels", publicHeadersPath: "Support Files"),
-        .target(name: "NefCommon", dependencies: ["Bow", "BowEffects", "BowOptics", "NefModels"], path: "Component/NefCommon", publicHeadersPath: "Support Files"),
+        .target(name: "NefModels", dependencies: ["Bow", "BowEffects", "BowOptics"], path: "Component/NefModels", publicHeadersPath: "Support Files"),
+        .target(name: "NefCommon", dependencies: ["NefModels"], path: "Component/NefCommon", publicHeadersPath: "Support Files"),
         .target(name: "NefCore", dependencies: ["NefCommon"], path: "Core", publicHeadersPath: "Support Files"),
         .target(name: "NefRender", dependencies: ["NefCore"], path: "Component/NefRender", publicHeadersPath: "Support Files"),
         .target(name: "NefMarkdown", dependencies: ["NefRender"], path: "Component/NefMarkdown", publicHeadersPath: "Support Files"),

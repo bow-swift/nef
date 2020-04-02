@@ -130,6 +130,7 @@
 		8B58128D2403FB5700587211 /* BuildConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58128B2403FB5500587211 /* BuildConfiguration.swift */; };
 		8B603EA7237A3CFE0059C9C7 /* nef.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B603E9F237A3CFE0059C9C7 /* nef.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B6B119D22CB9FDE0060177F /* NefCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B6B119422CB9FDE0060177F /* NefCore.framework */; };
+		8B74B9FA2436379C003AF374 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B74B9F92436379C003AF374 /* BowOptics */; };
 		8B7E807923DA13D700D4F6BD /* RenderCarbonEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E807723DA13D200D4F6BD /* RenderCarbonEnvironment.swift */; };
 		8B7E807C23DA1CCF00D4F6BD /* CarbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E807A23DA1CCB00D4F6BD /* CarbonView.swift */; };
 		8B7E807D23DB03AE00D4F6BD /* CarbonWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B75AF9023805A5200388B1C /* CarbonWebView.swift */; };
@@ -148,9 +149,6 @@
 		8BA1EF7423D62D5000B33CD0 /* CoreRender+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF222123D223A400786F2F /* CoreRender+Test.swift */; };
 		8BAF221D23D20A8F00786F2F /* CoreRenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221C23D20A8F00786F2F /* CoreRenderError.swift */; };
 		8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */; };
-		8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17723B0C2AF000DB61F /* Bow */; };
-		8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17923B0C2AF000DB61F /* BowEffects */; };
-		8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */ = {isa = PBXBuildFile; productRef = 8B12C17B23B0C2AF000DB61F /* BowOptics */; };
 		8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacXcodePlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -629,6 +627,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B74B9FA2436379C003AF374 /* BowOptics in Frameworks */,
 				11EDF4662436342C0092E959 /* BowEffects in Frameworks */,
 				11EDF4642436342C0092E959 /* Bow in Frameworks */,
 			);
@@ -639,16 +638,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B46C435238FDA3300437659 /* Swiftline in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8B300D4A23B0C69B00D0AB25 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8BB7D10F23B0C6AB00C8E6F8 /* BowOptics in Frameworks */,
-				8BB7D10E23B0C6AB00C8E6F8 /* BowEffects in Frameworks */,
-				8BB7D10D23B0C6AB00C8E6F8 /* Bow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1765,12 +1754,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				8BBCA6BA2396A86600BE058B /* PBXTargetDependency */,
 			);
 			name = NefModels;
 			packageProductDependencies = (
 				11EDF4632436342C0092E959 /* Bow */,
 				11EDF4652436342C0092E959 /* BowEffects */,
+				8B74B9F92436379C003AF374 /* BowOptics */,
 			);
 			productName = NefModels;
 			productReference = 8B4F45A522CF9AF400E6F471 /* NefModels.framework */;
@@ -1917,7 +1906,6 @@
 			buildPhases = (
 				8BBD14AA2390179B0002970C /* Headers */,
 				8BBD14AB2390179B0002970C /* Sources */,
-				8B300D4A23B0C69B00D0AB25 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2670,10 +2658,6 @@
 			isa = PBXTargetDependency;
 			target = 8B0FB583237C0A5600221548 /* CLIKit */;
 			targetProxy = 8BBCA69B2396A68900BE058B /* PBXContainerItemProxy */;
-		};
-		8BBCA6BA2396A86600BE058B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 8BBCA6B92396A86600BE058B /* BowEffects */;
 		};
 		8BBD14C0239019570002970C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4042,6 +4026,11 @@
 			package = 8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
 		};
+		8B74B9F92436379C003AF374 /* BowOptics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
+			productName = BowOptics;
+		};
 		8BBCA6952396A59600BE058B /* Bow */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
@@ -4056,11 +4045,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
 			productName = BowOptics;
-		};
-		8BBCA6B92396A86600BE058B /* BowEffects */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8B0FB5A3237C1D3700221548 /* XCRemoteSwiftPackageReference "bow" */;
-			productName = BowEffects;
 		};
 		8BD4E3572388369C002DECDB /* BowEffects */ = {
 			isa = XCSwiftPackageProductDependency;
