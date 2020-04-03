@@ -9,8 +9,9 @@ import BowEffects
 
 public struct MarkdownPageCommand: ParsableCommand {
     public static var commandName: String = "nef-markdown-page"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Render a markdown file from a Playground page")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Render a markdown file from a Playground page")
 
     public init() {}
     
@@ -25,27 +26,27 @@ public struct MarkdownPageCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         nef.Markdown.renderVerbose(page: page.url, toFile: output.url)
+            .outcomeScope()
             .reportOutcome(
-                failure: "rendering Markdown page",
                 success: { (url, ast, rendered) in
                     if self.verbose {
                         return """
-                        rendered markdown page '\(url.path)'.
+                        rendered Markdown page '\(url.path)'.
                         • AST:
-                            \(ast)
+                        \(ast)
                         
                         • Output:
-                            \(rendered)
+                        \(rendered)
                         """
                     } else {
-                        return "rendered markdown page '\(url.path)'."
+                        return "rendered Markdown page '\(url.path)'."
                     }
-                })
+            }, failure: { _ in "rendering Markdown page" })
             .finish()
     }
 }

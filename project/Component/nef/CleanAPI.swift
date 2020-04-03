@@ -28,8 +28,5 @@ public enum Clean: CleanAPI {
                     fileSystem: MacFileSystem(),
                     shell: MacNefPlaygroundSystem()) }
             .mapError { e in nef.Error.compiler(info: "clean: \(e)") }
-        .reportOutcome(
-            failure: "clean up nef Playground '\(nefPlayground.lastPathComponent)'",
-            success: { _ in "'\(nefPlayground.lastPathComponent)' clean up successfully" })
     }
 }

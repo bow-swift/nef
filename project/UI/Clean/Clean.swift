@@ -24,11 +24,19 @@ public struct CleanCommand: ParsableCommand {
     
 
     public func run() throws {
-        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         nef.Clean.clean(nefPlayground: project.url)
+            .outcomeScope()
+            .reportOutcome(
+                success: { _ in
+                    "'\(self.project.url.lastPathComponent)' clean up successfully"
+                },
+                failure: { _ in
+                    "clean up nef Playground '\(self.project.url.lastPathComponent)'"
+                })
             .finish()
     }
 }

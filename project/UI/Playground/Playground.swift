@@ -9,8 +9,9 @@ import BowEffects
 
 public struct PlaygroundCommand: ParsableCommand {
     public static var commandName: String = "nef-playground"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Build a playground compatible with external frameworks")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Build a playground compatible with external frameworks")
 
     public init() {}
     
@@ -42,10 +43,11 @@ public struct PlaygroundCommand: ParsableCommand {
     var bowCommit: String?
     
     public func run() throws {
-        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<ProgressReport, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>()
+        -> EnvIO<D, nef.Error, Void> {
         playground.toOption()
             .fold(
                 { self.nefPlayground(
@@ -84,36 +86,42 @@ public struct PlaygroundCommand: ParsableCommand {
     }
     
     // MARK: private methods
-    private func nefPlayground(
+    private func nefPlayground<D: ProgressReport & OutcomeReport>(
         xcodePlayground: URL,
         name: String,
         output: URL,
         platform: Platform,
         dependencies: PlaygroundDependencies
-    ) -> EnvIO<ProgressReport, nef.Error, Void> {
+    ) -> EnvIO<D, nef.Error, Void> {
         
         nef.Playground.nef(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
+            .outcomeScope()
             .reportOutcome(
-                failure: "building nef Playground from Xcode Playground '\(xcodePlayground.path)'",
                 success: { output in
                     "nef Playground created successfully in '\(output.path)'"
-            })
+                },
+                failure: { _ in
+                    "building nef Playground from Xcode Playground '\(xcodePlayground.path)'"
+                })
             .finish()
     }
     
-    private func nefPlayground(
+    private func nefPlayground<D: ProgressReport & OutcomeReport>(
         name: String,
         output: URL,
         platform: Platform,
         dependencies: PlaygroundDependencies
-    ) -> EnvIO<ProgressReport, nef.Error, Void> {
+    ) -> EnvIO<D, nef.Error, Void> {
         
         nef.Playground.nef(name: name, output: output, platform: platform, dependencies: dependencies)
+            .outcomeScope()
             .reportOutcome(
-                failure: "building nef Playground in '\(output.path)'",
                 success: { output in
                     "nef Playground created successfully in '\(output.path)'"
-            })
+                },
+                failure: { _ in
+                    "building nef Playground in '\(output.path)'"
+                })
             .finish()
     }
 }

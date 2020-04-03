@@ -7,11 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11A8D6582434A31C0058A71C /* CommandOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D6572434A31C0058A71C /* CommandOutcome.swift */; };
-		11A8D65A2434A44F0058A71C /* Kleisli+ProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D6592434A44F0058A71C /* Kleisli+ProgressReport.swift */; };
 		11C9DFB524332B8300E906E4 /* ProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB424332B8300E906E4 /* ProgressReport.swift */; };
 		11C9DFB9243331DB00E906E4 /* IO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */; };
-		11C9DFBB2433350900E906E4 /* ConsoleProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBA2433350900E906E4 /* ConsoleProgressReport.swift */; };
+		11C9DFBB2433350900E906E4 /* ConsoleReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBA2433350900E906E4 /* ConsoleReport.swift */; };
 		11EDF458243611590092E959 /* CleanEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB624332F5900E906E4 /* CleanEvent.swift */; };
 		11EDF4592436117A0092E959 /* CompilerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */; };
 		11EDF45A243611A00092E959 /* JekyllEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFC2243475C700E906E4 /* JekyllEvent.swift */; };
@@ -20,6 +18,9 @@
 		11EDF45D243611F50092E959 /* PlaygroundBookEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */; };
 		11EDF4642436342C0092E959 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 11EDF4632436342C0092E959 /* Bow */; };
 		11EDF4662436342C0092E959 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 11EDF4652436342C0092E959 /* BowEffects */; };
+		11EDF4702437195C0092E959 /* OutcomeReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EDF46F2437195C0092E959 /* OutcomeReport.swift */; };
+		11EDF47124371A0F0092E959 /* Kleisli+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D6592434A44F0058A71C /* Kleisli+Extensions.swift */; };
+		11EDF472243724940092E959 /* CommandOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A8D6572434A31C0058A71C /* CommandOutcome.swift */; };
 		8B0286DA23E078830033ECBA /* CompilerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286D623E077FA0033ECBA /* CompilerAPI.swift */; };
 		8B0286E423E079650033ECBA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286E323E079650033ECBA /* main.swift */; };
 		8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0286F723E1D1E90033ECBA /* MacCompilerShell.swift */; };
@@ -418,15 +419,16 @@
 /* Begin PBXFileReference section */
 		11A8D65524347F3E0058A71C /* PlaygroundBookEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundBookEvent.swift; sourceTree = "<group>"; };
 		11A8D6572434A31C0058A71C /* CommandOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandOutcome.swift; sourceTree = "<group>"; };
-		11A8D6592434A44F0058A71C /* Kleisli+ProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kleisli+ProgressReport.swift"; sourceTree = "<group>"; };
+		11A8D6592434A44F0058A71C /* Kleisli+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kleisli+Extensions.swift"; sourceTree = "<group>"; };
 		11C9DFB424332B8300E906E4 /* ProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressReport.swift; sourceTree = "<group>"; };
 		11C9DFB624332F5900E906E4 /* CleanEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanEvent.swift; sourceTree = "<group>"; };
 		11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Extensions.swift"; sourceTree = "<group>"; };
-		11C9DFBA2433350900E906E4 /* ConsoleProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleProgressReport.swift; sourceTree = "<group>"; };
+		11C9DFBA2433350900E906E4 /* ConsoleReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleReport.swift; sourceTree = "<group>"; };
 		11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerEvent.swift; sourceTree = "<group>"; };
 		11C9DFBE2433931D00E906E4 /* RenderEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEvent.swift; sourceTree = "<group>"; };
 		11C9DFC2243475C700E906E4 /* JekyllEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JekyllEvent.swift; sourceTree = "<group>"; };
 		11C9DFC424347A9F00E906E4 /* PlaygroundEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundEvent.swift; sourceTree = "<group>"; };
+		11EDF46F2437195C0092E959 /* OutcomeReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeReport.swift; sourceTree = "<group>"; };
 		8B0286D123E074250033ECBA /* CompilerShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerShell.swift; sourceTree = "<group>"; };
 		8B0286D623E077FA0033ECBA /* CompilerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerAPI.swift; sourceTree = "<group>"; };
 		8B0286DB23E078D10033ECBA /* NefCompilerSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NefCompilerSystem.swift; sourceTree = "<group>"; };
@@ -697,9 +699,12 @@
 				8BD6977B23F7119C000A512F /* Array+Utils.swift */,
 				8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */,
 				8B10F304241796A200BB179B /* CommandLineTool.swift */,
-				11C9DFBA2433350900E906E4 /* ConsoleProgressReport.swift */,
+				11A8D6572434A31C0058A71C /* CommandOutcome.swift */,
+				11C9DFBA2433350900E906E4 /* ConsoleReport.swift */,
 				8BED79B823A92B4200115479 /* DispatchTimeInterval+Utils.swift */,
 				8BF31D93240FD9A8006516DC /* ExpressibleByArgument+Extension.swift */,
+				11A8D6592434A44F0058A71C /* Kleisli+Extensions.swift */,
+				11EDF46F2437195C0092E959 /* OutcomeReport.swift */,
 				8B3CB86522D392C000919F36 /* PlaygroundUtils.swift */,
 				8B304D5F23ABA954001E9303 /* String+Colorize.swift */,
 				8B0FB58E237C0A8F00221548 /* Support Files */,
@@ -1188,7 +1193,6 @@
 		8B75AF9523805B3400388B1C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				11A8D6572434A31C0058A71C /* CommandOutcome.swift */,
 				8B0FB5B7237C61C000221548 /* Error.swift */,
 			);
 			path = Models;
@@ -1401,7 +1405,6 @@
 			isa = PBXGroup;
 			children = (
 				8B58128B2403FB5500587211 /* BuildConfiguration.swift */,
-				11A8D6592434A44F0058A71C /* Kleisli+ProgressReport.swift */,
 				8BD8FE34241BF02500B84CDD /* URL+PlaygroundPage.swift */,
 			);
 			path = Utils;
@@ -2241,10 +2244,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */,
-				11C9DFBB2433350900E906E4 /* ConsoleProgressReport.swift in Sources */,
+				11C9DFBB2433350900E906E4 /* ConsoleReport.swift in Sources */,
 				8B0FB599237C0B9A00221548 /* PlaygroundUtils.swift in Sources */,
+				11EDF4702437195C0092E959 /* OutcomeReport.swift in Sources */,
 				8BED79B923A92B4200115479 /* DispatchTimeInterval+Utils.swift in Sources */,
+				11EDF472243724940092E959 /* CommandOutcome.swift in Sources */,
 				8BF31D94240FD9A8006516DC /* ExpressibleByArgument+Extension.swift in Sources */,
+				11EDF47124371A0F0092E959 /* Kleisli+Extensions.swift in Sources */,
 				8B10F306241796C800BB179B /* CommandLineTool.swift in Sources */,
 				8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */,
 				8BD6977F23F71316000A512F /* Array+Utils.swift in Sources */,
@@ -2497,7 +2503,6 @@
 			files = (
 				8BD6F70B238C28EF00DD93C4 /* MacFileSytem.swift in Sources */,
 				8BD6978E23FAAB2D000A512F /* MacNefPlaygroundSystem.swift in Sources */,
-				11A8D6582434A31C0058A71C /* CommandOutcome.swift in Sources */,
 				8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */,
 				8B58128D2403FB5700587211 /* BuildConfiguration.swift in Sources */,
 				8BA1EF3A23D62B9C00B33CD0 /* MacRenderSystem.swift in Sources */,
@@ -2512,7 +2517,6 @@
 				8B5812892403F7ED00587211 /* VersionAPI.swift in Sources */,
 				8BD6977823F6E8C5000A512F /* PlaygroundAPI.swift in Sources */,
 				8B0286F823E1D1E90033ECBA /* MacCompilerShell.swift in Sources */,
-				11A8D65A2434A44F0058A71C /* Kleisli+ProgressReport.swift in Sources */,
 				8B0FB5B8237C61C000221548 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
