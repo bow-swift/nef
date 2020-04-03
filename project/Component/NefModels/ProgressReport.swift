@@ -22,17 +22,17 @@ public extension ProgressReport {
                           status: .successful))
     }
     
-    func failed<E: Error, A: CustomProgressDescription>(_ step: A, _ error: E) -> IO<E, Void> {
+    func failed<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
-                          status: .failed(error)))
+                          status: .failed))
     }
 }
 
 public enum ProgressEventStatus {
     case inProgress
     case successful
-    case failed(Error)
+    case failed
 }
 
 public protocol CustomProgressDescription {

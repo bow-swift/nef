@@ -17,8 +17,8 @@ extension ConsoleReport: ProgressReport {
         case .successful:
             return ConsoleIO.print("✓ ".bold.green)
             
-        case let .failed(error):
-            return ConsoleIO.print("✗ ".bold.red + " \(error)")
+        case .failed:
+            return ConsoleIO.print("✗ ".bold.red)
         }
     }
 }

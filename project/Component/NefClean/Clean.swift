@@ -15,11 +15,8 @@ public struct Clean {
             return binding(
                 |<-env.progressReport.inProgress(step),
                 |<-env.shell.clean(playground: nefPlayground).provide(env.fileSystem).mapError { e in .clean(info: e) },
-            yield: ())^
-                .foldMTap(
-                    { e in env.progressReport.failed(step, e) },
-                    { env.progressReport.succeeded(step) })
-                
+                yield: ())^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
 }

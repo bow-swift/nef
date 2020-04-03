@@ -15,7 +15,7 @@ public extension IO {
     ) -> IO<E, A> {
         
         self.foldMTap(
-            { e in progressReport.failed(step, e) },
+            { e in progressReport.failed(step) },
             { _ in progressReport.succeeded(step) })
     }
 }
