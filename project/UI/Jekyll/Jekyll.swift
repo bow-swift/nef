@@ -9,8 +9,9 @@ import BowEffects
 
 public struct JekyllCommand: ParsableCommand {
     public static var commandName: String = "nef-jekyll"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Render Markdown files that can be consumed from Jekyll to generate a microsite")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Render Markdown files that can be consumed from Jekyll to generate a microsite")
 
     public init() {}
     
@@ -30,12 +31,21 @@ public struct JekyllCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
-        nef.Jekyll.render(playgroundsAt: project.url, mainPage: mainURL, into: output.url)
-            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
-                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
+        nef.Jekyll.render(
+            playgroundsAt: project.url,
+            mainPage: mainURL,
+            into: output.url)
+            .outcomeScope()
+            .reportOutcome(
+                success: { _ in
+                    "rendered Xcode Playgrounds in '\(self.output.path)'"
+                },
+                failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'"
+                })
+            .finish()
     }
 }

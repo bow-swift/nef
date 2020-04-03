@@ -9,8 +9,9 @@ import BowEffects
 
 public struct MarkdownCommand: ParsableCommand {
     public static var commandName: String = "nef-markdown"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Render Markdown files for a given Xcode Playgrounds")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Render Markdown files for a given Xcode Playgrounds")
 
     public init() {}
     
@@ -22,12 +23,19 @@ public struct MarkdownCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         nef.Markdown.render(playgroundsAt: self.project.url, into: self.output.url)
-            .reportStatus(failure: { e in "rendering Xcode Playgrounds from '\(self.project.path)'" },
-                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { _ in
+                    "rendered Xcode Playgrounds in '\(self.output.path)'"
+                },
+                failure: { _ in
+                    "rendering Xcode playgrounds from '\(self.project.path)'"
+                })
+            .finish()
     }
 }

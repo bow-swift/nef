@@ -10,8 +10,9 @@ import BowEffects
 
 public struct CarbonCommand: ParsableCommand {
     public static var commandName: String = "nef-carbon"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Export Carbon code snippets for a given nef Playground")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Export Carbon code snippets for a given nef Playground")
 
     public init() {}
     
@@ -41,19 +42,27 @@ public struct CarbonCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
-        let style = CarbonStyle(background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
-                                theme: theme,
-                                size: size,
-                                fontType: font,
-                                lineNumbers: lines,
-                                watermark: watermark)
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
+        let style = CarbonStyle(
+            background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
+            theme: theme,
+            size: size,
+            fontType: font,
+            lineNumbers: lines,
+            watermark: watermark)
         
         return nef.Carbon.render(playgroundsAt: project.url, style: style, into: output.url)
-            .reportStatus(failure: { _ in "rendering Xcode Playgrounds from '\(self.project.path)'" },
-                          success: { _ in "rendered Xcode Playgrounds in '\(self.output.path)'" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { _ in
+                    "rendered Xcode Playgrounds in '\(self.output.path)'"
+                },
+                failure: { _ in
+                    "rendering Xcode Playgrounds from '\(self.project.path)'"
+                })
+            .finish()
     }
 }

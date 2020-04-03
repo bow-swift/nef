@@ -9,8 +9,9 @@ import BowEffects
 
 public struct PlaygroundCommand: ParsableCommand {
     public static var commandName: String = "nef-playground"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Build a playground compatible with external frameworks")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Build a playground compatible with external frameworks")
 
     public init() {}
     
@@ -41,15 +42,27 @@ public struct PlaygroundCommand: ParsableCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Specify the commit hash of Bow", valueName: "commit hash"))
     var bowCommit: String?
     
-    
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>()
+        -> EnvIO<D, nef.Error, Void> {
         playground.toOption()
-            .fold({ self.nefPlayground(name: self.name, output: self.output.url, platform: self.platform, dependencies: self.dependencies) },
-                  { arg in self.nefPlayground(xcodePlayground: arg.url, name: self.name, output: self.output.url, platform: self.platform, dependencies: self.dependencies) })^
+            .fold(
+                { self.nefPlayground(
+                    name: self.name,
+                    output: self.output.url,
+                    platform: self.platform,
+                    dependencies: self.dependencies)
+                },
+                { arg in self.nefPlayground(
+                    xcodePlayground: arg.url,
+                    name: self.name,
+                    output: self.output.url,
+                    platform: self.platform,
+                    dependencies: self.dependencies)
+                })
     }
     
     // MARK: attributes
@@ -73,15 +86,42 @@ public struct PlaygroundCommand: ParsableCommand {
     }
     
     // MARK: private methods
-    private func nefPlayground(xcodePlayground: URL, name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    private func nefPlayground<D: ProgressReport & OutcomeReport>(
+        xcodePlayground: URL,
+        name: String,
+        output: URL,
+        platform: Platform,
+        dependencies: PlaygroundDependencies
+    ) -> EnvIO<D, nef.Error, Void> {
+        
         nef.Playground.nef(xcodePlayground: xcodePlayground, name: name, output: output, platform: platform, dependencies: dependencies)
-            .reportStatus(failure: { e in "building nef Playground from Xcode Playground '\(xcodePlayground.path)'. \(e)" },
-                          success: { output in "nef Playground created successfully in '\(output.path)'" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { output in
+                    "nef Playground created successfully in '\(output.path)'"
+                },
+                failure: { _ in
+                    "building nef Playground from Xcode Playground '\(xcodePlayground.path)'"
+                })
+            .finish()
     }
     
-    private func nefPlayground(name: String, output: URL, platform: Platform, dependencies: PlaygroundDependencies) -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    private func nefPlayground<D: ProgressReport & OutcomeReport>(
+        name: String,
+        output: URL,
+        platform: Platform,
+        dependencies: PlaygroundDependencies
+    ) -> EnvIO<D, nef.Error, Void> {
+        
         nef.Playground.nef(name: name, output: output, platform: platform, dependencies: dependencies)
-            .reportStatus(failure: { e in "building nef Playground in '\(output.path)'. \(e)" },
-                          success: { output in "nef Playground created successfully in '\(output.path)'" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { output in
+                    "nef Playground created successfully in '\(output.path)'"
+                },
+                failure: { _ in
+                    "building nef Playground in '\(output.path)'"
+                })
+            .finish()
     }
 }

@@ -39,11 +39,18 @@ public struct Playground {
     private func template(output: URL, name: String, platform: Platform) -> EnvIO<PlaygroundEnvironment, PlaygroundError, NefPlaygroundURL> {
         EnvIO { env in
             let playground = IO<PlaygroundError, NefPlaygroundURL>.var()
+            let step = PlaygroundEvent.downloadingTemplate(output.path)
             
             return binding(
-                           |<-env.console.print(information: "Downloading playground template '\(output.path)'"),
-                playground <- env.nefPlaygroundSystem.installTemplate(into: output, name: name, platform: platform).provide(env.fileSystem).mapError { e in .template(info: e) },
-            yield: playground.get)^.reportStatus(console: env.console)
+                |<-env.progressReport.inProgress(step),
+                playground <- env.nefPlaygroundSystem.installTemplate(
+                    into: output,
+                    name: name,
+                    platform: platform)
+                    .provide(env.fileSystem)
+                    .mapError { e in .template(info: e) },
+            yield: playground.get)^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     
@@ -66,13 +73,21 @@ public struct Playground {
         }
         
         let xcodeproj = IO<PlaygroundError, URL>.var()
+        let step = PlaygroundEvent.resolvingDependencies(name)
         
         return EnvIO { env in
             binding(
-                          |<-env.console.print(information: "Resolving dependencies '\(name)'"),
+                |<-env.progressReport.inProgress(step),
                 xcodeproj <- xcodeprojAt(playground).provide(env),
-                          |<-env.nefPlaygroundSystem.setDependencies(dependencies, playground: playground, inXcodeproj: xcodeproj.get, target: name).provide(env.fileSystem).mapError { e in .dependencies(info: e) },
-            yield: ())^.reportStatus(console: env.console)^
+                |<-env.nefPlaygroundSystem.setDependencies(
+                    dependencies,
+                    playground: playground,
+                    inXcodeproj: xcodeproj.get,
+                    target: name)
+                    .provide(env.fileSystem)
+                    .mapError { e in .dependencies(info: e) },
+                yield: ())^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     
@@ -109,13 +124,15 @@ public struct Playground {
         return EnvIO { env in
             let xcworkspace = IO<PlaygroundError, URL>.var()
             let playgrounds = IO<PlaygroundError, NEA<URL>>.var()
+            let step = PlaygroundEvent.linkingPlaygrounds(playground.name)
             
             return binding(
-                            |<-env.console.print(information: "Linking playgrounds '\(playground.name)'"),
+                |<-env.progressReport.inProgress(step),
                 xcworkspace <- xcworkspaceAt(playground).provide(env),
                 playgrounds <- playgrounsAt(playground).provide(env),
-                            |<-linkPlaygrounds(playgrounds.get, xcworkspace: xcworkspace.get).provide(env),
-            yield: ())^.reportStatus(console: env.console)
+                |<-linkPlaygrounds(playgrounds.get, xcworkspace: xcworkspace.get).provide(env),
+                yield: ())^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     

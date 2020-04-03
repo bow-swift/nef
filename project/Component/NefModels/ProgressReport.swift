@@ -1,3 +1,4 @@
+import Bow
 import BowEffects
 
 public protocol ProgressReport {
@@ -6,9 +7,7 @@ public protocol ProgressReport {
 
 public extension ProgressReport {
     func oneShot<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
-        self.notify(
-            ProgressEvent(step: step,
-                          status: .oneShot))
+        self.inProgress(step).followedBy(self.succeeded(step))^
     }
     
     func inProgress<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
@@ -17,38 +16,23 @@ public extension ProgressReport {
                           status: .inProgress))
     }
     
-    func succeeded<E: Error, A: CustomProgressDescription>(_ step: A, info: String = "") -> IO<E, Void> {
+    func succeeded<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
-                          status: .successful(info: info)))
+                          status: .successful))
     }
     
-    func failed<E: Error, A: CustomProgressDescription>(_ step: A, _ error: E, info: String = "") -> IO<E, Void> {
+    func failed<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
-                          status: .failed(error, info: info)))
-    }
-    
-    func finished<E: Error, A: CustomProgressDescription>(successfully step: A) -> IO<E, Void> {
-        self.notify(
-            ProgressEvent(step: step,
-                          status: .finishedSuccessfully))
-    }
-    
-    func finished<E: Error, A: CustomProgressDescription>(withError step: A) -> IO<E, Void> {
-        self.notify(
-            ProgressEvent(step: step,
-                          status: .finishedWithError))
+                          status: .failed))
     }
 }
 
 public enum ProgressEventStatus {
-    case oneShot
     case inProgress
-    case successful(info: String)
-    case failed(Error, info: String)
-    case finishedSuccessfully
-    case finishedWithError
+    case successful
+    case failed
 }
 
 public protocol CustomProgressDescription {

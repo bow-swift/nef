@@ -9,8 +9,10 @@ import BowEffects
 
 public struct CompilerCommand: ParsableCommand {
     public static var commandName: String = "nefc"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                    abstract: "Compile nef Playground")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Compile nef Playground")
+    
     public init() {}
     
     @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to compile", valueName: "nef playground"))
@@ -21,12 +23,19 @@ public struct CompilerCommand: ParsableCommand {
 
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         nef.Compiler.compile(nefPlayground: project.url, cached: cached)
-            .reportStatus(failure: { e in "compiling Xcode Playgrounds from '\(self.project.path)'. \(e)" },
-                          success: { _ in "'\(self.project.path)' compiled successfully" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { _ in
+                    "'\(self.project.url.path)' compiled successfully"
+                },
+                failure: { _ in
+                    "compiling Xcode Playgrounds from '\(self.project.url.path)'"
+                })
+            .finish()
     }
 }

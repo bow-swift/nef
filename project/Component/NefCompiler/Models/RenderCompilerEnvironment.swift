@@ -12,26 +12,29 @@ public struct RenderCompilerEnvironment<A> {
     let render: Render<A>
     let codeEnvironment: RenderEnvironment<A>
     
-    internal var console: Console { codeEnvironment.console }
+    internal var progressReport: ProgressReport { codeEnvironment.progressReport }
     internal var fileSystem: FileSystem { codeEnvironment.fileSystem }
     internal var xcodePlaygroundSystem: XcodePlaygroundSystem { codeEnvironment.xcodePlaygroundSystem }
     
-    public init(console: Console,
-                fileSystem: FileSystem,
-                compilerShell: CompilerShell,
-                nefPlaygroundSystem: NefPlaygroundSystem,
-                xcodePlaygroundSystem: XcodePlaygroundSystem,
-                codePrinter: @escaping (_ content: String) -> EnvIO<CoreCodeEnvironment, CoreRenderError, RenderingOutput<A>>) {
+    public init(
+        progressReport: ProgressReport,
+        fileSystem: FileSystem,
+        compilerShell: CompilerShell,
+        nefPlaygroundSystem: NefPlaygroundSystem,
+        xcodePlaygroundSystem: XcodePlaygroundSystem,
+        codePrinter: @escaping (_ content: String) -> EnvIO<CoreCodeEnvironment, CoreRenderError, RenderingOutput<A>>) {
         
         self.compilerSystem = NefCompilerSystem()
-        self.compilerEnvironment = CompilerSystemEnvironment(shell: compilerShell,
-                                                             fileSystem: fileSystem,
-                                                             nefPlaygroundSystem: nefPlaygroundSystem)
+        self.compilerEnvironment = CompilerSystemEnvironment(
+            shell: compilerShell,
+            fileSystem: fileSystem,
+            nefPlaygroundSystem: nefPlaygroundSystem)
         
         self.render = Render<A>()
-        self.codeEnvironment = RenderEnvironment(console: console,
-                                                 fileSystem: fileSystem,
-                                                 xcodePlaygroundSystem: xcodePlaygroundSystem,
-                                                 nodePrinter: { content in codePrinter(content).provide(.init()).env() })
+        self.codeEnvironment = RenderEnvironment(
+            progressReport: progressReport,
+            fileSystem: fileSystem,
+            xcodePlaygroundSystem: xcodePlaygroundSystem,
+            nodePrinter: { content in codePrinter(content).provide(.init()).env() })
     }
 }

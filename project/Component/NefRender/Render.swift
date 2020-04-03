@@ -93,11 +93,14 @@ public struct Render<A> {
     private func renderPage(content: String, info: RenderEnvironmentInfo) -> EnvIO<Environment, RenderError, RenderingOutput<A>> {
         EnvIO { env in
             let rendered = IO<RenderError, RenderingOutput<A>>.var()
+            let step = RenderEvent.processingPage(info.data?.page.title ?? "content")
             
             return binding(
-                             |<-env.console.print(information: "\t• Processing page \(info.data?.page.title ?? "content")"),
-                    rendered <- env.nodePrinter(content).provide(info).mapError { e in .content(info: e) },
-            yield: rendered.get)^.reportStatus(console: env.console)
+                         |<-env.progressReport.inProgress(step),
+                rendered <- env.nodePrinter(content).provide(info)
+                               .mapError { e in .content(info: e) },
+                yield: rendered.get)^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     
@@ -106,12 +109,16 @@ public struct Render<A> {
         EnvIO { env in
             let pages = IO<RenderError, NEA<URL>>.var()
             let rendererPages = IO<RenderError, NEA<RenderingURL>>.var()
+            let step = RenderEvent.gettingPagesFromPlayground(playground.description)
             
             return binding(
-                              |<-env.console.print(information: "Get pages in playground '\(playground)'"),
-                        pages <- env.xcodePlaygroundSystem.pages(in: playground.url).provide(env.fileSystem).mapError { _ in .getPages(playground: playground.url) },
+                |<-env.progressReport.inProgress(step),
+                pages <- env.xcodePlaygroundSystem.pages(in: playground.url)
+                    .provide(env.fileSystem)
+                    .mapError { _ in .getPages(playground: playground.url) },
                 rendererPages <- pages.get.traverse { url in RenderingURL(url: url, title: self.pageName(url)).io() },
-            yield: rendererPages.get)^.reportStatus(console: env.console)
+                yield: rendererPages.get)^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     
@@ -119,12 +126,16 @@ public struct Render<A> {
         EnvIO { env in
             let playgrounds = IO<RenderError, NEA<URL>>.var()
             let rendered = IO<RenderError, NEA<RenderingURL>>.var()
+            let step = RenderEvent.gettingPlaygrounds(folder.lastPathComponent.removeExtension)
             
             return binding(
-                           |<-env.console.print(information: "Get playgrounds in '\(folder.lastPathComponent.removeExtension)'"),
-               playgrounds <- env.xcodePlaygroundSystem.linkedPlaygrounds(at: folder).provide(env.fileSystem).mapError { _ in .getPlaygrounds(folder: folder) },
-                  rendered <- playgrounds.get.traverse { url in RenderingURL(url: url, title: self.playgroundName(url)).io() },
-            yield: rendered.get)^.reportStatus(console: env.console)
+                |<-env.progressReport.inProgress(step),
+                playgrounds <- env.xcodePlaygroundSystem.linkedPlaygrounds(at: folder)
+                    .provide(env.fileSystem)
+                    .mapError { _ in .getPlaygrounds(folder: folder) },
+                rendered <- playgrounds.get.traverse { url in RenderingURL(url: url, title: self.playgroundName(url)).io() },
+                yield: rendered.get)^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     

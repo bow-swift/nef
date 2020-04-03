@@ -10,8 +10,9 @@ import BowEffects
 
 public struct CarbonPageCommand: ParsableCommand {
     public static var commandName: String = "nef-carbon-page"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Export Carbon code snippets for a given Playground page")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Export Carbon code snippets for a given Playground page")
 
     public init() {}
     
@@ -44,19 +45,33 @@ public struct CarbonPageCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
-        let style = CarbonStyle(background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
-                                theme: theme,
-                                size: size,
-                                fontType: font,
-                                lineNumbers: lines,
-                                watermark: watermark)
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
+        let style = CarbonStyle(
+            background: CarbonStyle.Color(hex: background) ?? CarbonStyle.Color(default: background) ?? CarbonStyle.Color.nef,
+            theme: theme,
+            size: size,
+            fontType: font,
+            lineNumbers: lines,
+            watermark: watermark)
         
         return nef.Carbon.renderVerbose(page: page.url, style: style, filename: page.path.filename, into: output.url)
-            .reportStatus(failure: { e in "rendering carbon images. \(e)" },
-                          success: { (ast, url) in "rendered carbon images '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)" : "")" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { (ast, url) in
+                    if self.verbose {
+                        return """
+                        "rendered carbon images '\(url.path)'.
+                        
+                        • AST
+                        \(ast)"
+                        """
+                    } else {
+                        return "rendered carbon images '\(url.path)'"
+                    }
+            }, failure: { _ in "rendering carbon images" })
+            .finish()
     }
 }

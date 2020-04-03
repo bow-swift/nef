@@ -13,7 +13,7 @@ public struct RenderMarkdownEnvironment<A> {
     
     internal var fileSystem: FileSystem { renderEnvironment.fileSystem }
     
-    public init(console: Console,
+    public init(progressReport: ProgressReport,
                 fileSystem: FileSystem,
                 persistence: RenderingPersistence<A>,
                 xcodePlaygroundSystem: XcodePlaygroundSystem,
@@ -21,6 +21,10 @@ public struct RenderMarkdownEnvironment<A> {
         
         self.persistence = persistence
         self.render = Render<A>()
-        self.renderEnvironment = RenderEnvironment(console: console, fileSystem: fileSystem, xcodePlaygroundSystem: xcodePlaygroundSystem, nodePrinter: { content in markdownPrinter(content).provide(.init()).env() })
+        self.renderEnvironment = RenderEnvironment(
+            progressReport: progressReport,
+            fileSystem: fileSystem,
+            xcodePlaygroundSystem: xcodePlaygroundSystem,
+            nodePrinter: { content in markdownPrinter(content).provide(.init()).env() })
     }
 }

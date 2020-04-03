@@ -5,25 +5,25 @@ import Foundation
 /// Models a `nef` error.
 public enum Error: Swift.Error {
     /// Describes a `Compiler` error with detailed information.
-    case compiler(info: String = "")
+    case compiler(info: String)
     
     /// Describes a `Markdown` error with detailed information.
-    case markdown(info: String = "")
+    case markdown(info: String)
     
     /// Describes a `Jekyll` error with detailed information.
-    case jekyll(info: String = "")
+    case jekyll(info: String)
     
     /// Describes a `Carbon` error with detailed information.
-    case carbon(info: String = "")
+    case carbon(info: String)
     
     /// Describes a `Carbon` error with detailed information about the snapshot failure.
-    case invalidSnapshot(info: String = "")
+    case invalidSnapshot(info: String)
     
     /// Describes a `Playground` error with detailed information.
-    case playground(info: String = "")
+    case playground(info: String)
     
     /// Describes a `Swift Playground` error with detailed information.
-    case swiftPlaygrond(info: String = "")
+    case swiftPlaygrond(info: String)
 }
 
 extension Error: CustomStringConvertible {
@@ -31,19 +31,19 @@ extension Error: CustomStringConvertible {
     public var description: String {
         switch self {
         case .compiler(let info):
-            return info.isEmpty ? "Compiler failure." : info
+            return "Compiler failure. \(info)"
         case .markdown(let info):
-            return info.isEmpty ? "Markdown failure." : info
+            return "Markdown failure. \(info)"
         case .jekyll(let info):
-            return info.isEmpty ? "Jekyll failure." : info
+            return "Jekyll failure. \(info)"
         case .carbon(let info):
-            return info.isEmpty ? "Carbon failure." : info
+            return "Carbon failure. \(info)"
         case .invalidSnapshot(let info):
-            return info.isEmpty ? "Invalid snapshot." : info
+            return "Invalid snapshot. \(info)"
         case .playground(let info):
-            return info.isEmpty ? "Playground generator failure." : info
+            return "Playground generator failure. \(info)"
         case .swiftPlaygrond(let info):
-            return info.isEmpty ? "Swift Playground generator failure." : info
+            return "Swift Playground generator failure. \(info)"
         }
     }
 }

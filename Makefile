@@ -24,7 +24,7 @@ BINARIES =  nef\
 
 
 .PHONY: install
-install: build install_folders
+install: uninstall build install_folders
 	$(foreach binary,$(BINARIES),$(shell install $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
 	@cp -R Documentation.app $(PREFIX_TESTS)
 

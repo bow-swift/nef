@@ -8,13 +8,16 @@ import BowEffects
 public struct RenderEnvironment<A> {
     public typealias NodePrinter = (_ content: String) -> EnvIO<RenderEnvironmentInfo, CoreRenderError, RenderingOutput<A>>
     
-    public let console: Console
+    public let progressReport: ProgressReport
     public let fileSystem: FileSystem
     public let xcodePlaygroundSystem: XcodePlaygroundSystem
     public let nodePrinter: NodePrinter
 
-    public init(console: Console, fileSystem: FileSystem, xcodePlaygroundSystem: XcodePlaygroundSystem, nodePrinter: @escaping NodePrinter) {
-        self.console = console
+    public init(progressReport: ProgressReport,
+                fileSystem: FileSystem,
+                xcodePlaygroundSystem: XcodePlaygroundSystem,
+                nodePrinter: @escaping NodePrinter) {
+        self.progressReport = progressReport
         self.fileSystem = fileSystem
         self.xcodePlaygroundSystem = xcodePlaygroundSystem
         self.nodePrinter = nodePrinter

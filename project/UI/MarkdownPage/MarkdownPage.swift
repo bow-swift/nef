@@ -9,8 +9,9 @@ import BowEffects
 
 public struct MarkdownPageCommand: ParsableCommand {
     public static var commandName: String = "nef-markdown-page"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Render a markdown file from a Playground page")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Render a markdown file from a Playground page")
 
     public init() {}
     
@@ -25,12 +26,27 @@ public struct MarkdownPageCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         nef.Markdown.renderVerbose(page: page.url, toFile: output.url)
-            .reportStatus(failure: { e in "rendering markdown page. \(e)" },
-                          success: { (url, ast, rendered) in "rendered markdown page '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { (url, ast, rendered) in
+                    if self.verbose {
+                        return """
+                        rendered Markdown page '\(url.path)'.
+                        • AST:
+                        \(ast)
+                        
+                        • Output:
+                        \(rendered)
+                        """
+                    } else {
+                        return "rendered Markdown page '\(url.path)'."
+                    }
+            }, failure: { _ in "rendering Markdown page" })
+            .finish()
     }
 }

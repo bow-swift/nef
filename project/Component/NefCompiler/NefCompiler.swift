@@ -61,15 +61,17 @@ public struct Compiler {
     
     private func compile(page: RenderingOutput, filename: String, inPlayground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
         let page = page.output.all().joined()
+        let step = CompilerEvent.compilingPage(filename.removeExtension)
         
         return EnvIO { env -> IO<RenderError, Void> in
             binding(
-                |<-env.console.print(information: "\t• Compiling page '\(filename.removeExtension)'"),
+                |<-env.progressReport.inProgress(step),
                 |<-env.compilerSystem
                       .compile(page: page, filename: filename, inPlayground: inPlayground, atNefPlayground: nefPlayground, platform: platform, frameworks: frameworks)
                       .contramap(\Environment.compilerEnvironment).provide(env)
                       .mapError { e in RenderError.content(info: e) },
-            yield: ())^.reportStatus(console: env.console)
+            yield: ())^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     
@@ -83,8 +85,9 @@ public struct Compiler {
         return EnvIO { env in
             binding(
                 |<-compilePages(pages, inPlayground: playground, atNefPlayground: nefPlayground, frameworks: frameworks).provide(env),
-                |<-env.console.print(information: "Building playground '\(playground.lastPathComponent.removeExtension)'"),
-                |<-env.console.printStatus(success: true),
+                |<-env.progressReport.oneShot(
+                    CompilerEvent.buildingPlayground(
+                        playground.lastPathComponent.removeExtension)),
             yield: ())^
         }
     }
@@ -100,11 +103,13 @@ public struct Compiler {
         
         return EnvIO { env in
             let dependencies = IO<RenderError, URL>.var()
+            let step = CompilerEvent.buildingWorkspace(workspace.lastPathComponent.removeExtension)
             
             return binding(
-                             |<-env.console.print(information: "Building workspace '\(workspace.lastPathComponent.removeExtension)'"),
+                |<-env.progressReport.inProgress(step),
                 dependencies <- buildWorkspace(workspace, atNefPlayground: nefPlayground, platform: platform, cached: cached).provide(env),
-            yield: [dependencies.get])^.reportStatus(console: env.console)
+                yield: [dependencies.get])^
+                .step(step, reportCompleted: env.progressReport)
         }
     }
     

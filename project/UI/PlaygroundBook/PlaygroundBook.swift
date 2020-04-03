@@ -9,8 +9,9 @@ import BowEffects
 
 public struct PlaygroundBookCommand: ParsableCommand {
     public static var commandName: String = "nef-playground-book"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Build a playground compatible with iPad and 3rd-party libraries")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Build a playground compatible with iPad and 3rd-party libraries")
     
     public init() {}
     
@@ -28,12 +29,17 @@ public struct PlaygroundBookCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         nef.SwiftPlayground.render(package: package.url, name: name, output: output.url)
-            .reportStatus(failure: { e in "rendering Playground Book. \(e)" },
-                          success: { url in "rendered Playground Book in '\(url.path)'" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { url in
+                    "rendered Playground Book in '\(url.path)'"
+                },
+                failure: { _ in "rendering Playground Book" })
+            .finish()
     }
 }

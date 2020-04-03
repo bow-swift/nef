@@ -9,8 +9,9 @@ import BowEffects
 
 public struct JekyllPageCommand: ParsableCommand {
     public static var commandName: String = "nef-jekyll-page"
-    public static var configuration = CommandConfiguration(commandName: commandName,
-                                                           abstract: "Render a markdown file from a Playground page that can be consumed from Jekyll")
+    public static var configuration = CommandConfiguration(
+        commandName: commandName,
+        abstract: "Render a markdown file from a Playground page that can be consumed from Jekyll")
 
     public init() {}
     
@@ -30,12 +31,27 @@ public struct JekyllPageCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ArgumentConsole())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run() -> EnvIO<CLIKit.Console, nef.Error, Void> {
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         nef.Jekyll.renderVerbose(page: page.url, permalink: permalink, toFile: outputFile)
-            .reportStatus(failure: { e in "rendering jekyll page. \(e)" },
-                          success: { (url, ast, rendered) in "rendered jekyll page '\(url.path)'.\(self.verbose ? "\n\n• AST \n\t\(ast)\n\n• Output \n\t\(rendered)" : "")" })
+            .outcomeScope()
+            .reportOutcome(
+                success: { (url, ast, rendered) in
+                    if self.verbose {
+                        return """
+                        rendered jekyll page '\(url.path)'.
+                        • AST
+                        \(ast)
+                        
+                        • Output
+                        \(rendered)"
+                        """
+                    } else {
+                        return "rendered jekyll page '\(url.path)'"
+                    }
+            }, failure: { _ in "rendering jekyll page" })
+            .finish()
     }
 }
