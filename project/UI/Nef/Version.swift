@@ -19,7 +19,7 @@ public struct VersionCommand: ParsableCommand {
     
     
     public func run() throws {
-        try run().provide(ConsoleProgressReport())^.unsafeRunSync()
+        try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
     func run() -> EnvIO<ProgressReport, Never, Void> {

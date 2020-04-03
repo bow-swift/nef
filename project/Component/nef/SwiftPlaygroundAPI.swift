@@ -107,6 +107,6 @@ public enum SwiftPlayground: SwiftPlaygroundAPI {
                     system: MacFileSystem())
             }^
             .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
-            .mapError { _ in .swiftPlaygrond() }^
+            .mapError { e in .swiftPlaygrond(info: "\(e)") }^
     }
 }

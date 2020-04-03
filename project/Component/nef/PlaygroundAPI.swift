@@ -51,7 +51,7 @@ public enum Playground: PlaygroundAPI {
                     nefPlaygroundSystem: MacNefPlaygroundSystem(),
                     xcodePlaygroundSystem: MacXcodePlaygroundSystem())
             }^
-            .mapError { _ in .playground() }
+            .mapError { e in .playground(info: "\(e)") }
     }
     
     public static func nef(
@@ -75,6 +75,6 @@ public enum Playground: PlaygroundAPI {
                     nefPlaygroundSystem: MacNefPlaygroundSystem(),
                     xcodePlaygroundSystem: MacXcodePlaygroundSystem())
             }^
-            .mapError { _ in .playground() }
+            .mapError { e in .playground(info: "\(e)") }
     }
 }

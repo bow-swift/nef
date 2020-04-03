@@ -164,7 +164,7 @@ public enum Markdown: MarkdownAPI {
         NefMarkdown.Markdown()
             .page(content: content)
             .contramap(environment)
-            .mapError { _ in nef.Error.markdown() }
+            .mapError { e in nef.Error.markdown(info: "\(e)") }
     }
     
     public static func renderVerbose(
@@ -189,7 +189,7 @@ public enum Markdown: MarkdownAPI {
         NefMarkdown.Markdown()
             .playground(playground, into: output)
             .contramap(environment)
-            .mapError { _ in nef.Error.markdown() }^
+            .mapError { e in nef.Error.markdown(info: "\(e)") }^
     }
     
     public static func render(
@@ -200,7 +200,7 @@ public enum Markdown: MarkdownAPI {
         NefMarkdown.Markdown()
             .playgrounds(atFolder: folder, into: output)
             .contramap(environment)
-            .mapError { _ in nef.Error.markdown() }^
+            .mapError { e in nef.Error.markdown(info: "\(e)") }^
     }
     
     // MARK: - private <helpers>

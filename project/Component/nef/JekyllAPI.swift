@@ -185,7 +185,7 @@ public enum Jekyll: JekyllAPI {
         NefJekyll.Jekyll()
             .page(content: content, permalink: permalink)
             .contramap(environment)
-            .mapError { _ in nef.Error.jekyll() }
+            .mapError { e in nef.Error.jekyll(info: "\(e)") }
     }
     
     public static func renderVerbose(
@@ -200,7 +200,7 @@ public enum Jekyll: JekyllAPI {
         return NefJekyll.Jekyll()
             .page(content: content, permalink: permalink, filename: filename, into: output)
             .contramap(environment)
-            .mapError { _ in nef.Error.jekyll() }
+            .mapError { e in nef.Error.jekyll(info: "\(e)") }
     }
     
     
@@ -212,7 +212,7 @@ public enum Jekyll: JekyllAPI {
         NefJekyll.Jekyll()
             .playground(playground, into: output)
             .contramap(environment)
-            .mapError { _ in nef.Error.jekyll() }^
+            .mapError { e in nef.Error.jekyll(info: "\(e)") }^
     }
     
     public static func render(
@@ -224,7 +224,7 @@ public enum Jekyll: JekyllAPI {
         NefJekyll.Jekyll()
             .playgrounds(at: playgroundsAt, mainPage: mainPage, into: output)
             .contramap(environment)
-            .mapError { _ in nef.Error.jekyll() }^
+            .mapError { e in nef.Error.jekyll(info: "\(e)") }^
     }
     
     // MARK: - private <helpers>

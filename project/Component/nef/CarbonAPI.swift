@@ -241,7 +241,7 @@ public enum Carbon: CarbonAPI {
             .contramap { progressReport in
                 environment(progressReport: progressReport, style: style)
             }
-            .mapError { _ in nef.Error.carbon() }
+            .mapError { e in nef.Error.carbon(info: "\(e)") }
     }
     
     public static func renderVerbose(
@@ -266,7 +266,7 @@ public enum Carbon: CarbonAPI {
         NefCarbon.Carbon()
             .playground(playground, into: output)
             .contramap { progressReport in environment(progressReport: progressReport, style: style) }
-            .mapError { _ in nef.Error.carbon() }
+            .mapError { e in nef.Error.carbon(info: "\(e)") }
     }
     
     public static func render(
@@ -278,7 +278,7 @@ public enum Carbon: CarbonAPI {
         NefCarbon.Carbon()
             .playgrounds(at: playgroundsAt, into: output)
             .contramap { progressReport in environment(progressReport: progressReport, style: style) }
-            .mapError { _ in nef.Error.carbon() }
+            .mapError { e in nef.Error.carbon(info: "\(e)") }
     }
     
     public static func request(

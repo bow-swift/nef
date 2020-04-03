@@ -1,6 +1,7 @@
 import Bow
 import BowEffects
 import nef
+import Foundation
 
 public extension Kleisli where D: OutcomeReport, F == IOPartial<nef.Error> {
     
