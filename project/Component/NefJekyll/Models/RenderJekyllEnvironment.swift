@@ -44,10 +44,14 @@ public struct RenderJekyllEnvironment<A> {
     static func permalink(info: RenderEnvironmentInfo) -> IO<CoreRenderError, String> {
         switch info {
         case let .info(playground, page):
-            return IO.pure("/\(docs)/\(playground.escapedTitle)/\(page.escapedTitle)/")^
+            return IO.pure("/\(docs)/\(pagePathComponent(playground: playground, page: page))/")^
         default:
             return IO.raiseError(.renderEmpty)^
         }
+    }
+    
+    static func pagePathComponent(playground: RenderingURL, page: RenderingURL) -> String {
+        "\(playground.escapedTitle)/\(page.escapedTitle)"
     }
     
     // MARK: - init <helper>

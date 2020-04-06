@@ -64,8 +64,12 @@ public struct Jekyll {
     }
     
     private func writePage(page: RenderingURL, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
+        writePage(pathComponent: page.escapedTitle, content: content, output: output)
+    }
+    
+    private func writePage(pathComponent: String, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         EnvIO { env in
-            let file = output.appendingPathComponent(page.escapedTitle).appendingPathComponent("README.md")
+            let file = output.appendingPathComponent(pathComponent).appendingPathComponent("README.md")
             return env.persistence.writePage(content, file).provide(env.fileSystem)
                                   .map { _ in file }^.mapError { _ in .page(file) }
         }^
@@ -76,7 +80,10 @@ public struct Jekyll {
     }
     
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        content.traverse { info in self.writePage(page: info.page, content: info.output, output: output) }
+        
+        content.traverse { info in self.writePage(pathComponent: Environment.pagePathComponent(playground: playground, page: info.page),
+                                                  content: info.output,
+                                                  output: output) }
                .map { _ in playground.url }^
     }
     
@@ -137,9 +144,7 @@ public struct Jekyll {
             info.traverse { (page, _, _) in sidebarPage(playground: playground, page: page) }.map { sidebarPages in
                 """
                    - title: \(playground)
-
                      nested_options:
-
                 \(sidebarPages.all().joined(separator: "\n\n"))
                 """
             }^

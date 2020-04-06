@@ -10,6 +10,7 @@ public struct RenderingURL {
 
     public var escapedTitle: String {
         title.lowercased().replacingOccurrences(of: "?", with: "-")
+                          .replacingOccurrences(of: "→", with: "")
                           .replacingOccurrences(of: " ", with: "-")
     }
     

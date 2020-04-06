@@ -59,8 +59,12 @@ public struct Markdown {
     }
     
     private func writePage(page: RenderingURL, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
+        writePage(pathComponent: page.escapedTitle, content: content, output: output)
+    }
+    
+    private func writePage(pathComponent: String, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         EnvIO { env in
-            let file = output.appendingPathComponent(page.escapedTitle).appendingPathExtension("md")
+            let file = output.appendingPathComponent(pathComponent).appendingPathExtension("md")
             return env.persistence.writePage(content, file).provide(env.fileSystem)
                                   .map { _ in file }^.mapError { _ in .page(file) }
         }^
@@ -71,7 +75,9 @@ public struct Markdown {
     }
     
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        content.traverse { info in self.writePage(page: info.page, content: info.output, output: output) }
+        content.traverse { info in self.writePage(pathComponent: self.pagePathComponent(playground: playground, page: info.page),
+                                                  content: info.output,
+                                                  output: output) }
                .map { _ in playground.url }^
     }
     
@@ -97,6 +103,10 @@ public struct Markdown {
     // MARK: private <utils>
     private func contentFrom(page: RenderingOutput) -> String {
         page.output.all().joined()
+    }
+    
+    private func pagePathComponent(playground: RenderingURL, page: RenderingURL) -> String {
+        "\(playground.escapedTitle)/\(page.escapedTitle)"
     }
 }
 
