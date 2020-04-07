@@ -28,10 +28,17 @@ public enum RenderEnvironmentInfo {
     case info(playground: RenderingURL, page: RenderingURL)
     case empty
     
-    public var data: (playground: RenderingURL, page: RenderingURL)? {
+    public var pathComponent: String {
+        guard let data = data else { return "" }
+        return "\(data.playground.escapedTitle)/\(data.page.escapedTitle)"
+    }
+    
+    var data: (playground: RenderingURL, page: RenderingURL)? {
         switch self {
-        case let .info(playground, page): return (playground, page)
-        default: return nil
+        case let .info(playground, page):
+            return (playground, page)
+        default:
+            return nil
         }
     }
 }

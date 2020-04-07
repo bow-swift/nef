@@ -80,11 +80,12 @@ public struct Jekyll {
     }
     
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        
-        content.traverse { info in self.writePage(pathComponent: Environment.pagePathComponent(playground: playground, page: info.page),
-                                                  content: info.output,
-                                                  output: output) }
-               .map { _ in playground.url }^
+        content.traverse { info -> EnvIO<Environment, RenderError, URL> in
+            let pathComponent = RenderEnvironmentInfo.info(playground: playground, page: info.page).pathComponent
+            return self.writePage(pathComponent: pathComponent.isEmpty ? pathComponent : info.page.escapedTitle,
+                                  content: info.output,
+                                  output: output)
+        }.map { _ in playground.url }^
     }
     
     private func writePage(_ page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {

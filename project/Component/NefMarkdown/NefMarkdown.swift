@@ -75,10 +75,12 @@ public struct Markdown {
     }
     
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        content.traverse { info in self.writePage(pathComponent: self.pagePathComponent(playground: playground, page: info.page),
-                                                  content: info.output,
-                                                  output: output) }
-               .map { _ in playground.url }^
+        content.traverse { info -> EnvIO<Environment, RenderError, URL> in
+            let pathComponent = RenderEnvironmentInfo.info(playground: playground, page: info.page).pathComponent
+            return self.writePage(pathComponent: pathComponent.isEmpty ? pathComponent : info.page.escapedTitle,
+                                  content: info.output,
+                                  output: output)
+        }.map { _ in playground.url }^
     }
     
     private func write(page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
@@ -103,10 +105,6 @@ public struct Markdown {
     // MARK: private <utils>
     private func contentFrom(page: RenderingOutput) -> String {
         page.output.all().joined()
-    }
-    
-    private func pagePathComponent(playground: RenderingURL, page: RenderingURL) -> String {
-        "\(playground.escapedTitle)/\(page.escapedTitle)"
     }
 }
 
