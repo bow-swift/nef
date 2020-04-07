@@ -1,3 +1,5 @@
+import NefModels
+
 public enum PlaygroundBookEvent {
     case cleanup
     case creatingStructure(String)
@@ -21,4 +23,21 @@ extension PlaygroundBookEvent: CustomProgressDescription {
             return "Building Swift Playground..."
         }
     }
+    
+    public var currentStep: UInt {
+        switch self {
+        case .cleanup:
+            return 1
+        case .creatingStructure:
+            return 2
+        case .downloadingDependencies:
+            return 3
+        case .gettingModules:
+            return 4
+        case .buildingPlayground:
+            return 5
+        }
+    }
+    
+    public var totalSteps: UInt { 5 }
 }

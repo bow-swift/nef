@@ -37,6 +37,13 @@ public enum ProgressEventStatus {
 
 public protocol CustomProgressDescription {
     var progressDescription: String { get }
+    var currentStep: UInt { get }
+    var totalSteps: UInt { get }
+}
+
+public extension CustomProgressDescription {
+    var currentStep: UInt { 0 }
+    var totalSteps: UInt { 0 }
 }
 
 public struct ProgressEvent<A: CustomProgressDescription> {
