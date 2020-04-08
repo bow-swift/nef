@@ -9,14 +9,19 @@ public struct RenderingURL {
     public let title: String
 
     public var escapedTitle: String {
-        title.lowercased().replacingOccurrences(of: "?", with: "-")
-                          .replacingOccurrences(of: "→", with: "")
-                          .replacingOccurrences(of: " ", with: "-")
+        String(title.lowercased().unicodeScalars.filter { !$0.isAlphanumeric || $0 == " " || $0 == "-" })
+            .replacingOccurrences(of: " ", with: "-")
     }
     
     public init(url: URL, title: String) {
         self.url = url
         self.title = title
+    }
+}
+
+extension Unicode.Scalar {
+    var isAlphanumeric: Bool {
+        CharacterSet.alphanumerics.inverted.contains(self)
     }
 }
 

@@ -116,7 +116,7 @@ public struct Carbon {
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         content.traverse { info -> EnvIO<Environment, RenderError, URL> in
             let pathComponent = RenderEnvironmentInfo.info(playground: playground, page: info.page).pathComponent
-            return self.writePage(pagePathComponent: pathComponent.isEmpty ? pathComponent : info.page.escapedTitle,
+            return self.writePage(pagePathComponent: !pathComponent.isEmpty ? pathComponent : info.page.escapedTitle,
                                   content: info.output,
                                   output: output)
         }.map { _ in playground.url }^
