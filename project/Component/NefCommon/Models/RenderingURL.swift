@@ -9,7 +9,7 @@ public struct RenderingURL {
     public let title: String
 
     public var escapedTitle: String {
-        String(title.lowercased().unicodeScalars.filter { !$0.isAlphanumeric || $0 == " " || $0 == "-" })
+        String(title.lowercased().unicodeScalars.filter { $0.isAlphanumeric || $0 == " " || $0 == "-" })
             .replacingOccurrences(of: " ", with: "-")
     }
     
@@ -21,7 +21,7 @@ public struct RenderingURL {
 
 extension Unicode.Scalar {
     var isAlphanumeric: Bool {
-        CharacterSet.alphanumerics.inverted.contains(self)
+        CharacterSet.alphanumerics.contains(self)
     }
 }
 
