@@ -59,8 +59,12 @@ public struct Markdown {
     }
     
     private func writePage(page: RenderingURL, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
+        writePage(pathComponent: page.escapedTitle, content: content, output: output)
+    }
+    
+    private func writePage(pathComponent: String, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         EnvIO { env in
-            let file = output.appendingPathComponent(page.escapedTitle).appendingPathExtension("md")
+            let file = output.appendingPathComponent(pathComponent).appendingPathExtension("md")
             return env.persistence.writePage(content, file).provide(env.fileSystem)
                                   .map { _ in file }^.mapError { _ in .page(file) }
         }^
@@ -71,8 +75,12 @@ public struct Markdown {
     }
     
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        content.traverse { info in self.writePage(page: info.page, content: info.output, output: output) }
-               .map { _ in playground.url }^
+        content.traverse { info -> EnvIO<Environment, RenderError, URL> in
+            let pathComponent = RenderEnvironmentInfo.info(playground: playground, page: info.page).pathComponent
+            return self.writePage(pathComponent: !pathComponent.isEmpty ? pathComponent : info.page.escapedTitle,
+                                  content: info.output,
+                                  output: output)
+        }.map { _ in playground.url }^
     }
     
     private func write(page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {

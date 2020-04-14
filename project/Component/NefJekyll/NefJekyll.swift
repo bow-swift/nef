@@ -64,8 +64,12 @@ public struct Jekyll {
     }
     
     private func writePage(page: RenderingURL, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
+        writePage(pathComponent: page.escapedTitle, content: content, output: output)
+    }
+    
+    private func writePage(pathComponent: String, content: RenderingOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
         EnvIO { env in
-            let file = output.appendingPathComponent(page.escapedTitle).appendingPathComponent("README.md")
+            let file = output.appendingPathComponent(pathComponent).appendingPathComponent("README.md")
             return env.persistence.writePage(content, file).provide(env.fileSystem)
                                   .map { _ in file }^.mapError { _ in .page(file) }
         }^
@@ -76,8 +80,12 @@ public struct Jekyll {
     }
     
     private func writePlayground(playground: RenderingURL, content: PlaygroundOutput, output: URL) -> EnvIO<Environment, RenderError, URL> {
-        content.traverse { info in self.writePage(page: info.page, content: info.output, output: output) }
-               .map { _ in playground.url }^
+        content.traverse { info -> EnvIO<Environment, RenderError, URL> in
+            let pathComponent = RenderEnvironmentInfo.info(playground: playground, page: info.page).pathComponent
+            return self.writePage(pathComponent: !pathComponent.isEmpty ? pathComponent : info.page.escapedTitle,
+                                  content: info.output,
+                                  output: output)
+        }.map { _ in playground.url }^
     }
     
     private func writePage(_ page: RenderingOutput, into file: URL) -> EnvIO<Environment, RenderError, Void> {
@@ -137,9 +145,7 @@ public struct Jekyll {
             info.traverse { (page, _, _) in sidebarPage(playground: playground, page: page) }.map { sidebarPages in
                 """
                    - title: \(playground)
-
                      nested_options:
-
                 \(sidebarPages.all().joined(separator: "\n\n"))
                 """
             }^

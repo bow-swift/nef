@@ -99,7 +99,7 @@ public struct Render<A> {
                          |<-env.progressReport.inProgress(step),
                 rendered <- env.nodePrinter(content).provide(info)
                                .mapError { e in .content(info: e) },
-                yield: rendered.get)^
+            yield: rendered.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
     }
@@ -112,12 +112,12 @@ public struct Render<A> {
             let step = RenderEvent.gettingPagesFromPlayground(playground.description)
             
             return binding(
-                |<-env.progressReport.inProgress(step),
-                pages <- env.xcodePlaygroundSystem.pages(in: playground.url)
-                    .provide(env.fileSystem)
-                    .mapError { _ in .getPages(playground: playground.url) },
+                              |<-env.progressReport.inProgress(step),
+                        pages <- env.xcodePlaygroundSystem.pages(in: playground.url)
+                                    .provide(env.fileSystem)
+                                    .mapError { _ in .getPages(playground: playground.url) },
                 rendererPages <- pages.get.traverse { url in RenderingURL(url: url, title: self.pageName(url)).io() },
-                yield: rendererPages.get)^
+            yield: rendererPages.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
     }
@@ -129,12 +129,12 @@ public struct Render<A> {
             let step = RenderEvent.gettingPlaygrounds(folder.lastPathComponent.removeExtension)
             
             return binding(
-                |<-env.progressReport.inProgress(step),
-                playgrounds <- env.xcodePlaygroundSystem.linkedPlaygrounds(at: folder)
-                    .provide(env.fileSystem)
-                    .mapError { _ in .getPlaygrounds(folder: folder) },
+                         |<-env.progressReport.inProgress(step),
+             playgrounds <- env.xcodePlaygroundSystem.linkedPlaygrounds(at: folder)
+                               .provide(env.fileSystem)
+                               .mapError { _ in .getPlaygrounds(folder: folder) },
                 rendered <- playgrounds.get.traverse { url in RenderingURL(url: url, title: self.playgroundName(url)).io() },
-                yield: rendered.get)^
+            yield: rendered.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
     }

@@ -42,12 +42,9 @@ public struct RenderJekyllEnvironment<A> {
     static var data: String { "_data" }
     
     static func permalink(info: RenderEnvironmentInfo) -> IO<CoreRenderError, String> {
-        switch info {
-        case let .info(playground, page):
-            return IO.pure("/\(docs)/\(playground.escapedTitle)/\(page.escapedTitle)/")^
-        default:
-            return IO.raiseError(.renderEmpty)^
-        }
+        let pathComponent = info.pathComponent
+        return pathComponent.isEmpty ? IO.raiseError(.renderEmpty)^
+                                     : IO.pure("/\(docs)/\(info.pathComponent)/")^
     }
     
     // MARK: - init <helper>
