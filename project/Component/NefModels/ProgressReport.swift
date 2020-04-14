@@ -42,8 +42,8 @@ public protocol CustomProgressDescription {
 }
 
 public extension CustomProgressDescription {
-    var currentStep: UInt { 0 }
-    var totalSteps: UInt { 0 }
+    var currentStep: UInt { 1 }
+    var totalSteps: UInt { 1 }
 }
 
 public struct ProgressEvent<A: CustomProgressDescription> {
