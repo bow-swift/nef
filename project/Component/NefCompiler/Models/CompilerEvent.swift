@@ -1,3 +1,5 @@
+import NefModels
+
 public enum CompilerEvent {
     case buildingWorkspace(String)
     case buildingPlayground(String)
