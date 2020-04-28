@@ -21,17 +21,21 @@ class NefCompilerSystem: CompilerSystem {
     func compile(page: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         let content = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
         let linkers = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
+        let libs = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
         let sources = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
         
         return binding(
             content <- self.reorganizeHeaders(page: page),
             linkers <- self.dependencies(platform: platform),
+               libs <- self.libraries(platform: platform),
             sources <- self.sources(inPlayground: playground),
                     |<-self.compile(content: content.get, filename: filename,
                                     inPlayground: playground, atNefPlayground: nefPlayground,
-                                    sources: sources.get,
-                                    platform: platform,
-                                    frameworks: frameworks, linkers: linkers.get),
+                                    options: .init(sources: sources.get,
+                                                   platform: platform,
+                                                   frameworks: frameworks,
+                                                   linkers: linkers.get,
+                                                   libs: libs.get)),
         yield: ())^
     }
     
@@ -145,7 +149,7 @@ class NefCompilerSystem: CompilerSystem {
         yield: nefPlayground.appending(.fw))^
     }
     
-    private func compile(content: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, sources: [URL], platform: Platform, frameworks: [URL], linkers: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    private func compile(content: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, options: CompilerOptions) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         EnvIO { env in
             let playgroundName = playground.lastPathComponent.removeExtension
             let filename = "\(playgroundName)-\(filename).swift".lowercased()
@@ -156,11 +160,9 @@ class NefCompilerSystem: CompilerSystem {
             return binding(
                 temporal <- env.fileSystem.temporalFile(content: content, filename: "main.swift").mapError { e in .build(info: "\(e)") },
                          |<-env.shell.compile(file: temporal.get,
-                                              sources: sources,
-                                              platform: platform,
-                                              frameworks: frameworks,
-                                              linkers: linkers,
-                                              output: output, log: log).mapError { e in .build(temporal.get, info: "\(e)") },
+                                              options: options,
+                                              output: output,
+                                              log: log).mapError { e in .build(temporal.get, info: "\(e)") },
                          |<-env.fileSystem.write(content: content, toFile: output.path).mapError { e in .build(output, info: "\(e)") },
             yield: ())
         }
@@ -241,7 +243,15 @@ class NefCompilerSystem: CompilerSystem {
         EnvIO { env in
             env.shell.dependencies(platform: platform)
                 .mapError { _ in .dependencies() }
-                .map { [$0] }^
+                .map { [$0] }
+        }
+    }
+    
+    private func libraries(platform: Platform) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
+        EnvIO { env in
+            env.shell.libraries(platform: platform)
+                .mapError { _ in .dependencies() }
+                .map { [$0] }
         }
     }
     
@@ -253,7 +263,4 @@ class NefCompilerSystem: CompilerSystem {
                                  .mapError { _ in .build() }.handleError { _ in [] }^
         }
     }
-    
-    // MARK: helpers <path>
-    
 }
