@@ -8,10 +8,9 @@ BUILD_PATH = /tmp/$(TOOL_NAME)/$(version)
 PREFIX_BIN = $(prefix)/bin
 PREFIX_TESTS = $(prefix)/share/tests
 TAR_FILENAME = $(version).tar.gz
-SWIFT_PACKAGE_PATH = project
+SWIFT_PACKAGE_PATH = .
 BINARIES_PATH = $(BUILD_PATH)/release
-BINARIES =  nef\
-						nefc\
+BINARIES =  nefc\
 						nef-clean\
 						nef-playground\
 						nef-markdown\
@@ -26,6 +25,7 @@ BINARIES =  nef\
 .PHONY: install
 install: uninstall build install_folders
 	$(foreach binary,$(BINARIES),$(shell install $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
+	@install $(BINARIES_PATH)/nef-menu $(PREFIX_BIN)/nef
 	@cp -R Documentation.app $(PREFIX_TESTS)
 
 .PHONY: install_folders

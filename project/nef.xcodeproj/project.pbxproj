@@ -153,6 +153,7 @@
 		8BB7D13A23B0E10800C8E6F8 /* MacXcodePlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* MacXcodePlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BC8BCCE2458AA6A008AE611 /* CompilerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8BCCB2458A9A4008AE611 /* CompilerOptions.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
 		8BD1390B23A7D79100C24BFC /* Collection+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */; };
 		8BD4E312238814B7002DECDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD4E2F52388141E002DECDB /* main.swift */; };
@@ -575,6 +576,7 @@
 		8BBD14AF2390179B0002970C /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD14B12390179B0002970C /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
 		8BBD14B22390179B0002970C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BC8BCCB2458A9A4008AE611 /* CompilerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerOptions.swift; sourceTree = "<group>"; };
 		8BC8E94022D3A65D009740E4 /* CoreTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoreTestPlan.xctestplan; sourceTree = "<group>"; };
 		8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonViewer.swift; sourceTree = "<group>"; };
 		8BD1390A23A7D79100C24BFC /* Collection+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Utils.swift"; sourceTree = "<group>"; };
@@ -810,6 +812,7 @@
 				8B46C420238EBC7400437659 /* PlaygroundExcludeItem.swift */,
 				8BD6979A23FC45FD000A512F /* PlaygroundPlatform.swift */,
 				11C9DFB424332B8300E906E4 /* ProgressReport.swift */,
+				8BC8BCCB2458A9A4008AE611 /* CompilerOptions.swift */,
 				8B3CB83F22D3929B00919F36 /* Support Files */,
 			);
 			path = NefModels;
@@ -2302,6 +2305,7 @@
 			files = (
 				8B46C422238EBD9300437659 /* PlaygroundExcludeItem.swift in Sources */,
 				8BD697A223FC48D8000A512F /* PlaygroundPlatform.swift in Sources */,
+				8BC8BCCE2458AA6A008AE611 /* CompilerOptions.swift in Sources */,
 				11C9DFB524332B8300E906E4 /* ProgressReport.swift in Sources */,
 				8B3CB8C022D3963B00919F36 /* CarbonModel.swift in Sources */,
 				8BD6978823FAA902000A512F /* PlaygroundDependencies.swift in Sources */,
@@ -3963,7 +3967,7 @@
 			repositoryURL = "https://github.com/bow-swift/SwiftLine.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.4;
+				minimumVersion = 0.5.5;
 			};
 		};
 		8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
@@ -3971,7 +3975,7 @@
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.4;
+				minimumVersion = 0.0.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

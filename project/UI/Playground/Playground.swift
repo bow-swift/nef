@@ -15,11 +15,11 @@ public struct PlaygroundCommand: ParsableCommand {
 
     public init() {}
     
-    @ArgumentParser.Option(default: .init(argument: "."), help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
-    private var output: ArgumentPath
-
     @ArgumentParser.Option(default: "BowPlayground", help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
     private var name: String
+    
+    @ArgumentParser.Option(default: .init(argument: "."), help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
+    private var output: ArgumentPath
 
     @ArgumentParser.Option(default: .ios, help: "set the target to `ios` or `macos`")
     private var platform: Platform
