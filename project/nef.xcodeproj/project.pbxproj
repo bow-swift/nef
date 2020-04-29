@@ -3967,7 +3967,7 @@
 			repositoryURL = "https://github.com/bow-swift/SwiftLine.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.4;
+				minimumVersion = 0.5.5;
 			};
 		};
 		8B558DE62431FDB0004B9CAA /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
@@ -3975,7 +3975,7 @@
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.4;
+				minimumVersion = 0.0.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
