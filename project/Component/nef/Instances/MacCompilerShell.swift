@@ -52,25 +52,15 @@ class MacCompilerShell: CompilerShell {
     }
     
     func dependencies(platform: Platform) -> IO<CompilerShellError, URL> {
-        IO.invoke {
-            let result = run("/usr/bin/xcode-select", args: ["-p"])
-            guard result.exitStatus == 0 else {
-                throw CompilerShellError.failed(command: "xcode-select", info: result.stderr)
-            }
-            
-            return URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer/Library/Frameworks/")
-        }
+        activeDeveloperDirectory(platform: platform).map { url in
+            url.appendingPathComponent("Library/Frameworks")
+        }^
     }
     
     func libraries(platform: Platform) -> IO<CompilerShellError, URL> {
-        IO.invoke {
-            let result = run("/usr/bin/xcode-select", args: ["-p"])
-            guard result.exitStatus == 0 else {
-                throw CompilerShellError.failed(command: "xcode-select", info: result.stderr)
-            }
-            
-            return URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer/usr/lib/")
-        }
+        activeDeveloperDirectory(platform: platform).map { url in
+            url.appendingPathComponent("/usr/lib")
+        }^
     }
     
     func compile(file: URL, options: CompilerOptions, output: URL, log: URL) -> IO<CompilerShellError, Void> {
@@ -78,7 +68,7 @@ class MacCompilerShell: CompilerShell {
         
         return binding(
             target <- self.target(platform: options.platform),
-            |<-self.compile(file: file, target: target.get, options: options, output: output, log: log),
+                   |<-self.compile(file: file, target: target.get, options: options, output: output, log: log),
         yield: ())^
     }
     
@@ -120,22 +110,29 @@ class MacCompilerShell: CompilerShell {
     }
     
     private func target(platform: Platform) -> IO<CompilerShellError, String> {
+        activeDeveloperDirectory(platform: platform).flatMap { url in
+            IO.invoke {
+                let settings = url.appendingPathComponent("SDKs/\(platform.framework).sdk/SDKSettings.json")
+                guard let content = try? String(contentsOf: settings),
+                      let rawBundleVersion = content.matches(pattern: "(?<=\"MinimalDisplayName\":\").*(?=\")").first,
+                      let bundleVersion = rawBundleVersion.components(separatedBy: "\"").first,
+                      let target = platform.target(bundleVersion: bundleVersion) else {
+                        throw CompilerShellError.failed(command: "target(platform:)", info: "can not extract CFBundleVersion from \(platform.framework)")
+                }
+                
+                return target
+            }^
+        }^
+    }
+    
+    private func activeDeveloperDirectory(platform: Platform) -> IO<CompilerShellError, URL> {
         IO.invoke {
             let result = run("/usr/bin/xcode-select", args: ["-p"])
             guard result.exitStatus == 0 else {
                 throw CompilerShellError.failed(command: "xcode-select", info: result.stderr)
             }
             
-            let file = URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer/SDKs/\(platform.framework).sdk/SDKSettings.json")
-            
-            guard let content = try? String(contentsOf: file),
-                  let rawBundleVersion = content.matches(pattern: "(?<=\"MinimalDisplayName\":\").*(?=\")").first,
-                  let bundleVersion = rawBundleVersion.components(separatedBy: "\"").first,
-                  let target = platform.target(bundleVersion: bundleVersion) else {
-                    throw CompilerShellError.failed(command: "xcode-select", info: "can not extract CFBundleVersion from \(platform.framework)")
-            }
-            
-            return target
+            return URL(fileURLWithPath: "\(result.stdout)/Platforms/\(platform.framework).platform/Developer")
         }
     }
 }

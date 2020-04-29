@@ -68,7 +68,7 @@ public struct Compiler {
                 |<-env.progressReport.inProgress(step),
                 |<-env.compilerSystem
                       .compile(page: page, filename: filename, inPlayground: inPlayground, atNefPlayground: nefPlayground, platform: platform, frameworks: frameworks)
-                      .contramap(\Environment.compilerEnvironment).provide(env)
+                      .contramap(\.compilerEnvironment).provide(env)
                       .mapError { e in RenderError.content(info: e) },
             yield: ())^
                 .step(step, reportCompleted: env.progressReport)
