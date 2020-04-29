@@ -5,7 +5,7 @@ import NefCommon
 import Bow
 import BowEffects
 
-class MacFileSystem: NefCommon.FileSystem {
+final class UnixFileSystem: NefCommon.FileSystem {
     
     func createDirectory(atPath path: String) -> IO<FileSystemError, ()> {
         FileManager.default.createDirectoryIO(atPath: path, withIntermediateDirectories: true)

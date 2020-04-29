@@ -22,4 +22,3 @@ public enum Version: VersionAPI {
         IO.pure(BuildConfiguration.buildVersion)^
     }
 }
-

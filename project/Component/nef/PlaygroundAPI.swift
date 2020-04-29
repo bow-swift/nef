@@ -47,9 +47,9 @@ public enum Playground: PlaygroundAPI {
                    dependencies: dependencies)
             .contramap { progressReport in NefPlayground.PlaygroundEnvironment(
                     progressReport: progressReport,
-                    fileSystem: MacFileSystem(),
+                    fileSystem: UnixFileSystem(),
                     nefPlaygroundSystem: MacNefPlaygroundSystem(),
-                    xcodePlaygroundSystem: MacXcodePlaygroundSystem())
+                    xcodePlaygroundSystem: UnixPlaygroundSystem())
             }^
             .mapError { e in .playground(info: "\(e)") }
     }
@@ -71,9 +71,9 @@ public enum Playground: PlaygroundAPI {
                 dependencies: dependencies)
             .contramap { progressReport in NefPlayground.PlaygroundEnvironment(
                     progressReport: progressReport,
-                    fileSystem: MacFileSystem(),
+                    fileSystem: UnixFileSystem(),
                     nefPlaygroundSystem: MacNefPlaygroundSystem(),
-                    xcodePlaygroundSystem: MacXcodePlaygroundSystem())
+                    xcodePlaygroundSystem: UnixPlaygroundSystem())
             }^
             .mapError { e in .playground(info: "\(e)") }
     }

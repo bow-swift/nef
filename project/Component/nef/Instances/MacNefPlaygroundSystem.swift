@@ -7,7 +7,7 @@ import Bow
 import BowEffects
 import Swiftline
 
-class MacNefPlaygroundSystem: NefPlaygroundSystem {
+final class MacNefPlaygroundSystem: NefPlaygroundSystem {
     
     func installTemplate(into output: URL, name: String, platform: Platform) -> EnvIO<FileSystem, NefPlaygroundSystemError, NefPlaygroundURL> {
         func existPlayground(at output: URL, name: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
@@ -366,7 +366,7 @@ class MacNefPlaygroundSystem: NefPlaygroundSystem {
         }
     }
     
-    func createCocoaPodsWorkspace(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+    private func createCocoaPodsWorkspace(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         EnvIO.invoke { _ in
             let result = run("pod", args: ["install", "--project-directory=\(playground.appending(.contentFiles).path)"])
             guard result.exitStatus == 0 else {

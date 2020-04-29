@@ -103,8 +103,8 @@ public enum SwiftPlayground: SwiftPlaygroundAPI {
             .contramap { progressReport in
                 PlaygroundEnvironment(
                     progressReport: progressReport,
-                    shell: MacPackageShell(),
-                    system: MacFileSystem())
+                    shell: UnixPackageShell(),
+                    system: UnixFileSystem())
             }^
             .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
             .mapError { e in .swiftPlaygrond(info: "\(e)") }^

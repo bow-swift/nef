@@ -5,7 +5,7 @@ import NefCommon
 import Bow
 import BowEffects
 
-class MacXcodePlaygroundSystem: XcodePlaygroundSystem {
+final class UnixPlaygroundSystem: XcodePlaygroundSystem {
     
     func xcodeprojs(at folder: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
         func nea(from xcodeprojs: [URL], inFolder folder: URL) -> IO<XcodePlaygroundSystemError, NEA<URL>> {
