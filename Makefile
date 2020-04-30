@@ -2,7 +2,7 @@ SHELL = /bin/bash
 TOOL_NAME = nef
 
 prefix ?= /usr/local
-version ?= 0.6.0
+version ?= 0.6.1
 
 BUILD_PATH = /tmp/$(TOOL_NAME)/$(version)
 PREFIX_BIN = $(prefix)/bin
