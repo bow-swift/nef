@@ -1,10 +1,6 @@
 //  Copyright © 2020 The nef Authors.
 
 import Foundation
-import NefCommon
-@_exported import NefModels
-import NefPlayground
-
 import Bow
 import BowEffects
 
@@ -22,4 +18,3 @@ public enum Version: VersionAPI {
         IO.pure(BuildConfiguration.buildVersion)^
     }
 }
-

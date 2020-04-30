@@ -5,7 +5,7 @@ import NefSwiftPlayground
 import BowEffects
 import Swiftline
 
-class MacPackageShell: PackageShell {
+final class UnixPackageShell: PackageShell {
     
     func resolve(packagePath: String, buildPath: String) -> IO<PackageShellError, Void> {
         IO.invoke {

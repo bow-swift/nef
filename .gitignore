@@ -39,3 +39,7 @@ vendor/
 /Documentation.app/nef
 /Documentation.app/Contents/MacOS/Pods
 /Documentation.app/Contents/MacOS/Podfile.lock
+
+## linux
+**/LinuxMain.swift
+**/XCTestManifests.swift

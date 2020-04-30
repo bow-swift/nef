@@ -1,7 +1,7 @@
 // swift-tools-version:5.2
 import PackageDescription
 
-// MARK: - Dependencies
+// MARK: - Target.Dependencies
 extension Target.Dependency {
     static var bow: Target.Dependency {
         .product(name: "Bow", package: "Bow")
@@ -18,10 +18,6 @@ extension Target.Dependency {
     static var swiftLine: Target.Dependency {
         .product(name: "Swiftline", package: "Swiftline")
     }
-    
-    static var argumentParser: Target.Dependency {
-        .product(name: "ArgumentParser", package: "swift-argument-parser")
-    }
 }
 
 extension Target {
@@ -33,7 +29,18 @@ extension Target {
 // MARK: - Libraries
 extension Target {
     static var modules: [Target] {
-        [
+        #if os(Linux)
+        return [
+            .nefModels,
+            .nefCommon,
+            .nefCore,
+            .nefRender,
+            .nefMarkdown,
+            .nefJekyll,
+            .nefPlaygroundBook,
+        ]
+        #else
+        return [
             .nefModels,
             .nefCommon,
             .nefCore,
@@ -46,14 +53,24 @@ extension Target {
             .nefPlayground,
             .nefPlaygroundBook,
         ]
+        #endif
     }
 
     static var nefModels: Target {
-        .target(name: "NefModels",
-                dependencies: [.bow,
-                               .bowEffects,
-                               .bowOptics],
-                path: "project/Component/NefModels")
+        #if os(Linux)
+        return .target(name: "NefModels",
+                       dependencies: [.bow,
+                                      .bowEffects,
+                                      .bowOptics],
+                       path: "project/Component/NefModels",
+                       exclude: ["CarbonView.swift"])
+        #else
+        return .target(name: "NefModels",
+                       dependencies: [.bow,
+                                      .bowEffects,
+                                      .bowOptics],
+                       path: "project/Component/NefModels")
+        #endif
     }
     
     static var nefCommon: Target {
@@ -119,9 +136,21 @@ extension Target {
 
 extension Target {
     static var nef: Target {
-        .target(name: "nef",
-                dependencies: [.swiftLine] + Target.modules.map { $0.asDependency },
-                path: "project/Component/nef")
+        #if os(Linux)
+        return .target(name: "nef",
+                       dependencies: [.swiftLine] + Target.modules.map { $0.asDependency },
+                       path: "project/Component/nef",
+                       exclude: ["CleanAPI.swift",
+                                 "CompilerAPI.swift",
+                                 "CarbonAPI.swift",
+                                 "PlaygroundAPI.swift",
+                                 "Instances/MacCompilerShell.swift",
+                                 "Instances/MacNefPlaygroundSystem.swift"])
+        #else
+        return .target(name: "nef",
+                       dependencies: [.swiftLine] + Target.modules.map { $0.asDependency },
+                       path: "project/Component/nef")
+        #endif
     }
 }
 
@@ -161,7 +190,7 @@ extension Target {
     
     static var cliKit: Target {
         .target(name: "CLIKit",
-                dependencies: [.argumentParser,
+                dependencies: [.product(name: "ArgumentParser", package: "swift-argument-parser"),
                                Target.nef.asDependency],
                 path: "project/UI",
                 exclude: ["Nef/main.swift",
@@ -290,29 +319,57 @@ extension Product {
     }
 }
 
+// MARK: - Package
+extension Package.Dependency {
+    static var dependencies: [Package.Dependency] {
+        #if os(Linux)
+        return [
+            .package(name: "Bow", url: "https://github.com/bow-swift/bow.git", .branch("master")),
+            .package(url: "https://github.com/bow-swift/Swiftline.git", .exact("0.5.5")),
+        ]
+        #else
+        return [
+            .package(name: "Bow", url: "https://github.com/bow-swift/bow.git", .branch("master")),
+            .package(url: "https://github.com/bow-swift/Swiftline.git", .exact("0.5.5")),
+            .package(url: "https://github.com/apple/swift-argument-parser", .exact("0.0.5")),
+        ]
+        #endif
+    }
+}
+
+extension Target {
+    static var targets: [Target] {
+        #if os(Linux)
+        return [
+            Target.modules,
+            Target.tests,
+            [Target.nef],
+        ].flatMap { $0 }
+        #else
+        return [
+            Target.modules,
+            Target.tests,
+            Target.ui,
+            [Target.nef],
+        ].flatMap { $0 }
+        #endif
+    }
+}
+
+extension Product {
+    static var products: [Product] {
+        #if os(Linux)
+        return [Product.nef]
+        #else
+        return [Product.nef] + Product.cli
+        #endif
+    }
+}
 
 let package = Package(
     name: "nef",
-    
-    platforms: [
-        .macOS(.v10_14),
-    ],
-    
-    products: [
-        [Product.nef],
-        Product.cli,
-    ].flatMap { $0 },
-    
-    dependencies: [
-        .package(name: "Bow", url: "https://github.com/bow-swift/bow.git", .branch("master")),
-        .package(url: "https://github.com/bow-swift/Swiftline.git", .exact("0.5.5")),
-        .package(url: "https://github.com/apple/swift-argument-parser", .exact("0.0.5")),
-    ],
-    
-    targets: [
-        Target.modules,
-        Target.tests,
-        Target.ui,
-        [Target.nef],
-    ].flatMap { $0 }
+    platforms: [.macOS(.v10_14)],
+    products: Product.products,
+    dependencies: Package.Dependency.dependencies,
+    targets: Target.targets
 )

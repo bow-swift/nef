@@ -301,9 +301,9 @@ public enum Carbon: CarbonAPI {
     private static func environment(progressReport: ProgressReport, style: CarbonStyle) -> NefCarbon.Carbon.Environment {
         NefCarbon.Carbon.Environment(
             progressReport: progressReport,
-            fileSystem: MacFileSystem(),
+            fileSystem: UnixFileSystem(),
             persistence: .init(),
-            xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
+            xcodePlaygroundSystem: UnixPlaygroundSystem(),
             style: style,
             carbonPrinter: CoreRender.carbon.render)
     }

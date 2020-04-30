@@ -7,8 +7,7 @@ import Swiftline
 import Bow
 import BowEffects
 
-
-class MacCompilerShell: CompilerShell {
+final class MacCompilerShell: CompilerShell {
     
     func podinstall(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void> {
         IO.invoke {

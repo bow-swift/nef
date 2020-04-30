@@ -71,10 +71,10 @@ public enum Compiler: CompilerAPI {
     private static func environment(progressReport: ProgressReport) -> NefCompiler.Compiler.Environment {
         .init(
             progressReport: progressReport,
-            fileSystem: MacFileSystem(),
+            fileSystem: UnixFileSystem(),
             compilerShell: MacCompilerShell(),
             nefPlaygroundSystem: MacNefPlaygroundSystem(),
-            xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
+            xcodePlaygroundSystem: UnixPlaygroundSystem(),
             codePrinter: CoreRender.code.render)
     }
 }

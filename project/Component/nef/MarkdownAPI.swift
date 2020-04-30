@@ -210,9 +210,9 @@ public enum Markdown: MarkdownAPI {
         
         NefMarkdown.Markdown.Environment(
             progressReport: progressReport,
-            fileSystem: MacFileSystem(),
+            fileSystem: UnixFileSystem(),
             persistence: .init(),
-            xcodePlaygroundSystem: MacXcodePlaygroundSystem(),
+            xcodePlaygroundSystem: UnixPlaygroundSystem(),
             markdownPrinter: CoreRender.markdown.render)
     }
 }

@@ -25,7 +25,7 @@ public enum Clean: CleanAPI {
             .contramap { progressReport in
                 CleanEnvironment(
                     progressReport: progressReport,
-                    fileSystem: MacFileSystem(),
+                    fileSystem: UnixFileSystem(),
                     shell: MacNefPlaygroundSystem()) }
             .mapError { e in nef.Error.compiler(info: "clean: \(e)") }
     }
