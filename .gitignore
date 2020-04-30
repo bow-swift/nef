@@ -5,6 +5,7 @@ BowPlayground
 bin
 sha_*.txt
 /project/build
+Makefile~
 
 ## SPM
 .build

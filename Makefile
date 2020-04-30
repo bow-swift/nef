@@ -59,4 +59,4 @@ get_sha:
 .PHONY: brew_push
 brew_push: get_sha
 	SHA=$(shell cat sha_$(version).txt); \
-	@brew bump-formula-pr --url=https://github.com/bow-swift/$(TOOL_NAME)/archive/$(TAR_FILENAME) --sha256=$$SHA
+	brew bump-formula-pr --url="https://github.com/bow-swift/$(TOOL_NAME)/archive/$(TAR_FILENAME)" --sha256=$$SHA
