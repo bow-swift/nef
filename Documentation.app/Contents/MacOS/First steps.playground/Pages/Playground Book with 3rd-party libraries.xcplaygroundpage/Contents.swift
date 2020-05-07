@@ -15,14 +15,14 @@
  First of all, you need to define a Swift Package with your dependencies. In this tutorial, we will create one with Bow as a dependency. It'll be located at `~/Desktop`.
  
  ```swift
- // swift-tools-version:5.1
+ // swift-tools-version:5.2
  
  import PackageDescription
  
  let package = Package(
    name: "Tutorial",
    dependencies: [
-     .package(url: "https://github.com/bow-swift/bow.git", from: "0.7.0"),
+     .package(url: "https://github.com/bow-swift/bow.git", from: "0.8.0"),
    ]
  )
  ```
