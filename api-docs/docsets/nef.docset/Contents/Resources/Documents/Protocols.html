@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>nef - Protocols  Reference</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bow is a library for Typed Functional Programming in Swift">
+    <meta name="keywords" content="functional-programming, swift-library, monads, monad-transformers, functional-data-structure, swift, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory">
+
+    <meta property="og:image" content="" />
+    <meta property="og:title" content="nef - Protocols  Reference" />
+    <meta property="og:site_name" content="Bow" />
+    <meta property="og:url" content="https://bow-swift.io" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Bow is a library for Typed Functional Programming in Swift" />
+    <meta property="og:keywords" content="functional-programming, swift-library, monads, monad-transformers, functional-data-structure, swift, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory" />
+
+    <meta name="twitter:text:description" content="Bow is a library for Typed Functional Programming in Swift" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@bow_swift">
+    <meta name="twitter:creator" content="@bow_swift">
+    <meta name="twitter:image" content="https://bow-swift.io/img/twitter-card.png" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+
+    
+
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+
+    <meta class="swiftype" name="type" data-type="enum" content="nef Reference" />
+    <meta class="swiftype" name="title" data-type="string" content="Protocols" />
+
+
+    <style type="text/css">
+      .nav-group-name[data-name="Protocols"] > .small-heading,
+      .nav-group-task[data-name="Protocols"] {
+        background-color: #f5f5f5;
+        font-weight: bold;
+        border-left: 3px solid #39067D;
+        padding-left: 5px
+      }
+    </style>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Section/Protocols" class="dashAnchor"></a>
+
+    <a title="Protocols  Reference"></a>
+
+    <header class="header-container">
+      <div class="limiter">
+        <div class="header">
+        <p class="header-col header-col--primary">
+          <a class="header-link" href="/">
+            <img style="height: 18px;" class="header-icon" src="img/nef-logo.png" alt="nef Docs"/>
+            <span class="header-title">nef</span>
+          </a>
+          <span class="header-tag"> 86% documented</span>
+        </p>
+    
+          <p class="header-col header-col--secondary">
+            <a class="header-link space-right2" href="https://github.com/bow-swift/nef">
+              <svg style="margin-bottom: 1px;" class="header-icon" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      		      <path stroke="none" stroke-width="1" fill="white" fill-rule="evenodd" d="M16.6,0.4 C7.6,0.4 0.3,7.7 0.3,16.7 C0.3,23.9 5,30 11.4,32.2 C12.2,32.3 12.5,31.8 12.5,31.4 L12.5,28.6 C8,29.6 7,26.4 7,26.4 C6.3,24.5 5.2,24 5.2,24 C3.7,23 5.3,23 5.3,23 C6.9,23.1 7.8,24.7 7.8,24.7 C9.3,27.2 11.6,26.5 12.5,26.1 C12.6,25 13.1,24.3 13.5,23.9 C9.9,23.5 6.1,22.1 6.1,15.8 C6.1,14 6.7,12.6 7.8,11.4 C7.6,11 7.1,9.3 8,7.1 C8,7.1 9.4,6.7 12.5,8.8 C13.8,8.4 15.2,8.3 16.6,8.3 C18,8.3 19.4,8.5 20.7,8.8 C23.8,6.7 25.2,7.1 25.2,7.1 C26.1,9.3 25.5,11 25.4,11.4 C26.4,12.5 27.1,14 27.1,15.8 C27.1,22.1 23.3,23.4 19.7,23.8 C20.3,24.3 20.8,25.3 20.8,26.8 L20.8,31.3 C20.8,31.7 21.1,32.2 21.9,32.1 C28.4,29.9 33,23.8 33,16.6 C32.9,7.7 25.6,0.4 16.6,0.4 L16.6,0.4 Z"></path>
+              </svg>
+              View on GitHub
+            </a>
+          </p>
+    
+          <p class="header-col header-col--secondary">
+            <a class="header-link bold" href="dash-feed://https%3A%2F%2Fnef%2Ebow%2Dswift%2Eio%2Fapi%2Ddocs%2Fdocsets%2Fnef%2Exml">
+              <img style="margin-bottom: 1px;" class="header-icon" src="img/dash.png"/>
+              Install in Dash
+            </a>
+          </p>
+      </div>
+      </div>
+    </header>
+
+    <div class="breadcrumbs">
+      <div class="limiter">
+        <a class="breadcrumb" href="index.html">nef Reference</a>
+        <img class="carat" src="img/carat.png" />
+        Protocols  Reference
+      </div>
+    </div>
+
+    <div class="content-wrapper limiter">
+      <nav class="navigation">
+          <div class="header-col--secondary">
+            <form role="search" action="search.json">
+              <input type="text" placeholder="Search documentation" data-typeahead>
+            </form>
+          </div>
+        <ul class="nav-groups">
+          <li class="nav-group-name" data-name="Enumerations">
+            <a class="small-heading" href="Enumerations.html">Enumerations<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="Carbon" data-url="Enums/Carbon.html">
+                <a title="Carbon" class="nav-group-task-link" href="Enums/Carbon.html">Carbon</a>
+              </li>
+              <li class="nav-group-task" data-name="Clean" data-url="Enums/Clean.html">
+                <a title="Clean" class="nav-group-task-link" href="Enums/Clean.html">Clean</a>
+              </li>
+              <li class="nav-group-task" data-name="Compiler" data-url="Enums/Compiler.html">
+                <a title="Compiler" class="nav-group-task-link" href="Enums/Compiler.html">Compiler</a>
+              </li>
+              <li class="nav-group-task" data-name="Error" data-url="Enums/Error.html">
+                <a title="Error" class="nav-group-task-link" href="Enums/Error.html">Error</a>
+              </li>
+              <li class="nav-group-task" data-name="Jekyll" data-url="Enums/Jekyll.html">
+                <a title="Jekyll" class="nav-group-task-link" href="Enums/Jekyll.html">Jekyll</a>
+              </li>
+              <li class="nav-group-task" data-name="Markdown" data-url="Enums/Markdown.html">
+                <a title="Markdown" class="nav-group-task-link" href="Enums/Markdown.html">Markdown</a>
+              </li>
+              <li class="nav-group-task" data-name="Platform" data-url="Enums/Platform.html">
+                <a title="Platform" class="nav-group-task-link" href="Enums/Platform.html">Platform</a>
+              </li>
+              <li class="nav-group-task" data-name="Playground" data-url="Enums/Playground.html">
+                <a title="Playground" class="nav-group-task-link" href="Enums/Playground.html">Playground</a>
+              </li>
+              <li class="nav-group-task" data-name="PlaygroundDependencies" data-url="Enums/PlaygroundDependencies.html">
+                <a title="PlaygroundDependencies" class="nav-group-task-link" href="Enums/PlaygroundDependencies.html">PlaygroundDependencies</a>
+              </li>
+              <li class="nav-group-task" data-name="– Bow" data-url="Enums/PlaygroundDependencies/Bow.html">
+                <a title="– Bow" class="nav-group-task-link" href="Enums/PlaygroundDependencies/Bow.html">– Bow</a>
+              </li>
+              <li class="nav-group-task" data-name="PlaygroundExcludeItem" data-url="Enums/PlaygroundExcludeItem.html">
+                <a title="PlaygroundExcludeItem" class="nav-group-task-link" href="Enums/PlaygroundExcludeItem.html">PlaygroundExcludeItem</a>
+              </li>
+              <li class="nav-group-task" data-name="ProgressEventStatus" data-url="Enums/ProgressEventStatus.html">
+                <a title="ProgressEventStatus" class="nav-group-task-link" href="Enums/ProgressEventStatus.html">ProgressEventStatus</a>
+              </li>
+              <li class="nav-group-task" data-name="SwiftPlayground" data-url="Enums/SwiftPlayground.html">
+                <a title="SwiftPlayground" class="nav-group-task-link" href="Enums/SwiftPlayground.html">SwiftPlayground</a>
+              </li>
+              <li class="nav-group-task" data-name="Version" data-url="Enums/Version.html">
+                <a title="Version" class="nav-group-task-link" href="Enums/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Protocols">
+            <a class="small-heading" href="Protocols.html">Protocols<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="CarbonAPI" data-url="Protocols/CarbonAPI.html">
+                <a title="CarbonAPI" class="nav-group-task-link" href="Protocols/CarbonAPI.html">CarbonAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonLoadingView" data-url="Protocols/CarbonLoadingView.html">
+                <a title="CarbonLoadingView" class="nav-group-task-link" href="Protocols/CarbonLoadingView.html">CarbonLoadingView</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonView" data-url="Protocols/CarbonView.html">
+                <a title="CarbonView" class="nav-group-task-link" href="Protocols/CarbonView.html">CarbonView</a>
+              </li>
+              <li class="nav-group-task" data-name="CleanAPI" data-url="Protocols/CleanAPI.html">
+                <a title="CleanAPI" class="nav-group-task-link" href="Protocols/CleanAPI.html">CleanAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="CompilerAPI" data-url="Protocols/CompilerAPI.html">
+                <a title="CompilerAPI" class="nav-group-task-link" href="Protocols/CompilerAPI.html">CompilerAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="CustomProgressDescription" data-url="Protocols/CustomProgressDescription.html">
+                <a title="CustomProgressDescription" class="nav-group-task-link" href="Protocols/CustomProgressDescription.html">CustomProgressDescription</a>
+              </li>
+              <li class="nav-group-task" data-name="JekyllAPI" data-url="Protocols/JekyllAPI.html">
+                <a title="JekyllAPI" class="nav-group-task-link" href="Protocols/JekyllAPI.html">JekyllAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="MarkdownAPI" data-url="Protocols/MarkdownAPI.html">
+                <a title="MarkdownAPI" class="nav-group-task-link" href="Protocols/MarkdownAPI.html">MarkdownAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="PlaygroundAPI" data-url="Protocols/PlaygroundAPI.html">
+                <a title="PlaygroundAPI" class="nav-group-task-link" href="Protocols/PlaygroundAPI.html">PlaygroundAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="ProgressReport" data-url="Protocols/ProgressReport.html">
+                <a title="ProgressReport" class="nav-group-task-link" href="Protocols/ProgressReport.html">ProgressReport</a>
+              </li>
+              <li class="nav-group-task" data-name="SwiftPlaygroundAPI" data-url="Protocols/SwiftPlaygroundAPI.html">
+                <a title="SwiftPlaygroundAPI" class="nav-group-task-link" href="Protocols/SwiftPlaygroundAPI.html">SwiftPlaygroundAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="VersionAPI" data-url="Protocols/VersionAPI.html">
+                <a title="VersionAPI" class="nav-group-task-link" href="Protocols/VersionAPI.html">VersionAPI</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Structures">
+            <a class="small-heading" href="Structures.html">Structures<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="CarbonError" data-url="Structs/CarbonError.html">
+                <a title="CarbonError" class="nav-group-task-link" href="Structs/CarbonError.html">CarbonError</a>
+              </li>
+              <li class="nav-group-task" data-name="– Cause" data-url="Structs/CarbonError/Cause.html">
+                <a title="– Cause" class="nav-group-task-link" href="Structs/CarbonError/Cause.html">– Cause</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonModel" data-url="Structs/CarbonModel.html">
+                <a title="CarbonModel" class="nav-group-task-link" href="Structs/CarbonModel.html">CarbonModel</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonStyle" data-url="Structs/CarbonStyle.html">
+                <a title="CarbonStyle" class="nav-group-task-link" href="Structs/CarbonStyle.html">CarbonStyle</a>
+              </li>
+              <li class="nav-group-task" data-name="– Size" data-url="Structs/CarbonStyle/Size.html">
+                <a title="– Size" class="nav-group-task-link" href="Structs/CarbonStyle/Size.html">– Size</a>
+              </li>
+              <li class="nav-group-task" data-name="– Theme" data-url="Structs/CarbonStyle/Theme.html">
+                <a title="– Theme" class="nav-group-task-link" href="Structs/CarbonStyle/Theme.html">– Theme</a>
+              </li>
+              <li class="nav-group-task" data-name="– Font" data-url="Structs/CarbonStyle/Font.html">
+                <a title="– Font" class="nav-group-task-link" href="Structs/CarbonStyle/Font.html">– Font</a>
+              </li>
+              <li class="nav-group-task" data-name="– Color" data-url="Structs/CarbonStyle/Color.html">
+                <a title="– Color" class="nav-group-task-link" href="Structs/CarbonStyle/Color.html">– Color</a>
+              </li>
+              <li class="nav-group-task" data-name="CompilerOptions" data-url="Structs/CompilerOptions.html">
+                <a title="CompilerOptions" class="nav-group-task-link" href="Structs/CompilerOptions.html">CompilerOptions</a>
+              </li>
+              <li class="nav-group-task" data-name="ProgressEvent" data-url="Structs/ProgressEvent.html">
+                <a title="ProgressEvent" class="nav-group-task-link" href="Structs/ProgressEvent.html">ProgressEvent</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <a href="#/Protocols"><h1 id="Protocols">Protocols<span class="anchor-icon" /></h1></a>
+            <p>The following protocols are available globally.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9NefModels17CarbonLoadingViewP"></a>
+                    <a name="//apple_ref/swift/Protocol/CarbonLoadingView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9NefModels17CarbonLoadingViewP">
+                      <span class="token-name">CarbonLoadingView</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes a Carbon loading view.</p>
+
+                        <a href="Protocols/CarbonLoadingView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">CarbonLoadingView</span> <span class="p">:</span> <span class="kt">NSView</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9NefModels10CarbonViewP"></a>
+                    <a name="//apple_ref/swift/Protocol/CarbonView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9NefModels10CarbonViewP">
+                      <span class="token-name">CarbonView</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes a Carbon view.</p>
+
+                        <a href="Protocols/CarbonView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">CarbonView</span> <span class="p">:</span> <span class="kt">NSView</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9NefModels14ProgressReportP"></a>
+                    <a name="//apple_ref/swift/Protocol/ProgressReport" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9NefModels14ProgressReportP">
+                      <span class="token-name">ProgressReport</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/ProgressReport.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ProgressReport</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9NefModels25CustomProgressDescriptionP"></a>
+                    <a name="//apple_ref/swift/Protocol/CustomProgressDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9NefModels25CustomProgressDescriptionP">
+                      <span class="token-name">CustomProgressDescription</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/CustomProgressDescription.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">CustomProgressDescription</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef9CarbonAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/CarbonAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef9CarbonAPIP">
+                      <span class="token-name">CarbonAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code><a href="Enums/Carbon.html">Carbon</a></code></p>
+
+                        <a href="Protocols/CarbonAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">CarbonAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef8CleanAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/CleanAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef8CleanAPIP">
+                      <span class="token-name">CleanAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code><a href="Enums/Clean.html">Clean</a></code></p>
+
+                        <a href="Protocols/CleanAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">CleanAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef11CompilerAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/CompilerAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef11CompilerAPIP">
+                      <span class="token-name">CompilerAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code><a href="Enums/Compiler.html">Compiler</a></code></p>
+
+                        <a href="Protocols/CompilerAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">CompilerAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef9JekyllAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/JekyllAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef9JekyllAPIP">
+                      <span class="token-name">JekyllAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code><a href="Enums/Jekyll.html">Jekyll</a></code></p>
+
+                        <a href="Protocols/JekyllAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">JekyllAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef11MarkdownAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/MarkdownAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef11MarkdownAPIP">
+                      <span class="token-name">MarkdownAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code><a href="Enums/Markdown.html">Markdown</a></code></p>
+
+                        <a href="Protocols/MarkdownAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">MarkdownAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef13PlaygroundAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/PlaygroundAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef13PlaygroundAPIP">
+                      <span class="token-name">PlaygroundAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code><a href="Enums/Playground.html">Playground</a></code></p>
+
+                        <a href="Protocols/PlaygroundAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PlaygroundAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef18SwiftPlaygroundAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/SwiftPlaygroundAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef18SwiftPlaygroundAPIP">
+                      <span class="token-name">SwiftPlaygroundAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code>Swift Playground</code></p>
+
+                        <a href="Protocols/SwiftPlaygroundAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SwiftPlaygroundAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:3nef10VersionAPIP"></a>
+                    <a name="//apple_ref/swift/Protocol/VersionAPI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:3nef10VersionAPIP">
+                      <span class="token-name">VersionAPI</span>
+                      <span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Describes the API for <code><a href="Enums/Version.html">Version</a></code></p>
+
+                        <a href="Protocols/VersionAPI.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language key-main">
+                          <p class="aside-title key-main-text">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">VersionAPI</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section id="footer" class="footer">
+      <div>
+        <p>nef is designed and developed by <a href="https://github.com/bow-swift/nef">nef</a></p>
+        <p>with support from <a href="https://47deg.com/">47 Degrees</a></p>
+      </div>
+      <div>
+        <p>&copy; 2020 <a class="link" href="https://nef.bow-swift.io" target="_blank" rel="external">nef</a>. All rights reserved. (Last updated: 2020-05-07)</p>
+        <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      </div>
+    </section>
+  </body>
+</div>
+</html>

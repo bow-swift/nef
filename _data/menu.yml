@@ -1,0 +1,12 @@
+nav:
+    - title: Documentation
+      url: /docs
+
+    - title: API Reference
+      url: /api-docs
+
+    - title: Github
+      url: https://github.com/bow-swift/nef
+
+    - title: License
+      url: https://github.com/bow-swift/nef/blob/develop/LICENSE

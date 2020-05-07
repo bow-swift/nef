@@ -1,0 +1,114 @@
+// Sidebar menu
+// -----------------------------------------------
+// -----------------------------------------------
+
+.sidebar-menu {
+  margin-top: ($base-point-grid * 2);
+  padding: 0;
+
+  .sidebar-menu-item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .sub-menu {
+      background: $sidebar-active-color;
+      max-height: 0;
+      transition: max-height 0.3s ease-in-out;
+      overflow: hidden;
+
+      a {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: $base-point-grid * 2 $base-point-grid * 3;
+        font-size: 0.875rem;
+        height: auto;
+
+        &.active {
+          color: $white;
+          box-shadow: 3px 0 $brand-tertiary inset;
+        }
+      }
+    }
+
+    a,
+    button {
+      box-sizing: border-box;
+      font-family: $base-font-family;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $base-point-grid * 3 $base-point-grid * 2 $base-point-grid * 3 $base-point-grid * 3;
+      line-height: $base-point-grid * 2;
+      text-align: left;
+      width: 100%;
+      color: $white;
+
+      @include links($white, $white, rgba($white, 0.8), $white);
+
+      transition: background $base-duration $base-timing;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .caret {
+      position: absolute;
+      right: ($base-point-grid * 3);
+      top: $base-point-grid * 3;
+      pointer-events: none;
+      transform-origin: 0% 75%;
+      height: 8px;
+      transition: transform 0.2s ease;
+    }
+
+    .caret::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 6px solid rgba($white, 0.8);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+    }
+
+    .caret::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      border-left: 4px solid $brand-secondary;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    &.active {
+      > a,
+      button {
+        box-shadow: 3px 0 rgba($brand-tertiary, 0.5) inset;
+      }
+    }
+
+    &.open {
+      > a,
+      button {
+        background: $sidebar-head-active-color;
+      }
+
+      .caret {
+        transform: rotateZ(90deg);
+      }
+
+      .caret::after {
+        border-left-color: $sidebar-head-active-color;
+      }
+
+      .sub-menu {
+        max-height: 1600px; // This will suffice for +20 entries in a submenu tops
+      }
+    }
+  }
+}

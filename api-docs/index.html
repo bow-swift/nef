@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>nef - nef  Reference</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bow is a library for Typed Functional Programming in Swift">
+    <meta name="keywords" content="functional-programming, swift-library, monads, monad-transformers, functional-data-structure, swift, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory">
+
+    <meta property="og:image" content="" />
+    <meta property="og:title" content="nef - nef  Reference" />
+    <meta property="og:site_name" content="Bow" />
+    <meta property="og:url" content="https://bow-swift.io" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Bow is a library for Typed Functional Programming in Swift" />
+    <meta property="og:keywords" content="functional-programming, swift-library, monads, monad-transformers, functional-data-structure, swift, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory" />
+
+    <meta name="twitter:text:description" content="Bow is a library for Typed Functional Programming in Swift" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@bow_swift">
+    <meta name="twitter:creator" content="@bow_swift">
+    <meta name="twitter:image" content="https://bow-swift.io/img/twitter-card.png" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+
+    
+
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+
+    <meta class="swiftype" name="type" data-type="enum" content="nef Reference" />
+    <meta class="swiftype" name="title" data-type="string" content="nef" />
+
+
+    <style type="text/css">
+      .nav-group-name[data-name="nef"] > .small-heading,
+      .nav-group-task[data-name="nef"] {
+        background-color: #f5f5f5;
+        font-weight: bold;
+        border-left: 3px solid #39067D;
+        padding-left: 5px
+      }
+    </style>
+  </head>
+  <body>
+
+
+    <a title="nef  Reference"></a>
+
+    <header class="header-container">
+      <div class="limiter">
+        <div class="header">
+        <p class="header-col header-col--primary">
+          <a class="header-link" href="/">
+            <img style="height: 18px;" class="header-icon" src="img/nef-logo.png" alt="nef Docs"/>
+            <span class="header-title">nef</span>
+          </a>
+          <span class="header-tag"> 86% documented</span>
+        </p>
+    
+          <p class="header-col header-col--secondary">
+            <a class="header-link space-right2" href="https://github.com/bow-swift/nef">
+              <svg style="margin-bottom: 1px;" class="header-icon" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      		      <path stroke="none" stroke-width="1" fill="white" fill-rule="evenodd" d="M16.6,0.4 C7.6,0.4 0.3,7.7 0.3,16.7 C0.3,23.9 5,30 11.4,32.2 C12.2,32.3 12.5,31.8 12.5,31.4 L12.5,28.6 C8,29.6 7,26.4 7,26.4 C6.3,24.5 5.2,24 5.2,24 C3.7,23 5.3,23 5.3,23 C6.9,23.1 7.8,24.7 7.8,24.7 C9.3,27.2 11.6,26.5 12.5,26.1 C12.6,25 13.1,24.3 13.5,23.9 C9.9,23.5 6.1,22.1 6.1,15.8 C6.1,14 6.7,12.6 7.8,11.4 C7.6,11 7.1,9.3 8,7.1 C8,7.1 9.4,6.7 12.5,8.8 C13.8,8.4 15.2,8.3 16.6,8.3 C18,8.3 19.4,8.5 20.7,8.8 C23.8,6.7 25.2,7.1 25.2,7.1 C26.1,9.3 25.5,11 25.4,11.4 C26.4,12.5 27.1,14 27.1,15.8 C27.1,22.1 23.3,23.4 19.7,23.8 C20.3,24.3 20.8,25.3 20.8,26.8 L20.8,31.3 C20.8,31.7 21.1,32.2 21.9,32.1 C28.4,29.9 33,23.8 33,16.6 C32.9,7.7 25.6,0.4 16.6,0.4 L16.6,0.4 Z"></path>
+              </svg>
+              View on GitHub
+            </a>
+          </p>
+    
+          <p class="header-col header-col--secondary">
+            <a class="header-link bold" href="dash-feed://https%3A%2F%2Fnef%2Ebow%2Dswift%2Eio%2Fapi%2Ddocs%2Fdocsets%2Fnef%2Exml">
+              <img style="margin-bottom: 1px;" class="header-icon" src="img/dash.png"/>
+              Install in Dash
+            </a>
+          </p>
+      </div>
+      </div>
+    </header>
+
+    <div class="breadcrumbs">
+      <div class="limiter">
+        <a class="breadcrumb" href="index.html">nef Reference</a>
+        <img class="carat" src="img/carat.png" />
+        nef  Reference
+      </div>
+    </div>
+
+    <div class="content-wrapper limiter">
+      <nav class="navigation">
+          <div class="header-col--secondary">
+            <form role="search" action="search.json">
+              <input type="text" placeholder="Search documentation" data-typeahead>
+            </form>
+          </div>
+        <ul class="nav-groups">
+          <li class="nav-group-name" data-name="Enumerations">
+            <a class="small-heading" href="Enumerations.html">Enumerations<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="Carbon" data-url="Enums/Carbon.html">
+                <a title="Carbon" class="nav-group-task-link" href="Enums/Carbon.html">Carbon</a>
+              </li>
+              <li class="nav-group-task" data-name="Clean" data-url="Enums/Clean.html">
+                <a title="Clean" class="nav-group-task-link" href="Enums/Clean.html">Clean</a>
+              </li>
+              <li class="nav-group-task" data-name="Compiler" data-url="Enums/Compiler.html">
+                <a title="Compiler" class="nav-group-task-link" href="Enums/Compiler.html">Compiler</a>
+              </li>
+              <li class="nav-group-task" data-name="Error" data-url="Enums/Error.html">
+                <a title="Error" class="nav-group-task-link" href="Enums/Error.html">Error</a>
+              </li>
+              <li class="nav-group-task" data-name="Jekyll" data-url="Enums/Jekyll.html">
+                <a title="Jekyll" class="nav-group-task-link" href="Enums/Jekyll.html">Jekyll</a>
+              </li>
+              <li class="nav-group-task" data-name="Markdown" data-url="Enums/Markdown.html">
+                <a title="Markdown" class="nav-group-task-link" href="Enums/Markdown.html">Markdown</a>
+              </li>
+              <li class="nav-group-task" data-name="Platform" data-url="Enums/Platform.html">
+                <a title="Platform" class="nav-group-task-link" href="Enums/Platform.html">Platform</a>
+              </li>
+              <li class="nav-group-task" data-name="Playground" data-url="Enums/Playground.html">
+                <a title="Playground" class="nav-group-task-link" href="Enums/Playground.html">Playground</a>
+              </li>
+              <li class="nav-group-task" data-name="PlaygroundDependencies" data-url="Enums/PlaygroundDependencies.html">
+                <a title="PlaygroundDependencies" class="nav-group-task-link" href="Enums/PlaygroundDependencies.html">PlaygroundDependencies</a>
+              </li>
+              <li class="nav-group-task" data-name="– Bow" data-url="Enums/PlaygroundDependencies/Bow.html">
+                <a title="– Bow" class="nav-group-task-link" href="Enums/PlaygroundDependencies/Bow.html">– Bow</a>
+              </li>
+              <li class="nav-group-task" data-name="PlaygroundExcludeItem" data-url="Enums/PlaygroundExcludeItem.html">
+                <a title="PlaygroundExcludeItem" class="nav-group-task-link" href="Enums/PlaygroundExcludeItem.html">PlaygroundExcludeItem</a>
+              </li>
+              <li class="nav-group-task" data-name="ProgressEventStatus" data-url="Enums/ProgressEventStatus.html">
+                <a title="ProgressEventStatus" class="nav-group-task-link" href="Enums/ProgressEventStatus.html">ProgressEventStatus</a>
+              </li>
+              <li class="nav-group-task" data-name="SwiftPlayground" data-url="Enums/SwiftPlayground.html">
+                <a title="SwiftPlayground" class="nav-group-task-link" href="Enums/SwiftPlayground.html">SwiftPlayground</a>
+              </li>
+              <li class="nav-group-task" data-name="Version" data-url="Enums/Version.html">
+                <a title="Version" class="nav-group-task-link" href="Enums/Version.html">Version</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Protocols">
+            <a class="small-heading" href="Protocols.html">Protocols<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="CarbonAPI" data-url="Protocols/CarbonAPI.html">
+                <a title="CarbonAPI" class="nav-group-task-link" href="Protocols/CarbonAPI.html">CarbonAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonLoadingView" data-url="Protocols/CarbonLoadingView.html">
+                <a title="CarbonLoadingView" class="nav-group-task-link" href="Protocols/CarbonLoadingView.html">CarbonLoadingView</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonView" data-url="Protocols/CarbonView.html">
+                <a title="CarbonView" class="nav-group-task-link" href="Protocols/CarbonView.html">CarbonView</a>
+              </li>
+              <li class="nav-group-task" data-name="CleanAPI" data-url="Protocols/CleanAPI.html">
+                <a title="CleanAPI" class="nav-group-task-link" href="Protocols/CleanAPI.html">CleanAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="CompilerAPI" data-url="Protocols/CompilerAPI.html">
+                <a title="CompilerAPI" class="nav-group-task-link" href="Protocols/CompilerAPI.html">CompilerAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="CustomProgressDescription" data-url="Protocols/CustomProgressDescription.html">
+                <a title="CustomProgressDescription" class="nav-group-task-link" href="Protocols/CustomProgressDescription.html">CustomProgressDescription</a>
+              </li>
+              <li class="nav-group-task" data-name="JekyllAPI" data-url="Protocols/JekyllAPI.html">
+                <a title="JekyllAPI" class="nav-group-task-link" href="Protocols/JekyllAPI.html">JekyllAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="MarkdownAPI" data-url="Protocols/MarkdownAPI.html">
+                <a title="MarkdownAPI" class="nav-group-task-link" href="Protocols/MarkdownAPI.html">MarkdownAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="PlaygroundAPI" data-url="Protocols/PlaygroundAPI.html">
+                <a title="PlaygroundAPI" class="nav-group-task-link" href="Protocols/PlaygroundAPI.html">PlaygroundAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="ProgressReport" data-url="Protocols/ProgressReport.html">
+                <a title="ProgressReport" class="nav-group-task-link" href="Protocols/ProgressReport.html">ProgressReport</a>
+              </li>
+              <li class="nav-group-task" data-name="SwiftPlaygroundAPI" data-url="Protocols/SwiftPlaygroundAPI.html">
+                <a title="SwiftPlaygroundAPI" class="nav-group-task-link" href="Protocols/SwiftPlaygroundAPI.html">SwiftPlaygroundAPI</a>
+              </li>
+              <li class="nav-group-task" data-name="VersionAPI" data-url="Protocols/VersionAPI.html">
+                <a title="VersionAPI" class="nav-group-task-link" href="Protocols/VersionAPI.html">VersionAPI</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Structures">
+            <a class="small-heading" href="Structures.html">Structures<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="CarbonError" data-url="Structs/CarbonError.html">
+                <a title="CarbonError" class="nav-group-task-link" href="Structs/CarbonError.html">CarbonError</a>
+              </li>
+              <li class="nav-group-task" data-name="– Cause" data-url="Structs/CarbonError/Cause.html">
+                <a title="– Cause" class="nav-group-task-link" href="Structs/CarbonError/Cause.html">– Cause</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonModel" data-url="Structs/CarbonModel.html">
+                <a title="CarbonModel" class="nav-group-task-link" href="Structs/CarbonModel.html">CarbonModel</a>
+              </li>
+              <li class="nav-group-task" data-name="CarbonStyle" data-url="Structs/CarbonStyle.html">
+                <a title="CarbonStyle" class="nav-group-task-link" href="Structs/CarbonStyle.html">CarbonStyle</a>
+              </li>
+              <li class="nav-group-task" data-name="– Size" data-url="Structs/CarbonStyle/Size.html">
+                <a title="– Size" class="nav-group-task-link" href="Structs/CarbonStyle/Size.html">– Size</a>
+              </li>
+              <li class="nav-group-task" data-name="– Theme" data-url="Structs/CarbonStyle/Theme.html">
+                <a title="– Theme" class="nav-group-task-link" href="Structs/CarbonStyle/Theme.html">– Theme</a>
+              </li>
+              <li class="nav-group-task" data-name="– Font" data-url="Structs/CarbonStyle/Font.html">
+                <a title="– Font" class="nav-group-task-link" href="Structs/CarbonStyle/Font.html">– Font</a>
+              </li>
+              <li class="nav-group-task" data-name="– Color" data-url="Structs/CarbonStyle/Color.html">
+                <a title="– Color" class="nav-group-task-link" href="Structs/CarbonStyle/Color.html">– Color</a>
+              </li>
+              <li class="nav-group-task" data-name="CompilerOptions" data-url="Structs/CompilerOptions.html">
+                <a title="CompilerOptions" class="nav-group-task-link" href="Structs/CompilerOptions.html">CompilerOptions</a>
+              </li>
+              <li class="nav-group-task" data-name="ProgressEvent" data-url="Structs/ProgressEvent.html">
+                <a title="ProgressEvent" class="nav-group-task-link" href="Structs/ProgressEvent.html">ProgressEvent</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            
+            <p><img src="assets/header-nef.png" alt=""></p>
+
+<p align="center">
+<img src="https://github.com/bow-swift/nef/workflows/Compile and test/badge.svg" alt="Build">
+<img src="https://github.com/bow-swift/nef/workflows/Deploy docs/badge.svg" alt="Site">
+<a href="https://github.com/bow-swift/nef">
+<img src="https://img.shields.io/badge/platform-macOS-orange" alt="Platforms">
+</a>
+<a href="https://github.com/bow-swift/nef">
+<img src="https://img.shields.io/badge/dependency%20manager-CocoaPods%20%7C%20Carthage-orange" alt="CocoaPods+Carthage compatible">
+</a>
+<a href="https://gitter.im/bowswift/bow">
+<img src="https://img.shields.io/badge/gitter-nef-blueviolet.svg" alt="Gitter">
+</a>
+</p>
+
+<p><code>nef</code>, short for <a href="https://en.wikipedia.org/wiki/Nefertiti">Nefertiti</a>, mother of Ankhesenamun, is a toolset to ease the <strong>creation of documentation</strong> in the form of Xcode Playgrounds. It provides compile-time <strong>verification</strong> of documentation, exports it in <strong>Markdown</strong> format that can be consumed by <a href="https://jekyllrb.com/">Jekyll</a> to generate websites, and export <a href="https://carbon.now.sh/">Carbon</a> snippets for a given Xcode Playground.</p>
+
+<p><code>nef</code> is inspired by <a href="https://github.com/arrow-kt/ank">ΛNK</a> for Kotlin and <a href="https://github.com/tpolecat/tut">tut</a> for Scala.</p>
+<h3 id='features' class='heading'>Features</h3>
+
+<p>💡 Eases the creation of Xcode Playgrounds with support for <a href="#-creating-a-nef-playground"><strong>third party libraries</strong></a>.</p>
+
+<p>💡 <a href="#-compiling-a-nef-playground"><strong>Compiles Xcode Playgrounds</strong></a> with support for 3rd-party libraries from the command line.</p>
+
+<p>💡 Builds a <a href="#-creating-a-playground-book"><strong>Playground Book</strong></a> for iPad with external dependencies defined in a Swift Package.</p>
+
+<p>💡 Generates <a href="#-generating-a-markdown-project"><strong>Markdown</strong></a> project from nef Playground.</p>
+
+<p>💡 Generates Markdown files that can be consumed from <a href="#-generating-markdown-files-for-jekyll"><strong>Jekyll</strong></a> to create a microsite.</p>
+
+<p>💡 Export <a href="#-exporting-carbon-code-snippets"><strong>Carbon</strong></a> code snippets for a given nef Playground.</p>
+
+<p>&nbsp;</p>
+<h2 id='installation' class='heading'>💻 Installation</h2>
+<h4 id='using-a-href-https-github-com-bow-swift-homebrew-nef-homebrew-a-preferred' class='heading'>📟 Using <a href="https://github.com/bow-swift/homebrew-nef">Homebrew</a> (preferred)</h4>
+<pre class="highlight shell"><code>➜ brew <span class="nb">install </span>nef
+</code></pre>
+
+<blockquote>
+<p>It will warn you if there is a missing dependency and will provide guidance to install it.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+<h4 id='using-a-href-https-developer-apple-com-documentation-xcode-creating_a_swift_package_with_xcode-swift-package-manager-a' class='heading'>📦 Using <a href="https://developer.apple.com/documentation/xcode/creating_a_swift_package_with_xcode">Swift Package Manager</a></h4>
+
+<p><code>nef</code> can be consumed as a library in your <strong>macOS project</strong>.</p>
+<pre class="highlight swift"><code><span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/bow-swift/nef.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"{version}"</span><span class="p">)</span>
+</code></pre>
+
+<p>It is an excellent option if you want to use all nef features in your macOS app, even to build new tooling on top of nef.</p>
+
+<blockquote>
+<p>You can read more about how to use nef library in the <a href="https://nef.bow-swift.io/docs/library/how-to-use-nef-library-/"><strong>nef site</strong></a>.</p>
+</blockquote>
+
+<p>&nbsp;</p>
+<h4 id='using-a-href-https-github-com-bow-swift-nef-plugin-xcode-editor-extension-a' class='heading'>🔌 Using <a href="https://github.com/bow-swift/nef-plugin">Xcode Editor Extension</a></h4>
+
+<p>Some of <code>nef</code> features can be used directly in Xcode as an Extension. You can install it directly from <a href="https://apps.apple.com/app/nef/id1479391704?mt=8"><strong>App Store</strong></a> or downloading the last binary from the <a href="https://github.com/bow-swift/nef-plugin/releases"><strong>releases section</strong></a>.</p>
+
+<p>&nbsp;</p>
+<h2 id='usage' class='heading'>Usage</h2>
+<h3 id='creating-a-nef-playground' class='heading'>📃 Creating a nef Playground</h3>
+
+<p>Xcode Playgrounds are a nice tool for prototyping and trying new concepts. However, third party libraries support is a bit cumbersome to add. One of the goals of <code>nef</code> is to make the creation of an Xcode Playground easier with support for one or more libraries.</p>
+
+<p>By default, <code>nef</code> can create an Xcode Playground with support for <a href="http://bow-swift.io">Bow</a>, the Functional Programming companion library for Swift.</p>
+<pre class="highlight shell"><code>➜ nef playground
+</code></pre>
+
+<p align="center">
+<img src="assets/nef-playground.png" height="100">
+</p>
+
+<p>And you can use the following option to specify the name for the <code>nef Playground</code> that you are creating:</p>
+<pre class="highlight shell"><code>➜ nef playground <span class="nt">--output</span> ~/Desktop <span class="nt">--name</span> LatestBowProject
+</code></pre>
+
+<p>It will create an Xcode project with support for the latest available version of Bow, named <code>LatestBowProject</code> in your <code>~/Desktop</code>. If you open this <code>nef playground</code>, you will find an Xcode Playground where you can import Bow or any of its modules, and start trying some of its features.</p>
+
+<p>By default, <code>nef playground</code> will be created for iOS platform. If you need to change it, you can use the <code>--platform</code> option.</p>
+<pre class="highlight shell"><code>➜ nef playground <span class="nt">--platform</span> osx
+</code></pre>
+
+<p>If you need to take advantage of nef in your Xcode Playgrounds, you can transform your Xcode Playground into a nef Playground using the following command:</p>
+<pre class="highlight shell"><code>➜ nef playground <span class="nt">--playground</span> &lt;Xcode Playground&gt;
+</code></pre>
+
+<p>Where <code>&lt;Xcode Playground&gt;</code> is the path to your Xcode Playground.</p>
+
+<details>
+<summary>📣 You can create a nef Playground compatible with any different Bow version, branch or commit; even third-party dependencies</summary>
+
+###
+
+> Note: The next options are mutually exclusive.
+
+###
+
+- `&ndash;bow-version <x.y.z>`: Specify the version of Bow that you want to use in the project. This option lets you test an old version of the library in an Xcode Playground. Example:
+
+&ldquo;`bash
+➜ nef playground &ndash;name OldBowProject &ndash;bow-version 0.3.0
+&rdquo;`
+
+##
+
+- `&ndash;bow-branch <branch name>`: Specify the branch of Bow that you want to use in the project. This option lets you test features of Bow that are still in development in a branch that has not been merged or released yet. Example:
+
+&ldquo;`bash
+➜ nef playground &ndash;name BranchBowProject &ndash;bow-branch master
+&rdquo;`
+
+##
+
+- `&ndash;bow-commit <commit hash>`: Specify the commit hash of Bow that you want to use in the project. This option lets you test features of Bow exactly at the moment you need, released or not. Example:
+
+&ldquo;`bash
+➜ nef playground &ndash;name CommitBowProject &ndash;bow-commit e70c739067be1f5700f8b692523e1bb8931c7236
+&rdquo;`
+
+##
+
+- `&ndash;podfile <podfile>`: Specify a **Podfile** with your own dependencies. This option lets you create a Playground with support for other libraries. Create a `Podfile` listing your dependencies and pass it to `nef`. Example:
+
+Your `Podfile`, located in `./folder/dependencies`:
+
+&ldquo;`ruby
+target &lsquo;MyPodsProject&rsquo; do
+  platform :osx, &lsquo;10.14&rsquo;
+  use_frameworks!
+
+  pod &lsquo;Bow&rsquo;, &lsquo;~> 0.3.0&rsquo;
+end
+&rdquo;`
+
+&ldquo;`bash
+➜ nef playground &ndash;name MyPodsProject &ndash;podfile ./folder/dependencies/Podfile
+&rdquo;`
+
+##
+
+- `&ndash;cartfile <cartfile>`: Specify a **Cartfile** with your dependencies. Create a `Cartfile` listing your dependencies and pass it to `nef`. Example:
+
+Your `Cartfile`, located in `./folder/dependencies`:
+
+&ldquo;`ruby
+github &quot;bow-swift/Bow&rdquo;
+&ldquo;`
+
+&rdquo;`bash
+➜ nef playground &ndash;name MyCarthageProject &ndash;cartfile ./folder/dependencies/Cartfile
+&ldquo;`
+
+</details>
+
+<p>&nbsp;</p>
+<h3 id='compiling-a-nef-playground' class='heading'>🔨 Compiling a nef Playground</h3>
+
+<p>Xcode lets you check for correctness of your Xcode Playground and run it. However, Apple does not provide us commands to compile an Xcode Playground, as they do for building Xcode projects. It is particularly useful in Continuous Integration when you want to verify that your playgrounds are not broken when the libraries you depend on are updated. <code>nef</code> has an option to compile a <code>nef Playground</code>. To do this, you can run the following command:</p>
+<pre class="highlight shell"><code>➜ nef compile <span class="nt">--project</span> &lt;nef playground&gt;
+</code></pre>
+
+<blockquote>
+<p>If you need to transform your Xcode Playground into a nef Playground you can check <a href="#-creating-a-nef-playground">Creating a nef Playground</a> section.</p>
+</blockquote>
+
+<p>Where <code>&lt;nef playground&gt;</code> is the path to <code>nef Playground</code> where your playgrounds are located. Also, you can use the following option with this command:</p>
+
+<ul>
+<li><code>--use-cache</code>: Use cached dependencies if it is possible, in another case, it will download them. Example:</li>
+</ul>
+<pre class="highlight shell"><code>➜ nef compile <span class="nt">--project</span> &lt;nef playground&gt; <span class="nt">--use-cache</span>
+</code></pre>
+
+<p>You can also clean the result of the compilation:</p>
+<pre class="highlight shell"><code>➜ nef clean <span class="nt">--project</span> &lt;nef playground&gt;
+</code></pre>
+
+<p>&nbsp;</p>
+<h3 id='creating-a-playground-book' class='heading'>📲 Creating a Playground Book</h3>
+
+<p>Swift Playgrounds is a revolutionary app that makes possible to write Swift code on an iPad. In the latest updates, Swift Playgrounds 3.x has added a new feature: <a href="https://developer.apple.com/documentation/swift_playgrounds/structuring_content_for_swift_playgrounds/using_modules_to_share_code_in_a_playground_book">UserModules</a>; it lets you include swift code and make it available across multiple chapters like modules.</p>
+
+<p>nef takes advantage of these new possibilities and advancements in Swift Package Manager to build a Playground Book with external dependencies from a Swift Package specification.</p>
+
+<p>Given a <code>Package.swift</code> like the next one:</p>
+<pre class="highlight swift"><code><span class="c1">// swift-tools-version:5.0</span>
+
+<span class="kd">import</span> <span class="kt">PackageDescription</span>
+
+<span class="k">let</span> <span class="nv">package</span> <span class="o">=</span> <span class="kt">Package</span><span class="p">(</span>
+    <span class="nv">name</span><span class="p">:</span> <span class="s">"BowProject"</span><span class="p">,</span>
+    <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+        <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/bow-swift/bow.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"0.7.0"</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</code></pre>
+
+<p>you can run the following command:</p>
+<pre class="highlight shell"><code>➜ nef ipad <span class="nt">--name</span> PlaygroundName <span class="nt">--package</span> Package.swift <span class="nt">--output</span> ~/Desktop
+</code></pre>
+
+<p>It will create a Playground Book (<code>PlaygroundName</code>) with support for the external dependencies and save it in <code>~/Desktop</code></p>
+
+<p>Options:</p>
+
+<ul>
+<li><code>--name</code>: the name for the Playground Book to build.</li>
+<li><code>--package</code>: path to the Swift Package specification.</li>
+<li><code>--output</code>: path where the resulting Playground Book will be generated.</li>
+</ul>
+
+<p>&nbsp;</p>
+<h3 id='generating-a-markdown-project' class='heading'>🔖 Generating a Markdown project</h3>
+
+<p>Xcode Playgrounds let you write comments in Markdown format using the symbols <code>//:</code> for single line comments, or <code>/*: */</code> for multiline comments. Inside these comments, you can use any Markdown syntax; an example:</p>
+<pre class="highlight swift"><code><span class="cm">/*:
+ # This is a heading 1
+
+ This is regular text. *This is bold text*. [This is a link](http://bow-swift.io).
+ */</span>
+<span class="kd">protocol</span> <span class="kt">MyProtocol</span> <span class="p">{}</span>
+
+<span class="c1">//: ## This is a single line heading 2</span>
+</code></pre>
+
+<p>It makes Xcode Playgrounds the proper tool to write an article with compilable examples. The command provided by <code>nef</code> to generate the Markdown files is:</p>
+<pre class="highlight shell"><code>➜ nef markdown <span class="nt">--project</span> &lt;nef playground&gt; <span class="nt">--output</span> &lt;path&gt;
+</code></pre>
+
+<p>Options:</p>
+
+<ul>
+<li><code>--project</code>: Path to your nef Playground.</li>
+<li><code>--output</code>: Path where the resulting Markdown project will be generated.</li>
+</ul>
+
+<p>&nbsp;</p>
+<h3 id='generating-markdown-files-for-jekyll' class='heading'>🌐 Generating Markdown files for Jekyll</h3>
+
+<p>As you can write comments in <a href="https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html">Markdown</a> in Xcode Playgrounds, this makes it very suitable to write documentation with compilable examples.
+Leveraging this, <code>nef</code> can create Markdown files that can be consumed from Jekyll to generate a microsite. The command to do this is:</p>
+<pre class="highlight shell"><code>➜ nef jekyll <span class="nt">--project</span> &lt;nef playground&gt; <span class="nt">--output</span> &lt;path&gt; <span class="nt">--main-page</span> &lt;main-page&gt;
+</code></pre>
+
+<p>Options:</p>
+
+<ul>
+<li><code>--project</code>: Path to your nef Playground.</li>
+<li><code>--output</code>: Path where the resulting Markdown files will be generated.</li>
+<li><code>--main-page</code>: Optional. Path to &lsquo;README.md&rsquo; file to be used as the index page of the generated microsite.</li>
+</ul>
+
+<details>
+<summary>📣 How to setup a nef Playgroud for Jekyll?</summary>
+
+###
+
+`nef` finds all the Xcode Playgrounds in a nef Playground. Each playground is considered a section in the generated microsite structure. For each page in a playground, an entry in the corresponding section is created. The page is transformed from Swift to Markdown using the syntax described above. As a result, a directory structure matching the nef Playground structure is generated, together with a `sidebar.yml` that can be used as a menu in Jekyll.
+
+`nef` adds some commands to modify the Markdown transformation process. All `nef` commands are included as Swift comments. They begin with `// nef:begin:` and end with `// nef:end`. The supported commands are:
+
+- `header`: It lets you add metadata to a playground page to be consumed by Jekyll. You must provide the layout that this page will use in Jekyll. The remaining attributes are optional, and you may include any of them according to your Jekyll configuration. `nef` will take care of the permalinks as well. Example (at the beginning of the playground page):
+
+&rdquo;`swift
+// nef:begin:header
+/*
+  layout: docs
+*/
+// nef:end
+&ldquo;`
+
+- `hidden`: It lets you hide a portion of your playground in the output Markdown file. It is useful to hide imports or supporting utility code to make an example work. Example:
+
+&rdquo;`swift
+// nef:begin:hidden
+import Bow // This will be hidden in the Markdown file
+// nef:end
+
+struct Person {} // This will be present in the Markdown file
+&ldquo;`
+</details>
+
+<p>&nbsp;</p>
+<h3 id='exporting-carbon-code-snippets' class='heading'>🌁 Exporting Carbon code snippets</h3>
+
+<p>Xcode Playgrounds are a great place for prototyping and trying new concepts. Oftentimes we want to share some Swift snippets. <code><a href="Enums/Carbon.html">Carbon</a></code> is a cool tool for this, and <code>nef</code> nicely integrates with it. You can take your nef Playground, write several pieces of code, and keep it verified. Later, you can export all your code snippets with the next command:</p>
+<pre class="highlight shell"><code>➜ nef carbon <span class="nt">--project</span> &lt;nef playground&gt; <span class="nt">--output</span> &lt;path&gt;
+</code></pre>
+
+<p>Options:</p>
+
+<ul>
+<li><code>--project</code>: Path to your nef Playground.</li>
+<li><code>--output</code>: Path where the resulting Carbon snippets will be generated.</li>
+</ul>
+
+<details>
+<summary>📣 You can customize the output with the next commands</summary>
+
+###
+<table>
+  <tr>
+    <th width="20%">Command</th>
+    <th width="20%">Description</th>
+    <th width="18%">Format</th>
+    <th>Options</th>
+    <th width="5%">Default</th>
+  </tr>
+  <tr>
+    <td align="center"><code>--background</code></td>
+    <td>Background color applied to image</td>
+    <td>hexadecimal <code>#AABBCC</code>, <code>#AABBCCDD</code> or predefined colors</td>
+    <td><img src="https://placehold.it/15/8c44ff/000000?text=+"> <code>nef</code> <img src="https://placehold.it/15/d54048/000000?text=+"> <code>bow</code> <img src="https://placehold.it/15/ffffff/000000?text=+"> <code>white</code> <br \><img src="https://placehold.it/15/6ef0a7/000000?text=+"> <code>green</code> <img src="https://placehold.it/15/42c5ff/000000?text=+"><code>blue</code> <img src="https://placehold.it/15/ffed75/000000?text=+"><code>yellow</code> <br \><img src="https://placehold.it/15/ff9f46/000000?text=+"> <code>orange</code</td>
+    <td align="center"><code>nef</code></td>
+  </tr>
+  <tr>
+    <td align="center"><code>--theme</code></td>
+    <td>Carbon&rsquo;s theme to be applied</td>
+    <td align="center">String</td>
+    <td><code>base16-dark</code> <code>blackboard</code> <code>cobalt</code> <code>duotone-dark</code> <code>dracula</code> <code>hopscotch</code> <code>lucario</code> <code>material</code> <code>monokai</code> <code>night-owl</code> <code>nord</code> <code>oceanic-next</code> <code>one-dark</code> <code>panda-syntax</code> <code>paraiso-dark</code> <code>seti</code> <code>shades-of-purple</code> <code>synthwave-84</code> <code>tomorrow-night-bright</code> <code>twilight</code> <code>verminal</code> <code>vscode</code> <code>zenburn</code></td>
+    <td align="center"><code>dracula</code></td>
+  </tr>
+  <tr>
+    <td align="center"><code>--size</code></td>
+    <td>Export file dimensions</td>
+    <td align="center">Number</td>
+    <td align="center">[<code>1</code>, <code>5</code>]</td>
+    <td align="center"><code>2</code></td>
+  </tr>
+  <tr>
+    <td align="center"><code>--font</code></td>
+    <td>Font type</td>
+    <td align="center">String</td>
+    <td><code>firaCode</code> <code>hack</code> <code>inconsolata</code> <code>iosevka</code> <code>monoid</code> <code>anonymousPro</code> <code>sourceCodePro</code> <code>darkMono</code> <code>droidMono</code> <code>fantasqueMono</code> <code>ibmPlexMono</code> <code>spaceMono</code> <code>ubuntuMono</code></td>
+    <td align="center"><code>firaCode</code></td>
+  </tr>
+  <tr>
+    <td align="center"><code>--show-lines</code></td>
+    <td>shows/hides number of lines in code snippet</td>
+    <td align="center">Bool</td>
+    <td><code>true</code> <code>false</code></td>
+    <td align="center"><code>true</code></td>
+  </tr>
+  <tr>
+    <td align="center"><code>--show-watermark</code></td>
+    <td>shows/hides watermark in code snippet</td>
+    <td align="center">Bool</td>
+    <td><code>true</code> <code>false</code></td>
+    <td align="center"><code>true</code></td>
+  </tr>
+</table>
+
+#### Example of use
+
+If we have a project created by `nef`, and an Xcode playground with the next content:
+&rdquo;`swift
+let example = &ldquo;This is an example&rdquo;
+print(&ldquo;nef is super cool: \(example)&rdquo;)
+
+// nef is super cool: This is an example
+&ldquo;`
+
+Running the following command, we will customize the `background color` to ![#d54048](https://placehold.it/15/d54048/000000?text=+) bow, `hide the number of lines`, and set the export file to `size 3`:
+
+&rdquo;`bash
+➜ nef carbon &ndash;project . &ndash;output ~/Desktop/nef-carbon &ndash;background bow &ndash;size 3 &ndash;show-lines false
+&ldquo;`
+
+<p align="center">
+<img src="assets/nef-carbon-example.png" width="600"/>
+</p>
+
+</details>
+
+<p>&nbsp;</p>
+<h2 id='️-contributing-to-the-project' class='heading'>❤️ Contributing to the project</h2>
+
+<p>You can contribute in different ways to make <code>nef</code> better:</p>
+
+<ul>
+<li>File an issue if you encounter a bug or malfunction in <code>nef</code>.</li>
+<li>Suggest a new use case or feature for <code>nef</code>.</li>
+<li>Open a Pull Request fixing a problem or adding new functionality. You can check the <a href="https://github.com/bow-swift/nef/issues">Issues</a> to see some of the pending tasks.</li>
+<li>Discuss with us in the <a href="https://gitter.im/bowswift/bow">Gitter channel for Bow</a> about all the above.</li>
+</ul>
+<h3 id='how-to-run-the-project' class='heading'>How to run the project</h3>
+
+<p>Open <code>project/nef.xcodeproj</code> in Xcode 11 (or newer) and you are ready to go. nef uses the [Swift Package Manager] to handle its dependencies - they will be resolving automatically from Xcode.</p>
+<h3 id='how-to-run-the-documentation-project' class='heading'>How to run the documentation project</h3>
+
+<ul>
+<li>Go to main directory where you can find the nef Playground <code>Documentation.app</code>.</li>
+<li>Run <code>nef compile --project Documentation.app</code> to set up the project with its dependencies.</li>
+<li>Open <code>Documentation.app</code></li>
+</ul>
+
+<p>For further information, refer to our <a href="CONTRIBUTING.md">Contribution guidelines</a>.</p>
+
+<p>&nbsp;</p>
+<h1 id='️-license' class='heading'>⚖️ License</h1>
+<pre class="highlight plaintext"><code>Copyright (C) 2019 The nef Authors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section id="footer" class="footer">
+      <div>
+        <p>nef is designed and developed by <a href="https://github.com/bow-swift/nef">nef</a></p>
+        <p>with support from <a href="https://47deg.com/">47 Degrees</a></p>
+      </div>
+      <div>
+        <p>&copy; 2020 <a class="link" href="https://nef.bow-swift.io" target="_blank" rel="external">nef</a>. All rights reserved. (Last updated: 2020-05-07)</p>
+        <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      </div>
+    </section>
+  </body>
+</div>
+</html>

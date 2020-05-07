@@ -1,0 +1,236 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/CompilerOptions.swift",
+      "line": 5,
+      "symbol": "CompilerOptions",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/CompilerOptions.swift",
+      "line": 6,
+      "symbol": "CompilerOptions.sources",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/CompilerOptions.swift",
+      "line": 7,
+      "symbol": "CompilerOptions.platform",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/CompilerOptions.swift",
+      "line": 8,
+      "symbol": "CompilerOptions.frameworks",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/CompilerOptions.swift",
+      "line": 9,
+      "symbol": "CompilerOptions.linkers",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/CompilerOptions.swift",
+      "line": 10,
+      "symbol": "CompilerOptions.libs",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/CompilerOptions.swift",
+      "line": 12,
+      "symbol": "CompilerOptions.init(sources:platform:frameworks:linkers:libs:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 4,
+      "symbol": "ProgressReport",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 5,
+      "symbol": "ProgressReport.notify(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 8,
+      "symbol": "ProgressReport",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 9,
+      "symbol": "ProgressReport.oneShot(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 13,
+      "symbol": "ProgressReport.inProgress(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 19,
+      "symbol": "ProgressReport.succeeded(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 25,
+      "symbol": "ProgressReport.failed(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 32,
+      "symbol": "ProgressEventStatus",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 33,
+      "symbol": "ProgressEventStatus.inProgress",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 34,
+      "symbol": "ProgressEventStatus.successful",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 35,
+      "symbol": "ProgressEventStatus.failed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 38,
+      "symbol": "CustomProgressDescription",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 39,
+      "symbol": "CustomProgressDescription.progressDescription",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 40,
+      "symbol": "CustomProgressDescription.currentStep",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 41,
+      "symbol": "CustomProgressDescription.totalSteps",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 44,
+      "symbol": "CustomProgressDescription",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 45,
+      "symbol": "CustomProgressDescription.currentStep",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 46,
+      "symbol": "CustomProgressDescription.totalSteps",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 49,
+      "symbol": "ProgressEvent",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 50,
+      "symbol": "ProgressEvent.step",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 51,
+      "symbol": "ProgressEvent.status",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/NefModels/ProgressReport.swift",
+      "line": 53,
+      "symbol": "ProgressEvent.init(step:status:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/nef/JekyllAPI.swift",
+      "line": 13,
+      "symbol": "JekyllAPI.VerboseOutput",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/nef/JekyllAPI.swift",
+      "line": 14,
+      "symbol": "JekyllAPI.URLVerboseOutput",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/nef/MarkdownAPI.swift",
+      "line": 13,
+      "symbol": "MarkdownAPI.VerboseOutput",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.1/work/nef/nef/project/Component/nef/MarkdownAPI.swift",
+      "line": 14,
+      "symbol": "MarkdownAPI.URLVerboseOutput",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/runner/runners/2.169.1/work/nef/nef"
+}

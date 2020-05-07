@@ -1,0 +1,25 @@
+#-------------------------
+name: nef
+#-------------------------
+title: nef # To be used on meta tags mainly
+#-------------------------
+description: 💊 steroids for Xcode Playgrounds
+#-------------------------
+author: 47 Degrees
+keywords: functional-programming, monads, monad-transformers, functional-data-structure, swift, bow, xcode, xcode-playgrounds, playgrounds, fp-types, adt, free-monads, tagless-final, mtl, for-comprehension, category-theory
+#-------------------------
+github-owner: bow-swift
+github-repo: nef
+#-------------------------
+url: https://nef.bow-swift.io
+#-------------------------
+markdown: kramdown
+sass:
+    sass_dir: _sass
+    style: compressed
+    sourcemap: never
+#-------------------------
+permalink: pretty
+#-------------------------
+exclude: ['config.ru', 'Gemfile', 'Gemfile.lock', 'vendor', 'Procfile', 'Rakefile']
+#-------------------------

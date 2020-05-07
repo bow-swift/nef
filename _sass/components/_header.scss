@@ -1,0 +1,128 @@
+// Header
+// -----------------------------------------------
+// -----------------------------------------------
+
+#site-header {
+  flex: 1 0 auto;
+  padding: ($base-point-grid * 18) 0 ($base-point-grid * 8) 0;
+  background: linear-gradient(170deg, transparent 66%, darken($brand-secondary, 9%) 97%), linear-gradient(130deg, darken($brand-secondary, 6%), $brand-secondary 16%);
+  background-position: center;
+  background-size: 200% 100%;
+  animation: bg-gradient 12s ease infinite;
+
+  .header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: $white;
+    height: 100%;
+
+    .header-text {
+      width: 55%;
+      height: 80%;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        color: $white;
+        font-size: 3.5rem;
+        line-height: 1.3;
+
+        span {
+          display: block;
+          margin: ($base-point-grid * 3) 0;
+          font-size: 1.286rem;
+          font-weight: $font-regular;
+
+          strong {
+            font-weight: $font-bold;
+          }
+        }
+      }
+
+      .header-button {
+        align-self: flex-start;
+        padding: 12px ($base-point-grid * 6);
+        display: inline-block;
+        font-weight: $font-semibold;
+        text-transform: uppercase;
+        color: $brand-tertiary;
+        border: 2px solid $brand-tertiary;
+        background: none;
+        position: relative;
+        transition:
+          color $base-duration $base-timing,
+          background-color $base-duration $base-timing;
+
+        &:visited {
+          color: $brand-tertiary;
+        }
+
+        &:hover {
+          text-decoration: none;
+          color: $brand-secondary;
+          background: $brand-tertiary;
+        }
+
+        &:active {
+          color: $brand-secondary;
+          background: $brand-tertiary;
+        }
+      }
+    }
+
+    .header-image {
+      height: 100%;
+      width: 45%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Responsive
+// -----------------------------------------------
+
+@include bp(large) {
+  #site-header {
+    .header-flex {
+      .header-text {
+        h1 {
+          font-size: 2.9rem;
+        }
+      }
+    }
+  }
+}
+
+@include bp(medium) {
+  #site-header {
+    .header-flex {
+      .header-text {
+        height: 300px;
+        text-align: center;
+        width: $column-12;
+
+        .header-button {
+          align-self: center;
+          width: 50%;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+
+      .header-image {
+        display: none;
+      }
+    }
+  }
+}

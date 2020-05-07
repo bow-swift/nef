@@ -1,0 +1,51 @@
+options:
+
+   - title: Quick start
+     nested_options:
+         - title: Getting started
+           url: /docs/quick-start/getting-started/
+
+         - title: Resources
+           url: /docs/quick-start/resources/
+
+   - title: Command-Line
+     nested_options:
+         - title: Creating a nef Playground
+           url: /docs/command-line/creating-a-nef-playground/
+
+         - title: Creating a Playground Book for iPad
+           url: /docs/command-line/creating-a-playground-book-for-ipad/
+
+         - title: Compiling a nef Playground
+           url: /docs/command-line/compiling-a-nef-playground/
+
+         - title: Generating a Markdown document
+           url: /docs/command-line/generating-a-markdown-document/
+
+         - title: Generating content for Jekyll
+           url: /docs/command-line/generating-content-for-jekyll/
+
+         - title: Exporting Carbon code snippets
+           url: /docs/command-line/exporting-carbon-code-snippets/
+
+   - title: Library
+     nested_options:
+         - title: How to use nef as a library?
+           url: /docs/library/how-to-use-nef-as-a-library/
+
+         - title: APIs
+           url: /docs/library/apis/
+
+   - title: First steps
+     nested_options:
+         - title: Xcode Playground → nef Playground
+           url: /docs/first-steps/xcode-playground--nef-playground/
+
+         - title: Playground Book with 3rd-party libraries
+           url: /docs/first-steps/playground-book-with-3rd-party-libraries/
+
+         - title: How to export my snippets?
+           url: /docs/first-steps/how-to-export-my-snippets/
+
+         - title: How to use Carbon API?
+           url: /docs/first-steps/how-to-use-carbon-api/
