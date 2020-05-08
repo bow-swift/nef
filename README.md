@@ -207,14 +207,14 @@ nef takes advantage of these new possibilities and advancements in Swift Package
 
 Given a `Package.swift` like the next one:
 ```swift
-// swift-tools-version:5.0
+// swift-tools-version:5.2
 
 import PackageDescription
 
 let package = Package(
     name: "BowProject",
     dependencies: [
-        .package(url: "https://github.com/bow-swift/bow.git", from: "0.7.0"),
+        .package(url: "https://github.com/bow-swift/bow.git", from: "0.8.0"),
     ]
 )
 ```

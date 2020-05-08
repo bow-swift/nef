@@ -1,43 +1,43 @@
 import Bow
 import BowEffects
 
-/// Notify about the progress of an event.
+/// Notifies the progress of an event.
 public protocol ProgressReport {
-    /// Notify about the status of an event.
-    /// - Parameter event: progress description.
-    /// - Returns: An `IO` that represent the information for the event.
+    /// Notifies the status of an event.
+    /// - Parameter event: Progress description.
+    /// - Returns: An `IO` describing the progress report.
     func notify<E: Error, A: CustomProgressDescription>(_ event: ProgressEvent<A>) -> IO<E, Void>
 }
 
 public extension ProgressReport {
-    /// Describes a succeeded event.
-    /// - Parameter step: step description.
-    /// - Returns: An `IO` that represent the information for the succeeded event.
+    /// Reports an event that completes successfully and instantly.
+    /// - Parameter step: Step description.
+    /// - Returns: An `IO` describing the progress report.
     func oneShot<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.inProgress(step).followedBy(self.succeeded(step))^
     }
     
-    /// Describes an event has just been initiated.
-    /// - Parameter step: step description.
-    /// - Returns: An `IO` that represent the information for the initiated event.
+    /// Reports an ongoing event.
+    /// - Parameter step: Step description.
+    /// - Returns: An `IO` describing the progress report.
     func inProgress<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
                           status: .inProgress))
     }
     
-    /// Describes the progress of an event finished with status `succeeded`.
-    /// - Parameter step: step description.
-    /// - Returns: An `IO` that represent the information for the succeeded event.
+    /// Reports the successful completion of an event.
+    /// - Parameter step: Step description.
+    /// - Returns: An `IO` describing the progress report.
     func succeeded<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
                           status: .successful))
     }
     
-    /// Describes the progress of an event finished with status `failed`.
-    /// - Parameter step: step description.
-    /// - Returns: An `IO` that represent the information for the failed event.
+    /// Reports the failed completion of an event.
+    /// - Parameter step: Step description.
+    /// - Returns: An `IO` describing the progress report.
     func failed<E: Error, A: CustomProgressDescription>(_ step: A) -> IO<E, Void> {
         self.notify(
             ProgressEvent(step: step,
@@ -45,7 +45,7 @@ public extension ProgressReport {
     }
 }
 
-/// Models the `progress status` for an event.
+/// Models the progress status for an event.
 public enum ProgressEventStatus {
     /// Event is running.
     case inProgress
@@ -55,7 +55,7 @@ public enum ProgressEventStatus {
     case failed
 }
 
-/// Models the `step` description for an event.
+/// Describes the metadata associated with a progress event.
 public protocol CustomProgressDescription {
     /// Detailed information about progress in current step.
     var progressDescription: String { get }
@@ -70,18 +70,18 @@ public extension CustomProgressDescription {
     var totalSteps: UInt { 1 }
 }
 
-/// Models an `event`.
+/// Models an event that can be reported.
 public struct ProgressEvent<A: CustomProgressDescription> {
     /// Describes the current step.
     public let step: A
     /// Describes the progress status.
     public let status: ProgressEventStatus
     
-    /// Initializes a `Platform`
+    /// Initializes a `ProgressEvent`.
     ///
     /// - Parameters:
-    ///   - step: current step.
-    ///   - status: progress status.
+    ///   - step: Current step.
+    ///   - status: Progress status.
     public init(step: A, status: ProgressEventStatus) {
         self.step = step
         self.status = status
