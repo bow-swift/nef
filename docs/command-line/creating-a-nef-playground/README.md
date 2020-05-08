@@ -51,7 +51,7 @@ permalink: /docs/command-line/creating-a-nef-playground/
  - `--bow-version <x.y.z>`: Specify the version of Bow that you want to use in the project. This option lets you test an old version of the library in an Xcode Playground. Example:
 
  ```bash
- ➜ nef playground --name OldBowProject --bow-version 0.7.0
+ ➜ nef playground --name OldBowProject --bow-version 0.8.0
  ```
 
  &nbsp;
@@ -81,7 +81,7 @@ permalink: /docs/command-line/creating-a-nef-playground/
    platform :osx, '10.15'
    use_frameworks!
 
-   pod 'Bow', '~> 0.7.0'
+   pod 'Bow', '~> 0.8.0'
  end
  ```
 

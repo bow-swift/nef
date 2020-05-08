@@ -65,7 +65,7 @@
             <img style="height: 18px;" class="header-icon" src="../img/nef-logo.png" alt="nef Docs"/>
             <span class="header-title">nef</span>
           </a>
-          <span class="header-tag"> 86% documented</span>
+          <span class="header-tag"> 98% documented</span>
         </p>
     
           <p class="header-col header-col--secondary">
@@ -239,7 +239,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Notifies the progress of an event.</p>
 
           </div>
         </section>
@@ -261,7 +261,7 @@
                   <div class="height-container">
                     <section class="section">
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Notifies the status of an event.</p>
 
                       </div>
                       <div class="declaration">
@@ -271,6 +271,29 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">notify</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Structs/ProgressEvent.html">ProgressEvent</a></span><span class="o">&lt;</span><span class="kt">A</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">IO</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">E</span> <span class="p">:</span> <span class="kt"><a href="../Enums/Error.html">Error</a></span><span class="p">,</span> <span class="kt">A</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/CustomProgressDescription.html">CustomProgressDescription</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                  event
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Progress description.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An <code>IO</code> describing the progress report.</p>
                       </div>
                     </section>
                   </div>
@@ -291,7 +314,7 @@
                   <div class="height-container">
                     <section class="section">
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Reports an event that completes successfully and instantly.</p>
 
                       </div>
                       <div class="declaration">
@@ -301,6 +324,29 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">oneShot</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">A</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">IO</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">E</span> <span class="p">:</span> <span class="kt"><a href="../Enums/Error.html">Error</a></span><span class="p">,</span> <span class="kt">A</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/CustomProgressDescription.html">CustomProgressDescription</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                  step
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Step description.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An <code>IO</code> describing the progress report.</p>
                       </div>
                     </section>
                   </div>
@@ -321,7 +367,7 @@
                   <div class="height-container">
                     <section class="section">
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Reports an ongoing event.</p>
 
                       </div>
                       <div class="declaration">
@@ -331,6 +377,29 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">inProgress</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">A</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">IO</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">E</span> <span class="p">:</span> <span class="kt"><a href="../Enums/Error.html">Error</a></span><span class="p">,</span> <span class="kt">A</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/CustomProgressDescription.html">CustomProgressDescription</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                  step
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Step description.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An <code>IO</code> describing the progress report.</p>
                       </div>
                     </section>
                   </div>
@@ -351,7 +420,7 @@
                   <div class="height-container">
                     <section class="section">
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Reports the successful completion of an event.</p>
 
                       </div>
                       <div class="declaration">
@@ -361,6 +430,29 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">succeeded</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">A</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">IO</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">E</span> <span class="p">:</span> <span class="kt"><a href="../Enums/Error.html">Error</a></span><span class="p">,</span> <span class="kt">A</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/CustomProgressDescription.html">CustomProgressDescription</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                  step
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Step description.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An <code>IO</code> describing the progress report.</p>
                       </div>
                     </section>
                   </div>
@@ -381,7 +473,7 @@
                   <div class="height-container">
                     <section class="section">
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Reports the failed completion of an event.</p>
 
                       </div>
                       <div class="declaration">
@@ -391,6 +483,29 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">failed</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">A</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">IO</span><span class="o">&lt;</span><span class="kt">E</span><span class="p">,</span> <span class="kt">Void</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">E</span> <span class="p">:</span> <span class="kt"><a href="../Enums/Error.html">Error</a></span><span class="p">,</span> <span class="kt">A</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/CustomProgressDescription.html">CustomProgressDescription</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                  step
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Step description.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An <code>IO</code> describing the progress report.</p>
                       </div>
                     </section>
                   </div>
@@ -408,7 +523,7 @@
         <p>with support from <a href="https://47deg.com/">47 Degrees</a></p>
       </div>
       <div>
-        <p>&copy; 2020 <a class="link" href="https://nef.bow-swift.io" target="_blank" rel="external">nef</a>. All rights reserved. (Last updated: 2020-05-07)</p>
+        <p>&copy; 2020 <a class="link" href="https://nef.bow-swift.io" target="_blank" rel="external">nef</a>. All rights reserved. (Last updated: 2020-05-08)</p>
         <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
       </div>
     </section>

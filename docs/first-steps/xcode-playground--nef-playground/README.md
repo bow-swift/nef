@@ -55,7 +55,7 @@ permalink: /docs/first-steps/xcode-playground--nef-playground/
    platform :osx, '10.15'
    use_frameworks!
 
-   pod 'Bow', '~> 0.7.0'
+   pod 'Bow', '~> 0.8.0'
  end
  ```
  

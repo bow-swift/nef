@@ -10,7 +10,7 @@ permalink: /docs/first-steps/how-to-use-carbon-api/
  In this section, we will see how we can use the `Carbon API`.
  
 #### Step 1: Import nef library in your project
- > If you need to know how to add nef dependency to your macOS project, read [How to use nef as a library?](/docs/library/how-to-use-nef-as-a-library-/) section.
+ > If you need to know how to add nef dependency to your macOS project, read [How to use nef as a library?](/docs/library/how-to-use-nef-as-a-library/) section.
  
  ```swift
  import nef

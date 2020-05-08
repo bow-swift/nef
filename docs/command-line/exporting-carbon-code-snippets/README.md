@@ -115,4 +115,4 @@ Xcode Playgrounds are a great tool for prototyping and trying new concepts. Ofte
  </tr>
  </table>
 
- You can find an example of use in the section [How to export my snippets?](/docs/first-steps/how-to-export-my-snippets-/)
+ You can find an example of use in the section [How to export my snippets?](/docs/first-steps/how-to-export-my-snippets/)
