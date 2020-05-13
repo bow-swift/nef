@@ -69,15 +69,11 @@ public struct SwiftPlayground {
             let step = PlaygroundBookEvent.downloadingDependencies
             
             return binding(
-                |<-env.progressReport.inProgress(step),
-                |<-self.buildPackage(
-                    content: content,
-                    packageFilePath: path.packageFilePath,
-                    packagePath: path.packagePath,
-                    buildPath: path.buildPath)
-                    .provide((env.system, env.shell)),
+                     |<-env.progressReport.inProgress(step),
+                     |<-self.buildPackage(content: content, packageFilePath: path.packageFilePath, packagePath: path.packagePath, buildPath: path.buildPath)
+                            .provide((env.system, env.shell)),
                 repos <- self.repositories(checkoutPath: path.checkoutPath).provide(env.system),
-                yield: repos.get)^
+            yield: repos.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
     }
@@ -88,9 +84,9 @@ public struct SwiftPlayground {
             let step = PlaygroundBookEvent.gettingModules
             
             return binding(
-                |<-env.progressReport.inProgress(step),
-                modules <- self.swiftLibraryModules(in: repos, excludes: excludes).provide(env.shell),
-                yield: modules.get)^
+                       |<-env.progressReport.inProgress(step),
+               modules <- self.swiftLibraryModules(in: repos, excludes: excludes).provide(env.shell),
+            yield: modules.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
     }
@@ -140,7 +136,6 @@ public struct SwiftPlayground {
         EnvIO { fileSystem in
             fileSystem.items(atPath: checkoutPath, recursive: false)
                       .mapError { e in .checkout(info: e.description) }
-                      .map { repos in repos.filter { repo in !repo.filename.contains("swift-") } }
         }
     }
     
