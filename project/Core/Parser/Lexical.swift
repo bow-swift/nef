@@ -32,6 +32,7 @@ struct LexicalAnalyzer {
         static let multiMarkup = "/\\*:.*\n"
         static let markup = "^[ ]*//:.*\n"
         static let comment = "^[ ]*//.*\n"
+        static let multiCommentSingleLine = "^[ ]*/\\*.*\\*/\n"
         static let multiComment = "/\\*.*\n"
         static let markupComment = "\\*/\n"
         static let line = ".*\n"
@@ -53,6 +54,9 @@ struct LexicalAnalyzer {
             return Token.markup
         }
         if let _ = line.substring(pattern: Regex.comment) {
+            return Token.comment
+        }
+        if let _ = line.substring(pattern: Regex.multiCommentSingleLine) {
             return Token.comment
         }
         if let _ = line.substring(pattern: Regex.multiComment) {
