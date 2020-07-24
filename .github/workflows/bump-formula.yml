@@ -1,0 +1,20 @@
+name: Bump Homebrew nef formula
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  homebrew:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Bump formulae
+      uses: dawidd6/action-homebrew-bump-formula@v3.1.1
+      with:
+        token: ${{ secrets.HOMEBREW_NEF_TOKEN }}
+        formula: nef
+        livecheck: true
