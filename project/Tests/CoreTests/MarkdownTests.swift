@@ -10,7 +10,6 @@ class MarkdownTests: XCTestCase {
                     /*:
                      ### This is a markup
                      */
-
                     """
         let expected = "\n### This is a markup\n"
         
@@ -27,7 +26,6 @@ class MarkdownTests: XCTestCase {
                      ## Title without spaces
                        # Title with one space.
                      */
-
                     """
         let expected = "\n### This is a Title with spaces\n    text with spaces.\n\n## Title without spaces\n# Title with one space.\n"
         
@@ -38,12 +36,9 @@ class MarkdownTests: XCTestCase {
     func testPlainPlaygroundWithCode_render_returnsSwiftBlock() {
         let input = """
                     import Bow
-
                     """
-        let expected = "\n```swift\n\(input)```\n"
-        
-        assert(markdown(content: input),
-               succeeds: expected)
+        let expected = "\n```swift\n\(input)\n```\n"
+        assert(markdown(content: input), succeeds: expected)
     }
 
     func testPlainPlaygroundWithNefHeader_render_failsEmpty() {
@@ -55,7 +50,6 @@ class MarkdownTests: XCTestCase {
                     video: video
                     */
                     // nef:end
-
                     """
         
         assert(markdown(content: input),
@@ -64,7 +58,7 @@ class MarkdownTests: XCTestCase {
 
     func testPlainPlaygroundWithCodeAndNefHiddenBlock_render_returnsSwiftBlock() {
         let code = """
-                    let nef = "It is awesone!"
+                   let nef = "It is awesone!"
                    """
         let input = """
                     // nef:begin:hidden
@@ -75,6 +69,46 @@ class MarkdownTests: XCTestCase {
 
                     """
         let expected = "\n```swift\n\(code)\n```\n"
+        
+        assert(markdown(content: input),
+               succeeds: expected)
+    }
+    
+    func testPlainPlaygroundWithCommentMultine_render_returnsCommentBlock() {
+        let input =  """
+                     /* Comment */
+                     """
+        let expected =  """
+
+                        ```swift
+                        /* Comment */
+                        ```
+
+                        """
+        
+        assert(markdown(content: input),
+               succeeds: expected)
+    }
+    
+    func testFunctionWithSingleMultiCommentInline_render_returnsCommentBlock() {
+        let input =  """
+                     func f() {
+                         print("Hello") /* Prints Hello */
+                     }
+                     """
+        let expected = "\n```swift\nfunc f() {\n    print(\"Hello\") /* Prints Hello */\n}\n```\n"
+        
+        assert(markdown(content: input),
+               succeeds: expected)
+    }
+    
+    func testFunctionWithMultiCommentInline_render_returnsCommentBlock() {
+        let input =  """
+                     print("Hello") /* Prints
+                     Hello
+                     */
+                     """
+        let expected = "\n```swift\nprint(\"Hello\") /* Prints\nHello\n*/\n```\n"
         
         assert(markdown(content: input),
                succeeds: expected)

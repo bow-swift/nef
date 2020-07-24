@@ -12,6 +12,7 @@ public struct CoreRender<D, A> {
     }
     
     public func render(content: String) -> EnvIO<D, CoreRenderError, RenderingOutput<A>> {
+        let content = "\(content.trimmingNewLines)\n"
         let syntaxAST = SyntaxAnalyzer.parse(content: content)
         guard syntaxAST.count > 0 else { return EnvIO.raiseError(.ast)^ }
 

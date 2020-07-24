@@ -12,7 +12,11 @@ extension CoreRenderError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .ast:
-            return "Syntax analysis failed. Possible issues: \n\t- File is empty\n\t- Check all the begin/end delimiters are correct."
+            return  """
+                    Syntax analysis failed. Possible issues:
+                        - File is empty.
+                        - Check all the begin/end delimiters are balanced.
+                    """
         case .renderNode(let node):
             return "Could not render node: \n\(node)\n"
         case .renderEmpty:
