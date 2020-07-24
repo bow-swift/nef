@@ -1,33 +1,33 @@
 {
   "warnings": [
     {
-      "file": "/Users/runner/runners/2.263.0/work/nef/nef/project/Component/nef/JekyllAPI.swift",
+      "file": "/Users/runner/work/nef/nef/project/Component/nef/JekyllAPI.swift",
       "line": 13,
       "symbol": "JekyllAPI.VerboseOutput",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.263.0/work/nef/nef/project/Component/nef/JekyllAPI.swift",
+      "file": "/Users/runner/work/nef/nef/project/Component/nef/JekyllAPI.swift",
       "line": 14,
       "symbol": "JekyllAPI.URLVerboseOutput",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.263.0/work/nef/nef/project/Component/nef/MarkdownAPI.swift",
+      "file": "/Users/runner/work/nef/nef/project/Component/nef/MarkdownAPI.swift",
       "line": 13,
       "symbol": "MarkdownAPI.VerboseOutput",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.263.0/work/nef/nef/project/Component/nef/MarkdownAPI.swift",
+      "file": "/Users/runner/work/nef/nef/project/Component/nef/MarkdownAPI.swift",
       "line": 14,
       "symbol": "MarkdownAPI.URLVerboseOutput",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/runner/runners/2.263.0/work/nef/nef"
+  "source_directory": "/Users/runner/work/nef/nef"
 }
