@@ -3,6 +3,6 @@
 import Foundation
 
 internal enum BuildConfiguration {
-    static let buildVersion = "0.6.1"
-    static let templateVersion = "0.6.1"
+    static let buildVersion = "0.6.2"
+    static let templateVersion = "0.6.2"
 }
