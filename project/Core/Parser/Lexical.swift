@@ -33,8 +33,8 @@ struct LexicalAnalyzer {
         static let markup = "^[ ]*//:.*\n"
         static let comment = "^[ ]*//.*\n"
         static let multiCommentSingleLine = "^[ ]*/\\*.*\\*/\n"
-        static let multiComment = "/\\*.*\n"
-        static let markupComment = "\\*/\n"
+        static let multiComment = "^[ ]*/\\*.*\n"
+        static let markupComment = "^[ ]*\\*/\n"
         static let line = ".*\n"
     }
 

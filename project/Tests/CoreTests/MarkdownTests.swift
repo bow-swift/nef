@@ -89,4 +89,28 @@ class MarkdownTests: XCTestCase {
         assert(markdown(content: input),
                succeeds: expected)
     }
+    
+    func testFunctionWithSingleMultiCommentInline_render_returnsCommentBlock() {
+        let input =  """
+                     func f() {
+                         print("Hello") /* Prints Hello */
+                     }
+                     """
+        let expected = "\n```swift\nfunc f() {\n    print(\"Hello\") /* Prints Hello */\n}\n```\n"
+        
+        assert(markdown(content: input),
+               succeeds: expected)
+    }
+    
+    func testFunctionWithMultiCommentInline_render_returnsCommentBlock() {
+        let input =  """
+                     print("Hello") /* Prints
+                     Hello
+                     */
+                     """
+        let expected = "\n```swift\nprint(\"Hello\") /* Prints\nHello\n*/\n```\n"
+        
+        assert(markdown(content: input),
+               succeeds: expected)
+    }
 }
