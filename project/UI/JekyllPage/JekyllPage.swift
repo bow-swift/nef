@@ -24,8 +24,8 @@ public struct JekyllPageCommand: ParsableCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Relative path where Jekyll will render the documentation. ex. `/about/`", valueName: "relative URL"))
     private var permalink: String
     
-    @ArgumentParser.Flag (help: "Run jekyll page in verbose mode")
-    private var verbose: Bool
+    @ArgumentParser.Flag(help: "Run jekyll page in verbose mode")
+    private var verbose: Bool = false
     
     private var outputFile: URL { output.url.appendingPathComponent("README.md") }
     

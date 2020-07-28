@@ -3979,7 +3979,7 @@
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.0.5;
+				version = 0.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

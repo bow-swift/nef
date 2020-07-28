@@ -21,8 +21,8 @@ public struct JekyllCommand: ParsableCommand {
     @ArgumentParser.Option(help: "Path where the resulting jekyll files will be generated")
     private var output: ArgumentPath
     
-    @ArgumentParser.Option(name: .customLong("main-page"), default: "README.md", help: "Path to 'README.md' file to be used as the index page")
-    private var mainPage: String
+    @ArgumentParser.Option(name: .customLong("main-page"), help: "Path to 'README.md' file to be used as the index page")
+    private var mainPage: String = "README.md"
     
     private var mainURL: URL {
         mainPage == "README.md" ? output.url.appendingPathComponent("README.md")
