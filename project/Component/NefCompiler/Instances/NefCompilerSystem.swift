@@ -64,7 +64,6 @@ class NefCompilerSystem: CompilerSystem {
         binding(
             |<-self.buildPods(xcworkspace: xcworkspace, platform: platform, cached: cached),
             |<-self.buildCarthage(xcworkspace: xcworkspace, platform: platform, cached: cached),
-            |<-self.buildSPM(xcworkspace: xcworkspace, platform: platform, cached: cached),
         yield: ())^
     }
     
@@ -195,11 +194,6 @@ class NefCompilerSystem: CompilerSystem {
         return resolve(project: xcworkspace.deletingLastPathComponent(),
                        platform: platform,
                        cached: cached)
-    }
-    
-    private func buildSPM(xcworkspace: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-        #warning("it must be done when apple fixes the Xcode bug '47668990'")
-        return EnvIO.pure(())^
     }
     
     // MARK: - helpers
