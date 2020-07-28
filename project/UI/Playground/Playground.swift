@@ -15,14 +15,14 @@ public struct PlaygroundCommand: ParsableCommand {
 
     public init() {}
     
-    @ArgumentParser.Option(default: "BowPlayground", help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
-    private var name: String
+    @ArgumentParser.Option(help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
+    private var name: String = "BowPlayground"
     
-    @ArgumentParser.Option(default: .init(argument: "."), help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
-    private var output: ArgumentPath
+    @ArgumentParser.Option(help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
+    private var output: ArgumentPath = .init(argument: ".")
 
-    @ArgumentParser.Option(default: .ios, help: "set the target to `ios` or `macos`")
-    private var platform: Platform
+    @ArgumentParser.Option(help: "set the target to `ios` or `macos`")
+    private var platform: Platform = .ios
     
     @ArgumentParser.Option(help: ArgumentHelp("Xcode Playground to be transformed into nef Playground", valueName: "Xcode Playground"))
     private var playground: ArgumentPath?
@@ -41,6 +41,7 @@ public struct PlaygroundCommand: ParsableCommand {
     
     @ArgumentParser.Option(help: ArgumentHelp("Specify the commit hash of Bow", valueName: "commit hash"))
     var bowCommit: String?
+    
     
     public func run() throws {
         try run().provide(ConsoleReport())^.unsafeRunSync()

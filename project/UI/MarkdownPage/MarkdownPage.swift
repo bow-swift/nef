@@ -21,8 +21,8 @@ public struct MarkdownPageCommand: ParsableCommand {
     @ArgumentParser.Option(help: "Path where markdown files are saved to. ex. `/home`")
     private var output: ArgumentPath
     
-    @ArgumentParser.Flag (help: "Run markdown page in verbose mode.")
-    private var verbose: Bool
+    @ArgumentParser.Flag(help: "Run markdown page in verbose mode.")
+    private var verbose: Bool = false
     
     
     public func run() throws {

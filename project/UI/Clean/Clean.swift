@@ -16,10 +16,7 @@ public struct CleanCommand: ParsableCommand {
 
     public init() {}
     
-    @ArgumentParser.Option(help:
-        ArgumentHelp(
-            "Path to nef Playground to clean up",
-            valueName: "nef Playground"))
+    @ArgumentParser.Option(help: ArgumentHelp("Path to nef Playground to clean up", valueName: "nef Playground"))
     private var project: ArgumentPath
     
 

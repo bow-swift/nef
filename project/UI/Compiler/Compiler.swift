@@ -19,7 +19,7 @@ public struct CompilerCommand: ParsableCommand {
     var project: ArgumentPath
     
     @ArgumentParser.Flag(name: .customLong("use-cache"), help: "Use cached dependencies if it is possible")
-    var cached: Bool
+    var cached: Bool = false
 
     
     public func run() throws {
