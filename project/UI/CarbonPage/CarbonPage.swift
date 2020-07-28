@@ -22,26 +22,26 @@ public struct CarbonPageCommand: ParsableCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Path where Carbon snippets are saved to. ex. `/home`", valueName: "carbon output"))
     private var output: ArgumentPath
     
-    @ArgumentParser.Option(default: "nef", help: "Background color in hexadecimal")
-    private var background: String
+    @ArgumentParser.Option(help: "Background color in hexadecimal")
+    private var background: String = "nef"
     
-    @ArgumentParser.Option(default: .dracula, help: "Carbon theme")
-    private var theme: CarbonStyle.Theme
+    @ArgumentParser.Option(help: "Carbon theme")
+    private var theme: CarbonStyle.Theme = .dracula
     
-    @ArgumentParser.Option(default: .x2, help: "export file size [1-5]")
-    private var size: CarbonStyle.Size
+    @ArgumentParser.Option(help: "export file size [1-5]")
+    private var size: CarbonStyle.Size = .x2
     
-    @ArgumentParser.Option(default: .firaCode, help: "Carbon font type")
-    private var font: CarbonStyle.Font
+    @ArgumentParser.Option(help: "Carbon font type")
+    private var font: CarbonStyle.Font = .firaCode
     
-    @ArgumentParser.Option(name: .customLong("show-lines"), default: true, help: "Shows/hides lines of code [true | false]")
-    private var lines: Bool
+    @ArgumentParser.Option(name: .customLong("show-lines"), help: "Shows/hides lines of code [true | false]")
+    private var lines: Bool = true
     
-    @ArgumentParser.Option(name: .customLong("show-watermark"), default: true, help: "Shows/hides the watermark [true | false]")
-    private var watermark: Bool
+    @ArgumentParser.Option(name: .customLong("show-watermark"), help: "Shows/hides the watermark [true | false]")
+    private var watermark: Bool = true
     
-    @ArgumentParser.Flag (help: "Run carbon page in verbose mode")
-    private var verbose: Bool
+    @ArgumentParser.Flag(help: "Run carbon page in verbose mode")
+    private var verbose: Bool = false
     
     
     public func run() throws {
