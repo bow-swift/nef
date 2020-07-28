@@ -298,7 +298,6 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
         binding(
             |<-self.cleanPods(playground: playground).handleError { _ in },
             |<-self.cleanCarthage(playground: playground).handleError { _ in },
-            |<-self.cleanSPM(playground: playground).handleError { _ in },
         yield: ())^
     }
     
@@ -395,11 +394,6 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
             return fileSystem.remove(itemPath: cartfile.path)^
                              .mapError { _ in .clean() }.handleError { _ in }
         }
-    }
-    
-    private func cleanSPM(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-        #warning("it must be done when apple fixes the Xcode bug '47668990'")
-        return EnvIO.pure(())^
     }
     
     // MARK: helpers <file manager>
