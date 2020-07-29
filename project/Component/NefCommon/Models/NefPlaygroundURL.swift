@@ -36,6 +36,7 @@ public struct NefPlaygroundURL {
         case launcher
         case cocoapodsTemplate = "cocoapods"
         case carthageTemplate  = "carthage"
+        case spmTemplate = "spm"
         
         public var pathComponent: String {
             switch self {
@@ -48,6 +49,7 @@ public struct NefPlaygroundURL {
             case .launcher:          return "\(Component.contentFiles.pathComponent)/\(rawValue)"
             case .cocoapodsTemplate: return "\(Component.contentFiles.pathComponent)/\(rawValue)"
             case .carthageTemplate:  return "\(Component.contentFiles.pathComponent)/\(rawValue)"
+            case .spmTemplate:       return "\(Component.contentFiles.pathComponent)/\(rawValue)"
             }
         }
         

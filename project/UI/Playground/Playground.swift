@@ -27,6 +27,9 @@ public struct PlaygroundCommand: ParsableCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Xcode Playground to be transformed into nef Playground", valueName: "Xcode Playground"))
     private var playground: ArgumentPath?
     
+    @ArgumentParser.Flag(help: "Use Swift Packages as dependency manager")
+    private var spm: Bool = false
+    
     @ArgumentParser.Option(help: "Path to Podfile with your own dependencies")
     private var podfile: ArgumentPath?
     
@@ -69,7 +72,9 @@ public struct PlaygroundCommand: ParsableCommand {
     // MARK: attributes
     private var dependencies: PlaygroundDependencies {
         let dependencies: PlaygroundDependencies
-        if let version = bowVersion {
+        if spm {
+            dependencies = .spm
+        } else if let version = bowVersion {
             dependencies = .bow(.version(version))
         } else if let branch = bowBranch {
             dependencies = .bow(.branch(branch))
