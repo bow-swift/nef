@@ -31,19 +31,19 @@ extension Error: CustomStringConvertible {
     public var description: String {
         switch self {
         case .compiler(let info):
-            return "Compiler failure. \(info)"
+            return "Compiler failure. \(info.firstCapitalized)"
         case .markdown(let info):
-            return "Markdown failure. \(info)"
+            return "Markdown failure. \(info.firstCapitalized)"
         case .jekyll(let info):
-            return "Jekyll failure. \(info)"
+            return "Jekyll failure. \(info.firstCapitalized)"
         case .carbon(let info):
-            return "Carbon failure. \(info)"
+            return "Carbon failure. \(info.firstCapitalized)"
         case .invalidSnapshot(let info):
-            return "Invalid snapshot. \(info)"
+            return "Invalid snapshot. \(info.firstCapitalized)"
         case .playground(let info):
-            return "Playground generator failure. \(info)"
-        case .swiftPlayground(let info):
-            return "Swift Playground generator failure. \(info)"
+            return "Playground generator failure. \(info.firstCapitalized)"
+        case .swiftPlaygrond(let info):
+            return "Swift Playground generator failure. \(info.firstCapitalized)"
         }
     }
 }
