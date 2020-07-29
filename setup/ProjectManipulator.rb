@@ -35,7 +35,10 @@ module Nef
     def rename_files
       # shared schemes have project specific names
       scheme_path = project_folder + "/PROJECT.xcodeproj/xcshareddata/xcschemes/"
-      File.rename(scheme_path + "PROJECT.xcscheme", scheme_path +  @configurator.project_name + ".xcscheme")
+      scheme_file = scheme_path + "PROJECT.xcscheme"
+      if File.file?(scheme_file)
+          File.rename(scheme_file, scheme_path +  @configurator.project_name + ".xcscheme")
+      end
 
       # rename xcproject
       File.rename(project_folder + "/PROJECT.xcodeproj", project_folder + "/" +  @configurator.project_name + ".xcodeproj")
