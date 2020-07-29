@@ -39,6 +39,8 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
         switch dependencies {
         case .bow(let bow):
             return setDependencies(playground: playground, bow: bow)
+        case .spm:
+            return setDependencies(playground: playground)
         case .cartfile(let url):
             return setDependencies(playground: playground, xcodeproj: xcodeproj, cartfile: url)
         case .podfile(let url):
@@ -280,6 +282,13 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
             |<-self.moveFiles(at: playground.appending(.carthageTemplate), into: playground.appending(.contentFiles)),
             |<-self.cleanTemplates(playground: playground),
             |<-self.rewriteFile(contentCartfile, with: cartfile),
+        yield: ())^
+    }
+    
+    private func setDependencies(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+        return binding(
+            |<-self.moveFiles(at: playground.appending(.spmTemplate), into: playground.appending(.contentFiles)),
+            |<-self.cleanTemplates(playground: playground),
         yield: ())^
     }
     

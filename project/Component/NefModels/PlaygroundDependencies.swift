@@ -13,6 +13,9 @@ public enum PlaygroundDependencies {
     /// Describes the Carthage dependencies.
     case cartfile(URL)
     
+    /// Project uses Swift Packages Manager.
+    case spm
+    
     /// Models the `Bow` dependencies.
     public enum Bow {
         /// Represents the version number `x.y.z`

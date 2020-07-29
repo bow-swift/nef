@@ -52,7 +52,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-h"
+            argument = "--name Migue"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--output ~/Desktop"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--spm"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
