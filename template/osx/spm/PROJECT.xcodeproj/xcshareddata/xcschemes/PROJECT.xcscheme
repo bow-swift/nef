@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1200"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8BD6975923F6D6A7000A512F"
-               BuildableName = "nef-playground"
-               BlueprintName = "Playground"
-               ReferencedContainer = "container:nef.xcodeproj">
+               BlueprintIdentifier = "07E5010A20CABF0000EDBFB7"
+               BuildableName = "PROJECT"
+               BlueprintName = "PROJECT"
+               ReferencedContainer = "container:PROJECT.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,34 +40,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8BD6975923F6D6A7000A512F"
-            BuildableName = "nef-playground"
-            BlueprintName = "Playground"
-            ReferencedContainer = "container:nef.xcodeproj">
+            BlueprintIdentifier = "07E5010A20CABF0000EDBFB7"
+            BuildableName = "PROJECT"
+            BlueprintName = "PROJECT"
+            ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "--name Migue"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--platform macos"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--output ~/Desktop"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--spm"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -75,16 +56,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8BD6975923F6D6A7000A512F"
-            BuildableName = "nef-playground"
-            BlueprintName = "Playground"
-            ReferencedContainer = "container:nef.xcodeproj">
+            BlueprintIdentifier = "07E5010A20CABF0000EDBFB7"
+            BuildableName = "PROJECT"
+            BlueprintName = "PROJECT"
+            ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

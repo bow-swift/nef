@@ -42,6 +42,12 @@ module Nef
 
       # rename playground
       File.rename(project_folder + "/PROJECT.playground", project_folder + "/" +  @configurator.project_name + ".playground")
+
+      # rename xcworkspace
+      workspace_path = project_folder + "/PROJECT.xcworkspace"
+      if Dir.exist?(workspace_path)
+          File.rename(workspace_path, project_folder + "/" +  @configurator.project_name + ".xcworkspace")
+      end
     end
 
     def rename_project_folder

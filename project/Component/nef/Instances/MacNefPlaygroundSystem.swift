@@ -198,9 +198,9 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
             }
             
             let platformFiles = playground.appending(.contentFiles).appendingPathComponent(platform == .ios ? "ios" : "osx")
-            let platformDirectory = playground.appending(.contentFiles).appendingPathComponent(platform == .ios ? "osx" : "ios")
+            let otherPlatformFolder = playground.appending(.contentFiles).appendingPathComponent(platform == .ios ? "osx" : "ios")
             
-            let removeOtherPlatformIO = fileSystem.removeDirectory(platformDirectory.path)
+            let removeOtherPlatformIO = fileSystem.removeDirectory(otherPlatformFolder.path)
             let moveFilesIO = fileSystem.moveFiles(in: platformFiles.path, to: playground.appending(.contentFiles).path)
             
             return removeOtherPlatformIO.followedBy(moveFilesIO)^.mapError { e in .template(info: "\(e)") }
