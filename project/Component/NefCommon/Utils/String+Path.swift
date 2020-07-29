@@ -32,6 +32,10 @@ public extension String {
         trimmingCharacters(in: ["\n", " " ])
     }
     
+    var trimmingQuotes: String {
+        trimmingCharacters(in: ["\"", "'" ])
+    }
+    
     private func removeLastComponent(separatedBy separator: String) -> String {
         var pathComponents = components(separatedBy: separator)
         pathComponents.removeLast()
