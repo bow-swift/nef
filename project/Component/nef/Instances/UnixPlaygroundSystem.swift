@@ -24,7 +24,6 @@ final class UnixPlaygroundSystem: XcodePlaygroundSystem {
         }
     }
     
-    
     func xcworkspaces(at folder: URL) -> EnvIO<FileSystem, XcodePlaygroundSystemError, NEA<URL>> {
         func xcworkspace(file: URL, fileSystem: FileSystem) -> URL? {
             guard let xcodeproj = self.xcodeprojs(file: file) else { return nil }
