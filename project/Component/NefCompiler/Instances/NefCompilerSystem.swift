@@ -102,7 +102,7 @@ class NefCompilerSystem: CompilerSystem {
             let schemes = pbxproj.matches(pattern: "(?s)(/\\* Begin PBX\(name.capitalized)Target section.*\n).*(End PBX\(name.capitalized)Target section \\*/)").joined()
                                  .matches(pattern: "(?<=\tname = ).*(?=;)")
             
-            guard let scheme = schemes.first else { return EnvIO.raiseError(.build(xcworkspace))^ }
+            guard let scheme = schemes.first?.trimmingEmptyCharacters.trimmingQuotes else { return EnvIO.raiseError(.build(xcworkspace))^ }
             return EnvIO.pure(scheme)^
         }
         
