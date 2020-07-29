@@ -42,13 +42,11 @@ public struct Playground {
             let step = PlaygroundEvent.downloadingTemplate(output.path)
             
             return binding(
-                |<-env.progressReport.inProgress(step),
-                playground <- env.nefPlaygroundSystem.installTemplate(
-                    into: output,
-                    name: name,
-                    platform: platform)
-                    .provide(env.fileSystem)
-                    .mapError { e in .template(info: e) },
+                          |<-env.progressReport.inProgress(step),
+                playground <- env.nefPlaygroundSystem.installTemplate(into: output,
+                                                                      name: name,
+                                                                      platform: platform).provide(env.fileSystem)
+                                                                                         .mapError { e in .template(info: e) },
             yield: playground.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
@@ -127,11 +125,11 @@ public struct Playground {
             let step = PlaygroundEvent.linkingPlaygrounds(playground.name)
             
             return binding(
-                |<-env.progressReport.inProgress(step),
+                           |<-env.progressReport.inProgress(step),
                 xcworkspace <- xcworkspaceAt(playground).provide(env),
                 playgrounds <- playgrounsAt(playground).provide(env),
-                |<-linkPlaygrounds(playgrounds.get, xcworkspace: xcworkspace.get).provide(env),
-                yield: ())^
+                           |<-linkPlaygrounds(playgrounds.get, xcworkspace: xcworkspace.get).provide(env),
+            yield: ())^
                 .step(step, reportCompleted: env.progressReport)
         }
     }
