@@ -27,7 +27,7 @@ public struct PlaygroundCommand: ParsableCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Xcode Playground to be transformed into nef Playground", valueName: "Xcode Playground"))
     private var playground: ArgumentPath?
     
-    @ArgumentParser.Flag(help: "Use Swift Packages as dependency manager")
+    @ArgumentParser.Flag(help: "Use Swift Packages as a dependency manager")
     private var spm: Bool = false
     
     @ArgumentParser.Option(help: "Path to Podfile with your own dependencies")
