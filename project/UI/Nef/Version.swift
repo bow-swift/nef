@@ -25,10 +25,10 @@ public struct VersionCommand: ParsableCommand {
     func run() -> EnvIO<ProgressReport, Never, Void> {
         EnvIO { progressReport in
             nef.Version.info()
-                .flatMap { version in
+               .flatMap { version in
                     progressReport.oneShot(VersionEvent.version(version))
-                }
-        }^
+               }
+        }^.finish()
     }
 }
 
