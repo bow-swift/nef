@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8BBF1CCB24D0417A009559D8"
-               BuildableName = "Swift Packages.framework"
-               BlueprintName = "Swift Packages"
+               BuildableName = "SwiftPackages.framework"
+               BlueprintName = "SwiftPackages"
                ReferencedContainer = "container:PROJECT.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BBF1CCB24D0417A009559D8"
-            BuildableName = "Swift Packages.framework"
-            BlueprintName = "Swift Packages"
+            BuildableName = "SwiftPackages.framework"
+            BlueprintName = "SwiftPackages"
             ReferencedContainer = "container:PROJECT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
