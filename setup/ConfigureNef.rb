@@ -28,12 +28,12 @@ module Nef
           :prefix => ''
         }).run
 
-        # Nef::ProjectManipulator.new({
-        #   :configurator => @configurator,
-        #   :xcodeproj_path => "template/ios/"+dependency_manager+"/PROJECT.xcodeproj",
-        #   :platform => :ios,
-        #   :prefix => ''
-        # }).run
+        Nef::ProjectManipulator.new({
+          :configurator => @configurator,
+          :xcodeproj_path => "template/ios/"+dependency_manager+"/PROJECT.xcodeproj",
+          :platform => :ios,
+          :prefix => ''
+        }).run
     end
   end
 

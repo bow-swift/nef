@@ -1,4 +1,4 @@
-import UIKit
+import SwiftUI
 
 public protocol NefPlaygroundLiveViewable {}
 extension UIView: NefPlaygroundLiveViewable {}
@@ -20,7 +20,7 @@ public enum Nef {
         public static func liveView(_ view: NefPlaygroundLiveViewable) {
             PlaygroundPage.current.liveView = (view as! PlaygroundLiveViewable)
         }
-        
+
         public static func needsIndefiniteExecution(_ state: Bool) {
             PlaygroundPage.current.needsIndefiniteExecution = state
         }
