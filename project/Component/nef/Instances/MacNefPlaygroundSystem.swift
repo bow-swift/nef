@@ -295,7 +295,8 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
     private func cleanTemplates(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         EnvIO { fileSystem in
             let dependencies = [playground.appending(.cocoapodsTemplate),
-                                playground.appending(.carthageTemplate)]
+                                playground.appending(.carthageTemplate),
+                                playground.appending(.spmTemplate)]
             
             return dependencies.traverse { template in fileSystem.removeDirectory(template.path).handleError { _ in } }^
                                .mapError { e in .dependencies(info: "clean templates: \(e)") }
