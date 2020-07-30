@@ -29,8 +29,8 @@ public extension Kleisli where D == ProgressReport {
     }
 }
 
-public extension Kleisli where F == IOPartial<nef.Error> {
-    func finish() -> EnvIO<D, nef.Error, Void>  {
+public extension Kleisli {
+    func finish<E>() -> EnvIO<D, E, Void> where F == IOPartial<E> {
         self.foldM(
             { _ in
                 EnvIO.invoke { _ in Darwin.exit(-1) }
