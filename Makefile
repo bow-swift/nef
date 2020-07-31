@@ -23,7 +23,7 @@ BINARIES =  nefc\
 
 
 .PHONY: install
-install: uninstall build install_folders
+install: uninstall build install_folders bash
 	$(foreach binary,$(BINARIES),$(shell install $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
 	@install $(BINARIES_PATH)/nef-menu $(PREFIX_BIN)/nef
 	@cp -R Documentation.app $(PREFIX_TESTS)
@@ -49,3 +49,9 @@ clean:
 .PHONY: zip
 zip: build
 	@zip $(TOOL_NAME).$(version).zip $(foreach binary,$(BINARIES),$(BINARIES_PATH)/$(binary))
+
+.PHONY: bash
+bash:
+	@mkdir -p ~/.bash_completions
+	@nef --generate-completion-script bash > ~/.bash_completions/nef.bash
+	$(shell if [[ ! -f ~/.bashrc ]] || [[ ! `grep "nef.bash" ~/.bashrc` ]]; then echo "source ~/.bash_completions/nef.bash" >> ~/.bashrc; fi)
