@@ -28,16 +28,16 @@ public struct CarbonCommand: ParsableCommand {
     @ArgumentParser.Option(help: "Carbon theme")
     private var theme: CarbonStyle.Theme = .dracula
     
-    @ArgumentParser.Option(help: "export file size [1-5]")
+    @ArgumentParser.Option(help: "export file size")
     private var size: CarbonStyle.Size = .x2
     
     @ArgumentParser.Option(help: "Carbon font type")
     private var font: CarbonStyle.Font = .firaCode
     
-    @ArgumentParser.Option(name: .customLong("show-lines"), help: "Shows/hides lines of code [true | false]")
+    @ArgumentParser.Option(name: .customLong("show-lines"), help: "Shows/hides lines of code")
     private var lines: Bool = true
     
-    @ArgumentParser.Option(name: .customLong("show-watermark"), help: "Shows/hides the watermark [true | false]")
+    @ArgumentParser.Option(name: .customLong("show-watermark"), help: "Shows/hides the watermark")
     private var watermark: Bool = true
     
     
