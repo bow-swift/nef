@@ -23,7 +23,7 @@ BINARIES =  nefc\
 
 
 .PHONY: install
-install: uninstall build install_folders bash
+install: uninstall build install_folders bash zsh
 	$(foreach binary,$(BINARIES),$(shell install $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
 	@install $(BINARIES_PATH)/nef-menu $(PREFIX_BIN)/nef
 	@cp -R Documentation.app $(PREFIX_TESTS)
@@ -49,6 +49,14 @@ clean:
 .PHONY: zip
 zip: build
 	@zip $(TOOL_NAME).$(version).zip $(foreach binary,$(BINARIES),$(BINARIES_PATH)/$(binary))
+
+.PHONY: zsh
+zsh:
+	@mkdir -p ~/.zsh/completion
+	@mkdir -p ~/.oh-my-zsh/completions
+	@nef --generate-completion-script zsh > ~/.oh-my-zsh/completions/_nef
+	@nef --generate-completion-script zsh > ~/.zsh/completion/nef.zsh
+	$(shell if [[ ! -f ~/.zshrc ]] || [[ ! `grep "~/.zsh/completion" ~/.zshrc` ]]; then echo -e '\n# Enable Zsh completions\nfpath=(~/.zsh/completion $$fpath)\nautoload -U compinit\ncompinit\n' >> ~/.zshrc; fi)
 
 .PHONY: bash
 bash:
