@@ -32,6 +32,7 @@ public struct NefPlaygroundURL {
         case log
         case build
         case fw
+        case swiftmodules
         case contentFiles
         case launcher
         case cocoapodsTemplate = "cocoapods"
@@ -45,6 +46,7 @@ public struct NefPlaygroundURL {
             case .log:           return "\(Component.nef.pathComponent)/\(rawValue)"
             case .build:         return "\(Component.nef.pathComponent)/\(rawValue)"
             case .fw:            return "\(Component.build.pathComponent)/\(rawValue)"
+            case .swiftmodules:  return "\(Component.build.pathComponent)/\(rawValue)"
             case .contentFiles:      return "Contents/MacOS"
             case .launcher:          return "\(Component.contentFiles.pathComponent)/\(rawValue)"
             case .cocoapodsTemplate: return "\(Component.contentFiles.pathComponent)/\(rawValue)"
