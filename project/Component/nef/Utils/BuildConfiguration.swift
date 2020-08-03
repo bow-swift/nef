@@ -3,6 +3,6 @@
 import Foundation
 
 internal enum BuildConfiguration {
-    static let buildVersion = "0.6.2"
-    static let templateVersion = "spm_playgrounds"
+    static let buildVersion = "0.7.0"
+    static let templateVersion = "spm_nefc"
 }
