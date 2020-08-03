@@ -33,18 +33,18 @@ public struct MarkdownPageCommand: ParsableCommand {
         nef.Markdown.renderVerbose(page: page.url, toFile: output.url)
             .outcomeScope()
             .reportOutcome(
-                success: { (url, ast, rendered) in
+                success: { info in
                     if self.verbose {
                         return """
-                        rendered Markdown page '\(url.path)'.
+                        rendered Markdown page
                         • AST:
-                        \(ast)
+                        \(info.ast)
                         
                         • Output:
-                        \(rendered)
+                        \(info.rendered.content)
                         """
                     } else {
-                        return "rendered Markdown page '\(url.path)'."
+                        return "rendered Markdown page."
                     }
             }, failure: { _ in "rendering Markdown page" })
             .finish()
