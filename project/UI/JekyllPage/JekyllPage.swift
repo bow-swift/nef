@@ -38,18 +38,18 @@ public struct JekyllPageCommand: ParsableCommand {
         nef.Jekyll.renderVerbose(page: page.url, permalink: permalink, toFile: outputFile)
             .outcomeScope()
             .reportOutcome(
-                success: { (url, ast, rendered) in
+                success: { info in
                     if self.verbose {
                         return """
-                        rendered jekyll page '\(url.path)'.
+                        rendered jekyll page
                         • AST
-                        \(ast)
+                        \(info.ast)
                         
                         • Output
-                        \(rendered)"
+                        \(info.rendered.content)"
                         """
                     } else {
-                        return "rendered jekyll page '\(url.path)'"
+                        return "rendered jekyll page"
                     }
             }, failure: { _ in "rendering jekyll page" })
             .finish()
