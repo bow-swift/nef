@@ -58,37 +58,34 @@ public struct PlaygroundCommand: ParsableCommand {
                     name: self.name,
                     output: self.output.url,
                     platform: self.platform,
-                    dependencies: self.dependencies)
+                    dependencies: self.dependencies ?? .bow(.version()))
                 },
                 { arg in self.nefPlayground(
                     xcodePlayground: arg.url,
                     name: self.name,
                     output: self.output.url,
                     platform: self.platform,
-                    dependencies: self.dependencies)
+                    dependencies: self.dependencies ?? .spm)
                 })
     }
     
     // MARK: attributes
-    private var dependencies: PlaygroundDependencies {
-        let dependencies: PlaygroundDependencies
-        if spm {
-            dependencies = .spm
-        } else if let version = bowVersion {
-            dependencies = .bow(.version(version))
+    private var dependencies: PlaygroundDependencies? {
+        if let version = bowVersion {
+            return .bow(.version(version))
         } else if let branch = bowBranch {
-            dependencies = .bow(.branch(branch))
+            return .bow(.branch(branch))
         } else if let commit = bowCommit {
-            dependencies = .bow(.commit(commit))
+            return .bow(.commit(commit))
         } else if let podfileURL = podfile?.url {
-            dependencies = .podfile(podfileURL)
+            return .podfile(podfileURL)
         } else if let cartfileURL = cartfile?.url {
-            dependencies = .cartfile(cartfileURL)
+            return .cartfile(cartfileURL)
+        } else if spm {
+            return .spm
         } else {
-            dependencies = .bow(.version(""))
+            return nil
         }
-        
-        return dependencies
     }
     
     // MARK: private methods
