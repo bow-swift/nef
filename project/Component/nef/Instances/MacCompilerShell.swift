@@ -66,7 +66,7 @@ final class MacCompilerShell: CompilerShell {
         let target = IO<CompilerShellError, String>.var()
         
         return binding(
-            target <- self.target(platform: options.platform),
+            target <- self.target(platform: options.workspace.platform),
                    |<-self.compile(file: file, target: target.get, options: options, output: output, log: log),
         yield: ())^
     }
@@ -74,13 +74,15 @@ final class MacCompilerShell: CompilerShell {
     // MARK: private methods
     private func compile(file: URL, target: String, options: CompilerOptions, output: URL, log: URL) -> IO<CompilerShellError, Void> {
         IO.invoke {
-            let sdk = options.platform.sdk
-            let linkFrameworks = (options.frameworks + options.linkers).flatMap { fw in ["-F", fw.path] }
-            let xlinkers = options.linkers.flatMap { linker in ["-Xlinker", linker.path] }
-            let linkLibs = options.libs.flatMap { lib in ["-L", lib.path] }
+            let sdk = options.workspace.platform.sdk
+            let linkFrameworks = (options.workspace.frameworks + options.workspace.linkers).flatMap { fw in ["-F", fw.path] }
+            let linkModules = options.workspace.modules.flatMap { module in ["-I", module.path] }
+            let linkBinaries = options.workspace.binaries.map(\.path)
+            let xlinkers = options.workspace.linkers.flatMap { linker in ["-Xlinker", linker.path] }
+            let linkLibs = options.workspace.libs.flatMap { lib in ["-L", lib.path] }
             let sourcesPaths = options.sources.map { (source: URL) in source.path }
-            let linkSwiftCore = options.platform == .ios ? ["-lswiftXCTest", "-lXCTestSwiftSupport"]
-                                                         : ["-lswiftCore", "-lswiftXCTest", "-lXCTestSwiftSupport"]
+            let linkSwiftCore = options.workspace.platform == .ios ? ["-lswiftXCTest", "-lXCTestSwiftSupport"]
+                                                                   : ["-lswiftCore", "-lswiftXCTest", "-lXCTestSwiftSupport"]
             
             let args = ["-k"]                                     // invalidate all existing cache entries
                         .append("-sdk").append(sdk)               // find the tool for the given SDK name
@@ -88,11 +90,13 @@ final class MacCompilerShell: CompilerShell {
                         .append("-D").append("NOT_IN_PLAYGROUND") // allow use `import PlaygroundSupport` and utils outside Xcode Playgrounds
                         .append("-target").append(target)         // generate code for the given target
                         .appending(contentsOf: linkFrameworks)    // add directories to frameworks search path
+                        .appending(contentsOf: linkModules)       // add swift-modules directories to the import search path
                         .appending(contentsOf: linkLibs)          // add directories to libraries search path
                         .append("-Xlinker").append("-rpath")      // -Xlinker, specifies an option which should be passed to the linker
                         .appending(contentsOf: xlinkers)
                         .appending(contentsOf: linkSwiftCore)     // -l, specifies a library which should be linked against
                         .appending(contentsOf: sourcesPaths)      // sources to link against main.swift
+                        .appending(contentsOf: linkBinaries)      // link .swiftmodules binaries
                         .append(file.path)                        // main.swift - allow top level function (playground)
                         .append("-o").append(output.path.removeExtension)
             

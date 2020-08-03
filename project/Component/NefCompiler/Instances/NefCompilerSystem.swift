@@ -9,33 +9,37 @@ import BowEffects
 
 class NefCompilerSystem: CompilerSystem {
     
-    func compile(xcworkspace: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL> {
-        binding(
-            |<-self.createStructure(xcworkspace: xcworkspace, nefPlayground: nefPlayground, cached: cached),
-            |<-self.buildDependencies(xcworkspace: xcworkspace, platform: platform, cached: cached),
-            |<-self.buildProject(xcworkspace: xcworkspace, nefPlayground: nefPlayground, platform: platform, cached: cached),
-            |<-self.copyFrameworks(nefPlayground: nefPlayground),
-        yield: nefPlayground.appending(.fw))^
-    }
-    
-    func compile(page: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
-        let content = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
+    func compile(xcworkspace: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, WorkspaceInfo> {
+        let binaries = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
         let linkers = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
         let libs = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
+        
+        return binding(
+                    |<-self.createStructure(xcworkspace: xcworkspace, nefPlayground: nefPlayground, cached: cached),
+                    |<-self.buildDependencies(xcworkspace: xcworkspace, platform: platform, cached: cached),
+                    |<-self.buildProject(xcworkspace: xcworkspace, nefPlayground: nefPlayground, platform: platform, cached: cached),
+                    |<-self.copyWorkspaceDependencies(nefPlayground: nefPlayground),
+           binaries <- self.binaries(nefPlayground: nefPlayground),
+            linkers <- self.platformDependencies(platform: platform),
+               libs <- self.libraries(platform: platform),
+        yield: .init(platform: platform,
+                     frameworks: [nefPlayground.appending(.fw)],
+                     modules: [nefPlayground.appending(.swiftmodules)],
+                     binaries: binaries.get,
+                     linkers: linkers.get,
+                     libs: libs.get) )^
+    }
+    
+    func compile(page: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, workspace: WorkspaceInfo) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+        let content = EnvIO<CompilerSystemEnvironment, CompilerSystemError, String>.var()
         let sources = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]>.var()
         
         return binding(
             content <- self.reorganizeHeaders(page: page),
-            linkers <- self.dependencies(platform: platform),
-               libs <- self.libraries(platform: platform),
             sources <- self.sources(inPlayground: playground),
                     |<-self.compile(content: content.get, filename: filename,
                                     inPlayground: playground, atNefPlayground: nefPlayground,
-                                    options: .init(sources: sources.get,
-                                                   platform: platform,
-                                                   frameworks: frameworks,
-                                                   linkers: linkers.get,
-                                                   libs: libs.get)),
+                                    options: .init(sources: sources.get, workspace: workspace)),
         yield: ())^
     }
     
@@ -50,11 +54,13 @@ class NefCompilerSystem: CompilerSystem {
             
             let createDerivedDataIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.derivedData).path)
             let createFrameworksIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.fw).path)
+            let createSwiftModulesIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.swiftmodules).path)
             let createLogIO = env.fileSystem.createDirectory(atPath: nefPlayground.appending(.log).path)
             
             return cleanIO
                     .followedBy(createDerivedDataIO)
                     .followedBy(createFrameworksIO)
+                    .followedBy(createSwiftModulesIO)
                     .followedBy(createLogIO)^
                     .mapError { _ in .build(nefPlayground.project, info: "creating the project structure") }
         }
@@ -67,7 +73,7 @@ class NefCompilerSystem: CompilerSystem {
         yield: ())^
     }
     
-    private func copyFrameworks(nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+    private func copyWorkspaceDependencies(nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
         func items(nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]> {
             EnvIO { env in
                 return env.fileSystem.items(atPath: nefPlayground.appending(.derivedData).appendingPathComponent("Build").path, recursive: true)
@@ -81,19 +87,39 @@ class NefCompilerSystem: CompilerSystem {
             return EnvIO.pure(frameworks)^
         }
         
+        func extractSwiftModules(paths: [String]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [SwiftModule]> {
+            EnvIO.access { fileSystem -> [String] in
+                let directories = paths.filter(fileSystem.isDirectory)
+                return directories.filter { $0.filename.extension == "swiftmodule" }
+            }
+             .flatMap { modules in modules.swiftModules() }^
+             .contramap(\.fileSystem)
+        }
+        
         func copyFrameworks(paths: [String], nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
                 env.fileSystem.copy(itemPaths: paths, to: nefPlayground.appending(.fw).path).void()
             }.mapError { _ in .build(nefPlayground.project, info: "move frameworks into '\(nefPlayground.project.path)'") }
         }
         
+        func copySwiftModules(_ swiftModules: [SwiftModule], nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
+            EnvIO { env in
+                let copyModules = env.fileSystem.copy(itemPaths: swiftModules.map(\.module).map(\.path), to: nefPlayground.appending(.swiftmodules).path)
+                let copyBinaries = env.fileSystem.copy(itemPaths: swiftModules.map(\.binary).map(\.path), to: nefPlayground.appending(.swiftmodules).path)
+                return copyModules.followedBy(copyBinaries)
+            }.mapError { (e: FileSystemError) in .build(nefPlayground.project, info: "move modules into '\(nefPlayground.project.path)'") }^
+        }
+        
         let paths = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]>.var()
         let frameworks = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [String]>.var()
+        let modules = EnvIO<CompilerSystemEnvironment, CompilerSystemError, [SwiftModule]>.var()
         
         return binding(
-                   paths <- items(nefPlayground: nefPlayground),
-              frameworks <- extractFrameworks(paths: paths.get),
-                         |<-copyFrameworks(paths: frameworks.get, nefPlayground: nefPlayground),
+                 paths <- items(nefPlayground: nefPlayground),
+            frameworks <- extractFrameworks(paths: paths.get),
+               modules <- extractSwiftModules(paths: paths.get),
+                       |<-copyFrameworks(paths: frameworks.get, nefPlayground: nefPlayground),
+                       |<-copySwiftModules(modules.get, nefPlayground: nefPlayground),
         yield: ())^
     }
     
@@ -145,7 +171,7 @@ class NefCompilerSystem: CompilerSystem {
         return binding(
             schemeName <- extractScheme(xcworkspace: xcworkspace),
                        |<-build(xcworkspace: xcworkspace, nefPlayground: nefPlayground, scheme: schemeName.get, platform: platform, cached: cached),
-        yield: nefPlayground.appending(.fw))^
+        yield: nefPlayground.appending(.build))^
     }
     
     private func compile(content: String, filename: String, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, options: CompilerOptions) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
@@ -233,7 +259,7 @@ class NefCompilerSystem: CompilerSystem {
         yield: output.get)^
     }
     
-    private func dependencies(platform: Platform) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
+    private func platformDependencies(platform: Platform) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
         EnvIO { env in
             env.shell.dependencies(platform: platform)
                 .mapError { _ in .dependencies() }
@@ -247,6 +273,15 @@ class NefCompilerSystem: CompilerSystem {
                 .mapError { _ in .dependencies() }
                 .map { [$0] }
         }
+    }
+    
+    private func binaries(nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
+        EnvIO { env in
+            env.fileSystem.items(atPath: nefPlayground.appending(.swiftmodules).path, recursive: false)
+                .map { items in items.compactMap(URL.init) }^
+                .map { items in items.filter { item in item.pathExtension == "o" } }^
+                .mapError { _ in .build(nefPlayground.project, info: "get binaries") }
+        }^
     }
     
     private func sources(inPlayground playground: URL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, [URL]> {
