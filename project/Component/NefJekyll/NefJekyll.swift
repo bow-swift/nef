@@ -17,20 +17,21 @@ public struct Jekyll {
     
     public init() {}
     
-    public func page(content: String, permalink: String) -> EnvIO<Environment, RenderError, (ast: String, rendered: String)> {
+    public func page(content: String, permalink: String) -> EnvIO<Environment, RenderError, RenderedPage> {
         renderPage(content: content, permalink: permalink).map { rendered in
-            (ast: rendered.ast, rendered: self.contentFrom(page: rendered))
+            RenderedPage(ast: rendered.ast,
+                         rendered: .value(contentFrom(page: rendered)))
         }^
     }
     
-    public func page(content: String, permalink: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, (url: URL, ast: String, rendered: String)> {
+    public func page(content: String, permalink: String, filename: String, into output: URL) -> EnvIO<Environment, RenderError, RenderedPage> {
         let file = output.appendingPathComponent(filename)
         let rendered = EnvIO<Environment, RenderError, RenderingOutput>.var()
         
         return binding(
             rendered <- self.renderPage(content: content, permalink: permalink),
                      |<-self.writePage(rendered.get, into: file),
-        yield: (url: file, ast: rendered.get.ast, rendered: self.contentFrom(page: rendered.get)))^
+        yield: .init(ast: rendered.get.ast, rendered: .url(file)))^
     }
     
     public func playground(_ playground: URL, into output: URL) -> EnvIO<Environment, RenderError, NEA<URL>> {
