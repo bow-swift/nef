@@ -20,7 +20,7 @@ public struct Jekyll {
     public func page(content: String, permalink: String) -> EnvIO<Environment, RenderError, RenderedPage> {
         renderPage(content: content, permalink: permalink).map { rendered in
             RenderedPage(ast: rendered.ast,
-                         rendered: .value(contentFrom(page: rendered)))
+                         rendered: .value(self.contentFrom(page: rendered)))
         }^
     }
     
