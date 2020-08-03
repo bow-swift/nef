@@ -13,6 +13,7 @@ public protocol FileSystem {
     func write(content: String, toFile path: String) -> IO<FileSystemError, ()>
     func write(content: Data, toFile path: String) -> IO<FileSystemError, ()>
     func exist(itemPath: String) -> Bool
+    func isDirectory(itemPath: String) -> Bool
     func temporalDirectory() -> URL
     func temporalFile(content: String, filename: String) -> IO<FileSystemError, URL>
     
