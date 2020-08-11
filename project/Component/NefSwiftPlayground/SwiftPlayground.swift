@@ -132,19 +132,33 @@ public struct SwiftPlayground {
     }
     
     private func packageGraph(packagePath: String) -> EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]> {
-        func productsDescription(swiftPackage: SwiftPackage) -> EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]> {
-            let products = swiftPackage.products.filter { $0.type == .library }
-            let packageGraph = products.map { product -> SwiftPackageProduct in
-                let dependencies = swiftPackage.targets
-                    .filter { target in product.targets.contains(target.name) }
-                    .map(\.dependencies)
-                    .flatMap { $0.targets + $0.products }
-                    .removeDuplicates()
-                
-                return .init(name: product.name, dependencies: dependencies)
+        func flattenDependencies(products: [SwiftPackageProduct]) -> [SwiftPackageProduct] {
+            func flattenDependencies(_ dependencies: [String], in products: [SwiftPackageProduct]) -> [String] {
+                dependencies.reduce([String]()) { acc, dependency in
+                    guard let product = products.first(where: { $0.name == dependency }) else { return acc + [dependency] }
+                    return acc + [dependency] + flattenDependencies(product.dependencies, in: products)
+                }.uniques()
             }
             
-            return EnvIO.pure(packageGraph)^
+            return products.compactMap { product in
+                let dependencies = flattenDependencies(product.dependencies, in: products)
+                return SwiftPackageProduct(name: product.name, dependencies: dependencies)
+            }
+        }
+        
+        func productsDescription(swiftPackage: SwiftPackage) -> EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]> {
+            let libraries = swiftPackage.products.filter { $0.type == .library }
+            let packageGraph = libraries.map { library -> SwiftPackageProduct in
+                let dependencies = swiftPackage.targets
+                    .filter { target in library.targets.contains(target.name) }
+                    .map(\.dependencies)
+                    .flatMap { $0.targets + $0.products }
+                    .uniques()
+                
+                return .init(name: library.name, dependencies: dependencies)
+            }
+            
+            return EnvIO.pure(flattenDependencies(products: packageGraph))^
         }
         
         let env =  EnvIO<PackageShell, SwiftPlaygroundError, PackageShell>.var()
@@ -175,14 +189,8 @@ public struct SwiftPlayground {
         func modules(packagePath: String, excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
             EnvIO { shell in
                 shell.describe(repositoryPath: packagePath)
-                     .map { data in
-                        modules(in: data, excludes: excludes)
-                        
-                    }^
-                     .flatMap { modules in
-                        linkPathForSources(in: modules).provide(shell)
-                        
-                    }^
+                     .map { data in modules(in: data, excludes: excludes) }^
+                     .flatMap { modules in linkPathForSources(in: modules).provide(shell) }^
                      .mapError { _ in .modules(repos) }
             }
         }
@@ -215,7 +223,8 @@ public struct SwiftPlayground {
         func filterModules(_ modules: [Module], inProducts products: [SwiftPackageProduct]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
             EnvIO.access { _ in 
                 let modulesNames = Set(modules.map(\.name))
-                let validProductsNames = products.filter { product in modulesNames.isSuperset(of: product.dependencies.append(product.name)) }.map(\.name)
+                let validProducts = products.filter { product in modulesNames.isSuperset(of: product.dependencies.append(product.name)) }
+                let validProductsNames = (validProducts.map(\.name) + validProducts.flatMap(\.dependencies)).uniques()
                 let productModules = modules.filter { module in validProductsNames.contains(module.name) }
                 return productModules
             }^

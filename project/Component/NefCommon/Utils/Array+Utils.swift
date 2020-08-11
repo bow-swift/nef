@@ -9,7 +9,7 @@ public extension Array {
 }
 
 public extension Array where Element: Hashable {
-    func removeDuplicates() -> [Element] {
+    func uniques() -> [Element] {
         NSOrderedSet(array: self).array as! [Element]
     }
 }

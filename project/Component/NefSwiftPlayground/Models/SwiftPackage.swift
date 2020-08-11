@@ -54,10 +54,10 @@ public struct SwiftPackage: Decodable {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let dependencies = try container.decode([[String: [String]]].self, forKey: .dependencies)
-            let targets = dependencies.filter { dependency in dependency.keys.first?.lowercased() == "target" }
+            let targets = dependencies.filter { dependency in dependency.keys.first?.lowercased() != "product" }
             let products = dependencies.filter { dependency in dependency.keys.first?.lowercased() == "product" }
-            let flattenTargets = targets.flatMap(\.values).flatMap { $0 }.removeDuplicates()
-            let flattenProducts = products.flatMap(\.values).flatMap { $0 }.removeDuplicates()
+            let flattenTargets = targets.flatMap(\.values).flatMap { $0 }.uniques()
+            let flattenProducts = products.flatMap(\.values).flatMap { $0 }.uniques()
             
             self.name = try container.decode(String.self, forKey: .name)
             self.dependencies = Dependencies(targets: flattenTargets, products: flattenProducts)
