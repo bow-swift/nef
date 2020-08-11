@@ -4,5 +4,5 @@ import Foundation
 
 public struct SwiftPackageProduct {
     let name: String
-    let modules: [String]
+    let dependencies: [String]
 }
