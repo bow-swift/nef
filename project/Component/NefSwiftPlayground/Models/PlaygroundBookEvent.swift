@@ -4,6 +4,7 @@ public enum PlaygroundBookEvent {
     case cleanup
     case creatingStructure(String)
     case downloadingDependencies
+    case creatingPackageGraph
     case gettingModules
     case buildingPlayground
 }
@@ -17,6 +18,8 @@ extension PlaygroundBookEvent: CustomProgressDescription {
             return "Creating swift playground structure (\(name))"
         case .downloadingDependencies:
             return "Downloading dependencies..."
+        case .creatingPackageGraph:
+            return "Creating package graph..."
         case .gettingModules:
             return "Getting modules from repositories..."
         case .buildingPlayground:
@@ -32,12 +35,14 @@ extension PlaygroundBookEvent: CustomProgressDescription {
             return 2
         case .downloadingDependencies:
             return 3
-        case .gettingModules:
+        case .creatingPackageGraph:
             return 4
-        case .buildingPlayground:
+        case .gettingModules:
             return 5
+        case .buildingPlayground:
+            return 6
         }
     }
     
-    public var totalSteps: UInt { 5 }
+    public var totalSteps: UInt { 6 }
 }

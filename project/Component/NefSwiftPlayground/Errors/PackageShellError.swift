@@ -4,6 +4,7 @@ import Foundation
 
 public enum PackageShellError: Error {
     case empty(directory: String)
+    case dumpPackage(package: String, information: String)
     case dependencies(package: String, information: String)
     case describe(repository: String)
     case linkPath(item: String)
@@ -20,6 +21,8 @@ extension PackageShellError: CustomStringConvertible {
             return "could not get information from repository '\(repository)'"
         case .linkPath(let item):
             return "could not follow symbolic links to item '\(item)'"
+        case .dumpPackage(let package, let info):
+            return info.isEmpty ? "could not get swift package description: '\(package)'" : info.lowercased()
         }
     }
 }

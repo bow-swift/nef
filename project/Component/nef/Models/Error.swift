@@ -23,7 +23,7 @@ public enum Error: Swift.Error {
     case playground(info: String)
     
     /// Describes a `Swift Playground` error with detailed information.
-    case swiftPlaygrond(info: String)
+    case swiftPlayground(info: String)
 }
 
 extension Error: CustomStringConvertible {
@@ -42,7 +42,7 @@ extension Error: CustomStringConvertible {
             return "Invalid snapshot. \(info)"
         case .playground(let info):
             return "Playground generator failure. \(info)"
-        case .swiftPlaygrond(let info):
+        case .swiftPlayground(let info):
             return "Swift Playground generator failure. \(info)"
         }
     }

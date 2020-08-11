@@ -8,6 +8,7 @@ public enum SwiftPlaygroundError: Error {
     case package(packagePath: String)
     case checkout(info: String)
     case modules(_ paths: [String])
+    case dumpPackage(info: String)
     case playgroundBook(info: String)
     case ioError(info: String = "")
     
@@ -24,6 +25,8 @@ public enum SwiftPlaygroundError: Error {
         case .modules(let paths):
             let packages = paths.map { $0.filename }.joined(separator: ", ")
             return "could not extract any module from dependencies in your Package.swift: \(packages)"
+        case .dumpPackage(let info):
+            return info.isEmpty ? "could not read the Package.swift file" : info
         case .playgroundBook(let info):
             return "could not create Playground Book: \(info)"
         case .ioError(let info):

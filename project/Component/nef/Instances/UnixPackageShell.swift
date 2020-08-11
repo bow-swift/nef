@@ -6,6 +6,24 @@ import BowEffects
 import Swiftline
 
 final class UnixPackageShell: PackageShell {
+    func dumpPackage(packagePath: String) -> IO<PackageShellError, SwiftPackage> {
+        IO.invoke {
+            let result = run("swift", args: ["package", "--package-path", "\(packagePath)", "dump-package"])
+            guard result.exitStatus == 0,
+                  !result.stdout.isEmpty,
+                  let json = result.stdout.data(using: .utf8) else {
+                let error = result.stderr.components(separatedBy: "error:").last?
+                                  .trimmingEmptyCharacters.clean("\n   ").clean("\n") ?? ""
+                throw PackageShellError.dumpPackage(package: packagePath, information: error.firstCapitalized)
+            }
+            
+            guard let package = try? JSONDecoder().decode(SwiftPackage.self, from: json) else {
+                throw PackageShellError.dumpPackage(package: packagePath, information: "could not decode Package.swift")
+            }
+            
+            return package
+        }
+    }
     
     func resolve(packagePath: String, buildPath: String) -> IO<PackageShellError, Void> {
         IO.invoke {
