@@ -116,11 +116,11 @@ public struct SwiftPlayground {
     }
     
     private func buildPackage(content: String, packageFilePath: String, packagePath: String, buildPath: String) -> EnvIO<(FileSystem, PackageShell), SwiftPlaygroundError, Void> {
-        EnvIO { (system, shell) in
-            let writePackageIO = system.write(content: content, toFile: packageFilePath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) }
-            let resolvePackageIO = shell.resolve(packagePath: packagePath, buildPath: buildPath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) }
-
-            return writePackageIO.followedBy(resolvePackageIO)
+        EnvIO.accessM { (system, shell) in
+            binding(
+                |<-system.write(content: content, toFile: packageFilePath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) }.env(),
+                |<-shell.resolve(packagePath: packagePath, buildPath: buildPath).mapError { e in SwiftPlaygroundError.checkout(info: e.description) },
+            yield: ())^
         }
     }
     
@@ -167,7 +167,7 @@ public struct SwiftPlayground {
         
         return binding(
                  env <- .ask(),
-             package <- env.get.dumpPackage(packagePath: packagePath).mapError(SwiftPlaygroundError.dumpPackage).env(),
+             package <- env.get.dumpPackage(packagePath: packagePath).mapError(SwiftPlaygroundError.dumpPackage),
             products <- productsDescription(swiftPackage: package.get),
         yield: products.get)^
     }
@@ -187,10 +187,10 @@ public struct SwiftPlayground {
         }
         
         func modules(packagePath: String, excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
-            EnvIO { shell in
+            EnvIO.accessM { shell in
                 shell.describe(repositoryPath: packagePath)
                      .map { data in modules(in: data, excludes: excludes) }^
-                     .flatMap { modules in linkPathForSources(in: modules).provide(shell) }^
+                     .flatMap(linkPathForSources)^
                      .mapError { _ in .modules(repos) }
             }
         }
@@ -208,15 +208,14 @@ public struct SwiftPlayground {
         }
     
         func linkPathForSources(in modules: [Module]) -> EnvIO<PackageShell, PackageShellError, [Module]> {
-            EnvIO { shell in
+            EnvIO.accessM { shell in
                 modules.traverse { (module: Module) in
-                    let sourcesIO = module.sources.map { ($0, module.path) }.traverse(shell.linkPath)^
-                    let moduleIO  = sourcesIO.map { sources in
-                        Module.sourcesLens.set(module, sources)
-                    }^
+                    let sources = EnvIO<PackageShell, PackageShellError, [String]>.var()
                     
-                    return moduleIO
-                }
+                    return binding(
+                        sources <- module.sources.map { relativePath in (relativePath, module.path) }.traverse(shell.linkPath)^,
+                    yield: Module.sourcesLens.set(module, sources.get))
+                }^
             }
         }
         
