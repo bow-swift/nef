@@ -24,8 +24,8 @@ public struct SwiftPlayground {
         return binding(
                       |<-self.cleanUp(deintegrate: !cached, path: self.resolutionPath),
                       |<-self.structure(path: self.resolutionPath),
-           modulesRaw <- self.checkout(content: self.packageContent, path: self.resolutionPath),
-              modules <- self.modules(repos: modulesRaw.get, excludes: excludes),
+           modulesRaw <- self.checkout(content: self.packageContent, resolutionPath: self.resolutionPath),
+              modules <- self.modules(packagePath: self.resolutionPath.packagePath, repos: modulesRaw.get, excludes: excludes),
                       |<-self.swiftPlayground(modules: modules.get, path: self.resolutionPath),
         yield: ())^
     }
@@ -58,29 +58,31 @@ public struct SwiftPlayground {
         }
     }
     
-    private func checkout(content: String, path: PlaygroundResolutionPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [String]> {
+    private func checkout(content: String, resolutionPath: PlaygroundResolutionPath) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [String]> {
         EnvIO { env in
             let repos = IOPartial<SwiftPlaygroundError>.var([String].self)
             let step = PlaygroundBookEvent.downloadingDependencies
             
             return binding(
                      |<-env.progressReport.inProgress(step),
-                     |<-self.buildPackage(content: content, packageFilePath: path.packageFilePath, packagePath: path.packagePath, buildPath: path.buildPath)
-                            .provide((env.system, env.shell)),
-               repos <- self.repositories(checkoutPath: path.checkoutPath).provide(env.system),
+                     |<-self.buildPackage(content: content,
+                                          packageFilePath: resolutionPath.packageFilePath,
+                                          packagePath: resolutionPath.packagePath,
+                                          buildPath: resolutionPath.buildPath).provide((env.system, env.shell)),
+               repos <- self.repositories(checkoutPath: resolutionPath.checkoutPath).provide(env.system),
             yield: repos.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
     }
     
-    private func modules(repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [Module]> {
+    private func modules(packagePath: String, repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PlaygroundEnvironment, SwiftPlaygroundError, [Module]> {
         EnvIO { env in
             let modules = IO<SwiftPlaygroundError, [Module]>.var()
             let step = PlaygroundBookEvent.gettingModules
             
             return binding(
                         |<-env.progressReport.inProgress(step),
-                modules <- self.swiftLibraryModules(in: repos, excludes: excludes).provide(env.shell),
+                modules <- self.swiftLibraryModules(packagePath: packagePath, repos: repos, excludes: excludes).provide(env.shell),
             yield: modules.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
@@ -172,18 +174,24 @@ public struct SwiftPlayground {
         yield: products.get)^
     }
     
-    private func swiftLibraryModules(in repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
+    private func swiftLibraryModules(packagePath: String, repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
         func modules(inRepos repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
-            let products = EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]>.var()
-            let reposModules = EnvIO<PackageShell, SwiftPlaygroundError, [Module]>.var()
-            let productsModules = EnvIO<PackageShell, SwiftPlaygroundError, [Module]>.var()
             let modulesInPackage = curry(flip(modules(packagePath:excludes:)))(excludes)
             
+            let packageProducts = EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]>.var()
+            let reposProducts = EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]>.var()
+            let reposModules = EnvIO<PackageShell, SwiftPlaygroundError, [Module]>.var()
+            let products = EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]>.var()
+            let modules = EnvIO<PackageShell, SwiftPlaygroundError, [Module]>.var()
+            
+            
             return binding(
-                      products <- repos.parFlatTraverse(self.packageGraph(packagePath:))^,
+               packageProducts <- self.packageGraph(packagePath: packagePath),
+                 reposProducts <- repos.parFlatTraverse(self.packageGraph(packagePath:))^,
                   reposModules <- repos.parFlatTraverse(modulesInPackage)^,
-               productsModules <- filterModules(reposModules.get, inProducts: products.get),
-            yield: productsModules.get)^
+                      products <- filterReposProducts(reposProducts.get, byPackage: packageProducts.get),
+                       modules <- extractPackageModules(reposModules: reposModules.get, inProducts: products.get),
+            yield: modules.get)^
         }
         
         func modules(packagePath: String, excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
@@ -219,13 +227,22 @@ public struct SwiftPlayground {
             }
         }
         
-        func filterModules(_ modules: [Module], inProducts products: [SwiftPackageProduct]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
-            EnvIO.access { _ in 
-                let modulesNames = Set(modules.map(\.name))
-                let validProducts = products.filter { product in modulesNames.isSuperset(of: product.dependencies.append(product.name)) }
-                let validProductsNames = (validProducts.map(\.name) + validProducts.flatMap(\.dependencies)).uniques()
-                let productModules = modules.filter { module in validProductsNames.contains(module.name) }
-                return productModules
+        func filterReposProducts(_ reposProducts: [SwiftPackageProduct], byPackage packageProducts: [SwiftPackageProduct]) -> EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]> {
+            EnvIO.access { _ in
+                let packageProductsNames = packageProducts.names()
+                let products = reposProducts.filter { repoProduct in packageProductsNames.contains(repoProduct.name) }
+                return products.count == 0 ? reposProducts : products
+            }^
+        }
+        
+        func extractPackageModules(reposModules: [Module], inProducts products: [SwiftPackageProduct]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
+            EnvIO.access { _ in
+                let reposModulesNames = Set(reposModules.map(\.name))
+                let validProducts = products.filter { product in reposModulesNames.isSuperset(of: product.dependencies.append(product.name)) }
+                let validProductsNames = validProducts.names()
+                
+                let modules = reposModules.filter { module in validProductsNames.contains(module.name) }
+                return modules
             }^
         }
         
