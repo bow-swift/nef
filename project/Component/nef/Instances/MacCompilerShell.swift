@@ -24,7 +24,7 @@ final class MacCompilerShell: CompilerShell {
     func carthage(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void> {
         IO.invoke {
             let result = run("carthage", args: cached ? ["bootstrap", "--cache-builds", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path]
-                                                      : ["bootstrap", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
+                                                      : ["update", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
             guard result.exitStatus == 0 else {
                 throw CompilerShellError.notFound(command: "carthage", info: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
             }
