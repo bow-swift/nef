@@ -392,8 +392,12 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
     private func cleanCarthage(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         EnvIO { fileSystem in
             let cartfile = playground.appending(pathComponent: "Carthage", in: .contentFiles)
-            return fileSystem.remove(itemPath: cartfile.path)^
-                             .mapError { _ in .clean() }.handleError { _ in }
+            let resolved = playground.appending(pathComponent: "Cartfile", extension: "resolved", in: .contentFiles)
+            
+            let cartfileIO = fileSystem.remove(itemPath: cartfile.path).handleError { _ in }
+            let resolvedIO = fileSystem.remove(itemPath: resolved.path).handleError { _ in }
+            
+            return cartfileIO.followedBy(resolvedIO)^.mapError { _ in .clean() }
         }
     }
     
