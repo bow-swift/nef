@@ -149,18 +149,19 @@ public struct SwiftPlayground {
         }
         
         func productsDescription(swiftPackage: SwiftPackage) -> EnvIO<PackageShell, SwiftPlaygroundError, [SwiftPackageProduct]> {
-            let libraries = swiftPackage.products.filter { $0.type == .library }
-            let packageGraph = libraries.map { library -> SwiftPackageProduct in
-                let dependencies = swiftPackage.targets
-                    .filter { target in library.targets.contains(target.name) }
-                    .map(\.dependencies)
-                    .flatMap { $0.targets + $0.products }
-                    .uniques()
-                
-                return .init(name: library.name, dependencies: dependencies)
-            }
-            
-            return EnvIO.pure(flattenDependencies(products: packageGraph))^
+            EnvIO.pure(
+                swiftPackage.products
+                    .filter { $0.type == .library }
+                    .map { library -> SwiftPackageProduct in
+                        let dependencies = swiftPackage.targets
+                            .filter { target in library.targets.contains(target.name) }
+                            .map(\.dependencies)
+                            .flatMap { $0.targets + $0.products }
+                            .uniques()
+                        
+                        return .init(name: library.name, dependencies: dependencies)
+                    }
+            )^
         }
         
         let env =  EnvIO<PackageShell, SwiftPlaygroundError, PackageShell>.var()
@@ -171,7 +172,7 @@ public struct SwiftPlayground {
                  env <- .ask(),
              package <- env.get.dumpPackage(packagePath: packagePath).mapError(SwiftPlaygroundError.dumpPackage),
             products <- productsDescription(swiftPackage: package.get),
-        yield: products.get)^
+        yield: flattenDependencies(products: products.get))^
     }
     
     private func swiftLibraryModules(packagePath: String, repos: [String], excludes: [PlaygroundExcludeItem]) -> EnvIO<PackageShell, SwiftPlaygroundError, [Module]> {
