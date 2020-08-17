@@ -104,8 +104,8 @@ class NefCompilerSystem: CompilerSystem {
         
         func copySwiftModules(_ swiftModules: [SwiftModule], nefPlayground: NefPlaygroundURL) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
-                let copyModules = env.fileSystem.copy(itemPaths: swiftModules.map(\.module).map(\.path), to: nefPlayground.appending(.swiftmodules).path)
-                let copyBinaries = env.fileSystem.copy(itemPaths: swiftModules.map(\.binary).map(\.path), to: nefPlayground.appending(.swiftmodules).path)
+                let copyModules = env.fileSystem.copy(itemPaths: swiftModules.map(\.module.path), to: nefPlayground.appending(.swiftmodules).path)
+                let copyBinaries = env.fileSystem.copy(itemPaths: swiftModules.map(\.binary.path), to: nefPlayground.appending(.swiftmodules).path)
                 return copyModules.followedBy(copyBinaries)
             }.mapError { (e: FileSystemError) in .build(nefPlayground.project, info: "move modules into '\(nefPlayground.project.path)'") }^
         }
