@@ -13,16 +13,23 @@
  nef takes advantage of these new possibilities, together with advancements in Swift Package Manager, to build a Playground Book with external dependencies from a Swift Package specification.
  
  Given a `Package.swift` like the next one:
+ 
  ```swift
  // swift-tools-version:5.2
- 
+
  import PackageDescription
- 
+
  let package = Package(
-   name: "BowProject",
-   dependencies: [
-     .package(url: "https://github.com/bow-swift/bow.git", from: "0.8.0"),
-   ]
+     name: "BowProject",
+     products: [
+         .library(name: "BowTutorial", targets: ["nef"])
+     ],
+     dependencies: [
+         .package(url: "https://github.com/bow-swift/bow.git", from: "0.8.0"),
+     ],
+     targets: [
+         .target(name: "nef", dependencies: ["Bow"])
+     ]
  )
  ```
  

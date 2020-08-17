@@ -4,7 +4,7 @@ import Foundation
 import NefCommon
 import NefModels
 
-public struct PlaygroundEnvironment {
+public struct PlaygroundEnvironment: HasProgressReport {
     public let progressReport: ProgressReport
     public let shell: PackageShell
     public let system: FileSystem

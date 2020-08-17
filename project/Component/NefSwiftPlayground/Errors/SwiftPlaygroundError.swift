@@ -8,6 +8,7 @@ public enum SwiftPlaygroundError: Error {
     case package(packagePath: String)
     case checkout(info: String)
     case modules(_ paths: [String])
+    case dumpPackage(info: Error)
     case playgroundBook(info: String)
     case ioError(info: String = "")
     
@@ -23,7 +24,9 @@ public enum SwiftPlaygroundError: Error {
             return "command checkout failed: \(info)"
         case .modules(let paths):
             let packages = paths.map { $0.filename }.joined(separator: ", ")
-            return "could not extract any module from dependencies in your Package.swift: \(packages)"
+            return "could not find any module for products in your Package.swift: \(packages)"
+        case .dumpPackage(let error):
+            return error.localizedDescription.isEmpty ? "could not read the Package.swift file" : error.localizedDescription
         case .playgroundBook(let info):
             return "could not create Playground Book: \(info)"
         case .ioError(let info):

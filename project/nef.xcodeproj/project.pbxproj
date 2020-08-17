@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11C9DFB524332B8300E906E4 /* ProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB424332B8300E906E4 /* ProgressReport.swift */; };
-		11C9DFB9243331DB00E906E4 /* IO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */; };
+		11C9DFB9243331DB00E906E4 /* Effects+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFB8243331DB00E906E4 /* Effects+Extensions.swift */; };
 		11C9DFBB2433350900E906E4 /* ConsoleReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C9DFBA2433350900E906E4 /* ConsoleReport.swift */; };
 		11EDF4642436342C0092E959 /* Bow in Frameworks */ = {isa = PBXBuildFile; productRef = 11EDF4632436342C0092E959 /* Bow */; };
 		11EDF4662436342C0092E959 /* BowEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 11EDF4652436342C0092E959 /* BowEffects */; };
@@ -37,6 +37,9 @@
 		8B22247C22D4C91B00C85856 /* NSImage+Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB86422D392C000919F36 /* NSImage+Store.swift */; };
 		8B22249D22D5EC6B00C85856 /* NefMarkdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85B22D392C000919F36 /* NefMarkdown.swift */; };
 		8B3345DE23D5C89F007156B2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3345DD23D5C89F007156B2 /* Image.swift */; };
+		8B3A193924E1B74300F11DA3 /* SwiftPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A193724E1B73B00F11DA3 /* SwiftPackage.swift */; };
+		8B3A1B2724E1D47F00F11DA3 /* SwiftPackageProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A1B2524E1D3AB00F11DA3 /* SwiftPackageProduct.swift */; };
+		8B3A1B2F24E28B3C00F11DA3 /* HasProgressReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A1B2C24E28B1D00F11DA3 /* HasProgressReport.swift */; };
 		8B3CB88022D3931D00919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85722D392C000919F36 /* main.swift */; };
 		8B3CB88122D3932000919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85922D392C000919F36 /* main.swift */; };
 		8B3CB88422D3932400919F36 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB85D22D392C000919F36 /* main.swift */; };
@@ -423,7 +426,7 @@
 		11A8D6592434A44F0058A71C /* Kleisli+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kleisli+Extensions.swift"; sourceTree = "<group>"; };
 		11C9DFB424332B8300E906E4 /* ProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressReport.swift; sourceTree = "<group>"; };
 		11C9DFB624332F5900E906E4 /* CleanEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanEvent.swift; sourceTree = "<group>"; };
-		11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IO+Extensions.swift"; sourceTree = "<group>"; };
+		11C9DFB8243331DB00E906E4 /* Effects+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Effects+Extensions.swift"; sourceTree = "<group>"; };
 		11C9DFBA2433350900E906E4 /* ConsoleReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleReport.swift; sourceTree = "<group>"; };
 		11C9DFBC243383FB00E906E4 /* CompilerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilerEvent.swift; sourceTree = "<group>"; };
 		11C9DFBE2433931D00E906E4 /* RenderEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderEvent.swift; sourceTree = "<group>"; };
@@ -458,6 +461,9 @@
 		8B22248622D5EAD600C85856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B304D5F23ABA954001E9303 /* String+Colorize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Colorize.swift"; sourceTree = "<group>"; };
 		8B3345DD23D5C89F007156B2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		8B3A193724E1B73B00F11DA3 /* SwiftPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPackage.swift; sourceTree = "<group>"; };
+		8B3A1B2524E1D3AB00F11DA3 /* SwiftPackageProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPackageProduct.swift; sourceTree = "<group>"; };
+		8B3A1B2C24E28B1D00F11DA3 /* HasProgressReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasProgressReport.swift; sourceTree = "<group>"; };
 		8B3CB83A22D3929B00919F36 /* CarbonAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonAPI.swift; sourceTree = "<group>"; };
 		8B3CB83D22D3929B00919F36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B3CB84022D3929B00919F36 /* NefModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefModels.h; sourceTree = "<group>"; };
@@ -1250,6 +1256,7 @@
 			children = (
 				8BA1EF5B23D62C6700B33CD0 /* RenderingURL.swift */,
 				8BD6979423FAC93F000A512F /* NefPlaygroundURL.swift */,
+				8B3A1B2C24E28B1D00F11DA3 /* HasProgressReport.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1259,7 +1266,7 @@
 			children = (
 				8BA1EF6323D62CF700B33CD0 /* Array+Utils.swift */,
 				8BA1EF6223D62CF700B33CD0 /* EnumeratedSequence+Extension.swift */,
-				11C9DFB8243331DB00E906E4 /* IO+Extensions.swift */,
+				11C9DFB8243331DB00E906E4 /* Effects+Extensions.swift */,
 				8BD6979D23FC463D000A512F /* Platform+Utils.swift */,
 				8BA1EF6023D62CF700B33CD0 /* String+Path.swift */,
 				8BA1EF6423D62CF700B33CD0 /* String+Utils.swift */,
@@ -1349,6 +1356,8 @@
 				8B46C41C238D917D00437659 /* PlaygroundBookTemplate.swift */,
 				8BD6F706238C268E00DD93C4 /* PlaygroundEnvironment.swift */,
 				8BD4E33623881F9F002DECDB /* PlaygroundResolutionPath.swift */,
+				8B3A193724E1B73B00F11DA3 /* SwiftPackage.swift */,
+				8B3A1B2524E1D3AB00F11DA3 /* SwiftPackageProduct.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2412,9 +2421,10 @@
 				8BA1EF6F23D62D1F00B33CD0 /* String+Path.swift in Sources */,
 				8BA1EF5D23D62C6D00B33CD0 /* RenderingURL.swift in Sources */,
 				8BD6979F23FC4641000A512F /* Platform+Utils.swift in Sources */,
-				11C9DFB9243331DB00E906E4 /* IO+Extensions.swift in Sources */,
+				11C9DFB9243331DB00E906E4 /* Effects+Extensions.swift in Sources */,
 				8B58126C2403D8CC00587211 /* RenderingPersistenceError.swift in Sources */,
 				8BA1EF6B23D62D1F00B33CD0 /* Array+Utils.swift in Sources */,
+				8B3A1B2F24E28B3C00F11DA3 /* HasProgressReport.swift in Sources */,
 				8B5812682403D8CC00587211 /* RenderingPersistence.swift in Sources */,
 				8B58126A2403D8CC00587211 /* FileSystemError.swift in Sources */,
 				8B58126B2403D8CC00587211 /* RenderingOutput.swift in Sources */,
@@ -2441,10 +2451,12 @@
 			files = (
 				8B433224243C991800EB3C7E /* PlaygroundBookEvent.swift in Sources */,
 				8B46C417238D889700437659 /* PlaygroundBook.swift in Sources */,
+				8B3A1B2724E1D47F00F11DA3 /* SwiftPackageProduct.swift in Sources */,
 				8BD6F707238C268E00DD93C4 /* PlaygroundEnvironment.swift in Sources */,
 				8B46C412238D87F200437659 /* Assets.swift in Sources */,
 				8B46C41D238D917D00437659 /* PlaygroundBookTemplate.swift in Sources */,
 				8B46C40B238D689F00437659 /* Module.swift in Sources */,
+				8B3A193924E1B74300F11DA3 /* SwiftPackage.swift in Sources */,
 				8B46C42D238FD4AF00437659 /* PackageShell.swift in Sources */,
 				8B46C42F238FD52900437659 /* PackageShellError.swift in Sources */,
 				8BD4E33923881FD3002DECDB /* SwiftPlaygroundError.swift in Sources */,
@@ -3431,8 +3443,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
 				PRODUCT_NAME = "nef-playground-book";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -3440,8 +3455,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fortysevendegrees.SwiftPlayground;
 				PRODUCT_NAME = "nef-playground-book";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

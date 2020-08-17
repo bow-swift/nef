@@ -8,6 +8,12 @@ public extension Array {
     }
 }
 
+public extension Array where Element: Hashable {
+    func unique() -> [Element] {
+        NSOrderedSet(array: self).array as! [Element]
+    }
+}
+
 public extension ArraySlice {
     func dropLast(while f: (Iterator.Element) -> Bool, include: Bool = true) -> ArraySlice {
         guard let index = lastIndex(where: { !f($0) }) else { return [] }

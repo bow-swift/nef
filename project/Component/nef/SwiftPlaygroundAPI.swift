@@ -55,9 +55,9 @@ public extension SwiftPlaygroundAPI {
         output: URL
     ) -> EnvIO<ProgressReport, nef.Error, URL> {
         
-        guard let packageContent = try? String(contentsOfFile: package.path),
-            !packageContent.isEmpty else {
-            return EnvIO.raiseError(.swiftPlaygrond(info: "Error: invalid Swift Package"))^
+        guard let packageContent = try? String(contentsOf: package),
+              !packageContent.isEmpty else {
+            return EnvIO.raiseError(.swiftPlayground(info: "Error: invalid Swift Package"))^
         }
         
         return render(packageContent: packageContent, name: name, output: output)
@@ -68,25 +68,12 @@ public extension SwiftPlaygroundAPI {
 public enum SwiftPlayground: SwiftPlaygroundAPI {
     static let invalidModules: [PlaygroundExcludeItem] = [
         .module(name: "RxSwift"),
-        .module(name: "RxRelay"),
-        .module(name: "RxTest"),
-        .module(name: "RxBlocking"),
-        .module(name: "RxCocoa"),
         .module(name: "SwiftCheck"),
-        .module(name: "Swiftline"),
-        .module(name: "BowRx"),
-        .module(name: "BowGenerators"),
-        .module(name: "BowEffectsGenerators"),
-        .module(name: "BowRxGenerators"),
-        .module(name: "BowFreeGenerators"),
-        .module(name: "BowLaws"),
-        .module(name: "BowEffectsLaws"),
-        .module(name: "BowOpticsLaws")
+        .module(name: "Swiftline")
     ]
     
     static let invalidFiles: [PlaygroundExcludeItem] = [
-        .file(name: "NetworkReachabilityManager.swift",
-              module: "Alamofire")
+        .file(name: "NetworkReachabilityManager.swift", module: "Alamofire")
     ]
     
     public static func render(
@@ -107,6 +94,6 @@ public enum SwiftPlayground: SwiftPlaygroundAPI {
                     system: UnixFileSystem())
             }^
             .map { _ in output.appendingPathComponent(name).appendingPathComponent("\(name).playgroundbook") }^
-            .mapError { e in .swiftPlaygrond(info: "\(e)") }^
+            .mapError { e in .swiftPlayground(info: "\(e)") }^
     }
 }
