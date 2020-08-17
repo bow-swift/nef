@@ -42,7 +42,7 @@ extension Error: CustomStringConvertible {
             return "Invalid snapshot. \(info.firstCapitalized)"
         case .playground(let info):
             return "Playground generator failure. \(info.firstCapitalized)"
-        case .swiftPlaygrond(let info):
+        case .swiftPlayground(let info):
             return "Swift Playground generator failure. \(info.firstCapitalized)"
         }
     }
