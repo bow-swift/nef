@@ -139,7 +139,7 @@ public struct SwiftPlayground {
                 dependencies.reduce([String]()) { acc, dependency in
                     guard let product = products.first(where: { $0.name == dependency }) else { return acc + [dependency] }
                     return acc + [dependency] + flattenDependencies(product.dependencies, in: products)
-                }.uniques()
+                }.unique()
             }
             
             return products.compactMap { product in
@@ -157,7 +157,7 @@ public struct SwiftPlayground {
                             .filter { target in library.targets.contains(target.name) }
                             .map(\.dependencies)
                             .flatMap { $0.targets + $0.products }
-                            .uniques()
+                            .unique()
                         
                         return .init(name: library.name, dependencies: dependencies)
                     }

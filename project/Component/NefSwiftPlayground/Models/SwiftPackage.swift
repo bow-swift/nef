@@ -56,8 +56,8 @@ public struct SwiftPackage: Decodable {
             let dependencies = try container.decode([[String: [String]]].self, forKey: .dependencies)
             let targets = dependencies.filter { dependency in dependency.keys.first?.lowercased() != "product" }
             let products = dependencies.filter { dependency in dependency.keys.first?.lowercased() == "product" }
-            let flattenTargets = targets.flatMap(\.values).flatMap { $0 }.uniques()
-            let flattenProducts = products.flatMap(\.values).flatMap { $0 }.uniques()
+            let flattenTargets = targets.flatMap(\.values).flatMap { $0 }.unique()
+            let flattenProducts = products.flatMap(\.values).flatMap { $0 }.unique()
             
             self.name = try container.decode(String.self, forKey: .name)
             self.dependencies = Dependencies(targets: flattenTargets, products: flattenProducts)

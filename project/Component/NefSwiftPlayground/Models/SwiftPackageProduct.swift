@@ -10,6 +10,6 @@ public struct SwiftPackageProduct {
 
 public extension Array where Element == SwiftPackageProduct {
     func names() -> [String] {
-        (map(\.name) + flatMap(\.dependencies)).uniques()
+        (map(\.name) + flatMap(\.dependencies)).unique()
     }
 }
