@@ -39,3 +39,17 @@ permalink: /docs/quick-start/getting-started/
 
  Some of `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8) or downloading the last binary from the [**releases section**](https://github.com/bow-swift/nef-plugin/releases).
  
+  &nbsp;
+ 
+#### 📲 Using your [iPad](https://github.com/bow-swift/nef-editor-client)
+
+ You can create Swift Playgrounds -together with third-party libraries- directly in your iPad using the app [**nef Playgrounds**](https://apps.apple.com/us/app/nef-playgrounds/id1511012848).
+
+ &nbsp;
+
+#### Using a [GitHub badge](https://github.com/bow-swift/nef-playgrounds-badge)
+
+ You can create a [**nef badge**](badge.bow-swift.io) for your GitHub repository, and let users try your project in their iPads.
+
+ <img src="https://raw.githubusercontent.com/bow-swift/bow-art/master/badges/nef-playgrounds-badge.svg" alt="bow Playground" style="height:20px">
+ 
