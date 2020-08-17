@@ -4,13 +4,11 @@
 <img src="https://github.com/bow-swift/nef/workflows/Compile and test/badge.svg" alt="Build">
 <img src="https://github.com/bow-swift/nef/workflows/Deploy docs/badge.svg" alt="Site">
 <a href="https://github.com/bow-swift/nef">
-<img src="https://img.shields.io/badge/platform-macOS-orange" alt="Platforms">
+<img src="https://img.shields.io/badge/platform-macOS+iPad-blueviolet" alt="Platforms">
 </a>
-<a href="https://github.com/bow-swift/nef">
-<img src="https://img.shields.io/badge/dependency%20manager-CocoaPods%20%7C%20Carthage-orange" alt="CocoaPods+Carthage compatible">
-</a>
+<img src="https://img.shields.io/badge/dependency%20manager-swiftpm-blueviolet" alt="dependency manager: Swift Package Manager">
 <a href="https://gitter.im/bowswift/bow">
-<img src="https://img.shields.io/badge/gitter-nef-blueviolet.svg" alt="Gitter">
+<img src="https://img.shields.io/badge/Gitter-nef-blueviolet.svg" alt="Gitter">
 </a>
 </p>
 
@@ -63,6 +61,20 @@ It is an excellent option if you want to use all nef features in your macOS app,
 #### 🔌 Using [Xcode Editor Extension](https://github.com/bow-swift/nef-plugin)
 
 Some of `nef` features can be used directly in Xcode as an Extension. You can install it directly from [**App Store**](https://apps.apple.com/app/nef/id1479391704?mt=8) or downloading the last binary from the [**releases section**](https://github.com/bow-swift/nef-plugin/releases).
+
+&nbsp;
+
+#### 📲 Using your [iPad](https://github.com/bow-swift/nef-editor-client)
+
+You can create Swift Playgrounds -together with third-party libraries- directly in your iPad using the app [**nef Playgrounds**](https://apps.apple.com/us/app/nef-playgrounds/id1511012848).
+
+&nbsp;
+
+#### Using a [GitHub badge](https://github.com/bow-swift/nef-playgrounds-badge)
+
+You can create a [**nef badge**](badge.bow-swift.io) for your GitHub repository, and let users try your project in their iPads.
+
+<img src="https://raw.githubusercontent.com/bow-swift/bow-art/master/badges/nef-playgrounds-badge.svg" alt="bow Playground" style="height:20px">
 
 &nbsp;
 
