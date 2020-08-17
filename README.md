@@ -72,7 +72,7 @@ You can create Swift Playgrounds -together with third-party libraries- directly 
 
 #### Using a [GitHub badge](https://github.com/bow-swift/nef-playgrounds-badge)
 
-You can create a [**nef badge**](badge.bow-swift.io) for your GitHub repository, and let users try your project in their iPads.
+You can create a [**nef badge**](https://badge.bow-swift.io) for your GitHub repository, and let users try your project in their iPads.
 
 <img src="https://raw.githubusercontent.com/bow-swift/bow-art/master/badges/nef-playgrounds-badge.svg" alt="bow Playground" style="height:20px">
 
