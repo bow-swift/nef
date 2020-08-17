@@ -21,7 +21,7 @@ public struct SwiftPackage: Decodable {
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            let type = try container.decode([String: [String]].self, forKey: .type)
+            let type = try container.decode([String: [String]?].self, forKey: .type)
             
             self.name = try container.decode(String.self, forKey: .name)
             self.targets = try container.decode([String].self, forKey: .targets)
