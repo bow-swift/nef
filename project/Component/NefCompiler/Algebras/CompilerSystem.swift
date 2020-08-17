@@ -6,6 +6,6 @@ import NefCommon
 import BowEffects
 
 public protocol CompilerSystem {
-    func compile(xcworkspace: URL, atNefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, URL>
-    func compile(page: String, filename: String, inPlayground: URL, atNefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void>
+    func compile(xcworkspace: URL, atNefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, WorkspaceInfo>
+    func compile(page: String, filename: String, inPlayground: URL, atNefPlayground: NefPlaygroundURL, workspace: WorkspaceInfo) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void>
 }

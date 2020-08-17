@@ -10,9 +10,6 @@ import BowEffects
 
 /// Describes the API for `Markdown`
 public protocol MarkdownAPI {
-    typealias VerboseOutput = (ast: String, rendered: String)
-    typealias URLVerboseOutput = (url: URL, ast: String, rendered: String)
-    
     /// Renders content into markdown.
     ///
     /// - Parameters:
@@ -20,7 +17,7 @@ public protocol MarkdownAPI {
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
     static func renderVerbose(
         content: String
-    ) -> EnvIO<ProgressReport, nef.Error, VerboseOutput>
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage>
     
     /// Renders content into markdown file.
     ///
@@ -31,7 +28,7 @@ public protocol MarkdownAPI {
     static func renderVerbose(
         content: String,
         toFile file: URL
-    ) -> EnvIO<ProgressReport, nef.Error, URLVerboseOutput>
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage>
     
     /// Renders playground pages into markdown files.
     ///
@@ -65,7 +62,7 @@ public extension MarkdownAPI {
     static func render(
         content: String
     ) -> EnvIO<ProgressReport, nef.Error, String> {
-        renderVerbose(content: content).map { info in info.rendered }^
+        renderVerbose(content: content).map { info in info.rendered.content }^
     }
     
     /// Renders content into markdown.
@@ -92,7 +89,7 @@ public extension MarkdownAPI {
     ///   - Returns: An `EnvIO` to perform IO operations that produce errors of type `nef.Error` and values with the render information, having access to an immutable environment of type `ProgressReport`.
     static func renderVerbose(
         page: URL
-    ) -> EnvIO<ProgressReport, nef.Error, VerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         guard let contentPage = page.contentPage,
             !contentPage.isEmpty else {
@@ -113,7 +110,13 @@ public extension MarkdownAPI {
         toFile file: URL
     ) -> EnvIO<ProgressReport, nef.Error, URL> {
         renderVerbose(content: content, toFile: file)
-            .map { info in info.url }^
+            .flatMap { info in
+                guard case let .url(file) = info.rendered else {
+                    return .raiseError(.markdown(info: "invalid rendered content"))
+                }
+                
+                return .pure(file)^
+            }^
     }
     
     /// Renders content into markdown file.
@@ -143,7 +146,7 @@ public extension MarkdownAPI {
     static func renderVerbose(
         page: URL,
         toFile file: URL
-    ) -> EnvIO<ProgressReport, nef.Error, URLVerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         guard let contentPage = page.contentPage,
             !contentPage.isEmpty else {
@@ -159,7 +162,7 @@ public enum Markdown: MarkdownAPI {
     
     public static func renderVerbose(
         content: String
-    ) -> EnvIO<ProgressReport, nef.Error, VerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         NefMarkdown.Markdown()
             .page(content: content)
@@ -170,7 +173,7 @@ public enum Markdown: MarkdownAPI {
     public static func renderVerbose(
         content: String,
         toFile file: URL
-    ) -> EnvIO<ProgressReport, nef.Error, URLVerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
         let filename = file.pathExtension == "md" ? file.lastPathComponent : file.appendingPathExtension("md").lastPathComponent

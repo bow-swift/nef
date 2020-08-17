@@ -10,9 +10,6 @@ import BowEffects
 
 /// Describes the API for `Jekyll`
 public protocol JekyllAPI {
-    typealias VerboseOutput = (ast: String, rendered: String)
-    typealias URLVerboseOutput = (url: URL, ast: String, rendered: String)
-    
     /// Renders content into jekyll format.
     ///
     /// - Parameters:
@@ -22,7 +19,7 @@ public protocol JekyllAPI {
     static func renderVerbose(
         content: String,
         permalink: String
-    ) -> EnvIO<ProgressReport, nef.Error, VerboseOutput>
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage>
     
     /// Renders content into jekyll file.
     ///
@@ -35,7 +32,7 @@ public protocol JekyllAPI {
         content: String,
         permalink: String,
         toFile file: URL
-    ) -> EnvIO<ProgressReport, nef.Error, URLVerboseOutput>
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage>
     
     /// Renders playground pages into jekyll files.
     ///
@@ -75,7 +72,7 @@ public extension JekyllAPI {
     ) -> EnvIO<ProgressReport, nef.Error, String> {
         
         renderVerbose(content: content, permalink: permalink)
-            .map { info in info.rendered }^
+            .map { info in info.rendered.content }^
     }
     
     /// Renders content into jekyll format.
@@ -105,7 +102,7 @@ public extension JekyllAPI {
     static func renderVerbose(
         page: URL,
         permalink: String
-    ) -> EnvIO<ProgressReport, nef.Error, VerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         guard let contentPage = page.contentPage,
             !contentPage.isEmpty else {
@@ -129,7 +126,13 @@ public extension JekyllAPI {
     ) -> EnvIO<ProgressReport, nef.Error, URL> {
         
         renderVerbose(content: content, permalink: permalink, toFile: file)
-            .map { info in info.url }^
+            .flatMap { info in
+                guard case let .url(file) = info.rendered else {
+                    return .raiseError(.jekyll(info: "invalid rendered content"))
+                }
+                
+                return .pure(file)^
+            }^
     }
     
     /// Renders content into jekyll file.
@@ -164,7 +167,7 @@ public extension JekyllAPI {
         page: URL,
         permalink: String,
         toFile file: URL
-    ) -> EnvIO<ProgressReport, nef.Error, URLVerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         guard let contentPage = page.contentPage,
             !contentPage.isEmpty else {
@@ -180,7 +183,7 @@ public enum Jekyll: JekyllAPI {
     public static func renderVerbose(
         content: String,
         permalink: String
-    ) -> EnvIO<ProgressReport, nef.Error, VerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         NefJekyll.Jekyll()
             .page(content: content, permalink: permalink)
@@ -192,7 +195,7 @@ public enum Jekyll: JekyllAPI {
         content: String,
         permalink: String,
         toFile file: URL
-    ) -> EnvIO<ProgressReport, nef.Error, URLVerboseOutput> {
+    ) -> EnvIO<ProgressReport, nef.Error, RenderedPage> {
         
         let output = URL(fileURLWithPath: file.path.parentPath, isDirectory: true)
         let filename = file.pathExtension == "md" ? file.lastPathComponent : file.appendingPathExtension("md").lastPathComponent
