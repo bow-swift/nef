@@ -75,6 +75,12 @@ final class UnixFileSystem: NefCommon.FileSystem {
         FileManager.default.fileExists(atPath: itemPath)
     }
     
+    func isDirectory(itemPath: String) -> Bool {
+        var isDirectory: ObjCBool = false
+        FileManager.default.fileExists(atPath: itemPath, isDirectory: &isDirectory)
+        return isDirectory.boolValue
+    }
+    
     func temporalDirectory() -> URL {
         FileManager.default.temporaryDirectory
     }

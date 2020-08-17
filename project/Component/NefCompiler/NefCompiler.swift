@@ -43,23 +43,23 @@ public struct Compiler {
     private func buildPlaygrounds(_ playgrounds: PlaygroundsOutput, atNefPlayground nefPlayground: NefPlaygroundURL, cached: Bool) -> EnvIO<Environment, RenderError, Void> {
         let platform = self.platform(in: playgrounds)
         let xcworkspace = EnvIO<Environment, RenderError, URL>.var()
-        let frameworks = EnvIO<Environment, RenderError, [URL]>.var()
+        let workspace = EnvIO<Environment, RenderError, WorkspaceInfo>.var()
         
         return binding(
-            xcworkspace <- self.xcworkspace(atFolder: nefPlayground.appending(.contentFiles)),
-             frameworks <- self.compile(workspace: xcworkspace.get, atNefPlayground: nefPlayground, platform: platform, cached: cached),
-                        |<-self.compilePages(in: playgrounds, atNefPlayground: nefPlayground, frameworks: frameworks.get),
+             xcworkspace <- self.xcworkspace(atFolder: nefPlayground.appending(.contentFiles)),
+               workspace <- self.compile(workspace: xcworkspace.get, atNefPlayground: nefPlayground, platform: platform, cached: cached),
+                         |<-self.compilePages(in: playgrounds, atNefPlayground: nefPlayground, workspace: workspace.get),
         yield: ())^
     }
     
     // MARK: private <compiler>
-    private func compilePages(in playgrounds: PlaygroundsOutput, atNefPlayground nefPlayground: NefPlaygroundURL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+    private func compilePages(in playgrounds: PlaygroundsOutput, atNefPlayground nefPlayground: NefPlaygroundURL, workspace: WorkspaceInfo) -> EnvIO<Environment, RenderError, Void> {
         playgrounds.traverse { info in
-            self.compile(pages: info.output, inPlayground: info.playground.url, atNefPlayground: nefPlayground, frameworks: frameworks)
+            self.compile(pages: info.output, inPlayground: info.playground.url, atNefPlayground: nefPlayground, workspace: workspace)
         }.void()^
     }
     
-    private func compile(page: RenderingOutput, filename: String, inPlayground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+    private func compile(page: RenderingOutput, filename: String, inPlayground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, workspace: WorkspaceInfo) -> EnvIO<Environment, RenderError, Void> {
         let page = page.output.all().joined()
         let step = CompilerEvent.compilingPage(filename.removeExtension)
         
@@ -67,7 +67,11 @@ public struct Compiler {
             binding(
                 |<-env.progressReport.inProgress(step),
                 |<-env.compilerSystem
-                      .compile(page: page, filename: filename, inPlayground: inPlayground, atNefPlayground: nefPlayground, platform: platform, frameworks: frameworks)
+                      .compile(page: page,
+                               filename: filename,
+                               inPlayground: inPlayground,
+                               atNefPlayground: nefPlayground,
+                               workspace: workspace)
                       .contramap(\.compilerEnvironment).provide(env)
                       .mapError { e in RenderError.content(info: e) },
             yield: ())^
@@ -75,25 +79,23 @@ public struct Compiler {
         }
     }
     
-    private func compile(pages: PlaygroundOutput, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
-        func compilePages(_ pages: PlaygroundOutput, inPlayground: URL, atNefPlayground: NefPlaygroundURL, frameworks: [URL]) -> EnvIO<Environment, RenderError, Void> {
+    private func compile(pages: PlaygroundOutput, inPlayground playground: URL, atNefPlayground nefPlayground: NefPlaygroundURL, workspace: WorkspaceInfo) -> EnvIO<Environment, RenderError, Void> {
+        func compilePages(_ pages: PlaygroundOutput, inPlayground: URL, atNefPlayground: NefPlaygroundURL, workspace: WorkspaceInfo) -> EnvIO<Environment, RenderError, Void> {
             pages.traverse { info in
-                self.compile(page: info.output, filename: info.page.escapedTitle, inPlayground: inPlayground, atNefPlayground: atNefPlayground, platform: info.platform, frameworks: frameworks)
+                self.compile(page: info.output, filename: info.page.escapedTitle, inPlayground: inPlayground, atNefPlayground: atNefPlayground, workspace: workspace)
             }.void()^
         }
         
         return EnvIO { env in
             binding(
-                |<-compilePages(pages, inPlayground: playground, atNefPlayground: nefPlayground, frameworks: frameworks).provide(env),
-                |<-env.progressReport.oneShot(
-                    CompilerEvent.buildingPlayground(
-                        playground.lastPathComponent.removeExtension)),
+                |<-compilePages(pages, inPlayground: playground, atNefPlayground: nefPlayground, workspace: workspace).provide(env),
+                |<-env.progressReport.oneShot(CompilerEvent.buildingPlayground(playground.lastPathComponent.removeExtension)),
             yield: ())^
         }
     }
     
-    private func compile(workspace: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, [URL]> {
-        func buildWorkspace(_ workspace: URL, atNefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, URL> {
+    private func compile(workspace: URL, atNefPlayground nefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, WorkspaceInfo> {
+        func buildWorkspace(_ workspace: URL, atNefPlayground: NefPlaygroundURL, platform: Platform, cached: Bool) -> EnvIO<Environment, RenderError, WorkspaceInfo> {
             EnvIO { env in
                 env.compilerSystem.compile(xcworkspace: workspace, atNefPlayground: atNefPlayground, platform: platform, cached: cached)
                                   .provide(env.compilerEnvironment)
@@ -102,13 +104,13 @@ public struct Compiler {
         }
         
         return EnvIO { env in
-            let dependencies = IO<RenderError, URL>.var()
+            let workspaceInfo = IO<RenderError, WorkspaceInfo>.var()
             let step = CompilerEvent.buildingWorkspace(workspace.lastPathComponent.removeExtension)
             
             return binding(
-                |<-env.progressReport.inProgress(step),
-                dependencies <- buildWorkspace(workspace, atNefPlayground: nefPlayground, platform: platform, cached: cached).provide(env),
-                yield: [dependencies.get])^
+                              |<-env.progressReport.inProgress(step),
+                workspaceInfo <- buildWorkspace(workspace, atNefPlayground: nefPlayground, platform: platform, cached: cached).provide(env),
+            yield: workspaceInfo.get)^
                 .step(step, reportCompleted: env.progressReport)
         }
     }
