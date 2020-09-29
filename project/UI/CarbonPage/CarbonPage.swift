@@ -22,7 +22,7 @@ public struct CarbonPageCommand: ParsableCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Path where Carbon snippets are saved to. ex. `/home`", valueName: "carbon output"))
     private var output: ArgumentPath
     
-    @ArgumentParser.Option(help: "Background color in hexadecimal")
+    @ArgumentParser.Option(help: "Background color (hexadecimal or predefined)")
     private var background: String = "nef"
     
     @ArgumentParser.Option(help: "Carbon theme")
