@@ -21,13 +21,13 @@ public struct PlaygroundCommand: ParsableCommand {
     @ArgumentParser.Option(help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
     private var output: ArgumentPath = .init(argument: ".")
 
-    @ArgumentParser.Option(help: "set the target to `ios` or `macos`")
+    @ArgumentParser.Option(help: "Set the target to `ios` or `macos`")
     private var platform: Platform = .ios
     
     @ArgumentParser.Option(help: ArgumentHelp("Xcode Playground to be transformed into nef Playground", valueName: "Xcode Playground"))
     private var playground: ArgumentPath?
     
-    @ArgumentParser.Flag(help: "Use Swift Packages as a dependency manager")
+    @ArgumentParser.Flag(help: "Use Swift Package Manager to resolve dependencies")
     private var spm: Bool = false
     
     @ArgumentParser.Option(help: "Path to Podfile with your own dependencies")

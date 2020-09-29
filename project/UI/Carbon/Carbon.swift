@@ -22,7 +22,7 @@ public struct CarbonCommand: ParsableCommand {
     @ArgumentParser.Option(help: "Path where the resulting carbon files will be generated")
     private var output: ArgumentPath
     
-    @ArgumentParser.Option(help: "Background color in hexadecimal")
+    @ArgumentParser.Option(help: "Background color (hexadecimal or predefined)")
     private var background: String = "nef"
     
     @ArgumentParser.Option(help: "Carbon theme")
