@@ -155,6 +155,7 @@
 		8BAF221F23D20AFA00786F2F /* CoreEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */; };
 		8BB7D13A23B0E10800C8E6F8 /* UnixPlaygroundSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D13823B0E10300C8E6F8 /* UnixPlaygroundSystem.swift */; };
 		8BB7D13C23B0ED4100C8E6F8 /* String+Colorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B304D5F23ABA954001E9303 /* String+Colorize.swift */; };
+		8BBBB53C25248EE80025A6B4 /* PlaygroundDependenciesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBBB53B25248EE80025A6B4 /* PlaygroundDependenciesError.swift */; };
 		8BBD14B32390179B0002970C /* NefCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BBD14B12390179B0002970C /* NefCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BC8BCCE2458AA6A008AE611 /* CompilerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8BCCB2458A9A4008AE611 /* CompilerOptions.swift */; };
 		8BCDC72022F0455D00174A19 /* CarbonViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDC71F22F0455D00174A19 /* CarbonViewer.swift */; };
@@ -579,6 +580,7 @@
 		8BAF221E23D20AFA00786F2F /* CoreEnvironments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreEnvironments.swift; sourceTree = "<group>"; };
 		8BAF222123D223A400786F2F /* CoreRender+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreRender+Test.swift"; sourceTree = "<group>"; };
 		8BB7D13823B0E10300C8E6F8 /* UnixPlaygroundSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnixPlaygroundSystem.swift; sourceTree = "<group>"; };
+		8BBBB53B25248EE80025A6B4 /* PlaygroundDependenciesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundDependenciesError.swift; sourceTree = "<group>"; };
 		8BBD14AF2390179B0002970C /* NefCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NefCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBD14B12390179B0002970C /* NefCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NefCommon.h; sourceTree = "<group>"; };
 		8BBD14B22390179B0002970C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1417,6 +1419,7 @@
 			children = (
 				8BD6975C23F6D6A7000A512F /* main.swift */,
 				8B444F4123FEF32E00975C8C /* Playground.swift */,
+				8BBBB53B25248EE80025A6B4 /* PlaygroundDependenciesError.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -2489,6 +2492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BBBB53C25248EE80025A6B4 /* PlaygroundDependenciesError.swift in Sources */,
 				8B444F6E23FF06AF00975C8C /* Playground.swift in Sources */,
 				8BD6975D23F6D6A7000A512F /* main.swift in Sources */,
 			);
