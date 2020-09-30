@@ -50,45 +50,89 @@ public struct PlaygroundCommand: ParsableCommand {
         try run().provide(ConsoleReport())^.unsafeRunSync()
     }
     
-    func run<D: ProgressReport & OutcomeReport>()
-        -> EnvIO<D, nef.Error, Void> {
-        playground.toOption()
-            .fold(
-                { self.nefPlayground(
-                    name: self.name,
-                    output: self.output.url,
-                    platform: self.platform,
-                    dependencies: self.dependencies ?? .bow(.version()))
-                },
-                { arg in self.nefPlayground(
-                    xcodePlayground: arg.url,
-                    name: self.name,
-                    output: self.output.url,
-                    platform: self.platform,
-                    dependencies: self.dependencies ?? .spm)
-                })
+    func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
+        let dependencies = EnvIO<D, nef.Error, PlaygroundDependencies>.var()
+        let nefPlayground = EnvIO<D, nef.Error, Void>.var()
+        
+        return binding(
+             dependencies <- self.dependencies(xcodePlayground: playground?.url),
+            nefPlayground <- self.run(xcodePlayground: playground?.url,
+                                      name: name,
+                                      output: output.url,
+                                      platform: platform,
+                                      dependencies: dependencies.get),
+        yield: nefPlayground.get)^
+    }
+    
+    func run<D: ProgressReport & OutcomeReport>(
+        xcodePlayground: URL?,
+        name: String,
+        output: URL,
+        platform: Platform,
+        dependencies: PlaygroundDependencies
+    ) -> EnvIO<D, nef.Error, Void> {
+        
+        xcodePlayground.toOption().fold(
+            {
+                self.nefPlayground(name: name,
+                                   output: output,
+                                   platform: platform,
+                                   dependencies: dependencies)
+            },
+            { arg in
+                self.nefPlayground(xcodePlayground: arg,
+                                   name: name,
+                                   output: output,
+                                   platform: platform,
+                                   dependencies: dependencies)
+            })
     }
     
     // MARK: attributes
-    private var dependencies: PlaygroundDependencies? {
+    private var dependencies: Result<PlaygroundDependencies, PlaygroundDependenciesError> {
+        guard numberOfDependencies <= 1 else { return .failure(.invalid) }
+        
         if let version = bowVersion {
-            return .bow(.version(version))
+            return .success(.bow(.version(version)))
         } else if let branch = bowBranch {
-            return .bow(.branch(branch))
+            return .success(.bow(.branch(branch)))
         } else if let commit = bowCommit {
-            return .bow(.commit(commit))
+            return .success(.bow(.commit(commit)))
         } else if let podfileURL = podfile?.url {
-            return .podfile(podfileURL)
+            return .success(.podfile(podfileURL))
         } else if let cartfileURL = cartfile?.url {
-            return .cartfile(cartfileURL)
+            return .success(.cartfile(cartfileURL))
         } else if spm {
-            return .spm
+            return .success(.spm)
         } else {
-            return nil
+            return .failure(.notFound)
         }
     }
     
+    private var numberOfDependencies: Int {
+        [
+            bowVersion,
+            bowBranch,
+            bowCommit,
+            podfile?.url.path,
+            cartfile?.url.path,
+            spm ? "true" : nil
+        ].compactMap { $0 }.count
+    }
+    
     // MARK: private methods
+    private func dependencies<D>(xcodePlayground: URL?) -> EnvIO<D, nef.Error, PlaygroundDependencies> {
+        EnvIO.invokeResult { _ in
+            self.dependencies.flatMapError { error in
+                guard error == .notFound else { return .failure(.playground(info: "Invalid configuration for dependency manager")) }
+                
+                return xcodePlayground == nil
+                    ? .success(.bow(.version()))
+                    : .success(.spm)
+            }
+        }
+    }
+    
     private func nefPlayground<D: ProgressReport & OutcomeReport>(
         xcodePlayground: URL,
         name: String,
