@@ -14,12 +14,12 @@ public extension Kleisli where D: OutcomeReport, F == IOPartial<nef.Error> {
                 EnvIO { outcomeReport in
                     outcomeReport.failure(failure(e), error: e)
                 }
-        },
+            },
             { a in
                 EnvIO { outcomeReport in
                     outcomeReport.success(success(a))
                 }
-        })
+            })
     }
 }
 
