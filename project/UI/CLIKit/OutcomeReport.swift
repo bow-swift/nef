@@ -10,6 +10,6 @@ public extension OutcomeReport {
     }
     
     func failure<E: Error>(_ info: String, error: E) -> IO<E, Void> {
-        self.notify("☠️ \(info) failed with error:\n\(error)")
+        self.notify("☠️ \(info) failed with error:\n\(error)").flatMap { .raiseError(error) }^
     }
 }
