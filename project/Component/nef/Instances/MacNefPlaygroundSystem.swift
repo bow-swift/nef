@@ -35,20 +35,6 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
         yield: playground.get)^
     }
     
-    func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, xcodeprojs: NEA<URL>, target: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-        switch dependencies {
-        case .bow(let bow):
-            return setDependencies(playground: playground, bow: bow)
-        case .spm:
-            return setSPM(playground: playground)
-        case .cocoapods(let podfile):
-            return setCocoapods(playground: playground, target: target, podfile: podfile)
-        case .carthage(let cartfile):
-            let xcodeproj = xcodeprojs.find { url in url.path.contains(playground.appending(.carthageTemplate).path) }.getOrElse { xcodeprojs.head }
-            return setCarthage(playground: playground, xcodeproj: xcodeproj, cartfile: cartfile)
-        }
-    }
-    
     func linkPlaygrounds(_ playgrounds: NEA<URL>,  xcworkspace: URL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         func extractPlaygroundsNames(in xcworkspace: URL) -> EnvIO<FileSystem, NefPlaygroundSystemError, [String]> {
             EnvIO { fileSystem in
@@ -99,6 +85,100 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
             |<-self.cleanTemplates(playground: playground),
             |<-self.cleanDependencies(playground: playground),
             |<-self.cleanBinaries(playground: playground),
+        yield: ())^
+    }
+    
+    func setSPM(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+        return binding(
+            |<-self.moveFiles(at: playground.appending(.spmTemplate), into: playground.appending(.contentFiles)),
+            |<-self.cleanTemplates(playground: playground),
+        yield: ())^
+    }
+    
+    func setCocoapods(playground: NefPlaygroundURL, target: String, customPodfile podfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+        func updateTarget(podfile: URL, with target: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+            EnvIO { fileSystem in
+                let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
+                let writeContentIO = { (content: String) in fileSystem.write(content: content, toFile: podfile.path) }
+                let replaceTarget = { (content: String) -> String in
+                    guard let replaceTarget = content.matches(pattern: "(?<=target ').*(?=' do)").first else { return content }
+                    return content.replacingOccurrences(of: "target '\(replaceTarget)' do", with: "target '\(target)' do")
+                }
+                
+                return readPodfileIO
+                        .map(replaceTarget)
+                        .flatMap(writeContentIO)^
+                        .mapError { _ in .dependencies() }
+            }
+        }
+        
+        let contentPodfile = playground.appending(pathComponent: "Podfile", in: .contentFiles)
+        let defaultPodfile = """
+                             platform :ios, '12.0'
+                             use_frameworks!
+
+                             target 'Default' do
+                             end
+                             """
+        
+        return binding(
+            |<-self.checkCocoaPod(),
+            |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
+            |<-self.cleanTemplates(playground: playground),
+            |<-self.rewriteFile(contentPodfile, content: defaultPodfile),
+            |<-self.rewriteFile(contentPodfile, withFile: podfile),
+            |<-updateTarget(podfile: contentPodfile, with: target),
+            |<-self.createCocoaPodsWorkspace(playground: playground),
+        yield: ())^
+    }
+    
+    func setCarthage(playground: NefPlaygroundURL, xcodeproj: URL, customCartfile cartfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+        let contentCartfile = playground.appending(pathComponent: "Cartfile", in: .contentFiles)
+        let defaultCartfile = ""
+        
+        return binding(
+            |<-self.checkCarthage(),
+            |<-self.emptyWorkspace(xcodeproj: xcodeproj),
+            |<-self.moveFiles(at: playground.appending(.carthageTemplate), into: playground.appending(.contentFiles)),
+            |<-self.cleanTemplates(playground: playground),
+            |<-self.rewriteFile(contentCartfile, content: defaultCartfile),
+            |<-self.rewriteFile(contentCartfile, withFile: cartfile),
+        yield: ())^
+    }
+    
+    func setBow(dependency bow: PlaygroundDependencies.Bow, playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+        func dependency(bow: PlaygroundDependencies.Bow, lastBowVersion: String) -> String {
+            switch bow {
+            case .version(let version): return "\"~> \(version.isEmpty ? lastBowVersion : version)\""
+            case .branch(let branch):   return ":git => '\(Bow.repository)', :branch => '\(branch)'"
+            case .tag(let tag):         return ":git => '\(Bow.repository)', :tag => '\(tag)'"
+            case .commit(let commit):   return ":git => '\(Bow.repository)', :commit => '\(commit)'"
+            }
+        }
+        
+        func updateBowDependency(podfile: URL, with: PlaygroundDependencies.Bow, lastBowVersion: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+            EnvIO { fileSystem in
+                let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
+                let writeContentIO = { (content: String) in fileSystem.write(content: content, toFile: podfile.path) }
+                let setDependencyIO = { (content: String) in content.replacingOccurrences(of: "\"~> 0.0.0\"", with: dependency(bow: bow, lastBowVersion: lastBowVersion)) }
+                
+                return readPodfileIO
+                        .map(setDependencyIO)
+                        .flatMap(writeContentIO)^
+                        .mapError { _ in .dependencies() }
+            }
+        }
+        
+        let podfile = playground.appending(pathComponent: "Podfile", in: .contentFiles)
+        let lastBowVersion = EnvIO<FileSystem, NefPlaygroundSystemError, String>.var()
+        
+        return binding(
+                           |<-self.checkCocoaPod(),
+            lastBowVersion <- self.lastBowVersion(),
+                           |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
+                           |<-self.cleanTemplates(playground: playground),
+                           |<-updateBowDependency(podfile: podfile, with: bow, lastBowVersion: lastBowVersion.get),
+                           |<-self.createCocoaPodsWorkspace(playground: playground),
         yield: ())^
     }
     
@@ -209,100 +289,6 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
     }
     
     // MARK: dependencies
-    private func setDependencies(playground: NefPlaygroundURL, bow: PlaygroundDependencies.Bow) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-        func dependency(bow: PlaygroundDependencies.Bow, lastBowVersion: String) -> String {
-            switch bow {
-            case .version(let version): return "\"~> \(version.isEmpty ? lastBowVersion : version)\""
-            case .branch(let branch):   return ":git => '\(Bow.repository)', :branch => '\(branch)'"
-            case .tag(let tag):         return ":git => '\(Bow.repository)', :tag => '\(tag)'"
-            case .commit(let commit):   return ":git => '\(Bow.repository)', :commit => '\(commit)'"
-            }
-        }
-        
-        func updateBowDependency(podfile: URL, with: PlaygroundDependencies.Bow, lastBowVersion: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-            EnvIO { fileSystem in
-                let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
-                let writeContentIO = { (content: String) in fileSystem.write(content: content, toFile: podfile.path) }
-                let setDependencyIO = { (content: String) in content.replacingOccurrences(of: "\"~> 0.0.0\"", with: dependency(bow: bow, lastBowVersion: lastBowVersion)) }
-                
-                return readPodfileIO
-                        .map(setDependencyIO)
-                        .flatMap(writeContentIO)^
-                        .mapError { _ in .dependencies() }
-            }
-        }
-        
-        let podfile = playground.appending(pathComponent: "Podfile", in: .contentFiles)
-        let lastBowVersion = EnvIO<FileSystem, NefPlaygroundSystemError, String>.var()
-        
-        return binding(
-                           |<-self.checkCocoaPod(),
-            lastBowVersion <- self.lastBowVersion(),
-                           |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
-                           |<-self.cleanTemplates(playground: playground),
-                           |<-updateBowDependency(podfile: podfile, with: bow, lastBowVersion: lastBowVersion.get),
-                           |<-self.createCocoaPodsWorkspace(playground: playground),
-        yield: ())^
-    }
-    
-    private func setCocoapods(playground: NefPlaygroundURL, target: String, podfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-        func updateTarget(podfile: URL, with target: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-            EnvIO { fileSystem in
-                let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
-                let writeContentIO = { (content: String) in fileSystem.write(content: content, toFile: podfile.path) }
-                let replaceTarget = { (content: String) -> String in
-                    guard let replaceTarget = content.matches(pattern: "(?<=target ').*(?=' do)").first else { return content }
-                    return content.replacingOccurrences(of: "target '\(replaceTarget)' do", with: "target '\(target)' do")
-                }
-                
-                return readPodfileIO
-                        .map(replaceTarget)
-                        .flatMap(writeContentIO)^
-                        .mapError { _ in .dependencies() }
-            }
-        }
-        
-        let contentPodfile = playground.appending(pathComponent: "Podfile", in: .contentFiles)
-        let defaultPodfile = """
-                             platform :ios, '12.0'
-                             use_frameworks!
-
-                             target 'Default' do
-                             end
-                             """
-        
-        return binding(
-            |<-self.checkCocoaPod(),
-            |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
-            |<-self.cleanTemplates(playground: playground),
-            |<-self.rewriteFile(contentPodfile, content: defaultPodfile),
-            |<-self.rewriteFile(contentPodfile, withFile: podfile),
-            |<-updateTarget(podfile: contentPodfile, with: target),
-            |<-self.createCocoaPodsWorkspace(playground: playground),
-        yield: ())^
-    }
-    
-    private func setCarthage(playground: NefPlaygroundURL, xcodeproj: URL, cartfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-        let contentCartfile = playground.appending(pathComponent: "Cartfile", in: .contentFiles)
-        let defaultCartfile = ""
-        
-        return binding(
-            |<-self.checkCarthage(),
-            |<-self.emptyWorkspace(xcodeproj: xcodeproj),
-            |<-self.moveFiles(at: playground.appending(.carthageTemplate), into: playground.appending(.contentFiles)),
-            |<-self.cleanTemplates(playground: playground),
-            |<-self.rewriteFile(contentCartfile, content: defaultCartfile),
-            |<-self.rewriteFile(contentCartfile, withFile: cartfile),
-        yield: ())^
-    }
-    
-    private func setSPM(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
-        return binding(
-            |<-self.moveFiles(at: playground.appending(.spmTemplate), into: playground.appending(.contentFiles)),
-            |<-self.cleanTemplates(playground: playground),
-        yield: ())^
-    }
-    
     private func cleanTemplates(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         EnvIO { fileSystem in
             let dependencies = [playground.appending(.cocoapodsTemplate),

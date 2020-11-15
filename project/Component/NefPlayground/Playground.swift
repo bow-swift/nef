@@ -71,19 +71,42 @@ public struct Playground {
             }
         }
         
+        func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, xcodeprojs: NEA<URL>, target: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+            EnvIO.accessM { env -> EnvIO<PlaygroundEnvironment, NefPlaygroundSystemError, Void> in
+                switch dependencies {
+                case .bow(let bow):
+                    return env.nefPlaygroundSystem
+                        .setBow(dependency: bow, playground: playground)
+                        .contramap(\.fileSystem)
+                case .spm:
+                    return env.nefPlaygroundSystem
+                        .setSPM(playground: playground)
+                        .contramap(\.fileSystem)
+                case .cocoapods(let podfile):
+                    return env.nefPlaygroundSystem
+                        .setCocoapods(playground: playground, target: target, customPodfile: podfile)
+                        .contramap(\.fileSystem)^
+                case .carthage(let cartfile):
+                    let carthageTemplatePath = playground.appending(.carthageTemplate).path
+                    let xcodeproj = xcodeprojs.find { url in url.path.contains(carthageTemplatePath) }.getOrElse { xcodeprojs.head }
+                    return env.nefPlaygroundSystem
+                        .setCarthage(playground: playground, xcodeproj: xcodeproj, customCartfile: cartfile)
+                        .contramap(\.fileSystem)^
+                }
+            }.mapError(PlaygroundError.dependencies)
+        }
+        
         let xcodeproj = IO<PlaygroundError, NEA<URL>>.var()
         let step = PlaygroundEvent.resolvingDependencies(name)
-        
+
         return EnvIO { env in
             binding(
-                      |<-env.progressReport.inProgress(step),
-            xcodeproj <- xcodeprojAt(playground).provide(env),
-                      |<-env.nefPlaygroundSystem.setDependencies(
-                        dependencies, playground: playground,
-                        xcodeprojs: xcodeproj.get,
-                        target: name
-                      ).provide(env.fileSystem)
-                       .mapError(PlaygroundError.dependencies),
+                        |<-env.progressReport.inProgress(step),
+              xcodeproj <- xcodeprojAt(playground).provide(env),
+                        |<-setDependencies(dependencies,
+                                           playground: playground,
+                                           xcodeprojs: xcodeproj.get,
+                                           target: name).provide(env),
             yield: ())^
                 .step(step, reportCompleted: env.progressReport)
         }
