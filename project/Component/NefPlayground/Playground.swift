@@ -62,29 +62,29 @@ public struct Playground {
     }
     
     private func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
-        func xcodeprojAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, URL> {
+        func xcodeprojAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, NEA<URL>> {
             EnvIO { env in
-                env.xcodePlaygroundSystem.xcodeprojs(at: playground.appending(.contentFiles)).provide(env.fileSystem)
-                                         .map { xcworkspaces in xcworkspaces.head }^
-                                         .mapError { e in .dependencies(info: e) }
+                env.xcodePlaygroundSystem
+                    .xcodeprojs(at: playground.appending(.contentFiles))
+                    .provide(env.fileSystem)
+                    .mapError(PlaygroundError.dependencies)
             }
         }
         
-        let xcodeproj = IO<PlaygroundError, URL>.var()
+        let xcodeproj = IO<PlaygroundError, NEA<URL>>.var()
         let step = PlaygroundEvent.resolvingDependencies(name)
         
         return EnvIO { env in
             binding(
-                |<-env.progressReport.inProgress(step),
-                xcodeproj <- xcodeprojAt(playground).provide(env),
-                |<-env.nefPlaygroundSystem.setDependencies(
-                    dependencies,
-                    playground: playground,
-                    inXcodeproj: xcodeproj.get,
-                    target: name)
-                    .provide(env.fileSystem)
-                    .mapError { e in .dependencies(info: e) },
-                yield: ())^
+                      |<-env.progressReport.inProgress(step),
+            xcodeproj <- xcodeprojAt(playground).provide(env),
+                      |<-env.nefPlaygroundSystem.setDependencies(
+                        dependencies, playground: playground,
+                        xcodeprojs: xcodeproj.get,
+                        target: name
+                      ).provide(env.fileSystem)
+                       .mapError(PlaygroundError.dependencies),
+            yield: ())^
                 .step(step, reportCompleted: env.progressReport)
         }
     }

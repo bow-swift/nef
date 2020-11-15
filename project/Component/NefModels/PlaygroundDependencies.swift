@@ -7,14 +7,14 @@ public enum PlaygroundDependencies {
     /// Describes the bow dependencies.
     case bow(Bow)
     
-    /// Describes the CocoaPods dependencies.
-    case podfile(URL)
-    
-    /// Describes the Carthage dependencies.
-    case cartfile(URL)
-    
     /// Project uses Swift Packages Manager.
     case spm
+    
+    /// Project uses CocoaPods.
+    case cocoapods(podfile: URL?)
+    
+    /// Project uses Carthage.
+    case carthage(cartfile: URL?)
     
     /// Models the `Bow` dependencies.
     public enum Bow {
