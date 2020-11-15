@@ -17,7 +17,7 @@ public struct Playground {
         return binding(
             nefPlayground <- self.template(output: output, name: name, platform: platform),
                           |<-self.createStructure(playground: nefPlayground.get),
-                          |<-self.setDependencies(dependencies, playground: nefPlayground.get, name: name),
+                          |<-self.setDependencies(dependencies, platform: platform, playground: nefPlayground.get, name: name),
                           |<-self.linkPlaygrounds(nefPlayground.get),
         yield: nefPlayground.get.project)^
     }
@@ -29,7 +29,7 @@ public struct Playground {
         return binding(
             nefPlayground <- self.template(output: output, name: name, platform: platform),
                           |<-self.createStructure(playground: nefPlayground.get),
-                          |<-self.setDependencies(dependencies, playground: nefPlayground.get, name: name),
+                          |<-self.setDependencies(dependencies, platform: platform, playground: nefPlayground.get, name: name),
                           |<-self.setNefPlayground(nefPlayground.get, withXcodePlayground: xcodePlayground, name: name),
                           |<-self.linkPlaygrounds(nefPlayground.get),
         yield: nefPlayground.get.project)^
@@ -61,7 +61,7 @@ public struct Playground {
         }
     }
     
-    private func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+    private func setDependencies(_ dependencies: PlaygroundDependencies, platform: Platform, playground: NefPlaygroundURL, name: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
         func xcodeprojAt(_ playground: NefPlaygroundURL) -> EnvIO<PlaygroundEnvironment, PlaygroundError, NEA<URL>> {
             EnvIO { env in
                 env.xcodePlaygroundSystem
@@ -71,7 +71,7 @@ public struct Playground {
             }
         }
         
-        func setDependencies(_ dependencies: PlaygroundDependencies, playground: NefPlaygroundURL, xcodeprojs: NEA<URL>, target: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
+        func setDependencies(_ dependencies: PlaygroundDependencies, platform: Platform, playground: NefPlaygroundURL, xcodeprojs: NEA<URL>, target: String) -> EnvIO<PlaygroundEnvironment, PlaygroundError, Void> {
             EnvIO.accessM { env -> EnvIO<PlaygroundEnvironment, NefPlaygroundSystemError, Void> in
                 switch dependencies {
                 case .bow(let bow):
@@ -84,7 +84,7 @@ public struct Playground {
                         .contramap(\.fileSystem)
                 case .cocoapods(let podfile):
                     return env.nefPlaygroundSystem
-                        .setCocoapods(playground: playground, target: target, customPodfile: podfile)
+                        .setCocoapods(playground: playground, platform: platform, target: target, customPodfile: podfile)
                         .contramap(\.fileSystem)^
                 case .carthage(let cartfile):
                     let carthageTemplatePath = playground.appending(.carthageTemplate).path
@@ -104,6 +104,7 @@ public struct Playground {
                         |<-env.progressReport.inProgress(step),
               xcodeproj <- xcodeprojAt(playground).provide(env),
                         |<-setDependencies(dependencies,
+                                           platform: platform,
                                            playground: playground,
                                            xcodeprojs: xcodeproj.get,
                                            target: name).provide(env),

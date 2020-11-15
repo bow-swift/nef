@@ -95,7 +95,7 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
         yield: ())^
     }
     
-    func setCocoapods(playground: NefPlaygroundURL, target: String, customPodfile podfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+    func setCocoapods(playground: NefPlaygroundURL, platform: Platform, target: String, customPodfile podfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         func updateTarget(podfile: URL, with target: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
             EnvIO { fileSystem in
                 let readPodfileIO = fileSystem.readFile(atPath: podfile.path)
@@ -114,7 +114,7 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
         
         let contentPodfile = playground.appending(pathComponent: "Podfile", in: .contentFiles)
         let defaultPodfile = """
-                             platform :ios, '12.0'
+                             platform :\(platform == .ios ? "ios, '13.0'" : "osx, '10.14'")
                              use_frameworks!
 
                              target 'Default' do

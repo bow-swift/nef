@@ -10,7 +10,7 @@ public protocol NefPlaygroundSystem {
     func linkPlaygrounds(_ playgrounds: NEA<URL>,  xcworkspace: URL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void>
     func clean(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void>
     func setSPM(playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void>
-    func setCocoapods(playground: NefPlaygroundURL, target: String, customPodfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void>
+    func setCocoapods(playground: NefPlaygroundURL, platform: Platform, target: String, customPodfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void>
     func setCarthage(playground: NefPlaygroundURL, xcodeproj: URL, customCartfile: URL?) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void>
     func setBow(dependency: PlaygroundDependencies.Bow, playground: NefPlaygroundURL) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void>
 }
