@@ -16,7 +16,7 @@ public struct PlaygroundCommand: ParsableCommand {
     public init() {}
     
     @ArgumentParser.Option(help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
-    private var name: String = "BowPlayground"
+    private var name: String?
     
     @ArgumentParser.Option(help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
     private var output: ArgumentPath = .init(argument: ".")
@@ -58,12 +58,14 @@ public struct PlaygroundCommand: ParsableCommand {
     
     func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         let dependencies = EnvIO<D, nef.Error, PlaygroundDependencies>.var()
+        let defaultName = EnvIO<D, nef.Error, String>.var()
         let nefPlayground = EnvIO<D, nef.Error, Void>.var()
         
         return binding(
              dependencies <- self.dependencies(xcodePlayground: playground?.url),
+              defaultName <- self.defaultPlaygroundName(dependencies: dependencies.get),
             nefPlayground <- self.run(xcodePlayground: playground?.url,
-                                      name: name,
+                                      name: name ?? defaultName.get,
                                       output: output.url,
                                       platform: platform,
                                       dependencies: dependencies.get),
@@ -136,6 +138,15 @@ public struct PlaygroundCommand: ParsableCommand {
                     ? .success(.bow(.version()))
                     : .success(.spm)
             }
+        }
+    }
+    
+    private func defaultPlaygroundName<D>(dependencies: PlaygroundDependencies) -> EnvIO<D, nef.Error, String> {
+        switch dependencies {
+        case .bow:
+            return .pure("BowPlayground")^
+        default:
+            return .pure("nefPlayground")^
         }
     }
     
