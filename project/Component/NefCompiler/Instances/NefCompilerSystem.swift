@@ -212,8 +212,11 @@ class NefCompilerSystem: CompilerSystem {
         func resolve(project: URL, platform: Platform, cached: Bool) -> EnvIO<CompilerSystemEnvironment, CompilerSystemError, Void> {
             EnvIO { env in
                 let hasCartfile = env.fileSystem.exist(itemPath: project.appendingPathComponent("Cartfile").path)
-                return hasCartfile ? env.shell.carthage(project: project, platform: platform, cached: cached).mapError { e in .dependencies(project, info: "\(e)") }
-                                   : IO.pure(())^
+                let carthageIO = env.shell.carthage(project: project, platform: platform, cached: cached)
+                    .mapError { e in CompilerSystemError.dependencies(project, info: "\(e)") }^
+                    .provide(env.fileSystem)
+            
+                return hasCartfile ? carthageIO : .pure(())^
             }^
         }
         
