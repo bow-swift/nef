@@ -125,7 +125,7 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
             |<-self.checkCocoaPod(),
             |<-self.moveFiles(at: playground.appending(.cocoapodsTemplate), into: playground.appending(.contentFiles)),
             |<-self.cleanTemplates(playground: playground),
-            |<-self.rewriteFile(contentPodfile, content: defaultPodfile),
+            |<-self.rewriteFile(contentPodfile, withContent: defaultPodfile),
             |<-self.rewriteFile(contentPodfile, withFile: podfile),
             |<-updateTarget(podfile: contentPodfile, with: target),
             |<-self.createCocoaPodsWorkspace(playground: playground),
@@ -141,7 +141,7 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
             |<-self.emptyWorkspace(xcodeproj: xcodeproj),
             |<-self.moveFiles(at: playground.appending(.carthageTemplate), into: playground.appending(.contentFiles)),
             |<-self.cleanTemplates(playground: playground),
-            |<-self.rewriteFile(contentCartfile, content: defaultCartfile),
+            |<-self.rewriteFile(contentCartfile, withContent: defaultCartfile),
             |<-self.rewriteFile(contentCartfile, withFile: cartfile),
         yield: ())^
     }
@@ -425,7 +425,7 @@ final class MacNefPlaygroundSystem: NefPlaygroundSystem {
         }
     }
     
-    private func rewriteFile(_ file: URL, content: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
+    private func rewriteFile(_ file: URL, withContent content: String) -> EnvIO<FileSystem, NefPlaygroundSystemError, Void> {
         EnvIO { (fileSystem: FileSystem) in
             let removeOldFileIO = fileSystem.remove(itemPath: file.path).handleError { _ in }
             let copyContentIO = fileSystem.write(content: content, toFile: file.path)
