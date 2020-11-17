@@ -26,7 +26,7 @@ final class MacCompilerShell: CompilerShell {
             EnvIO.invoke { _ in
                 _ = run("chmod", args: "+x", carthage.path)
                 let result = run(carthage.path, args: cached ? ["bootstrap", "--cache-builds", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path]
-                                                           : ["update", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
+                                                             : ["update", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
                 guard result.exitStatus == 0 else {
                     throw CompilerShellError.failed(command: "carthage", info: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
                 }
@@ -62,9 +62,12 @@ final class MacCompilerShell: CompilerShell {
             }
         }
         
-        return fixCarthageLipo(project: project).flatMap { carthage in
-            resolve(carthage: carthage, project: project, platform: platform, cached: cached)
-        }^
+        let carthage = EnvIO<FileSystem, CompilerShellError, URL>.var()
+        
+        return binding(
+            carthage <- fixCarthageLipo(project: project),
+                     |<-resolve(carthage: carthage.get, project: project, platform: platform, cached: cached),
+        yield: ())^
     }
     
     func build(xcworkspace: URL, scheme: String, platform: Platform, derivedData: URL, log: URL) -> IO<CompilerShellError, Void> {
