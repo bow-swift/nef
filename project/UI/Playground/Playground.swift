@@ -16,7 +16,7 @@ public struct PlaygroundCommand: ParsableCommand {
     public init() {}
     
     @ArgumentParser.Option(help: ArgumentHelp("Specify the name for the nef Playground", valueName: "playground name"))
-    private var name: String = "BowPlayground"
+    private var name: String?
     
     @ArgumentParser.Option(help: ArgumentHelp("Path where nef Playground will be generated", valueName: "path"))
     private var output: ArgumentPath = .init(argument: ".")
@@ -30,10 +30,16 @@ public struct PlaygroundCommand: ParsableCommand {
     @ArgumentParser.Flag(help: "Use Swift Package Manager to resolve dependencies")
     private var spm: Bool = false
     
-    @ArgumentParser.Option(help: "Path to Podfile with your own dependencies")
+    @ArgumentParser.Flag(help: "Use CocoaPods to resolve dependencies")
+    private var cocoapods: Bool = false
+    
+    @ArgumentParser.Option(name: .customLong("custom-podfile"), help: ArgumentHelp("Path to your podfile with own dependencies", valueName: "path"))
     private var podfile: ArgumentPath?
     
-    @ArgumentParser.Option(help: "Path to Cartfile with your own dependencies")
+    @ArgumentParser.Flag(help: "Use Carthage to resolve dependencies")
+    private var carthage: Bool = false
+    
+    @ArgumentParser.Option(name: .customLong("custom-cartfile"), help: ArgumentHelp("Path to your cartfile with own dependencies", valueName: "path"))
     private var cartfile: ArgumentPath?
     
     @ArgumentParser.Option(help: ArgumentHelp("Specify the version of Bow", valueName: "x.y.z"))
@@ -52,12 +58,14 @@ public struct PlaygroundCommand: ParsableCommand {
     
     func run<D: ProgressReport & OutcomeReport>() -> EnvIO<D, nef.Error, Void> {
         let dependencies = EnvIO<D, nef.Error, PlaygroundDependencies>.var()
+        let defaultName = EnvIO<D, nef.Error, String>.var()
         let nefPlayground = EnvIO<D, nef.Error, Void>.var()
         
         return binding(
              dependencies <- self.dependencies(xcodePlayground: playground?.url),
+              defaultName <- self.defaultPlaygroundName(dependencies: dependencies.get),
             nefPlayground <- self.run(xcodePlayground: playground?.url,
-                                      name: name,
+                                      name: name ?? defaultName.get,
                                       output: output.url,
                                       platform: platform,
                                       dependencies: dependencies.get),
@@ -98,12 +106,12 @@ public struct PlaygroundCommand: ParsableCommand {
             return .success(.bow(.branch(branch)))
         } else if let commit = bowCommit {
             return .success(.bow(.commit(commit)))
-        } else if let podfileURL = podfile?.url {
-            return .success(.podfile(podfileURL))
-        } else if let cartfileURL = cartfile?.url {
-            return .success(.cartfile(cartfileURL))
         } else if spm {
             return .success(.spm)
+        } else if cocoapods  {
+            return .success(.cocoapods(podfile: podfile?.url))
+        } else if carthage  {
+            return .success(.carthage(cartfile: cartfile?.url))
         } else {
             return .failure(.notFound)
         }
@@ -114,9 +122,9 @@ public struct PlaygroundCommand: ParsableCommand {
             bowVersion,
             bowBranch,
             bowCommit,
-            podfile?.url.path,
-            cartfile?.url.path,
-            spm ? "true" : nil
+            spm ? "true" : nil,
+            cocoapods ? "true" : nil,
+            carthage ? "true" : nil
         ].compactMap { $0 }.count
     }
     
@@ -124,12 +132,21 @@ public struct PlaygroundCommand: ParsableCommand {
     private func dependencies<D>(xcodePlayground: URL?) -> EnvIO<D, nef.Error, PlaygroundDependencies> {
         EnvIO.invokeResult { _ in
             self.dependencies.flatMapError { error in
-                guard error == .notFound else { return .failure(.playground(info: "Invalid configuration for dependency manager")) }
+                guard error != .invalid else { return .failure(.playground(info: "Invalid configuration for dependency manager")) }
                 
                 return xcodePlayground == nil
                     ? .success(.bow(.version()))
                     : .success(.spm)
             }
+        }
+    }
+    
+    private func defaultPlaygroundName<D>(dependencies: PlaygroundDependencies) -> EnvIO<D, nef.Error, String> {
+        switch dependencies {
+        case .bow:
+            return .pure("BowPlayground")^
+        default:
+            return .pure("nefPlayground")^
         }
     }
     

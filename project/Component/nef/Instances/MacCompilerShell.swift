@@ -14,7 +14,7 @@ final class MacCompilerShell: CompilerShell {
             let result = run("pod", args: cached ? ["install", "--project-directory=\(project.path)"]
                                                  : ["install", "--repo-update", "--project-directory=\(project.path)"])
             guard result.exitStatus == 0 else {
-                throw CompilerShellError.notFound(command: "pod", info: "error: \(result.stderr) - output:\(result.stdout) install cocoapods using `gem install cocoapods`")
+                throw CompilerShellError.failed(command: "pod", info: "error: \(result.stderr) - output:\(result.stdout) install cocoapods using `gem install cocoapods`")
             }
             
             return ()
@@ -26,7 +26,7 @@ final class MacCompilerShell: CompilerShell {
             let result = run("carthage", args: cached ? ["bootstrap", "--cache-builds", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path]
                                                       : ["update", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
             guard result.exitStatus == 0 else {
-                throw CompilerShellError.notFound(command: "carthage", info: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
+                throw CompilerShellError.failed(command: "carthage", info: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
             }
             
             return ()
