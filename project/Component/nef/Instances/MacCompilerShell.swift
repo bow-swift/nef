@@ -21,16 +21,53 @@ final class MacCompilerShell: CompilerShell {
         }
     }
     
-    func carthage(project: URL, platform: Platform, cached: Bool) -> IO<CompilerShellError, Void> {
-        IO.invoke {
-            let result = run("carthage", args: cached ? ["bootstrap", "--cache-builds", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path]
-                                                      : ["update", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
-            guard result.exitStatus == 0 else {
-                throw CompilerShellError.failed(command: "carthage", info: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
+    func carthage(project: URL, platform: Platform, cached: Bool) -> EnvIO<FileSystem, CompilerShellError, Void> {
+        func resolve(carthage: URL, project: URL, platform: Platform, cached: Bool) -> EnvIO<FileSystem, CompilerShellError, Void> {
+            EnvIO.invoke { _ in
+                _ = run("chmod", args: "+x", carthage.path)
+                let result = run(carthage.path, args: cached ? ["bootstrap", "--cache-builds", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path]
+                                                             : ["update", "--platform", platform == .ios ? "ios" : "osx", "--project-directory", project.path])
+                guard result.exitStatus == 0 else {
+                    throw CompilerShellError.failed(command: "carthage", info: "error: \(result.stderr) - output: \(result.stdout) install carthage using `brew install carthage`")
+                }
+                
+                return ()
             }
-            
-            return ()
         }
+        
+        func fixCarthageLipo(project: URL) -> EnvIO<FileSystem, CompilerShellError, URL> {
+            EnvIO { fileSystem in
+                let xcconfigFile = project.appendingPathComponent("carthage.sh")
+                let xcconfigContent =  """
+                                       #!/usr/bin/env bash
+                                       set -euo pipefail
+                                       xcconfig=$(mktemp /tmp/static.xcconfig.XXXXXX)
+                                       trap 'rm -f "$xcconfig"' INT TERM HUP EXIT
+
+                                       echo 'EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_simulator__NATIVE_ARCH_64_BIT_x86_64__XCODE_1200 = arm64 arm64e armv7 armv7s armv6 armv8' >> $xcconfig
+                                       echo 'EXCLUDED_ARCHS = $(inherited) $(EXCLUDED_ARCHS__EFFECTIVE_PLATFORM_SUFFIX_$(EFFECTIVE_PLATFORM_SUFFIX)__NATIVE_ARCH_64_BIT_$(NATIVE_ARCH_64_BIT)__XCODE_$(XCODE_VERSION_MAJOR))' >> $xcconfig
+
+                                       export XCODE_XCCONFIG_FILE="$xcconfig"
+                                       carthage "$@"
+                                       """
+                
+                let removeIO = fileSystem.remove(itemPath: xcconfigFile.path).handleError { _ in }
+                let xcconfigIO = fileSystem.write(content: xcconfigContent, toFile: xcconfigFile.path)
+                
+                return removeIO.followedBy(xcconfigIO).as(xcconfigFile)^
+                    .mapError { e in
+                        .failed(command: "carthage",
+                                info: "\(e). Remove 'arm64' architecture from iphone-simulator.")
+                    }^
+            }
+        }
+        
+        let carthage = EnvIO<FileSystem, CompilerShellError, URL>.var()
+        
+        return binding(
+            carthage <- fixCarthageLipo(project: project),
+                     |<-resolve(carthage: carthage.get, project: project, platform: platform, cached: cached),
+        yield: ())^
     }
     
     func build(xcworkspace: URL, scheme: String, platform: Platform, derivedData: URL, log: URL) -> IO<CompilerShellError, Void> {
