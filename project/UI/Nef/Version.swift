@@ -13,7 +13,8 @@ public struct VersionCommand: ParsableCommand {
     public static var commandName: String = "version"
     public static var configuration = CommandConfiguration(
         commandName: commandName,
-        abstract: "Get the build version number")
+        abstract: "Get the build version number"
+    )
     
     public init() {}
     

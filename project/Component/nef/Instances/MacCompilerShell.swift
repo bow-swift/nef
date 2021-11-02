@@ -118,8 +118,8 @@ final class MacCompilerShell: CompilerShell {
             let xlinkers = options.workspace.linkers.flatMap { linker in ["-Xlinker", linker.path] }
             let linkLibs = options.workspace.libs.flatMap { lib in ["-L", lib.path] }
             let sourcesPaths = options.sources.map { (source: URL) in source.path }
-            let linkSwiftCore = options.workspace.platform == .ios ? ["-lswiftXCTest", "-lXCTestSwiftSupport"]
-                                                                   : ["-lswiftCore", "-lswiftXCTest", "-lXCTestSwiftSupport"]
+            let linkSwiftCore = options.workspace.platform == .ios ? ["-lXCTestSwiftSupport"]
+                                                                   : ["-lswiftCore", "-lXCTestSwiftSupport"]
             
             let args = ["-k"]                                     // invalidate all existing cache entries
                         .append("-sdk").append(sdk)               // find the tool for the given SDK name
