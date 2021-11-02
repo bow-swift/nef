@@ -4,5 +4,5 @@ import Foundation
 
 internal enum BuildConfiguration {
     static let buildVersion = "0.7.0"
-    static let templateVersion = "master"
+    static let templateVersion = "0.7.0"
 }

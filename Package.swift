@@ -325,12 +325,12 @@ extension Package.Dependency {
         #if os(Linux)
         return [
             .package(name: "Bow", url: "https://github.com/bow-swift/bow.git", .exact("0.8.0")),
-            .package(url: "https://github.com/bow-swift/Swiftline.git", .exact("0.5.5")),
+            .package(url: "https://github.com/bow-swift/Swiftline.git", .exact("0.5.6")),
         ]
         #else
         return [
             .package(name: "Bow", url: "https://github.com/bow-swift/bow.git", .exact("0.8.0")),
-            .package(url: "https://github.com/bow-swift/Swiftline.git", .exact("0.5.5")),
+            .package(url: "https://github.com/bow-swift/Swiftline.git", .exact("0.5.6")),
             .package(url: "https://github.com/apple/swift-argument-parser", .exact("0.2.1")),
         ]
         #endif
