@@ -13,7 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Bump formulae
-      uses: dawidd6/action-homebrew-bump-formula@v3.1.1
+      uses: dawidd6/action-homebrew-bump-formula@v3
       with:
         token: ${{ secrets.HOMEBREW_NEF_TOKEN }}
         formula: nef
