@@ -27,8 +27,6 @@ install: uninstall build install_folders
 	$(foreach binary,$(BINARIES),$(shell install $(BINARIES_PATH)/$(binary) $(PREFIX_BIN)/$(binary)))
 	@install $(BINARIES_PATH)/nef-menu $(PREFIX_BIN)/nef
 	@cp -R Documentation.app $(PREFIX_TESTS)
-	$(MAKE) bash
-	$(MAKE) zsh
 
 .PHONY: install_folders
 install_folders:
