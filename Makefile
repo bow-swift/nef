@@ -56,12 +56,12 @@ zip: build
 zsh:
 	@mkdir -p ~/.zsh/completion
 	@mkdir -p ~/.oh-my-zsh/completions
-	@nef --generate-completion-script zsh > ~/.oh-my-zsh/completions/_nef
-	@nef --generate-completion-script zsh > ~/.zsh/completion/nef.zsh
+	@$(PREFIX_BIN)/nef --generate-completion-script zsh > ~/.oh-my-zsh/completions/_nef
+	@$(PREFIX_BIN)/nef --generate-completion-script zsh > ~/.zsh/completion/nef.zsh
 	$(shell if [[ ! -f ~/.zshrc ]] || [[ ! `grep "~/.zsh/completion" ~/.zshrc` ]]; then echo -e '\n# Enable Zsh completions\nfpath=(~/.zsh/completion $$fpath)\nautoload -U compinit\ncompinit\n' >> ~/.zshrc; fi)
 
 .PHONY: bash
 bash:
 	@mkdir -p ~/.bash_completions
-	@nef --generate-completion-script bash > ~/.bash_completions/nef.bash
+	@$(PREFIX_BIN)/nef --generate-completion-script bash > ~/.bash_completions/nef.bash
 	$(shell if [[ ! -f ~/.bashrc ]] || [[ ! `grep "nef.bash" ~/.bashrc` ]]; then echo "source ~/.bash_completions/nef.bash" >> ~/.bashrc; fi)
