@@ -101,14 +101,26 @@ final class MacCompilerShell: CompilerShell {
     
     func compile(file: URL, options: CompilerOptions, output: URL, log: URL) -> IO<CompilerShellError, Void> {
         let target = IO<CompilerShellError, String>.var()
+        let isM1 = IO<CompilerShellError, Bool>.var()
         
         return binding(
-            target <- self.target(platform: options.workspace.platform),
+              isM1 <- self.isUsingM1(),
+            target <- self.target(platform: options.workspace.platform, isM1: isM1.get),
                    |<-self.compile(file: file, target: target.get, options: options, output: output, log: log),
         yield: ())^
     }
     
     // MARK: private methods
+    private func isUsingM1() -> IO<CompilerShellError, Bool> {
+        IO.invoke {
+            let result = run("uname", args: ["-m"])
+            guard result.exitStatus == 0 else {
+                throw CompilerShellError.failed(command: "check M1 processor", info: result.stderr)
+            }
+            return result.stdout == "arm64"
+        }
+    }
+
     private func compile(file: URL, target: String, options: CompilerOptions, output: URL, log: URL) -> IO<CompilerShellError, Void> {
         IO.invoke {
             let sdk = options.workspace.platform.sdk
@@ -120,7 +132,7 @@ final class MacCompilerShell: CompilerShell {
             let sourcesPaths = options.sources.map { (source: URL) in source.path }
             let linkSwiftCore = options.workspace.platform == .ios ? ["-lXCTestSwiftSupport"]
                                                                    : ["-lswiftCore", "-lXCTestSwiftSupport"]
-            
+
             let args = ["-k"]                                     // invalidate all existing cache entries
                         .append("-sdk").append(sdk)               // find the tool for the given SDK name
                         .append("swiftc")                         // swift compiler
@@ -149,14 +161,14 @@ final class MacCompilerShell: CompilerShell {
         }
     }
     
-    private func target(platform: Platform) -> IO<CompilerShellError, String> {
+    private func target(platform: Platform, isM1: Bool) -> IO<CompilerShellError, String> {
         activeDeveloperDirectory(platform: platform).flatMap { url in
             IO.invoke {
                 let settings = url.appendingPathComponent("SDKs/\(platform.framework).sdk/SDKSettings.json")
                 guard let content = try? String(contentsOf: settings),
                       let rawBundleVersion = content.matches(pattern: "(?<=\"MinimalDisplayName\":\").*(?=\")").first,
                       let bundleVersion = rawBundleVersion.components(separatedBy: "\"").first,
-                      let target = platform.target(bundleVersion: bundleVersion) else {
+                      let target = platform.target(bundleVersion: bundleVersion, isM1: isM1) else {
                         throw CompilerShellError.failed(command: "target(platform:)", info: "can not extract CFBundleVersion from \(platform.framework)")
                 }
                 

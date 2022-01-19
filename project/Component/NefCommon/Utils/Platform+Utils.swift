@@ -22,10 +22,10 @@ public extension Platform {
         }
     }
 
-    func target(bundleVersion: String) -> String? {
+    func target(bundleVersion: String, isM1: Bool) -> String? {
         switch self {
         case .ios:     return "arm64-apple-ios\(bundleVersion)"
-        case .macos:   return "x86_64-macosx\(bundleVersion)"
+        case .macos:   return isM1 ? "arm64-apple-macosx\(bundleVersion)" : "x86_64-macosx\(bundleVersion)"
         default: return nil
         }
     }
